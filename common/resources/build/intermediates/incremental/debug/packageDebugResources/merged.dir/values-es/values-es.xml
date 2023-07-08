@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bookings">Reservas</string>
+    <string name="choose_a_schedule">Elige un horario</string>
+    <string name="clear_all">Resetear</string>
+    <string name="create_sala">Crear sala</string>
+    <string name="explore_exceptional_destinations">Explora destinos excepcionales</string>
+    <string name="favorites">Mis favoritos</string>
+    <string name="filters">Filtros</string>
+    <string name="group_description">Descripción del grupo</string>
+    <string name="inbox">Inbox</string>
+    <string name="location">Ubicación</string>
+    <string name="login">Iniciar Sessión</string>
+    <string name="logout">Cerrar Sessión</string>
+    <string name="looking_for_a_place">¿Buscando por un sitio?</string>
+    <string name="map">Mapa</string>
+    <string name="near_me">Cerca de mi</string>
+    <string name="notifications">Notifications</string>
+    <string name="price_range">Rango de precios</string>
+    <string name="rules_of_the_place">Reglas del lugar</string>
+    <string name="search_nearby_places">Buscar lugares cercanos</string>
+    <string name="services">Servicios</string>
+    <string name="settings">Configuraciones</string>
+    <string name="show_less">Ver menos</string>
+    <string name="show_more">Ver más</string>
+    <string name="there_are_not_available_schudules">No hay horarios disponibles</string>
+    <string name="time_interval">¿Por cuánto tiempo de gustaría jugar?</string>
+    <string name="what_would_you_like_to_play">¿Qué te gustaría jugar?</string>
+    <string name="where_will_it_be_played">Donde estarás jugando</string>
+</resources>

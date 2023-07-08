@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "937865427496",
+    "project_id": "regat-b56b2",
+    "storage_bucket": "regat-b56b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937865427496:android:9429a3a9f55291ed1d131d",
+        "android_client_info": {
+          "package_name": "app.regate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "937865427496-j0avau10idrhgemlcdbug39qgjjetjbd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv7dbfEwRiWXRv8S1r0llJgrEkytHpLzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "937865427496-j0avau10idrhgemlcdbug39qgjjetjbd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

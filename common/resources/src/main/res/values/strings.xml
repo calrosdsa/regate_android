@@ -1,0 +1,52 @@
+<!--
+  ~ Copyright 2023 Google LLC
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="mapbox_access_token" translatable="false">pk.eyJ1Ijoiam1pcmFuZGEyMSIsImEiOiJjbGl0Y3YyeDEwMm1rM2ZwaXJ6eGs0MnNwIn0.rURAi6PkFGac0TBkM4QE-A</string>
+    <string name="gcp_id" translatable="false">405059725143-8ian2lbmjge14iu3ebdobd2h3udpqjlq.apps.googleusercontent.com</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Log out</string>
+    <string name="login">Log in</string>
+    <string name="bookings">Bookings</string>
+    <string name="floating1" translatable="false">floating1</string>
+    <string name="floating2" translatable="false">floating2</string>
+    <string name="filters">Filters</string>
+    <string name="price_range">Rango de precios</string>
+    <string name="services">Servicios</string>
+    <string name="time_interval">¿Cuánto tiempo quieres jugar?</string>
+    <string name="location">Location</string>
+    <string name="near_me">Near me</string>
+    <string name="clear_all">Clear all</string>
+    <string name="map">Map</string>
+    <string name="search_nearby_places">Search nearby places</string>
+    <string name="looking_for_a_place">Looking for a place to go?</string>
+    <string name="explore_exceptional_destinations">Explore exceptional destinations</string>
+    <string name="favorites">Favorites</string>
+    <string name="where_will_it_be_played">Where will it be played?</string>
+    <string name="location_static_url" translatable="false">
+        https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/geojson(%7B%22type%22%3A%22Point%22%2C%22coordinates%22%3A%5B-63.180198%2C-17.818861%5D%7D)/-63.180198,-17.818861,14/500x300?access_token=pk.eyJ1Ijoiam1pcmFuZGEyMSIsImEiOiJjbGl0Y3YyeDEwMm1rM2ZwaXJ6eGs0MnNwIn0.rURAi6PkFGac0TBkM4QE-A
+       </string>
+    <string name="rules_of_the_place">Rules of the place</string>
+    <string name="show_more">Show more</string>
+    <string name="show_less">Show less</string>
+    <string name="choose_a_schedule">Choose a schedule</string>
+    <string name="what_would_you_like_to_play">What would you like to play?</string>
+    <string name="inbox">Inbox</string>
+    <string name="notifications">Notifications</string>
+    <string name="group_description">Group description</string>
+    <string name="there_are_not_available_schudules">There are no available schedules</string>
+    <string name="create_sala">Create sala</string>
+</resources>

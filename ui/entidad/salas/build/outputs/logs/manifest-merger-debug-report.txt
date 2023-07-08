@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml:18:1-19:12
+INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml:18:1-19:12
+INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml:18:1-19:12
+	package
+		INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml
+		ADDED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml:18:1-19:12
+		INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml:18:1-19:12
+uses-sdk
+INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml
+INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml
+INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml
+INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml
+		ADDED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml
+		INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml
+		ADDED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml
+		INJECTED from D:\Regate\RegateApp\ui\entidad\salas\src\main\AndroidManifest.xml

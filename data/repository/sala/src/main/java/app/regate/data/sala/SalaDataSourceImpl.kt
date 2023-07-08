@@ -1,0 +1,59 @@
+package app.regate.data.sala
+
+import app.regate.data.auth.store.AuthStore
+import app.regate.data.dto.ResponseMessage
+import app.regate.data.dto.empresa.salas.JoinSalaRequest
+import app.regate.data.dto.empresa.salas.SalaDetail
+import app.regate.data.dto.empresa.salas.SalaDto
+import app.regate.data.dto.empresa.grupo.GrupoMessageDto
+import app.regate.data.dto.empresa.salas.SalaRequestDto
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
+import me.tatarka.inject.annotations.Inject
+
+@Inject
+class SalaDataSourceImpl(
+    private val client:HttpClient,
+    private val authStore: AuthStore
+): SalaDataSource {
+    override suspend fun createSala(d: SalaRequestDto):ResponseMessage {
+        val token = authStore.get()?.accessToken
+        return client.post("/v1/sala/"){
+            header("Authorization", "Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
+    }
+    override suspend fun getSalas(id: Long): List<SalaDto> {
+            return client.get("/v1/salas/${id}/").body()
+
+//            ResponseData.Success(data = res)
+//        }catch (e:ResponseException){
+//            ResponseData.Error(message = e.errorMessage<ErrorResponse>().message)
+//        }
+    }
+
+    override suspend fun getMessagesSala(id: Long): List<GrupoMessageDto> {
+        return client.get("/v1/grupo/messages/${id}/").body()
+    }
+
+    override suspend fun getSala(id: Long): SalaDetail {
+        return client.get("/v1/sala/${id}/").body()
+    }
+
+    override suspend fun joinSala(d: JoinSalaRequest):ResponseMessage{
+        val token = authStore.get()?.accessToken
+        return client.post("/v1/sala/add-user/"){
+            header("Authorization","Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
+    }
+}
+

@@ -1,0 +1,37 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml:19:1-32:12
+INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml:19:1-32:12
+INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml:19:1-32:12
+	package
+		INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml
+		ADDED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml:19:1-32:12
+		INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml:19:11-69
+application
+ADDED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml:21:5-30:19
+	android:theme
+		ADDED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml:22:9-40
+activity#app.regate.map.MapActivity
+ADDED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml:25:9-28:15
+	android:label
+		ADDED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml:26:13-46
+	android:theme
+		ADDED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml:27:13-44
+	android:name
+		ADDED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml:25:19-46
+uses-sdk
+INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml
+INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml
+INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml
+INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml
+		ADDED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml
+		INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml
+		ADDED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml
+		INJECTED from D:\Regate\RegateApp\ui\map\src\main\AndroidManifest.xml

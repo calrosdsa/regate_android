@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Regate</string>
+    <string name="gcp_id">405059725143-8ian2lbmjge14iu3ebdobd2h3udpqjlq.apps.googleusercontent.com</string>
+    <string name="chanel_id">default_channel_id</string>
+    <string name="channel_name">defaul_channel_app</string>
+    <string name="channel_description">defaul_channel_app_for_regate</string>
+</resources>
