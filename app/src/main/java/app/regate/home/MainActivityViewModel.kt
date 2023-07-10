@@ -31,7 +31,7 @@ class MainActivityViewModel(
         // [START log_reg_token]
         Firebase.messaging.getToken().addOnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.w("DEBUG_", "Fetching FCM registration token failed", task.exception)
+                Log.d("DEBUG_", "Fetching FCM registration token failed", task.exception)
                 return@addOnCompleteListener
             }
 
@@ -41,6 +41,7 @@ class MainActivityViewModel(
                 viewModelScope.launch {
                     try{
 
+                preferences.fcmToken = token
                 accountRepository.saveFcmToken(FcmRequest(
                     fcm_token = token,
                     category_id = 1
@@ -50,7 +51,6 @@ class MainActivityViewModel(
                     }
                 }
             }
-            preferences.token = token
             // Log and toast
             val msg = "FCM Registration token: $token"
             Log.d("DEBUG_", msg)
@@ -58,5 +58,7 @@ class MainActivityViewModel(
         }
         // [END log_reg_token]
     }
+
+
 
 }

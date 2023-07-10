@@ -16,7 +16,6 @@ data class EstablecimientoDto(
     val is_open:Boolean? = null,
     val phone_number: String? = null,
     val photo: String,
-    val portada: String,
     val amenities:List<Long> = emptyList(),
     val rules:List<Long> = emptyList()
 )

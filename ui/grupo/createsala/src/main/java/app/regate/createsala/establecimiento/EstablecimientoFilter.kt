@@ -91,7 +91,7 @@ internal fun EstablecimientoFilter(
                     .clickable { navigateToCreateSala(establecimiento.id.toLong()) }
                     .padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
                     PosterCardImage(
-                        model = establecimiento.portada, modifier = Modifier
+                        model = establecimiento.photo, modifier = Modifier
                             .width(100.dp)
                             .height(70.dp)
                     )

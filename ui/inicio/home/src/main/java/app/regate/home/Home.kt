@@ -156,7 +156,7 @@ fun EstablecimientoCard(
             .width(165.dp)
             .padding(5.dp)){
         PosterCardImageDark(
-            model = item.portada,
+            model = item.photo,
             modifier = Modifier
                 .height(95.dp)
                 .width(165.dp)

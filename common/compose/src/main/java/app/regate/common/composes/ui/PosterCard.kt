@@ -91,9 +91,9 @@ private fun PosterCardContent(establecimiento: EstablecimientoDto) {
                 .align(Alignment.CenterStart),
         )
         AsyncImage(
-            model = establecimiento.portada,
+            model = establecimiento.photo,
             requestBuilder = { crossfade(true) },
-            contentDescription = establecimiento.portada,
+            contentDescription = establecimiento.photo,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop,
         )

@@ -74,12 +74,10 @@ class AuthViewModel (
             loadingState.addLoader()
             try{
                 delay(2000)
-                val me =  accountRepository.login(
+                accountRepository.login(
                     LoginRequest(
                     email = email, password = password)
                 )
-                preferences.token = me.access_token
-                Log.d("API_REQUEST",me.toString())
                 loadingState.removeLoader()
                 redirect()
 //                redirect()

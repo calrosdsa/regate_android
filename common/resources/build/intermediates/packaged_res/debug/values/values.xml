@@ -11,6 +11,14 @@
     <color name="tv_test_red">#e10000</color>
     <color name="tv_test_yellow">#bdc200</color>
     <string name="bookings">Bookings</string>
+    <string name="channel_group_description" translatable="false">group_notification</string>
+    <string name="channel_message_description" translatable="false">message_notification</string>
+    <string name="chat_group_channel_id" translatable="false">chat_group_channel_id</string>
+    <string name="chat_group_channel_name">Group Notifications</string>
+    <string name="chat_message_channel_id" translatable="false">chat_inbox_channel_id</string>
+    <string name="chat_message_channel_name">Message notification</string>
+    <string name="chat_notification_id" translatable="false">chat_notifications</string>
+    <string name="chat_notification_name" translatable="false">Chat</string>
     <string name="choose_a_schedule">Choose a schedule</string>
     <string name="clear_all">Clear all</string>
     <string name="create_sala">Create sala</string>

@@ -1,7 +1,17 @@
 <resources>
-    <string name="app_name">Regate</string>
-    <string name="gcp_id">405059725143-8ian2lbmjge14iu3ebdobd2h3udpqjlq.apps.googleusercontent.com</string>
-    <string name="chanel_id">default_channel_id</string>
-    <string name="channel_name">defaul_channel_app</string>
-    <string name="channel_description">defaul_channel_app_for_regate</string>
+    <string name="app_name" translatable="false">Regate</string>
+    <string name="gcp_id" translatable="false">405059725143-8ian2lbmjge14iu3ebdobd2h3udpqjlq.apps.googleusercontent.com</string>
+
+
+<!--    <string name="chat_group_channel_id" translatable="false">chat_group_channel_id</string>-->
+<!--    <string name="chat_group_channel_name">Group Notifications</string>-->
+<!--    <string name="channel_group_description" translatable="false">group_notification</string>-->
+
+<!--    <string name="chat_message_channel_id" translatable="false">chat_inbox_channel_id</string>-->
+<!--    <string name="chat_message_channel_name">Message notification</string>-->
+<!--    <string name="channel_message_description" translatable="false">message_notification</string>-->
+
+
+<!--    <string name="chat_notification" translatable="false">Chat</string>-->
+<!--    <string name="chat_notification_id" translatable="false">chat_notifications</string>-->
 </resources>

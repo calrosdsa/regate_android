@@ -205,6 +205,7 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
+    implementation(libs.coil.coil)
 
     implementation(libs.kotlininject.runtime)
     ksp(libs.kotlininject.compiler)

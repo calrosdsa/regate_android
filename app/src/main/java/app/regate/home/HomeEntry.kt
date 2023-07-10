@@ -275,7 +275,7 @@ internal fun AppNavigation(
             composeScreens.grupo(
                 navigateUp = navController::navigateUp,
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
-                navigateToChat = {navController.navigate(Route.CHAT_SALA id it)},
+//                navigateToChat = {navController.navigate(Route.CHAT_SALA id it)},
                 createSala = { navController.navigate(Route.ESTABLECIMIENTO_FILTER id it)},
                 navigateToSala = { navController.navigate(Route.SALA id it)}
                 )

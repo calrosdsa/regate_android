@@ -4,6 +4,10 @@ package app.regate.home
 
 import android.Manifest
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationChannelGroup
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -26,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.viewModelFactory
 import app.regate.ComposeScreens
+import app.regate.common.resources.R
+//import app.regate.R
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.theme.RegateTheme
 import app.regate.data.common.AddressDevice
@@ -58,6 +64,10 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationGroup()
+            createNotificationGroupChatChannel()
+        }
         requestPermisos()
         saveAddress()
 //        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
@@ -85,6 +95,34 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationGroup(){
+        val groupId = getString(R.string.chat_notification_id)
+        val groupName = getString(R.string.chat_notification_name)
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannelGroup(NotificationChannelGroup(groupId, groupName))
+
+    }
+    private fun createNotificationGroupChatChannel(){
+        val groupId = getString(R.string.chat_notification_id)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val messageGroupChannel = NotificationChannel(
+                getString(R.string.chat_group_channel_id),
+                getString(R.string.chat_group_channel_name),
+                NotificationManager.IMPORTANCE_HIGH
+                )
+            messageGroupChannel.group = groupId
+            val messageChannel = NotificationChannel(
+                getString(R.string.chat_message_channel_id),
+                getString(R.string.chat_message_channel_name),
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            messageChannel.group = groupId
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannels(mutableListOf(messageChannel,messageGroupChannel))
         }
     }
     private fun requestPermisos(){

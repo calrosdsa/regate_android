@@ -49,4 +49,17 @@
     <string name="group_description">Group description</string>
     <string name="there_are_not_available_schudules">There are no available schedules</string>
     <string name="create_sala">Create sala</string>
+
+
+    <string name="chat_group_channel_id" translatable="false">chat_group_channel_id</string>
+    <string name="chat_group_channel_name">Group Notifications</string>
+    <string name="channel_group_description" translatable="false">group_notification</string>
+
+    <string name="chat_message_channel_id" translatable="false">chat_inbox_channel_id</string>
+    <string name="chat_message_channel_name">Message notification</string>
+    <string name="channel_message_description" translatable="false">message_notification</string>
+
+
+    <string name="chat_notification_name" translatable="false">Chat</string>
+    <string name="chat_notification_id" translatable="false">chat_notifications</string>
 </resources>

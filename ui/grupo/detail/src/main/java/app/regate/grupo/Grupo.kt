@@ -28,12 +28,14 @@ import androidx.compose.material.icons.filled.ViewSidebar
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.DismissValue
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -82,7 +84,7 @@ import kotlin.time.Duration.Companion.minutes
 
 typealias Grupo = @Composable (
     navigateUp:()->Unit,
-    navigateToChat:(id:Long)->Unit,
+//    navigateToChat:(id:Long)->Unit,
     openAuthBottomSheet:()->Unit,
     createSala:(id:Long)->Unit,
     navigateToSala:(id:Long)->Unit,
@@ -93,7 +95,7 @@ typealias Grupo = @Composable (
 fun Grupo(
     viewModelFactory:(SavedStateHandle)-> GrupoViewModel,
     @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToChat: (id:Long) -> Unit,
+//    @Assisted navigateToChat: (id:Long) -> Unit,
     @Assisted openAuthBottomSheet: () -> Unit,
     @Assisted createSala: (id:Long) -> Unit,
     @Assisted navigateToSala: (id: Long) -> Unit
@@ -101,7 +103,7 @@ fun Grupo(
     Grupo(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
-        navigateToChat= navigateToChat,
+//        navigateToChat= navigateToChat,
         openAuthBottomSheet = openAuthBottomSheet,
         createSala = createSala,
         navigateToSala = navigateToSala
@@ -112,7 +114,7 @@ fun Grupo(
 internal fun Grupo(
     viewModel: GrupoViewModel,
     navigateUp: () -> Unit,
-    navigateToChat: (id:Long) -> Unit,
+//    navigateToChat: (id:Long) -> Unit,
     openAuthBottomSheet: () -> Unit,
     createSala: (id:Long) -> Unit,
     navigateToSala: (id: Long) -> Unit
@@ -127,7 +129,7 @@ internal fun Grupo(
         navigateUp = navigateUp,
         formatShortTime = {formatter.formatShortTime(it)},
         formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
-        navigateToChat = navigateToChat,
+//        navigateToChat = navigateToChat,
         openAuthBottomSheet = openAuthBottomSheet,
         openDialogConfirmation = {joinSalaDialog.value = true},
         clearMessage = viewModel::clearMessage,
@@ -138,7 +140,7 @@ internal fun Grupo(
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
         confirm = {
-            viewModel.joinSala()
+            viewModel.joinGrupo()
             joinSalaDialog.value = false
         }
     )
@@ -152,7 +154,7 @@ internal fun Grupo(
     navigateUp: () -> Unit,
     formatShortTime:(time:Instant)->String,
     formatDate:(date:Instant)->String,
-    navigateToChat: (id:Long) -> Unit,
+//    navigateToChat: (id:Long) -> Unit,
     openAuthBottomSheet: () -> Unit,
     openDialogConfirmation:()->Unit,
     refresh:()->Unit,
@@ -165,6 +167,11 @@ internal fun Grupo(
 //            viewState.profiles.size
 //        }
 //    }
+    val isLogged by remember(viewState.authState){
+        derivedStateOf {
+            viewState.authState == AppAuthState.LOGGED_IN
+        }
+    }
     val snackbarHostState = remember { SnackbarHostState() }
 //    val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
@@ -203,22 +210,14 @@ internal fun Grupo(
             }
         },
         floatingActionButton = {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                CustomButton(onClick = {
-                    if (viewState.authState == AppAuthState.LOGGED_IN) {
-                        openDialogConfirmation()
-                    } else {
-                        openAuthBottomSheet()
-                    }
-                }) {
-                    Text(text = "Unirme")
-                }
-                Spacer(modifier = Modifier.width(10.dp))
-            FloatingActionButton(onClick = { viewState.grupo?.let { navigateToChat(it.id) } }) {
-                Icon(imageVector = Icons.Default.Chat, contentDescription = "chat")
-            }
-            }
+            if(viewState.user?.profile_id !in viewState.usersProfileGrupo.map { it.id })
+                               Button(onClick =  {
+                                   if(isLogged){ openDialogConfirmation() }else{ openAuthBottomSheet() }
+                               }) {
+                                   Text(text = "Unirme")
+                               }
         },
+        floatingActionButtonPosition = FabPosition.Center,
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         },

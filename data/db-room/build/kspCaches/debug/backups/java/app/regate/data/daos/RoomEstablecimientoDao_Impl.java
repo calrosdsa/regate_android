@@ -83,7 +83,7 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `establecimientos` SET `id` = ?,`address` = ?,`created_at` = ?,`email` = ?,`empresa_id` = ?,`latidud` = ?,`longitud` = ?,`name` = ?,`description` = ?,`is_open` = ?,`phone_number` = ?,`photo` = ?,`portada` = ?,`amenities` = ?,`rules` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `establecimientos` SET `id` = ?,`address` = ?,`created_at` = ?,`email` = ?,`empresa_id` = ?,`latidud` = ?,`longitud` = ?,`name` = ?,`description` = ?,`is_open` = ?,`phone_number` = ?,`photo` = ?,`amenities` = ?,`rules` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -142,23 +142,18 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
         } else {
           statement.bindString(12, entity.getPhoto());
         }
-        if (entity.getPortada() == null) {
-          statement.bindNull(13);
-        } else {
-          statement.bindString(13, entity.getPortada());
-        }
         final String _tmp_1 = AppTypeConverters.INSTANCE.fromListLong(entity.getAmenities());
-        statement.bindString(14, _tmp_1);
+        statement.bindString(13, _tmp_1);
         final String _tmp_2 = AppTypeConverters.INSTANCE.fromListLong(entity.getRules());
-        statement.bindString(15, _tmp_2);
-        statement.bindLong(16, entity.getId());
+        statement.bindString(14, _tmp_2);
+        statement.bindLong(15, entity.getId());
       }
     };
     this.__upsertionAdapterOfEstablecimiento = new EntityUpsertionAdapter<Establecimiento>(new EntityInsertionAdapter<Establecimiento>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `establecimientos` (`id`,`address`,`created_at`,`email`,`empresa_id`,`latidud`,`longitud`,`name`,`description`,`is_open`,`phone_number`,`photo`,`portada`,`amenities`,`rules`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `establecimientos` (`id`,`address`,`created_at`,`email`,`empresa_id`,`latidud`,`longitud`,`name`,`description`,`is_open`,`phone_number`,`photo`,`amenities`,`rules`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -217,21 +212,16 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
         } else {
           statement.bindString(12, entity.getPhoto());
         }
-        if (entity.getPortada() == null) {
-          statement.bindNull(13);
-        } else {
-          statement.bindString(13, entity.getPortada());
-        }
         final String _tmp_1 = AppTypeConverters.INSTANCE.fromListLong(entity.getAmenities());
-        statement.bindString(14, _tmp_1);
+        statement.bindString(13, _tmp_1);
         final String _tmp_2 = AppTypeConverters.INSTANCE.fromListLong(entity.getRules());
-        statement.bindString(15, _tmp_2);
+        statement.bindString(14, _tmp_2);
       }
     }, new EntityDeletionOrUpdateAdapter<Establecimiento>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `establecimientos` SET `id` = ?,`address` = ?,`created_at` = ?,`email` = ?,`empresa_id` = ?,`latidud` = ?,`longitud` = ?,`name` = ?,`description` = ?,`is_open` = ?,`phone_number` = ?,`photo` = ?,`portada` = ?,`amenities` = ?,`rules` = ? WHERE `id` = ?";
+        return "UPDATE `establecimientos` SET `id` = ?,`address` = ?,`created_at` = ?,`email` = ?,`empresa_id` = ?,`latidud` = ?,`longitud` = ?,`name` = ?,`description` = ?,`is_open` = ?,`phone_number` = ?,`photo` = ?,`amenities` = ?,`rules` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -290,16 +280,11 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
         } else {
           statement.bindString(12, entity.getPhoto());
         }
-        if (entity.getPortada() == null) {
-          statement.bindNull(13);
-        } else {
-          statement.bindString(13, entity.getPortada());
-        }
         final String _tmp_1 = AppTypeConverters.INSTANCE.fromListLong(entity.getAmenities());
-        statement.bindString(14, _tmp_1);
+        statement.bindString(13, _tmp_1);
         final String _tmp_2 = AppTypeConverters.INSTANCE.fromListLong(entity.getRules());
-        statement.bindString(15, _tmp_2);
-        statement.bindLong(16, entity.getId());
+        statement.bindString(14, _tmp_2);
+        statement.bindLong(15, entity.getId());
       }
     });
   }
@@ -443,7 +428,6 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
             final int _cursorIndexOfIsOpen = CursorUtil.getColumnIndexOrThrow(_cursor, "is_open");
             final int _cursorIndexOfPhoneNumber = CursorUtil.getColumnIndexOrThrow(_cursor, "phone_number");
             final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
-            final int _cursorIndexOfPortada = CursorUtil.getColumnIndexOrThrow(_cursor, "portada");
             final int _cursorIndexOfAmenities = CursorUtil.getColumnIndexOrThrow(_cursor, "amenities");
             final int _cursorIndexOfRules = CursorUtil.getColumnIndexOrThrow(_cursor, "rules");
             final List<Establecimiento> _result = new ArrayList<Establecimiento>(_cursor.getCount());
@@ -515,12 +499,6 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
               } else {
                 _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
               }
-              final String _tmpPortada;
-              if (_cursor.isNull(_cursorIndexOfPortada)) {
-                _tmpPortada = null;
-              } else {
-                _tmpPortada = _cursor.getString(_cursorIndexOfPortada);
-              }
               final List<Long> _tmpAmenities;
               final String _tmp_1;
               _tmp_1 = _cursor.getString(_cursorIndexOfAmenities);
@@ -529,7 +507,7 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
               final String _tmp_2;
               _tmp_2 = _cursor.getString(_cursorIndexOfRules);
               _tmpRules = AppTypeConverters.INSTANCE.toListLong(_tmp_2);
-              _item = new Establecimiento(_tmpId,_tmpAddress,_tmpCreated_at,_tmpEmail,_tmpEmpresa_id,_tmpLatidud,_tmpLongitud,_tmpName,_tmpDescription,_tmpIs_open,_tmpPhone_number,_tmpPhoto,_tmpPortada,_tmpAmenities,_tmpRules);
+              _item = new Establecimiento(_tmpId,_tmpAddress,_tmpCreated_at,_tmpEmail,_tmpEmpresa_id,_tmpLatidud,_tmpLongitud,_tmpName,_tmpDescription,_tmpIs_open,_tmpPhone_number,_tmpPhoto,_tmpAmenities,_tmpRules);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -575,7 +553,6 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
             final int _cursorIndexOfIsOpen = CursorUtil.getColumnIndexOrThrow(_cursor, "is_open");
             final int _cursorIndexOfPhoneNumber = CursorUtil.getColumnIndexOrThrow(_cursor, "phone_number");
             final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
-            final int _cursorIndexOfPortada = CursorUtil.getColumnIndexOrThrow(_cursor, "portada");
             final int _cursorIndexOfAmenities = CursorUtil.getColumnIndexOrThrow(_cursor, "amenities");
             final int _cursorIndexOfRules = CursorUtil.getColumnIndexOrThrow(_cursor, "rules");
             final Establecimiento _result;
@@ -646,12 +623,6 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
               } else {
                 _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
               }
-              final String _tmpPortada;
-              if (_cursor.isNull(_cursorIndexOfPortada)) {
-                _tmpPortada = null;
-              } else {
-                _tmpPortada = _cursor.getString(_cursorIndexOfPortada);
-              }
               final List<Long> _tmpAmenities;
               final String _tmp_1;
               _tmp_1 = _cursor.getString(_cursorIndexOfAmenities);
@@ -660,7 +631,7 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
               final String _tmp_2;
               _tmp_2 = _cursor.getString(_cursorIndexOfRules);
               _tmpRules = AppTypeConverters.INSTANCE.toListLong(_tmp_2);
-              _result = new Establecimiento(_tmpId,_tmpAddress,_tmpCreated_at,_tmpEmail,_tmpEmpresa_id,_tmpLatidud,_tmpLongitud,_tmpName,_tmpDescription,_tmpIs_open,_tmpPhone_number,_tmpPhoto,_tmpPortada,_tmpAmenities,_tmpRules);
+              _result = new Establecimiento(_tmpId,_tmpAddress,_tmpCreated_at,_tmpEmail,_tmpEmpresa_id,_tmpLatidud,_tmpLongitud,_tmpName,_tmpDescription,_tmpIs_open,_tmpPhone_number,_tmpPhoto,_tmpAmenities,_tmpRules);
             } else {
               _result = null;
             }

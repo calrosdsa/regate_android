@@ -8,6 +8,7 @@ import app.regate.data.dto.account.auth.LoginRequest
 import app.regate.data.dto.account.auth.LoginResponse
 import app.regate.data.dto.account.auth.UserDto
 import app.regate.data.dto.account.auth.FcmRequest
+import app.regate.data.dto.account.auth.SocialRequest
 import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.mappers.DtoToUser
 import app.regate.models.User
@@ -28,7 +29,6 @@ class AccountDataSourceImpl(
     private val authStore: AuthStore,
     private val userDao: UserDao,
     private val dtoToUser: DtoToUser,
-//    private val preferences: AppPreferences
 //    private val dispatchers: AppCoroutineDispatchers,
 ):AccountDataSource {
 
@@ -47,7 +47,6 @@ class AccountDataSourceImpl(
             contentType(ContentType.Application.Json)
             setBody(LoginRequest(email = d.email, password = d.password))
         }.body<LoginResponse>()
-        updateUser(dtoToUser.map(res.user))
 //        userDao.upsert(dtoToUser.map(res.user))
         return res.also {
             authRepository.clearAuth()
@@ -56,12 +55,12 @@ class AccountDataSourceImpl(
         }
     }
 
-    override suspend fun socialLogin(user: UserDto): LoginResponse {
+    override suspend fun socialLogin(request: SocialRequest): LoginResponse {
         val res =  client.post("/v1/account/social-login/"){
             contentType(ContentType.Application.Json)
-            setBody(user)
+            setBody(request)
         }.body<LoginResponse>()
-        updateUser(dtoToUser.map(res.user))
+
 //        userDao.upsert(dtoToUser.map(res.user))
         return res.also {
             authRepository.clearAuth()
@@ -78,7 +77,5 @@ class AccountDataSourceImpl(
     }
 
 
-    override suspend fun updateUser(user: User) {
-        userDao.upsert(user)
-    }
+
 }

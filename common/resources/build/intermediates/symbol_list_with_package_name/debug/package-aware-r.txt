@@ -28,6 +28,14 @@ layout item_callout_view
 layout mapbox
 mipmap ic_launcher
 string bookings
+string channel_group_description
+string channel_message_description
+string chat_group_channel_id
+string chat_group_channel_name
+string chat_message_channel_id
+string chat_message_channel_name
+string chat_notification_id
+string chat_notification_name
 string choose_a_schedule
 string clear_all
 string create_sala

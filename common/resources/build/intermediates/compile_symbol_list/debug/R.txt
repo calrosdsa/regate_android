@@ -27,6 +27,14 @@ int layout item_callout_view 0x0
 int layout mapbox 0x0
 int mipmap ic_launcher 0x0
 int string bookings 0x0
+int string channel_group_description 0x0
+int string channel_message_description 0x0
+int string chat_group_channel_id 0x0
+int string chat_group_channel_name 0x0
+int string chat_message_channel_id 0x0
+int string chat_message_channel_name 0x0
+int string chat_notification_id 0x0
+int string chat_notification_name 0x0
 int string choose_a_schedule 0x0
 int string clear_all 0x0
 int string create_sala 0x0

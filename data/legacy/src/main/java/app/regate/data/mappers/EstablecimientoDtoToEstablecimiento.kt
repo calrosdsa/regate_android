@@ -11,7 +11,6 @@ class EstablecimientoDtoToEstablecimiento:Mapper<EstablecimientoDto, Establecimi
             id = from.id.toLong(),
             name = from.name,
             photo = from.photo,
-            portada = from.portada,
             created_at = from.created_at,
             address = from.address,
             phone_number = from.phone_number,

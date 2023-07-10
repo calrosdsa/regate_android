@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "563502574525",
+    "project_id": "regate-288a2",
+    "storage_bucket": "regate-288a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563502574525:android:0f5a984a472b47b05a80d4",
+        "android_client_info": {
+          "package_name": "app.regate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "563502574525-t14ob5qu0vse2htnd9386oks89v4i2lq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABCOA1rv1ayPjPPSUJF9FeCfW-WwG-IsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563502574525-t14ob5qu0vse2htnd9386oks89v4i2lq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

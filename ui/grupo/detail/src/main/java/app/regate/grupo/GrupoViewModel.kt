@@ -4,11 +4,14 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
+import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveGrupo
+import app.regate.domain.observers.ObserveUser
 import app.regate.domain.observers.ObserveUsersGrupo
 import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
@@ -29,7 +32,8 @@ class GrupoViewModel(
     private val grupoRepository: GrupoRepository,
     observeAuthState: ObserveAuthState,
     observeUsersGrupo: ObserveUsersGrupo,
-    observeGrupo: ObserveGrupo
+    observeGrupo: ObserveGrupo,
+    observeUser: ObserveUser
     ):ViewModel() {
     private val grupoId: Long = savedStateHandle["id"]!!
     private val loadingState = ObservableLoadingCounter()
@@ -41,15 +45,17 @@ class GrupoViewModel(
         observeAuthState.flow,
         observeUsersGrupo.flow,
         observeGrupo.flow,
-        salas
-    ){ message, loading, authState,usersGrupo, grupo,salas->
+        salas,
+        observeUser.flow
+    ){ message, loading, authState,usersGrupo, grupo,salas,user->
         GrupoState(
             message = message,
             authState = authState,
             loading = loading,
             usersProfileGrupo = usersGrupo,
             grupo = grupo,
-            salas = salas
+            salas = salas,
+            user = user
         )
     }.stateIn(
         scope = viewModelScope,
@@ -59,6 +65,7 @@ class GrupoViewModel(
     init {
         observeAuthState(Unit)
         observeGrupo(ObserveGrupo.Param(id = grupoId))
+        observeUser(Unit)
         observeUsersGrupo(ObserveUsersGrupo.Params(id=grupoId))
         getGrupo()
     }
@@ -75,20 +82,20 @@ class GrupoViewModel(
             }
         }
     }
-    fun joinSala(){
+    fun joinGrupo(){
         viewModelScope.launch {
-//            try{
-//                loadingState.addLoader()
-//                val res = salaRepository.joinSala(grupoId,200)
-//                getSala()
-//                loadingState.removeLoader()
-//                uiMessageManager.emitMessage(UiMessage(message = res.message))
-////                Log.d("DEBUG_APP_ERROR",res.message)
-//            }catch(e:ResponseException){
-//                loadingState.removeLoader()
-//                uiMessageManager.emitMessage(UiMessage(message = e.response.body<ResponseMessage>().message))
-//                Log.d("DEBUG_APP_ERROR",e.response.body()?:"error")
-//            }
+            try{
+                loadingState.addLoader()
+                val res = grupoRepository.joinGrupo(grupoId)
+                getGrupo()
+                loadingState.removeLoader()
+                uiMessageManager.emitMessage(UiMessage(message = res.message))
+//                Log.d("DEBUG_APP_ERROR",res.message)
+            }catch(e:ResponseException){
+                loadingState.removeLoader()
+                uiMessageManager.emitMessage(UiMessage(message = e.response.body<ResponseMessage>().message))
+                Log.d("DEBUG_APP_ERROR",e.response.body()?:"error")
+            }
         }
     }
 

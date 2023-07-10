@@ -6,7 +6,9 @@ import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
+import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.account.user.ProfileDto
+import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
@@ -35,7 +37,8 @@ class GrupoRepository(
     private val dtoToGrupo: DtoToGrupo,
     private val profileMapper:DtoToProfile,
     private val dtoToUserGrupo: DtoToUserGrupo,
-    private val dispatchers: AppCoroutineDispatchers
+    private val dispatchers: AppCoroutineDispatchers,
+    private val userDao: UserDao,
 ){
 //    suspend fun createSala(d:SalaRequestDto):ResponseMessage{
 //        return grupoDataSourceImpl.createSala(d)
@@ -43,18 +46,15 @@ class GrupoRepository(
 //    fun observeProfileSala(ids:List<Long>):Flow<List<Profile>>{
 //        return profileDao.observeProfileSalas(ids)
 //    }
-//    suspend fun joinSala(salaId:Long,precio:Int):ResponseMessage{
-//        val user  = userDao.getUser(0)
-//        val dataR = JoinSalaRequest(
-//            sala_id = salaId,
-//            precio = precio,
-//            profile_id = user.profile_id
-//        )
-//        return grupoDataSourceImpl.joinSala(dataR)
-//    }
-    suspend fun getReplyMessage(id:Long):MessageProfile{
-        return messageProfileDao.getReplyMessage(id)
+    suspend fun joinGrupo(grupoId:Long): ResponseMessage {
+        val user  = userDao.getUser(0)
+        val dataR = AddUserGrupoRequest(
+            grupo_id = grupoId,
+            profile_id = user.profile_id
+        )
+        return grupoDataSourceImpl.joinGrupo(dataR)
     }
+
 
     suspend fun getGrupo(id:Long):List<SalaDto>{
         return  grupoDataSourceImpl.getGrupo(id).also { result->
