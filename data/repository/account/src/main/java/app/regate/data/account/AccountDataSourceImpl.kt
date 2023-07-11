@@ -76,6 +76,15 @@ class AccountDataSourceImpl(
         }
     }
 
+    override suspend fun updateFcmToken(fcm_token:String){
+        val token = authStore.get()?.accessToken
+        if(!token.isNullOrBlank()){
+        client.get("v1/account/update-fcm-token/${fcm_token}/"){
+            header("Authorization","Bearer $token")
+        }
+        }
+    }
+
 
 
 }

@@ -64,6 +64,7 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationGroup()
             createNotificationGroupChatChannel()

@@ -7,5 +7,5 @@ interface GrupoDao:EntityDao<Grupo> {
     fun observeGrupo(id:Long):Flow<Grupo>
     fun observeGrupos():Flow<List<Grupo>>
     fun deleteAll()
-
+    fun getGrupo(id: Long):Grupo
 }

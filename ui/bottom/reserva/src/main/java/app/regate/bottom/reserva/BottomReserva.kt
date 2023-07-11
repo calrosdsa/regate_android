@@ -209,7 +209,7 @@ internal fun BottomReserva(
                     .fillMaxWidth()
                     .padding(8.dp)
                     .clickable { }, verticalAlignment = Alignment.CenterVertically) {
-            PosterCardImage(model = viewState.establecimiento?.portada?:"",modifier = Modifier
+            PosterCardImage(model = viewState.establecimiento?.photo?:"",modifier = Modifier
                 .size(55.dp), shape = CircleShape)
                     Spacer(modifier = Modifier.width(10.dp))
                 Text(text = viewState.establecimiento?.name?:"",modifier = Modifier

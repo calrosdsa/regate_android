@@ -46,6 +46,17 @@
                 <data android:host="teclu-portal.s3.sa-east-1.amazonaws.com"/>
 
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="example.com"
+                    android:scheme="https" />
+            </intent-filter>
         </activity>
 
         <provider
@@ -81,6 +92,8 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/chat_message_channel_id" />
+
+
 
 
     </application>

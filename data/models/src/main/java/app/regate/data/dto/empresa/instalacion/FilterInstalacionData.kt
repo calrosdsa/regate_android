@@ -17,7 +17,7 @@ data class FilterInstalacionData(
     val currentTime:LocalTime = LocalTime.parse("21:00"),
     val date:List<String> = emptyList(),
     val time:List<String> = emptyList(),
-    val day:Int = Clock.System.now().toLocalDateTime(TimeZone.UTC).dayOfWeek.value,
+    val day_week:Int = 0,
     val category_id:Long = 0,
     val amenities:List<Long> = emptyList(),
     val longitud:Double? = null,

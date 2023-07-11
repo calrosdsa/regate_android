@@ -26,6 +26,7 @@ import androidx.navigation.NavType
 import com.google.accompanist.navigation.animation.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import app.regate.ComposeScreens
 import app.regate.constant.Route
 import app.regate.constant.arg
@@ -113,6 +114,7 @@ internal fun AppNavigation(
     openDrawer:()->Unit,
     navigateToMap:()->Unit
 ) {
+    val uri = "https://example.com"
     val context = LocalContext.current as Activity
     AnimatedNavHost(
         navController = navController,
@@ -256,7 +258,8 @@ internal fun AppNavigation(
             route = Route.CHAT_SALA arg "id",
             arguments = listOf(
                 navArgument("id") { type = NavType.LongType },
-            )
+            ),
+            deepLinks = listOf(navDeepLink { uriPattern = "$uri/grupo_id={id}" })
         ) {
             composeScreens.chatSala(
                 navigateUp = navController::navigateUp,

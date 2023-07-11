@@ -271,7 +271,7 @@ internal fun Grupo(
                         }
                         items(
                             items = viewState.salas,
-                            key = { it.id }
+//                            key = { it. }
                         ) { sala ->
                             SalaItem(
                                 sala = sala,

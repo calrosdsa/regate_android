@@ -12,6 +12,7 @@ color tv_test_red
 color tv_test_yellow
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable icon128
 drawable icon_google
 drawable icon_mac
 drawable image

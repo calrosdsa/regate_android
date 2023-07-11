@@ -15,7 +15,9 @@ abstract class RoomGrupoDao:GrupoDao,RoomEntityDao<Grupo>{
     @Transaction
     @Query("select * from grupos")
     abstract override fun observeGrupos(): Flow<List<Grupo>>
-
     @Query("delete from grupos")
     abstract override fun deleteAll()
+
+    @Query("select * from grupos where id = :id")
+    abstract override fun getGrupo(id: Long): Grupo
 }

@@ -7,6 +7,7 @@ import app.regate.data.account.AccountRepository
 import app.regate.data.dto.account.auth.FcmRequest
 import app.regate.settings.AppPreferences
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.messaging.ktx.messaging
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
@@ -22,6 +23,11 @@ class MainActivityViewModel(
         Log.d("DEBUG_",preferences.fcmToken.isBlank().toString())
         if(preferences.fcmToken.isBlank()){
         logRegToken()
+        }else{
+            viewModelScope.launch {
+                Log.d("DEBUG_","UPDATING FCM TOKEN")
+                accountRepository.updateFcmToken(preferences.fcmToken)
+            }
         }
 
     }

@@ -32,6 +32,11 @@ class AccountRepository(
     suspend fun me(): UserDto {
         return accountDataSourceImpl.me()
     }
+    suspend fun updateFcmToken(token:String){
+        withContext(dispatchers.io){
+            accountDataSourceImpl.updateFcmToken(token)
+        }
+    }
 
     private suspend fun updateUser(user:User){
             userDao.upsert(user)

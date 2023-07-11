@@ -10,6 +10,7 @@ int color tv_test_red 0x0
 int color tv_test_yellow 0x0
 int drawable ic_launcher_background 0x0
 int drawable ic_launcher_foreground 0x0
+int drawable icon128 0x0
 int drawable icon_google 0x0
 int drawable icon_mac 0x0
 int drawable image 0x0

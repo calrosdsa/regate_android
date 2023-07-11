@@ -13,6 +13,6 @@ interface AccountDataSource {
     suspend fun login(d: LoginRequest): LoginResponse
     suspend fun socialLogin(request: SocialRequest): LoginResponse
     suspend fun saveFcmToken(data:FcmRequest)
-
+    suspend fun updateFcmToken(fcm_token:String)
 }
 

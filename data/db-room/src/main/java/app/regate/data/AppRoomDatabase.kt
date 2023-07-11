@@ -16,7 +16,9 @@
 
 package app.regate.data
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import app.regate.data.daos.GrupoDao
@@ -93,4 +95,21 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
     abstract override fun labelsDao(): RoomLabelDao
     abstract override fun grupoDao(): RoomGrupoDao
     abstract override fun userGrupoDao(): RoomUserGrupoDao
+
+    companion object {
+
+        private var INSTANCE: AppRoomDatabase? = null
+
+        fun getInstance(context: Context): AppRoomDatabase {
+            if (INSTANCE == null) {
+                INSTANCE = Room.databaseBuilder(context, AppRoomDatabase::class.java, "regate.db").build()
+            }
+            return INSTANCE!!
+        }
+
+        fun destroyInstance() {
+            INSTANCE = null
+        }
+    }
+
 }

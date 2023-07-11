@@ -123,6 +123,7 @@ class DiscoverViewModel(
                 filterData.value.currentTime.toJavaLocalTime(),
                 (filterData.value.interval / 30) - 1
             )
+            Log.d("DEBUG_","list time $listTime")
             val listDate = listTime.map {
                 "${
                     Instant.fromEpochMilliseconds(filterData.value.currentDate).toLocalDateTime(
@@ -132,21 +133,21 @@ class DiscoverViewModel(
             }
             try {
                 loadingState.addLoader()
+                val data = filterData.value.copy(
+                    time = listTime,
+                    date = listDate,
+                )
                 val res = instalacionRepository.filterInstacion(
-                    filterData.value.copy(
-                        time = listTime, date = listDate,
-                        day = Instant.fromEpochMilliseconds(filterData.value.currentDate)
-                            .toLocalDateTime(
-                                TimeZone.UTC
-                            ).dayOfWeek.value,
-                        longitud = addressDevice.value?.longitud,
-                        latitud = addressDevice.value?.latitud
-                    ), 1)
+                   data, 1)
+                Log.d("DEBUG_",filterData.value.toString())
+                Log.d("DEBUG_",res.toString())
                 instalacionResult.tryEmit(res)
                 loadingState.removeLoader()
             } catch (e: ResponseException) {
+                Log.d("DEBUG_ERROR",e.localizedMessage?:"c")
                 uiMessageManager.emitMessage(UiMessage(message = e.response.body()))
             } catch (e: Exception) {
+                Log.d("DEBUG_ERROR",e.localizedMessage?:"c")
                 loadingState.removeLoader()
                 uiMessageManager.emitMessage(UiMessage(message = e.localizedMessage ?: ""))
             }
@@ -163,11 +164,19 @@ class DiscoverViewModel(
         return listTime.toList()
     }
 
-    fun setTime(time:LocalTime){
-        appPreferences.filter =  Json.encodeToString(filterData.value.copy(currentTime = time))
+    fun setTime(time:LocalTime) {
+        appPreferences.filter = Json.encodeToString(
+            filterData.value.copy(
+                currentTime = time,
+            )
+        )
     }
     fun setCurrentDate(dateMillis:Long){
-        appPreferences.filter =  Json.encodeToString(filterData.value.copy(currentDate = dateMillis))
+        appPreferences.filter =  Json.encodeToString(filterData.value.copy(currentDate = dateMillis,
+            day_week = (Instant.fromEpochMilliseconds(dateMillis)
+                .toLocalDateTime(
+                    TimeZone.UTC
+                ).dayOfWeek.ordinal)+1))
     }
     fun setCategory(id:Long){
         appPreferences.filter = Json.encodeToString(filterData.value.copy(category_id = id))

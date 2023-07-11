@@ -395,6 +395,57 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
     });
   }
 
+  @Override
+  public Grupo getGrupo(final long id) {
+    final String _sql = "select * from grupos where id = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, id);
+    __db.assertNotSuspendingTransaction();
+    final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+    try {
+      final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+      final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+      final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
+      final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
+      final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
+      final Grupo _result;
+      if (_cursor.moveToFirst()) {
+        final long _tmpId;
+        _tmpId = _cursor.getLong(_cursorIndexOfId);
+        final String _tmpName;
+        _tmpName = _cursor.getString(_cursorIndexOfName);
+        final String _tmpDescription;
+        if (_cursor.isNull(_cursorIndexOfDescription)) {
+          _tmpDescription = null;
+        } else {
+          _tmpDescription = _cursor.getString(_cursorIndexOfDescription);
+        }
+        final Instant _tmpCreated_at;
+        final String _tmp;
+        if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+          _tmp = null;
+        } else {
+          _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+        }
+        _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+        final String _tmpPhoto;
+        if (_cursor.isNull(_cursorIndexOfPhoto)) {
+          _tmpPhoto = null;
+        } else {
+          _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
+        }
+        _result = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto);
+      } else {
+        _result = null;
+      }
+      return _result;
+    } finally {
+      _cursor.close();
+      _statement.release();
+    }
+  }
+
   @NonNull
   public static List<Class<?>> getRequiredConverters() {
     return Collections.emptyList();

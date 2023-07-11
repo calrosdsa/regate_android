@@ -2,19 +2,17 @@
 
 package app.regate
 
+//import com.google.firebase.example.messaging.R
+
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Icon
-import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -22,33 +20,66 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.Person
+import androidx.core.app.TaskStackBuilder
 import androidx.core.graphics.drawable.IconCompat
-import app.regate.common.resources.R
+import androidx.core.net.toUri
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import app.regate.common.resources.R
+import app.regate.compoundmodels.MessageProfile
+import app.regate.data.AppRoomDatabase
+import app.regate.data.dto.empresa.grupo.GrupoMessageDto
+import app.regate.data.dto.notifications.MessageGroupPayload
+import app.regate.data.dto.notifications.TypeNotification
+import app.regate.data.mappers.MessageDtoToMessage
 import app.regate.home.MainActivity
+import app.regate.models.Grupo
 import coil.ImageLoader
 import coil.request.ImageRequest
-//import com.google.firebase.example.messaging.R
+import coil.request.SuccessResult
+import coil.transform.CircleCropTransformation
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import okhttp3.internal.notify
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
+    private val job = SupervisorJob()
+    private val scope = CoroutineScope(Dispatchers.IO + job)
 
-    // [START receive_message]
-    @RequiresApi(Build.VERSION_CODES.P)
+    //    @RequiresApi(Build.VERSION_CODES.P)
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: ${remoteMessage.from}")
-
+        val data = remoteMessage.data
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
+            if(TypeNotification.NOTIFICATION_GROUP.ordinal == data["type"]?.toInt()){
+            try{
+
+            val db = AppRoomDatabase.getInstance(applicationContext)
+            val messages = Json.decodeFromString<List<MessageGroupPayload>>(data["payload"].toString())
+
+            val grupo = db.grupoDao().getGrupo(messages[0].grupo_id)
+                Log.d(TAG,"Success $messages")
+                scope.launch {
+                sendNotificationGroupMessage(messages,grupo)
+                }
+            }catch(e:Exception){
+                Log.d(TAG,e.localizedMessage?:"")
+            }
+            }
+            Log.d(TAG, remoteMessage.data["type"].toString())
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
-            sendNotificationGroupMessage()
 
             // Check if data needs to be processed by long running job
             if (needsToBeScheduled()) {
@@ -69,6 +100,97 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // message, here is where that should be initiated. See sendNotification method below.
     }
     // [END receive_message]
+
+
+
+
+    @SuppressLint("RestrictedApi")
+//    @RequiresApi(Build.VERSION_CODES.P)
+    private suspend fun sendNotificationGroupMessage(messages:List<MessageGroupPayload>,grupo:Grupo) {
+//        val loader = ImageLoader(this)
+//        val bitmap = getBitmap(grupo.photo?:"")
+        try {
+        Log.d(TAG,messages.toString())
+        val m1 = messages[2]
+        val m2 = messages[1]
+        val m3 = messages[0]
+            val taskDetailIntent = Intent(
+                Intent.ACTION_VIEW,
+                "https://example.com/grupo_id=${grupo.id}".toUri(),
+                this,
+                MainActivity::class.java
+            )
+            val taskBuilder = TaskStackBuilder.create(this)
+            taskBuilder.addNextIntentWithParentStack(taskDetailIntent)
+            val pendingIntent = taskBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
+
+            val persons = mutableListOf<Person>()
+            messages.map {
+                val person = Person.Builder()
+                    .setIcon(IconCompat.createWithBitmap(getBitmap(it.profile_photo?:"")))
+                    .setName("${it.profile_name} ${it.profile_apellido?:""}" )
+                    .build()
+                persons.add(person)
+            }
+//            Log.d(TAG,bit.toString())
+            val CHANNEL_ID = applicationContext.getString(R.string.chat_group_channel_id)
+            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setStyle(
+                    NotificationCompat.MessagingStyle("Me")
+                        .setConversationTitle(grupo.name)
+                        .setGroupConversation(true)
+                        .addMessage(m1.content, m1.created_at.epochSeconds, persons[2])
+                        .addMessage(m2.content, m2.created_at.epochSeconds, persons[1])
+                        .addMessage(m3.content, m3.created_at.epochSeconds, persons[0])
+//                .addMessage("How about lunch?", 300L, person)
+                )
+                .setSmallIcon(R.drawable.logo_app)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build()
+
+            with(NotificationManagerCompat.from(this)) {
+                if (ActivityCompat.checkSelfPermission(
+                        applicationContext,
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return
+                }
+                Log.d(TAG,"SENDIN NOTIFICATION")
+                notify(grupo.id.toInt(), notification)
+            }
+
+        }catch(e:Exception){
+            Log.d(TAG,e.localizedMessage?:"")
+        }
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    private suspend fun getBitmap(url:String):Bitmap{
+        val bitmap = CoroutineScope(Dispatchers.IO).async {
+
+        val loader = ImageLoader(applicationContext)
+        val request = ImageRequest.Builder(applicationContext)
+            .data(url.ifBlank { "https://cdn-icons-png.flaticon.com/128/847/847969.png" })
+            .allowHardware(false) // Disable hardware bitmaps.
+            .transformations(CircleCropTransformation())
+            .build()
+
+        val result = (loader.execute(request) as SuccessResult).drawable
+        val bitmap = (result as BitmapDrawable).bitmap
+            return@async bitmap
+        }
+        return bitmap.await()
+    }
+
 
     private fun needsToBeScheduled() = true
 
@@ -107,67 +229,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "sendRegistrationTokenToServer($token)")
     }
 
-
-
-    @SuppressLint("RestrictedApi")
-    @RequiresApi(Build.VERSION_CODES.P)
-    private fun sendNotificationGroupMessage() {
-        try {
-            val CHANNEL_ID = applicationContext.getString(R.string.chat_group_channel_id)
-            var bitmap:Bitmap? = null
-            val loader = ImageLoader(this)
-            val req = ImageRequest.Builder(this)
-                .data("https://static.vecteezy.com/system/resources/previews/021/548/095/original/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg") // demo link
-                .target { result ->
-                     bitmap = (result as BitmapDrawable).bitmap
-                }
-                .build()
-            loader.enqueue(req)
-
-//            val icon =
-//                Icon.createWithContentUri("https://static.vecteezy.com/system/resources/previews/021/548/095/original/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg")
-            val person = Person.Builder()
-                .setName("User")
-//            .setIcon()
-                .setIcon(bitmap?.let { IconCompat.createWithBitmap(it) })
-                .build()
-            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setStyle(
-                    NotificationCompat.MessagingStyle("Me")
-                        .setConversationTitle("Team lunch")
-                        .addMessage("Hello", 0L, person)
-                        .addMessage("Hi", 0L, person)
-                        .addMessage("Hi", 0L, person) // Pass in null for user.
-                        .addMessage("What's up?", 0L, person)
-                        .addMessage("Not much", 200L, person)
-//                .addMessage("How about lunch?", 300L, person)
-                )
-                .setSmallIcon(R.drawable.logo_app)
-                .build()
-
-            with(NotificationManagerCompat.from(this)) {
-                // notificationId is a unique int for each notification that you must define
-//            notify(notificationId, builder.build())
-                if (ActivityCompat.checkSelfPermission(
-                        applicationContext,
-                        Manifest.permission.POST_NOTIFICATIONS
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return
-                }
-                notify(1, notification)
-            }
-        }catch(e:Exception){
-            Log.d(TAG,e.localizedMessage?:"")
-        }
-    }
 
     companion object {
         private const val TAG = "MyFirebaseMsgService"
