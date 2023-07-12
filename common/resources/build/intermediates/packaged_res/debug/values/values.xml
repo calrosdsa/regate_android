@@ -40,9 +40,15 @@
     <string name="map">Map</string>
     <string name="mapbox_access_token" translatable="false">pk.eyJ1Ijoiam1pcmFuZGEyMSIsImEiOiJjbGl0Y3YyeDEwMm1rM2ZwaXJ6eGs0MnNwIn0.rURAi6PkFGac0TBkM4QE-A</string>
     <string name="near_me">Near me</string>
+    <string name="new_room_created">A new room has been created.</string>
+    <string name="notification_sala">Room Notifications</string>
+    <string name="notification_sala_channel" translatable="false">sala_channel_id</string>
     <string name="notifications">Notifications</string>
     <string name="price_range">Rango de precios</string>
     <string name="rules_of_the_place">Rules of the place</string>
+    <string name="sala_help_text">In a room, the time, location, and game details are determined, including
+        the maximum capacity of people and the price per spot.</string>
+    <string name="sala_help_text2">When you join the room, the specified amount will be held from your account. If all spots are filled, the reservation will be made and the amount paid will be deducted. If the spots are not filled within the time limit, the held amount will be released.</string>
     <string name="search_nearby_places">Search nearby places</string>
     <string name="services">Servicios</string>
     <string name="settings">Settings</string>

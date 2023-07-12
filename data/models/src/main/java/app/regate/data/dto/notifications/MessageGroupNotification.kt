@@ -28,6 +28,7 @@ data class MessageGroupPayload(
 
 enum class TypeNotification {
     NOTIFICATION_GROUP,
-    NOTIFICATION_INBOX,
+    NOTIFICATION_MESSAGE_COMPLEJO,
+    NOTIFICATION_SALA_CREATION
 }
 

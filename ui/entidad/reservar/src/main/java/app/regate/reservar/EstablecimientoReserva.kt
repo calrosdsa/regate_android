@@ -142,11 +142,10 @@ internal fun EstablecimientoReserva(
 ) {
     val treshhold = 7.days
     val endDate = (Clock.System.now() + treshhold).toEpochMilliseconds()
-    val startDate = (Clock.System.now() - (2.days)).toEpochMilliseconds()
+    val startDate = (Clock.System.now() - (1.days)).toEpochMilliseconds()
     val showDialog = remember { mutableStateOf(false) }
     val dateState = rememberDatePickerState(
-        initialSelectedDateMillis = state.filter.currentDate.toInstant(TimeZone.UTC)
-            .toEpochMilliseconds()
+        initialSelectedDateMillis = Clock.System.now().toEpochMilliseconds()
     )
     val showDialogIntervalo = remember {
         mutableStateOf(false)

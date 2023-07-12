@@ -214,7 +214,8 @@ internal fun AppNavigation(
             route = Route.SALA arg "id",
             arguments = listOf(
                 navArgument("id") { type = NavType.LongType },
-            )
+            ),
+            deepLinks = listOf(navDeepLink { uriPattern = "$uri/sala_id={id}" })
         ) {
             composeScreens.sala(
                 navigateUp = navController::navigateUp,

@@ -172,11 +172,16 @@ class DiscoverViewModel(
         )
     }
     fun setCurrentDate(dateMillis:Long){
+//        appPreferences.filter =  Json.encodeToString(filterData.value.copy(currentDate = dateMillis,
+//            day_week = (Instant.fromEpochMilliseconds(dateMillis)
+//                .toLocalDateTime(
+//                    TimeZone.UTC
+//                ).dayOfWeek.ordinal)+1))
         appPreferences.filter =  Json.encodeToString(filterData.value.copy(currentDate = dateMillis,
-            day_week = (Instant.fromEpochMilliseconds(dateMillis)
+            day_week = Instant.fromEpochMilliseconds(dateMillis)
                 .toLocalDateTime(
                     TimeZone.UTC
-                ).dayOfWeek.ordinal)+1))
+                ).dayOfWeek.value))
     }
     fun setCategory(id:Long){
         appPreferences.filter = Json.encodeToString(filterData.value.copy(category_id = id))

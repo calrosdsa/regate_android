@@ -55,9 +55,14 @@ int string looking_for_a_place 0x0
 int string map 0x0
 int string mapbox_access_token 0x0
 int string near_me 0x0
+int string new_room_created 0x0
+int string notification_sala 0x0
+int string notification_sala_channel 0x0
 int string notifications 0x0
 int string price_range 0x0
 int string rules_of_the_place 0x0
+int string sala_help_text 0x0
+int string sala_help_text2 0x0
 int string search_nearby_places 0x0
 int string services 0x0
 int string settings 0x0

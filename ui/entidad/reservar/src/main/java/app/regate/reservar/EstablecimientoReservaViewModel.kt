@@ -96,7 +96,10 @@ class EstablecimientoReservaViewModel(
         observeSettingEstablecimiento(ObserveSettingEstablecimiento.Params(establecimientoId))
         viewModelScope.launch {
           filter.collectLatest{
+              Log.d("DEBUG_APP","COLLECTING")
+              if(it.currentDate != null){
               getEstablecimientoCupos()
+              }
             }
         }
         try{
@@ -121,17 +124,18 @@ class EstablecimientoReservaViewModel(
 
     fun getInstalacionesAvailables(start:Instant,cupos: Int){
         val listTime = getArrayofTime(start,cupos -1)
-        val listDate = listTime.map { "${filter.value.currentDate.date} $it" }
+        val listDate = listTime.map { "${filter.value.currentDate?.date} $it" }
         viewModelScope.launch {
         selectedTime.tryEmit(start)
             val request = InstalacionRequest(
-                day = filter.value.currentDate.dayOfWeek.value,
+                day = filter.value.currentDate?.dayOfWeek?.value,
                 date_time = listDate,
                 time = listTime,
                 establecimiento_id = establecimientoId,
                 category_id = filter.value.category_id
             )
             try{
+                Log.d("DEBUG_APP_REQUEST",request.toString())
                 val res = instalacionRepository.getInstalacionesAvailables(request)
                 Log.d("DEBUG_APP",res.toString())
                 instalacionesAvailables.tryEmit(res.instalaciones)
@@ -145,20 +149,12 @@ class EstablecimientoReservaViewModel(
     fun getEstablecimientoCupos(){
         viewModelScope.launch {
             try{
-//                if(state.value.categories.isEmpty()) return@launch
-                if(filter.value.category_id == 0L){
-                    selectedCategory.tryEmit(state.value.categories.first())
-                }else{
-                    selectedCategory.tryEmit(state.value.categories.find {
-                        it.category_id == filter.value.category_id.toInt()
-                    })
-                }
             val d = CuposEstablecimientoRequest(
                 cupos = (filter.value.minutes / 30).toInt(),
                 minutes = filter.value.minutes,
                 establecimiento_id = establecimientoId,
-                day = filter.value.currentDate.dayOfWeek.value,
-                date = filter.value.currentDate.date
+                day = filter.value.currentDate?.dayOfWeek?.value,
+                date = filter.value.currentDate?.date
             )
             val res = establecimientoRepository.getEstablecimientoCupos(d)
                 Log.d("DEBUG_APP",res.toString())
@@ -181,10 +177,8 @@ class EstablecimientoReservaViewModel(
         val listTime = mutableListOf(startTime.time.toString())
         for (i in 1..cupos){
             val t = startTime.toJavaLocalDateTime().plusMinutes(30L*i).toLocalTime().toString()
-            Log.d("TIME_",t)
             listTime.add(t)
         }
-        Log.d("TIME_",listTime.toString())
         return listTime.toList()
     }
     fun setTime(date:Long){
@@ -205,7 +199,7 @@ class EstablecimientoReservaViewModel(
         val cupo = establecimientoCupos.value.find { it.start_time == selectedTime.value } ?: return
 //            Log.d("DEBUG_APP_CUPO",cupo.toString())
         val listTime = getArrayofTime(cupo.start_time,cupo.cupos -1)
-        val listDate = listTime.map { "${filter.value.currentDate.date}T$it:00Z".toInstant() }
+        val listDate = listTime.map { "${filter.value.currentDate?.date}T$it:00Z".toInstant() }
         viewModelScope.launch {
          cupoRepository.insertCuposReserva(listDate,id,(price/listDate.size).toDouble())
             open(id,establecimientoId)
@@ -218,6 +212,9 @@ class EstablecimientoReservaViewModel(
     fun setCategory(id:Long){
         viewModelScope.launch {
             filter.tryEmit(filter.value.copy(category_id = id))
+            selectedCategory.tryEmit(state.value.categories.find {
+                it.category_id == filter.value.category_id.toInt()
+            })
         }
     }
 

@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class InstalacionRequest(
     val date_time: List<String>,
-    val day: Int,
+    val day: Int? = null,
     val establecimiento_id: Long,
     val time: List<String>,
     val category_id:Long,

@@ -8,6 +8,6 @@ data class CuposEstablecimientoRequest(
     val cupos: Int,
     val establecimiento_id: Long,
     val minutes: Long,
-    val day:Int,
-    val date:LocalDate
+    val day:Int? = null,
+    val date:LocalDate? = null
 )

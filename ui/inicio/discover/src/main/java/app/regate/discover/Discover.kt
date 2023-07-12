@@ -105,7 +105,7 @@ internal fun Discover(
     val formatter = LocalAppDateFormatter.current
     val treshhold = 7.days
     val endDate = (Clock.System.now() + treshhold).toEpochMilliseconds()
-    val startDate = (Clock.System.now() - (2.days)).toEpochMilliseconds()
+    val startDate = (Clock.System.now() - (1.days)).toEpochMilliseconds()
     val showDialog = remember { mutableStateOf(false) }
     val showTimeDialog = remember { mutableStateOf(false) }
     val showDialogIntervalo = remember {

@@ -17,9 +17,13 @@
     <string name="looking_for_a_place">¿Buscando por un sitio?</string>
     <string name="map">Mapa</string>
     <string name="near_me">Cerca de mi</string>
+    <string name="new_room_created">Se ha creado una sala nueva.</string>
+    <string name="notification_sala">Notificaciones sala</string>
     <string name="notifications">Notifications</string>
     <string name="price_range">Rango de precios</string>
     <string name="rules_of_the_place">Reglas del lugar</string>
+    <string name="sala_help_text">En una sala se determina la hora, el lugar y los detalles de juego, incluyendo la capacidad máxima de personas y el precio por cupo.</string>
+    <string name="sala_help_text2">Cuando te unas a la sala, se retendrá el monto indicado. Si todos los cupos se completan, se realizará la reserva y se descontará el pago. En caso de que los cupos no se completen dentro del límite de tiempo, se liberará el monto retenido.</string>
     <string name="search_nearby_places">Buscar lugares cercanos</string>
     <string name="services">Servicios</string>
     <string name="settings">Configuraciones</string>

@@ -11,6 +11,7 @@ import app.regate.models.Setting
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toKotlinTimeZone
 import kotlinx.datetime.toLocalDateTime
 import java.time.ZoneId
@@ -42,16 +43,14 @@ data class EstablecimientoReservaState(
 
 data class Filter(
     val minutes: Long,
-    val currentDate:LocalDateTime,
+    val currentDate:LocalDateTime? = null,
     val category_id:Long,
 ) {
     companion object {
         val Default = Filter(
             minutes = 60,
-            currentDate = Clock.System.now().toLocalDateTime(
-                ZoneId.systemDefault().toKotlinTimeZone()
-            ),
             category_id = 0
         )
+//        val defaltDate = Clock.System.now().toLocalDateTime(TimeZone.UTC)
     }
 }

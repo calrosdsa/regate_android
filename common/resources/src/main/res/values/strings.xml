@@ -62,4 +62,10 @@
 
     <string name="chat_notification_name" translatable="false">Chat</string>
     <string name="chat_notification_id" translatable="false">chat_notifications</string>
+    <string name="sala_help_text">In a room, the time, location, and game details are determined, including
+        the maximum capacity of people and the price per spot.</string>
+    <string name="sala_help_text2">When you join the room, the specified amount will be held from your account. If all spots are filled, the reservation will be made and the amount paid will be deducted. If the spots are not filled within the time limit, the held amount will be released.</string>
+    <string name="notification_sala_channel" translatable="false">sala_channel_id</string>
+    <string name="new_room_created">A new room has been created.</string>
+    <string name="notification_sala">Room Notifications</string>
 </resources>

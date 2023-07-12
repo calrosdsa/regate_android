@@ -56,9 +56,14 @@ string looking_for_a_place
 string map
 string mapbox_access_token
 string near_me
+string new_room_created
+string notification_sala
+string notification_sala_channel
 string notifications
 string price_range
 string rules_of_the_place
+string sala_help_text
+string sala_help_text2
 string search_nearby_places
 string services
 string settings

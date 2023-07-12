@@ -32,4 +32,8 @@
 
     <string name="chat_group_channel_name">Notificaciones de Grupo</string>
     <string name="chat_message_channel_name">Notificación de Mensaje</string>
+    <string name="sala_help_text">En una sala se determina la hora, el lugar y los detalles de juego, incluyendo la capacidad máxima de personas y el precio por cupo.</string>
+    <string name="sala_help_text2">Cuando te unas a la sala, se retendrá el monto indicado. Si todos los cupos se completan, se realizará la reserva y se descontará el pago. En caso de que los cupos no se completen dentro del límite de tiempo, se liberará el monto retenido.</string>
+    <string name="new_room_created">Se ha creado una sala nueva.</string>
+    <string name="notification_sala">Notificaciones sala</string>
 </resources>

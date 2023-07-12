@@ -64,7 +64,6 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationGroup()
             createNotificationGroupChatChannel()
@@ -122,8 +121,13 @@ class MainActivity : ComponentActivity() {
                 NotificationManager.IMPORTANCE_HIGH
             )
             messageChannel.group = groupId
+            val salaChannel = NotificationChannel(
+                getString(R.string.notification_sala_channel),
+                getString(R.string.notification_sala),
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannels(mutableListOf(messageChannel,messageGroupChannel))
+            notificationManager.createNotificationChannels(mutableListOf(messageChannel,messageGroupChannel,salaChannel))
         }
     }
     private fun requestPermisos(){

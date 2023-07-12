@@ -1,7 +1,9 @@
 package app.regate.sala
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,16 +13,24 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.DismissValue
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PlainTooltipBox
+import androidx.compose.material3.PlainTooltipState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -35,9 +45,12 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.LocalAppDateFormatter
@@ -53,6 +66,8 @@ import app.regate.common.composes.viewModel
 import app.regate.data.auth.AppAuthState
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
+import app.regate.common.resources.R
+import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import kotlin.time.Duration.Companion.minutes
@@ -151,7 +166,7 @@ internal fun Sala(
     }
     Scaffold(
         topBar = {
-            CommonTopBar(onBack = navigateUp)
+           SalaTopBar(onBack = navigateUp)
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { viewState.sala?.let { navigateToChat(it.grupo_id) } }) {
@@ -175,7 +190,8 @@ internal fun Sala(
     ) { paddingValues ->
         Box(modifier = Modifier
             .pullRefresh(state = refreshState)
-            .padding(paddingValues).fillMaxSize()) {
+            .padding(paddingValues)
+            .fillMaxSize()) {
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 viewState.sala?.let { sala ->
@@ -276,3 +292,48 @@ internal fun Sala(
     }
 }
 
+
+@Composable
+fun SalaTopBar(modifier:Modifier = Modifier,
+                 onBack:()->Unit) {
+
+    val expanded = remember { mutableStateOf(false) }
+
+    Column (modifier = modifier){
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background)
+            ,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            IconButton(onClick = { onBack() }) {
+                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back_esta")
+            }
+            Row(){
+
+                 Box(modifier = Modifier) {
+
+                     IconButton(onClick = {
+                         expanded.value = !expanded.value
+                     }) {
+                         Icon(imageVector = Icons.Default.Info, contentDescription = "back_esta")
+                     }
+                     DropdownMenu(
+                         expanded = expanded.value,
+                         onDismissRequest = { expanded.value = false },
+                     ) {
+                         Column(modifier = Modifier.padding(10.dp)) {
+                             Text(text = stringResource(id = R.string.sala_help_text),style = MaterialTheme.typography.labelMedium)
+                             Text(text = stringResource(id = R.string.sala_help_text2),style = MaterialTheme.typography.labelMedium)
+                         }
+                     }
+             }    
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(imageVector = Icons.Default.Share, contentDescription = "back_esta")
+            }
+            }
+        }
+        Divider()
+    }
+}
