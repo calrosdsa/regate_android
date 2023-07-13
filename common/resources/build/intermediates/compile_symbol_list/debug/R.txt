@@ -8,6 +8,8 @@ int color tv_test_grey 0x0
 int color tv_test_magenta 0x0
 int color tv_test_red 0x0
 int color tv_test_yellow 0x0
+int drawable check 0x0
+int drawable doble_check 0x0
 int drawable ic_launcher_background 0x0
 int drawable ic_launcher_foreground 0x0
 int drawable icon128 0x0

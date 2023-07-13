@@ -33,7 +33,7 @@ fun InstalacionCategoryItem(
     modifier:Modifier = Modifier
 ) {
     Surface(
-        onClick = { navigateToReserva(item.category_id.toLong()) },
+        onClick = { item.category_id?.let { navigateToReserva(it.toLong()) } },
         modifier = modifier.padding(8.dp),
         shape = MaterialTheme.shapes.small,
         color = MaterialTheme.colorScheme.inverseOnSurface,

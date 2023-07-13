@@ -7,18 +7,15 @@ import androidx.lifecycle.viewModelScope
 import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
 import app.cash.paging.cachedIn
-import app.cash.paging.flatMap
-import app.cash.paging.insertFooterItem
-import app.cash.paging.map
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.data.auth.AppAuthState
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.dto.empresa.grupo.GrupoEvent
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.grupo.GrupoRepository
-import app.regate.data.sala.SalaRepository
 import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveGrupo
@@ -26,7 +23,7 @@ import app.regate.domain.observers.ObservePagerMessages
 import app.regate.domain.observers.ObserveUser
 import app.regate.domain.observers.ObserveUsersGrupo
 import app.regate.extensions.combine
-import app.regate.models.UserGrupo
+import app.regate.models.Message
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
@@ -35,8 +32,6 @@ import io.ktor.http.HttpMethod
 import io.ktor.websocket.Frame
 import io.ktor.websocket.readText
 import io.ktor.websocket.send
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -45,12 +40,14 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import java.util.UUID
 
 @Inject
 class ChatSalaViewModel(
@@ -100,12 +97,12 @@ class ChatSalaViewModel(
         initialValue = ChatSalaState.Empty
     )
     init {
-
         getData()
         observeUser(Unit)
         observeAuthState(Unit)
         observeGrupo(ObserveGrupo.Param(id = grupoId))
         observeUsersGrupo(ObserveUsersGrupo.Params(id = grupoId))
+        syncMessages()
         pagingInteractor(ObservePagerMessages.Params(PAGING_CONFIG,grupoId))
         viewModelScope.launch {
             try{
@@ -175,7 +172,8 @@ class ChatSalaViewModel(
                         profile_id = it.profile_id,
                         content = data.content,
                         grupo_id = grupoId,
-                        reply_to = data.reply_to
+                        reply_to = data.reply_to,
+                        id = data.id
                     )
                     val event =  GrupoEvent(
                         type = "message",
@@ -205,13 +203,27 @@ class ChatSalaViewModel(
         }
     }
 
-    fun sendMessage(message:Message){
+    fun sendMessage(messageData:MessageData){
         viewModelScope.launch {
+            val message =  Message(
+                content = messageData.content,
+                reply_to = messageData.reply_to,
+                profile_id = state.value.user?.profile_id?:0,
+                created_at = Clock.System.now(),
+                grupo_id = grupoId,
+                id = UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE
+            )
+            grupoRepository.saveMessageLocal(message)
             messageChat.tryEmit(message)
         }
     }
-
-
+    fun syncMessages(){
+        viewModelScope.launch {
+//            if(state.value.authState == AppAuthState.LOGGED_IN){
+               grupoRepository.syncMessages(grupoId)
+//            }
+        }
+    }
     fun clearMessage(id:Long){
         viewModelScope.launch {
             uiMessageManager.clearMessage(id)

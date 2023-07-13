@@ -9,6 +9,8 @@ color tv_test_grey
 color tv_test_magenta
 color tv_test_red
 color tv_test_yellow
+drawable check
+drawable doble_check
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable icon128

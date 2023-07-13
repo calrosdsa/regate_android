@@ -18,8 +18,10 @@ import app.regate.data.mappers.DtoToGrupo
 import app.regate.data.mappers.DtoToProfile
 import app.regate.data.mappers.DtoToUserGrupo
 import app.regate.data.mappers.MessageDtoToMessage
+import app.regate.data.mappers.MessageToMessageDto
 import app.regate.data.mappers.ReplyMessageDtoToMessage
 import app.regate.inject.ApplicationScope
+import app.regate.models.Message
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -33,6 +35,7 @@ class GrupoRepository(
     private val profileDao: ProfileDao,
     private val messageProfileDao: MessageProfileDao,
     private val messageMapper:MessageDtoToMessage,
+    private val messageMapperDto:MessageToMessageDto,
     private val replyMessageMapper:ReplyMessageDtoToMessage,
     private val dtoToGrupo: DtoToGrupo,
     private val profileMapper:DtoToProfile,
@@ -40,12 +43,23 @@ class GrupoRepository(
     private val dispatchers: AppCoroutineDispatchers,
     private val userDao: UserDao,
 ){
-//    suspend fun createSala(d:SalaRequestDto):ResponseMessage{
-//        return grupoDataSourceImpl.createSala(d)
-//    }
-//    fun observeProfileSala(ids:List<Long>):Flow<List<Profile>>{
-//        return profileDao.observeProfileSalas(ids)
-//    }
+    suspend fun syncMessages(grupoId: Long){
+        withContext(dispatchers.io){
+            try {
+                val user = userDao.getUser(0)
+                val messages = messageProfileDao.getUnSendedMessage(user.profile_id, grupoId)
+                val data = messages.map { messageMapperDto.map(it) }
+                if (messages.isEmpty()) return@withContext
+                val results = grupoDataSourceImpl.syncMessages(data).map {
+                    messageMapper.map(it)
+                }
+                messageProfileDao.upsertAll(results)
+            }catch (e:Exception){
+                //TODO()
+            }
+
+        }
+    }
     suspend fun joinGrupo(grupoId:Long): ResponseMessage {
         val user  = userDao.getUser(0)
         val dataR = AddUserGrupoRequest(
@@ -54,8 +68,6 @@ class GrupoRepository(
         )
         return grupoDataSourceImpl.joinGrupo(dataR)
     }
-
-
     suspend fun getGrupo(id:Long):List<SalaDto>{
         return  grupoDataSourceImpl.getGrupo(id).also { result->
             val profiles = result.profiles.map { profileMapper.map(it) }
@@ -75,6 +87,9 @@ class GrupoRepository(
         messageProfileDao.upsert(messageMapper.map(data))
     }
 
+    suspend fun saveMessageLocal(data:Message){
+        messageProfileDao.upsert(data)
+    }
     suspend fun getUsersGroup(id:Long){
         withContext(dispatchers.computation){
         grupoDataSourceImpl.getUsersGrupo(id).apply {

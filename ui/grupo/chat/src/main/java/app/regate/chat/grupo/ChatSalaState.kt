@@ -5,6 +5,7 @@ import app.regate.data.auth.AppAuthState
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.models.Grupo
+import app.regate.models.Message
 import app.regate.models.User
 
 data class ChatSalaState(
@@ -23,7 +24,7 @@ data class ChatSalaState(
 }
 
 
-data class Message(
+data class MessageData(
     val content:String,
     val reply_to:Long? = null
 )

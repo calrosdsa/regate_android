@@ -174,6 +174,7 @@ internal fun EstablecimientoReserva(
                     .padding(10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
                 Text(
                     text = stringResource(id = R.string.what_would_you_like_to_play),
                     modifier = Modifier
@@ -181,9 +182,10 @@ internal fun EstablecimientoReserva(
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium
                 )
+
                 state.categories.map { item ->
                     OutlinedButton(
-                        onClick = { setCategory(item.category_id.toLong()) },
+                        onClick = { item.category_id?.let { setCategory(it.toLong()) } },
                         colors = ButtonDefaults.outlinedButtonColors(
                             containerColor = if (state.selectedCategory?.category_id == item.category_id) MaterialTheme.colorScheme.primary else Color.Transparent,
                             contentColor = if (state.selectedCategory?.category_id == item.category_id) Color.White else MaterialTheme.colorScheme.primary

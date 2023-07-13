@@ -8,6 +8,7 @@ import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
+import app.regate.models.Message
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -23,14 +24,12 @@ class GrupoDataSourceImpl(
     private val client:HttpClient,
     private val authStore: AuthStore
 ): GrupoDataSource {
-//    override suspend fun createSala(d: SalaRequestDto):ResponseMessage {
-//        val token = authStore.get()?.accessToken
-//        return client.post("/v1/sala/"){
-//            header("Authorization", "Bearer $token")
-//            contentType(ContentType.Application.Json)
-//            setBody(d)
-//        }.body()
-//    }
+    override  suspend fun syncMessages(d:List<GrupoMessageDto>):List<GrupoMessageDto>{
+        return client.post("/v1/grupo/message/sync-message/"){
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
+    }
     override suspend fun filterGrupos(d: FilterGrupoData): List<GrupoDto> {
             return client.post("/v1/grupo/filter/"){
                 contentType(ContentType.Application.Json)

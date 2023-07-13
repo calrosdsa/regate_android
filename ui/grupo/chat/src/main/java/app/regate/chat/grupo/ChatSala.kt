@@ -1,28 +1,24 @@
 package app.regate.chat.grupo
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardDoubleArrowDown
-import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SwipeToDismiss
-import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -34,12 +30,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.zIndex
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.util.Layout
 import app.regate.common.composes.util.appendErrorOrNull
 import app.regate.common.composes.util.prependErrorOrNull
 import app.regate.common.composes.util.refreshErrorOrNull
@@ -109,7 +103,7 @@ internal fun ChatSala   (
     viewState: ChatSalaState,
     lazyPagingItems: LazyPagingItems<MessageProfile>,
     navigateUp: () -> Unit,
-    sendMessage:(Message)->Unit,
+    sendMessage:(MessageData)->Unit,
     openAuthBottomSheet: () -> Unit,
     formatterRelativeTime:(date:Instant)->String,
     clearMessage:(id:Long)->Unit,
@@ -160,6 +154,7 @@ internal fun ChatSala   (
             snackbarHostState.showSnackbar(it.message)
         }
     }
+
 
     Scaffold(
         topBar = {

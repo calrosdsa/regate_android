@@ -589,8 +589,12 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
             final InstalacionCategoryCount _item;
             final String _tmpCategory_name;
             _tmpCategory_name = _cursor.getString(_cursorIndexOfCategoryName);
-            final int _tmpCategory_id;
-            _tmpCategory_id = _cursor.getInt(_cursorIndexOfCategoryId);
+            final Integer _tmpCategory_id;
+            if (_cursor.isNull(_cursorIndexOfCategoryId)) {
+              _tmpCategory_id = null;
+            } else {
+              _tmpCategory_id = _cursor.getInt(_cursorIndexOfCategoryId);
+            }
             final int _tmpCount;
             _tmpCount = _cursor.getInt(_cursorIndexOfCount);
             final String _tmpThumbnail;

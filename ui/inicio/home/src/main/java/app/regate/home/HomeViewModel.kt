@@ -4,11 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.data.account.AccountRepository
-import app.regate.data.auth.store.AuthStore
-import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
+import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +16,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
+import java.util.UUID
 
 @Inject
 class HomeViewModel(
@@ -54,6 +53,18 @@ class HomeViewModel(
 //            Log.d("TOKEN_",it.accessToken)
 //        }
 //        }
+//        try{
+
+//        Log.d("DEBUG_APP",UUID.randomUUID().leastSignificantBits.toString())
+//            Log.d("DEBUG_APP",UUID.randomUUID().mostSignificantBits.toString())
+//            Log.d("DEBUG_APP", (UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE).toString()
+//            )
+
+//        }catch(e:Exception){
+//            Log.d("DEBUG_APP",e.localizedMessage?:"")
+//
+//        }
+
         me()
         getEstablecimientos()
         observeAuthState(Unit)

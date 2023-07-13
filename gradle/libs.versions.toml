@@ -182,3 +182,5 @@ play-service-auth = "com.google.android.gms:play-services-auth:20.5.0"
 com-github-nestedscroll = "com.github.Tlaster:NestedScrollView:0.7.0"
 
 com-github-wheelpicker = "com.github.commandiron:WheelPickerCompose:1.1.11"
+
+component-swipe = "me.saket.swipe:swipe:1.2.0"

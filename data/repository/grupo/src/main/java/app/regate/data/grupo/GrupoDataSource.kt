@@ -9,8 +9,10 @@ import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
+import app.regate.models.Message
 
 interface GrupoDataSource {
+   suspend fun syncMessages(d:List<GrupoMessageDto>):List<GrupoMessageDto>
    suspend fun filterGrupos(d:FilterGrupoData):List<GrupoDto>
    suspend fun getGrupo(id:Long):GrupoResponse
    suspend fun getMessagesGrupo(id:Long,page:Int):List<GrupoMessageDto>

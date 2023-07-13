@@ -19,7 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material.icons.outlined.EmojiEmotions
-import androidx.compose.material.icons.outlined.EmojiPeople
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -48,7 +47,7 @@ fun ChatInput(
     focusRequester: FocusRequester,
     authState:AppAuthState?,
     openAuthBottomSheet:()->Unit,
-    sendMessage:(Message)->Unit,
+    sendMessage:(MessageData)->Unit,
     modifier:Modifier = Modifier,
 ){
     Row(
@@ -124,13 +123,15 @@ fun ChatInput(
         }
         IconButton(onClick = {
             if (authState == AppAuthState.LOGGED_IN) {
+                if(message.isNotEmpty()){
                 if(replyMessage != null) {
-                    sendMessage(Message(content = message, reply_to = replyMessage.message.id))
+                    sendMessage(MessageData(content = message, reply_to = replyMessage.message.id))
                      updateMessage("")
                     updateReplyMessage(null)
                 }else{
-                    sendMessage(Message(content = message))
+                    sendMessage(MessageData(content = message))
                     updateMessage("")
+                }
                 }
             } else {
                 openAuthBottomSheet()

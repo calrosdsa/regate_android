@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "e3e4ca4709f1366b22ed6763ff93a066",
+    "identityHash": "5e3dd17cb32e554b9379f8ff12022e01",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -316,7 +316,7 @@
       },
       {
         "tableName": "messages",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -353,6 +353,12 @@
             "columnName": "reply_to",
             "affinity": "INTEGER",
             "notNull": false
+          },
+          {
+            "fieldPath": "sended",
+            "columnName": "sended",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -621,7 +627,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e3e4ca4709f1366b22ed6763ff93a066')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5e3dd17cb32e554b9379f8ff12022e01')"
     ]
   }
 }

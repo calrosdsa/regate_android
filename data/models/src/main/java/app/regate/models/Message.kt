@@ -1,8 +1,6 @@
 package app.regate.models
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.datetime.Instant
 
@@ -29,4 +27,5 @@ data class Message(
     val created_at:Instant,
     val profile_id:Long,
     val reply_to:Long? = null,
+    val sended:Boolean = false,
 ):AppEntity

@@ -10,4 +10,5 @@ interface MessageProfileDao:EntityDao<Message> {
     suspend fun getReplyMessage(id:Long):MessageProfile
 
     fun getMessages(id:Long):List<MessageProfile>
+    suspend fun getUnSendedMessage(profileId:Long,grupoId:Long):List<Message>
 }

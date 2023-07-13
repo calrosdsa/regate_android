@@ -14,7 +14,23 @@ class MessageDtoToMessage:Mapper<GrupoMessageDto,Message> {
             grupo_id = from.grupo_id,
             content = from.content,
             created_at = from.created_at?: Clock.System.now(),
-            reply_to = from.reply_to
+            reply_to = from.reply_to,
+            sended = true
+        )
+    }
+}
+
+
+@Inject
+class MessageToMessageDto:Mapper<Message,GrupoMessageDto> {
+    override suspend fun map(from: Message): GrupoMessageDto {
+        return GrupoMessageDto(
+            id = from.id,
+            profile_id = from.profile_id,
+            grupo_id = from.grupo_id,
+            content = from.content,
+            created_at = from.created_at,
+            reply_to = from.reply_to,
         )
     }
 }
