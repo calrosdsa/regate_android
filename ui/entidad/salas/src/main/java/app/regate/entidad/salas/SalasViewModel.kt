@@ -11,6 +11,7 @@ import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -55,10 +56,16 @@ class SalasViewModel(
     fun getSalas(){
         viewModelScope.launch(context = Dispatchers.IO) {
             try{
+                loadingState.addLoader()
                 val res = salaRepository.getSalas(establecimientoId)
+                delay(2000)
                 salas.tryEmit(res)
+                loadingState.removeLoader()
             }catch(e: ResponseException){
+                loadingState.removeLoader()
                 uiMessageManager.emitMessage(UiMessage(message = e.response.body()))
+            }catch(e:Exception){
+                loadingState.removeLoader()
             }
         }
     }

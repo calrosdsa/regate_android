@@ -11,7 +11,9 @@ data class GrupoDto(
     val descripcion: String? = null,
     val id: Long,
     val name: String,
-    val photo: String? = null
+    val photo: String? = null,
+    val visibility:Int,
+    val user_id:Long
 )
 
 @Serializable

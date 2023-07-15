@@ -33,6 +33,7 @@ object Route {
     const val FILTER = "filter"
 
     const val GRUPO = "grupo"
+    const val CREATE_GROUP = "create_group"
 
     const val ESTABLECIMIENTO_FILTER = "establecimiento_filter"
 

@@ -39,6 +39,7 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -67,8 +68,10 @@ import app.regate.common.composes.components.card.InstalacionCard
 import app.regate.common.composes.components.dialog.DialogConfirmation
 import app.regate.common.composes.components.item.ProfileItem
 import app.regate.common.composes.components.item.SalaItem
+import app.regate.common.composes.components.skeleton.SalaItemSkeleton
 import app.regate.common.composes.ui.CommonTopBar
 import app.regate.common.composes.ui.PosterCardImage
+import app.regate.common.composes.ui.Skeleton
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.util.dividerLazyList
 import app.regate.common.composes.util.spacerLazyList
@@ -84,6 +87,7 @@ import kotlin.time.Duration.Companion.minutes
 
 typealias Grupo = @Composable (
     navigateUp:()->Unit,
+    editGroup:(Long)->Unit,
 //    navigateToChat:(id:Long)->Unit,
     openAuthBottomSheet:()->Unit,
     createSala:(id:Long)->Unit,
@@ -95,7 +99,7 @@ typealias Grupo = @Composable (
 fun Grupo(
     viewModelFactory:(SavedStateHandle)-> GrupoViewModel,
     @Assisted navigateUp: () -> Unit,
-//    @Assisted navigateToChat: (id:Long) -> Unit,
+    @Assisted editGroup: (Long) -> Unit,
     @Assisted openAuthBottomSheet: () -> Unit,
     @Assisted createSala: (id:Long) -> Unit,
     @Assisted navigateToSala: (id: Long) -> Unit
@@ -106,7 +110,8 @@ fun Grupo(
 //        navigateToChat= navigateToChat,
         openAuthBottomSheet = openAuthBottomSheet,
         createSala = createSala,
-        navigateToSala = navigateToSala
+        navigateToSala = navigateToSala,
+        editGroup = editGroup
     )
 }
 
@@ -114,6 +119,7 @@ fun Grupo(
 internal fun Grupo(
     viewModel: GrupoViewModel,
     navigateUp: () -> Unit,
+    editGroup: (Long) -> Unit,
 //    navigateToChat: (id:Long) -> Unit,
     openAuthBottomSheet: () -> Unit,
     createSala: (id:Long) -> Unit,
@@ -135,7 +141,8 @@ internal fun Grupo(
         clearMessage = viewModel::clearMessage,
         refresh = viewModel::refresh,
         createSala = createSala,
-        navigateToSala = navigateToSala
+        navigateToSala = navigateToSala,
+        editGroup = editGroup
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -154,6 +161,7 @@ internal fun Grupo(
     navigateUp: () -> Unit,
     formatShortTime:(time:Instant)->String,
     formatDate:(date:Instant)->String,
+    editGroup: (Long) -> Unit,
 //    navigateToChat: (id:Long) -> Unit,
     openAuthBottomSheet: () -> Unit,
     openDialogConfirmation:()->Unit,
@@ -201,10 +209,12 @@ internal fun Grupo(
                         text = { Text(text = stringResource(id = R.string.create_sala)) },
                         onClick = { viewState.grupo?.let { createSala(it.id) } }
                     )
+                    if(viewState.user?.id == viewState.grupo?.user_id?.toLong()){
                     DropdownMenuItem(
-                        text = { Text("Save") },
-                        onClick = {  }
+                        text = { Text("Editar") },
+                        onClick = { viewState.grupo?.id?.let { editGroup(it) } }
                     )
+                    }
                 }
             }
             }
@@ -261,14 +271,19 @@ internal fun Grupo(
                         grupo.description?.let { Text(text = it, style = MaterialTheme.typography.bodySmall) }
                     }
                     dividerLazyList()
-                    if(viewState.salas.isNotEmpty()) {
-
                         item {
                             Text(
-                                text = "Salas",
+                                text = stringResource(R.string.rooms),
                                 style = MaterialTheme.typography.labelLarge,
                             )
                         }
+
+                    if(viewState.loading){
+                        item{
+                        SalaItemSkeleton()
+                        }
+                    }else{
+                    if(viewState.salas.isNotEmpty()) {
                         items(
                             items = viewState.salas,
 //                            key = { it. }
@@ -280,6 +295,16 @@ internal fun Grupo(
                                 formatShortTime = formatShortTime
                             )
                         }
+                    }else{
+                        item {
+                            Box(modifier = Modifier.padding(10.dp).fillMaxWidth()) {
+                            OutlinedButton(onClick = { createSala(grupo.id) },modifier = Modifier.align(
+                                Alignment.Center)) {
+                                Text(text = stringResource(id = R.string.create_sala))
+                            }
+                            }
+                        }
+                    }
                     }
                     dividerLazyList()
 
@@ -315,6 +340,8 @@ internal fun Grupo(
         }
     }
 }
+
+
 
 
 

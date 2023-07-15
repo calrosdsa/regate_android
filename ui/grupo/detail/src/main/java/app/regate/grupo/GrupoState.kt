@@ -10,7 +10,7 @@ import app.regate.models.Instalacion
 import app.regate.models.User
 
 data class GrupoState(
-    val loading:Boolean = false,
+    val loading:Boolean = true,
     val message:UiMessage? = null,
     val user:User? = null,
     val authState:AppAuthState? = null,
@@ -19,6 +19,8 @@ data class GrupoState(
     val salas:List<SalaDto> = emptyList()
 ){
     companion object{
-        val Empty = GrupoState()
+        val Empty = GrupoState(
+            loading = true
+        )
     }
 }

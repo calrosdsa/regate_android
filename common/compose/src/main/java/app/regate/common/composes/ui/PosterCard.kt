@@ -13,14 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("DEPRECATION")
 
 package app.regate.common.composes.ui
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.components.images.AsyncImage
@@ -79,6 +94,54 @@ fun PosterCardImage(
         )
     }
 }
+
+@Composable
+fun UploadImageBitmap(
+    bitmap: Bitmap?,
+    setBitmap:(Bitmap)->Unit,
+    context:Context,
+    uri:Uri?,
+//    uploadImage:()->Unit,
+    modifier: Modifier = Modifier,
+    shape:Shape = CircleShape,
+) {
+    Card(modifier = modifier,
+        shape = shape) {
+        Box(modifier = Modifier.fillMaxSize()) {
+
+        if(uri != null){
+            if (Build.VERSION.SDK_INT < 28) {
+               setBitmap(MediaStore.Images
+                    .Media.getBitmap(context.contentResolver,uri))
+            } else {
+                val source = ImageDecoder
+                    .createSource(context.contentResolver,uri)
+                setBitmap(ImageDecoder.decodeBitmap(source))
+            }
+
+            bitmap?.let {  btm ->
+                Image(bitmap = btm.asImageBitmap(),
+                    contentDescription =null,
+                    modifier = Modifier.fillMaxSize())
+            }
+
+
+        }
+
+//            IconButton(onClick = { uploadImage() },modifier = Modifier.align(Alignment.Center)) {
+//                Icon(imageVector = Icons.Default.UploadFile, contentDescription = "upload")
+//        }
+
+        }
+//        Image(
+//            bitmap = it,
+//            contentDescription = null,
+//            modifier = Modifier.fillMaxSize(),
+////            contentScale = ContentScale.Crop,
+//        )
+        }
+    }
+
 @Composable
 private fun PosterCardContent(establecimiento: EstablecimientoDto) {
 

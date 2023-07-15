@@ -14,7 +14,7 @@ plugins {
 }
 
 android {
-    namespace = "app.regate.createsala"
+    namespace = "app.regate.creategroup"
 //    compileSdk = 33
     buildFeatures {
         compose = true

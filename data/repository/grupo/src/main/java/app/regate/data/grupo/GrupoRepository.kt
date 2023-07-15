@@ -10,6 +10,7 @@ import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
+import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
@@ -58,6 +59,11 @@ class GrupoRepository(
                 //TODO()
             }
 
+        }
+    }
+    suspend fun createGrupo(d:GroupRequest):GrupoDto{
+        return grupoDataSourceImpl.createGroup(d).also {
+            grupoDao.upsert(dtoToGrupo.map(it))
         }
     }
     suspend fun joinGrupo(grupoId:Long): ResponseMessage {

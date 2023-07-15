@@ -12,7 +12,8 @@ class DtoToGrupo:Mapper<GrupoDto,Grupo> {
             created_at = from.created_at,
             description = from.descripcion,
             name = from.name,
-            photo = from.photo
-        )
+            photo = from.photo,
+            user_id = from.user_id
+         )
     }
 }

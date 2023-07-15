@@ -40,6 +40,7 @@ int string chat_notification_id 0x0
 int string chat_notification_name 0x0
 int string choose_a_schedule 0x0
 int string clear_all 0x0
+int string create_group 0x0
 int string create_sala 0x0
 int string explore_exceptional_destinations 0x0
 int string favorites 0x0
@@ -62,6 +63,7 @@ int string notification_sala 0x0
 int string notification_sala_channel 0x0
 int string notifications 0x0
 int string price_range 0x0
+int string rooms 0x0
 int string rules_of_the_place 0x0
 int string sala_help_text 0x0
 int string sala_help_text2 0x0

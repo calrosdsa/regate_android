@@ -1,1 +1,1 @@
-app.regate.createsala
+app.regate.creategroup

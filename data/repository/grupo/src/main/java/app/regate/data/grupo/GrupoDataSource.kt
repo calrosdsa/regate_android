@@ -4,6 +4,7 @@ import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
+import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
@@ -18,6 +19,7 @@ interface GrupoDataSource {
    suspend fun getMessagesGrupo(id:Long,page:Int):List<GrupoMessageDto>
    suspend fun joinGrupo(d:AddUserGrupoRequest): ResponseMessage
    suspend fun getUsersGrupo(id:Long):List<ProfileDto>
+   suspend fun createGroup(d:GroupRequest):GrupoDto
 
 //   suspend fun createGrupo(d: SalaRequestDto):ResponseMessage
 

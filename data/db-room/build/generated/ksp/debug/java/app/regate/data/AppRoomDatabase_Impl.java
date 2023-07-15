@@ -78,11 +78,11 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `settings` (`uuid` TEXT NOT NULL, `paid_type` TEXT NOT NULL, `establecimiento_id` INTEGER NOT NULL, `payment_for_reservation` INTEGER NOT NULL, `horario_interval` TEXT NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`establecimiento_id`) REFERENCES `establecimientos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_settings_establecimiento_id` ON `settings` (`establecimiento_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `labels` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `thumbnail` TEXT, `type_label` TEXT, PRIMARY KEY(`id`, `name`))");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `grupos` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `grupos` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, `user_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_grupo` (`id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`grupo_id`) REFERENCES `grupos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_user_grupo_grupo_id` ON `user_grupo` (`grupo_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5e3dd17cb32e554b9379f8ff12022e01')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '326f06eb3d502f3c07b524f8011154fc')");
       }
 
       @Override
@@ -285,12 +285,13 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoLabels + "\n"
                   + " Found:\n" + _existingLabels);
         }
-        final HashMap<String, TableInfo.Column> _columnsGrupos = new HashMap<String, TableInfo.Column>(5);
+        final HashMap<String, TableInfo.Column> _columnsGrupos = new HashMap<String, TableInfo.Column>(6);
         _columnsGrupos.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsGrupos.put("name", new TableInfo.Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsGrupos.put("description", new TableInfo.Column("description", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsGrupos.put("created_at", new TableInfo.Column("created_at", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsGrupos.put("photo", new TableInfo.Column("photo", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsGrupos.put("user_id", new TableInfo.Column("user_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysGrupos = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesGrupos = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoGrupos = new TableInfo("grupos", _columnsGrupos, _foreignKeysGrupos, _indicesGrupos);
@@ -317,7 +318,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "5e3dd17cb32e554b9379f8ff12022e01", "ccc85925c1a5c2a710dd98f55699d948");
+    }, "326f06eb3d502f3c07b524f8011154fc", "866247724ec736e975e5045d4e6aafca");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;

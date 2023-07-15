@@ -42,6 +42,7 @@ string chat_notification_id
 string chat_notification_name
 string choose_a_schedule
 string clear_all
+string create_group
 string create_sala
 string explore_exceptional_destinations
 string favorites
@@ -64,6 +65,7 @@ string notification_sala
 string notification_sala_channel
 string notifications
 string price_range
+string rooms
 string rules_of_the_place
 string sala_help_text
 string sala_help_text2

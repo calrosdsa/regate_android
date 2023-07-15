@@ -34,7 +34,11 @@ class AccountRepository(
     }
     suspend fun updateFcmToken(token:String){
         withContext(dispatchers.io){
+            try{
             accountDataSourceImpl.updateFcmToken(token)
+            }catch(e:Exception){
+                //TODO()
+            }
         }
     }
 
@@ -67,6 +71,12 @@ class AccountRepository(
         }
     }
     suspend fun saveFcmToken(data:FcmRequest){
+        withContext(dispatchers.computation){
+        try{
         accountDataSourceImpl.saveFcmToken(data)
+        }catch(e:Exception){
+            //TODO()
+        }
+        }
     }
 }

@@ -50,15 +50,15 @@ class GruposViewModel(
 
     fun getFilterGrupos(){
         viewModelScope.launch {
-//            try{
-//               grupoRepository.filterGrupos(FilterGrupoData(category_id = 1))
-//            }catch (e:ResponseException){
-//              Log.d("DEBUG_APP",e.response.body<String>().toString())
-//            } catch (e:Exception){
-//                Log.d("DEBUG_APP",e.localizedMessage?:"")
-//            }
-            updateFilterGrupos(UpdateFilterGrupos.Params(d = FilterGrupoData(category_id = 1)))
-                .collectStatus(loadingCounter,uiMessageManager)
+            try{
+               grupoRepository.filterGrupos(FilterGrupoData(category_id = 1))
+            }catch (e:ResponseException){
+              Log.d("DEBUG_APP",e.response.body<String>().toString())
+            } catch (e:Exception){
+                Log.d("DEBUG_APP",e.localizedMessage?:"")
+            }
+//            updateFilterGrupos(UpdateFilterGrupos.Params(d = FilterGrupoData(category_id = 1)))
+//                .collectStatus(loadingCounter,uiMessageManager)
         }
     }
     }

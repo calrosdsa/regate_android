@@ -21,6 +21,7 @@
     <string name="chat_notification_name" translatable="false">Chat</string>
     <string name="choose_a_schedule">Choose a schedule</string>
     <string name="clear_all">Clear all</string>
+    <string name="create_group">Create group</string>
     <string name="create_sala">Create sala</string>
     <string name="explore_exceptional_destinations">Explore exceptional destinations</string>
     <string name="favorites">Favorites</string>
@@ -45,6 +46,7 @@
     <string name="notification_sala_channel" translatable="false">sala_channel_id</string>
     <string name="notifications">Notifications</string>
     <string name="price_range">Rango de precios</string>
+    <string name="rooms">Rooms</string>
     <string name="rules_of_the_place">Rules of the place</string>
     <string name="sala_help_text">In a room, the time, location, and game details are determined, including
         the maximum capacity of people and the price per spot.</string>

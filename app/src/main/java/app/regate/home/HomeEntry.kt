@@ -281,7 +281,8 @@ internal fun AppNavigation(
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
 //                navigateToChat = {navController.navigate(Route.CHAT_SALA id it)},
                 createSala = { navController.navigate(Route.ESTABLECIMIENTO_FILTER id it)},
-                navigateToSala = { navController.navigate(Route.SALA id it)}
+                navigateToSala = { navController.navigate(Route.SALA id it)},
+                editGroup = {navController.navigate(Route.CREATE_GROUP + "?id=${it}" )}
                 )
         }
 
@@ -300,6 +301,22 @@ internal fun AppNavigation(
                 navigateToReserva={
                     navController.navigate(Route.RESERVA_DETAIL id it)
                 }
+            )
+        }
+
+        animatedComposable(
+            route = Route.CREATE_GROUP + "?id={id}",
+            arguments = listOf(navArgument("id") {
+                defaultValue = 0
+                type = NavType.LongType
+            })
+        ){
+            composeScreens.createGroup(
+                navigateUp = navController::navigateUp,
+                navigateToGroup = { navController.navigate(Route.GRUPO id it){
+                    popUpTo(Route.GRUPOS)
+                } },
+//                groupId = backStackEntry.arguments?.getLong("id")?:0
             )
         }
 
@@ -338,8 +355,12 @@ private fun NavGraphBuilder.AddMainNav(
             composeScreens.servicios(navController = navController)
         }
         composable(route= Route.GRUPOS){
-            composeScreens.grupos(navController = navController)
-        }
+            composeScreens.grupos(navController = navController,userGroups={
+                composeScreens.userGroups(
+                    navigateToChat = {navController.navigate(Route.CHAT_SALA id it)},
+                )
+            }
+        )}
         composable(route= Route.ACTIVITIES){
             composeScreens.actividades(navController = navController)
         }

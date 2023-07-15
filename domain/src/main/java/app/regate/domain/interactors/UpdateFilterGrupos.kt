@@ -20,4 +20,5 @@ class UpdateFilterGrupos(
     data class  Params(
         val d:FilterGrupoData
     )
+
 }

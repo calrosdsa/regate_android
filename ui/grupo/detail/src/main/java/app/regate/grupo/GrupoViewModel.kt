@@ -17,6 +17,7 @@ import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -72,12 +73,17 @@ class GrupoViewModel(
     fun getGrupo(){
         viewModelScope.launch {
             try{
+                loadingState.addLoader()
                 val res = grupoRepository.getGrupo(grupoId)
+                delay(2000)
                 salas.tryEmit(res)
+                loadingState.removeLoader()
                 Log.d("DEBUG_APP",res.toString())
             } catch (e:ResponseException){
+                loadingState.removeLoader()
                 Log.d("DEBUG_ERROR",e.response.body())
             }catch(e:Exception){
+                loadingState.removeLoader()
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
             }
         }

@@ -1,5 +1,6 @@
 package app.regate.entidad.salas
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,6 +8,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,11 +22,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.components.item.SalaItem
+import app.regate.common.composes.components.skeleton.SalaItemSkeleton
 import app.regate.common.composes.viewModel
 import app.regate.data.dto.empresa.salas.SalaDto
 import kotlinx.datetime.Instant
@@ -63,21 +70,24 @@ internal fun Salas(
         crearSala = {crearSala(viewModel.getEstablecimientoId())},
         formatShortTime = {formatter.formatShortTime(it)},
         formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
+        getSalas = viewModel::getSalas
   )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun Salas(
     viewState: SalasState,
     navigateToSala: (id:Long) -> Unit,
     formatShortTime:(time: Instant)->String,
     formatDate:(date: Instant)->String,
-    crearSala: () -> Unit
+    crearSala: () -> Unit,
+    getSalas:()->Unit,
 ){
-
-
+    val refreshState = rememberPullRefreshState(refreshing = false, onRefresh = { getSalas()})
     Scaffold(modifier = Modifier.padding(10.dp)) {paddingValues->
-        Column(modifier = Modifier
+        Box(modifier = Modifier
+            .pullRefresh(refreshState)
             .fillMaxSize()
             .padding(paddingValues)) {
             TextButton(onClick = { crearSala() }) {
@@ -85,6 +95,12 @@ internal fun Salas(
             }
             Spacer(modifier = Modifier.height(10.dp))
             LazyColumn(){
+                if(viewState.loading) {
+                    items(5){
+                        SalaItemSkeleton()
+                        Divider()
+                    }
+                }else{
                 items(items = viewState.salas,
                     key = { it.id}){sala->
                     SalaItem(
@@ -95,27 +111,17 @@ internal fun Salas(
                     )
                     Divider(modifier = Modifier.padding(vertical = 2.dp))
                 }
+                }
             }
+            PullRefreshIndicator(
+                refreshing = viewState.loading,
+                state = refreshState,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(paddingValues)
+                    .padding(top = 20.dp),
+                scale = true,
+            )
         }
     }
 }
-
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun SalaItem(
-//    sala: SalaDto,
-//    navigateToSala: (id:Long) -> Unit,
-//    modifier:Modifier = Modifier,
-//){
-//    ElevatedCard(onClick = { navigateToSala(sala.id) }, modifier = modifier.padding(10.dp)) {
-//        Column(modifier = Modifier.padding(10.dp)) {
-////        AsyncImage(model = "", contentDescription = )
-//            Text(text = sala.titulo,style = MaterialTheme.typography.titleSmall)
-//            Text(text = sala.descripcion,style = MaterialTheme.typography.bodySmall,maxLines =2)
-//            Spacer(modifier = Modifier.height(5.dp))
-//            Text(text = "Cupos",style = MaterialTheme.typography.labelMedium)
-//            Text(text = "4/${sala.cupos}",style = MaterialTheme.typography.labelSmall)
-//        }
-//
-//    }
-//}

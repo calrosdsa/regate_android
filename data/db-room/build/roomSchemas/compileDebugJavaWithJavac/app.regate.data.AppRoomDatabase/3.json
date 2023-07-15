@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "5e3dd17cb32e554b9379f8ff12022e01",
+    "identityHash": "326f06eb3d502f3c07b524f8011154fc",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -527,7 +527,7 @@
       },
       {
         "tableName": "grupos",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, `user_id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -558,6 +558,12 @@
             "columnName": "photo",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "user_id",
+            "columnName": "user_id",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -627,7 +633,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5e3dd17cb32e554b9379f8ff12022e01')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '326f06eb3d502f3c07b524f8011154fc')"
     ]
   }
 }

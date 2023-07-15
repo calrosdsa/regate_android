@@ -56,6 +56,7 @@
             <option value="$PROJECT_DIR$/ui/entidad/salas" />
             <option value="$PROJECT_DIR$/ui/grupo" />
             <option value="$PROJECT_DIR$/ui/grupo/chat" />
+            <option value="$PROJECT_DIR$/ui/grupo/creategrupo" />
             <option value="$PROJECT_DIR$/ui/grupo/createsala" />
             <option value="$PROJECT_DIR$/ui/grupo/detail" />
             <option value="$PROJECT_DIR$/ui/grupo/sala" />

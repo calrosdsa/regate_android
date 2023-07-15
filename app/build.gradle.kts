@@ -161,6 +161,7 @@ dependencies {
     implementation(projects.ui.grupo.sala)
     implementation(projects.ui.grupo.detail)
     implementation(projects.ui.grupo.createsala)
+    implementation(projects.ui.grupo.creategrupo)
 
     implementation(projects.tasks.android)
 

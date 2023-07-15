@@ -68,4 +68,6 @@
     <string name="notification_sala_channel" translatable="false">sala_channel_id</string>
     <string name="new_room_created">A new room has been created.</string>
     <string name="notification_sala">Room Notifications</string>
+    <string name="create_group">Create group</string>
+    <string name="rooms">Rooms</string>
 </resources>

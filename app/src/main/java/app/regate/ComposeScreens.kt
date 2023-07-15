@@ -30,6 +30,7 @@ import app.regate.establecimiento.Establecimiento
 import app.regate.instalacion.InstalacionDetail
 import app.regate.reservar.EstablecimientoReserva
 import app.regate.chat.grupo.ChatSala
+import app.regate.creategroup.CreateGroup
 import app.regate.createsala.CreateSala
 import app.regate.createsala.establecimiento.EstablecimientoFilter
 import app.regate.discover.DiscoverScreen
@@ -37,6 +38,7 @@ import app.regate.discover.filter.Filter
 import app.regate.entidad.actividades.ActividadesEstablecimiento
 import app.regate.grupo.Grupo
 import app.regate.grupos.Grupos
+import app.regate.usergroups.UserGroups
 import app.regate.sala.Sala
 import app.regate.settings.Setting
 import app.regate.signup.SignUp
@@ -71,6 +73,9 @@ class ComposeScreens(
     val settings:Setting,
 
     val grupo:Grupo,
+    val userGroups:UserGroups,
+    val createGroup: CreateGroup,
+
     val establecimientoFilter:EstablecimientoFilter
 
     )
