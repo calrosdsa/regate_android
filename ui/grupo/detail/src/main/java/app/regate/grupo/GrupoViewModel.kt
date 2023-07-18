@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
+import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.grupo.GrupoRepository
@@ -32,14 +34,16 @@ class GrupoViewModel(
     @Assisted savedStateHandle: SavedStateHandle,
     private val grupoRepository: GrupoRepository,
     observeAuthState: ObserveAuthState,
-    observeUsersGrupo: ObserveUsersGrupo,
+    private val observeUsersGrupo: ObserveUsersGrupo,
     observeGrupo: ObserveGrupo,
-    observeUser: ObserveUser
+    private val observeUser: ObserveUser
     ):ViewModel() {
     private val grupoId: Long = savedStateHandle["id"]!!
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val salas = MutableStateFlow<List<SalaDto>>(emptyList())
+    private val isAdmin = MutableStateFlow(false)
+    private val selectedUser = MutableStateFlow<UserProfileGrupo?>(null)
     val state:StateFlow<GrupoState> = combine(
         uiMessageManager.message,
         loadingState.observable,
@@ -47,8 +51,10 @@ class GrupoViewModel(
         observeUsersGrupo.flow,
         observeGrupo.flow,
         salas,
-        observeUser.flow
-    ){ message, loading, authState,usersGrupo, grupo,salas,user->
+        observeUser.flow,
+        isAdmin,
+        selectedUser,
+    ){ message, loading, authState,usersGrupo, grupo,salas,user,isAdmin,selectedUser->
         GrupoState(
             message = message,
             authState = authState,
@@ -56,7 +62,9 @@ class GrupoViewModel(
             usersProfileGrupo = usersGrupo,
             grupo = grupo,
             salas = salas,
-            user = user
+            user = user,
+            isAdmin = isAdmin,
+            selectedUser = selectedUser
         )
     }.stateIn(
         scope = viewModelScope,
@@ -64,11 +72,32 @@ class GrupoViewModel(
         initialValue = GrupoState.Empty
     )
     init {
+        observeUser(Unit)
         observeAuthState(Unit)
         observeGrupo(ObserveGrupo.Param(id = grupoId))
-        observeUser(Unit)
         observeUsersGrupo(ObserveUsersGrupo.Params(id=grupoId))
         getGrupo()
+        checkIsAdmin()
+    }
+    fun checkIsAdmin(){
+    viewModelScope.launch {
+        try{
+        observeUsersGrupo.flow.collect{results->
+            try{
+
+            Log.d("DEBUG_APP_SS",results.toString())
+            val admins = results.filter { it.is_admin }.map { it.id }
+            Log.d("DEBUG_APP_SS",admins.toString())
+            Log.d("DEBUG_APP_SS",state.value.user?.profile_id.toString())
+            observeUser.flow.collect{result-> if(admins.contains(result.profile_id)){ isAdmin.tryEmit(true) } }
+            }catch (e:Exception){
+                //TODO()
+            }
+        }
+        }catch(e:Exception){
+            //TODO()
+        }
+    }
     }
     fun getGrupo(){
         viewModelScope.launch {
@@ -104,7 +133,53 @@ class GrupoViewModel(
             }
         }
     }
+    fun selectUser(id:Long){
+        viewModelScope.launch {
+        try{
+            val user = state.value.usersProfileGrupo.first { it.id == id }
+            selectedUser.tryEmit(user)
+        }catch (e:Exception){
+            //TODO()
+        }
+        }
+    }
+    fun removeUserFromGroup(){
+        viewModelScope.launch {
+            try{
+            selectedUser.value?.let { grupoRepository.removeUserFromGroup(it.user_group_id) }
+            }catch (e:Exception){
+                Log.d("DEBUG_APP_WS",e.localizedMessage?:"")
+            }
+        }
+    }
+    fun removeUserAdmin(){
+        viewModelScope.launch {
+            try{
+            selectedUser.value?.let { grupoRepository.changeStatusUser(it.user_group_id,false) }
+            }catch (e:Exception){
+                Log.d("DEBUG_APP_WS",e.localizedMessage?:"")
+            }
+        }
+    }
+    fun addUserAdmin(){
+        viewModelScope.launch {
+            try{
 
+            selectedUser.value?.let { grupoRepository.changeStatusUser(it.user_group_id,true) }
+            }catch (e:Exception){
+                Log.d("DEBUG_APP_WS",e.localizedMessage?:"")
+            }
+//            grupoRepository.changeStatusUser(id,true)
+        }
+    }
+    fun leaveGroup(navigateUp:()->Unit){
+        viewModelScope.launch {
+            val targetUser = state.value.usersProfileGrupo
+                .first { it.id == state.value.user?.profile_id }
+                grupoRepository.removeUserFromGroup(targetUser.user_group_id)
+            navigateUp()
+        }
+    }
     fun refresh(){
         viewModelScope.launch {
             getGrupo()

@@ -94,6 +94,18 @@ class CreateSalaViewModel(
             try {
                 loadingState.addLoader()
                 salaData.value.let {
+                    if(it.instalacion_id == 0L ) {
+                        uiMessageManager.emitMessage(UiMessage(
+                            message = "No fue posible crear la sala debido a que no se estableció el lugar y la hora"))
+                        loadingState.removeLoader()
+                        return@launch
+                    }
+                    if((cupos.toInt()) -1 >= (state.value.instalacionCupos?.instalacion?.cantidad_personas?: 30)) {
+                        uiMessageManager.emitMessage(UiMessage(
+                            message = "No fue posible crear la sala debido a que los cupos superan la cantidad maxima"))
+                        loadingState.removeLoader()
+                        return@launch
+                    }
                     val data = it.copy(
                         titulo = asunto,
                         descripcion = description,
@@ -120,6 +132,7 @@ class CreateSalaViewModel(
                 Log.d("DEBUG_APP_ERROR_1", e.localizedMessage ?: "")
             } catch (e: Exception) {
                 loadingState.removeLoader()
+                uiMessageManager.emitMessage(UiMessage(message = e.localizedMessage?:""))
                 Log.d("DEBUG_APP_ERROR_1", e.localizedMessage ?: "")
 
             }

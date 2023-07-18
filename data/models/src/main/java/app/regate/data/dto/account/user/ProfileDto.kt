@@ -11,6 +11,4 @@ data class ProfileDto(
     val profile_id: Long,
     val profile_photo: String?= null,
     val user_id: Long,
-    //Only for user grupo table
-    val user_grupo_id:Long = 0
 )

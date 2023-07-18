@@ -23,6 +23,7 @@ import app.regate.data.mappers.MessageToMessageDto
 import app.regate.data.mappers.ReplyMessageDtoToMessage
 import app.regate.inject.ApplicationScope
 import app.regate.models.Message
+import app.regate.models.Profile
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -39,11 +40,36 @@ class GrupoRepository(
     private val messageMapperDto:MessageToMessageDto,
     private val replyMessageMapper:ReplyMessageDtoToMessage,
     private val dtoToGrupo: DtoToGrupo,
-    private val profileMapper:DtoToProfile,
     private val dtoToUserGrupo: DtoToUserGrupo,
     private val dispatchers: AppCoroutineDispatchers,
     private val userDao: UserDao,
 ){
+    suspend fun myGroups(){
+        withContext(dispatchers.computation){
+            val grupos = grupoDataSourceImpl.myGroups().map { dtoToGrupo.map(it) }
+            grupoDao.upsertAll(grupos)
+        }
+    }
+    suspend fun removeUserFromGroup(id:Long) {
+        withContext(dispatchers.computation) {
+            try {
+                grupoDataSourceImpl.removeUserFromGroup(id)
+                userGrupoDao.deleteUserGroup(id)
+            } catch (e: Exception) {
+                //TODO()
+            }
+        }
+    }
+    suspend fun changeStatusUser(id:Long,status:Boolean) {
+        withContext(dispatchers.computation) {
+            try {
+                grupoDataSourceImpl.changeStatusUser(id, status)
+                userGrupoDao.updateUser(id,status)
+            } catch (e: Exception) {
+                //TODO
+            }
+        }
+    }
     suspend fun syncMessages(grupoId: Long){
         withContext(dispatchers.io){
             try {
@@ -76,18 +102,14 @@ class GrupoRepository(
     }
     suspend fun getGrupo(id:Long):List<SalaDto>{
         return  grupoDataSourceImpl.getGrupo(id).also { result->
-            val profiles = result.profiles.map { profileMapper.map(it) }
+//            val profiles = result.profiles.map { profileMapper.map(it) }
             val usersGrupo = result.profiles.map { dtoToUserGrupo.map(it,result.grupo.id) }
-            profileDao.upsertAll(profiles)
+//            profileDao.upsertAll(profiles)
             userGrupoDao.upsertAll(usersGrupo)
         }.salas
     }
-    suspend fun filterGrupos(d:FilterGrupoData):List<GrupoDto>{
-        return grupoDataSourceImpl.filterGrupos(d).also {res->
-            grupoDao.deleteAll()
-            val grupos = res.map { dtoToGrupo.map(it) }
-            grupoDao.upsertAll(grupos)
-        }
+    suspend fun filterGrupos(d:FilterGrupoData,page: Int):List<GrupoDto>{
+        return grupoDataSourceImpl.filterGrupos(d,page)
     }
     suspend fun saveMessage(data:GrupoMessageDto){
         messageProfileDao.upsert(messageMapper.map(data))
@@ -98,8 +120,17 @@ class GrupoRepository(
     }
     suspend fun getUsersGroup(id:Long){
         withContext(dispatchers.computation){
+            userGrupoDao.deleteUsers(id)
         grupoDataSourceImpl.getUsersGrupo(id).apply {
-            val profiles = map { profileMapper.map(it) }
+            val profiles = map {
+//                profileMapper.map(it)
+                Profile(
+                    id = it.profile_id,
+                    profile_photo = it.profile_photo,
+                    nombre = it.nombre,
+                    apellido = it.apellido,
+                )
+            }
             val usersGrupo = map { dtoToUserGrupo.map(it,id) }
             profileDao.upsertAll(profiles)
             userGrupoDao.upsertAll(usersGrupo)
@@ -109,7 +140,6 @@ class GrupoRepository(
     suspend fun getMessagesGrupo(id:Long,page:Int){
          withContext(dispatchers.computation){
              try{
-
          grupoDataSourceImpl.getMessagesGrupo(id,page).also { apiResult ->
                 val messages =async{ apiResult.map { messageMapper.map(it) } }
                 val replies =async{ apiResult.filter { it.reply_to != null }.map {

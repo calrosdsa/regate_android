@@ -72,7 +72,7 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
         if (entity.getCantidad_personas() == null) {
           statement.bindNull(2);
         } else {
-          statement.bindString(2, entity.getCantidad_personas());
+          statement.bindLong(2, entity.getCantidad_personas());
         }
         if (entity.getCategory_id() == null) {
           statement.bindNull(3);
@@ -118,7 +118,7 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
         if (entity.getCantidad_personas() == null) {
           statement.bindNull(2);
         } else {
-          statement.bindString(2, entity.getCantidad_personas());
+          statement.bindLong(2, entity.getCantidad_personas());
         }
         if (entity.getCategory_id() == null) {
           statement.bindNull(3);
@@ -162,7 +162,7 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
         if (entity.getCantidad_personas() == null) {
           statement.bindNull(2);
         } else {
-          statement.bindString(2, entity.getCantidad_personas());
+          statement.bindLong(2, entity.getCantidad_personas());
         }
         if (entity.getCategory_id() == null) {
           statement.bindNull(3);
@@ -318,11 +318,11 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
               final Instalacion _item;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              final String _tmpCantidad_personas;
+              final Integer _tmpCantidad_personas;
               if (_cursor.isNull(_cursorIndexOfCantidadPersonas)) {
                 _tmpCantidad_personas = null;
               } else {
-                _tmpCantidad_personas = _cursor.getString(_cursorIndexOfCantidadPersonas);
+                _tmpCantidad_personas = _cursor.getInt(_cursorIndexOfCantidadPersonas);
               }
               final Integer _tmpCategory_id;
               if (_cursor.isNull(_cursorIndexOfCategoryId)) {
@@ -405,11 +405,11 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
             if (_cursor.moveToFirst()) {
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              final String _tmpCantidad_personas;
+              final Integer _tmpCantidad_personas;
               if (_cursor.isNull(_cursorIndexOfCantidadPersonas)) {
                 _tmpCantidad_personas = null;
               } else {
-                _tmpCantidad_personas = _cursor.getString(_cursorIndexOfCantidadPersonas);
+                _tmpCantidad_personas = _cursor.getInt(_cursorIndexOfCantidadPersonas);
               }
               final Integer _tmpCategory_id;
               if (_cursor.isNull(_cursorIndexOfCategoryId)) {
@@ -503,11 +503,11 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
               final Instalacion _item_1;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              final String _tmpCantidad_personas;
+              final Integer _tmpCantidad_personas;
               if (_cursor.isNull(_cursorIndexOfCantidadPersonas)) {
                 _tmpCantidad_personas = null;
               } else {
-                _tmpCantidad_personas = _cursor.getString(_cursorIndexOfCantidadPersonas);
+                _tmpCantidad_personas = _cursor.getInt(_cursorIndexOfCantidadPersonas);
               }
               final Integer _tmpCategory_id;
               if (_cursor.isNull(_cursorIndexOfCategoryId)) {

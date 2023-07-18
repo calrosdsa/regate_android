@@ -411,11 +411,11 @@ public final class RoomCupoDao_Impl extends RoomCupoDao {
               final Instalacion _tmpInstalacion;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              final String _tmpCantidad_personas;
+              final Integer _tmpCantidad_personas;
               if (_cursor.isNull(_cursorIndexOfCantidadPersonas)) {
                 _tmpCantidad_personas = null;
               } else {
-                _tmpCantidad_personas = _cursor.getString(_cursorIndexOfCantidadPersonas);
+                _tmpCantidad_personas = _cursor.getInt(_cursorIndexOfCantidadPersonas);
               }
               final Integer _tmpCategory_id;
               if (_cursor.isNull(_cursorIndexOfCategoryId)) {

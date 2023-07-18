@@ -5,15 +5,18 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.dto.FileData
 import app.regate.data.dto.empresa.grupo.GroupRequest
-import app.regate.data.dto.empresa.grupo.GrupoDto
+import app.regate.data.dto.empresa.grupo.GroupVisibility
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
+import app.regate.domain.observers.ObserveGrupo
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -27,6 +30,7 @@ import me.tatarka.inject.annotations.Inject
 class CreateGroupViewModel(
     @Assisted savedStateHandle: SavedStateHandle,
     observeAuthState: ObserveAuthState,
+    observeGrupo: ObserveGrupo,
     private val grupoRepository: GrupoRepository
     ):ViewModel() {
         private val groupId: Long = savedStateHandle.get<Long>("id")?:0
@@ -37,11 +41,13 @@ class CreateGroupViewModel(
         uiMessageManager.message,
         loadingState.observable,
         observeAuthState.flow,
-    ) { message, loading, authState->
+        observeGrupo.flow,
+    ) { message, loading, authState,group->
         CreateGroupState(
             message = message,
             authState = authState,
             loading = loading,
+            group = group
         )
     }.stateIn(
         scope = viewModelScope,
@@ -52,26 +58,36 @@ class CreateGroupViewModel(
     init {
         observeAuthState(Unit)
         Log.d("DEBUG_APP_ARG",groupId.toString())
+        if(groupId != 0L){
+            observeGrupo(ObserveGrupo.Param(id = groupId))
+        }
     }
 
     @SuppressLint("SuspiciousIndentation")
-    fun createGroup(name: String, description: String, visibility: String, navigateToGroup:(Long)->Unit) {
+    fun createGroup(name: String, description: String, visibility: GroupVisibility, navigateToGroup:(Long)->Unit,
+    openBottonAuth:()->Unit,removeLoader:()->Unit) {
         viewModelScope.launch {
             try{
-                loadingState.addLoader()
                 val res =  grupoRepository.createGrupo(GroupRequest(
                    name = name,
                    description = description,
-                   visibility = visibility.toInt(),
-                   fileData = file.value
+                   visibility = visibility.ordinal,
+                   fileData = file.value,
+                    id = groupId,
+                    photo_url = state.value.group?.photo
                 ))
                 navigateToGroup(res.id)
-                loadingState.removeLoader()
+                removeLoader()
             }catch (e:ResponseException){
-                loadingState.removeLoader()
+                if(e.response.status == HttpStatusCode.Unauthorized){
+//                    uiMessageManager.emitMessage(UiMessage(message= ))
+                    openBottonAuth()
+                }
+                removeLoader()
+                Log.d("DEBUG_APP",e.response.status.value.toString())
                 Log.d("DEBUG_APP",e.response.body()?:"")
             } catch (e:Exception){
-                loadingState.removeLoader()
+                removeLoader()
                 Log.d("DEBUG_APP",e.localizedMessage?:"")
             }
         }

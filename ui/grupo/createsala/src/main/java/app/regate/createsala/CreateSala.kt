@@ -1,5 +1,6 @@
 package app.regate.createsala
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
+import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.components.dialog.DialogConfirmation
 import app.regate.common.composes.components.dialog.LoaderDialog
 import app.regate.common.composes.ui.CommonTopBar
@@ -40,7 +42,9 @@ import app.regate.common.composes.util.Layout
 import app.regate.common.composes.viewModel
 import app.regate.createsala.pages.Page1
 import app.regate.createsala.pages.Page2
+import app.regate.data.dto.empresa.grupo.GroupVisibility
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -78,13 +82,16 @@ internal fun CreateSala(
 //    openAuthBottomSheet: () -> Unit
 ){
     val viewState by viewModel.state.collectAsState()
+    val formatter = LocalAppDateFormatter.current
     LoaderDialog(loading = viewState.loading)
     CreateSala(
         viewState = viewState,
         navigateUp = navigateUp,
         reservarInstalacion = reservarInstalacion,
         createSala = viewModel::createSala,
-        clearMessage = viewModel::clearMessage
+        clearMessage = viewModel::clearMessage,
+        formatShortTime = {formatter.formatShortTime(it)},
+        formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
     )
 }
 
@@ -95,7 +102,9 @@ internal fun CreateSala(
     navigateUp: () -> Unit,
     reservarInstalacion:@Composable () -> Unit,
     createSala:(String,String,String)->Unit,
-    clearMessage:(id:Long)->Unit
+    clearMessage:(id:Long)->Unit,
+    formatShortTime:(time: Instant)->String,
+    formatDate:(date: Instant)->String,
 //    onChangeAsunto:(v:String)->Unit,
 //    onChangeDescription:(v:String)->Unit,
 //    onChangeCupos:(v:String)->Unit,
@@ -112,6 +121,12 @@ internal fun CreateSala(
             snackbarHostState.showSnackbar(message.message)
             // Notify the view model that the message has been dismissed
             clearMessage(message.id)
+        }
+    }
+    BackHandler(enabled = true) {
+        when(pagerState.currentPage){
+            0 -> navigateUp()
+            1 -> coroutineScope.launch { pagerState.animateScrollToPage(0) }
         }
     }
 
@@ -175,20 +190,23 @@ internal fun CreateSala(
             state = pagerState
         ) { page ->
             when (page) {
-                0 -> Page1(
+                1 -> Page1(
                     modifier = Modifier.padding(horizontal = 10.dp),
                     asunto = asunto,
                     description = description,
                     cupos = cupos,
                     onChangeCupos = {cupos = it},
                     onChangeDescription = {description = it},
-                    onChangeAsunto = { asunto=it}
+                    onChangeAsunto = { asunto=it},
+                    max_cupos = viewState.instalacionCupos?.instalacion?.cantidad_personas?:30
                 )
 
-                1 -> Page2(
+                0 -> Page2(
                     reservarInstalacion = reservarInstalacion,
 //                    navigateToPage = { coroutineScope.launch { pagerState.animateScrollToPage(it) } },
                     instalacionCupos = viewState.instalacionCupos,
+                    formatDate = formatDate,
+                    formatShortTime = formatShortTime,
 //                    createSala = { createSala(asunto,description,cupos)}
                 )
             }

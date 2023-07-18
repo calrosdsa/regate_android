@@ -16,7 +16,9 @@ data class GrupoState(
     val authState:AppAuthState? = null,
     val usersProfileGrupo: List<UserProfileGrupo> = emptyList(),
     val grupo:Grupo? = null,
-    val salas:List<SalaDto> = emptyList()
+    val salas:List<SalaDto> = emptyList(),
+    val isAdmin:Boolean = false,
+    val selectedUser:UserProfileGrupo? = null,
 ){
     companion object{
         val Empty = GrupoState(

@@ -15,7 +15,7 @@ data class SalaDto(
     val precio: Int,
     val titulo: String,
     val start_time:Instant,
-    val end_time:Instant,
+    val  end_time:Instant,
     val fecha:Instant,
     val users:Int,
     val grupo_id:Long

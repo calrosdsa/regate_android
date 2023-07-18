@@ -273,7 +273,8 @@ internal fun Sala(
                         ProfileItem(
                             nombre = profile.nombre,
                             apellido = profile.apellido,
-                            photo = profile.profile_photo
+                            photo = profile.profile_photo,
+                            isCurrentUserAdmin = false
                         )
                     }
                 }

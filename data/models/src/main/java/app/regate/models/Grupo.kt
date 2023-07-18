@@ -17,5 +17,5 @@ data class Grupo(
     val created_at: Instant? = null,
     val photo:String? = null,
     //id del usuario que creo
-    val user_id:Long
+    val user_id:Long,
 ):AppEntity

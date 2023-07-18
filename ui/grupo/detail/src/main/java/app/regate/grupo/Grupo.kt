@@ -1,5 +1,6 @@
 package app.regate.grupo
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +22,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.DoorBack
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
@@ -46,6 +48,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -61,6 +64,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.components.CustomButton
@@ -142,7 +146,12 @@ internal fun Grupo(
         refresh = viewModel::refresh,
         createSala = createSala,
         navigateToSala = navigateToSala,
-        editGroup = editGroup
+        editGroup = editGroup,
+        selectUser = viewModel::selectUser,
+        removeUserFromGroup = viewModel::removeUserFromGroup,
+        removeAdminUser = viewModel::removeUserAdmin,
+        addAdminUser = viewModel::addUserAdmin,
+        leaveGroup = { viewModel.leaveGroup(navigateUp) }
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -168,27 +177,59 @@ internal fun Grupo(
     refresh:()->Unit,
     clearMessage:(id:Long)->Unit,
     createSala: (id:Long) -> Unit,
-    navigateToSala: (id: Long) -> Unit
-) {
-//    val participantes = remember(viewState.profiles) {
-//        derivedStateOf {
-//            viewState.profiles.size
-//        }
-//    }
+    navigateToSala: (id: Long) -> Unit,
+    selectUser:(Long)->Unit,
+    removeUserFromGroup:()->Unit,
+    removeAdminUser:()->Unit,
+    addAdminUser:()->Unit,
+    leaveGroup:()->Unit
+    ) {
     val isLogged by remember(viewState.authState){
         derivedStateOf {
             viewState.authState == AppAuthState.LOGGED_IN
         }
     }
+    var dialogUserMenu by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
-//    val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
     val refreshState = rememberPullRefreshState(refreshing = false, onRefresh = { refresh()})
     viewState.message?.let { message ->
         LaunchedEffect(message) {
             snackbarHostState.showSnackbar(message.message)
-            // Notify the view model that the message has been dismissed
             clearMessage(message.id)
+        }
+    }
+    if(dialogUserMenu){
+        Dialog(onDismissRequest = { dialogUserMenu = false }) {
+            Column(modifier = Modifier
+                .padding(10.dp)
+                .clip(MaterialTheme.shapes.small)
+                .background(MaterialTheme.colorScheme.background)
+                .fillMaxWidth()
+            ) {
+             Text(text = "${viewState.selectedUser?.nombre} ${viewState.selectedUser?.apellido?:""}",
+             style = MaterialTheme.typography.titleSmall,modifier = Modifier.padding(horizontal = 8.dp, vertical = 10.dp))
+            Text(text = stringResource(id = R.string.remove_user),modifier = Modifier
+                .clickable { removeUserFromGroup();dialogUserMenu = false }
+                .padding(8.dp)
+                .fillMaxWidth(),
+                style = MaterialTheme.typography.labelLarge
+            )
+                Divider()
+            Text(text = stringResource(id = R.string.meke_user_admin),modifier = Modifier
+                .clickable { addAdminUser();dialogUserMenu = false }
+                .padding(8.dp)
+                .fillMaxWidth(),
+                style = MaterialTheme.typography.labelLarge
+            )
+                Divider()
+                Text(text = stringResource(id = R.string.remove_user_admin),modifier = Modifier
+                    .clickable { removeAdminUser();dialogUserMenu = false }
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
         }
     }
     Scaffold(
@@ -209,7 +250,7 @@ internal fun Grupo(
                         text = { Text(text = stringResource(id = R.string.create_sala)) },
                         onClick = { viewState.grupo?.let { createSala(it.id) } }
                     )
-                    if(viewState.user?.id == viewState.grupo?.user_id?.toLong()){
+                    if(viewState.user?.user_id == viewState.grupo?.user_id){
                     DropdownMenuItem(
                         text = { Text("Editar") },
                         onClick = { viewState.grupo?.id?.let { editGroup(it) } }
@@ -297,7 +338,9 @@ internal fun Grupo(
                         }
                     }else{
                         item {
-                            Box(modifier = Modifier.padding(10.dp).fillMaxWidth()) {
+                            Box(modifier = Modifier
+                                .padding(10.dp)
+                                .fillMaxWidth()) {
                             OutlinedButton(onClick = { createSala(grupo.id) },modifier = Modifier.align(
                                 Alignment.Center)) {
                                 Text(text = stringResource(id = R.string.create_sala))
@@ -322,8 +365,26 @@ internal fun Grupo(
                         ProfileItem(
                             nombre = profile.nombre,
                             apellido = profile.apellido,
-                            photo = profile.profile_photo
+                            photo = profile.profile_photo,
+                            is_admin = profile.is_admin,
+                            isCurrentUserAdmin= viewState.isAdmin,
+                            selectUser = {
+                                dialogUserMenu = true
+                                selectUser(profile.id)
+                            }
                         )
+                    }
+
+                    item{
+                        Spacer(modifier = Modifier.height(10.dp))
+                        TextButton(modifier = Modifier
+                            .padding(10.dp)
+                            .fillMaxWidth(), onClick = { leaveGroup() },
+                        shape = CircleShape,
+                        border = BorderStroke(width = 1.dp,color = MaterialTheme.colorScheme.error)
+                        ) {
+                            Text(text= stringResource(id = R.string.leave_group),color = MaterialTheme.colorScheme.error)
+                        }
                     }
                 }
             }

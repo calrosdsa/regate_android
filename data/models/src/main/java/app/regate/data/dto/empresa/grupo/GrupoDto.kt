@@ -13,14 +13,25 @@ data class GrupoDto(
     val name: String,
     val photo: String? = null,
     val visibility:Int,
-    val user_id:Long
+    val user_id:Long,
 )
 
 @Serializable
 data class GrupoResponse(
     val grupo: GrupoDto,
-    val profiles:List<ProfileDto>,
+    val profiles:List<UserGrupoDto>,
     val salas:List<SalaDto>
+)
+
+@Serializable
+data class UserGrupoDto(
+    val nombre: String,
+    val apellido: String? = null,
+    val profile_id: Long,
+    val profile_photo: String?= null,
+    val is_admin:Boolean,
+    //Only for user grupo table
+    val user_grupo_id:Long = 0
 )
 
 @Serializable

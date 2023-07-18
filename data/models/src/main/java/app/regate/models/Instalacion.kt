@@ -22,7 +22,7 @@ import androidx.room.PrimaryKey
 data class Instalacion (
     @PrimaryKey
     override val id: Long,
-    val cantidad_personas: String?,
+    val cantidad_personas: Int?,
     val category_id: Int?,
     val category_name: String?,
     val description: String?,

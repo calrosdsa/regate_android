@@ -38,4 +38,12 @@
     <string name="notification_sala">Notificaciones sala</string>
     <string name="create_group">Crear grupo</string>
     <string name="rooms">Salas</string>
+    <string name="save">Save</string>
+    <string name="group_visibility">Visibilidad del Grupo</string>
+    <string name="publico">Público</string>
+    <string name="privado">Privado</string>
+    <string name="remove_user">Remover este  usuario del grupo</string>
+    <string name="meke_user_admin">Nombrar a este usuario como administrador</string>
+    <string name="remove_user_admin">Revocar el estatus de administrador</string>
+    <string name="leave_group">Salir del grupo</string>
 </resources>

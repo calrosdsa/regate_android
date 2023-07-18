@@ -70,4 +70,12 @@
     <string name="notification_sala">Room Notifications</string>
     <string name="create_group">Create group</string>
     <string name="rooms">Rooms</string>
+    <string name="save">Save</string>
+    <string name="group_visibility">Group Visibility</string>
+    <string name="publico">Public</string>
+    <string name="privado">Privado</string>
+    <string name="remove_user">Remove this user from the group</string>
+    <string name="meke_user_admin">Appoint this user as an administrator</string>
+    <string name="remove_user_admin">Revoke administrator status</string>
+    <string name="leave_group">Leave group</string>
 </resources>

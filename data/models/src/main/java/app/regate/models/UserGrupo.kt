@@ -24,5 +24,6 @@ data class UserGrupo(
     @PrimaryKey
     override val id: Long,
     val profile_id:Long,
-    val grupo_id:Long
+    val grupo_id:Long,
+    val is_admin:Boolean
 ):AppEntity

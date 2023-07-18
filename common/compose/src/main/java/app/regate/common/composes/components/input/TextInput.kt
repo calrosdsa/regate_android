@@ -1,32 +1,42 @@
 package app.regate.common.composes.components.input
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 
+@SuppressLint("ComposeParameterOrder")
 @Composable
 fun CustomOutlinedTextInput(
     value:String,
     onValueChange:(value:String)->Unit,
-    placeholder:String="",
     modifier: Modifier = Modifier,
+    placeholder:String="",
     label:String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
     icon:ImageVector? = null,
+    maxLines:Int = 1
 ){
 //    var email by remember { mutableStateOf("") }
       OutlinedTextField(
         value = value,
         onValueChange = { onValueChange(it) },
-        maxLines = 1,
+        maxLines = maxLines,
         label = { Text(text = label) },
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType
@@ -42,6 +52,43 @@ fun CustomOutlinedTextInput(
     )
 }
 
+@Composable
+fun InputForm(
+    onValueChange:(value:String)->Unit,
+    value:String,
+//    maxCharacters:Int,
+//    currentCharacters:Int,
+    modifier: Modifier = Modifier,
+    placeholder:String="",
+    label:String = "",
+    maxLines:Int = 1,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    icon:ImageVector? = null,
+    content: @Composable() (BoxScope.() -> Unit) = {},
+){
+    Box() {
+
+    content()
+//    var email by remember { mutableStateOf("") }
+    OutlinedTextField(
+        value = value,
+        onValueChange = { onValueChange(it) },
+        maxLines = maxLines,
+        label = { Text(text = label) },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType
+        ),
+        modifier = modifier.fillMaxWidth(),
+//        shape = CircleShape,
+        placeholder = { Text(text = placeholder)},
+        trailingIcon = {
+            if(icon != null){
+                Icon(imageVector = icon, contentDescription = "Trailing icon")
+            }
+        },
+    )
+    }
+}
 @Composable
 fun TextInput(
     value:String,

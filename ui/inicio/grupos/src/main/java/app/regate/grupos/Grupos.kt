@@ -49,6 +49,8 @@ import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.constant.Route
 import app.regate.constant.id
+import app.regate.data.dto.empresa.grupo.GrupoDto
+import app.regate.data.mappers.DtoToGrupo
 import app.regate.models.Grupo
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
@@ -84,6 +86,7 @@ internal fun Grupos(
     viewModel:GruposViewModel,
     userGroups:@Composable () -> Unit,
     ) {
+//    val pagingItems = viewModel.pagingList.collectasLa
     val viewState by viewModel.state.collectAsState()
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
@@ -109,7 +112,7 @@ internal fun Grupos(
                 1 -> Grupos(
                     modifier = Modifier,
                     viewState = viewState,
-                    navigateToGrupoChat = { navController.navigate(Route.CHAT_SALA id it) }
+//                    navigateToGrupoChat = { navController.navigate(Route.CHAT_SALA id it) }
                 )
             }
         }
@@ -119,16 +122,40 @@ internal fun Grupos(
 @Composable
 internal fun Grupos(
     viewState:GruposState,
-    navigateToGrupoChat:(id:Long)->Unit,
+//    navigateToGrupoChat:(id:Long)->Unit,
     modifier:Modifier = Modifier
 ){
-    Column(modifier = modifier.fillMaxSize()) {
 
-        viewState.grupos.map{
-            GrupoItem(grupo = it,navigateToChatGrupo = navigateToGrupoChat)
-        }
+    Column(modifier = modifier.fillMaxSize()) {
+        Text(text = viewState.loading.toString())
+//        viewState.grupos.map{
+//            GrupoItemDto(grupo = it,navigateToChatGrupo = navigateToGrupoChat)
+//        }
     }
 }
+
+@Composable
+fun GrupoItemDto(
+    grupo:GrupoDto,
+    navigateToChatGrupo: (id: Long) -> Unit,
+    modifier:Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { navigateToChatGrupo(grupo.id) }
+            .padding(10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        PosterCardImage(
+            model = grupo.photo, modifier = Modifier
+                .size(70.dp), shape = CircleShape
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Text(text = grupo.name, style = MaterialTheme.typography.titleMedium)
+    }
+}
+
 
 @Composable
 fun GrupoItem(

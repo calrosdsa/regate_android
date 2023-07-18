@@ -1,14 +1,13 @@
 package app.regate.usergroups
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
-import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.grupo.GrupoRepository
-import app.regate.domain.interactors.UpdateFilterGrupos
-import app.regate.domain.observers.ObserveGrupos
+import app.regate.domain.observers.ObserveUser
+import app.regate.domain.observers.ObserveUserGroups
 import app.regate.util.ObservableLoadingCounter
-import app.regate.util.collectStatus
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -18,9 +17,9 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 class UserGroupsViewModel(
-    observeGrupos: ObserveGrupos,
-//    private val grupoRepository: GrupoRepository,
-    private val updateFilterGrupos: UpdateFilterGrupos
+    observeGrupos: ObserveUserGroups,
+    private val grupoRepository: GrupoRepository,
+//    private val updateFilterGrupos: UpdateFilterGrupos
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
@@ -40,22 +39,18 @@ class UserGroupsViewModel(
         started = SharingStarted.WhileSubscribed()
     )
 
-    init{
+    init {
         observeGrupos(Unit)
-        getFilterGrupos()
+        getUserGrupos()
     }
 
-    fun getFilterGrupos(){
+    fun getUserGrupos(){
         viewModelScope.launch {
-//            try{
-//               grupoRepository.filterGrupos(FilterGrupoData(category_id = 1))
-//            }catch (e:ResponseException){
-//              Log.d("DEBUG_APP",e.response.body<String>().toString())
-//            } catch (e:Exception){
-//                Log.d("DEBUG_APP",e.localizedMessage?:"")
-//            }
-            updateFilterGrupos(UpdateFilterGrupos.Params(d = FilterGrupoData(category_id = 1)))
-                .collectStatus(loadingCounter,uiMessageManager)
+            try{
+            grupoRepository.myGroups()
+            }catch(e:Exception){
+                Log.d("DEBUG_APP_!21",e.localizedMessage?:"")
+            }
         }
     }
     }

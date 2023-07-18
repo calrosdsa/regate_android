@@ -316,6 +316,7 @@ internal fun AppNavigation(
                 navigateToGroup = { navController.navigate(Route.GRUPO id it){
                     popUpTo(Route.GRUPOS)
                 } },
+                openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)}
 //                groupId = backStackEntry.arguments?.getLong("id")?:0
             )
         }
