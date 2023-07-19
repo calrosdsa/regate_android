@@ -3,6 +3,7 @@ package app.regate.models
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import kotlinx.datetime.Instant
 
 @Entity(
     tableName ="profiles",
@@ -24,5 +25,6 @@ data class Profile(
     val profile_photo:String?=null,
     val nombre:String,
     val apellido:String? = null,
+    val created_at:Instant? = null
 ):AppEntity
 

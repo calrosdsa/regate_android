@@ -43,6 +43,7 @@ string choose_a_schedule
 string clear_all
 string create_group
 string create_sala
+string edit
 string explore_exceptional_destinations
 string favorites
 string filters
@@ -83,5 +84,7 @@ string show_less
 string show_more
 string there_are_not_available_schudules
 string time_interval
+string user_since
 string what_would_you_like_to_play
 string where_will_it_be_played
+string you

@@ -23,6 +23,8 @@ import app.regate.data.daos.RoomLabelDao;
 import app.regate.data.daos.RoomLabelDao_Impl;
 import app.regate.data.daos.RoomMessageProfileDao;
 import app.regate.data.daos.RoomMessageProfileDao_Impl;
+import app.regate.data.daos.RoomMyGroupsDao;
+import app.regate.data.daos.RoomMyGroupsDao_Impl;
 import app.regate.data.daos.RoomProfileDao;
 import app.regate.data.daos.RoomProfileDao_Impl;
 import app.regate.data.daos.RoomUserDao;
@@ -61,6 +63,8 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
 
   private volatile RoomUserGrupoDao _roomUserGrupoDao;
 
+  private volatile RoomMyGroupsDao _roomMyGroupsDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
@@ -74,15 +78,16 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_cupos_instalacion_id` ON `cupos` (`instalacion_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `users` (`id` INTEGER NOT NULL, `user_id` INTEGER NOT NULL, `email` TEXT NOT NULL, `estado` INTEGER NOT NULL, `username` TEXT NOT NULL, `profile_photo` TEXT, `nombre` TEXT NOT NULL, `apellido` TEXT, `coins` INTEGER, `profile_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `messages` (`id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, PRIMARY KEY(`id`))");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `profiles` (`id` INTEGER NOT NULL, `user_id` INTEGER, `email` TEXT, `profile_photo` TEXT, `nombre` TEXT NOT NULL, `apellido` TEXT, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `profiles` (`id` INTEGER NOT NULL, `user_id` INTEGER, `email` TEXT, `profile_photo` TEXT, `nombre` TEXT NOT NULL, `apellido` TEXT, `created_at` TEXT, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `settings` (`uuid` TEXT NOT NULL, `paid_type` TEXT NOT NULL, `establecimiento_id` INTEGER NOT NULL, `payment_for_reservation` INTEGER NOT NULL, `horario_interval` TEXT NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`establecimiento_id`) REFERENCES `establecimientos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_settings_establecimiento_id` ON `settings` (`establecimiento_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `labels` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `thumbnail` TEXT, `type_label` TEXT, PRIMARY KEY(`id`, `name`))");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `grupos` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, `user_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `grupos` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, `profile_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_grupo` (`id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`grupo_id`) REFERENCES `grupos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_user_grupo_grupo_id` ON `user_grupo` (`grupo_id`)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `my_groups` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `group_id` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7748e59ced94d8846dc35042df1eeaa5')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7327db9425ecda2be32103cf295e2c7d')");
       }
 
       @Override
@@ -97,6 +102,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("DROP TABLE IF EXISTS `labels`");
         db.execSQL("DROP TABLE IF EXISTS `grupos`");
         db.execSQL("DROP TABLE IF EXISTS `user_grupo`");
+        db.execSQL("DROP TABLE IF EXISTS `my_groups`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -238,13 +244,14 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoMessages + "\n"
                   + " Found:\n" + _existingMessages);
         }
-        final HashMap<String, TableInfo.Column> _columnsProfiles = new HashMap<String, TableInfo.Column>(6);
+        final HashMap<String, TableInfo.Column> _columnsProfiles = new HashMap<String, TableInfo.Column>(7);
         _columnsProfiles.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsProfiles.put("user_id", new TableInfo.Column("user_id", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsProfiles.put("email", new TableInfo.Column("email", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsProfiles.put("profile_photo", new TableInfo.Column("profile_photo", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsProfiles.put("nombre", new TableInfo.Column("nombre", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsProfiles.put("apellido", new TableInfo.Column("apellido", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsProfiles.put("created_at", new TableInfo.Column("created_at", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysProfiles = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesProfiles = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoProfiles = new TableInfo("profiles", _columnsProfiles, _foreignKeysProfiles, _indicesProfiles);
@@ -291,7 +298,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         _columnsGrupos.put("description", new TableInfo.Column("description", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsGrupos.put("created_at", new TableInfo.Column("created_at", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsGrupos.put("photo", new TableInfo.Column("photo", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsGrupos.put("user_id", new TableInfo.Column("user_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsGrupos.put("profile_id", new TableInfo.Column("profile_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysGrupos = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesGrupos = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoGrupos = new TableInfo("grupos", _columnsGrupos, _foreignKeysGrupos, _indicesGrupos);
@@ -317,9 +324,21 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoUserGrupo + "\n"
                   + " Found:\n" + _existingUserGrupo);
         }
+        final HashMap<String, TableInfo.Column> _columnsMyGroups = new HashMap<String, TableInfo.Column>(2);
+        _columnsMyGroups.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMyGroups.put("group_id", new TableInfo.Column("group_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysMyGroups = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesMyGroups = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoMyGroups = new TableInfo("my_groups", _columnsMyGroups, _foreignKeysMyGroups, _indicesMyGroups);
+        final TableInfo _existingMyGroups = TableInfo.read(db, "my_groups");
+        if (!_infoMyGroups.equals(_existingMyGroups)) {
+          return new RoomOpenHelper.ValidationResult(false, "my_groups(app.regate.models.MyGroups).\n"
+                  + " Expected:\n" + _infoMyGroups + "\n"
+                  + " Found:\n" + _existingMyGroups);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "7748e59ced94d8846dc35042df1eeaa5", "8511616c33f78f1c486a67b96f82a634");
+    }, "7327db9425ecda2be32103cf295e2c7d", "700a315b9af908a8f172fb5a398c26f2");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -330,7 +349,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups");
   }
 
   @Override
@@ -356,6 +375,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
       _db.execSQL("DELETE FROM `labels`");
       _db.execSQL("DELETE FROM `grupos`");
       _db.execSQL("DELETE FROM `user_grupo`");
+      _db.execSQL("DELETE FROM `my_groups`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -382,6 +402,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
     _typeConvertersMap.put(RoomLabelDao.class, RoomLabelDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomGrupoDao.class, RoomGrupoDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomUserGrupoDao.class, RoomUserGrupoDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(RoomMyGroupsDao.class, RoomMyGroupsDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -522,6 +543,20 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
           _roomUserGrupoDao = new RoomUserGrupoDao_Impl(this);
         }
         return _roomUserGrupoDao;
+      }
+    }
+  }
+
+  @Override
+  public RoomMyGroupsDao myGroupsDao() {
+    if (_roomMyGroupsDao != null) {
+      return _roomMyGroupsDao;
+    } else {
+      synchronized(this) {
+        if(_roomMyGroupsDao == null) {
+          _roomMyGroupsDao = new RoomMyGroupsDao_Impl(this);
+        }
+        return _roomMyGroupsDao;
       }
     }
   }

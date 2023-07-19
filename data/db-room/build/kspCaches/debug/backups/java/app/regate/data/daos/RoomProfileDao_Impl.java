@@ -12,6 +12,7 @@ import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.room.util.StringUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
+import app.regate.data.db.DateTimeTypeConverters;
 import app.regate.models.Profile;
 import java.lang.Class;
 import java.lang.Exception;
@@ -29,6 +30,7 @@ import java.util.concurrent.Callable;
 import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 import kotlinx.coroutines.flow.Flow;
+import kotlinx.datetime.Instant;
 
 @SuppressWarnings({"unchecked", "deprecation"})
 public final class RoomProfileDao_Impl extends RoomProfileDao {
@@ -59,7 +61,7 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `profiles` SET `id` = ?,`user_id` = ?,`email` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `profiles` SET `id` = ?,`user_id` = ?,`email` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ?,`created_at` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -87,14 +89,20 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
         } else {
           statement.bindString(6, entity.getApellido());
         }
-        statement.bindLong(7, entity.getId());
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp == null) {
+          statement.bindNull(7);
+        } else {
+          statement.bindString(7, _tmp);
+        }
+        statement.bindLong(8, entity.getId());
       }
     };
     this.__upsertionAdapterOfProfile = new EntityUpsertionAdapter<Profile>(new EntityInsertionAdapter<Profile>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `profiles` (`id`,`user_id`,`email`,`profile_photo`,`nombre`,`apellido`) VALUES (?,?,?,?,?,?)";
+        return "INSERT INTO `profiles` (`id`,`user_id`,`email`,`profile_photo`,`nombre`,`apellido`,`created_at`) VALUES (?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -121,13 +129,19 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
           statement.bindNull(6);
         } else {
           statement.bindString(6, entity.getApellido());
+        }
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp == null) {
+          statement.bindNull(7);
+        } else {
+          statement.bindString(7, _tmp);
         }
       }
     }, new EntityDeletionOrUpdateAdapter<Profile>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `profiles` SET `id` = ?,`user_id` = ?,`email` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ? WHERE `id` = ?";
+        return "UPDATE `profiles` SET `id` = ?,`user_id` = ?,`email` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ?,`created_at` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -155,7 +169,13 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
         } else {
           statement.bindString(6, entity.getApellido());
         }
-        statement.bindLong(7, entity.getId());
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp == null) {
+          statement.bindNull(7);
+        } else {
+          statement.bindString(7, _tmp);
+        }
+        statement.bindLong(8, entity.getId());
       }
     });
   }
@@ -273,6 +293,7 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
             final int _cursorIndexOfProfilePhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_photo");
             final int _cursorIndexOfNombre = CursorUtil.getColumnIndexOrThrow(_cursor, "nombre");
             final int _cursorIndexOfApellido = CursorUtil.getColumnIndexOrThrow(_cursor, "apellido");
+            final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
             final Profile _result;
             if (_cursor.moveToFirst()) {
               final long _tmpId;
@@ -303,7 +324,15 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
               } else {
                 _tmpApellido = _cursor.getString(_cursorIndexOfApellido);
               }
-              _result = new Profile(_tmpId,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido);
+              final Instant _tmpCreated_at;
+              final String _tmp;
+              if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+                _tmp = null;
+              } else {
+                _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+              }
+              _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+              _result = new Profile(_tmpId,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCreated_at);
             } else {
               _result = null;
             }
@@ -353,6 +382,7 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
             final int _cursorIndexOfProfilePhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_photo");
             final int _cursorIndexOfNombre = CursorUtil.getColumnIndexOrThrow(_cursor, "nombre");
             final int _cursorIndexOfApellido = CursorUtil.getColumnIndexOrThrow(_cursor, "apellido");
+            final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
             final List<Profile> _result = new ArrayList<Profile>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final Profile _item_1;
@@ -384,7 +414,15 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
               } else {
                 _tmpApellido = _cursor.getString(_cursorIndexOfApellido);
               }
-              _item_1 = new Profile(_tmpId,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido);
+              final Instant _tmpCreated_at;
+              final String _tmp;
+              if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+                _tmp = null;
+              } else {
+                _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+              }
+              _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+              _item_1 = new Profile(_tmpId,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCreated_at);
               _result.add(_item_1);
             }
             __db.setTransactionSuccessful();

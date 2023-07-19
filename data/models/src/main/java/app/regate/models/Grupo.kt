@@ -1,8 +1,6 @@
 package app.regate.models
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.datetime.Instant
 
@@ -17,5 +15,5 @@ data class Grupo(
     val created_at: Instant? = null,
     val photo:String? = null,
     //id del usuario que creo
-    val user_id:Long,
+    val profile_id:Long,
 ):AppEntity

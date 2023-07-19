@@ -1,8 +1,12 @@
+@file:Suppress("DEPRECATION")
 
 package app.regate.creategroup
 
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -63,15 +67,15 @@ internal fun MainPage(
     uploadImage:(type:String,name:String,byteArray:ByteArray)->Unit,
     modifier: Modifier = Modifier
 ){
-    var imageUri by remember {
-        mutableStateOf<Uri?>(null)
-    }
+
     val context = LocalContext.current
-//    val bitmap =  remember {
-//        mutableStateOf<Bitmap?>(null)
-//    }
+    val bitmapImg =  remember {
+        mutableStateOf<Bitmap?>(null)
+    }
     val launcher = rememberLauncherForActivityResult(contract =
     ActivityResultContracts.GetContent()) { uri: Uri? ->
+
+
          uri?.let { returnUri ->
             context.contentResolver.query(returnUri, null, null, null, null)
         }?.use { cursor ->
@@ -89,14 +93,22 @@ internal fun MainPage(
                  if (imageByteArray != null) {
                      uploadImage(imgType,cursor.getString(nameIndex),imageByteArray)
                  }
+                     if (Build.VERSION.SDK_INT < 28) {
+                         val bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver,uri)
+                         bitmapImg.value = bitmap
+
+                     } else {
+                         val source = ImageDecoder
+                             .createSource(context.contentResolver,uri)
+                         val bitmap = ImageDecoder.decodeBitmap(source)
+                         bitmapImg.value = bitmap
+                     }
                  Log.d("DEBUG_APP",imageByteArray.toString())
                  inputStream?.close()
              }catch(e:Exception){
                  Log.d("DEBUG_APP",e.localizedMessage?:"")
              }
         }
-        imageUri = uri
-
     }
     Box(modifier = modifier.fillMaxSize()){
 
@@ -112,14 +124,11 @@ internal fun MainPage(
 //                    shape = CircleShape)
 //                }else{
 
-//        UploadImageBitmap(bitmap = bitmap.value,
-//            setBitmap = {bitmap.value = it},
-//            context = context,
-//            uri = imageUri,
-//            modifier = Modifier
-//                .size(100.dp)
-////            uploadImage = { launcher.launch("image/*") }
-//        )
+        UploadImageBitmap(bitmap = bitmapImg.value,
+            modifier = Modifier
+                .size(100.dp)
+//            uploadImage = { launcher.launch("image/*") }
+        )
 
 //                }
             IconButton(onClick = { launcher.launch("image/*") },

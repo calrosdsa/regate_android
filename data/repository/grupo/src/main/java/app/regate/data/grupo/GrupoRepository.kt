@@ -3,6 +3,7 @@ package app.regate.data.grupo
 import app.regate.compoundmodels.MessageProfile
 import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.MessageProfileDao
+import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
@@ -14,6 +15,7 @@ import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
+import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.mappers.DtoToGrupo
 import app.regate.data.mappers.DtoToProfile
@@ -21,8 +23,10 @@ import app.regate.data.mappers.DtoToUserGrupo
 import app.regate.data.mappers.MessageDtoToMessage
 import app.regate.data.mappers.MessageToMessageDto
 import app.regate.data.mappers.ReplyMessageDtoToMessage
+import app.regate.data.mappers.UserGroupDtoToProfile
 import app.regate.inject.ApplicationScope
 import app.regate.models.Message
+import app.regate.models.MyGroups
 import app.regate.models.Profile
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
@@ -43,10 +47,15 @@ class GrupoRepository(
     private val dtoToUserGrupo: DtoToUserGrupo,
     private val dispatchers: AppCoroutineDispatchers,
     private val userDao: UserDao,
+    private val myGroupsDao: MyGroupsDao,
+    private val profileMapper:UserGroupDtoToProfile
 ){
     suspend fun myGroups(){
         withContext(dispatchers.computation){
             val grupos = grupoDataSourceImpl.myGroups().map { dtoToGrupo.map(it) }
+            val myGroups = grupos.map{ MyGroups(group_id = it.id)}
+            myGroupsDao.deleteAll()
+            myGroupsDao.upsertAll(myGroups)
             grupoDao.upsertAll(grupos)
         }
     }
@@ -90,6 +99,7 @@ class GrupoRepository(
     suspend fun createGrupo(d:GroupRequest):GrupoDto{
         return grupoDataSourceImpl.createGroup(d).also {
             grupoDao.upsert(dtoToGrupo.map(it))
+            myGroupsDao.upsert(MyGroups(group_id = it.id))
         }
     }
     suspend fun joinGrupo(grupoId:Long): ResponseMessage {
@@ -102,13 +112,15 @@ class GrupoRepository(
     }
     suspend fun getGrupo(id:Long):List<SalaDto>{
         return  grupoDataSourceImpl.getGrupo(id).also { result->
-//            val profiles = result.profiles.map { profileMapper.map(it) }
+            grupoDao.upsert(dtoToGrupo.map(result.grupo))
+            val profiles = result.profiles.map { profileMapper.map(it) }
             val usersGrupo = result.profiles.map { dtoToUserGrupo.map(it,result.grupo.id) }
-//            profileDao.upsertAll(profiles)
+            userGrupoDao.deleteUserGroup(id)
+            profileDao.upsertAll(profiles)
             userGrupoDao.upsertAll(usersGrupo)
         }.salas
     }
-    suspend fun filterGrupos(d:FilterGrupoData,page: Int):List<GrupoDto>{
+    suspend fun filterGrupos(d:FilterGrupoData,page: Int):PaginationGroupsResponse{
         return grupoDataSourceImpl.filterGrupos(d,page)
     }
     suspend fun saveMessage(data:GrupoMessageDto){
@@ -119,8 +131,8 @@ class GrupoRepository(
         messageProfileDao.upsert(data)
     }
     suspend fun getUsersGroup(id:Long){
-        withContext(dispatchers.computation){
-            userGrupoDao.deleteUsers(id)
+        withContext(dispatchers.computation){ 
+            userGrupoDao.deleteUserGroup(id)
         grupoDataSourceImpl.getUsersGrupo(id).apply {
             val profiles = map {
 //                profileMapper.map(it)

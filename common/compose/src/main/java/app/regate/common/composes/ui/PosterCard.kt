@@ -98,31 +98,23 @@ fun PosterCardImage(
 @Composable
 fun UploadImageBitmap(
     bitmap: Bitmap?,
-    setBitmap:(Bitmap)->Unit,
-    context:Context,
-    uri:Uri?,
 //    uploadImage:()->Unit,
     modifier: Modifier = Modifier,
     shape:Shape = CircleShape,
 ) {
-    Card(modifier = modifier,
-        shape = shape) {
+    Card(
+        modifier = modifier,
+        shape = shape
+    ) {
         Box(modifier = Modifier.fillMaxSize()) {
 
-        if(uri != null){
-            if (Build.VERSION.SDK_INT < 28) {
-               setBitmap(MediaStore.Images
-                    .Media.getBitmap(context.contentResolver,uri))
-            } else {
-                val source = ImageDecoder
-                    .createSource(context.contentResolver,uri)
-                setBitmap(ImageDecoder.decodeBitmap(source))
-            }
 
-            bitmap?.let {  btm ->
-                Image(bitmap = btm.asImageBitmap(),
-                    contentDescription =null,
-                    modifier = Modifier.fillMaxSize())
+            bitmap?.let { btm ->
+                Image(
+                    bitmap = btm.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
 
 
@@ -132,15 +124,15 @@ fun UploadImageBitmap(
 //                Icon(imageVector = Icons.Default.UploadFile, contentDescription = "upload")
 //        }
 
-        }
+    }
 //        Image(
 //            bitmap = it,
 //            contentDescription = null,
 //            modifier = Modifier.fillMaxSize(),
 ////            contentScale = ContentScale.Crop,
 //        )
-        }
-    }
+}
+
 
 @Composable
 private fun PosterCardContent(establecimiento: EstablecimientoDto) {

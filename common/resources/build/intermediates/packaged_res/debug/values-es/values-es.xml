@@ -7,6 +7,7 @@
     <string name="clear_all">Resetear</string>
     <string name="create_group">Crear grupo</string>
     <string name="create_sala">Crear sala</string>
+    <string name="edit">Editar</string>
     <string name="explore_exceptional_destinations">Explora destinos excepcionales</string>
     <string name="favorites">Mis favoritos</string>
     <string name="filters">Filtros</string>
@@ -41,6 +42,8 @@
     <string name="show_more">Ver más</string>
     <string name="there_are_not_available_schudules">No hay horarios disponibles</string>
     <string name="time_interval">¿Por cuánto tiempo de gustaría jugar?</string>
+    <string name="user_since">Usuario desde %1$s</string>
     <string name="what_would_you_like_to_play">¿Qué te gustaría jugar?</string>
     <string name="where_will_it_be_played">Donde estarás jugando</string>
+    <string name="you">Tú</string>
 </resources>

@@ -282,7 +282,8 @@ internal fun AppNavigation(
 //                navigateToChat = {navController.navigate(Route.CHAT_SALA id it)},
                 createSala = { navController.navigate(Route.ESTABLECIMIENTO_FILTER id it)},
                 navigateToSala = { navController.navigate(Route.SALA id it)},
-                editGroup = {navController.navigate(Route.CREATE_GROUP + "?id=${it}" )}
+                editGroup = {navController.navigate(Route.CREATE_GROUP + "?id=${it}" )},
+                navigateToProfile = {navController.navigate(Route.PROFILE id it)}
                 )
         }
 
@@ -290,6 +291,27 @@ internal fun AppNavigation(
             route = Route.SETTING
         ){
             composeScreens.settings(
+                navigateUp = navController::navigateUp
+            )
+        }
+        animatedComposable(
+            route = Route.PROFILE arg "id",
+            arguments = listOf(
+                navArgument("id") { type = NavType.LongType },
+            )
+        ){
+            composeScreens.profile(
+                navigateUp = navController::navigateUp,
+                navigateToEditProfile = {navController.navigate(Route.EDIT_PROFILE id it)}
+            )
+        }
+        animatedComposable(
+            route = Route.EDIT_PROFILE arg "id",
+            arguments = listOf(
+                navArgument("id") { type = NavType.LongType },
+            )
+        ){
+            composeScreens.editProfile(
                 navigateUp = navController::navigateUp
             )
         }
@@ -356,9 +378,9 @@ private fun NavGraphBuilder.AddMainNav(
             composeScreens.servicios(navController = navController)
         }
         composable(route= Route.GRUPOS){
-            composeScreens.grupos(navController = navController,userGroups={
-                composeScreens.userGroups(
-                    navigateToChat = {navController.navigate(Route.CHAT_SALA id it)},
+            composeScreens.grupos(navController = navController,filterGroups={
+                composeScreens.filterGroups(
+                    navigateToGroup = {navController.navigate(Route.GRUPO id it)},
                 )
             }
         )}

@@ -10,13 +10,14 @@ import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
+import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.UserGrupoDto
 import app.regate.models.Message
 
 interface GrupoDataSource {
    suspend fun myGroups():List<GrupoDto>
    suspend fun syncMessages(d:List<GrupoMessageDto>):List<GrupoMessageDto>
-   suspend fun filterGrupos(d:FilterGrupoData,page:Int):List<GrupoDto>
+   suspend fun filterGrupos(d:FilterGrupoData,page:Int):PaginationGroupsResponse
    suspend fun getGrupo(id:Long):GrupoResponse
    suspend fun getMessagesGrupo(id:Long,page:Int):List<GrupoMessageDto>
    suspend fun joinGrupo(d:AddUserGrupoRequest): ResponseMessage

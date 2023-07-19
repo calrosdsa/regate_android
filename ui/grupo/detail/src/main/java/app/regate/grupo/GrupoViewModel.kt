@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.UserProfileGrupo
-import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.grupo.GrupoRepository
@@ -23,7 +22,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
@@ -42,7 +40,7 @@ class GrupoViewModel(
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val salas = MutableStateFlow<List<SalaDto>>(emptyList())
-    private val isAdmin = MutableStateFlow(false)
+    private val currentUser = MutableStateFlow<UserProfileGrupo?>(null)
     private val selectedUser = MutableStateFlow<UserProfileGrupo?>(null)
     val state:StateFlow<GrupoState> = combine(
         uiMessageManager.message,
@@ -52,9 +50,9 @@ class GrupoViewModel(
         observeGrupo.flow,
         salas,
         observeUser.flow,
-        isAdmin,
+        currentUser,
         selectedUser,
-    ){ message, loading, authState,usersGrupo, grupo,salas,user,isAdmin,selectedUser->
+    ){ message, loading, authState,usersGrupo, grupo,salas,user,currentUser,selectedUser->
         GrupoState(
             message = message,
             authState = authState,
@@ -63,7 +61,7 @@ class GrupoViewModel(
             grupo = grupo,
             salas = salas,
             user = user,
-            isAdmin = isAdmin,
+            currentUser = currentUser,
             selectedUser = selectedUser
         )
     }.stateIn(
@@ -79,41 +77,40 @@ class GrupoViewModel(
         getGrupo()
         checkIsAdmin()
     }
-    fun checkIsAdmin(){
-    viewModelScope.launch {
-        try{
-        observeUsersGrupo.flow.collect{results->
-            try{
-
-            Log.d("DEBUG_APP_SS",results.toString())
-            val admins = results.filter { it.is_admin }.map { it.id }
-            Log.d("DEBUG_APP_SS",admins.toString())
-            Log.d("DEBUG_APP_SS",state.value.user?.profile_id.toString())
-            observeUser.flow.collect{result-> if(admins.contains(result.profile_id)){ isAdmin.tryEmit(true) } }
-            }catch (e:Exception){
+    fun checkIsAdmin() {
+        viewModelScope.launch {
+            try {
+                observeUsersGrupo.flow.collect { results ->
+                    try {
+                        Log.d("DEBUG_APP_SS", results.toString())
+                        observeUser.flow.collect { result ->
+                                val user = results.find { it.id == result.profile_id }
+                                currentUser.tryEmit(results.find { it.id == user?.id })
+                        }
+                    } catch (e: Exception) {
+                        //TODO()
+                    }
+                }
+            } catch (e: Exception) {
                 //TODO()
             }
         }
-        }catch(e:Exception){
-            //TODO()
-        }
     }
-    }
-    fun getGrupo(){
+    fun getGrupo() {
         viewModelScope.launch {
-            try{
+            try {
                 loadingState.addLoader()
                 val res = grupoRepository.getGrupo(grupoId)
                 delay(2000)
                 salas.tryEmit(res)
                 loadingState.removeLoader()
-                Log.d("DEBUG_APP",res.toString())
-            } catch (e:ResponseException){
+                Log.d("DEBUG_APP", res.toString())
+            } catch (e: ResponseException) {
                 loadingState.removeLoader()
-                Log.d("DEBUG_ERROR",e.response.body())
-            }catch(e:Exception){
+                Log.d("DEBUG_ERROR", e.response.body())
+            } catch (e: Exception) {
                 loadingState.removeLoader()
-                Log.d("DEBUG_ERROR",e.localizedMessage?:"")
+                Log.d("DEBUG_ERROR", e.localizedMessage ?: "")
             }
         }
     }

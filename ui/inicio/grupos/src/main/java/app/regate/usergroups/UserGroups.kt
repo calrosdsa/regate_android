@@ -12,25 +12,25 @@ import app.regate.grupos.GrupoItem
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias UserGroups = @Composable (
-    navigateToChat:(id:Long)->Unit,
-//    navigateToSignUpScreen:() -> Unit,
-
-) -> Unit
-
-@Inject
-@Composable
-fun UserGroups (
-    viewModelFactory:()-> UserGroupsViewModel,
-    @Assisted navigateToChat: (id: Long) -> Unit,
-//    @Assisted navigateToReserva: (id:Long) -> Unit,
-//    viewModelFactory:()->ReservasViewModel
-){
-    UserGroups(
-        viewModel = viewModel(factory = viewModelFactory),
-        navigateToChat = navigateToChat
-    )
-}
+//typealias UserGroups = @Composable (
+//    navigateToChat:(id:Long)->Unit,
+////    navigateToSignUpScreen:() -> Unit,
+//
+//) -> Unit
+//
+//@Inject
+//@Composable
+//fun UserGroups (
+//    viewModelFactory:()-> UserGroupsViewModel,
+//    @Assisted navigateToChat: (id: Long) -> Unit,
+////    @Assisted navigateToReserva: (id:Long) -> Unit,
+////    viewModelFactory:()->ReservasViewModel
+//){
+//    UserGroups(
+//        viewModel = viewModel(factory = viewModelFactory),
+//        navigateToChat = navigateToChat
+//    )
+//}
 
 
 @Composable

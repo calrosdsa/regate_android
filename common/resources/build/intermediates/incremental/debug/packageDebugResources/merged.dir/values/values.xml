@@ -23,6 +23,7 @@
     <string name="clear_all">Clear all</string>
     <string name="create_group">Create group</string>
     <string name="create_sala">Create sala</string>
+    <string name="edit">Edit</string>
     <string name="explore_exceptional_destinations">Explore exceptional destinations</string>
     <string name="favorites">Favorites</string>
     <string name="filters">Filters</string>
@@ -66,6 +67,8 @@
     <string name="show_more">Show more</string>
     <string name="there_are_not_available_schudules">There are no available schedules</string>
     <string name="time_interval">¿Cuánto tiempo quieres jugar?</string>
+    <string name="user_since">User since %1$s</string>
     <string name="what_would_you_like_to_play">What would you like to play?</string>
     <string name="where_will_it_be_played">Where will it be played?</string>
+    <string name="you">You</string>
 </resources>

@@ -25,6 +25,7 @@ import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.InstalacionDao
 import app.regate.data.daos.LabelDao
 import app.regate.data.daos.MessageProfileDao
+import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
@@ -49,6 +50,8 @@ interface RoomDatabaseComponent {
     }
     @Provides
     fun provideAppDatabase(bind: AppRoomDatabase): AppDatabase = bind
+    @Provides
+    fun provideMyGroupsDao(db: AppDatabase):MyGroupsDao = db.myGroupsDao()
     @Provides
     fun provideAppLabelsDao(db:AppDatabase):LabelDao = db.labelsDao()
     @Provides

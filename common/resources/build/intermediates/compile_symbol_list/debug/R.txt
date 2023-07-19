@@ -42,6 +42,7 @@ int string choose_a_schedule 0x0
 int string clear_all 0x0
 int string create_group 0x0
 int string create_sala 0x0
+int string edit 0x0
 int string explore_exceptional_destinations 0x0
 int string favorites 0x0
 int string filters 0x0
@@ -82,5 +83,7 @@ int string show_less 0x0
 int string show_more 0x0
 int string there_are_not_available_schudules 0x0
 int string time_interval 0x0
+int string user_since 0x0
 int string what_would_you_like_to_play 0x0
 int string where_will_it_be_played 0x0
+int string you 0x0

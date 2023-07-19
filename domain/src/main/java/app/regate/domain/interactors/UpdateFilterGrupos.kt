@@ -14,7 +14,7 @@ class UpdateFilterGrupos(
 ):Interactor<UpdateFilterGrupos.Params>() {
     override suspend fun doWork(params: Params) {
         withContext(dispatchers.computation){
-            grupoRepository.filterGrupos(params.d)
+            grupoRepository.filterGrupos(params.d,1)
         }
     }
     data class  Params(

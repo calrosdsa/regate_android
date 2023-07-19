@@ -9,6 +9,7 @@ import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
+import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.UserGrupoDto
 import app.regate.models.Message
 import io.ktor.client.HttpClient
@@ -43,7 +44,7 @@ class GrupoDataSourceImpl(
             setBody(d)
         }.body()
     }
-    override suspend fun filterGrupos(d: FilterGrupoData,page: Int): List<GrupoDto> {
+    override suspend fun filterGrupos(d: FilterGrupoData,page: Int): PaginationGroupsResponse {
             return client.post("/v1/grupo/filter/?page=${page}"){
                 contentType(ContentType.Application.Json)
                 setBody(d)

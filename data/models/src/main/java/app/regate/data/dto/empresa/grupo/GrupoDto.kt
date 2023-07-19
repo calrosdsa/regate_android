@@ -1,6 +1,5 @@
 package app.regate.data.dto.empresa.grupo
 
-import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.dto.empresa.salas.SalaDto
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
@@ -13,7 +12,13 @@ data class GrupoDto(
     val name: String,
     val photo: String? = null,
     val visibility:Int,
-    val user_id:Long,
+    val profile_id:Long,
+)
+
+@Serializable
+data class PaginationGroupsResponse(
+    val results:List<GrupoDto>,
+    val page:Int
 )
 
 @Serializable

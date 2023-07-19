@@ -30,6 +30,9 @@ object Route {
     const val SETTING = "setting"
     const val RESERVAS = "reservas"
 
+    const val PROFILE = "profile"
+    const val EDIT_PROFILE = "edit_profile"
+
     const val FILTER = "filter"
 
     const val GRUPO = "grupo"

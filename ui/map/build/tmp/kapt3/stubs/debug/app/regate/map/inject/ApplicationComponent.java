@@ -177,6 +177,13 @@ public abstract class ApplicationComponent implements app.regate.data.RoomDataba
     
     @org.jetbrains.annotations.NotNull
     @me.tatarka.inject.annotations.Provides
+    public app.regate.data.daos.MyGroupsDao provideMyGroupsDao(@org.jetbrains.annotations.NotNull
+    app.regate.data.db.AppDatabase db) {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.NotNull
+    @me.tatarka.inject.annotations.Provides
     @app.regate.inject.ApplicationScope
     public okhttp3.OkHttpClient provideOkHttpClient(@org.jetbrains.annotations.NotNull
     android.app.Application context) {

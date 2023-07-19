@@ -46,4 +46,7 @@
     <string name="meke_user_admin">Nombrar a este usuario como administrador</string>
     <string name="remove_user_admin">Revocar el estatus de administrador</string>
     <string name="leave_group">Salir del grupo</string>
+    <string name="you">Tú</string>
+    <string name="user_since">Usuario desde %1$s</string>
+    <string name="edit">Editar</string>
 </resources>

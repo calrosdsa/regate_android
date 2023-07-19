@@ -271,6 +271,7 @@ internal fun Sala(
                         key = { it.profile_id }
                     ) { profile ->
                         ProfileItem(
+                            id = profile.profile_id,
                             nombre = profile.nombre,
                             apellido = profile.apellido,
                             photo = profile.profile_photo,

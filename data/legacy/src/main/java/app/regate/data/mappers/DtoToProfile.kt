@@ -13,7 +13,8 @@ class DtoToProfile:Mapper<ProfileDto,Profile> {
             profile_photo = from.profile_photo,
             nombre = from.nombre,
             apellido = from.apellido,
-            email = from.email
+            email = from.email,
+            created_at = from.created_at
         )
     }
 }

@@ -66,18 +66,10 @@ class GruposViewModel(
             initialLoadSize = 20,
         )
     }
-    fun getFilterGrupos(){
+
+    fun clearMessage(id:Long){
         viewModelScope.launch {
-            try{
-//               val results = grupoRepository.filterGrupos(FilterGrupoData(category_id = 1))
-//                grupos.tryEmit(results)
-            }catch (e:ResponseException){
-              Log.d("DEBUG_APP",e.response.body<String>().toString())
-            } catch (e:Exception){
-                Log.d("DEBUG_APP",e.localizedMessage?:"")
-            }
-//            updateFilterGrupos(UpdateFilterGrupos.Params(d = FilterGrupoData(category_id = 1)))
-//                .collectStatus(loadingCounter,uiMessageManager)
+            uiMessageManager.clearMessage(id)
         }
     }
     }

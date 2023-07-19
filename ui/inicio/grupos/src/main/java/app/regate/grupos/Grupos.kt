@@ -5,10 +5,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -17,9 +15,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.More
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -44,21 +40,20 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import app.regate.common.composes.ui.BottomBar
 import app.regate.common.composes.ui.PosterCardImage
-import app.regate.common.composes.ui.TopBar
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.constant.Route
 import app.regate.constant.id
-import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.data.mappers.DtoToGrupo
 import app.regate.models.Grupo
+import app.regate.usergroups.UserGroups
+import app.regate.usergroups.UserGroupsViewModel
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
 typealias Grupos = @Composable (
     navController: NavController,
-    userGroups:@Composable () -> Unit,
+    filterGroups:@Composable () -> Unit,
 //    navigateToReserva:(id:Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
@@ -66,15 +61,15 @@ typealias Grupos = @Composable (
 @Inject
 @Composable
 fun Grupos (
-    viewModelFactory:()->GruposViewModel,
+    viewModelFactory:()->UserGroupsViewModel,
     @Assisted navController: NavController,
-    @Assisted userGroups:@Composable () -> Unit,
+    @Assisted filterGroups:@Composable () -> Unit,
 //    @Assisted navigateToReserva: (id:Long) -> Unit,
 //    viewModelFactory:()->ReservasViewModel
 ){
     Grupos(navController = navController,
         viewModel = viewModel(factory = viewModelFactory),
-        userGroups = userGroups
+        filterGroups = filterGroups
     )
 }
 
@@ -83,8 +78,8 @@ fun Grupos (
 @Composable
 internal fun Grupos(
     navController: NavController,
-    viewModel:GruposViewModel,
-    userGroups:@Composable () -> Unit,
+    viewModel:UserGroupsViewModel,
+    filterGroups:@Composable () -> Unit,
     ) {
 //    val pagingItems = viewModel.pagingList.collectasLa
     val viewState by viewModel.state.collectAsState()
@@ -108,53 +103,17 @@ internal fun Grupos(
         HorizontalPager(pageCount = 2,state= pagerState,modifier = Modifier
             .padding(paddingValue)) {page->
             when (page) {
-                0 -> userGroups()
-                1 -> Grupos(
-                    modifier = Modifier,
+                0 -> UserGroups(
+//                    modifier = Modifier,
                     viewState = viewState,
-//                    navigateToGrupoChat = { navController.navigate(Route.CHAT_SALA id it) }
+                    navigateToChat = { navController.navigate(Route.CHAT_SALA id it) }
                 )
+                1 -> filterGroups()
             }
         }
     }
 }
 
-@Composable
-internal fun Grupos(
-    viewState:GruposState,
-//    navigateToGrupoChat:(id:Long)->Unit,
-    modifier:Modifier = Modifier
-){
-
-    Column(modifier = modifier.fillMaxSize()) {
-        Text(text = viewState.loading.toString())
-//        viewState.grupos.map{
-//            GrupoItemDto(grupo = it,navigateToChatGrupo = navigateToGrupoChat)
-//        }
-    }
-}
-
-@Composable
-fun GrupoItemDto(
-    grupo:GrupoDto,
-    navigateToChatGrupo: (id: Long) -> Unit,
-    modifier:Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { navigateToChatGrupo(grupo.id) }
-            .padding(10.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        PosterCardImage(
-            model = grupo.photo, modifier = Modifier
-                .size(70.dp), shape = CircleShape
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Text(text = grupo.name, style = MaterialTheme.typography.titleMedium)
-    }
-}
 
 
 @Composable

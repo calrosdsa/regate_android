@@ -640,7 +640,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       return;
     }
     final StringBuilder _stringBuilder = StringUtil.newStringBuilder();
-    _stringBuilder.append("SELECT `id`,`user_id`,`email`,`profile_photo`,`nombre`,`apellido` FROM `profiles` WHERE `id` IN (");
+    _stringBuilder.append("SELECT `id`,`user_id`,`email`,`profile_photo`,`nombre`,`apellido`,`created_at` FROM `profiles` WHERE `id` IN (");
     final int _inputSize = _map.size();
     StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
     _stringBuilder.append(")");
@@ -665,6 +665,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       final int _cursorIndexOfProfilePhoto = 3;
       final int _cursorIndexOfNombre = 4;
       final int _cursorIndexOfApellido = 5;
+      final int _cursorIndexOfCreatedAt = 6;
       while (_cursor.moveToNext()) {
         final long _tmpKey;
         _tmpKey = _cursor.getLong(_itemKeyIndex);
@@ -698,7 +699,15 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           } else {
             _tmpApellido = _cursor.getString(_cursorIndexOfApellido);
           }
-          _item_1 = new Profile(_tmpId,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido);
+          final Instant _tmpCreated_at;
+          final String _tmp;
+          if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+            _tmp = null;
+          } else {
+            _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+          }
+          _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+          _item_1 = new Profile(_tmpId,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCreated_at);
           _map.put(_tmpKey, _item_1);
         }
       }
