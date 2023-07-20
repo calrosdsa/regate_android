@@ -1,8 +1,10 @@
 package app.regate.profile.edit
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.dto.FileData
 import app.regate.data.users.UsersRepository
@@ -47,15 +49,37 @@ class EditProfileViewModel(
     init{
         observeProfile(ObserveProfile.Params(id = id))
     }
-    fun editProfile(){
+    fun editProfile(nombre:String,apellido:String){
         viewModelScope.launch {
-            usersRepository.editProfile()
+            try{
+                loadingCounter.addLoader()
+            state.value.profile?.let {
+                usersRepository.editProfile(
+                    file = file.value,
+                    d = it.copy(
+                        apellido = apellido,
+                        nombre = nombre,
+                    )
+                )
+            }
+                loadingCounter.removeLoader()
+                uiMessageManager.emitMessage(UiMessage(message = "Se han aplicado los cambios"))
+            } catch (e:Exception){
+                loadingCounter.removeLoader()
+                Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")
+            }
         }
     }
     fun uploadImage(type:String,name:String,byteArray: ByteArray){
         viewModelScope.launch {
             val result = FileData( name = name,type = type, byteArray = byteArray)
             file.tryEmit(result)
+        }
+    }
+
+    fun clearMessage(id:Long){
+        viewModelScope.launch {
+            uiMessageManager.clearMessage(id)
         }
     }
 }

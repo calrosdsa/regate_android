@@ -91,13 +91,13 @@ class AppPreferencesImpl(
         }
     override fun observeToken(): Flow<String>  = createPreferenceFlow(KEY_TOKEN){ token }
 
-    override var theme: Theme
+    override var theme: AppPreferences.Theme
         get() = getThemeForStorageValue(sharedPreferences.getString(KEY_THEME, defaultThemeValue)!!)
         set(value) = sharedPreferences.edit {
             putString(KEY_THEME, value.storageKey)
         }
 
-    override fun observeTheme(): Flow<Theme> = createPreferenceFlow(KEY_THEME) { theme }
+    override fun observeTheme(): Flow<AppPreferences.Theme> = createPreferenceFlow(KEY_THEME) { theme }
 
     override var useDynamicColors: Boolean
         get() = sharedPreferences.getBoolean(KEY_USE_DYNAMIC_COLORS, defaultUseDynamicColors)
@@ -163,16 +163,16 @@ class AppPreferencesImpl(
         .map { getValue() }
         .distinctUntilChanged()
 
-    private val Theme.storageKey: String
+    private val AppPreferences.Theme.storageKey: String
         get() = when (this) {
-            Theme.LIGHT -> context.getString(R.string.pref_theme_light_value)
-            Theme.DARK -> context.getString(R.string.pref_theme_dark_value)
-            Theme.SYSTEM -> context.getString(R.string.pref_theme_system_value)
+            AppPreferences.Theme.LIGHT -> context.getString(R.string.pref_theme_light_value)
+            AppPreferences.Theme.DARK -> context.getString(R.string.pref_theme_dark_value)
+            AppPreferences.Theme.SYSTEM -> context.getString(R.string.pref_theme_system_value)
         }
 
     private fun getThemeForStorageValue(value: String) = when (value) {
-        context.getString(R.string.pref_theme_light_value) -> Theme.LIGHT
-        context.getString(R.string.pref_theme_dark_value) -> Theme.DARK
-        else -> Theme.SYSTEM
+        context.getString(R.string.pref_theme_light_value) -> AppPreferences.Theme.LIGHT
+        context.getString(R.string.pref_theme_dark_value) -> AppPreferences.Theme.DARK
+        else -> AppPreferences.Theme.SYSTEM
     }
 }

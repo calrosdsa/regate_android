@@ -21,6 +21,7 @@ import android.os.Debug
 import androidx.room.Room
 import app.regate.data.daos.CupoDao
 import app.regate.data.daos.EstablecimientoDao
+import app.regate.data.daos.FavoriteEstablecimientoDao
 import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.InstalacionDao
 import app.regate.data.daos.LabelDao
@@ -50,6 +51,8 @@ interface RoomDatabaseComponent {
     }
     @Provides
     fun provideAppDatabase(bind: AppRoomDatabase): AppDatabase = bind
+    @Provides
+    fun provideFavoriteEstablecimientos(db: AppDatabase):FavoriteEstablecimientoDao = db.favoriteEstablecimientos()
     @Provides
     fun provideMyGroupsDao(db: AppDatabase):MyGroupsDao = db.myGroupsDao()
     @Provides

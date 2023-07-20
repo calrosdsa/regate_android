@@ -36,6 +36,7 @@ import app.regate.createsala.establecimiento.EstablecimientoFilter
 import app.regate.discover.DiscoverScreen
 import app.regate.discover.filter.Filter
 import app.regate.entidad.actividades.ActividadesEstablecimiento
+import app.regate.favorites.Favorites
 import app.regate.grupo.Grupo
 import app.regate.grupos.FilterGroups
 import app.regate.grupos.Grupos
@@ -75,6 +76,7 @@ class ComposeScreens(
     val chatSala: ChatSala,
     val createSala:CreateSala,
     val settings:Setting,
+    val favorites:Favorites,
 
     val grupo:Grupo,
     val filterGroups:FilterGroups,

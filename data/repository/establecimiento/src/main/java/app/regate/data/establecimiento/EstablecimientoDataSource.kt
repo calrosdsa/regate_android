@@ -10,8 +10,7 @@ import app.regate.models.Establecimiento
 interface EstablecimientoDataSource {
     suspend fun getEstablecimientos():List<EstablecimientoDto>
     suspend fun getEstablecimiento(id:Long): EstablecimientoDetailDto
-
     suspend fun getEstablecimientoCupos(d:CuposEstablecimientoRequest):List<CupoEstablecimiento>
-
+    suspend fun getEstablecimientoFavoritos():List<EstablecimientoDto>
 }
 

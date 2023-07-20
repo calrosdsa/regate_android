@@ -23,6 +23,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -80,7 +82,7 @@ internal fun Profile(
         viewState = state,
         navigateUp = navigateUp,
         formatterDate = formatter::formatMediumDate,
-        navigateToEditProfile = navigateToEditProfile
+        navigateToEditProfile = navigateToEditProfile,
     )
 }
 
@@ -89,12 +91,14 @@ internal fun Profile(
     viewState:ProfileState,
     navigateUp: () -> Unit,
     formatterDate:(Instant)->String,
-    navigateToEditProfile: (Long) -> Unit
+    navigateToEditProfile: (Long) -> Unit,
 ) {
     val scrollState = rememberScrollState()
+
     val like = remember {
         mutableStateOf(false)
     }
+
     Scaffold(
         topBar = {
             Column() {
@@ -122,7 +126,9 @@ internal fun Profile(
         ) {
             viewState.profile?.let {profile->
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.padding(vertical = 15.dp).fillMaxWidth()) {
+                modifier = Modifier
+                    .padding(vertical = 15.dp)
+                    .fillMaxWidth()) {
                     Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.fillMaxWidth(0.8f)) {
                     PosterCardImage(
                         model = profile.profile_photo, modifier = Modifier

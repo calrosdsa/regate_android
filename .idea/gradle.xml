@@ -54,6 +54,7 @@
             <option value="$PROJECT_DIR$/ui/entidad/instalacion" />
             <option value="$PROJECT_DIR$/ui/entidad/reservar" />
             <option value="$PROJECT_DIR$/ui/entidad/salas" />
+            <option value="$PROJECT_DIR$/ui/favoritos" />
             <option value="$PROJECT_DIR$/ui/grupo" />
             <option value="$PROJECT_DIR$/ui/grupo/chat" />
             <option value="$PROJECT_DIR$/ui/grupo/creategrupo" />

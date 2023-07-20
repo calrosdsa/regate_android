@@ -59,15 +59,17 @@
     <string name="chat_message_channel_name">Message notification</string>
     <string name="channel_message_description" translatable="false">message_notification</string>
 
+    <string name="notification_sala_channel" translatable="false">sala_channel_id</string>
+    <string name="notification_sala">Room Notifications</string>
 
     <string name="chat_notification_name" translatable="false">Chat</string>
     <string name="chat_notification_id" translatable="false">chat_notifications</string>
     <string name="sala_help_text">In a room, the time, location, and game details are determined, including
         the maximum capacity of people and the price per spot.</string>
     <string name="sala_help_text2">When you join the room, the specified amount will be held from your account. If all spots are filled, the reservation will be made and the amount paid will be deducted. If the spots are not filled within the time limit, the held amount will be released.</string>
-    <string name="notification_sala_channel" translatable="false">sala_channel_id</string>
     <string name="new_room_created">A new room has been created.</string>
-    <string name="notification_sala">Room Notifications</string>
+
+
     <string name="create_group">Create group</string>
     <string name="rooms">Rooms</string>
     <string name="save">Save</string>
@@ -81,4 +83,17 @@
     <string name="you">You</string>
     <string name="user_since">User since %1$s</string>
     <string name="edit">Edit</string>
+    <string name="name">Name</string>
+    <string name="family_name">Family name</string>
+    <string name="new_offers">New Offers Here!</string>
+    <string name="discount">Discount benefits are periodically launched.</string>
+    <string name="balance_coins">Coins Balance</string>
+    <string name="purchase">Purchase</string>
+    <string name="language">Language</string>
+    <string name="about_regate">About Regate</string>
+    <string name="theme">Theme</string>
+    <string name="dynamic_color">Dynamic colors</string>
+    <string name="terms_of_services">Terms of Service</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="version">Version %1$s</string>
 </resources>

@@ -2,6 +2,7 @@ package app.regate.data.db
 
 import app.regate.data.daos.CupoDao
 import app.regate.data.daos.EstablecimientoDao
+import app.regate.data.daos.FavoriteEstablecimientoDao
 import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.InstalacionDao
 import app.regate.data.daos.LabelDao
@@ -22,4 +23,5 @@ interface AppDatabase {
     fun grupoDao():GrupoDao
     fun userGrupoDao():UserGrupoDao
     fun myGroupsDao():MyGroupsDao
+    fun favoriteEstablecimientos():FavoriteEstablecimientoDao
 }

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ProfileDto(
-    val created_at: Instant,
+    val created_at: Instant?=null,
     val email: String,
     val nombre: String,
     val apellido: String? = null,

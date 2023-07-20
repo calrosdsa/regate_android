@@ -5,6 +5,7 @@ import app.regate.data.dto.FileData
 import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.mappers.DtoToProfile
 import app.regate.inject.ApplicationScope
+import app.regate.models.Profile
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.withContext
 import me.tatarka.inject.annotations.Inject
@@ -22,8 +23,17 @@ class UsersRepository(
             profileDao.upsert(profileDtoToProfile.map(it))
         }
     }
-    suspend fun editProfile(d:ProfileDto,file:FileData?):ProfileDto{
-        return usersDataSourceImpl.editProfile(d,file).also {
+    suspend fun editProfile(d:Profile,file:FileData?):ProfileDto{
+        val profile = ProfileDto(
+            profile_id = d.id,
+            nombre = d.nombre,
+            apellido = d.apellido,
+            user_id = d.user_id?:0,
+            email = d.email?:"",
+            created_at = d.created_at,
+            profile_photo = d.profile_photo
+        )
+        return usersDataSourceImpl.editProfile(profile,file).also {
             withContext(dispatchers.computation){
                 profileDao.upsert(profileMapper.map(it))
             }

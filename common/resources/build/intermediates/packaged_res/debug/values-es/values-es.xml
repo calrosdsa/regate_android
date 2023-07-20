@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="about_regate">Sobre Regate</string>
+    <string name="balance_coins">Saldo de monedas</string>
     <string name="bookings">Reservas</string>
     <string name="chat_group_channel_name">Notificaciones de Grupo</string>
     <string name="chat_message_channel_name">Notificación de Mensaje</string>
@@ -7,13 +9,17 @@
     <string name="clear_all">Resetear</string>
     <string name="create_group">Crear grupo</string>
     <string name="create_sala">Crear sala</string>
+    <string name="discount">Los beneficios y descuento se lanzan regularmente</string>
+    <string name="dynamic_color">Dynamic colors</string>
     <string name="edit">Editar</string>
     <string name="explore_exceptional_destinations">Explora destinos excepcionales</string>
+    <string name="family_name">Apellido</string>
     <string name="favorites">Mis favoritos</string>
     <string name="filters">Filtros</string>
     <string name="group_description">Descripción del grupo</string>
     <string name="group_visibility">Visibilidad del Grupo</string>
     <string name="inbox">Inbox</string>
+    <string name="language">Idioma</string>
     <string name="leave_group">Salir del grupo</string>
     <string name="location">Ubicación</string>
     <string name="login">Iniciar Sessión</string>
@@ -21,13 +27,17 @@
     <string name="looking_for_a_place">¿Buscando por un sitio?</string>
     <string name="map">Mapa</string>
     <string name="meke_user_admin">Nombrar a este usuario como administrador</string>
+    <string name="name">Nombre</string>
     <string name="near_me">Cerca de mi</string>
+    <string name="new_offers">¡Nuevas ofertas aquí!</string>
     <string name="new_room_created">Se ha creado una sala nueva.</string>
     <string name="notification_sala">Notificaciones sala</string>
     <string name="notifications">Notifications</string>
     <string name="price_range">Rango de precios</string>
+    <string name="privacy_policy">Política de Privacidad</string>
     <string name="privado">Privado</string>
     <string name="publico">Público</string>
+    <string name="purchase">Recargar</string>
     <string name="remove_user">Remover este  usuario del grupo</string>
     <string name="remove_user_admin">Revocar el estatus de administrador</string>
     <string name="rooms">Salas</string>
@@ -40,9 +50,12 @@
     <string name="settings">Configuraciones</string>
     <string name="show_less">Ver menos</string>
     <string name="show_more">Ver más</string>
+    <string name="terms_of_services">Condiciones de Servicio</string>
+    <string name="theme">Theme</string>
     <string name="there_are_not_available_schudules">No hay horarios disponibles</string>
     <string name="time_interval">¿Por cuánto tiempo de gustaría jugar?</string>
     <string name="user_since">Usuario desde %1$s</string>
+    <string name="version">Version %1$s</string>
     <string name="what_would_you_like_to_play">¿Qué te gustaría jugar?</string>
     <string name="where_will_it_be_played">Donde estarás jugando</string>
     <string name="you">Tú</string>

@@ -21,6 +21,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Button
@@ -180,7 +181,7 @@ internal fun Grupo(
 //    }
     val snackbarHostState = remember { SnackbarHostState() }
     var expanded by remember { mutableStateOf(false) }
-    val refreshState = rememberPullRefreshState(refreshing = false, onRefresh = { refresh()})
+    val refreshState = rememberPullRefreshState(refreshing = viewState.loading, onRefresh = { refresh()})
     val isCurrentUserSuperAdmin by remember(key1 = viewState.currentUser){
         derivedStateOf {
             viewState.currentUser?.id == viewState.grupo?.profile_id
@@ -417,15 +418,15 @@ internal fun Grupo(
                 }
             }
 
-//            PullRefreshIndicator(
-//                refreshing = viewState.loading,
-//                state = refreshState,
-//                modifier = Modifier
-//                    .align(Alignment.TopCenter)
-//                    .padding(paddingValues)
-//                    .padding(top = 20.dp),
-//                scale = true,
-//            )
+            PullRefreshIndicator(
+                refreshing = viewState.loading,
+                state = refreshState,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(paddingValues)
+                    .padding(top = 20.dp),
+                scale = true,
+            )
         }
     }
 }

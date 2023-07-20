@@ -8,6 +8,7 @@ import android.app.NotificationChannel
 import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -34,6 +35,8 @@ import app.regate.common.resources.R
 //import app.regate.R
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.theme.RegateTheme
+import app.regate.common.composes.util.shouldUseDarkColors
+import app.regate.common.composes.util.shouldUseDynamicColors
 import app.regate.data.common.AddressDevice
 import app.regate.extensions.unsafeLazy
 import app.regate.inject.ActivityComponent
@@ -81,7 +84,10 @@ class MainActivity : ComponentActivity() {
             CompositionLocalProvider(
                 LocalAppDateFormatter provides component.appDateFormatter
             ) {
-                RegateTheme() {
+                RegateTheme(
+                    useDarkColors = preferences.shouldUseDarkColors(),
+                    useDynamicColors = preferences.shouldUseDynamicColors()
+                ) {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background,
@@ -96,6 +102,18 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(ContextWrapper(newBase.setAppLocale("en")))
+    }
+
+    fun Context.setAppLocale(language: String): Context {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        config.setLayoutDirection(locale)
+        return createConfigurationContext(config)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

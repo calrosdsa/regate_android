@@ -49,4 +49,17 @@
     <string name="you">Tú</string>
     <string name="user_since">Usuario desde %1$s</string>
     <string name="edit">Editar</string>
+    <string name="name">Nombre</string>
+    <string name="family_name">Apellido</string>
+    <string name="new_offers" >¡Nuevas ofertas aquí!</string>
+    <string name="discount">Los beneficios y descuento se lanzan regularmente</string>
+    <string name="balance_coins">Saldo de monedas</string>
+    <string name="purchase">Recargar</string>
+    <string name="language">Idioma</string>
+    <string name="about_regate">Sobre Regate</string>
+    <string name="theme">Theme</string>
+    <string name="dynamic_color">Dynamic colors</string>
+    <string name="terms_of_services">Condiciones de Servicio</string>
+    <string name="privacy_policy">Política de Privacidad</string>
+    <string name="version">Version %1$s</string>
 </resources>

@@ -15,6 +15,8 @@ import app.regate.data.daos.RoomCupoDao;
 import app.regate.data.daos.RoomCupoDao_Impl;
 import app.regate.data.daos.RoomEstablecimientoDao;
 import app.regate.data.daos.RoomEstablecimientoDao_Impl;
+import app.regate.data.daos.RoomFavoriteEstablecimientoDao;
+import app.regate.data.daos.RoomFavoriteEstablecimientoDao_Impl;
 import app.regate.data.daos.RoomGrupoDao;
 import app.regate.data.daos.RoomGrupoDao_Impl;
 import app.regate.data.daos.RoomInstalacionDao;
@@ -65,6 +67,8 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
 
   private volatile RoomMyGroupsDao _roomMyGroupsDao;
 
+  private volatile RoomFavoriteEstablecimientoDao _roomFavoriteEstablecimientoDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
@@ -86,8 +90,9 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_grupo` (`id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`grupo_id`) REFERENCES `grupos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_user_grupo_grupo_id` ON `user_grupo` (`grupo_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `my_groups` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `group_id` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_establecimiento` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `establecimiento_id` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7327db9425ecda2be32103cf295e2c7d')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4066d805a5131d5e7dc8116ec0e1f95c')");
       }
 
       @Override
@@ -103,6 +108,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("DROP TABLE IF EXISTS `grupos`");
         db.execSQL("DROP TABLE IF EXISTS `user_grupo`");
         db.execSQL("DROP TABLE IF EXISTS `my_groups`");
+        db.execSQL("DROP TABLE IF EXISTS `favorite_establecimiento`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -336,9 +342,21 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoMyGroups + "\n"
                   + " Found:\n" + _existingMyGroups);
         }
+        final HashMap<String, TableInfo.Column> _columnsFavoriteEstablecimiento = new HashMap<String, TableInfo.Column>(2);
+        _columnsFavoriteEstablecimiento.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteEstablecimiento.put("establecimiento_id", new TableInfo.Column("establecimiento_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysFavoriteEstablecimiento = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesFavoriteEstablecimiento = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoFavoriteEstablecimiento = new TableInfo("favorite_establecimiento", _columnsFavoriteEstablecimiento, _foreignKeysFavoriteEstablecimiento, _indicesFavoriteEstablecimiento);
+        final TableInfo _existingFavoriteEstablecimiento = TableInfo.read(db, "favorite_establecimiento");
+        if (!_infoFavoriteEstablecimiento.equals(_existingFavoriteEstablecimiento)) {
+          return new RoomOpenHelper.ValidationResult(false, "favorite_establecimiento(app.regate.models.FavoriteEstablecimiento).\n"
+                  + " Expected:\n" + _infoFavoriteEstablecimiento + "\n"
+                  + " Found:\n" + _existingFavoriteEstablecimiento);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "7327db9425ecda2be32103cf295e2c7d", "700a315b9af908a8f172fb5a398c26f2");
+    }, "4066d805a5131d5e7dc8116ec0e1f95c", "2855a646e825dd3ddab11d0202366001");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -349,7 +367,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento");
   }
 
   @Override
@@ -376,6 +394,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
       _db.execSQL("DELETE FROM `grupos`");
       _db.execSQL("DELETE FROM `user_grupo`");
       _db.execSQL("DELETE FROM `my_groups`");
+      _db.execSQL("DELETE FROM `favorite_establecimiento`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -403,6 +422,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
     _typeConvertersMap.put(RoomGrupoDao.class, RoomGrupoDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomUserGrupoDao.class, RoomUserGrupoDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomMyGroupsDao.class, RoomMyGroupsDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(RoomFavoriteEstablecimientoDao.class, RoomFavoriteEstablecimientoDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -557,6 +577,20 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
           _roomMyGroupsDao = new RoomMyGroupsDao_Impl(this);
         }
         return _roomMyGroupsDao;
+      }
+    }
+  }
+
+  @Override
+  public RoomFavoriteEstablecimientoDao favoriteEstablecimientos() {
+    if (_roomFavoriteEstablecimientoDao != null) {
+      return _roomFavoriteEstablecimientoDao;
+    } else {
+      synchronized(this) {
+        if(_roomFavoriteEstablecimientoDao == null) {
+          _roomFavoriteEstablecimientoDao = new RoomFavoriteEstablecimientoDao_Impl(this);
+        }
+        return _roomFavoriteEstablecimientoDao;
       }
     }
   }

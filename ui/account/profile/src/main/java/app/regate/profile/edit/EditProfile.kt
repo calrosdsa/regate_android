@@ -8,13 +8,10 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.provider.OpenableColumns
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,7 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CameraAlt
@@ -32,10 +29,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,13 +47,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.components.dialog.LoaderDialog
 import app.regate.common.composes.components.input.InputForm
 import app.regate.common.composes.ui.UploadImageBitmap
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
-import app.regate.data.dto.empresa.grupo.GroupVisibility
-import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -81,11 +78,14 @@ internal fun EditProfile(
     navigateUp: () -> Unit
 ){
     val state by viewModel.state.collectAsState()
+    LoaderDialog(loading = state.loading)
 //    val formatter = LocalAppDateFormatter.current
     EditProfile(
         viewState = state,
         navigateUp = navigateUp,
         uploadImage = viewModel::uploadImage,
+        editProfile = viewModel::editProfile,
+        clearMessage = viewModel::clearMessage
         )
 }
 
@@ -93,9 +93,11 @@ internal fun EditProfile(
 internal fun EditProfile(
     viewState: EditProfileState,
     navigateUp: () -> Unit,
+    editProfile:(nombre:String,apellido:String)->Unit,
     uploadImage:(String,String,ByteArray)->Unit,
-    ) {
-    var name by remember(viewState.profile) {
+    clearMessage:(Long)->Unit
+) {
+    var nombre by remember(viewState.profile) {
         mutableStateOf(viewState.profile?.nombre?:"")
     }
     var apellido by remember(viewState.profile) {
@@ -109,6 +111,8 @@ internal fun EditProfile(
     val bitmapImg =  remember {
         mutableStateOf<Bitmap?>(null)
     }
+    val snackbarHostState = remember { SnackbarHostState() }
+
     val launcher = rememberLauncherForActivityResult(contract =
     ActivityResultContracts.GetContent()) { uri: Uri? ->
 
@@ -143,8 +147,16 @@ internal fun EditProfile(
             }
         }
     }
-    
+    viewState.message?.let { message ->
+        LaunchedEffect(message) {
+            snackbarHostState.showSnackbar(message.message)
+            // Notify the view model that the message has been dismissed
+            clearMessage(message.id)
+        }
+    }
+
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             IconButton(onClick = { navigateUp() }) {
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
@@ -152,8 +164,10 @@ internal fun EditProfile(
         },
         bottomBar = {
             BottomAppBar() {
-                Box(modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp)) {
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.align(Alignment.CenterEnd)) {
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp)) {
+                    Button(onClick = { editProfile(nombre,apellido) }, modifier = Modifier.align(Alignment.CenterEnd)) {
                         Text(text = stringResource(id = R.string.save))
                     }
                 }
@@ -182,7 +196,6 @@ internal fun EditProfile(
                             .size(100.dp)
 //            uploadImage = { launcher.launch("image/*") }
                     )
-
 //                }
                     IconButton(onClick = { launcher.launch("image/*") },
                         colors= IconButtonDefaults.iconButtonColors(
@@ -195,20 +208,25 @@ internal fun EditProfile(
                 }
             }
 
-            Text(text = "Crea una sala y elije cuando quires jugar",
+            Text(text = stringResource(id = R.string.edit),
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center,color = MaterialTheme.colorScheme.primary)
             Spacer(modifier = Modifier.height(10.dp))
-            InputForm(value = name, onValueChange = {if(it.length <= 25){ name = it}},
-                label = "Asunto",
+            InputForm(
+                value = nombre, onValueChange = {
+                    if (it.length <= 25) {
+                        nombre = it
+                    }
+                },
+                label = stringResource(id = R.string.name),
             ){
-                Text(text = "${name.length}/25",style = MaterialTheme.typography.labelSmall,
+                Text(text = "${nombre.length}/25",style = MaterialTheme.typography.labelSmall,
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(2.dp))
             }
             InputForm(value = apellido, onValueChange = {if(it.length <= 25){ apellido = it}},
-                label = "Asunto",
+                label =stringResource(id = R.string.family_name),
             ){
                 Text(text = "${apellido.length}/25",style = MaterialTheme.typography.labelSmall,
                     modifier = Modifier

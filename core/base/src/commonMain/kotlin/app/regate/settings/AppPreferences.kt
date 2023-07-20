@@ -50,10 +50,10 @@ interface AppPreferences {
 
     var upNextFollowedOnly: Boolean
     fun observeUpNextFollowedOnly(): Flow<Boolean>
-
-}
     enum class Theme {
         LIGHT,
         DARK,
         SYSTEM,
     }
+
+}

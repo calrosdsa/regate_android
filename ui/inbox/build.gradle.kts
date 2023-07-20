@@ -14,7 +14,7 @@ plugins {
 }
 
 android {
-    namespace = "app.regate.actividades"
+    namespace = "app.regate.inbox"
     compileSdk = 33
     buildFeatures {
         compose = true

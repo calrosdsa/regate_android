@@ -76,6 +76,7 @@ include(
 
     ":ui:settings",
     ":ui:inbox",
+    ":ui:favoritos",
 
     ":app",
     ":common:resources",

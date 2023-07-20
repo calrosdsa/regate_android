@@ -49,55 +49,55 @@ fun HomeEntry(
 ) {
     val bottomSheetNavigator = rememberBottomSheetNavigator()
     val navController = rememberAnimatedNavController(bottomSheetNavigator)
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+//    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(key1 = true, block = {
-        if(establecimientoId != null){
+        if (establecimientoId != null) {
             navController.navigate(Route.ESTABLECIMIENTO id establecimientoId.toLong())
         }
     })
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet {
-                composeScreens.account(
-                    navigateToSettings = { navController.navigate(Route.SETTING) },
-                    closeDrawer = { coroutineScope.launch { drawerState.close() }},
-                    navigateToReservas = { navController.navigate(Route.RESERVAS)},
-                    openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
-                    )
-            }
-        },
-        gesturesEnabled = true
-    ) {
-        Scaffold(modifier = Modifier.fillMaxSize()) {
+//    ModalNavigationDrawer(
+//        drawerState = drawerState,
+//        drawerContent = {
+//            ModalDrawerSheet {
+//                composeScreens.account(
+//                    navigateToSettings = { navController.navigate(Route.SETTING) },
+//                    closeDrawer = { coroutineScope.launch { drawerState.close() }},
+//                    navigateToReservas = { navController.navigate(Route.RESERVAS)},
+//                    openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
+//                    )
+//            }
+//        },
+//        gesturesEnabled = true
+//    ) {
+    Scaffold(modifier = Modifier.fillMaxSize()) {
 
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            ModalBottomSheetLayout(
+                bottomSheetNavigator = bottomSheetNavigator,
+                sheetShape = MaterialTheme.shapes.large.copy(
+                    bottomStart = CornerSize(0.dp),
+                    bottomEnd = CornerSize(0.dp),
+                ),
+                sheetBackgroundColor = MaterialTheme.colorScheme.surface,
+                sheetContentColor = MaterialTheme.colorScheme.onSurface,
+                scrimColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.33f),
             ) {
-                ModalBottomSheetLayout(
-                    bottomSheetNavigator = bottomSheetNavigator,
-                    sheetShape = MaterialTheme.shapes.large.copy(
-                        bottomStart = CornerSize(0.dp),
-                        bottomEnd = CornerSize(0.dp),
-                    ),
-                    sheetBackgroundColor = MaterialTheme.colorScheme.surface,
-                    sheetContentColor = MaterialTheme.colorScheme.onSurface,
-                    scrimColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.33f),
-                ) {
-                    AppNavigation(
-                        navController = navController,
-                        composeScreens = composeScreens,
-                        modifier = Modifier,
-                        openDrawer = { coroutineScope.launch {
-                            drawerState.open()
+                AppNavigation(
+                    navController = navController,
+                    composeScreens = composeScreens,
+                    modifier = Modifier,
+                    openDrawer = {
+                        coroutineScope.launch {
+//                            drawerState.open()
                         }
-                        },
-                        finishActivity = establecimientoId!= null,
-                        navigateToMap = navigateToMap
-                    )
-                }
+                    },
+                    finishActivity = establecimientoId != null,
+                    navigateToMap = navigateToMap
+                )
             }
         }
     }
@@ -325,7 +325,13 @@ internal fun AppNavigation(
                 }
             )
         }
-
+        animatedComposable(
+            route = Route.FAVORITES
+        ){
+            composeScreens.favorites(
+                navigateUp = navController::navigateUp,
+            )
+        }
         animatedComposable(
             route = Route.CREATE_GROUP + "?id={id}",
             arguments = listOf(navArgument("id") {
@@ -374,9 +380,18 @@ private fun NavGraphBuilder.AddMainNav(
         composable(route= Route.DISCOVER) {
             composeScreens.discover(navController = navController,navigateToMap = navigateToMap)
         }
-        composable(route= Route.SERVICIOS){
-            composeScreens.servicios(navController = navController)
+        composable(route = Route.ACCOUNT){
+            composeScreens.account(
+                navigateToSettings = { navController.navigate(Route.SETTING) },
+                closeDrawer = { },
+                navigateToReservas = { navController.navigate(Route.RESERVAS)},
+                openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
+                navController = navController
+            )
         }
+//        composable(route= Route.SERVICIOS){
+//            composeScreens.servicios(navController = navController)
+//        }
         composable(route= Route.GRUPOS){
             composeScreens.grupos(navController = navController,filterGroups={
                 composeScreens.filterGroups(
@@ -384,8 +399,8 @@ private fun NavGraphBuilder.AddMainNav(
                 )
             }
         )}
-        composable(route= Route.ACTIVITIES){
-            composeScreens.actividades(navController = navController)
-        }
+//        composable(route= Route.ACTIVITIES){
+//            composeScreens.actividades(navController = navController)
+//        }
     }
 }

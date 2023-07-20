@@ -21,11 +21,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import app.regate.data.daos.GrupoDao
-import app.regate.data.daos.LabelDao
-import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.RoomCupoDao
 import app.regate.data.daos.RoomEstablecimientoDao
+import app.regate.data.daos.RoomFavoriteEstablecimientoDao
 import app.regate.data.daos.RoomGrupoDao
 import app.regate.data.daos.RoomInstalacionDao
 import app.regate.data.daos.RoomLabelDao
@@ -34,15 +32,14 @@ import app.regate.data.daos.RoomMyGroupsDao
 import app.regate.data.daos.RoomProfileDao
 import app.regate.data.daos.RoomUserDao
 import app.regate.data.daos.RoomUserGrupoDao
-import app.regate.data.daos.UserGrupoDao
 import app.regate.data.db.AppDatabase
 import app.regate.data.db.AppTypeConverters
 import app.regate.data.db.DateTimeTypeConverters
 import app.regate.models.Cupo
 import app.regate.models.Establecimiento
+import app.regate.models.FavoriteEstablecimiento
 import app.regate.models.Grupo
 import app.regate.models.Instalacion
-import app.regate.models.LabelType
 import app.regate.models.Labels
 import app.regate.models.Message
 import app.regate.models.MyGroups
@@ -63,7 +60,8 @@ import app.regate.models.UserGrupo
         Labels::class,
         Grupo::class,
         UserGrupo::class,
-        MyGroups::class
+        MyGroups::class,
+        FavoriteEstablecimiento::class,
     ],
 //    views = [
 //        ShowsWatchStats::class,
@@ -100,6 +98,8 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
     abstract override fun grupoDao(): RoomGrupoDao
     abstract override fun userGrupoDao(): RoomUserGrupoDao
     abstract override fun myGroupsDao(): RoomMyGroupsDao
+    abstract override fun favoriteEstablecimientos(): RoomFavoriteEstablecimientoDao
+
 
     companion object {
 

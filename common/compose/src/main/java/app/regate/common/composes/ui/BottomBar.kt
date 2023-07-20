@@ -3,11 +3,13 @@ package app.regate.common.composes.ui
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.DesignServices
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.CalendarToday
 import androidx.compose.material.icons.outlined.DesignServices
 import androidx.compose.material.icons.outlined.Group
@@ -67,18 +69,21 @@ fun NavController.currentScreenAsState(): State<String> {
                 destination.hierarchy.any { it.route == Route.HOME } -> {
                     selectedItem.value = Route.HOME
                 }
-                destination.hierarchy.any { it.route == Route.SERVICIOS } -> {
-                    selectedItem.value = Route.SERVICIOS
+                destination.hierarchy.any { it.route == Route.DISCOVER } -> {
+                    selectedItem.value = Route.DISCOVER
                 }
                 destination.hierarchy.any { it.route == Route.GRUPOS} -> {
                     selectedItem.value = Route.GRUPOS
                 }
-                destination.hierarchy.any { it.route == Route.DISCOVER } -> {
-                    selectedItem.value = Route.DISCOVER
+                destination.hierarchy.any { it.route == Route.ACCOUNT} -> {
+                    selectedItem.value = Route.ACCOUNT
                 }
-                destination.hierarchy.any { it.route == Route.ACTIVITIES } -> {
-                    selectedItem.value = Route.ACTIVITIES
-                }
+//                destination.hierarchy.any { it.route == Route.DISCOVER } -> {
+//                    selectedItem.value = Route.DISCOVER
+//                }
+//                destination.hierarchy.any { it.route == Route.ACTIVITIES } -> {
+//                    selectedItem.value = Route.ACTIVITIES
+//                }
             }
         }
         addOnDestinationChangedListener(listener)
@@ -187,17 +192,24 @@ private val HomeNavigationItems = listOf(
         selectedImageVector = Icons.Default.Group,
     ),
     HomeNavigationItem.ImageVectorIcon(
-        screen = Route.SERVICIOS,
-        labelResId = "Servicios",
-        contentDescriptionResId = "home",
-        iconImageVector = Icons.Outlined.DesignServices,
-        selectedImageVector = Icons.Default.DesignServices,
+        screen = Route.ACCOUNT,
+        labelResId = "Account",
+        contentDescriptionResId = "account",
+        iconImageVector = Icons.Outlined.AccountCircle,
+        selectedImageVector = Icons.Default.AccountCircle,
     ),
-    HomeNavigationItem.ImageVectorIcon(
-        screen = Route.ACTIVITIES,
-        labelResId = "Actividades",
-        contentDescriptionResId = "activities",
-        iconImageVector = Icons.Outlined.Schedule,
-        selectedImageVector = Icons.Default.Schedule,
-    ),
+//    HomeNavigationItem.ImageVectorIcon(
+//        screen = Route.SERVICIOS,
+//        labelResId = "Servicios",
+//        contentDescriptionResId = "home",
+//        iconImageVector = Icons.Outlined.DesignServices,
+//        selectedImageVector = Icons.Default.DesignServices,
+//    ),
+//    HomeNavigationItem.ImageVectorIcon(
+//        screen = Route.ACTIVITIES,
+//        labelResId = "Actividades",
+//        contentDescriptionResId = "activities",
+//        iconImageVector = Icons.Outlined.Schedule,
+//        selectedImageVector = Icons.Default.Schedule,
+//    ),
 )

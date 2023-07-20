@@ -8,6 +8,7 @@ object Route {
     const val MAIN = "main"
     const val HOME = "home"
     const val GRUPOS = "grupos"
+    const val ACCOUNT = "account"
     const val ACTIVITIES = "activities"
     const val DISCOVER = "discover"
     const val SERVICIOS = "servicios"
@@ -29,6 +30,7 @@ object Route {
 
     const val SETTING = "setting"
     const val RESERVAS = "reservas"
+    const val FAVORITES = "favorites"
 
     const val PROFILE = "profile"
     const val EDIT_PROFILE = "edit_profile"

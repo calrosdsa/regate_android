@@ -31,13 +31,16 @@ class UsersDataSourceImpl(
                 append("id",d.profile_id)
                 append("nombre", d.nombre)
                 append("apellido", d.apellido?:"")
-                append("photo_url",d.profile_photo?:"")
-                file?.byteArray?.let {
-                    append("photo",it, Headers.build {
-                        append(HttpHeaders.ContentType,file.type)
-                        append(HttpHeaders.ContentDisposition,"filename=${file.name}")
-                    })
-                }
+               if(file != null){
+                   file.byteArray?.let {
+                       append("photo", it, Headers.build {
+                           append(HttpHeaders.ContentType,file.type)
+                           append(HttpHeaders.ContentDisposition,"filename=${file.name}")
+                       })
+                   }
+                }else{
+                    append("photo_url",d.profile_photo?:"")
+               }
             },
         ){
             header("Authorization","Bearer $token")
