@@ -12,5 +12,7 @@ interface EstablecimientoDataSource {
     suspend fun getEstablecimiento(id:Long): EstablecimientoDetailDto
     suspend fun getEstablecimientoCupos(d:CuposEstablecimientoRequest):List<CupoEstablecimiento>
     suspend fun getEstablecimientoFavoritos():List<EstablecimientoDto>
+    suspend fun likeEstablecimiento(id:Long)
+    suspend fun removeLikeEstablecimiento(id:Long)
 }
 

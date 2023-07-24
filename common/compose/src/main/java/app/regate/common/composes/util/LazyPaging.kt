@@ -26,6 +26,35 @@ fun CombinedLoadStates.refreshErrorOrNull(): UiMessage? {
 }
 
 
+fun <T : Any> LazyListScope.itemsCustomIndexed(
+    items: LazyPagingItems<T>,
+    key: ((item: T) -> Any)? = null,
+    contentType: (item: T) -> Any? = { null },
+    itemContent: @Composable LazyItemScope.(item: T?,index:Int) -> Unit,
+) {
+    items(
+        count = items.itemCount,
+        contentType = { index ->
+            items.peek(index)?.let { contentType(it) }
+        },
+        key = if (key == null) {
+            null
+        } else {
+            { index ->
+                val item = items.peek(index)
+                if (item == null) {
+                    PagingPlaceholderKey(index)
+                } else {
+                    key(item)
+                }
+            }
+        },
+    ) { index ->
+        itemContent(items[index],index)
+    }
+}
+
+
 fun <T : Any> LazyListScope.itemsCustom(
     items: LazyPagingItems<T>,
     key: ((item: T) -> Any)? = null,
@@ -53,7 +82,6 @@ fun <T : Any> LazyListScope.itemsCustom(
         itemContent(items[index])
     }
 }
-
 
 //SuppressLint("BanParcelableUsage")
 internal data class PagingPlaceholderKey(private val index: Int) : Parcelable {

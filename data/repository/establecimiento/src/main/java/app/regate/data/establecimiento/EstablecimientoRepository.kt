@@ -26,12 +26,31 @@ class EstablecimientoRepository(
     private val settingsDtoToSetting: SettingDtoToSetting,
     private val dispatchers: AppCoroutineDispatchers
 ){
+    fun checkIsFavorite():Flow<List<Long>>{
+        return favoriteEstablecimientoDao.observeFavoriteEstablecimientosIds()
+    }
+    suspend fun likeEstablecimiento(id:Long){
+        withContext(dispatchers.computation){
+            establecimientoDataSourceImpl.likeEstablecimiento(id).also {
+                favoriteEstablecimientoDao.upsert(FavoriteEstablecimiento(establecimiento_id = id))
+            }
+        }
+    }
+    suspend fun removeLikeEstablecimiento(id:Long){
+        withContext(dispatchers.computation){
+            establecimientoDataSourceImpl.removeLikeEstablecimiento(id).also {
+                favoriteEstablecimientoDao.removeFavoriteEstablecimiento(id)
+            }
+        }
+    }
     suspend fun getFavoritosEstablecimiento() {
         withContext(dispatchers.computation) {
-            val res = establecimientoDataSourceImpl.getEstablecimientoFavoritos().map {
+            establecimientoDataSourceImpl.getEstablecimientoFavoritos().map {
                 FavoriteEstablecimiento(establecimiento_id = it.id.toLong())
+            }.also {
+            favoriteEstablecimientoDao.removeAll()
+            favoriteEstablecimientoDao.upsertAll(it)
             }
-            favoriteEstablecimientoDao.upsertAll(res)
         }
     }
     fun observeEstablecimiento(id:Long): Flow<app.regate.models.Establecimiento> {

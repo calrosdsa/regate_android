@@ -38,6 +38,8 @@ import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.bottomSheet
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import kotlinx.coroutines.launch
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalAnimationApi::class)
@@ -56,20 +58,7 @@ fun HomeEntry(
             navController.navigate(Route.ESTABLECIMIENTO id establecimientoId.toLong())
         }
     })
-//    ModalNavigationDrawer(
-//        drawerState = drawerState,
-//        drawerContent = {
-//            ModalDrawerSheet {
-//                composeScreens.account(
-//                    navigateToSettings = { navController.navigate(Route.SETTING) },
-//                    closeDrawer = { coroutineScope.launch { drawerState.close() }},
-//                    navigateToReservas = { navController.navigate(Route.RESERVAS)},
-//                    openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
-//                    )
-//            }
-//        },
-//        gesturesEnabled = true
-//    ) {
+
     Scaffold(modifier = Modifier.fillMaxSize()) {
 
         Row(
@@ -121,7 +110,7 @@ internal fun AppNavigation(
         startDestination =Route.MAIN,
         modifier = modifier
     ) {
-        bottomSheet(route = Route.RESERVAR arg "id" arg "establecimientoId",
+        animatedComposable(route = Route.RESERVAR arg "id" arg "establecimientoId",
         arguments = listOf(
             navArgument("id"){ type = NavType.LongType },
             navArgument("establecimientoId"){ type = NavType.LongType }
@@ -129,7 +118,9 @@ internal fun AppNavigation(
         ) {
             composeScreens.bottomReserva(
                 openAuthDialog = {navController.navigate(Route.AUTH_DIALOG)},
-                navigateUp = navController::navigateUp
+                navigateUp = navController::navigateUp,
+                navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
+                navigateToConversation = {navController.navigate(Route.CONVERSATION id it)}
             )
         }
 
@@ -162,7 +153,16 @@ internal fun AppNavigation(
         animatedComposable(route = Route.SIGNUP_SCREEN) {
             composeScreens.signUp(onBack = { navController.navigate(Route.HOME) })
         }
-
+        animatedComposable(route = Route.PHOTO arg "url",
+        arguments = listOf(
+            navArgument("url") { type = NavType.StringType }
+        )){
+            val url = it.arguments?.getString("url")?:""
+            composeScreens.photo(
+                navigateUp = navController::navigateUp,
+                url = url
+            )
+        }
         animatedComposableVariant(
             route = Route.ESTABLECIMIENTO arg "id" arg "page",
             arguments = listOf(
@@ -182,7 +182,7 @@ internal fun AppNavigation(
                         navigateToReservaDetail = {instalacionId,establecimientoId ->
                             navController.navigate(Route.RESERVAR id instalacionId id establecimientoId)
                         },
-                        category = category
+                        category = category,
                     )
                 },
                 salas = {
@@ -191,7 +191,11 @@ internal fun AppNavigation(
                         crearSala = { navController.navigate(Route.CREAR_SALA id it) }
                     )
                 },
-                currentPage = page.toInt()
+                currentPage = page.toInt(),
+                navigateToPhoto = {
+                    val url =  URLEncoder.encode(it, StandardCharsets.UTF_8.toString())
+                    navController.navigate(Route.PHOTO id url)
+                },
             )
         }
 
@@ -330,6 +334,7 @@ internal fun AppNavigation(
         ){
             composeScreens.favorites(
                 navigateUp = navController::navigateUp,
+                navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)}
             )
         }
         animatedComposable(
@@ -346,6 +351,23 @@ internal fun AppNavigation(
                 } },
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)}
 //                groupId = backStackEntry.arguments?.getLong("id")?:0
+            )
+        }
+        animatedComposable(
+            route = Route.INBOX,
+        ){
+            composeScreens.inbox(
+                navigateUp = navController::navigateUp
+            )
+        }
+        animatedComposable(
+            route = Route.CONVERSATION arg "id",
+            arguments = listOf(navArgument("id") {
+                type = NavType.LongType
+            })
+        ){
+            composeScreens.conversation(
+                navigateUp = navController::navigateUp,
             )
         }
 

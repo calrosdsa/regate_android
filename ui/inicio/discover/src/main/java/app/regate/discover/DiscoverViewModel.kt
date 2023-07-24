@@ -57,6 +57,7 @@ class DiscoverViewModel(
     private val instalacionResult = MutableStateFlow<List<Pair<InstalacionDto, List<Labels>>>>(
         emptyList()
     )
+    private val selectedCategory = MutableStateFlow<Labels?>(null)
 
     val state:StateFlow<DiscoverState> = combine(
         observeLabelType.flow,
@@ -64,15 +65,17 @@ class DiscoverViewModel(
         uiMessageManager.message,
         addressDevice,
         filterData,
-        instalacionResult
-        ){categories,loading,message,addressDevice,filter,results ->
+        instalacionResult,
+        selectedCategory
+        ){categories,loading,message,addressDevice,filter,results,selectedCategory ->
         DiscoverState(
             loading = loading,
             message= message,
             filter = filter,
             addressDevice = addressDevice,
             categories = categories,
-            results = results
+            results = results,
+            selectedCategory = selectedCategory
         )
     }.stateIn(
         scope = viewModelScope,
@@ -185,6 +188,10 @@ class DiscoverViewModel(
     }
     fun setCategory(id:Long){
         appPreferences.filter = Json.encodeToString(filterData.value.copy(category_id = id))
+        viewModelScope.launch {
+            val selected = state.value.categories.find{ it.id == id}
+            selectedCategory.tryEmit(selected)
+        }
     }
     fun setInterval(minutes:Long){
         appPreferences.filter = Json.encodeToString(filterData.value.copy(interval = minutes))

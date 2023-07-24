@@ -57,17 +57,19 @@ import androidx.paging.compose.LazyPagingItems
 import app.regate.common.composes.components.images.ProfileImage
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.util.itemsCustom
+import app.regate.common.composes.util.itemsCustomIndexed
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.models.User
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Chat(
     lazyPagingItems: LazyPagingItems<MessageProfile>,
@@ -83,6 +85,9 @@ fun Chat(
     val coroutineScope = rememberCoroutineScope()
 
     val items by remember(lazyPagingItems.itemSnapshotList.items) {
+        val messages = lazyPagingItems.itemSnapshotList.items.groupBy {
+            it.message.created_at.toLocalDateTime(TimeZone.UTC).date
+        }
         mutableStateOf(lazyPagingItems.itemSnapshotList.items)
     }
     val selectedMessage = remember {
@@ -101,7 +106,7 @@ fun Chat(
         reverseLayout = true,
         state = lazyListState
     ) {
-        itemsCustom(items = lazyPagingItems,key={it.message.id}) {  result->
+        itemsCustomIndexed(items = lazyPagingItems,key={it.message.id}) {  result,index->
             result?.let { item ->
                 val isUserExists = user != null && item.profile?.id == user.profile_id
                 if (isUserExists) {
@@ -179,7 +184,7 @@ fun Chat(
                                     }
 
                                     Text(
-                                        text = item.message.content,
+                                        text = item.message.content + "$index",
                                         style = MaterialTheme.typography.bodySmall,
                                     )
                                     Row(

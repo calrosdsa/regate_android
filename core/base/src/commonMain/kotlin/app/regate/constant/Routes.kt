@@ -41,7 +41,10 @@ object Route {
     const val CREATE_GROUP = "create_group"
 
     const val ESTABLECIMIENTO_FILTER = "establecimiento_filter"
+    const val PHOTO = "media_photo"
 
+    const val CONVERSATION = "conversation"
+    const val INBOX = "inbox"
 }
 
 
@@ -50,6 +53,9 @@ infix fun String.arg(arg: String) = "$this/{$arg}"
 infix fun String.query(query: String) = "$this?$query={$query}"
 
 infix fun String.id(id: Long) = "$this/$id"
+
+infix fun String.id(id: String) = "$this/$id"
+
 
 
 infix fun String.bearer(token:String) = "this $token"

@@ -59,10 +59,12 @@ string favorites
 string filters
 string floating1
 string floating2
+string full_payment
 string gcp_id
 string group_description
 string group_visibility
 string inbox
+string inbox_to_establecimiento
 string language
 string leave_group
 string location

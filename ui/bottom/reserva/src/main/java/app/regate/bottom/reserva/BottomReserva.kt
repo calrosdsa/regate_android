@@ -1,5 +1,6 @@
 package app.regate.bottom.reserva
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DismissValue
@@ -23,6 +26,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -39,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.components.CustomButton
@@ -60,6 +65,8 @@ import app.regate.common.resources.R
 typealias BottomReserva = @Composable (
     openAuthDialog:()->Unit,
     navigateUp:()->Unit,
+    navigateToEstablecimiento:(Long)->Unit,
+    navigateToConversation:(Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
 
@@ -68,13 +75,17 @@ typealias BottomReserva = @Composable (
 fun BottomReserva(
     viewModelFactory:(SavedStateHandle)-> BottomReservaViewModel,
     @Assisted openAuthDialog: () -> Unit,
-    @Assisted navigateUp: () -> Unit
+    @Assisted navigateUp: () -> Unit,
+    @Assisted navigateToEstablecimiento: (Long) -> Unit,
+    @Assisted navigateToConversation: (Long) -> Unit
 //    @Assisted navigateToReserva:()->Unit,
     ){
     BottomReserva(
         viewModel = viewModel(factory = viewModelFactory),
         openAuthDialog = openAuthDialog,
-        navigateUp = navigateUp
+        navigateUp = navigateUp,
+        navigateToEstablecimiento=navigateToEstablecimiento,
+        navigateToConversation = navigateToConversation
 //        navigateToReserva = navigateToReserva
     )
 }
@@ -85,6 +96,8 @@ internal fun BottomReserva(
     viewModel: BottomReservaViewModel,
     openAuthDialog: () -> Unit,
     navigateUp: () -> Unit,
+    navigateToEstablecimiento: (Long) -> Unit,
+    navigateToConversation: (Long) -> Unit
 //    navigateToReserva: () -> Unit,
 ){
     val state by viewModel.state.collectAsState()
@@ -98,6 +111,8 @@ internal fun BottomReserva(
 //        formatterDateReserva = { formatter.formatShortDateTime(it)},
         confirmarReservas = viewModel::confirmarReservas,
         navigateUp = navigateUp,
+        navigateToEstablecimiento = navigateToEstablecimiento,
+        navigateToConversation = navigateToConversation
 //        navigateToReserva = navigateToReserva,
 //        openBottomSheet = { viewModel.openBottomSheet { navigateToReserva () } }
     )
@@ -111,6 +126,8 @@ internal fun BottomReserva(
     openAuthDialog: () -> Unit,
     confirmarReservas:()->Unit,
     navigateUp: () -> Unit,
+    navigateToEstablecimiento: (Long) -> Unit,
+    navigateToConversation: (Long) -> Unit
 //    formatterDate:(date:String)->String,
 //    formatterDateReserva:(date:Instant)->String,
 ) {
@@ -154,34 +171,50 @@ internal fun BottomReserva(
             onMessageShown(message.id)
         }
     }
-    Box(modifier = Modifier.fillMaxSize()) {
-
-        Column(modifier = Modifier.padding(bottom = 60.dp)) {
-            IconButton(onClick = { navigateUp() }, modifier = Modifier.fillMaxWidth()) {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowDown,
-                    contentDescription = "arrow_down"
-                )
+    Scaffold(
+        topBar = {
+            IconButton(onClick = { navigateUp() }) {
+                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
             }
-            Column(modifier = Modifier.padding(horizontal = 10.dp,vertical= 5.dp)) {
-                Text(
-                    text = "Puede proceder con el pago, por la reserva de ${viewState.cupos.size}" +
-                            "cupos para estas instalaciones",
-                    style = MaterialTheme.typography.labelMedium
-                )
-                Text(
-                    text = "Precio Total:${viewState.totalPrice}",
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(top=10.dp)
-                )
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if(viewState.setting?.paid_type?.list?.contains(PaidTypeEnum.DEFERRED_PAYMENT.ordinal) == true){
+        }
+    ) { paddingValues ->
+        Box(modifier = Modifier
+            .padding(paddingValues)
+            .fillMaxSize()) {
+            Column(modifier = Modifier.padding(bottom = 60.dp)) {
+                Column(modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)) {
+                    Text(
+                        text = "Puede proceder con el pago, por la reserva de ${viewState.cupos.size}" +
+                                "cupos para estas instalaciones",
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                    Text(
+                        text = "Precio Total:${viewState.totalPrice}",
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(top = 10.dp)
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (viewState.setting?.paid_type?.list?.contains(PaidTypeEnum.DEFERRED_PAYMENT.ordinal) == true) {
+                            CustomButton(onClick = {
+                                if (viewState.authState == AppAuthState.LOGGED_IN) {
+                                    confirmate.value = true
+                                } else {
+                                    openAuthDialog()
+                                }
+                            }) {
+                                Text(
+                                    text = "Reserva por:${
+                                        viewState.totalPrice?.divideToPercent(viewState.setting.payment_for_reservation)
+                                    }"
+                                )
+                            }
+                        }
                         CustomButton(onClick = {
                             if (viewState.authState == AppAuthState.LOGGED_IN) {
                                 confirmate.value = true
@@ -189,72 +222,90 @@ internal fun BottomReserva(
                                 openAuthDialog()
                             }
                         }) {
-                            Text(text = "Reserva por:${
-                                viewState.totalPrice?.divideToPercent(viewState.setting.payment_for_reservation)
-                            }")
+                            Text(text = stringResource(id = R.string.full_payment))
                         }
                     }
-                    CustomButton(onClick = {
-                        if (viewState.authState == AppAuthState.LOGGED_IN) {
-                            confirmate.value = true
-                        } else {
-                            openAuthDialog()
+
+                    //Establecimiento
+                    Divider()
+                    Row(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        , verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        PosterCardImage(
+                            model = viewState.establecimiento?.photo ?: "", modifier = Modifier
+                                .size(55.dp), shape = CircleShape
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Column() {
+                        Text(
+                            text = viewState.establecimiento?.name ?: "", modifier = Modifier
+                                .clickable { viewState.establecimiento?.let { navigateToEstablecimiento(it.id)} }
+                                .padding(5.dp),
+                            style = MaterialTheme.typography.titleMedium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                            Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier
+                                .clickable { viewState.establecimiento?.let {  navigateToConversation(it.id)} }) {
+                                Icon(
+                                    imageVector = Icons.Default.Chat,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(15.dp)
+                                )
+                                Spacer(modifier = Modifier.width(5.dp))
+                            Text(text = stringResource(id = R.string.inbox_to_establecimiento),
+                            style = MaterialTheme.typography.labelLarge)
+                            }
                         }
-                    }) {
-                        Text(text = "Proceder")
                     }
+                    Divider(modifier = Modifier.padding(vertical = 5.dp))
+                    Text(
+                        text = stringResource(id = R.string.where_will_it_be_played),
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                    Box(modifier = Modifier
+                        .clickable { }
+                        .height(110.dp)
+                        .padding(vertical = 5.dp)
+                        .fillMaxWidth()) {
+                        PosterCardImageDark(model = viewState.instalacion?.portada ?: "")
+                        Text(
+                            text = viewState.instalacion?.name ?: "", modifier = Modifier
+                                .align(Alignment.BottomStart)
+                                .padding(5.dp),
+                            style = MaterialTheme.typography.labelLarge, color = Color.White
+                        )
+                    }
+                    PosterCardImage(model = stringResource(id = R.string.location_static_url),
+                        modifier = Modifier
+                            .clickable { }
+                            .fillMaxWidth()
+                            .height(200.dp)
+                            .padding(10.dp))
+                    Text(
+                        text = viewState.establecimiento?.address ?: "",
+                        style = MaterialTheme.typography.titleSmall
+                    )
                 }
-                Divider()
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-                    .clickable { }, verticalAlignment = Alignment.CenterVertically) {
-            PosterCardImage(model = viewState.establecimiento?.photo?:"",modifier = Modifier
-                .size(55.dp), shape = CircleShape)
-                    Spacer(modifier = Modifier.width(10.dp))
-                Text(text = viewState.establecimiento?.name?:"",modifier = Modifier
-                    .padding(5.dp),
-                style = MaterialTheme.typography.titleMedium)
-            }
-                Divider(modifier = Modifier.padding(vertical = 5.dp))
-                Text(text = stringResource(id = R.string.where_will_it_be_played),
-                style = MaterialTheme.typography.labelLarge)
-                Box(modifier = Modifier
-                    .clickable {  }
-                    .height(110.dp)
-                    .padding(vertical = 5.dp)
-                    .fillMaxWidth()){
-                    PosterCardImageDark(model = viewState.instalacion?.portada?:"")
-                    Text(text = viewState.instalacion?.name?:"",modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(5.dp),
-                        style = MaterialTheme.typography.labelLarge,color = Color.White)
-                }
-                PosterCardImage(model = stringResource(id = R.string.location_static_url),
-                modifier = Modifier
-                    .clickable {  }
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .padding(10.dp))
-                Text(text = viewState.establecimiento?.address ?: "",
-                style = MaterialTheme.typography.titleSmall)
-            }
 
 
+            }
+            SnackbarHost(hostState = snackbarHostState) { data ->
+                SwipeToDismiss(
+                    state = dismissSnackbarState,
+                    background = {},
+                    dismissContent = { Snackbar(snackbarData = data) },
+                    modifier = Modifier
+                        .padding(horizontal = Layout.bodyMargin)
+                        .fillMaxWidth(),
+                )
+            }
         }
-    SnackbarHost(hostState = snackbarHostState) { data ->
-        SwipeToDismiss(
-            state = dismissSnackbarState,
-            background = {},
-            dismissContent = { Snackbar(snackbarData = data) },
-            modifier = Modifier
-                .padding(horizontal = Layout.bodyMargin)
-                .fillMaxWidth(),
-        )
     }
-    }
-}
 
+}
 
 @Composable
 fun CupoItem(

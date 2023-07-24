@@ -69,6 +69,7 @@
             <option value="$PROJECT_DIR$/ui/inicio/home" />
             <option value="$PROJECT_DIR$/ui/inicio/servicios" />
             <option value="$PROJECT_DIR$/ui/map" />
+            <option value="$PROJECT_DIR$/ui/media" />
             <option value="$PROJECT_DIR$/ui/settings" />
             <option value="$PROJECT_DIR$/ui/signup" />
           </set>

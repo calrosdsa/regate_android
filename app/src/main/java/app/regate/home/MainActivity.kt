@@ -104,7 +104,7 @@ class MainActivity : ComponentActivity() {
         }
     }
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(ContextWrapper(newBase.setAppLocale("en")))
+        super.attachBaseContext(ContextWrapper(newBase.setAppLocale("es")))
     }
 
     fun Context.setAppLocale(language: String): Context {

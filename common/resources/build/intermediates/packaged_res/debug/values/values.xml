@@ -34,10 +34,12 @@
     <string name="filters">Filters</string>
     <string name="floating1" translatable="false">floating1</string>
     <string name="floating2" translatable="false">floating2</string>
+    <string name="full_payment">Full Payment</string>
     <string name="gcp_id" translatable="false">405059725143-8ian2lbmjge14iu3ebdobd2h3udpqjlq.apps.googleusercontent.com</string>
     <string name="group_description">Group description</string>
     <string name="group_visibility">Group Visibility</string>
     <string name="inbox">Inbox</string>
+    <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
     <string name="language">Language</string>
     <string name="leave_group">Leave group</string>
     <string name="location">Location</string>

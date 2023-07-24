@@ -1,1 +1,1 @@
-app.regate.actividades
+app.regate.inbox

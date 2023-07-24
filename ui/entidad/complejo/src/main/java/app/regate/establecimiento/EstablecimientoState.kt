@@ -15,7 +15,8 @@ data class EstablecimientoState(
     val message:UiMessage? = null,
     val instalacionCategoryCount: List<InstalacionCategoryCount> = emptyList(),
     val rules:List<Labels> = emptyList(),
-    val amenities:List<Labels> = emptyList()
+    val amenities:List<Labels> = emptyList(),
+    val isFavorite:Boolean = false,
 ){
     companion object{
         val Empty = EstablecimientoState()

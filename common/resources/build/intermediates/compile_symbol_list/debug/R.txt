@@ -58,10 +58,12 @@ int string favorites 0x0
 int string filters 0x0
 int string floating1 0x0
 int string floating2 0x0
+int string full_payment 0x0
 int string gcp_id 0x0
 int string group_description 0x0
 int string group_visibility 0x0
 int string inbox 0x0
+int string inbox_to_establecimiento 0x0
 int string language 0x0
 int string leave_group 0x0
 int string location 0x0

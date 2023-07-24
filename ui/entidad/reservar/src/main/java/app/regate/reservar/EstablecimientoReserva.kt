@@ -19,6 +19,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
@@ -60,6 +63,7 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.components.card.InstalacionCard
+import app.regate.common.composes.components.dialog.CategoryDialog
 import app.regate.common.composes.components.dialog.DatePickerDialogComponent
 import app.regate.common.composes.components.dialog.DialogHour
 import app.regate.common.composes.components.images.AsyncImage
@@ -67,6 +71,7 @@ import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.data.dto.empresa.instalacion.InstalacionAvailable
 import app.regate.models.Instalacion
+import app.regate.models.Labels
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -164,48 +169,18 @@ internal fun EstablecimientoReserva(
     LaunchedEffect(key1 = dateState.selectedDateMillis, block = {
         dateState.selectedDateMillis?.let { updateCurrentDate(it) }
     })
-    if (showCategoryDialog.value) {
-        Dialog(onDismissRequest = { showCategoryDialog.value = false }) {
-            Column(
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .clip(MaterialTheme.shapes.medium)
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(10.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+    CategoryDialog(
+        showDialog = showCategoryDialog.value,
+        selectedCategory = state.selectedCategory.let{
+            Labels(id = it?.category_id?.toLong()?:0,name= it?.category_name.toString(),thumbnail = it?.thumbnail)
+                                                     },
+        categories = state.categories.map {
+            Labels(id = it.category_id?.toLong()?:0L,name=it.category_name,thumbnail = it.thumbnail)
+                                          },
+        closeDialog = { showCategoryDialog.value = false },
+        setCategory ={  setCategory(it) }
+    )
 
-                Text(
-                    text = stringResource(id = R.string.what_would_you_like_to_play),
-                    modifier = Modifier
-                        .padding(10.dp),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                state.categories.map { item ->
-                    OutlinedButton(
-                        onClick = { item.category_id?.let { setCategory(it.toLong()) } },
-                        colors = ButtonDefaults.outlinedButtonColors(
-                            containerColor = if (state.selectedCategory?.category_id == item.category_id) MaterialTheme.colorScheme.primary else Color.Transparent,
-                            contentColor = if (state.selectedCategory?.category_id == item.category_id) Color.White else MaterialTheme.colorScheme.primary
-
-                        )
-                    ) {
-                        AsyncImage(
-                            model = item.thumbnail,
-                            contentDescription = item.thumbnail,
-                            modifier = Modifier.size(30.dp),
-                            colorFilter = ColorFilter.tint(if (state.selectedCategory?.category_id == item.category_id) Color.White else MaterialTheme.colorScheme.onBackground)
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text(text = item.category_name, style = MaterialTheme.typography.labelLarge)
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                }
-            }
-        }
-    }
 
     DialogHour(
         showDialog = showDialogIntervalo.value,
@@ -224,114 +199,114 @@ internal fun EstablecimientoReserva(
     )
 
 
-        Column(
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 10.dp, vertical = 10.dp)
+    ) {
+        Surface(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 10.dp, vertical = 10.dp)
-        ) {
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 5.dp, vertical = 10.dp),
-                shape = MaterialTheme.shapes.medium,
-                shadowElevation = 10.dp,
+                .fillMaxWidth()
+                .padding(horizontal = 5.dp, vertical = 10.dp),
+            shape = MaterialTheme.shapes.medium,
+            shadowElevation = 10.dp,
 //                    tonalElevation = 5.dp
-            ) {
-                Column() {
+        ) {
+            Column() {
 
-                    LazyRow(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp)
-                    ) {
-                        item {
-                            Surface(
-                                onClick = { showCategoryDialog.value = true },
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp)
+                ) {
+                    item {
+                        Surface(
+                            onClick = { showCategoryDialog.value = true },
+                            modifier = Modifier
+                        ) {
+                            Box(
                                 modifier = Modifier
+                                    .padding(5.dp)
+                                    .size(40.dp)
                             ) {
-                                Box(
+                                Icon(
+                                    imageVector = Icons.Default.Add,
+                                    contentDescription = "add-sport",
                                     modifier = Modifier
-                                        .padding(5.dp)
-                                        .size(40.dp)
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Add,
-                                        contentDescription = "add-sport",
-                                        modifier = Modifier
-                                            .zIndex(1f)
-                                            .size(8.dp)
-                                            .align(Alignment.TopEnd)
-                                    )
-                                    AsyncImage(
-                                        model = state.selectedCategory?.thumbnail ?: "",
-                                        contentDescription = "",
-                                        modifier = Modifier
-                                            .size(30.dp)
-                                            .align(Alignment.Center),
-                                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
-                                    )
-                                }
-                            }
-                        }
-                        item {
-                            Divider(
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .width(1.dp)
-                            )
-                        }
-                        item {
-                            Surface(onClick = { showDialog.value = true }, modifier = Modifier) {
-                                Column(
-                                    modifier = Modifier.padding(10.dp)
-                                ) {
-                                    Text(
-                                        text = "Date",
-                                        style = MaterialTheme.typography.labelSmall
-                                    )
-                                    Spacer(modifier = Modifier.width(5.dp))
-                                    Text(
-                                        text = dateState.selectedDateMillis?.let { formatDate(it) }
-                                            .toString(),
-                                        style = MaterialTheme.typography.labelMedium,
-                                    )
-                                }
-                            }
-                        }
-                        item {
-                            Divider(
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .width(1.dp)
-                            )
-                        }
-                        item {
-
-                            Surface(
-                                onClick = { showDialogIntervalo.value = true },
-                                modifier = Modifier
-                            ) {
-                                Column(
-                                    modifier = Modifier.padding(10.dp)
-                                ) {
-                                    Text(
-                                        text = stringResource(id = R.string.time_interval),
-                                        style = MaterialTheme.typography.labelSmall
-                                    )
-                                    Spacer(modifier = Modifier.width(5.dp))
-                                    Text(
-                                        text = "${state.filter.minutes}mn",
-                                        style = MaterialTheme.typography.labelMedium,
-                                    )
-                                }
+                                        .zIndex(1f)
+                                        .size(8.dp)
+                                        .align(Alignment.TopEnd)
+                                )
+                                AsyncImage(
+                                    model = state.selectedCategory?.thumbnail ?: "",
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                        .align(Alignment.Center),
+                                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
+                                )
                             }
                         }
                     }
+                    item {
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .width(1.dp)
+                        )
+                    }
+                    item {
+                        Surface(onClick = { showDialog.value = true }, modifier = Modifier) {
+                            Column(
+                                modifier = Modifier.padding(10.dp)
+                            ) {
+                                Text(
+                                    text = "Date",
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                                Spacer(modifier = Modifier.width(5.dp))
+                                Text(
+                                    text = dateState.selectedDateMillis?.let { formatDate(it) }
+                                        .toString(),
+                                    style = MaterialTheme.typography.labelMedium,
+                                )
+                            }
+                        }
+                    }
+                    item {
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .width(1.dp)
+                        )
+                    }
+                    item {
 
-
+                        Surface(
+                            onClick = { showDialogIntervalo.value = true },
+                            modifier = Modifier
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(10.dp)
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.time_interval),
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                                Spacer(modifier = Modifier.width(5.dp))
+                                Text(
+                                    text = "${state.filter.minutes}mn",
+                                    style = MaterialTheme.typography.labelMedium,
+                                )
+                            }
+                        }
+                    }
                 }
+
+
             }
-            if (state.establecimientoCupos.isNotEmpty()) {
+        }
+        if (state.establecimientoCupos.isNotEmpty()) {
             Text(
                 text = stringResource(id = R.string.choose_a_schedule),
                 style = MaterialTheme.typography.titleMedium,
@@ -386,16 +361,16 @@ internal fun EstablecimientoReserva(
                     )
                 }
             }
-    } else {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Text(
-                text = stringResource(id = R.string.there_are_not_available_schudules),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.align(Alignment.Center)
-            )
+        } else {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Text(
+                    text = stringResource(id = R.string.there_are_not_available_schudules),
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         }
     }
-        }
 }
 
 
@@ -407,50 +382,51 @@ internal fun InstalacionAvailable(
     navigate: (id: Long) -> Unit,
     modifier: Modifier = Modifier,
     imageHeight: Dp = 110.dp,
-    content:@Composable () (ColumnScope.() -> Unit) = {}
+    content: @Composable() (ColumnScope.() -> Unit) = {}
 ) {
     ElevatedCard(
-        modifier = modifier,
-        onClick = { navigate(instalacion.instalacion_id) }
+            modifier = modifier,
+            onClick = { navigate(instalacion.instalacion_id) }
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(imageHeight)
-        ) {
-            AsyncImage(
-                model = instalacion.portada,
-                requestBuilder = { crossfade(true) },
-                contentDescription = instalacion.portada,
+            Box(
                 modifier = Modifier
-                    .fillMaxSize(),
-                contentScale = ContentScale.Crop,
-            )
-            Surface(
-                shape = RoundedCornerShape(topEnd = 10.dp),
-                border = BorderStroke(1.dp, Color.White),
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .offset(y = 4.dp),
-                color = MaterialTheme.colorScheme.primary
+                    .fillMaxWidth()
+                    .height(imageHeight)
             ) {
-                Box(modifier= Modifier.padding(vertical = 8.dp, horizontal = 12.dp)) {
-                    Text(
-                        text = instalacion.precio.toString(),
-                        style = MaterialTheme.typography.titleMedium
-                    )
+                AsyncImage(
+                    model = instalacion.portada,
+                    requestBuilder = { crossfade(true) },
+                    contentDescription = instalacion.portada,
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
+                Surface(
+                    shape = RoundedCornerShape(topEnd = 10.dp),
+                    border = BorderStroke(1.dp, Color.White),
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .offset(y = 4.dp),
+                    color = MaterialTheme.colorScheme.primary
+                ) {
+                    Box(modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp)) {
+                        Text(
+                            text = instalacion.precio.toString(),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
                 }
             }
-        }
-        Column(modifier = Modifier.padding(5.dp)) {
-            Text(
-                text = instalacion.name, style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier
-            )
-            Spacer(modifier = Modifier.height(5.dp))
-            content()
-        }
+            Column(modifier = Modifier.padding(5.dp)) {
+                Text(
+                    text = instalacion.name, style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier
+                )
+                Spacer(modifier = Modifier.height(5.dp))
+                content()
+            }
 
+        }
     }
-}
+
 

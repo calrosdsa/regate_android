@@ -75,6 +75,7 @@ include(
     ":ui:account:reservas",
 
     ":ui:settings",
+    ":ui:media",
     ":ui:inbox",
     ":ui:favoritos",
 

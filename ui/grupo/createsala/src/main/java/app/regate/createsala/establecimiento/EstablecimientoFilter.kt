@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
+import app.regate.common.composes.components.item.EstablecimientoItem
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.viewModel
 import me.tatarka.inject.annotations.Assisted
@@ -86,17 +87,21 @@ internal fun EstablecimientoFilter(
                 items = viewState.establecimientos,
                 key = { it.id }
             ) { establecimiento ->
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { navigateToCreateSala(establecimiento.id.toLong()) }
-                    .padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
-                    PosterCardImage(
-                        model = establecimiento.photo, modifier = Modifier
-                            .width(100.dp)
-                            .height(70.dp)
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(text = establecimiento.name, style = MaterialTheme.typography.titleMedium)
+
+//                Row(modifier = Modifier
+//                    .fillMaxWidth()
+//                    .clickable { navigateToCreateSala(establecimiento.id.toLong()) }
+//                    .padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
+//                    PosterCardImage(
+//                        model = establecimiento.photo, modifier = Modifier
+//                            .width(100.dp)
+//                            .height(70.dp)
+//                    )
+//                    Spacer(modifier = Modifier.width(10.dp))
+//                    Text(text = establecimiento.name, style = MaterialTheme.typography.titleMedium)
+//                }
+                EstablecimientoItem(name = establecimiento.name, photo = establecimiento.photo){
+                    navigateToCreateSala(establecimiento.id.toLong())
                 }
                 Divider()
             }

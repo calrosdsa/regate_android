@@ -140,6 +140,13 @@ public abstract class ApplicationComponent implements app.regate.data.RoomDataba
     
     @org.jetbrains.annotations.NotNull
     @me.tatarka.inject.annotations.Provides
+    public app.regate.data.daos.FavoriteEstablecimientoDao provideFavoriteEstablecimientos(@org.jetbrains.annotations.NotNull
+    app.regate.data.db.AppDatabase db) {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.NotNull
+    @me.tatarka.inject.annotations.Provides
     public app.regate.data.daos.GrupoDao provideGrupoDao(@org.jetbrains.annotations.NotNull
     app.regate.data.db.AppDatabase db) {
         return null;

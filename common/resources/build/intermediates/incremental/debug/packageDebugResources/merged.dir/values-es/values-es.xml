@@ -16,9 +16,11 @@
     <string name="family_name">Apellido</string>
     <string name="favorites">Mis favoritos</string>
     <string name="filters">Filtros</string>
+    <string name="full_payment">Pago Completo</string>
     <string name="group_description">Descripción del grupo</string>
     <string name="group_visibility">Visibilidad del Grupo</string>
     <string name="inbox">Inbox</string>
+    <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
     <string name="language">Idioma</string>
     <string name="leave_group">Salir del grupo</string>
     <string name="location">Ubicación</string>

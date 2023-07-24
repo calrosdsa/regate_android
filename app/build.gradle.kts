@@ -144,6 +144,9 @@ dependencies {
     implementation(projects.ui.account.reservas)
     implementation(projects.ui.auth)
 
+    implementation(projects.ui.inbox)
+    implementation(projects.ui.media)
+
     implementation(projects.ui.inicio.home)
     implementation(projects.ui.inicio.servicios)
     implementation(projects.ui.inicio.discover)

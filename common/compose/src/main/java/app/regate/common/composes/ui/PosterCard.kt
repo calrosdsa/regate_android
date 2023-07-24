@@ -82,6 +82,7 @@ fun PosterCardImage(
     model:String?,
     modifier: Modifier = Modifier,
     shape:Shape = CardDefaults.shape,
+    contentScale:ContentScale = ContentScale.Crop
 ) {
     Card(modifier = modifier,
     shape = shape) {
@@ -90,7 +91,7 @@ fun PosterCardImage(
             requestBuilder = { crossfade(true) },
             contentDescription = model,
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop,
+            contentScale = contentScale,
         )
     }
 }

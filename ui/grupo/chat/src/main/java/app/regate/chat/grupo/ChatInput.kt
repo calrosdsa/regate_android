@@ -105,16 +105,16 @@ fun ChatInput(
                     },
                     modifier = Modifier
                         .fillMaxWidth(0.85f)
-                        .padding(10.dp)
                         .focusRequester(focusRequester),
                     maxLines = 1,
                     decorationBox = { innerTextField ->
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(10.dp),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             innerTextField()
-                            Icon(imageVector = Icons.Outlined.EmojiEmotions, contentDescription = "emoji")
+//                            Icon(imageVector = Icons.Outlined.EmojiEmotions, contentDescription = "emoji")
                         }
                     },
                 )

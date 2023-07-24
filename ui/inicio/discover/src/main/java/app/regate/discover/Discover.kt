@@ -62,8 +62,8 @@ import app.regate.common.composes.viewModel
 import app.regate.constant.Route
 import app.regate.data.dto.empresa.instalacion.InstalacionDto
 import app.regate.models.Labels
-import com.commandiron.wheel_picker_compose.WheelTimePicker
-import com.commandiron.wheel_picker_compose.core.TimeFormat
+//import com.commandiron.wheel_picker_compose.WheelTimePicker
+//import com.commandiron.wheel_picker_compose.core.TimeFormat
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaLocalTime
 import kotlinx.datetime.toKotlinLocalTime
@@ -74,6 +74,8 @@ import java.time.LocalTime
 import kotlin.time.Duration.Companion.days
 import app.regate.common.resources.R
 import app.regate.constant.id
+import app.regate.discover.timepicker.TimeFormat
+import app.regate.discover.timepicker.WheelTimePicker
 
 typealias DiscoverScreen = @Composable (
     navController:NavController,
@@ -174,10 +176,10 @@ internal fun Discover(
                    date = formatter.formatWithSkeleton(dateState.selectedDateMillis!!, formatter.yearAbbrMonthDaySkeleton),
                    navigateToFilter = {navController.navigate(Route.FILTER)},
                    categories = viewState.categories,
-                   currentCategoryId = viewState.filter.category_id,
                    currentTime = viewState.filter.currentTime.toJavaLocalTime(),
                    currentInterval = viewState.filter.interval,
-                   setCategory = viewModel::setCategory
+                   setCategory = viewModel::setCategory,
+                   selectedCategory = viewState.selectedCategory
                    )
         },
         bottomBar = {

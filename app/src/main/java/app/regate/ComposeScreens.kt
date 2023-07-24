@@ -30,6 +30,7 @@ import app.regate.establecimiento.Establecimiento
 import app.regate.instalacion.InstalacionDetail
 import app.regate.reservar.EstablecimientoReserva
 import app.regate.chat.grupo.ChatSala
+import app.regate.conversation.Conversation
 import app.regate.creategroup.CreateGroup
 import app.regate.createsala.CreateSala
 import app.regate.createsala.establecimiento.EstablecimientoFilter
@@ -40,6 +41,8 @@ import app.regate.favorites.Favorites
 import app.regate.grupo.Grupo
 import app.regate.grupos.FilterGroups
 import app.regate.grupos.Grupos
+import app.regate.inbox.Inbox
+import app.regate.media.photo.Photo
 import app.regate.profile.Profile
 import app.regate.profile.edit.EditProfile
 import app.regate.sala.Sala
@@ -77,6 +80,10 @@ class ComposeScreens(
     val createSala:CreateSala,
     val settings:Setting,
     val favorites:Favorites,
+    val conversation:Conversation,
+    val inbox:Inbox,
+
+    val photo:Photo,
 
     val grupo:Grupo,
     val filterGroups:FilterGroups,

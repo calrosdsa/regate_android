@@ -3,17 +3,24 @@ package app.regate.establecimiento
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,7 +29,10 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.ThumbUp
 import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,21 +61,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.components.images.AsyncImage
+import app.regate.common.composes.ui.CommonTopBar
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.models.Establecimiento
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -80,6 +97,7 @@ typealias Establecimiento = @Composable (
     reservar:@Composable (category:Long) -> Unit,
     salas:@Composable () -> Unit,
     currentPage:Int,
+    navigateToPhoto:(String)->Unit
     ) -> Unit
 
 @Inject
@@ -92,6 +110,7 @@ fun Establecimiento(
     @Assisted reservar:@Composable (category:Long) -> Unit,
     @Assisted salas:@Composable () -> Unit,
     @Assisted currentPage:Int,
+    @Assisted navigateToPhoto: (String) -> Unit
     ){
     Establecimiento(
         viewModel = viewModel(factory = viewModelFactory),
@@ -101,6 +120,7 @@ fun Establecimiento(
         reservar = reservar,
         salas = salas,
         currentPage = currentPage,
+        navigateToPhoto = navigateToPhoto
     )
 }
 
@@ -115,24 +135,20 @@ internal fun Establecimiento(
     reservar:@Composable (category:Long) -> Unit,
     salas:@Composable () -> Unit,
     currentPage: Int,
+    navigateToPhoto: (String) -> Unit
     ) {
     val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Hidden)
-    val category = remember{ mutableStateOf(0L) }
+    val category = remember { mutableStateOf(0L) }
     val state by viewModel.state.collectAsState()
     val pagerState = rememberPagerState(initialPage = currentPage)
     val coroutineScope = rememberCoroutineScope()
     val nestedScrollViewState = rememberNestedScrollViewState()
     val snackbarHostState = remember { SnackbarHostState() }
-
-//    var headerO by remember{ mutableStateOf(1f) }
-    val maxOffset = remember{
-        derivedStateOf{ nestedScrollViewState.maxOffset }
+    val maxOffset = remember {
+        derivedStateOf { nestedScrollViewState.maxOffset }
     }
     val color = remember { Animatable(Color.Transparent) }
     val topBarColor = MaterialTheme.colorScheme.inverseOnSurface
-    BackHandler(true) {
-        navigateUp()
-    }
     LaunchedEffect(key1 = nestedScrollViewState.offset, block = {
         if (-maxOffset.value == nestedScrollViewState.offset) {
             color.animateTo(topBarColor, animationSpec = tween(500))
@@ -148,22 +164,34 @@ internal fun Establecimiento(
         }
     }
 
-    if(sheetState.isVisible){
+    BackHandler(true) {
 
-    ModalBottomSheet(onDismissRequest = {coroutineScope.launch { sheetState.hide() } }) {
-        Column(modifier = Modifier.fillMaxSize().padding(10.dp)){
-            PosterCardImage(model = stringResource(id = R.string.location_static_url),
-                modifier = Modifier
-                    .clickable {
-
-                    }
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .padding(10.dp))
-            Text(text = state.establecimiento?.address ?: "",
-                style = MaterialTheme.typography.titleSmall)
-        }
+        navigateUp()
     }
+
+
+
+    if (sheetState.isVisible) {
+        ModalBottomSheet(onDismissRequest = { coroutineScope.launch { sheetState.hide() } }) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(10.dp)
+            ) {
+                PosterCardImage(model = stringResource(id = R.string.location_static_url),
+                    modifier = Modifier
+                        .clickable {
+
+                        }
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .padding(10.dp))
+                Text(
+                    text = state.establecimiento?.address ?: "",
+                    style = MaterialTheme.typography.titleSmall
+                )
+            }
+        }
     }
 
     Scaffold(
@@ -176,38 +204,61 @@ internal fun Establecimiento(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(
-                    onClick = { navigateUp() }, modifier = Modifier
-                        .zIndex(1f)
-                        .padding(5.dp)
-                        .clip(CircleShape)
-                        .background(topBarColor)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "mdakd",
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
+                    IconButton(
+                        onClick = { navigateUp() }, modifier = Modifier
+                            .zIndex(1f)
+                            .padding(5.dp)
+                            .clip(CircleShape)
+                            .background(topBarColor)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "mdakd",
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
                     Spacer(modifier = Modifier.width(5.dp))
                     AnimatedVisibility(visible = -maxOffset.value == nestedScrollViewState.offset) {
-                    Text(text = state.establecimiento?.name?:"",style = MaterialTheme.typography.labelLarge)
+                        Text(
+                            text = state.establecimiento?.name ?: "",
+                            style = MaterialTheme.typography.labelLarge
+                        )
                     }
                 }
                 Row() {
-                IconButton(
-                    onClick = { coroutineScope.launch { sheetState.show() }}, modifier = Modifier
-                        .zIndex(1f)
-                        .padding(5.dp)
-                        .clip(CircleShape)
-                        .background(topBarColor)
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.ThumbUp,
-                        contentDescription = "thumpup",
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
+                    Crossfade(targetState = state.isFavorite) {
+                        if (it) {
+                            IconButton(
+                                onClick = { coroutineScope.launch { viewModel.removeLike() } },
+                                modifier = Modifier
+                                    .zIndex(1f)
+                                    .padding(5.dp)
+                                    .clip(CircleShape)
+                                    .background(topBarColor)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Favorite,
+                                    contentDescription = "thumpup",
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                        } else {
+                            IconButton(
+                                onClick = { coroutineScope.launch { viewModel.like() } },
+                                modifier = Modifier
+                                    .zIndex(1f)
+                                    .padding(5.dp)
+                                    .clip(CircleShape)
+                                    .background(topBarColor)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.FavoriteBorder,
+                                    contentDescription = "thumpup",
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                        }
+                    }
                     IconButton(
                         onClick = { navigateUp() }, modifier = Modifier
                             .zIndex(1f)
@@ -223,10 +274,12 @@ internal fun Establecimiento(
                     }
                 }
             }
+
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         },
+        modifier = Modifier.zIndex(0f)
     )
     { paddingValues ->
         VerticalNestedScrollView(
@@ -234,32 +287,39 @@ internal fun Establecimiento(
 //                .nestedScroll(nested),
             state = nestedScrollViewState,
             header = {
-
-                Layout(modifier =  Modifier.height(100.dp),content ={
-                state.establecimiento?.let {
-                    HeaderEstablecimiento(
-                        establecimiento = it,
+                Layout(modifier = Modifier.height(100.dp), content = {
+                    state.establecimiento?.let { establecimiento ->
+                        HeaderEstablecimiento(
+                            establecimiento = establecimiento,
+                            navigateToPhoto = navigateToPhoto
 //                        modifier = Modifier.graphicsLayer {
 //                            alpha = headerO.coerceIn(0f,1f)
 //                        }
-                    )
-                }
-                }){
-                        measurables, constraints ->
+                        )
+                    }
+                }) { measurables, constraints ->
                     val placeables = measurables.map { measurable ->
                         measurable.measure(
-                            Constraints.fixed(width = constraints.maxWidth
-                            ,height = constraints.maxHeight+200))
+                            Constraints.fixed(
+                                width = constraints.maxWidth,
+                                height = constraints.maxHeight + 200
+                            )
+                        )
                     }
-                    layout(width= constraints.maxWidth,height = constraints.maxHeight -200) {
+                    layout(
+                        width = constraints.maxWidth,
+                        height = constraints.maxHeight - 200
+                    ) {
                         placeables.forEach { placeable ->
-                            placeable.placeRelativeWithLayer(x =0, y = -275)
+                            placeable.placeRelativeWithLayer(x = 0, y = -275)
                         }
                     }
                 }
 
             }
+
         ) {
+
             Column() {
 
                 Indicators(navToTab = {
@@ -275,12 +335,18 @@ internal fun Establecimiento(
                         0 -> {
                             EstablecimientoPage(
                                 state = state,
-                                openLocationSheet = {coroutineScope.launch { sheetState.show() }},
+                                openLocationSheet = { coroutineScope.launch { sheetState.show() } },
                                 navigateToReserva = {
                                     category.value = it
-                                    coroutineScope.launch { pagerState.animateScrollToPage(1) } }
+                                    coroutineScope.launch {
+                                        pagerState.animateScrollToPage(
+                                            1
+                                        )
+                                    }
+                                }
                             )
                         }
+
                         1 -> reservar(category.value)
                         2 -> salas()
                         3 -> actividades()
@@ -296,57 +362,33 @@ internal fun Establecimiento(
 }
 
 
+
 @Composable
 fun HeaderEstablecimiento(
     establecimiento: Establecimiento,
     modifier:Modifier = Modifier,
+    navigateToPhoto: (String) -> Unit
 ){
 //    val isLike = remember {
 //        mutableStateOf(false)
 //    }
-    Column(modifier = modifier) {
+
+    Column(modifier = modifier.zIndex(1f)) {
             AsyncImage(
                 model = establecimiento.photo,
                 requestBuilder = { crossfade(true) },
                 contentDescription = establecimiento.photo,
                 modifier = Modifier
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ) {
+                        navigateToPhoto(establecimiento.photo.toString())
+                    }
                     .fillMaxWidth()
                     .height(170.dp),
                 contentScale = ContentScale.Crop,
             )
-
-//        Row(
-//            verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-//                .fillMaxWidth()
-//                .height(100.dp)
-//                .padding(10.dp),
-//            horizontalArrangement = Arrangement.SpaceBetween
-//        ) {
-//            Row(
-//                verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-//            ) {
-//                AsyncImage(
-//                    model = establecimiento.portada,
-//                    requestBuilder = { crossfade(true) },
-//                    contentDescription = establecimiento.portada,
-//                    modifier = Modifier
-//                        .size(80.dp)
-//                        .clip(CircleShape),
-//                    contentScale = ContentScale.Crop,
-//                )
-//                Spacer(modifier = Modifier.width(15.dp))
-//                Text(
-//                    text = establecimiento.name,
-//                    style = MaterialTheme.typography.titleMedium
-//                )
-//            }
-//            Crossfade(targetState = isLike.value) {
-//            IconButton(onClick = { isLike.value = !it }) {
-//                Icon(imageVector = if(it)Icons.Filled.ThumbUp else Icons.Outlined.ThumbUp, contentDescription = "thum_up")
-//            }
-//            }
-//        }
-
     }
 }
 

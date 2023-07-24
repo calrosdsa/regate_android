@@ -6,6 +6,7 @@ import app.regate.data.dto.empresa.establecimiento.CuposEstablecimientoRequest
 import app.regate.data.mappers.EstablecimientoDtoToEstablecimiento
 import app.regate.api.handleApi
 import app.regate.data.auth.store.AuthStore
+import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.models.Establecimiento
@@ -14,6 +15,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
+import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
@@ -41,6 +43,21 @@ class EstablecimientoDataSourceImpl(
             header("Authorization","Bearer $token")
         }.body()
     }
+
+    override suspend fun likeEstablecimiento(id: Long) {
+        val token = authStore.get()?.accessToken
+        client.put("/v1/establecimiento/like/${id}/"){
+            header("Authorization","Bearer $token")
+        }.body<ResponseMessage>()
+    }
+
+    override suspend fun removeLikeEstablecimiento(id: Long) {
+        val token = authStore.get()?.accessToken
+        client.put("/v1/establecimiento/dislike/${id}/"){
+            header("Authorization","Bearer $token")
+        }.body<ResponseMessage>()
+    }
+
     override suspend fun getEstablecimientoCupos(d: CuposEstablecimientoRequest):List<CupoEstablecimiento> {
         return client.post("/v1/establecimiento/cupos/"){
             contentType(ContentType.Application.Json)

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
 import app.regate.data.establecimiento.EstablecimientoRepository
+import app.regate.domain.observers.ObserveFavorites
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,17 +16,20 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 class FavoritesViewModel(
-    private val establecimientoRepository: EstablecimientoRepository
+    private val establecimientoRepository: EstablecimientoRepository,
+    observeEstablecimientoFavorites:ObserveFavorites
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     val state:StateFlow<FavoritesState> = combine(
         loadingCounter.observable,
-        uiMessageManager.message
-    ){loading,message->
+        uiMessageManager.message,
+        observeEstablecimientoFavorites.flow
+    ){loading,message,establecimientos->
         FavoritesState(
             loading = loading,
-            message = message
+            message = message,
+            establecimientos = establecimientos
         )
     }.stateIn(
         scope = viewModelScope,
@@ -33,6 +37,7 @@ class FavoritesViewModel(
         initialValue = FavoritesState.Empty
     )
     init {
+        observeEstablecimientoFavorites(Unit)
         getFavoriteEstablecimientos()
     }
 

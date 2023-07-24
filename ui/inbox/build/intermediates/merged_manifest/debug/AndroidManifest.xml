@@ -15,7 +15,7 @@
   ~ limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.regate.actividades" >
+    package="app.regate.inbox" >
 
     <uses-sdk android:minSdkVersion="23" />
 

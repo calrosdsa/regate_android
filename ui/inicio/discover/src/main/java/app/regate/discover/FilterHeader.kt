@@ -2,10 +2,13 @@ package app.regate.discover
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -13,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Sort
@@ -23,11 +27,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
+import app.regate.common.composes.components.dialog.CategoryDialog
 import app.regate.common.composes.components.images.AsyncImage
 import app.regate.data.common.AddressDevice
 import app.regate.common.resources.R
@@ -43,12 +51,21 @@ internal fun HeaderFilter(
     date:String,
     navigateToFilter:()->Unit,
     categories:List<Labels>,
-    currentCategoryId:Long,
+//    currentCategoryId:Long,
     currentTime:LocalTime,
     currentInterval:Long,
     setCategory: (Long) -> Unit,
+    selectedCategory:Labels?,
     modifier:Modifier = Modifier
 ){
+    val showCategoryDialog = remember{ mutableStateOf(false) }
+    CategoryDialog(
+        showDialog = showCategoryDialog.value,
+        selectedCategory = selectedCategory,
+        categories = categories,
+        closeDialog = { showCategoryDialog.value = false },
+        setCategory = setCategory
+    )
     Surface(
         modifier = modifier
             .fillMaxWidth()
@@ -109,7 +126,47 @@ internal fun HeaderFilter(
 
 
             Divider()
-            LazyRow(modifier = Modifier.fillMaxWidth()) {
+            LazyRow(modifier = Modifier.fillMaxWidth().height(50.dp)) {
+
+                item {
+                    Surface(
+                        onClick = { showCategoryDialog.value = true },
+                        modifier = Modifier
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .padding(5.dp)
+                                .size(40.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "add-sport",
+                                modifier = Modifier
+                                    .zIndex(1f)
+                                    .size(8.dp)
+                                    .align(Alignment.TopEnd)
+                            )
+                            if (selectedCategory != null) {
+                                AsyncImage(
+                                    model = selectedCategory.thumbnail ?: "",
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                        .align(Alignment.Center),
+                                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
+                                )
+                            }
+                        }
+                    }
+                }
+                item {
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(1.dp)
+                    )
+                }
+
                 item{
                 Surface(onClick = { showDateDialog() }, modifier = Modifier) {
                     Column(
@@ -127,22 +184,38 @@ internal fun HeaderFilter(
                     }
                 }
                 }
-                item{
-                Surface(onClick = { showTimeDialog() }, modifier = Modifier) {
-                    Column(
-                        modifier = Modifier.padding(10.dp)
-                    ) {
-                        Text(
-                            text = "Hora",
-                            style = MaterialTheme.typography.labelSmall
-                        )
-                        Spacer(modifier = Modifier.width(5.dp))
-                        Text(
-                            text = "$currentTime",
-                            style = MaterialTheme.typography.labelMedium,
-                        )
+                item {
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(1.dp)
+                    )
+                }
+                item {
+                    Surface(onClick = { showTimeDialog() }, modifier = Modifier) {
+                        Column(
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            Text(
+                                text = "Hora",
+                                style = MaterialTheme.typography.labelSmall
+                            )
+                            Spacer(modifier = Modifier.width(5.dp))
+                            Text(
+                                text = "$currentTime",
+                                style = MaterialTheme.typography.labelMedium,
+                            )
+                        }
                     }
                 }
+                item {
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(1.dp)
+                    )
+                }
+                item{
                     Surface(onClick = { showDialogInterval() }, modifier = Modifier) {
                         Column(
                             modifier = Modifier.padding(10.dp)
@@ -159,21 +232,22 @@ internal fun HeaderFilter(
                         }
                     }
                 }
-            }
-            Divider()
 
-            LazyRow{
-                items(
-                    items = categories,
-                    key= {it.id}
-                ) { item ->
-                    InstalacionCategoryItem(
-                        item = item,
-                        isSelected  = currentCategoryId == item.id,
-                        setCategory = { setCategory(item.id) }
-                    )
-                }
             }
+//            Divider()
+//
+//            LazyRow{
+//                items(
+//                    items = categories,
+//                    key= {it.id}
+//                ) { item ->
+//                    InstalacionCategoryItem(
+//                        item = item,
+//                        isSelected  = currentCategoryId == item.id,
+//                        setCategory = { setCategory(item.id) }
+//                    )
+//                }
+//            }
         }
     }
 }
