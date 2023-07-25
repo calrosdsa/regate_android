@@ -62,7 +62,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `grupos` SET `id` = ?,`name` = ?,`description` = ?,`created_at` = ?,`photo` = ?,`profile_id` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `grupos` SET `id` = ?,`name` = ?,`description` = ?,`created_at` = ?,`photo` = ?,`profile_id` = ?,`visibility` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -87,7 +87,8 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
           statement.bindString(5, entity.getPhoto());
         }
         statement.bindLong(6, entity.getProfile_id());
-        statement.bindLong(7, entity.getId());
+        statement.bindLong(7, entity.getVisibility());
+        statement.bindLong(8, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
@@ -102,7 +103,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `grupos` (`id`,`name`,`description`,`created_at`,`photo`,`profile_id`) VALUES (?,?,?,?,?,?)";
+        return "INSERT INTO `grupos` (`id`,`name`,`description`,`created_at`,`photo`,`profile_id`,`visibility`) VALUES (?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -127,12 +128,13 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
           statement.bindString(5, entity.getPhoto());
         }
         statement.bindLong(6, entity.getProfile_id());
+        statement.bindLong(7, entity.getVisibility());
       }
     }, new EntityDeletionOrUpdateAdapter<Grupo>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `grupos` SET `id` = ?,`name` = ?,`description` = ?,`created_at` = ?,`photo` = ?,`profile_id` = ? WHERE `id` = ?";
+        return "UPDATE `grupos` SET `id` = ?,`name` = ?,`description` = ?,`created_at` = ?,`photo` = ?,`profile_id` = ?,`visibility` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -157,7 +159,8 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
           statement.bindString(5, entity.getPhoto());
         }
         statement.bindLong(6, entity.getProfile_id());
-        statement.bindLong(7, entity.getId());
+        statement.bindLong(7, entity.getVisibility());
+        statement.bindLong(8, entity.getId());
       }
     });
   }
@@ -288,6 +291,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
             final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+            final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
             final Grupo _result;
             if (_cursor.moveToFirst()) {
               final long _tmpId;
@@ -316,7 +320,9 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               }
               final long _tmpProfile_id;
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-              _result = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id);
+              final int _tmpVisibility;
+              _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
+              _result = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility);
             } else {
               _result = null;
             }
@@ -355,6 +361,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
             final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+            final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
             final List<Grupo> _result = new ArrayList<Grupo>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final Grupo _item;
@@ -384,7 +391,9 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               }
               final long _tmpProfile_id;
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-              _item = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id);
+              final int _tmpVisibility;
+              _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
+              _item = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -422,6 +431,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
             final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+            final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
             final List<Grupo> _result = new ArrayList<Grupo>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final Grupo _item;
@@ -451,7 +461,9 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               }
               final long _tmpProfile_id;
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-              _item = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id);
+              final int _tmpVisibility;
+              _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
+              _item = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -486,6 +498,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
       final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
       final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
       final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+      final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
       final Grupo _result;
       if (_cursor.moveToFirst()) {
         final long _tmpId;
@@ -514,7 +527,9 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
         }
         final long _tmpProfile_id;
         _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-        _result = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id);
+        final int _tmpVisibility;
+        _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
+        _result = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility);
       } else {
         _result = null;
       }

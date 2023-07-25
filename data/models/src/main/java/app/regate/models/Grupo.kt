@@ -16,4 +16,5 @@ data class Grupo(
     val photo:String? = null,
     //id del usuario que creo
     val profile_id:Long,
+    val visibility:Int,
 ):AppEntity

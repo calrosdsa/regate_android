@@ -78,6 +78,7 @@ include(
     ":ui:media",
     ":ui:inbox",
     ":ui:favoritos",
+    ":ui:coin",
 
     ":app",
     ":common:resources",
@@ -100,6 +101,8 @@ include(
     ":data:repository:labels",
     ":data:repository:users",
     ":data:repository:grupo",
+    ":data:repository:coin",
+    ":data:repository:conversation",
 
 
     ":tasks:android",

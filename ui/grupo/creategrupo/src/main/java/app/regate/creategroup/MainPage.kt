@@ -59,8 +59,8 @@ import app.regate.models.Grupo
 internal fun MainPage(
     asunto:String,
     description:String,
-    visibility:GroupVisibility,
-    onChangeVisibility:(v: GroupVisibility)->Unit,
+    visibility:Int,
+    onChangeVisibility:(v: Int)->Unit,
     onChangeAsunto:(v:String)->Unit,
     onChangeDescription:(v:String)->Unit,
 //    group:Grupo?,
@@ -178,15 +178,15 @@ internal fun MainPage(
             modifier= Modifier.padding(5.dp))
 
         Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.fillMaxWidth()
-            .clickable { onChangeVisibility(GroupVisibility.PUBLIC) }.padding(5.dp)) {
-            RadioButton(selected = visibility == GroupVisibility.PUBLIC, onClick = { onChangeVisibility(GroupVisibility.PUBLIC)})
+            .clickable { onChangeVisibility(GroupVisibility.PUBLIC.ordinal) }.padding(5.dp)) {
+            RadioButton(selected = visibility == GroupVisibility.PUBLIC.ordinal, onClick = { onChangeVisibility(GroupVisibility.PUBLIC.ordinal)})
             Spacer(modifier = Modifier.width(10.dp))
             Text(text = stringResource(id = R.string.publico))
         }
 
         Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.fillMaxWidth()
-            .clickable { onChangeVisibility(GroupVisibility.PRIVATE) }.padding(5.dp)) {
-            RadioButton(selected = visibility == GroupVisibility.PRIVATE, onClick = { onChangeVisibility(GroupVisibility.PRIVATE)})
+            .clickable { onChangeVisibility(GroupVisibility.PRIVATE.ordinal) }.padding(5.dp)) {
+            RadioButton(selected = visibility == GroupVisibility.PRIVATE.ordinal, onClick = { onChangeVisibility(GroupVisibility.PRIVATE.ordinal)})
             Spacer(modifier = Modifier.width(10.dp))
             Text(text = stringResource(id = R.string.privado))
         }

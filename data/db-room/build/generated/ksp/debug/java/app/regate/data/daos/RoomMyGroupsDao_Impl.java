@@ -236,6 +236,7 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
           final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
           final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+          final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
           final List<Grupo> _result = new ArrayList<Grupo>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final Grupo _item;
@@ -265,7 +266,9 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
             }
             final long _tmpProfile_id;
             _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-            _item = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id);
+            final int _tmpVisibility;
+            _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
+            _item = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility);
             _result.add(_item);
           }
           return _result;

@@ -91,7 +91,10 @@ internal fun ChatSala   (
         clearMessage = viewModel::clearMessage,
         navigateToCreateSala = navigateToCreateSala,
         navigateToGroup = navigateToGroup,
-        getUserProfileGrupo = viewModel::getUserGrupo
+        getUserProfileGrupo = viewModel::getUserGrupo,
+        formatShortDate = {
+            formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)
+        }
 //        formatShortTime = {formatter.formatShortTime(it.toInstant())},
 //        formatDate = {formatter.formatWithSkeleton(it.toInstant().toEpochMilliseconds(),formatter.monthDaySkeleton)}
     )
@@ -109,7 +112,8 @@ internal fun ChatSala   (
     clearMessage:(id:Long)->Unit,
     navigateToCreateSala: (id: Long) -> Unit,
     navigateToGroup: (id: Long) -> Unit,
-    getUserProfileGrupo:(id:Long)->UserProfileGrupo?
+    getUserProfileGrupo:(id:Long)->UserProfileGrupo?,
+    formatShortDate:(Instant)->String
 ) {
     val colors = listOf(
         MaterialTheme.colorScheme.inverseOnSurface,
@@ -223,7 +227,9 @@ internal fun ChatSala   (
                     replyMessage.value = it
                 },
                 lazyListState = lazyListState,
-                getUserProfileGrupo = getUserProfileGrupo
+                getUserProfileGrupo = getUserProfileGrupo,
+                formatShortDate = formatShortDate
+
             )
         }
     }

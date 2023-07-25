@@ -28,6 +28,8 @@
             <option value="$PROJECT_DIR$/data/models" />
             <option value="$PROJECT_DIR$/data/repository" />
             <option value="$PROJECT_DIR$/data/repository/account" />
+            <option value="$PROJECT_DIR$/data/repository/coin" />
+            <option value="$PROJECT_DIR$/data/repository/conversation" />
             <option value="$PROJECT_DIR$/data/repository/establecimiento" />
             <option value="$PROJECT_DIR$/data/repository/grupo" />
             <option value="$PROJECT_DIR$/data/repository/instalacion" />
@@ -48,6 +50,7 @@
             <option value="$PROJECT_DIR$/ui/bottom/auth" />
             <option value="$PROJECT_DIR$/ui/bottom/map" />
             <option value="$PROJECT_DIR$/ui/bottom/reserva" />
+            <option value="$PROJECT_DIR$/ui/coin" />
             <option value="$PROJECT_DIR$/ui/entidad" />
             <option value="$PROJECT_DIR$/ui/entidad/actividades" />
             <option value="$PROJECT_DIR$/ui/entidad/complejo" />

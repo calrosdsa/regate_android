@@ -65,7 +65,8 @@ typealias Account = @Composable (
     navigateToSettings:()->Unit,
     closeDrawer:()->Unit,
     navigateToReservas:()->Unit,
-    openAuthBottomSheet:()->Unit
+    openAuthBottomSheet:()->Unit,
+    navigateToRecargaCoins:()->Unit
         ) -> Unit
 
 @Inject
@@ -76,7 +77,8 @@ fun Account(
     @Assisted navigateToSettings: () -> Unit,
     @Assisted closeDrawer: () -> Unit,
     @Assisted navigateToReservas: () -> Unit,
-    @Assisted openAuthBottomSheet: () -> Unit
+    @Assisted openAuthBottomSheet: () -> Unit,
+    @Assisted navigateToRecargaCoins: () -> Unit
 ) {
     Account(
         viewModel = viewModel(factory = viewModelFactory),
@@ -84,7 +86,8 @@ fun Account(
         closeDrawer = closeDrawer,
         navigateToReservas = navigateToReservas,
         openAuthBottomSheet = openAuthBottomSheet,
-        navController = navController
+        navController = navController,
+        navigateToRecargaCoins = navigateToRecargaCoins
     )
 }
 
@@ -95,6 +98,7 @@ internal fun Account(
     closeDrawer: () -> Unit,
     navigateToReservas: () -> Unit,
     openAuthBottomSheet: () -> Unit,
+    navigateToRecargaCoins: () -> Unit,
     navController:NavController
 ) {
     val viewState by viewModel.state.collectAsState()
@@ -117,7 +121,8 @@ internal fun Account(
             },
             navigateToProfile = { navController.navigate(Route.PROFILE id it)},
             navigateToFavorites = { navController.navigate(Route.FAVORITES)},
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
+            navigateToRecargaCoins = navigateToRecargaCoins
         )
     }
 }
@@ -131,6 +136,7 @@ internal fun Account(
     openAuthBottomSheet: () -> Unit,
     navigateToFavorites: ()-> Unit,
     navigateToProfile:(Long)->Unit,
+    navigateToRecargaCoins: () -> Unit,
     modifier:Modifier = Modifier
 ) {
     val settings = stringResource(id = R.string.settings)
@@ -188,7 +194,7 @@ internal fun Account(
                             Text(text = user.coins.toString(),style = MaterialTheme.typography.labelLarge)
                             }
                         }
-                        Button(onClick = { /*TODO*/ }) {
+                        Button(onClick = { navigateToRecargaCoins() }) {
                             Text(text = stringResource(id = R.string.purchase))
                         }
                     }

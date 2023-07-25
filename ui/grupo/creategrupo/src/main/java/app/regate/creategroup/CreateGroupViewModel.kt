@@ -64,14 +64,14 @@ class CreateGroupViewModel(
     }
 
     @SuppressLint("SuspiciousIndentation")
-    fun createGroup(name: String, description: String, visibility: GroupVisibility, navigateToGroup:(Long)->Unit,
+    fun createGroup(name: String, description: String, visibility: Int, navigateToGroup:(Long)->Unit,
     openBottonAuth:()->Unit,removeLoader:()->Unit) {
         viewModelScope.launch {
             try{
                 val res =  grupoRepository.createGrupo(GroupRequest(
                    name = name,
                    description = description,
-                   visibility = visibility.ordinal,
+                   visibility = visibility,
                    fileData = file.value,
                     id = groupId,
                     photo_url = state.value.group?.photo

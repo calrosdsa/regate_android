@@ -22,6 +22,7 @@ import app.regate.RegateApplication
 import app.regate.appinitializers.AppInitializers
 import app.regate.data.RoomDatabaseComponent
 import app.regate.data.account.AccountBinds
+import app.regate.data.coin.CoinBinds
 import app.regate.data.establecimiento.EstablecimeintoBinds
 import app.regate.data.grupo.GrupoBinds
 import app.regate.data.instalacion.InstalacionBinds
@@ -55,7 +56,8 @@ abstract class ApplicationComponent(
     UsersBinds,
     TasksComponent,
     LabelsBinds,
-    GrupoBinds
+    GrupoBinds,
+    CoinBinds
 //    LoggerComponent
 {
     abstract val initializers: AppInitializers

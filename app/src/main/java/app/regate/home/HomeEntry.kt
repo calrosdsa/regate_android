@@ -370,6 +370,11 @@ internal fun AppNavigation(
                 navigateUp = navController::navigateUp,
             )
         }
+        animatedComposable(route = Route.RECARGAR){
+            composeScreens.recargar(
+                navigateUp = navController::navigateUp,
+            )
+        }
 
         AddMainNav(composeScreens, navController,openDrawer,navigateToMap)
     }
@@ -408,7 +413,8 @@ private fun NavGraphBuilder.AddMainNav(
                 closeDrawer = { },
                 navigateToReservas = { navController.navigate(Route.RESERVAS)},
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
-                navController = navController
+                navController = navController,
+                navigateToRecargaCoins = { navController.navigate(Route.RECARGAR)}
             )
         }
 //        composable(route= Route.SERVICIOS){

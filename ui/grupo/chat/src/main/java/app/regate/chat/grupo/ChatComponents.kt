@@ -9,6 +9,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,6 +28,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Reply
+import androidx.compose.material3.Card
 import androidx.compose.material3.DismissDirection
 import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,6 +53,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
@@ -64,6 +67,7 @@ import app.regate.models.User
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import me.saket.swipe.SwipeAction
@@ -75,21 +79,27 @@ fun Chat(
     lazyPagingItems: LazyPagingItems<MessageProfile>,
     colors: List<Color>,
     setReply:(message:MessageProfile?)->Unit,
+    formatShortDate:(Instant)->String,
     formatterRelatimeTime:(date:Instant)->String,
     lazyListState:LazyListState,
     modifier: Modifier = Modifier,
     user:User? = null,
-    getUserProfileGrupo: (id:Long)->UserProfileGrupo?
+    getUserProfileGrupo: (id:Long)->UserProfileGrupo?,
 ) {
 
     val coroutineScope = rememberCoroutineScope()
 
     val items by remember(lazyPagingItems.itemSnapshotList.items) {
-        val messages = lazyPagingItems.itemSnapshotList.items.groupBy {
-            it.message.created_at.toLocalDateTime(TimeZone.UTC).date
-        }
+
+//        lazyPagingItems.itemSnapshotList.items.fold()
         mutableStateOf(lazyPagingItems.itemSnapshotList.items)
     }
+//    val itemsMap by remember(lazyPagingItems.itemSnapshotList.items){
+//        val messages = lazyPagingItems.itemSnapshotList.items.groupBy {
+//            it.message.created_at.toLocalDateTime(TimeZone.UTC).date
+//        }
+//        mutableStateOf(messages)
+//    }
     val selectedMessage = remember {
         mutableStateOf<Long>(0)
     }
@@ -98,6 +108,20 @@ fun Chat(
 //        Log.d("DEBUG_APP","UPDATE___ ")
         lazyListState.animateScrollToItem(0)
     })
+    fun checkIsLast(date:LocalDate,item:MessageProfile):Boolean{
+        return try{
+            val isLast =  items
+//                .sortedBy { it.first }
+                .map {
+                    Log.d("DEBUG_APP_MAP",it.toString())
+                    it
+                }
+                .last { it.message.created_at.toLocalDateTime(TimeZone.UTC).date == date }
+            isLast.message.id == item.message.id
+        }catch(e:Exception){
+            false
+        }
+    }
 
 
     LazyColumn(
@@ -106,28 +130,30 @@ fun Chat(
         reverseLayout = true,
         state = lazyListState
     ) {
-        itemsCustomIndexed(items = lazyPagingItems,key={it.message.id}) {  result,index->
-            result?.let { item ->
-                val isUserExists = user != null && item.profile?.id == user.profile_id
-                if (isUserExists) {
-                    SwipeableActionsBox(
-                        startActions = listOf(SwipeAction(
-                            icon = rememberVectorPainter(image = Icons.Default.Reply),
-                            background = Color.Transparent,
-                            onSwipe = {
-                                setReply(null)
-                                setReply(item)
-                            }
-                        )),
-                        swipeThreshold= 100.dp,
-                        backgroundUntilSwipeThreshold = Color.Transparent,
-                        modifier = Modifier
-                            .padding(horizontal = Layout.bodyMargin)
-                            .fillMaxWidth(),
-                    )  {
-                            Row(modifier = Modifier
-                                .fillMaxWidth()
-                                .background(if (selectedMessage.value == item.message.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)) {
+        itemsCustomIndexed(items = lazyPagingItems,key={it.message.id}) { result, index ->
+                result?.let { item ->
+                    val isUserExists = user != null && item.profile?.id == user.profile_id
+                    if (isUserExists) {
+                        SwipeableActionsBox(
+                            startActions = listOf(SwipeAction(
+                                icon = rememberVectorPainter(image = Icons.Default.Reply),
+                                background = Color.Transparent,
+                                onSwipe = {
+                                    setReply(null)
+                                    setReply(item)
+                                }
+                            )),
+                            swipeThreshold = 100.dp,
+                            backgroundUntilSwipeThreshold = Color.Transparent,
+                            modifier = Modifier
+                                .padding(horizontal = Layout.bodyMargin)
+                                .fillMaxWidth(),
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(if (selectedMessage.value == item.message.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
+                            ) {
                                 Spacer(modifier = Modifier.fillMaxWidth(0.25f))
                                 Column(
                                     modifier = Modifier
@@ -218,30 +244,30 @@ fun Chat(
                         }
 
 
-
-                } else {
-                    SwipeableActionsBox(
-                        startActions = listOf(SwipeAction(
-                            icon = rememberVectorPainter(image = Icons.Default.Reply),
-                            background = Color.Transparent,
-                            onSwipe = {
-                                setReply(null)
-                                setReply(item)
-                            }
-                        )),
-                        swipeThreshold= 100.dp,
-                        backgroundUntilSwipeThreshold = Color.Transparent,
-                        modifier = Modifier
-                            .padding(horizontal = Layout.bodyMargin)
-                            .fillMaxWidth(),
-                    ) {
-                            Row(modifier = Modifier
-                                .fillMaxWidth(if (selectedMessage.value == item.message.id) 1f else 0.8f)
-                                .background(if (selectedMessage.value == item.message.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
+                    } else {
+                        SwipeableActionsBox(
+                            startActions = listOf(SwipeAction(
+                                icon = rememberVectorPainter(image = Icons.Default.Reply),
+                                background = Color.Transparent,
+                                onSwipe = {
+                                    setReply(null)
+                                    setReply(item)
+                                }
+                            )),
+                            swipeThreshold = 100.dp,
+                            backgroundUntilSwipeThreshold = Color.Transparent,
+                            modifier = Modifier
+                                .padding(horizontal = Layout.bodyMargin)
+                                .fillMaxWidth(),
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(if (selectedMessage.value == item.message.id) 1f else 0.8f)
+                                    .background(if (selectedMessage.value == item.message.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
                             ) {
                                 ProfileImage(
                                     profileImage = item.profile?.profile_photo,
-                                    contentDescription = item.profile?.nombre?:"",
+                                    contentDescription = item.profile?.nombre ?: "",
                                     modifier = Modifier
                                         .clip(CircleShape)
                                         .size(30.dp)
@@ -265,24 +291,25 @@ fun Chat(
                                         )
                                 ) {
                                     Text(
-                                        text = "${item.profile?.nombre?:""} ${item.profile?.apellido ?: ""}",
+                                        text = "${item.profile?.nombre ?: ""} ${item.profile?.apellido ?: ""}",
                                         style = MaterialTheme.typography.labelSmall,
                                         color = MaterialTheme.colorScheme.primary
                                     )
                                     if (item.message.reply_to != null) {
-                                                MessageReply(item = item, scrollToItem = {
-                                                    coroutineScope.launch {
-                                                        items.forEachIndexed { index, messageProfile ->
+                                        MessageReply(item = item, scrollToItem = {
+                                            coroutineScope.launch {
+                                                items.forEachIndexed { index, messageProfile ->
 
-                                                            if(messageProfile.message.id == item.message.reply_to){
-                                                                lazyListState.scrollToItem(index)
-                                                                selectedMessage.value = messageProfile.message.id
+                                                    if (messageProfile.message.id == item.message.reply_to) {
+                                                        lazyListState.scrollToItem(index)
+                                                        selectedMessage.value =
+                                                            messageProfile.message.id
 
-                                                                return@forEachIndexed
-                                                            }
-                                                        }
+                                                        return@forEachIndexed
                                                     }
-                                                },getUserProfileGrupo = getUserProfileGrupo)
+                                                }
+                                            }
+                                        }, getUserProfileGrupo = getUserProfileGrupo)
                                     }
                                     Text(
                                         text = item.message.content,
@@ -296,11 +323,29 @@ fun Chat(
                             }
                         }
 
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    if (checkIsLast(
+                            item.message.created_at.toLocalDateTime(TimeZone.UTC).date,
+                            item
+                        )
+                    ) {
+                        Box(modifier = Modifier.fillMaxWidth()) {
+                        Card(
+                            modifier = Modifier
+                                .padding(top = 10.dp, bottom = 1.dp)
+                                .align(Alignment.Center)
+                        ) {
+                            Text(
+                                text = formatShortDate(item.message.created_at),
+                                modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp),
+                                style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
+                            )
+                        }
+                    }
                 }
-                Spacer(modifier = Modifier.height(10.dp))
             }
         }
-
     }
 }
 

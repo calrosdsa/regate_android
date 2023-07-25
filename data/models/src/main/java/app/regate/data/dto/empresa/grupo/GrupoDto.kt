@@ -13,6 +13,7 @@ data class GrupoDto(
     val photo: String? = null,
     val visibility:Int,
     val profile_id:Long,
+
 )
 
 @Serializable

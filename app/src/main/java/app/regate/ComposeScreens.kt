@@ -30,6 +30,7 @@ import app.regate.establecimiento.Establecimiento
 import app.regate.instalacion.InstalacionDetail
 import app.regate.reservar.EstablecimientoReserva
 import app.regate.chat.grupo.ChatSala
+import app.regate.coin.recargar.Recargar
 import app.regate.conversation.Conversation
 import app.regate.creategroup.CreateGroup
 import app.regate.createsala.CreateSala
@@ -82,6 +83,7 @@ class ComposeScreens(
     val favorites:Favorites,
     val conversation:Conversation,
     val inbox:Inbox,
+    val recargar:Recargar,
 
     val photo:Photo,
 

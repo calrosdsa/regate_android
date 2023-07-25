@@ -48,6 +48,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import app.regate.common.composes.ui.CommonTopBar
+import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -120,25 +121,26 @@ internal fun Setting(
     Scaffold(modifier = Modifier
         .fillMaxSize(),
         topBar = {
-            Surface(color = MaterialTheme.colorScheme.inverseOnSurface) {
-                Row(
-                    modifier = Modifier
-                        .padding(5.dp)
-                        .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(onClick = { navigateUp() }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
-
-                    }
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(
-                        text = stringResource(id = R.string.settings),
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    )
-                }
-            }
+            SimpleTopBar(navigateUp = navigateUp,title =  stringResource(id = R.string.settings))
+//            Surface(color = MaterialTheme.colorScheme.inverseOnSurface) {
+//                Row(
+//                    modifier = Modifier
+//                        .padding(5.dp)
+//                        .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+//                ) {
+//                    IconButton(onClick = { navigateUp() }) {
+//                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
+//
+//                    }
+//                    Spacer(modifier = Modifier.width(10.dp))
+//                    Text(
+//                        text = stringResource(id = R.string.settings),
+//                        style = MaterialTheme.typography.titleMedium.copy(
+//                            fontWeight = FontWeight.SemiBold
+//                        )
+//                    )
+//                }
+//            }
         }
     ) { paddingValues ->
         Box(

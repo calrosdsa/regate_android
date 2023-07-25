@@ -89,7 +89,7 @@ class AppDateFormatter(
 
     //  A date format skeleton used to format a selected date to be used as content description for screen
 //  readers (e.g. "Saturday, March 27, 2021")
-    private val yearMonthWeekdayDaySkeleton: String = "yMMMMEEEEd"
+     val yearMonthWeekdayDaySkeleton: String = "yMMMMEEEEd"
 
     private fun Instant.toTemporal(): Temporal {
         return JavaLocalDateTime.ofInstant(toJavaInstant(), utcTimeZone.toZoneId())

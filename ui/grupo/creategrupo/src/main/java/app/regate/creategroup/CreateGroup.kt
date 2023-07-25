@@ -89,7 +89,7 @@ internal fun CreateGroup(
 internal fun CreateGroup(
     viewState: CreateGroupState,
     navigateUp: () -> Unit,
-    createGroup:(String,String,GroupVisibility,()->Unit)->Unit,
+    createGroup:(String,String,Int,()->Unit)->Unit,
     clearMessage:(id:Long)->Unit,
     uploadImage:(String,String,ByteArray)->Unit,
 //    onChangeAsunto:(v:String)->Unit,
@@ -98,7 +98,7 @@ internal fun CreateGroup(
 ) {
     var name by remember(viewState.group){ mutableStateOf(viewState.group?.name?:"") }
     var description by remember(viewState.group){ mutableStateOf(viewState.group?.description?:"") }
-    var visibility by remember{ mutableStateOf(GroupVisibility.PUBLIC) }
+    var visibility by remember(viewState.group){ mutableStateOf(viewState.group?.visibility?:0) }
     val pagerState = rememberPagerState(initialPage = 0)
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }

@@ -14,6 +14,7 @@ class DtoToGrupo:Mapper<GrupoDto,Grupo> {
             name = from.name,
             photo = from.photo,
             profile_id = from.profile_id,
+            visibility = from.visibility
          )
     }
 }

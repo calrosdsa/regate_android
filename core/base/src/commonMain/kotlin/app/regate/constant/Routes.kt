@@ -45,6 +45,7 @@ object Route {
 
     const val CONVERSATION = "conversation"
     const val INBOX = "inbox"
+    const val RECARGAR = "recargar"
 }
 
 

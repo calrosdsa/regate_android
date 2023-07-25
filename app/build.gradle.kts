@@ -135,6 +135,7 @@ dependencies {
     implementation(projects.data.repository.users)
     implementation(projects.data.repository.labels)
     implementation(projects.data.repository.grupo)
+    implementation(projects.data.repository.coin)
 
     implementation(projects.data.dbRoom)
 
@@ -144,6 +145,7 @@ dependencies {
     implementation(projects.ui.account.reservas)
     implementation(projects.ui.auth)
 
+    implementation(projects.ui.coin)
     implementation(projects.ui.inbox)
     implementation(projects.ui.media)
 
@@ -197,6 +199,7 @@ dependencies {
     implementation(libs.okhttp.loggingInterceptor)
 
 
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.accompanist.navigation.material)
     implementation(libs.compose.material.iconsext)
