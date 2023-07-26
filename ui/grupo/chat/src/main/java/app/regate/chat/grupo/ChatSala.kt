@@ -34,12 +34,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.components.input.ChatInput
 import app.regate.common.composes.util.appendErrorOrNull
 import app.regate.common.composes.util.prependErrorOrNull
 import app.regate.common.composes.util.refreshErrorOrNull
 import app.regate.common.composes.viewModel
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.data.common.MessageData
+import app.regate.data.common.ReplyMessageData
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
@@ -126,7 +129,7 @@ internal fun ChatSala   (
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     val replyMessage = remember {
-        mutableStateOf<MessageProfile?>(null)
+        mutableStateOf<ReplyMessageData?>(null)
     }
     val lazyListState = rememberLazyListState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -200,7 +203,7 @@ internal fun ChatSala   (
             ChatInput(
                 authState = viewState.authState,
                 replyMessage = replyMessage.value,
-                updateReplyMessage = {replyMessage.value = it},
+                clearReplyMessage = {replyMessage.value = null},
                 updateMessage = { message.value = it},
                 message = message.value,
                 clearFocus = { focusManager.clearFocus() },

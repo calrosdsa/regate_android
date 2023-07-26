@@ -28,9 +28,12 @@ android {
 dependencies {
     implementation(projects.common.resources)
     implementation(projects.common.compose)
+    implementation(projects.domain)
 
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    implementation(libs.ktor.client.core)
 
     // For registerForActivityResult
     implementation(libs.androidx.activity.compose)
@@ -45,8 +48,12 @@ dependencies {
     implementation(libs.compose.animation.animation)
     implementation(libs.compose.ui.tooling)
 
+    implementation(libs.compose.material.iconsext)
 
     implementation(libs.coil.compose)
+
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
 
 //    ksp(libs.kotlininject.compiler)
 

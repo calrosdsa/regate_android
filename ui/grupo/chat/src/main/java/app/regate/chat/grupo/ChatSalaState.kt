@@ -22,9 +22,3 @@ data class ChatSalaState(
         val Empty = ChatSalaState()
     }
 }
-
-
-data class MessageData(
-    val content:String,
-    val reply_to:Long? = null
-)

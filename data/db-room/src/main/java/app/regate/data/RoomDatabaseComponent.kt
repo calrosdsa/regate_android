@@ -25,6 +25,7 @@ import app.regate.data.daos.FavoriteEstablecimientoDao
 import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.InstalacionDao
 import app.regate.data.daos.LabelDao
+import app.regate.data.daos.MessageInboxDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.ProfileDao
@@ -51,6 +52,8 @@ interface RoomDatabaseComponent {
     }
     @Provides
     fun provideAppDatabase(bind: AppRoomDatabase): AppDatabase = bind
+    @Provides
+    fun provideMessageInboxDao(db:AppDatabase):MessageInboxDao = db.messageInboxDao()
     @Provides
     fun provideFavoriteEstablecimientos(db: AppDatabase):FavoriteEstablecimientoDao = db.favoriteEstablecimientos()
     @Provides

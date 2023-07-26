@@ -177,6 +177,13 @@ public abstract class ApplicationComponent implements app.regate.data.RoomDataba
     
     @org.jetbrains.annotations.NotNull
     @me.tatarka.inject.annotations.Provides
+    public app.regate.data.daos.MessageInboxDao provideMessageInboxDao(@org.jetbrains.annotations.NotNull
+    app.regate.data.db.AppDatabase db) {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.NotNull
+    @me.tatarka.inject.annotations.Provides
     public app.regate.data.daos.MessageProfileDao provideMessageProfileDao(@org.jetbrains.annotations.NotNull
     app.regate.data.db.AppDatabase db) {
         return null;

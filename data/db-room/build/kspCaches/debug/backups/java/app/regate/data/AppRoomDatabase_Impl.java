@@ -23,6 +23,8 @@ import app.regate.data.daos.RoomInstalacionDao;
 import app.regate.data.daos.RoomInstalacionDao_Impl;
 import app.regate.data.daos.RoomLabelDao;
 import app.regate.data.daos.RoomLabelDao_Impl;
+import app.regate.data.daos.RoomMessageInboxDao;
+import app.regate.data.daos.RoomMessageInboxDao_Impl;
 import app.regate.data.daos.RoomMessageProfileDao;
 import app.regate.data.daos.RoomMessageProfileDao_Impl;
 import app.regate.data.daos.RoomMyGroupsDao;
@@ -69,6 +71,8 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
 
   private volatile RoomFavoriteEstablecimientoDao _roomFavoriteEstablecimientoDao;
 
+  private volatile RoomMessageInboxDao _roomMessageInboxDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
@@ -91,8 +95,9 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_user_grupo_grupo_id` ON `user_grupo` (`grupo_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `my_groups` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `group_id` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_establecimiento` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `establecimiento_id` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `message_inbox` (`id` INTEGER NOT NULL, `conversation_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `sender_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '83760a3ac953f1d0aa07a33cc89f0b6b')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2c77f64271e01d16d3faa52170603454')");
       }
 
       @Override
@@ -109,6 +114,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("DROP TABLE IF EXISTS `user_grupo`");
         db.execSQL("DROP TABLE IF EXISTS `my_groups`");
         db.execSQL("DROP TABLE IF EXISTS `favorite_establecimiento`");
+        db.execSQL("DROP TABLE IF EXISTS `message_inbox`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -355,9 +361,26 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoFavoriteEstablecimiento + "\n"
                   + " Found:\n" + _existingFavoriteEstablecimiento);
         }
+        final HashMap<String, TableInfo.Column> _columnsMessageInbox = new HashMap<String, TableInfo.Column>(7);
+        _columnsMessageInbox.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMessageInbox.put("conversation_id", new TableInfo.Column("conversation_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMessageInbox.put("content", new TableInfo.Column("content", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMessageInbox.put("created_at", new TableInfo.Column("created_at", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMessageInbox.put("sender_id", new TableInfo.Column("sender_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMessageInbox.put("reply_to", new TableInfo.Column("reply_to", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMessageInbox.put("sended", new TableInfo.Column("sended", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysMessageInbox = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesMessageInbox = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoMessageInbox = new TableInfo("message_inbox", _columnsMessageInbox, _foreignKeysMessageInbox, _indicesMessageInbox);
+        final TableInfo _existingMessageInbox = TableInfo.read(db, "message_inbox");
+        if (!_infoMessageInbox.equals(_existingMessageInbox)) {
+          return new RoomOpenHelper.ValidationResult(false, "message_inbox(app.regate.models.MessageInbox).\n"
+                  + " Expected:\n" + _infoMessageInbox + "\n"
+                  + " Found:\n" + _existingMessageInbox);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "83760a3ac953f1d0aa07a33cc89f0b6b", "772b1e7d68d14ac85f6f3e9308d26e89");
+    }, "2c77f64271e01d16d3faa52170603454", "df00385a8f2460485c6e16d67c9ec00f");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -368,7 +391,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox");
   }
 
   @Override
@@ -396,6 +419,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
       _db.execSQL("DELETE FROM `user_grupo`");
       _db.execSQL("DELETE FROM `my_groups`");
       _db.execSQL("DELETE FROM `favorite_establecimiento`");
+      _db.execSQL("DELETE FROM `message_inbox`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -424,6 +448,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
     _typeConvertersMap.put(RoomUserGrupoDao.class, RoomUserGrupoDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomMyGroupsDao.class, RoomMyGroupsDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomFavoriteEstablecimientoDao.class, RoomFavoriteEstablecimientoDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(RoomMessageInboxDao.class, RoomMessageInboxDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -592,6 +617,20 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
           _roomFavoriteEstablecimientoDao = new RoomFavoriteEstablecimientoDao_Impl(this);
         }
         return _roomFavoriteEstablecimientoDao;
+      }
+    }
+  }
+
+  @Override
+  public RoomMessageInboxDao messageInboxDao() {
+    if (_roomMessageInboxDao != null) {
+      return _roomMessageInboxDao;
+    } else {
+      synchronized(this) {
+        if(_roomMessageInboxDao == null) {
+          _roomMessageInboxDao = new RoomMessageInboxDao_Impl(this);
+        }
+        return _roomMessageInboxDao;
       }
     }
   }

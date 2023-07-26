@@ -31,7 +31,7 @@ import app.regate.instalacion.InstalacionDetail
 import app.regate.reservar.EstablecimientoReserva
 import app.regate.chat.grupo.ChatSala
 import app.regate.coin.recargar.Recargar
-import app.regate.conversation.Conversation
+import app.regate.inbox.Conversations
 import app.regate.creategroup.CreateGroup
 import app.regate.createsala.CreateSala
 import app.regate.createsala.establecimiento.EstablecimientoFilter
@@ -42,7 +42,7 @@ import app.regate.favorites.Favorites
 import app.regate.grupo.Grupo
 import app.regate.grupos.FilterGroups
 import app.regate.grupos.Grupos
-import app.regate.inbox.Inbox
+import app.regate.conversation.Conversation
 import app.regate.media.photo.Photo
 import app.regate.profile.Profile
 import app.regate.profile.edit.EditProfile
@@ -82,7 +82,7 @@ class ComposeScreens(
     val settings:Setting,
     val favorites:Favorites,
     val conversation:Conversation,
-    val inbox:Inbox,
+    val inbox:Conversations,
     val recargar:Recargar,
 
     val photo:Photo,

@@ -122,7 +122,8 @@ internal fun Account(
             navigateToProfile = { navController.navigate(Route.PROFILE id it)},
             navigateToFavorites = { navController.navigate(Route.FAVORITES)},
             modifier = Modifier.padding(paddingValues),
-            navigateToRecargaCoins = navigateToRecargaCoins
+            navigateToRecargaCoins = navigateToRecargaCoins,
+            navigateToInbox = {navController.navigate(Route.INBOX)}
         )
     }
 }
@@ -137,6 +138,7 @@ internal fun Account(
     navigateToFavorites: ()-> Unit,
     navigateToProfile:(Long)->Unit,
     navigateToRecargaCoins: () -> Unit,
+    navigateToInbox:()->Unit,
     modifier:Modifier = Modifier
 ) {
     val settings = stringResource(id = R.string.settings)
@@ -249,7 +251,7 @@ internal fun Account(
             if(isAuth){
                 RowIconOption(icon = Icons.Outlined.CollectionsBookmark, text = stringResource(id = R.string.inbox),
                 modifier = Modifier
-                    .clickable { navigateToReservas() }
+                    .clickable { navigateToInbox() }
                     .fillMaxWidth()
                     .padding(10.dp))
                 RowIconOption(icon = Icons.Outlined.Notifications, text = stringResource(id = R.string.notifications),

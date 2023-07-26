@@ -357,7 +357,8 @@ internal fun AppNavigation(
             route = Route.INBOX,
         ){
             composeScreens.inbox(
-                navigateUp = navController::navigateUp
+                navigateUp = navController::navigateUp,
+                navigateToConversation = { navController.navigate(Route.CONVERSATION id it) }
             )
         }
         animatedComposable(
@@ -427,6 +428,7 @@ private fun NavGraphBuilder.AddMainNav(
                 )
             }
         )}
+
 //        composable(route= Route.ACTIVITIES){
 //            composeScreens.actividades(navController = navController)
 //        }

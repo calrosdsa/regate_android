@@ -12,6 +12,7 @@ import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.data.auth.AppAuthState
+import app.regate.data.common.MessageData
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.dto.empresa.grupo.GrupoEvent
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
@@ -203,7 +204,7 @@ class ChatSalaViewModel(
         }
     }
 
-    fun sendMessage(messageData:MessageData){
+    fun sendMessage(messageData: MessageData){
         viewModelScope.launch {
             val message =  Message(
                 content = messageData.content,

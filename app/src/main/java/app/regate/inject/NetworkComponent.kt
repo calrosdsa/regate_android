@@ -1,20 +1,16 @@
 package app.regate.inject
 
 import android.app.Application
+import app.regate.api.HttpClientMessage
 import app.regate.api.MissingPageException
 import app.regate.settings.AppPreferences
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpResponseValidator
-import io.ktor.client.plugins.ResponseException
-import io.ktor.client.plugins.auth.Auth
-import io.ktor.client.plugins.auth.providers.BearerTokens
-import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.websocket.WebSockets
-import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
@@ -115,5 +111,38 @@ interface NetworkComponent {
 //            }
 //        }
     }
+
+@ApplicationScope
+@Provides
+fun provideKtorClient2(
+    client:OkHttpClient,
+//    preferences:AppPreferences
+) : HttpClientMessage = HttpClient(OkHttp) {
+    defaultRequest {
+        url("http://172.20.20.76:9091")
+    }
+    engine {
+        preconfigured = client
+    }
+    install(ContentNegotiation){
+        json(Json {
+            prettyPrint = true
+            isLenient = true
+            ignoreUnknownKeys = true
+        })
+    }
+    install(WebSockets) {
+        pingInterval = 20_000
+    }
+    expectSuccess = true
+//        install(Auth){
+//            bearer {
+//                loadTokens {
+//                    BearerTokens(preferences.token,preferences.token)
+//                }
+//            }
+//        }
+
 }
 
+}

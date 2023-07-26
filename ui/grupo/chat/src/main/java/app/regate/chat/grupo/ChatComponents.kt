@@ -58,6 +58,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import app.regate.common.composes.components.images.ProfileImage
+import app.regate.common.composes.components.input.MessengerIcon
+import app.regate.common.composes.components.input.MessengerIcon2
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.util.itemsCustomIndexed
@@ -67,6 +69,7 @@ import app.regate.models.User
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
+import app.regate.data.common.ReplyMessageData
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -75,10 +78,10 @@ import me.saket.swipe.SwipeableActionsBox
 
 
 @Composable
-fun Chat(
+internal fun Chat(
     lazyPagingItems: LazyPagingItems<MessageProfile>,
     colors: List<Color>,
-    setReply:(message:MessageProfile?)->Unit,
+    setReply:(message:ReplyMessageData?)->Unit,
     formatShortDate:(Instant)->String,
     formatterRelatimeTime:(date:Instant)->String,
     lazyListState:LazyListState,
@@ -90,22 +93,14 @@ fun Chat(
     val coroutineScope = rememberCoroutineScope()
 
     val items by remember(lazyPagingItems.itemSnapshotList.items) {
-
-//        lazyPagingItems.itemSnapshotList.items.fold()
         mutableStateOf(lazyPagingItems.itemSnapshotList.items)
     }
-//    val itemsMap by remember(lazyPagingItems.itemSnapshotList.items){
-//        val messages = lazyPagingItems.itemSnapshotList.items.groupBy {
-//            it.message.created_at.toLocalDateTime(TimeZone.UTC).date
-//        }
-//        mutableStateOf(messages)
-//    }
+
     val selectedMessage = remember {
         mutableStateOf<Long>(0)
     }
 
     LaunchedEffect(key1 = lazyPagingItems.itemSnapshotList.items, block = {
-//        Log.d("DEBUG_APP","UPDATE___ ")
         lazyListState.animateScrollToItem(0)
     })
     fun checkIsLast(date:LocalDate,item:MessageProfile):Boolean{
@@ -130,7 +125,7 @@ fun Chat(
         reverseLayout = true,
         state = lazyListState
     ) {
-        itemsCustomIndexed(items = lazyPagingItems,key={it.message.id}) { result, index ->
+        itemsCustom(items = lazyPagingItems,key={it.message.id}) { result->
                 result?.let { item ->
                     val isUserExists = user != null && item.profile?.id == user.profile_id
                     if (isUserExists) {
@@ -140,7 +135,12 @@ fun Chat(
                                 background = Color.Transparent,
                                 onSwipe = {
                                     setReply(null)
-                                    setReply(item)
+                                    setReply(ReplyMessageData(
+                                        nombre = item.profile?.nombre?:"",
+                                        apellido = item.profile?.apellido,
+                                        content = item.message.content,
+                                        id = item.message.id
+                                    ))
                                 }
                             )),
                             swipeThreshold = 100.dp,
@@ -210,7 +210,7 @@ fun Chat(
                                     }
 
                                     Text(
-                                        text = item.message.content + "$index",
+                                        text = item.message.content,
                                         style = MaterialTheme.typography.bodySmall,
                                     )
                                     Row(
@@ -251,7 +251,12 @@ fun Chat(
                                 background = Color.Transparent,
                                 onSwipe = {
                                     setReply(null)
-                                    setReply(item)
+                                    setReply(ReplyMessageData(
+                                        nombre = item.profile?.nombre?:"",
+                                        apellido = item.profile?.apellido,
+                                        content = item.message.content,
+                                        id = item.message.id
+                                    ))
                                 }
                             )),
                             swipeThreshold = 100.dp,
@@ -384,70 +389,6 @@ fun MessageReply(
 }
 
 
-
-@Composable
-fun MessengerIcon2(
-    colors: List<Color>,
-    modifier: Modifier=Modifier,
-) {
-    Canvas(
-        modifier = modifier
-            .width(9.dp)
-            .height(12.dp)
-//            .height(20.dp)
-    ) {
-//
-        val trianglePath = Path().let {
-            it.moveTo(this.size.width * 1f, this.size.height * 0f)
-            it.cubicTo(
-                size.width.times(0f),
-                size.height.times(0f),
-                size.width.times(-0.1f),
-                size.height.times(0f),
-                size.width.times(1f),
-                size.height.times(1f),
-            )
-            it.close()
-            it
-        }
-        drawPath(
-            path = trianglePath,
-            Brush.verticalGradient(colors = colors),
-        )
-    }
-}
-@Composable
-fun MessengerIcon(
-    colors:List<Color>,
-    modifier: Modifier = Modifier,
-) {
-    Canvas(
-        modifier = modifier
-            .width(9.dp)
-            .height(12.dp)
-//            .height(20.dp)
-    ) {
-//
-        val trianglePath = Path().let {
-            it.cubicTo(   size.width.times(1f),
-                this.size.height.times(0f),
-                size.width.times(1f),
-                size.height.times(0f),
-                size.width.times(0f),
-                size.height.times(1f),
-            )
-            it.close()
-            it
-        }
-
-
-
-        drawPath(
-            path = trianglePath,
-            Brush.verticalGradient(colors = colors),
-        )
-    }
-}
 
 
 

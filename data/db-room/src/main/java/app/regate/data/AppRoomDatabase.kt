@@ -21,12 +21,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import app.regate.data.daos.MessageInboxDao
 import app.regate.data.daos.RoomCupoDao
 import app.regate.data.daos.RoomEstablecimientoDao
 import app.regate.data.daos.RoomFavoriteEstablecimientoDao
 import app.regate.data.daos.RoomGrupoDao
 import app.regate.data.daos.RoomInstalacionDao
 import app.regate.data.daos.RoomLabelDao
+import app.regate.data.daos.RoomMessageInboxDao
 import app.regate.data.daos.RoomMessageProfileDao
 import app.regate.data.daos.RoomMyGroupsDao
 import app.regate.data.daos.RoomProfileDao
@@ -42,6 +44,7 @@ import app.regate.models.Grupo
 import app.regate.models.Instalacion
 import app.regate.models.Labels
 import app.regate.models.Message
+import app.regate.models.MessageInbox
 import app.regate.models.MyGroups
 import app.regate.models.Profile
 import app.regate.models.Setting
@@ -62,6 +65,7 @@ import app.regate.models.UserGrupo
         UserGrupo::class,
         MyGroups::class,
         FavoriteEstablecimiento::class,
+        MessageInbox::class,
     ],
 //    views = [
 //        ShowsWatchStats::class,
@@ -99,6 +103,7 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
     abstract override fun userGrupoDao(): RoomUserGrupoDao
     abstract override fun myGroupsDao(): RoomMyGroupsDao
     abstract override fun favoriteEstablecimientos(): RoomFavoriteEstablecimientoDao
+    abstract override fun messageInboxDao(): RoomMessageInboxDao
 
 
     companion object {

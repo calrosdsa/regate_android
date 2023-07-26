@@ -32,6 +32,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.app.ActivityCompat
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.viewModelFactory
 import app.regate.ComposeScreens
 import app.regate.common.resources.R
@@ -83,7 +84,6 @@ class MainActivity : ComponentActivity() {
         val establecimientoId = intent.getStringExtra("establecimientoId")
         val mapIntent = Intent(this, MapActivity::class.java)
 //        intent.flags = FLAG_ACTIVITY_SINGLE_TOP
-
         setContent {
             CompositionLocalProvider(
                 LocalAppDateFormatter provides component.appDateFormatter
