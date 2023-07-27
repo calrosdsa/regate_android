@@ -8,6 +8,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import app.cash.paging.cachedIn
 import app.regate.api.UiMessageManager
+import app.regate.compoundmodels.MessageConversation
 import app.regate.compoundmodels.MessageProfile
 import app.regate.data.coin.ConversationRepository
 import app.regate.data.common.MessageData
@@ -56,7 +57,7 @@ class ConversationViewModel(
     private val uiMessageManager = UiMessageManager()
     private val messageInbox = MutableStateFlow<MessageInbox?>(null)
 
-    val pagedList: Flow<PagingData<MessageInbox>> =
+    val pagedList: Flow<PagingData<MessageConversation>> =
         pagingInteractor.flow.cachedIn(viewModelScope)
     val state:StateFlow<ConversationsState>  = combine(
         loadingCounter.observable,

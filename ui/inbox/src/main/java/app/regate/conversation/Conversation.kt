@@ -32,6 +32,7 @@ import app.regate.inbox.ConversationsState
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
+import app.regate.compoundmodels.MessageConversation
 import app.regate.data.auth.AppAuthState
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
@@ -82,7 +83,7 @@ internal fun Conversation(
 @Composable
 internal fun Conversation(
     viewState: ConversationsState,
-    lazyPagingItems: LazyPagingItems<MessageInbox>,
+    lazyPagingItems: LazyPagingItems<MessageConversation>,
     formatterRelativeTime:(date: Instant)->String,
     formatShortDate:(Instant)->String,
     navigateUp: () -> Unit,

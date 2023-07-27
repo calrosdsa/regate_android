@@ -49,8 +49,10 @@ import app.regate.common.composes.components.input.MessengerIcon2
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.util.itemsCustom
 import app.regate.common.resources.R
+import app.regate.compoundmodels.MessageConversation
 import app.regate.compoundmodels.MessageProfile
 import app.regate.data.common.ReplyMessageData
+import app.regate.data.dto.empresa.conversation.ConversationMessage
 import app.regate.models.MessageInbox
 import app.regate.models.User
 import kotlinx.coroutines.launch
@@ -63,7 +65,7 @@ import me.saket.swipe.SwipeableActionsBox
 
 @Composable
 fun Chat(
-    lazyPagingItems: LazyPagingItems<MessageInbox>,
+    lazyPagingItems: LazyPagingItems<MessageConversation>,
     setReply:(message: ReplyMessageData?)->Unit,
     formatShortDate:(Instant)->String,
     formatterRelatimeTime:(date: Instant)->String,
@@ -96,8 +98,8 @@ fun Chat(
                     Log.d("DEBUG_APP_MAP",it.toString())
                     it
                 }
-                .last { it.created_at.toLocalDateTime(TimeZone.UTC).date == date }
-            isLast.id == item.id
+                .last { it.message.created_at.toLocalDateTime(TimeZone.UTC).date == date }
+            isLast.message.id == item.id
         }catch(e:Exception){
             false
         }
@@ -112,7 +114,7 @@ fun Chat(
             items = lazyPagingItems,
         ){result->
             result?.let {item->
-                val isUserExists = user != null && item.sender_id == user.profile_id
+                val isUserExists = user != null && item.message.sender_id == user.profile_id
                 if(isUserExists){
                     SwipeableActionsBox(
                         startActions = listOf(SwipeAction(
@@ -123,8 +125,8 @@ fun Chat(
                                 setReply(ReplyMessageData(
 //                                    nombre = item.nombre?:"",
 //                                    apellido = item.apellido,
-                                    content = item.content,
-                                    id = item.id
+                                    content = item.message.content,
+                                    id = item.message.id
                                 ))
                             }
                         )),
@@ -137,7 +139,7 @@ fun Chat(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(if (selectedMessage.value == item.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
+                                .background(if (selectedMessage.value == item.message.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
                         ) {
                             Spacer(modifier = Modifier.fillMaxWidth(0.25f))
                             Column(
@@ -164,17 +166,18 @@ fun Chat(
 //                                    color = MaterialTheme.colorScheme.primary
 //                                )
 
-                                if (item.reply_to != null) {
+                                if (item.message.reply_to != null) {
+                                    item.reply?.let {
                                     MessageReply(
-                                        item = item,
+                                        item = it,
                                         scrollToItem = {
                                             coroutineScope.launch {
                                                 try {
                                                     items.forEachIndexed { index, messageInbox ->
-                                                        if (messageInbox.id == item.reply_to) {
+                                                        if (messageInbox.message.id == item.message.reply_to) {
                                                             lazyListState.scrollToItem(index)
                                                             selectedMessage.value =
-                                                                messageInbox.id
+                                                                messageInbox.message.id
                                                             return@launch
                                                         }
                                                     }
@@ -189,10 +192,11 @@ fun Chat(
                                             }
                                         }
                                     )
+                                    }
                                 }
 
                                 Text(
-                                    text = item.content,
+                                    text = item.message.content,
                                     style = MaterialTheme.typography.bodySmall,
                                 )
                                 Row(
@@ -201,10 +205,10 @@ fun Chat(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = formatterRelatimeTime(item.created_at),
+                                        text = formatterRelatimeTime(item.message.created_at),
                                         style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp)
                                     )
-                                    if (item.sended) {
+                                    if (item.message.sended) {
                                         Image(
                                             painter = painterResource(id = R.drawable.doble_check),
                                             contentDescription = "double_check",
@@ -235,8 +239,8 @@ fun Chat(
                                 setReply(ReplyMessageData(
 //                                    nombre = item.profile?.nombre?:"",
 //                                    apellido = item.profile?.apellido,
-                                    content = item.content,
-                                    id = item.id
+                                    content = item.message.content,
+                                    id = item.message.id
                                 ))
                             }
                         )),
@@ -248,8 +252,8 @@ fun Chat(
                     ) {
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth(if (selectedMessage.value == item.id) 1f else 0.8f)
-                                .background(if (selectedMessage.value == item.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
+                                .fillMaxWidth(if (selectedMessage.value == item.message.id) 1f else 0.8f)
+                                .background(if (selectedMessage.value == item.message.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
                         ) {
 
                             MessengerIcon2(colors)
@@ -275,28 +279,30 @@ fun Chat(
 //                                    style = MaterialTheme.typography.labelSmall,
 //                                    color = MaterialTheme.colorScheme.primary
 //                                )
-                                if (item.reply_to != null) {
-                                    MessageReply(item = item, scrollToItem = {
+                                if (item.message.reply_to != null) {
+                                    item.reply?.let {
+                                    MessageReply(item = it, scrollToItem = {
                                         coroutineScope.launch {
                                             items.forEachIndexed { index, messageProfile ->
 
-                                                if (messageProfile.id == item.reply_to) {
+                                                if (messageProfile.message.id == item.message.reply_to) {
                                                     lazyListState.scrollToItem(index)
                                                     selectedMessage.value =
-                                                        messageProfile.id
+                                                        messageProfile.message.id
 
                                                     return@forEachIndexed
                                                 }
                                             }
                                         }
                                     })
+                                    }
                                 }
                                 Text(
-                                    text = item.content,
+                                    text = item.message.content,
                                     style = MaterialTheme.typography.bodySmall
                                 )
                                 Text(
-                                    text = formatterRelatimeTime(item.created_at),
+                                    text = formatterRelatimeTime(item.message.created_at),
                                     style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp)
                                 )
                             }
@@ -306,8 +312,8 @@ fun Chat(
 
                 Spacer(modifier = Modifier.height(10.dp))
                 if (checkIsLast(
-                        item.created_at.toLocalDateTime(TimeZone.UTC).date,
-                        item
+                        item.message.created_at.toLocalDateTime(TimeZone.UTC).date,
+                        item.message
                     )
                 ) {
                     Box(modifier = Modifier.fillMaxWidth()) {
@@ -317,7 +323,7 @@ fun Chat(
                                 .align(Alignment.Center)
                         ) {
                             Text(
-                                text = formatShortDate(item.created_at),
+                                text = formatShortDate(item.message.created_at),
                                 modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp),
                                 style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
                             )
