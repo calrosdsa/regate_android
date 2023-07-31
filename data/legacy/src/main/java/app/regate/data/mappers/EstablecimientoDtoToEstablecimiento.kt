@@ -20,7 +20,8 @@ class EstablecimientoDtoToEstablecimiento:Mapper<EstablecimientoDto, Establecimi
             longitud = from.longitud,
             description = from.description,
             amenities = from.amenities,
-            rules = from.rules
+            rules = from.rules,
+            address_photo = from.address_photo,
         )
 
 }

@@ -1,8 +1,13 @@
 package app.regate.discover.filter
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.util.Log
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -92,7 +97,7 @@ internal fun Filter(
     navigateUp: () -> Unit,
     setAmenity:(Long)->Unit,
     setMaxPrice:(Int)->Unit,
-    onRequestPermission:(Boolean)->Unit,
+    onRequestPermission:(Boolean, Context, (IntentSenderRequest)->Unit)->Unit,
     checkPermission:(Context,String)->Boolean,
     clearMessage:(Long)->Unit
 ) {
@@ -100,12 +105,24 @@ internal fun Filter(
     var sliderValue by remember(viewState.filterData.max_price) {
         mutableStateOf(viewState.filterData.max_price?.toFloat() ?: 0f) // pass the initial values
     }
-    val locationPermissionResultLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { isGranted ->
-            onRequestPermission(isGranted)
+    val locationResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult(),
+        onResult = { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                Log.d("DEBUG_APP", "OK")
+
+            } else {
+                Log.d("DEBUG_APP", "CANCEL")
+            }
         }
     )
+    val locationPermissionResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        onRequestPermission(isGranted, context) { senderRequest ->
+            locationResultLauncher.launch(senderRequest)
+        }
+    }
     var isEnabledLocation by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     val dismissSnackbarState = rememberDismissState(

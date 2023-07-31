@@ -79,7 +79,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
     final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(3) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS `establecimientos` (`id` INTEGER NOT NULL, `address` TEXT, `created_at` TEXT, `email` TEXT, `empresa_id` INTEGER, `latidud` TEXT, `longitud` TEXT, `name` TEXT NOT NULL, `description` TEXT, `is_open` INTEGER, `phone_number` TEXT, `photo` TEXT, `amenities` TEXT NOT NULL, `rules` TEXT NOT NULL, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `establecimientos` (`id` INTEGER NOT NULL, `address` TEXT, `created_at` TEXT, `email` TEXT, `empresa_id` INTEGER, `latidud` TEXT, `longitud` TEXT, `name` TEXT NOT NULL, `description` TEXT, `is_open` INTEGER, `phone_number` TEXT, `photo` TEXT, `address_photo` TEXT, `amenities` TEXT NOT NULL, `rules` TEXT NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `instalaciones` (`id` INTEGER NOT NULL, `cantidad_personas` INTEGER, `category_id` INTEGER, `category_name` TEXT, `description` TEXT, `establecimiento_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `precio_hora` INTEGER, `portada` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`establecimiento_id`) REFERENCES `establecimientos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_instalaciones_establecimiento_id` ON `instalaciones` (`establecimiento_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `cupos` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `time` TEXT NOT NULL, `instalacion_id` INTEGER NOT NULL, `price` REAL NOT NULL)");
@@ -97,7 +97,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_establecimiento` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `establecimiento_id` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `message_inbox` (`id` INTEGER NOT NULL, `conversation_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `sender_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2c77f64271e01d16d3faa52170603454')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e9d5ff63e31060bda2b7992e4522def2')");
       }
 
       @Override
@@ -159,7 +159,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
       @NonNull
       public RoomOpenHelper.ValidationResult onValidateSchema(
           @NonNull final SupportSQLiteDatabase db) {
-        final HashMap<String, TableInfo.Column> _columnsEstablecimientos = new HashMap<String, TableInfo.Column>(14);
+        final HashMap<String, TableInfo.Column> _columnsEstablecimientos = new HashMap<String, TableInfo.Column>(15);
         _columnsEstablecimientos.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsEstablecimientos.put("address", new TableInfo.Column("address", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsEstablecimientos.put("created_at", new TableInfo.Column("created_at", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -172,6 +172,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         _columnsEstablecimientos.put("is_open", new TableInfo.Column("is_open", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsEstablecimientos.put("phone_number", new TableInfo.Column("phone_number", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsEstablecimientos.put("photo", new TableInfo.Column("photo", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsEstablecimientos.put("address_photo", new TableInfo.Column("address_photo", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsEstablecimientos.put("amenities", new TableInfo.Column("amenities", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsEstablecimientos.put("rules", new TableInfo.Column("rules", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysEstablecimientos = new HashSet<TableInfo.ForeignKey>(0);
@@ -380,7 +381,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "2c77f64271e01d16d3faa52170603454", "df00385a8f2460485c6e16d67c9ec00f");
+    }, "e9d5ff63e31060bda2b7992e4522def2", "b9f411eba39941e827b1c5fc874d3313");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;

@@ -129,7 +129,7 @@ private fun prepareViewAnnotation(point: Point, item:EstablecimientoDto) {
       )
     val binding: ItemCalloutViewBinding? =  DataBindingUtil.bind(viewAnnotation)
     binding?.establecimiento =item
-    viewModel.loadImageFromUrl(item.photo,binding?.img)
+    item.photo?.let { viewModel.loadImageFromUrl(it,binding?.img) }
     binding?.img?.setOnClickListener {
         establecimientoMapBinding.let {
         it.establecimiento = item
@@ -146,7 +146,7 @@ private fun prepareViewAnnotation(point: Point, item:EstablecimientoDto) {
                 } catch (ignored: ClassNotFoundException) {
                 }
             }
-        viewModel.loadImageFromUrl(item.photo,it.img)
+            item.photo?.let { it1 -> viewModel.loadImageFromUrl(it1,it.img) }
         }
 
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED

@@ -61,7 +61,7 @@ fun PosterCard(
 
 @Composable
 fun PosterCardImageDark(
-    model:String,
+    model:String?,
     modifier: Modifier = Modifier,
 ) {
     Card(modifier = modifier) {

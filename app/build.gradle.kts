@@ -222,6 +222,9 @@ dependencies {
     implementation(libs.google.firebase.messaging)
     implementation(libs.google.firebase.firestore)
 
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
+
     implementation(libs.androidx.work.runtime)
 
     testImplementation("junit:junit:4.13.2")

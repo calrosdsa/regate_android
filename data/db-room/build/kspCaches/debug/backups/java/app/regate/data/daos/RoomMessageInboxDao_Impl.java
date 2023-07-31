@@ -3,6 +3,7 @@ package app.regate.data.daos;
 import android.database.Cursor;
 import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
+import androidx.collection.LongSparseArray;
 import androidx.paging.PagingSource;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityDeletionOrUpdateAdapter;
@@ -13,7 +14,10 @@ import androidx.room.RoomSQLiteQuery;
 import androidx.room.paging.LimitOffsetPagingSource;
 import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
+import androidx.room.util.RelationUtil;
+import androidx.room.util.StringUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
+import app.regate.compoundmodels.MessageConversation;
 import app.regate.data.db.DateTimeTypeConverters;
 import app.regate.models.MessageInbox;
 import java.lang.Class;
@@ -24,6 +28,7 @@ import java.lang.Long;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.SuppressWarnings;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -243,15 +248,15 @@ public final class RoomMessageInboxDao_Impl extends RoomMessageInboxDao {
   }
 
   @Override
-  public PagingSource<Integer, MessageInbox> observeMessages(final long id) {
+  public PagingSource<Integer, MessageConversation> observeMessages(final long id) {
     final String _sql = "SELECT * FROM message_inbox where conversation_id = ? ORDER BY datetime(created_at) DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
-    return new LimitOffsetPagingSource<MessageInbox>(_statement, __db, "message_inbox") {
+    return new LimitOffsetPagingSource<MessageConversation>(_statement, __db, "message_inbox") {
       @Override
       @NonNull
-      protected List<MessageInbox> convertRows(@NonNull final Cursor cursor) {
+      protected List<MessageConversation> convertRows(@NonNull final Cursor cursor) {
         final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(cursor, "id");
         final int _cursorIndexOfConversationId = CursorUtil.getColumnIndexOrThrow(cursor, "conversation_id");
         final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(cursor, "content");
@@ -259,9 +264,24 @@ public final class RoomMessageInboxDao_Impl extends RoomMessageInboxDao {
         final int _cursorIndexOfSenderId = CursorUtil.getColumnIndexOrThrow(cursor, "sender_id");
         final int _cursorIndexOfReplyTo = CursorUtil.getColumnIndexOrThrow(cursor, "reply_to");
         final int _cursorIndexOfSended = CursorUtil.getColumnIndexOrThrow(cursor, "sended");
-        final List<MessageInbox> _result = new ArrayList<MessageInbox>(cursor.getCount());
+        final LongSparseArray<MessageInbox> _collectionReply = new LongSparseArray<MessageInbox>();
         while (cursor.moveToNext()) {
-          final MessageInbox _item;
+          final Long _tmpKey;
+          if (cursor.isNull(_cursorIndexOfReplyTo)) {
+            _tmpKey = null;
+          } else {
+            _tmpKey = cursor.getLong(_cursorIndexOfReplyTo);
+          }
+          if (_tmpKey != null) {
+            _collectionReply.put(_tmpKey, null);
+          }
+        }
+        cursor.moveToPosition(-1);
+        __fetchRelationshipmessageInboxAsappRegateModelsMessageInbox(_collectionReply);
+        final List<MessageConversation> _result = new ArrayList<MessageConversation>(cursor.getCount());
+        while (cursor.moveToNext()) {
+          final MessageConversation _item;
+          final MessageInbox _tmpMessage;
           final long _tmpId;
           _tmpId = cursor.getLong(_cursorIndexOfId);
           final long _tmpConversation_id;
@@ -293,7 +313,22 @@ public final class RoomMessageInboxDao_Impl extends RoomMessageInboxDao {
           final int _tmp_2;
           _tmp_2 = cursor.getInt(_cursorIndexOfSended);
           _tmpSended = _tmp_2 != 0;
-          _item = new MessageInbox(_tmpId,_tmpConversation_id,_tmpContent,_tmpCreated_at,_tmpSender_id,_tmpReply_to,_tmpSended);
+          _tmpMessage = new MessageInbox(_tmpId,_tmpConversation_id,_tmpContent,_tmpCreated_at,_tmpSender_id,_tmpReply_to,_tmpSended);
+          final MessageInbox _tmpReply;
+          final Long _tmpKey_1;
+          if (cursor.isNull(_cursorIndexOfReplyTo)) {
+            _tmpKey_1 = null;
+          } else {
+            _tmpKey_1 = cursor.getLong(_cursorIndexOfReplyTo);
+          }
+          if (_tmpKey_1 != null) {
+            _tmpReply = _collectionReply.get(_tmpKey_1);
+          } else {
+            _tmpReply = null;
+          }
+          _item = new MessageConversation();
+          _item.message = _tmpMessage;
+          _item.setReply(_tmpReply);
           _result.add(_item);
         }
         return _result;
@@ -373,5 +408,89 @@ public final class RoomMessageInboxDao_Impl extends RoomMessageInboxDao {
   @NonNull
   public static List<Class<?>> getRequiredConverters() {
     return Collections.emptyList();
+  }
+
+  private void __fetchRelationshipmessageInboxAsappRegateModelsMessageInbox(
+      @NonNull final LongSparseArray<MessageInbox> _map) {
+    if (_map.isEmpty()) {
+      return;
+    }
+    if (_map.size() > RoomDatabase.MAX_BIND_PARAMETER_CNT) {
+      RelationUtil.recursiveFetchLongSparseArray(_map, false, (map) -> {
+        __fetchRelationshipmessageInboxAsappRegateModelsMessageInbox(map);
+        return Unit.INSTANCE;
+      });
+      return;
+    }
+    final StringBuilder _stringBuilder = StringUtil.newStringBuilder();
+    _stringBuilder.append("SELECT `id`,`conversation_id`,`content`,`created_at`,`sender_id`,`reply_to`,`sended` FROM `message_inbox` WHERE `id` IN (");
+    final int _inputSize = _map.size();
+    StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
+    _stringBuilder.append(")");
+    final String _sql = _stringBuilder.toString();
+    final int _argCount = 0 + _inputSize;
+    final RoomSQLiteQuery _stmt = RoomSQLiteQuery.acquire(_sql, _argCount);
+    int _argIndex = 1;
+    for (int i = 0; i < _map.size(); i++) {
+      final long _item = _map.keyAt(i);
+      _stmt.bindLong(_argIndex, _item);
+      _argIndex++;
+    }
+    final Cursor _cursor = DBUtil.query(__db, _stmt, false, null);
+    try {
+      final int _itemKeyIndex = CursorUtil.getColumnIndex(_cursor, "id");
+      if (_itemKeyIndex == -1) {
+        return;
+      }
+      final int _cursorIndexOfId = 0;
+      final int _cursorIndexOfConversationId = 1;
+      final int _cursorIndexOfContent = 2;
+      final int _cursorIndexOfCreatedAt = 3;
+      final int _cursorIndexOfSenderId = 4;
+      final int _cursorIndexOfReplyTo = 5;
+      final int _cursorIndexOfSended = 6;
+      while (_cursor.moveToNext()) {
+        final long _tmpKey;
+        _tmpKey = _cursor.getLong(_itemKeyIndex);
+        if (_map.containsKey(_tmpKey)) {
+          final MessageInbox _item_1;
+          final long _tmpId;
+          _tmpId = _cursor.getLong(_cursorIndexOfId);
+          final long _tmpConversation_id;
+          _tmpConversation_id = _cursor.getLong(_cursorIndexOfConversationId);
+          final String _tmpContent;
+          _tmpContent = _cursor.getString(_cursorIndexOfContent);
+          final Instant _tmpCreated_at;
+          final String _tmp;
+          if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+            _tmp = null;
+          } else {
+            _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+          }
+          final Instant _tmp_1 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+          if (_tmp_1 == null) {
+            throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
+          } else {
+            _tmpCreated_at = _tmp_1;
+          }
+          final long _tmpSender_id;
+          _tmpSender_id = _cursor.getLong(_cursorIndexOfSenderId);
+          final Long _tmpReply_to;
+          if (_cursor.isNull(_cursorIndexOfReplyTo)) {
+            _tmpReply_to = null;
+          } else {
+            _tmpReply_to = _cursor.getLong(_cursorIndexOfReplyTo);
+          }
+          final boolean _tmpSended;
+          final int _tmp_2;
+          _tmp_2 = _cursor.getInt(_cursorIndexOfSended);
+          _tmpSended = _tmp_2 != 0;
+          _item_1 = new MessageInbox(_tmpId,_tmpConversation_id,_tmpContent,_tmpCreated_at,_tmpSender_id,_tmpReply_to,_tmpSended);
+          _map.put(_tmpKey, _item_1);
+        }
+      }
+    } finally {
+      _cursor.close();
+    }
   }
 }

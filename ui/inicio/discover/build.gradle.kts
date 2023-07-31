@@ -50,6 +50,8 @@ dependencies {
 
     implementation(libs.com.github.wheelpicker)
 
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
 //    ksp(libs.kotlininject.compiler)
 
 //    lintChecks(libs.slack.lint.compose)

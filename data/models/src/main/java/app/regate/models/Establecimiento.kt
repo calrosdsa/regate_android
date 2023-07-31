@@ -19,7 +19,8 @@ data class Establecimiento(
     val description:String?  =null,
     val is_open:Boolean? = null,
     val phone_number: String?,
-    val photo: String?,
+    val photo: String? = null,
+    val address_photo:String? = null,
     val amenities:List<Long> = emptyList(),
     val rules:List<Long> = emptyList(),
 ):AppEntity

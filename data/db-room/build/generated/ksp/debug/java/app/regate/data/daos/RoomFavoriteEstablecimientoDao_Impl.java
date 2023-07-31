@@ -273,6 +273,7 @@ public final class RoomFavoriteEstablecimientoDao_Impl extends RoomFavoriteEstab
             final int _cursorIndexOfIsOpen = CursorUtil.getColumnIndexOrThrow(_cursor, "is_open");
             final int _cursorIndexOfPhoneNumber = CursorUtil.getColumnIndexOrThrow(_cursor, "phone_number");
             final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
+            final int _cursorIndexOfAddressPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "address_photo");
             final int _cursorIndexOfAmenities = CursorUtil.getColumnIndexOrThrow(_cursor, "amenities");
             final int _cursorIndexOfRules = CursorUtil.getColumnIndexOrThrow(_cursor, "rules");
             final List<Establecimiento> _result = new ArrayList<Establecimiento>(_cursor.getCount());
@@ -344,6 +345,12 @@ public final class RoomFavoriteEstablecimientoDao_Impl extends RoomFavoriteEstab
               } else {
                 _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
               }
+              final String _tmpAddress_photo;
+              if (_cursor.isNull(_cursorIndexOfAddressPhoto)) {
+                _tmpAddress_photo = null;
+              } else {
+                _tmpAddress_photo = _cursor.getString(_cursorIndexOfAddressPhoto);
+              }
               final List<Long> _tmpAmenities;
               final String _tmp_1;
               _tmp_1 = _cursor.getString(_cursorIndexOfAmenities);
@@ -352,7 +359,7 @@ public final class RoomFavoriteEstablecimientoDao_Impl extends RoomFavoriteEstab
               final String _tmp_2;
               _tmp_2 = _cursor.getString(_cursorIndexOfRules);
               _tmpRules = AppTypeConverters.INSTANCE.toListLong(_tmp_2);
-              _item = new Establecimiento(_tmpId,_tmpAddress,_tmpCreated_at,_tmpEmail,_tmpEmpresa_id,_tmpLatidud,_tmpLongitud,_tmpName,_tmpDescription,_tmpIs_open,_tmpPhone_number,_tmpPhoto,_tmpAmenities,_tmpRules);
+              _item = new Establecimiento(_tmpId,_tmpAddress,_tmpCreated_at,_tmpEmail,_tmpEmpresa_id,_tmpLatidud,_tmpLongitud,_tmpName,_tmpDescription,_tmpIs_open,_tmpPhone_number,_tmpPhoto,_tmpAddress_photo,_tmpAmenities,_tmpRules);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();

@@ -159,19 +159,21 @@ fun EstablecimientoPage(
             }
         }
 
+        establecimiento?.address_photo?.let{addressPhoto->
         Divider(modifier = Modifier.padding(5.dp))
         Text(
             text = "Donde estamos ubicados",
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(vertical = 5.dp)
         )
-        PosterCardImage(model = stringResource(id = R.string.location_static_url),
+        PosterCardImage(model = addressPhoto,
             modifier = Modifier
                 .clickable {
                 }
                 .fillMaxWidth()
                 .height(200.dp)
                 .padding(10.dp))
+        }
 
         Divider(modifier = Modifier.padding(5.dp))
         Text(

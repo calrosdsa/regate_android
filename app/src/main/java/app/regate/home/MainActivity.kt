@@ -1,4 +1,4 @@
-
+@file:Suppress("DEPRECATION")
 
 package app.regate.home
 
@@ -10,6 +10,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -21,6 +22,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,6 +53,12 @@ import app.regate.map.MapActivity
 import app.regate.settings.AppPreferences
 import app.regate.util.AppDateFormatter
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.LocationSettingsResponse
+import com.google.android.gms.location.LocationSettingsStatusCodes
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Component
@@ -76,6 +85,7 @@ class MainActivity : ComponentActivity() {
             createNotificationGroup()
             createNotificationGroupChatChannel()
         }
+//        enableLocation()
         requestPermisos()
         saveAddress()
 //        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
@@ -116,9 +126,52 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(ContextWrapper(newBase.setAppLocale("es")))
+
+    private var launcher=  registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()){ result->
+        if (result.resultCode == Activity.RESULT_OK) {
+            Log.d("DEBUG_APP", "OK")
+        } else {
+            Log.d("DEBUG_APP", "CANCEL")
+        }
     }
+    private fun enableLocation() {
+        val locationRequest = LocationRequest.create()
+        locationRequest.apply {
+            priority =LocationRequest.PRIORITY_HIGH_ACCURACY
+            interval = 30 * 1000.toLong()
+            fastestInterval = 5 * 1000.toLong()
+        }
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+        builder.setAlwaysShow(true)
+        val result=
+            LocationServices.getSettingsClient(this).checkLocationSettings(builder.build())
+        result.addOnCompleteListener {
+            try {
+                val response: LocationSettingsResponse = it.getResult(ApiException::class.java)
+//                println("location>>>>>>> ${response.locationSettingsStates.isGpsPresent}")
+                if(response.locationSettingsStates?.isGpsPresent!!){
+                    Log.d("DEBUG_APP_SUCC", response.locationSettingsStates!!.isGpsPresent.toString())
+                    //TODO()
+                }
+                //do something
+            }catch (e: ApiException){
+                Log.d("DEBUG_APP_LOC",e.localizedMessage?:"")
+                when (e.statusCode) {
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+                        val intentSenderRequest =
+                            e.status.resolution?.let { it1 -> IntentSenderRequest.Builder(it1).build() }
+                        launcher.launch(intentSenderRequest)
+                    } catch (e: IntentSender.SendIntentException) {
+                        //TODO()
+                    }
+                }
+            }
+        }
+    }
+//    override fun attachBaseContext(newBase: Context) {
+//        super.attachBaseContext(ContextWrapper(newBase.setAppLocale("es")))
+//    }
 
     fun Context.setAppLocale(language: String): Context {
         val locale = Locale(language)

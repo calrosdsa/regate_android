@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "2c77f64271e01d16d3faa52170603454",
+    "identityHash": "e9d5ff63e31060bda2b7992e4522def2",
     "entities": [
       {
         "tableName": "establecimientos",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `address` TEXT, `created_at` TEXT, `email` TEXT, `empresa_id` INTEGER, `latidud` TEXT, `longitud` TEXT, `name` TEXT NOT NULL, `description` TEXT, `is_open` INTEGER, `phone_number` TEXT, `photo` TEXT, `amenities` TEXT NOT NULL, `rules` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `address` TEXT, `created_at` TEXT, `email` TEXT, `empresa_id` INTEGER, `latidud` TEXT, `longitud` TEXT, `name` TEXT NOT NULL, `description` TEXT, `is_open` INTEGER, `phone_number` TEXT, `photo` TEXT, `address_photo` TEXT, `amenities` TEXT NOT NULL, `rules` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -77,6 +77,12 @@
           {
             "fieldPath": "photo",
             "columnName": "photo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address_photo",
+            "columnName": "address_photo",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -759,7 +765,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2c77f64271e01d16d3faa52170603454')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e9d5ff63e31060bda2b7992e4522def2')"
     ]
   }
 }
