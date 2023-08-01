@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DismissValue
 import androidx.compose.material3.Divider
@@ -57,6 +58,7 @@ import me.tatarka.inject.annotations.Inject
 import androidx.compose.ui.window.Dialog
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.ui.PosterCardImageDark
+import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.data.dto.empresa.establecimiento.PaidTypeEnum
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
@@ -173,21 +175,14 @@ internal fun BottomReserva(
     }
     Scaffold(
         topBar = {
-            IconButton(onClick = { navigateUp() }) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-            }
-        }
-    ) { paddingValues ->
-        Box(modifier = Modifier
-            .padding(paddingValues)
-            .fillMaxSize()) {
-            Column(modifier = Modifier.padding(bottom = 60.dp)) {
-                Column(modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)) {
-                    Text(
-                        text = "Puede proceder con el pago, por la reserva de ${viewState.cupos.size}" +
-                                "cupos para estas instalaciones",
-                        style = MaterialTheme.typography.labelMedium
-                    )
+            SimpleTopBar(navigateUp = { navigateUp()},title = viewState.instalacion?.name)
+//            IconButton(onClick = { navigateUp() }) {
+//                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+//            }
+        },
+        bottomBar = {
+            BottomAppBar(modifier = Modifier.height(110.dp)) {
+                Column(modifier = Modifier.padding(horizontal = 10.dp)) {
                     Text(
                         text = "Precio Total:${viewState.totalPrice}",
                         style = MaterialTheme.typography.titleMedium,
@@ -226,8 +221,23 @@ internal fun BottomReserva(
                         }
                     }
 
+                }
+            }
+        }
+    ) { paddingValues ->
+        Box(modifier = Modifier
+            .padding(paddingValues)
+            .fillMaxSize()) {
+            Column(modifier = Modifier) {
+                Column(modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)) {
+//                    Text(
+//                        text = "Puede proceder con el pago, por la reserva de ${viewState.cupos.size}" +
+//                                "cupos para estas instalaciones",
+//                        style = MaterialTheme.typography.labelMedium
+//                    )
+
                     //Establecimiento
-                    Divider()
+//                    Divider()
                     Row(modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
@@ -235,13 +245,26 @@ internal fun BottomReserva(
                     ) {
                         PosterCardImage(
                             model = viewState.establecimiento?.photo ?: "", modifier = Modifier
+                                .clickable {
+                                    viewState.establecimiento?.let {
+                                        navigateToEstablecimiento(
+                                            it.id
+                                        )
+                                    }
+                                }
                                 .size(55.dp), shape = CircleShape
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Column() {
                         Text(
                             text = viewState.establecimiento?.name ?: "", modifier = Modifier
-                                .clickable { viewState.establecimiento?.let { navigateToEstablecimiento(it.id)} }
+                                .clickable {
+                                    viewState.establecimiento?.let {
+                                        navigateToEstablecimiento(
+                                            it.id
+                                        )
+                                    }
+                                }
                                 .padding(5.dp),
                             style = MaterialTheme.typography.titleMedium,
                             maxLines = 1,
@@ -265,20 +288,25 @@ internal fun BottomReserva(
                         text = stringResource(id = R.string.where_will_it_be_played),
                         style = MaterialTheme.typography.labelLarge
                     )
+
+                    viewState.instalacion?.let {instalacion->
                     Box(modifier = Modifier
                         .clickable { }
                         .height(110.dp)
                         .padding(vertical = 5.dp)
                         .fillMaxWidth()) {
-                        PosterCardImageDark(model = viewState.instalacion?.portada ?: "")
+                        PosterCardImageDark(model = viewState.instalacion.portada)
                         Text(
-                            text = viewState.instalacion?.name ?: "", modifier = Modifier
+                            text = viewState.instalacion.name, modifier = Modifier
                                 .align(Alignment.BottomStart)
                                 .padding(5.dp),
                             style = MaterialTheme.typography.labelLarge, color = Color.White
                         )
                     }
-                    PosterCardImage(model = stringResource(id = R.string.location_static_url),
+                        Spacer(modifier = Modifier.height(5.dp))
+                        instalacion.description?.let { Text(text = it,style = MaterialTheme.typography.bodySmall) }
+                    }
+                    PosterCardImage(model = viewState.establecimiento?.address_photo,
                         modifier = Modifier
                             .clickable { }
                             .fillMaxWidth()

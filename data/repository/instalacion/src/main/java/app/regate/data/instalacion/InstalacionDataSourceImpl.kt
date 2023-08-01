@@ -9,6 +9,7 @@ import app.regate.data.dto.empresa.instalacion.InstalacionesAvailables
 import app.regate.data.mappers.toInstalacion
 import app.regate.api.handleApi
 import app.regate.data.dto.empresa.instalacion.FilterInstalacionData
+import app.regate.data.dto.empresa.instalacion.PaginationInstalacionReponse
 import app.regate.models.Instalacion
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -34,7 +35,7 @@ class InstalacionDataSourceImpl(
 //        }.body<LoginResponse>()
 //        return res
 //    }
-    override suspend fun filterInstalaciones(d: FilterInstalacionData,page:Int?): List<InstalacionDto> {
+    override suspend fun filterInstalaciones(d: FilterInstalacionData,page:Int?): PaginationInstalacionReponse {
         return client.post("/v1/instalacion/filter/?page=${page?:0}"){
             contentType(ContentType.Application.Json)
             setBody(d)

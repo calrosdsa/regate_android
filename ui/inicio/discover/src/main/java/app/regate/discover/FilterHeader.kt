@@ -72,6 +72,7 @@ internal fun HeaderFilter(
             .padding(horizontal = 15.dp, vertical = 10.dp),
         shape = MaterialTheme.shapes.medium,
         shadowElevation = 10.dp,
+        color = MaterialTheme.colorScheme.inverseOnSurface
 //                    tonalElevation = 5.dp
     ) {
         Column {
@@ -131,7 +132,8 @@ internal fun HeaderFilter(
                 item {
                     Surface(
                         onClick = { showCategoryDialog.value = true },
-                        modifier = Modifier
+                        modifier = Modifier,
+                        color = MaterialTheme.colorScheme.inverseOnSurface
                     ) {
                         Box(
                             modifier = Modifier
@@ -168,7 +170,9 @@ internal fun HeaderFilter(
                 }
 
                 item{
-                Surface(onClick = { showDateDialog() }, modifier = Modifier) {
+                Surface(onClick = { showDateDialog() }, modifier = Modifier,
+                    color = MaterialTheme.colorScheme.inverseOnSurface
+                ) {
                     Column(
                         modifier = Modifier.padding(10.dp)
                     ) {
@@ -192,7 +196,9 @@ internal fun HeaderFilter(
                     )
                 }
                 item {
-                    Surface(onClick = { showTimeDialog() }, modifier = Modifier) {
+                    Surface(onClick = { showTimeDialog() }, modifier = Modifier,
+                        color = MaterialTheme.colorScheme.inverseOnSurface
+                    ) {
                         Column(
                             modifier = Modifier.padding(10.dp)
                         ) {
@@ -216,7 +222,9 @@ internal fun HeaderFilter(
                     )
                 }
                 item{
-                    Surface(onClick = { showDialogInterval() }, modifier = Modifier) {
+                    Surface(onClick = { showDialogInterval() }, modifier = Modifier,
+                        color = MaterialTheme.colorScheme.inverseOnSurface
+                    ) {
                         Column(
                             modifier = Modifier.padding(10.dp)
                         ) {

@@ -36,6 +36,7 @@
     <string name="floating2" translatable="false">floating2</string>
     <string name="full_payment">Full Payment</string>
     <string name="gcp_id" translatable="false">405059725143-8ian2lbmjge14iu3ebdobd2h3udpqjlq.apps.googleusercontent.com</string>
+    <string name="grant_permission">Grant permission</string>
     <string name="group_description">Group description</string>
     <string name="group_visibility">Group Visibility</string>
     <string name="inbox">Inbox</string>
@@ -59,6 +60,7 @@
     <string name="notification_sala">Room Notifications</string>
     <string name="notification_sala_channel" translatable="false">sala_channel_id</string>
     <string name="notifications">Notifications</string>
+    <string name="permission_required">Permission required.</string>
     <string name="price_range">Rango de precios</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privado">Privado</string>

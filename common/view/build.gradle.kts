@@ -40,4 +40,7 @@ dependencies {
     implementation(libs.androidx.activity.activity)
     implementation(libs.androidx.core)
     implementation(libs.androidx.emoji)
+
+
+    implementation(libs.play.services.location)
 }

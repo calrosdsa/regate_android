@@ -64,4 +64,6 @@
     <string name="version">Version %1$s</string>
     <string name="full_payment">Pago Completo</string>
     <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
+    <string name="permission_required">Permiso requerido.</string>
+    <string name="grant_permission">Conceder permiso</string>
 </resources>

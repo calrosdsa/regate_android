@@ -9,6 +9,7 @@ import app.regate.data.dto.empresa.instalacion.FilterInstalacionData
 import app.regate.data.dto.empresa.instalacion.InstalacionDto
 import app.regate.data.dto.empresa.instalacion.InstalacionRequest
 import app.regate.data.dto.empresa.instalacion.InstalacionesAvailables
+import app.regate.data.dto.empresa.instalacion.PaginationInstalacionReponse
 import app.regate.data.mappers.toInstalacion
 import app.regate.inject.ApplicationScope
 import app.regate.models.Instalacion
@@ -26,20 +27,21 @@ class InstalacionRepository(
     private val labelDao:LabelDao,
     private val dispatchers: AppCoroutineDispatchers
 ){
-    suspend fun filterInstacion(d:FilterInstalacionData,page:Int?): List<Pair<InstalacionDto, List<Labels>>>{
+    suspend fun filterInstacion(d:FilterInstalacionData,page:Int?): PaginationInstalacionReponse{
         val res =  instalacionDataSourceImpl.filterInstalaciones(d,page)
+        return res
 //        withContext(dispatchers.computation){
 //        val instalaciones = res.map { it.toInstalacion() }
 //        instalacionDao.upsertAll(instalaciones)
 //        }
-        val amenitiesInstalacion = labelDao.getLabelsByType(LabelType.AMENITIES)
-        val amenitiesInsta = res.map {instalacion->
-             instalacion.amenities.map {amenityId->
-                amenitiesInstalacion.first {label->
-                    label.id == amenityId }
-            }
-        }
-        return res zip amenitiesInsta
+//        val amenitiesInstalacion = labelDao.getLabelsByType(LabelType.AMENITIES)
+//        val amenitiesInsta = res.map {instalacion->
+//             instalacion.amenities.map {amenityId->
+//                amenitiesInstalacion.first {label->
+//                    label.id == amenityId }
+//            }
+//        }
+//        return res zip amenitiesInsta
     }
     fun observeInstalacionesAvailables(ids:List<Long>):Flow<List<Instalacion>>{
         return instalacionDao.observeInstalacionesAvailables(ids)
@@ -62,6 +64,16 @@ class InstalacionRepository(
             instalacionDao.upsertAll(it)
         }
     }
+
+//    suspend fun saveInstalacion(d:InstalacionDto){
+//        withContext(dispatchers.computation){
+//            try{
+//                instalacionDao.upsert(d.toInstalacion())
+//            }catch (e:Exception){
+//                //TODO()
+//            }
+//        }
+//    }
 
     suspend fun getInstalacion(id:Long):Instalacion{
         return instalacionDataSourceImpl.getInstalacion(id).also {

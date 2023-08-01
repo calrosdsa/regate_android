@@ -60,6 +60,7 @@ int string floating1 0x0
 int string floating2 0x0
 int string full_payment 0x0
 int string gcp_id 0x0
+int string grant_permission 0x0
 int string group_description 0x0
 int string group_visibility 0x0
 int string inbox 0x0
@@ -81,6 +82,7 @@ int string new_room_created 0x0
 int string notification_sala 0x0
 int string notification_sala_channel 0x0
 int string notifications 0x0
+int string permission_required 0x0
 int string price_range 0x0
 int string privacy_policy 0x0
 int string privado 0x0

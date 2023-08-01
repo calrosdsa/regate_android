@@ -17,6 +17,7 @@
     <string name="favorites">Mis favoritos</string>
     <string name="filters">Filtros</string>
     <string name="full_payment">Pago Completo</string>
+    <string name="grant_permission">Conceder permiso</string>
     <string name="group_description">Descripción del grupo</string>
     <string name="group_visibility">Visibilidad del Grupo</string>
     <string name="inbox">Inbox</string>
@@ -35,6 +36,7 @@
     <string name="new_room_created">Se ha creado una sala nueva.</string>
     <string name="notification_sala">Notificaciones sala</string>
     <string name="notifications">Notifications</string>
+    <string name="permission_required">Permiso requerido.</string>
     <string name="price_range">Rango de precios</string>
     <string name="privacy_policy">Política de Privacidad</string>
     <string name="privado">Privado</string>

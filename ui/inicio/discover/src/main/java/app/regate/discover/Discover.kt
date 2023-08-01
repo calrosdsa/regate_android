@@ -1,6 +1,7 @@
 package app.regate.discover
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,12 +11,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Map
@@ -40,6 +43,7 @@ import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -76,6 +80,10 @@ import app.regate.common.resources.R
 import app.regate.constant.id
 import app.regate.discover.timepicker.TimeFormat
 import app.regate.discover.timepicker.WheelTimePicker
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 typealias DiscoverScreen = @Composable (
     navController:NavController,
@@ -214,9 +222,9 @@ internal fun Discover(
         Discover(
             viewState = viewState,
             modifier = Modifier.padding(paddingValue)
-        ) { instalacionId, establecimientoId, totalPrice ->
-            viewModel.openReservaBottomSheet(instalacionId, totalPrice
-            ) { navController.navigate(Route.RESERVAR id instalacionId id establecimientoId) }
+        ) { instalacion->
+            viewModel.openReservaBottomSheet(instalacion
+            ) { navController.navigate(Route.RESERVAR id instalacion.id id instalacion.establecimiento_id) }
         }
 //        formatterDateReserva = { formatter.formatShortDateTime(it.toInstant())},
 //        setIntervalo = viewModel::setIntervalo,
@@ -224,24 +232,31 @@ internal fun Discover(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun Discover(
     viewState:DiscoverState,
 //    formatterDateReserva:(date:String)->String,
     modifier:Modifier = Modifier,
-    navigateToReservaInstalacion:(instalacionId:Long,establecimientoId:Long,totalPrice:Int)->Unit
+    navigateToReservaInstalacion:(InstalacionDto)->Unit
 //    updateCurrentDate:(date:Long)->Unit,
 //    setIntervalo:(minutes:Long)->Unit,
     ) {
+    val isAddressDevice by remember(viewState.addressDevice) {
+        derivedStateOf {
+            viewState.addressDevice != null
+        }
+    }
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(
             items = viewState.results,
         ) { result ->
-            InstalacionResult(instalacion = result.first, amenities = result.second,
-                onClick = { navigateToReservaInstalacion(result.first.id,result.first.establecimiento_id
-                    ,result.first.precio_hora?:10000) },
-            minutes = viewState.filter.interval)
+            InstalacionResult(instalacion = result.first,
+                onClick = { navigateToReservaInstalacion(result.first) },
+//                onClick = { navigateToReservaInstalacion(result.first.id,result.first.establecimiento_id
+//                    ,result.first.precio_hora?:10000) },
+                isAddressDevice = isAddressDevice
+//            minutes = viewState.filter.interval
+            )
         }
     }
 }
@@ -252,12 +267,14 @@ fun InstalacionResult(
     modifier:Modifier=Modifier,
     instalacion:InstalacionDto,
     onClick:()->Unit,
-    amenities:List<Labels>,
-    minutes:Long,
+    isAddressDevice:Boolean,
+//    amenities:List<Labels>,
+//    minutes:Long,
 ) {
     Surface(
         onClick = { onClick() }, modifier = modifier.padding(10.dp),
-        shadowElevation = 10.dp, shape = MaterialTheme.shapes.medium
+        shadowElevation = 10.dp, shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.inverseOnSurface
     ) {
         Column() {
             Box() {
@@ -293,10 +310,15 @@ fun InstalacionResult(
                         }
                     }
                 }
+                PriceLabel(precio = instalacion.precio_hora.toString(),
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .offset(y = 4.dp))
 
                 Column(
                     modifier = Modifier
                         .padding(8.dp)
+                        .fillMaxWidth(0.7f)
                         .align(Alignment.BottomStart)
                 ) {
 
@@ -307,52 +329,93 @@ fun InstalacionResult(
 
                     )
                     Spacer(modifier = Modifier.height(5.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Place,
-                            contentDescription = instalacion.distance.toString(),
-                            modifier = Modifier.size(16.dp),
-                            tint = Color.White
-                        )
-                        Text(
-                            text = "A ${instalacion.distance?.div(1000)} Km de distancia",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = Color.White
-                        )
+                    if(isAddressDevice){
+
+                    instalacion.distance?.div(1000)?.let {
+                        roundOffDecimal(it)?.let { distance ->
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Place,
+                                    contentDescription = instalacion.distance.toString(),
+                                    modifier = Modifier.size(16.dp),
+                                    tint = Color.White
+                                )
+                                Text(
+                                    text = "A ${distance} Km de distancia",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = Color.White
+                                )
+                            }
+                        }
                     }
+                    }
+
+
                 }
             }
-            Column {
-                Text(
-                    text = "${instalacion.precio_hora} por ${
-                        LocalTime.MIN.plus(
-                            Duration.ofMinutes(
-                                minutes
-                            )
-                        )
-                    } h",
-                    style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
-                )
-                Text(
-                    text = "Comodidades",
-                    style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.padding(horizontal =10.dp)
-                )
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    contentPadding = PaddingValues(10.dp),
-                ) {
-                    items(items = amenities, key = { it.id }) {
-                        AmenityItem(amenity = it)
-                        Spacer(modifier = Modifier.width(8.dp))
-                    }
-                }
-            }
+//            Column {
+//                Text(
+//                    text = "${instalacion.precio_hora} por ${
+//                        LocalTime.MIN.plus(
+//                            Duration.ofMinutes(
+//                                minutes
+//                            )
+//                        )
+//                    } h",
+//                    style = MaterialTheme.typography.labelLarge,
+//                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+//                )
+//                Text(
+//                    text = "Comodidades",
+//                    style = MaterialTheme.typography.labelMedium,
+//                    modifier = Modifier.padding(horizontal =10.dp)
+//                )
+//                LazyRow(
+//                    modifier = Modifier
+//                        .fillMaxWidth(),
+//                    contentPadding = PaddingValues(10.dp),
+//                ) {
+//                    items(items = amenities, key = { it.id }) {
+//                        AmenityItem(amenity = it)
+//                        Spacer(modifier = Modifier.width(8.dp))
+//                    }
+//                }
+//            }
         }
     }
 }
+
+fun roundOffDecimal(number: Double): Double? {
+    return try{
+        val df = DecimalFormat("#.##", DecimalFormatSymbols(Locale.ENGLISH))
+        df.roundingMode = RoundingMode.CEILING
+        df.format(number).toDouble()
+    }catch (e:Exception){
+         null
+    }
+}
+
+
+@Composable
+fun PriceLabel(
+    precio:String,
+    modifier:Modifier=Modifier,
+){
+    Surface(
+        shape = RoundedCornerShape(topStart = 10.dp),
+        border = BorderStroke(1.dp, Color.White),
+        modifier = modifier,
+        color = MaterialTheme.colorScheme.primary
+    ) {
+        Box(modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp)) {
+            Text(
+                text = precio,
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+    }
+}
+
 

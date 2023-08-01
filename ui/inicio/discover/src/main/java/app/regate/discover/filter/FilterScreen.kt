@@ -3,6 +3,9 @@ package app.regate.discover.filter
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import android.util.Log
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -51,7 +54,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import app.regate.common.composes.components.CustomButton
+import app.regate.common.composes.components.dialog.CameraPermissionTextProvider
+import app.regate.common.composes.components.dialog.LocationPermissionTextProvider
+import app.regate.common.composes.components.dialog.PermissionDialog
 import app.regate.common.composes.components.input.RowCheckSelectWithImage
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.viewModel
@@ -78,33 +85,8 @@ internal fun Filter(
     navigateUp: () -> Unit
 ){
     val viewState by viewModel.state.collectAsState()
-    Filter(
-        viewState = viewState,
-        navigateUp = navigateUp,
-        setAmenity = viewModel::setAmenities,
-        setMaxPrice = viewModel::setMaxPrice,
-        onRequestPermission = viewModel::setLocation,
-        checkPermission = viewModel::checkPermission,
-        clearMessage = viewModel::clearMessage
-
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-internal fun Filter(
-    viewState:FilterState,
-    navigateUp: () -> Unit,
-    setAmenity:(Long)->Unit,
-    setMaxPrice:(Int)->Unit,
-    onRequestPermission:(Boolean, Context, (IntentSenderRequest)->Unit)->Unit,
-    checkPermission:(Context,String)->Boolean,
-    clearMessage:(Long)->Unit
-) {
-    val context = LocalContext.current
-    var sliderValue by remember(viewState.filterData.max_price) {
-        mutableStateOf(viewState.filterData.max_price?.toFloat() ?: 0f) // pass the initial values
-    }
+    val dialogQueue = viewModel.visiblePermissionDialogQueue
+    val activity = LocalContext.current as Activity
     val locationResultLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartIntentSenderForResult(),
         onResult = { result ->
@@ -116,13 +98,89 @@ internal fun Filter(
             }
         }
     )
-    val locationPermissionResultLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        onRequestPermission(isGranted, context) { senderRequest ->
-            locationResultLauncher.launch(senderRequest)
+    val locationPermission = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+        onResult = { perms ->
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION).forEach { permission ->
+                viewModel.onPermissionResult(
+                    permission = permission,
+                    isGranted = perms[permission] == true,
+                    context = activity
+                ){intentSenderRequest ->
+                    locationResultLauncher.launch(intentSenderRequest)
+                }
+            }
         }
+    )
+
+    dialogQueue
+        .reversed()
+        .forEach { permission ->
+            PermissionDialog(
+                permissionTextProvider = when (permission) {
+                    Manifest.permission.ACCESS_COARSE_LOCATION -> {
+                        LocationPermissionTextProvider()
+                    }
+                    else -> return@forEach
+                },
+                isPermanentlyDeclined = !activity.shouldShowRequestPermissionRationale(
+                    permission
+                ),
+                onDismiss = viewModel::dismissDialog,
+                onOkClick = {
+                    viewModel.dismissDialog()
+                    locationPermission.launch(arrayOf(permission))
+                },
+                onGoToAppSettingsClick = { activity.openAppSettings() }
+            )
+        }
+    Filter(
+        viewState = viewState,
+        navigateUp = navigateUp,
+        setAmenity = viewModel::setAmenities,
+        setMaxPrice = viewModel::setMaxPrice,
+//        onRequestPermission = viewModel::setLocation,
+        checkPermission = viewModel::checkPermission,
+        clearMessage = viewModel::clearMessage,
+        requestLocationPermission ={  locationPermission.launch(permissionsToRequest) }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun Filter(
+    viewState:FilterState,
+    navigateUp: () -> Unit,
+    setAmenity:(Long)->Unit,
+    setMaxPrice:(Int)->Unit,
+//    onRequestPermission:(Boolean, Context, (IntentSenderRequest)->Unit)->Unit,
+    requestLocationPermission:()->Unit,
+    checkPermission:(Context,String)->Boolean,
+    clearMessage:(Long)->Unit
+) {
+    val context = LocalContext.current
+    var sliderValue by remember(viewState.filterData.max_price) {
+        mutableStateOf(viewState.filterData.max_price?.toFloat() ?: 0f) // pass the initial values
     }
+
+//    val locationResultLauncher = rememberLauncherForActivityResult(
+//        contract = ActivityResultContracts.StartIntentSenderForResult(),
+//        onResult = { result ->
+//            if (result.resultCode == Activity.RESULT_OK) {
+//                Log.d("DEBUG_APP", "OK")
+//
+//            } else {
+//                Log.d("DEBUG_APP", "CANCEL")
+//            }
+//        }
+//    )
+//    val locationPermissionResultLauncher = rememberLauncherForActivityResult(
+//        contract = ActivityResultContracts.RequestPermission()
+//    ) { isGranted ->
+//        onRequestPermission(isGranted, context) { senderRequest ->
+//            locationResultLauncher.launch(senderRequest)
+//        }
+//    }
     var isEnabledLocation by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     val dismissSnackbarState = rememberDismissState(
@@ -246,7 +304,7 @@ internal fun Filter(
                     modifier = Modifier.padding(5.dp)
                 ) {
                     RadioButton(selected = isEnabledLocation, onClick = {
-                        locationPermissionResultLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+                        requestLocationPermission()
                     })
                     Spacer(modifier = Modifier.width(10.dp))
                     Text(text = stringResource(id = R.string.near_me))
@@ -271,3 +329,18 @@ internal fun Filter(
         }
     }
 }
+
+
+
+fun Activity.openAppSettings() {
+    Intent(
+        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+        Uri.fromParts("package", packageName, null)
+    ).also(::startActivity)
+}
+
+private val permissionsToRequest = arrayOf(
+    Manifest.permission.ACCESS_FINE_LOCATION,
+    Manifest.permission.ACCESS_COARSE_LOCATION,
+//    Manifest.permission.CALL_PHONE,
+)

@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.dto.ResponseMessage
+import app.regate.data.establecimiento.EstablecimientoRepository
+import app.regate.data.instalacion.InstalacionRepository
 import app.regate.data.reserva.ReservaRepository
 import app.regate.domain.interactors.UpdateEstablecimiento
 import app.regate.domain.observers.ObserveAuthState
@@ -19,6 +21,7 @@ import app.regate.util.ObservableLoadingCounter
 import app.regate.util.collectStatus
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -42,12 +45,14 @@ class BottomReservaViewModel(
     observeEstablecimientoDetail: ObserveEstablecimientoDetail,
     observeInstalacion: ObserveInstalacion,
     private val reservaRepository: ReservaRepository,
-    private val updateEstablecimiento: UpdateEstablecimiento
+    private val instalacionRepository: InstalacionRepository,
+    private val establecimientoRepository: EstablecimientoRepository,
+//    private val updateEstablecimiento: UpdateEstablecimiento
 ):ViewModel(){
     private val instalacionId: Long = savedStateHandle["id"]!!
     private val establecimientoId: Long = savedStateHandle["establecimientoId"]!!
     private val loadingState = ObservableLoadingCounter()
-    private val loadingPlaceholderState = ObservableLoadingCounter()
+//    private val loadingPlaceholderState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val totalPrice = MutableStateFlow<Int?>(null)
     val state: StateFlow<BottomReservaState> = combine(
@@ -92,10 +97,19 @@ class BottomReservaViewModel(
                 }
             }
         }
+       getData()
+    }
+    private fun getData(){
         viewModelScope.launch {
-            updateEstablecimiento(
-                UpdateEstablecimiento.Params(establecimientoId)
-            ).collectStatus(loadingPlaceholderState,uiMessageManager)
+            try{
+
+            val res = async { establecimientoRepository.updateEstablecimiento(establecimientoId ) }
+            res.await()
+            val res2 = async { instalacionRepository.getInstalacion(instalacionId) }
+            res2.await()
+            }catch(e:Exception){
+                //TODO()
+            }
         }
     }
 

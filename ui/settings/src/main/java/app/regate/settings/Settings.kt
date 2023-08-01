@@ -122,25 +122,6 @@ internal fun Setting(
         .fillMaxSize(),
         topBar = {
             SimpleTopBar(navigateUp = navigateUp,title =  stringResource(id = R.string.settings))
-//            Surface(color = MaterialTheme.colorScheme.inverseOnSurface) {
-//                Row(
-//                    modifier = Modifier
-//                        .padding(5.dp)
-//                        .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    IconButton(onClick = { navigateUp() }) {
-//                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
-//
-//                    }
-//                    Spacer(modifier = Modifier.width(10.dp))
-//                    Text(
-//                        text = stringResource(id = R.string.settings),
-//                        style = MaterialTheme.typography.titleMedium.copy(
-//                            fontWeight = FontWeight.SemiBold
-//                        )
-//                    )
-//                }
-//            }
         }
     ) { paddingValues ->
         Box(

@@ -62,6 +62,7 @@ string floating1
 string floating2
 string full_payment
 string gcp_id
+string grant_permission
 string group_description
 string group_visibility
 string inbox
@@ -83,6 +84,7 @@ string new_room_created
 string notification_sala
 string notification_sala_channel
 string notifications
+string permission_required
 string price_range
 string privacy_policy
 string privado

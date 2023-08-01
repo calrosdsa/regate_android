@@ -401,21 +401,10 @@ internal fun InstalacionAvailable(
                         .fillMaxSize(),
                     contentScale = ContentScale.Crop,
                 )
-                Surface(
-                    shape = RoundedCornerShape(topEnd = 10.dp),
-                    border = BorderStroke(1.dp, Color.White),
+                PriceLabel(precio = instalacion.precio.toString(),
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .offset(y = 4.dp),
-                    color = MaterialTheme.colorScheme.primary
-                ) {
-                    Box(modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp)) {
-                        Text(
-                            text = instalacion.precio.toString(),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                }
+                        .offset(y = 4.dp))
             }
             Column(modifier = Modifier.padding(5.dp)) {
                 Text(
@@ -429,4 +418,22 @@ internal fun InstalacionAvailable(
         }
     }
 
-
+@Composable
+fun PriceLabel(
+    precio:String,
+    modifier:Modifier=Modifier,
+){
+    Surface(
+        shape = RoundedCornerShape(topEnd = 10.dp),
+        border = BorderStroke(1.dp, Color.White),
+        modifier = modifier,
+        color = MaterialTheme.colorScheme.primary
+    ) {
+        Box(modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp)) {
+            Text(
+                text = precio,
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+    }
+}
