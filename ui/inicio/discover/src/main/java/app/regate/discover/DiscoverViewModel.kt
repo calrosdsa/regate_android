@@ -60,18 +60,15 @@ class DiscoverViewModel(
     private val cupoRepository: CupoRepository
 //    private val instalacionRepository: InstalacionRepository,
 ): ViewModel() {
-    val pagingList: Flow<PagingData<InstalacionDto>> = Pager(PAGING_CONFIG){
-         PaginationInstalacionFilter(){page->
-            instalacionRepository.filterInstacion(filterData.value,page)
+    private val filterData = MutableStateFlow(FILTER_DATA)
+    private val loadingState = ObservableLoadingCounter()
+    val pagedList: Flow<PagingData<InstalacionDto>> = Pager(PAGING_CONFIG){
+         PaginationInstalacionFilter(isInit = filterData.value.isInit,loadingState = loadingState){page->
+                 instalacionRepository.filterInstacion(filterData.value,page)
         }
     }.flow.cachedIn(viewModelScope)
-    private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val addressDevice = MutableStateFlow<AddressDevice?>(null)
-    private val filterData = MutableStateFlow(FilterInstalacionData())
-    private val instalacionResult = MutableStateFlow<List<Pair<InstalacionDto, List<Labels>>>>(
-        emptyList()
-    )
     private val selectedCategory = MutableStateFlow<Labels?>(null)
 
     val state:StateFlow<DiscoverState> = combine(
@@ -80,16 +77,16 @@ class DiscoverViewModel(
         uiMessageManager.message,
         addressDevice,
         filterData,
-        instalacionResult,
+//        instalacionResult,
         selectedCategory
-        ){categories,loading,message,addressDevice,filter,results,selectedCategory ->
+        ){categories,loading,message,addressDevice,filter,selectedCategory ->
         DiscoverState(
             loading = loading,
             message= message,
             filter = filter,
             addressDevice = addressDevice,
             categories = categories,
-            results = results,
+//            results = results,
             selectedCategory = selectedCategory
         )
     }.stateIn(
@@ -121,7 +118,7 @@ class DiscoverViewModel(
             }
         }
         viewModelScope.launch {
-            appPreferences.observeFilter().drop(1).flowOn(Dispatchers.IO).collectLatest{
+            appPreferences.observeFilter().flowOn(Dispatchers.IO).collectLatest{
                 try{
                 Log.d("DEBUG_APP",it)
                 getDataEntityFromJson<FilterInstalacionData>(it)?.let {filter->
@@ -146,6 +143,7 @@ class DiscoverViewModel(
             pageSize = 20,
             initialLoadSize = 20,
         )
+        val FILTER_DATA = FilterInstalacionData()
     }
 
     fun openReservaBottomSheet(instalacion:InstalacionDto,navigate:()->Unit){
@@ -162,7 +160,7 @@ class DiscoverViewModel(
                     cupoRepository.insertCuposReserva(
                         dates =listDate,
                         id = instalacion.id,
-                        price = it.toDouble()
+                        price = it.toDouble(),
                     )
                 }
                 navigate()
@@ -175,23 +173,20 @@ class DiscoverViewModel(
     fun getInstalaciones(filter:FilterInstalacionData) {
         viewModelScope.launch {
             val listTime = getArrayofTime(
-                filterData.value.currentTime.toJavaLocalTime(),
-                (filterData.value.interval / 30) - 1
+               filter.currentTime.toJavaLocalTime(),
+                (filter.interval / 30) - 1
             )
             Log.d("DEBUG_","list time $listTime")
             val listDate = listTime.map {
-                "${
-                    Instant.fromEpochMilliseconds(filterData.value.currentDate).toLocalDateTime(
-                        TimeZone.UTC
-                    ).date
-                } $it"
+                "${Instant.fromEpochMilliseconds(filter.currentDate).toLocalDateTime(TimeZone.UTC).date} $it"
             }
             try {
-                loadingState.addLoader()
+//                loadingState.addLoader()
 //                val address = getAddress()
                 val data = filter.copy(
                     time = listTime,
                     date = listDate,
+                    isInit = true
                     )
                 filterData.emit(data)
 //                val res = instalacionRepository.filterInstacion(
@@ -199,13 +194,13 @@ class DiscoverViewModel(
 //                Log.d("DEBUG_",filter.toString())
 ////                Log.d("DEBUG_",res.toString())
 //                instalacionResult.tryEmit(res)
-                loadingState.removeLoader()
+//                loadingState.removeLoader()
             } catch (e: ResponseException) {
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"c")
                 uiMessageManager.emitMessage(UiMessage(message = e.response.body()))
             } catch (e: Exception) {
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"c")
-                loadingState.removeLoader()
+//                loadingState.removeLoader()
                 uiMessageManager.emitMessage(UiMessage(message = e.localizedMessage ?: ""))
             }
         }

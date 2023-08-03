@@ -21,7 +21,7 @@ import app.regate.actividades.Actividades
 import app.regate.home.Home
 import app.regate.account.reservas.Reservas
 import app.regate.servicios.Servicios
-import app.regate.auth.Login
+import app.regate.auth.signin.Login
 import app.regate.bottom.auth.BottomAuth
 import app.regate.bottom.auth.Map
 import app.regate.bottom.reserva.BottomReserva
@@ -30,6 +30,7 @@ import app.regate.establecimiento.Establecimiento
 import app.regate.instalacion.InstalacionDetail
 import app.regate.reservar.EstablecimientoReserva
 import app.regate.chat.grupo.ChatSala
+import app.regate.coin.paid.Pay
 import app.regate.coin.recargar.Recargar
 import app.regate.inbox.Conversations
 import app.regate.creategroup.CreateGroup
@@ -48,12 +49,15 @@ import app.regate.profile.Profile
 import app.regate.profile.edit.EditProfile
 import app.regate.sala.Sala
 import app.regate.settings.Setting
-import app.regate.signup.SignUp
+import app.regate.auth.signup.SignUp
+import app.regate.filterSalas.FilterSalas
+import app.regate.welcome.Welcome
 import me.tatarka.inject.annotations.Inject
 
 //@ActivityScope
 @Inject
 class ComposeScreens(
+    val welcome:Welcome,
     val filter:Filter,
     val login: Login,
     val signUp: SignUp,
@@ -77,6 +81,7 @@ class ComposeScreens(
     val establecimientoReserva:EstablecimientoReserva,
     val establecimientoSalas: Salas,
     val sala: Sala,
+    val filterSalas:FilterSalas,
     val chatSala: ChatSala,
     val createSala:CreateSala,
     val settings:Setting,
@@ -84,6 +89,7 @@ class ComposeScreens(
     val conversation:Conversation,
     val inbox:Conversations,
     val recargar:Recargar,
+    val pay:Pay,
 
     val photo:Photo,
 

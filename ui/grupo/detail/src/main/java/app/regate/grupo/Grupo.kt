@@ -418,15 +418,7 @@ internal fun Grupo(
                 }
             }
 
-            PullRefreshIndicator(
-                refreshing = viewState.loading,
-                state = refreshState,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(paddingValues)
-                    .padding(top = 20.dp),
-                scale = true,
-            )
+
         }
     }
 }

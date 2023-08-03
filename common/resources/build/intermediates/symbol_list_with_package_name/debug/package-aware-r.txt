@@ -36,7 +36,9 @@ layout item_callout_view
 layout mapbox
 mipmap ic_launcher
 string about_regate
+string amount
 string balance_coins
+string book_a_court
 string bookings
 string channel_group_description
 string channel_message_description
@@ -48,11 +50,13 @@ string chat_notification_id
 string chat_notification_name
 string choose_a_schedule
 string clear_all
+string continuar
 string create_group
 string create_sala
 string discount
 string dynamic_color
 string edit
+string expiration_date
 string explore_exceptional_destinations
 string family_name
 string favorites
@@ -61,11 +65,13 @@ string floating1
 string floating2
 string full_payment
 string gcp_id
+string get_started
 string grant_permission
 string group_description
 string group_visibility
 string inbox
 string inbox_to_establecimiento
+string join_a_group
 string language
 string leave_group
 string location
@@ -89,6 +95,8 @@ string privacy_policy
 string privado
 string publico
 string purchase
+string qr_code_payment
+string recommended_places
 string remove_user
 string remove_user_admin
 string rooms
@@ -96,6 +104,8 @@ string rules_of_the_place
 string sala_help_text
 string sala_help_text2
 string save
+string save_image
+string saved_correctly
 string search_nearby_places
 string services
 string settings
@@ -105,8 +115,10 @@ string terms_of_services
 string theme
 string there_are_not_available_schudules
 string time_interval
+string unexpected_error
 string user_since
 string version
+string what_kind_of_game_do_you_prefere
 string what_would_you_like_to_play
 string where_will_it_be_played
 string you

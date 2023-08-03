@@ -47,6 +47,7 @@ import java.nio.charset.StandardCharsets
 fun HomeEntry(
     composeScreens: ComposeScreens,
     establecimientoId:String?,
+    startScreen:String,
     navigateToMap:()->Unit
 ) {
     val bottomSheetNavigator = rememberBottomSheetNavigator()
@@ -55,7 +56,7 @@ fun HomeEntry(
     val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(key1 = true, block = {
         if (establecimientoId != null) {
-            navController.navigate(Route.ESTABLECIMIENTO id establecimientoId.toLong())
+            navController.navigate(Route.ESTABLECIMIENTO id establecimientoId.toLong() id 0)
         }
     })
 
@@ -84,6 +85,7 @@ fun HomeEntry(
 //                            drawerState.open()
                         }
                     },
+                    startScreen = startScreen,
                     finishActivity = establecimientoId != null,
                     navigateToMap = navigateToMap
                 )
@@ -99,6 +101,7 @@ internal fun AppNavigation(
     navController: NavHostController,
     composeScreens: ComposeScreens,
     finishActivity:Boolean,
+    startScreen:String,
     modifier: Modifier = Modifier,
     openDrawer:()->Unit,
     navigateToMap:()->Unit
@@ -107,9 +110,15 @@ internal fun AppNavigation(
     val context = LocalContext.current as Activity
     AnimatedNavHost(
         navController = navController,
-        startDestination =Route.MAIN,
+        startDestination = startScreen,
         modifier = modifier
     ) {
+        animatedComposable(route = Route.WELCOME_PAGE){
+            composeScreens.welcome(
+//                navigateUp = navController::navigateUp
+                  navigateToHome = { navController.navigate(Route.MAIN)}
+            )
+        }
         animatedComposable(route = Route.RESERVAR arg "id" arg "establecimientoId",
         arguments = listOf(
             navArgument("id"){ type = NavType.LongType },
@@ -168,7 +177,8 @@ internal fun AppNavigation(
             arguments = listOf(
                 navArgument("id") { type = NavType.LongType },
                 navArgument("page") { type = NavType.LongType },
-                )
+                ),
+            deepLinks = listOf(navDeepLink { uriPattern = "$uri/establecimiento/id={id}/page={page}" })
         ) { it ->
             val page = it.arguments?.getLong("page")?:0
             composeScreens.establecimiento(
@@ -213,6 +223,7 @@ internal fun AppNavigation(
                 navigateToReserva = { navController.navigate(Route.RESERVAR id it) }
             )
         }
+
 
         animatedComposable(
             route = Route.SALA arg "id",
@@ -374,6 +385,27 @@ internal fun AppNavigation(
         animatedComposable(route = Route.RECARGAR){
             composeScreens.recargar(
                 navigateUp = navController::navigateUp,
+                navigateToPay = {navController.navigate(Route.PAY id it)}
+            )
+        }
+
+        animatedComposable(route = Route.FILTER_SALAS){
+            composeScreens.filterSalas(
+                navigateUp = navController::navigateUp,
+                openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
+                navigateToSala = {navController.navigate(Route.SALA id it)},
+            )
+        }
+
+        animatedComposable(
+            route = Route.PAY arg "qrRequest",
+            arguments = listOf(navArgument("qrRequest") {
+                type = NavType.StringType
+            })
+        ) {
+            composeScreens.pay(
+                navigateUp = navController::navigateUp,
+//                navigateToReserva = { navController.navigate(Route.RESERVAR id it) }
             )
         }
 

@@ -46,6 +46,7 @@ int id list_item 0x0
 int id main 0x0
 int id main_graph 0x0
 int id mapView 0x0
+int id maplayout 0x0
 int id name 0x0
 int id navHost 0x0
 int id navToDetail 0x0

@@ -6,6 +6,8 @@ import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
+import app.regate.data.dto.empresa.salas.PaginationSalaResponse
+import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.dto.empresa.salas.SalaRequestDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -37,6 +39,13 @@ class SalaDataSourceImpl(
 //        }catch (e:ResponseException){
 //            ResponseData.Error(message = e.errorMessage<ErrorResponse>().message)
 //        }
+    }
+
+    override suspend fun filterSalas(d: SalaFilterData,page:Int): PaginationSalaResponse {
+        return client.post("/v1/salas/filter/?page=${page}"){
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
     }
 
     override suspend fun getMessagesSala(id: Long): List<GrupoMessageDto> {

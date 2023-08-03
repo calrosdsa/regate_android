@@ -58,10 +58,23 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Setting entity) {
         statement.bindString(1, entity.getUuid());
-        final String _tmp = AppTypeConverters.INSTANCE.fromPaidType(entity.getPaid_type());
-        statement.bindString(2, _tmp);
+        final String _tmp;
+        if (entity.getPaid_type() == null) {
+          _tmp = null;
+        } else {
+          _tmp = AppTypeConverters.INSTANCE.fromPaidType(entity.getPaid_type());
+        }
+        if (_tmp == null) {
+          statement.bindNull(2);
+        } else {
+          statement.bindString(2, _tmp);
+        }
         statement.bindLong(3, entity.getEstablecimiento_id());
-        statement.bindLong(4, entity.getPayment_for_reservation());
+        if (entity.getPayment_for_reservation() == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindLong(4, entity.getPayment_for_reservation());
+        }
         final String _tmp_1 = AppTypeConverters.INSTANCE.fromListHorario(entity.getHorario_interval());
         statement.bindString(5, _tmp_1);
       }
@@ -706,12 +719,24 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
               _tmpUuid = _cursor.getString(_cursorIndexOfUuid);
               final PaidType _tmpPaid_type;
               final String _tmp;
-              _tmp = _cursor.getString(_cursorIndexOfPaidType);
-              _tmpPaid_type = AppTypeConverters.INSTANCE.toPaidType(_tmp);
+              if (_cursor.isNull(_cursorIndexOfPaidType)) {
+                _tmp = null;
+              } else {
+                _tmp = _cursor.getString(_cursorIndexOfPaidType);
+              }
+              if (_tmp == null) {
+                _tmpPaid_type = null;
+              } else {
+                _tmpPaid_type = AppTypeConverters.INSTANCE.toPaidType(_tmp);
+              }
               final long _tmpEstablecimiento_id;
               _tmpEstablecimiento_id = _cursor.getLong(_cursorIndexOfEstablecimientoId);
-              final int _tmpPayment_for_reservation;
-              _tmpPayment_for_reservation = _cursor.getInt(_cursorIndexOfPaymentForReservation);
+              final Integer _tmpPayment_for_reservation;
+              if (_cursor.isNull(_cursorIndexOfPaymentForReservation)) {
+                _tmpPayment_for_reservation = null;
+              } else {
+                _tmpPayment_for_reservation = _cursor.getInt(_cursorIndexOfPaymentForReservation);
+              }
               final List<HorarioInterval> _tmpHorario_interval;
               final String _tmp_1;
               _tmp_1 = _cursor.getString(_cursorIndexOfHorarioInterval);

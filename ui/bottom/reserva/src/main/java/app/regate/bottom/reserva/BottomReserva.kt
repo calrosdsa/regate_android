@@ -203,11 +203,14 @@ internal fun BottomReserva(
                                     openAuthDialog()
                                 }
                             }) {
+                                viewState.setting.payment_for_reservation?.let {
                                 Text(
                                     text = "Reserva por:${
-                                        viewState.totalPrice?.divideToPercent(viewState.setting.payment_for_reservation)
+                                            viewState.totalPrice?.divideToPercent(
+                                                it
+                                            )
                                     }"
-                                )
+                                ) }
                             }
                         }
                         CustomButton(onClick = {

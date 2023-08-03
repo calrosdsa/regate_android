@@ -20,6 +20,7 @@ object Route {
     const val INSTALACION = "instalacion"
 
     const val SALA = "establecimiento_salas"
+    const val FILTER_SALAS = "filter_salas"
     const val CREAR_SALA = "crear_sala"
 
     const val RESERVAR = "reservar"
@@ -46,6 +47,8 @@ object Route {
     const val CONVERSATION = "conversation"
     const val INBOX = "inbox"
     const val RECARGAR = "recargar"
+    const val PAY = "pay"
+
 }
 
 

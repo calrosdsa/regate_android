@@ -100,4 +100,18 @@
     <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
     <string name="permission_required">Permission required.</string>
     <string name="grant_permission">Grant permission</string>
+    <string name="save_image">Save Image</string>
+    <string name="saved_correctly">Saved successfully</string>
+    <string name="unexpected_error">Sorry, an unexpected error has occurred.</string>
+    <string name="qr_code_payment">QR code payment</string>
+    <string name="expiration_date">Expiration date:  %1$s</string>
+<!--    <string name="amount">Amount:  %1$d</string>-->
+    <string name="amount">Amount:  %1$s</string>
+    <string name="recommended_places">Recommended places</string>
+    <string name="book_a_court">Book a court</string>
+    <string name="get_started">Get Started</string>
+    <string name="what_kind_of_game_do_you_prefere">What kind of game do you prefer?</string>
+    <string name="continuar">Continue</string>
+    <string name="join_a_group">Join a group</string>
+
 </resources>

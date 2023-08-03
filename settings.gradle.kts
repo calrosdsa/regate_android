@@ -46,7 +46,7 @@ include(
 //    ":core:logging",
     ":core:preferences",
     ":ui:auth",
-    ":ui:signup",
+    ":ui:welcome",
     ":ui:map",
     ":ui:inicio:home",
     ":ui:inicio:discover",
@@ -73,12 +73,12 @@ include(
 
     ":ui:account:profile",
     ":ui:account:reservas",
+    ":ui:account:favoritos",
+    ":ui:account:inbox",
+    ":ui:account:coin",
 
     ":ui:settings",
     ":ui:media",
-    ":ui:inbox",
-    ":ui:favoritos",
-    ":ui:coin",
 
     ":app",
     ":common:resources",

@@ -46,7 +46,7 @@ import app.regate.common.resources.R
 fun HomeMediaCarousel(
     list: List<String>,
 //    totalItemsToShow: Int = 10,
-    carouselLabel: String = "Carousel Label",
+//    carouselLabel: String = "Carousel Label",
     pagerState: PagerState = rememberPagerState(),
     autoScrollDuration: Long = Constants.CAROUSEL_AUTO_SCROLL_TIMER,
     onItemClicked: (String) -> Unit
@@ -89,7 +89,7 @@ fun HomeMediaCarousel(
                     onClick = { onItemClicked(item) },
                     modifier = Modifier
                         .carouselTransition(page, pagerState)
-                        .height(100.dp)
+                        .height(80.dp)
                         .fillMaxWidth()
                 ) {
                     CarouselItem(item)
@@ -100,10 +100,6 @@ fun HomeMediaCarousel(
                 pagerState = pagerState,
                 modifier = Modifier.align(Alignment.BottomCenter).padding(5.dp)
             )
-        }
-
-        if (carouselLabel.isNotBlank()) {
-            Text(text = carouselLabel, style = MaterialTheme.typography.labelSmall)
         }
     }
 }

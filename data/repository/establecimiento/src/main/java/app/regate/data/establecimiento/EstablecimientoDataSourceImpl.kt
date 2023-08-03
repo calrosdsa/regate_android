@@ -9,6 +9,8 @@ import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
+import app.regate.data.dto.empresa.establecimiento.InitialData
+import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.models.Establecimiento
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -64,8 +66,25 @@ class EstablecimientoDataSourceImpl(
             setBody(d)
         }.body()
     }
-    override suspend fun getEstablecimientos(): List<EstablecimientoDto> {
-        return client.get("/v1/establecimientos/").body()
+    override suspend fun getEstablecimientos(d:InitialDataFilter): InitialData {
+        return client.post("/v1/establecimientos/"){
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
+    }
+
+    override suspend fun getRecommendedEstablecimientos(categories: List<Long>): List<EstablecimientoDto> {
+        return client.post("/v1/establecimientos/recommended/"){
+            contentType(ContentType.Application.Json)
+            setBody(categories)
+        }.body()
+    }
+
+    override suspend fun getNearEstablecimientos(
+        lng: String,
+        lat: String
+    ): List<EstablecimientoDto> {
+        return client.get("/v1/establecimientos/near/?lng=$lng&lat=$lat").body()
     }
 
     override suspend fun getEstablecimiento(id: Long): EstablecimientoDetailDto {

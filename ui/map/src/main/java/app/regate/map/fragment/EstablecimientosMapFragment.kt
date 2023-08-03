@@ -3,6 +3,7 @@
 package app.regate.map.fragment
 
 import android.annotation.SuppressLint
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.TaskStackBuilder
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -143,8 +146,10 @@ private fun prepareViewAnnotation(point: Point, item:EstablecimientoDto) {
                     intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
 
                     startActivity(intent)
-                } catch (ignored: ClassNotFoundException) {
+                } catch (ignored: Exception) {
+                    //TODO()
                 }
+//                navigateToComplejo(item.id)
             }
             item.photo?.let { it1 -> viewModel.loadImageFromUrl(it1,it.img) }
         }
@@ -153,6 +158,28 @@ private fun prepareViewAnnotation(point: Point, item:EstablecimientoDto) {
     }
     viewAnnotationList.add(viewAnnotation)
 }
+
+//private fun navigateToComplejo(id:Int){
+//    try{
+//
+//    val activityToStart = "app.regate.home.MainActivity"
+//    val c = Class.forName(activityToStart)
+//    val taskDetailIntent = Intent(
+//        Intent.ACTION_VIEW,
+//        "https://example.com/establecimiento/id=${id}/page=0".toUri(),
+//        context,
+//        c
+//    )
+//    val taskBuilder = context?.let { TaskStackBuilder.create(it) }
+//    if (taskBuilder != null) {
+//        taskBuilder.addNextIntentWithParentStack(taskDetailIntent)
+//        taskBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
+//    }
+//    }catch(e:Exception){
+//        //TODO
+//    }
+//}
+
 
 
 

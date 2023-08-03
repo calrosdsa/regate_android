@@ -8,8 +8,10 @@
            
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/maplayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" android:tag="layout/establecimiento_map_fragment_0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
 
         <com.mapbox.maps.MapView
             android:id="@+id/mapView"

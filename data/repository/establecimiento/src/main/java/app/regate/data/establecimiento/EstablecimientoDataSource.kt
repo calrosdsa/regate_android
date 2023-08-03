@@ -5,10 +5,15 @@ import app.regate.data.dto.empresa.establecimiento.CupoEstablecimiento
 import app.regate.data.dto.empresa.establecimiento.CuposEstablecimientoRequest
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
+import app.regate.data.dto.empresa.establecimiento.InitialData
+import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.models.Establecimiento
 
 interface EstablecimientoDataSource {
-    suspend fun getEstablecimientos():List<EstablecimientoDto>
+    suspend fun getEstablecimientos(d:InitialDataFilter):InitialData
+    suspend fun getRecommendedEstablecimientos(categories:List<Long>):List<EstablecimientoDto>
+    suspend fun getNearEstablecimientos(lng:String,lat:String):List<EstablecimientoDto>
+
     suspend fun getEstablecimiento(id:Long): EstablecimientoDetailDto
     suspend fun getEstablecimientoCupos(d:CuposEstablecimientoRequest):List<CupoEstablecimiento>
     suspend fun getEstablecimientoFavoritos():List<EstablecimientoDto>

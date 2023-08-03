@@ -22,5 +22,6 @@ data class FilterInstalacionData(
     val amenities:List<Long> = emptyList(),
     val longitud:Double? = null,
     val latitud:Double? = null,
-    val interval:Long = 60
+    val interval:Long = 60,
+    val isInit:Boolean = false
 )

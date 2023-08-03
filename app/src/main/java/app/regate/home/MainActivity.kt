@@ -44,6 +44,7 @@ import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.theme.RegateTheme
 import app.regate.common.composes.util.shouldUseDarkColors
 import app.regate.common.composes.util.shouldUseDynamicColors
+import app.regate.constant.Route
 import app.regate.data.common.AddressDevice
 import app.regate.extensions.unsafeLazy
 import app.regate.inject.ActivityComponent
@@ -53,6 +54,7 @@ import app.regate.map.MapActivity
 import app.regate.settings.AppPreferences
 import app.regate.util.AppDateFormatter
 import app.regate.util.AppLocation
+import app.regate.util.AppMedia
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.LocationRequest
@@ -86,17 +88,18 @@ class MainActivity : ComponentActivity() {
             createNotificationGroup()
             createNotificationGroupChatChannel()
         }
-        requestPermisos()
+//        requestPermisos()
 //        saveAddress()
 //        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
         component = MainActivityComponent::class.create(this)
         viewModel
-        if(preferences.address.isBlank()){
-            Log.d("DEBUG_APP","NO ADDDRESS")
-           enableLocation()
-        }
+//        if(preferences.address.isBlank()){
+//            Log.d("DEBUG_APP","NO ADDDRESS")
+//           enableLocation()
+//        }
         val establecimientoId = intent.getStringExtra("establecimientoId")
         val mapIntent = Intent(this, MapActivity::class.java)
+        val startScreen = if(preferences.categories.isBlank()) Route.WELCOME_PAGE else Route.MAIN
 //        intent.flags = FLAG_ACTIVITY_SINGLE_TOP
         setContent {
             CompositionLocalProvider(
@@ -122,7 +125,8 @@ class MainActivity : ComponentActivity() {
                             HomeEntry(
                                 composeScreens = component.screens,
                                 establecimientoId = establecimientoId,
-                                navigateToMap = { startActivity(mapIntent)}
+                                navigateToMap = { startActivity(mapIntent)},
+                                startScreen = startScreen
                             )
 //                        }
                     }
@@ -342,6 +346,7 @@ abstract class MainActivityComponent(
 ) : ActivityComponent {
     abstract val appDateFormatter: AppDateFormatter
     abstract val appLocation:AppLocation
+    abstract val appMedia:AppMedia
     abstract val screens: ComposeScreens
 //    abstract val textCreator: TiviTextCreator
     abstract val preferences: AppPreferences

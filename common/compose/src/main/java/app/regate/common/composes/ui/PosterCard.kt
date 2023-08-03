@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("DEPRECATION")
 
 package app.regate.common.composes.ui
 
@@ -26,8 +25,10 @@ import android.provider.MediaStore
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.UploadFile
@@ -48,16 +49,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.components.images.AsyncImage
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
-
-@Composable
-fun PosterCard(
-    establecimiento: EstablecimientoDto,
-    modifier: Modifier = Modifier,
-) {
-    Card(modifier = modifier) {
-        PosterCardContent(establecimiento = establecimiento)
-    }
-}
 
 @Composable
 fun PosterCardImageDark(
@@ -95,6 +86,8 @@ fun PosterCardImage(
         )
     }
 }
+
+
 
 @Composable
 fun UploadImageBitmap(

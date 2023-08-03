@@ -26,8 +26,8 @@ data class Setting(
     @PrimaryKey
     val uuid:String,
 //    override val id: Long = 0,
-    val paid_type:PaidType,
+    val paid_type:PaidType? = null,
     val establecimiento_id:Long,
-    val payment_for_reservation:Int,
+    val payment_for_reservation:Int? = null,
     val horario_interval:List<HorarioInterval>
 )

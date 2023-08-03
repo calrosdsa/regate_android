@@ -21,8 +21,6 @@ public class EstablecimientoMapFragmentBindingImpl extends EstablecimientoMapFra
         sViewsWithIds.put(R.id.navToDetail, 6);
     }
     // views
-    @NonNull
-    private final androidx.coordinatorlayout.widget.CoordinatorLayout mboundView0;
     // variables
     // values
     // listeners
@@ -37,11 +35,11 @@ public class EstablecimientoMapFragmentBindingImpl extends EstablecimientoMapFra
             , (android.widget.ImageButton) bindings[4]
             , (com.google.android.material.imageview.ShapeableImageView) bindings[5]
             , (com.mapbox.maps.MapView) bindings[2]
+            , (androidx.coordinatorlayout.widget.CoordinatorLayout) bindings[0]
             , (android.widget.TextView) bindings[1]
             , (android.widget.Button) bindings[6]
             );
-        this.mboundView0 = (androidx.coordinatorlayout.widget.CoordinatorLayout) bindings[0];
-        this.mboundView0.setTag(null);
+        this.maplayout.setTag(null);
         this.name.setTag(null);
         setRootTag(root);
         // listeners

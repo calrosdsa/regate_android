@@ -95,6 +95,7 @@ dependencies {
 //    implementation("com.google.android.material:material:1.10.0-alpha04")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
+
 //    implementation("androidx.activity:activity:1.7.2")
     implementation(libs.androidx.activity.activity)
     implementation(libs.androidx.browser)

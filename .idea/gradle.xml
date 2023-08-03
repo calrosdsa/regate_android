@@ -43,6 +43,9 @@
             <option value="$PROJECT_DIR$/tasks/api" />
             <option value="$PROJECT_DIR$/ui" />
             <option value="$PROJECT_DIR$/ui/account" />
+            <option value="$PROJECT_DIR$/ui/account/coin" />
+            <option value="$PROJECT_DIR$/ui/account/favoritos" />
+            <option value="$PROJECT_DIR$/ui/account/inbox" />
             <option value="$PROJECT_DIR$/ui/account/profile" />
             <option value="$PROJECT_DIR$/ui/account/reservas" />
             <option value="$PROJECT_DIR$/ui/auth" />
@@ -50,21 +53,18 @@
             <option value="$PROJECT_DIR$/ui/bottom/auth" />
             <option value="$PROJECT_DIR$/ui/bottom/map" />
             <option value="$PROJECT_DIR$/ui/bottom/reserva" />
-            <option value="$PROJECT_DIR$/ui/coin" />
             <option value="$PROJECT_DIR$/ui/entidad" />
             <option value="$PROJECT_DIR$/ui/entidad/actividades" />
             <option value="$PROJECT_DIR$/ui/entidad/complejo" />
             <option value="$PROJECT_DIR$/ui/entidad/instalacion" />
             <option value="$PROJECT_DIR$/ui/entidad/reservar" />
             <option value="$PROJECT_DIR$/ui/entidad/salas" />
-            <option value="$PROJECT_DIR$/ui/favoritos" />
             <option value="$PROJECT_DIR$/ui/grupo" />
             <option value="$PROJECT_DIR$/ui/grupo/chat" />
             <option value="$PROJECT_DIR$/ui/grupo/creategrupo" />
             <option value="$PROJECT_DIR$/ui/grupo/createsala" />
             <option value="$PROJECT_DIR$/ui/grupo/detail" />
             <option value="$PROJECT_DIR$/ui/grupo/sala" />
-            <option value="$PROJECT_DIR$/ui/inbox" />
             <option value="$PROJECT_DIR$/ui/inicio" />
             <option value="$PROJECT_DIR$/ui/inicio/actividades" />
             <option value="$PROJECT_DIR$/ui/inicio/discover" />
@@ -74,7 +74,7 @@
             <option value="$PROJECT_DIR$/ui/map" />
             <option value="$PROJECT_DIR$/ui/media" />
             <option value="$PROJECT_DIR$/ui/settings" />
-            <option value="$PROJECT_DIR$/ui/signup" />
+            <option value="$PROJECT_DIR$/ui/welcome" />
           </set>
         </option>
       </GradleProjectSettings>

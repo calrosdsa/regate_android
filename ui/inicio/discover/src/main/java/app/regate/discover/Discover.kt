@@ -1,5 +1,6 @@
 package app.regate.discover
 
+import android.util.Log
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -19,11 +20,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.outlined.Bookmark
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -55,6 +60,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.components.dialog.DatePickerDialogComponent
 import app.regate.common.composes.components.dialog.DialogHour2
@@ -62,6 +69,7 @@ import app.regate.common.composes.components.input.AmenityItem
 import app.regate.common.composes.ui.BottomBar
 import app.regate.common.composes.ui.PosterCardImageDark
 import app.regate.common.composes.util.Layout
+import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.viewModel
 import app.regate.constant.Route
 import app.regate.data.dto.empresa.instalacion.InstalacionDto
@@ -104,13 +112,14 @@ fun DiscoverScreen (
             navigateToMap = navigateToMap
         )
 }
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 internal fun Discover(
     viewModel:DiscoverViewModel,
     navController:NavController,
     navigateToMap: () -> Unit
 ){
+    val lazyPagingItems = viewModel.pagedList.collectAsLazyPagingItems()
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
     val treshhold = 7.days
@@ -132,6 +141,7 @@ internal fun Discover(
             }
         },
     )
+    val refreshState = rememberPullRefreshState(refreshing = viewState.loading, onRefresh = { lazyPagingItems.refresh() })
     val dateState = rememberDatePickerState(
         initialSelectedDateMillis = Clock.System.now().toEpochMilliseconds()
     )
@@ -218,13 +228,28 @@ internal fun Discover(
                 )
             }
         }
-    ) { paddingValue ->
-        Discover(
-            viewState = viewState,
-            modifier = Modifier.padding(paddingValue)
-        ) { instalacion->
-            viewModel.openReservaBottomSheet(instalacion
-            ) { navController.navigate(Route.RESERVAR id instalacion.id id instalacion.establecimiento_id) }
+    ) { paddingValues ->
+        Box(modifier = Modifier
+            .pullRefresh(state = refreshState)
+            .fillMaxSize()) {
+            Discover(
+                viewState = viewState,
+                modifier = Modifier.padding(paddingValues),
+                lazyPagingItems = lazyPagingItems,
+            ) { instalacion ->
+                viewModel.openReservaBottomSheet(
+                    instalacion
+                ) { navController.navigate(Route.RESERVAR id instalacion.id id instalacion.establecimiento_id) }
+            }
+            PullRefreshIndicator(
+                refreshing = viewState.loading,
+                state = refreshState,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(paddingValues)
+                    .padding(top = 20.dp),
+                scale = true,
+            )
         }
 //        formatterDateReserva = { formatter.formatShortDateTime(it.toInstant())},
 //        setIntervalo = viewModel::setIntervalo,
@@ -237,6 +262,7 @@ internal fun Discover(
     viewState:DiscoverState,
 //    formatterDateReserva:(date:String)->String,
     modifier:Modifier = Modifier,
+    lazyPagingItems: LazyPagingItems<InstalacionDto>,
     navigateToReservaInstalacion:(InstalacionDto)->Unit
 //    updateCurrentDate:(date:Long)->Unit,
 //    setIntervalo:(minutes:Long)->Unit,
@@ -246,17 +272,25 @@ internal fun Discover(
             viewState.addressDevice != null
         }
     }
+    LaunchedEffect(key1 = viewState.filter, block = {
+        Log.d("DEBUG_APP_FILTER",viewState.filter.toString())
+        if(viewState.filter.isInit){
+           lazyPagingItems.refresh()
+        }
+    })
     LazyColumn(modifier = modifier.fillMaxSize()) {
-        items(
-            items = viewState.results,
+        itemsCustom(
+            items = lazyPagingItems,
         ) { result ->
-            InstalacionResult(instalacion = result.first,
-                onClick = { navigateToReservaInstalacion(result.first) },
-//                onClick = { navigateToReservaInstalacion(result.first.id,result.first.establecimiento_id
-//                    ,result.first.precio_hora?:10000) },
-                isAddressDevice = isAddressDevice
-//            minutes = viewState.filter.interval
-            )
+            if (result != null) {
+                InstalacionResult(instalacion = result,
+                    onClick = { navigateToReservaInstalacion(result) },
+        //                onClick = { navigateToReservaInstalacion(result.first.id,result.first.establecimiento_id
+        //                    ,result.first.precio_hora?:10000) },
+                    isAddressDevice = isAddressDevice
+        //            minutes = viewState.filter.interval
+                )
+            }
         }
     }
 }

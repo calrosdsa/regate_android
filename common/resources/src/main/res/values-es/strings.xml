@@ -66,4 +66,16 @@
     <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
     <string name="permission_required">Permiso requerido.</string>
     <string name="grant_permission">Conceder permiso</string>
+    <string name="save_image">Guardar Imagen</string>
+    <string name="saved_correctly">Se ha guardado correctamente</string>
+    <string name="unexpected_error">Lo sentimos, se ha producido un error inesperado.</string>
+    <string name="qr_code_payment">Pago con código QR</string>
+    <string name="expiration_date">Expiration date:  %1$s</string>
+    <string name="amount">Amount: %1$s</string>
+    <string name="recommended_places">Lugares recomendados</string>
+    <string name="book_a_court">Reservar una cancha</string>
+    <string name="get_started">Empezar</string>
+    <string name="what_kind_of_game_do_you_prefere">¿Qué tipo de juego prefieres?</string>
+    <string name="continuar">Continuar</string>
+    <string name="join_a_group">Únete a un grupo</string>
 </resources>

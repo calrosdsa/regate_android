@@ -6,14 +6,14 @@ import kotlinx.serialization.Serializable
 data class SettingEstablecimientoDto(
     val establecimiento_id:Long,
     val horario_interval: List<HorarioInterval>,
-    val paid_type: List<Int>,
-    val payment_for_reservation: Int,
+    val paid_type: List<Int>? = null,
+    val payment_for_reservation: Int?,
     val uuid: String
 )
 
 @Serializable
 data class PaidType(
-    val list:List<Int>
+    val list:List<Int>? = null
 )
 
 enum class PaidTypeEnum {

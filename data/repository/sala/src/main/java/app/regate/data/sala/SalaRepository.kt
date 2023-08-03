@@ -8,6 +8,8 @@ import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
+import app.regate.data.dto.empresa.salas.PaginationSalaResponse
+import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.dto.empresa.salas.SalaRequestDto
 import app.regate.data.mappers.DtoToProfile
 import app.regate.data.mappers.MessageDtoToMessage
@@ -49,6 +51,10 @@ class SalaRepository(
 
     suspend fun getSalas(id:Long):List<SalaDto>{
         return  salaDataSourceImpl.getSalas(id)
+    }
+
+    suspend fun filterSalas(d:SalaFilterData,page:Int = 1):PaginationSalaResponse{
+        return salaDataSourceImpl.filterSalas(d,page)
     }
 
     suspend fun saveMessage(data: GrupoMessageDto){

@@ -50,7 +50,10 @@ dependencies {
 
     implementation(libs.com.github.wheelpicker)
 
-    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation(libs.play.services.location)
+
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
 
 //    ksp(libs.kotlininject.compiler)
 

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.Bindable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
@@ -34,6 +35,9 @@ public abstract class EstablecimientoMapFragmentBinding extends ViewDataBinding 
   public final MapView mapView;
 
   @NonNull
+  public final CoordinatorLayout maplayout;
+
+  @NonNull
   public final TextView name;
 
   @NonNull
@@ -44,12 +48,14 @@ public abstract class EstablecimientoMapFragmentBinding extends ViewDataBinding 
 
   protected EstablecimientoMapFragmentBinding(Object _bindingComponent, View _root,
       int _localFieldCount, ConstraintLayout bottomSheet, ImageButton closeButton,
-      ShapeableImageView img, MapView mapView, TextView name, Button navToDetail) {
+      ShapeableImageView img, MapView mapView, CoordinatorLayout maplayout, TextView name,
+      Button navToDetail) {
     super(_bindingComponent, _root, _localFieldCount);
     this.bottomSheet = bottomSheet;
     this.closeButton = closeButton;
     this.img = img;
     this.mapView = mapView;
+    this.maplayout = maplayout;
     this.name = name;
     this.navToDetail = navToDetail;
   }

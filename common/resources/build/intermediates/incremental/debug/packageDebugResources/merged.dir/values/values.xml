@@ -11,7 +11,9 @@
     <color name="tv_test_red">#e10000</color>
     <color name="tv_test_yellow">#bdc200</color>
     <string name="about_regate">About Regate</string>
+    <string name="amount">Amount:  %1$s</string>
     <string name="balance_coins">Coins Balance</string>
+    <string name="book_a_court">Book a court</string>
     <string name="bookings">Bookings</string>
     <string name="channel_group_description" translatable="false">group_notification</string>
     <string name="channel_message_description" translatable="false">message_notification</string>
@@ -23,11 +25,13 @@
     <string name="chat_notification_name" translatable="false">Chat</string>
     <string name="choose_a_schedule">Choose a schedule</string>
     <string name="clear_all">Clear all</string>
+    <string name="continuar">Continue</string>
     <string name="create_group">Create group</string>
     <string name="create_sala">Create sala</string>
     <string name="discount">Discount benefits are periodically launched.</string>
     <string name="dynamic_color">Dynamic colors</string>
     <string name="edit">Edit</string>
+    <string name="expiration_date">Expiration date:  %1$s</string>
     <string name="explore_exceptional_destinations">Explore exceptional destinations</string>
     <string name="family_name">Family name</string>
     <string name="favorites">Favorites</string>
@@ -36,11 +40,13 @@
     <string name="floating2" translatable="false">floating2</string>
     <string name="full_payment">Full Payment</string>
     <string name="gcp_id" translatable="false">405059725143-8ian2lbmjge14iu3ebdobd2h3udpqjlq.apps.googleusercontent.com</string>
+    <string name="get_started">Get Started</string>
     <string name="grant_permission">Grant permission</string>
     <string name="group_description">Group description</string>
     <string name="group_visibility">Group Visibility</string>
     <string name="inbox">Inbox</string>
     <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
+    <string name="join_a_group">Join a group</string>
     <string name="language">Language</string>
     <string name="leave_group">Leave group</string>
     <string name="location">Location</string>
@@ -66,6 +72,8 @@
     <string name="privado">Privado</string>
     <string name="publico">Public</string>
     <string name="purchase">Purchase</string>
+    <string name="qr_code_payment">QR code payment</string>
+    <string name="recommended_places">Recommended places</string>
     <string name="remove_user">Remove this user from the group</string>
     <string name="remove_user_admin">Revoke administrator status</string>
     <string name="rooms">Rooms</string>
@@ -74,6 +82,8 @@
         the maximum capacity of people and the price per spot.</string>
     <string name="sala_help_text2">When you join the room, the specified amount will be held from your account. If all spots are filled, the reservation will be made and the amount paid will be deducted. If the spots are not filled within the time limit, the held amount will be released.</string>
     <string name="save">Save</string>
+    <string name="save_image">Save Image</string>
+    <string name="saved_correctly">Saved successfully</string>
     <string name="search_nearby_places">Search nearby places</string>
     <string name="services">Servicios</string>
     <string name="settings">Settings</string>
@@ -83,8 +93,10 @@
     <string name="theme">Theme</string>
     <string name="there_are_not_available_schudules">There are no available schedules</string>
     <string name="time_interval">¿Cuánto tiempo quieres jugar?</string>
+    <string name="unexpected_error">Sorry, an unexpected error has occurred.</string>
     <string name="user_since">User since %1$s</string>
     <string name="version">Version %1$s</string>
+    <string name="what_kind_of_game_do_you_prefere">What kind of game do you prefer?</string>
     <string name="what_would_you_like_to_play">What would you like to play?</string>
     <string name="where_will_it_be_played">Where will it be played?</string>
     <string name="you">You</string>

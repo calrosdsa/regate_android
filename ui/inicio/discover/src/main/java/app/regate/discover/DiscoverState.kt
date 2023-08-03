@@ -29,7 +29,7 @@ data class DiscoverState(
         HoraIntervalo(text="3 horas", value = 180),
     ),
     val categories:List<Labels> = emptyList(),
-    val results:List<Pair<InstalacionDto, List<Labels>>> = emptyList(),
+    val results:List<InstalacionDto> = emptyList(),
     val selectedCategory:Labels?= null
 ){
     companion object {

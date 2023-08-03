@@ -3,6 +3,6 @@
 3    package="app.regate.data.room" >
 4
 5    <uses-sdk android:minSdkVersion="23" />
-5-->D:\Regate\RegateApp\data\api\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest8378096470814278476.xml
+5-->D:\Regate\RegateApp\data\api\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest2141094025080470205.xml
 6
 7</manifest>

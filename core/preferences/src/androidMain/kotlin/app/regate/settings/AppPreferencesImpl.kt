@@ -50,6 +50,7 @@ class AppPreferencesImpl(
         preferenceKeyChangedFlow.tryEmit(key)
     }
     companion object {
+        const val KEY_CATEGORIES = "categories"
         const val KEY_FILTER = "filter"
         const val KEY_ADDRESS = "address"
         const val KEY_FCM_TOKEN = "pref_fcm_token"
@@ -65,6 +66,11 @@ class AppPreferencesImpl(
     override fun setup() {
         sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
     }
+    override var categories: String
+        get() = sharedPreferences.getString(KEY_CATEGORIES, "")!!
+        set(value) = sharedPreferences.edit{
+            putString(KEY_CATEGORIES,value)
+        }
     override var filter: String
         get() = sharedPreferences.getString(KEY_FILTER, "")!!
         set(value) = sharedPreferences.edit{

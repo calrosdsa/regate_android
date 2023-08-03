@@ -47,6 +47,7 @@ id list_item
 id main
 id main_graph
 id mapView
+id maplayout
 id name
 id navHost
 id navToDetail

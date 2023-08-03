@@ -42,6 +42,9 @@ dependencies {
     implementation(libs.compose.animation.animation)
     implementation(libs.compose.ui.tooling)
 
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
+
     ksp(libs.kotlininject.compiler)
 
     lintChecks(libs.slack.lint.compose)

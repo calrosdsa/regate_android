@@ -140,13 +140,14 @@ dependencies {
     implementation(projects.data.dbRoom)
 
     implementation(projects.ui.map)
-    implementation(projects.ui.signup)
-    implementation(projects.ui.account.profile)
-    implementation(projects.ui.account.reservas)
+    implementation(projects.ui.welcome)
     implementation(projects.ui.auth)
 
-    implementation(projects.ui.coin)
-    implementation(projects.ui.inbox)
+    implementation(projects.ui.account.profile)
+    implementation(projects.ui.account.reservas)
+    implementation(projects.ui.account.coin)
+    implementation(projects.ui.account.inbox)
+    implementation(projects.ui.account.favoritos)
     implementation(projects.ui.media)
 
     implementation(projects.ui.inicio.home)
@@ -161,7 +162,6 @@ dependencies {
     implementation(projects.ui.entidad.salas)
     implementation(projects.ui.entidad.actividades)
 
-    implementation(projects.ui.favoritos)
     implementation(projects.ui.settings)
     implementation(projects.ui.grupo.chat)
     implementation(projects.ui.grupo.sala)

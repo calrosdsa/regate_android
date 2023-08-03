@@ -1,12 +1,13 @@
 package app.regate.data.establecimiento
 
-import app.regate.api.ApiResult
 import app.regate.data.daos.EstablecimientoDao
 import app.regate.data.daos.FavoriteEstablecimientoDao
 import app.regate.data.dto.empresa.establecimiento.CupoEstablecimiento
 import app.regate.data.dto.empresa.establecimiento.CuposEstablecimientoRequest
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
+import app.regate.data.dto.empresa.establecimiento.InitialData
+import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.data.mappers.EstablecimientoDtoToEstablecimiento
 import app.regate.data.mappers.SettingDtoToSetting
 import app.regate.inject.ApplicationScope
@@ -26,6 +27,9 @@ class EstablecimientoRepository(
     private val settingsDtoToSetting: SettingDtoToSetting,
     private val dispatchers: AppCoroutineDispatchers
 ){
+    suspend fun getRecommendedEstablecimientos(ids:List<Long>):List<EstablecimientoDto>{
+        return establecimientoDataSourceImpl.getRecommendedEstablecimientos(ids)
+    }
     fun checkIsFavorite():Flow<List<Long>>{
         return favoriteEstablecimientoDao.observeFavoriteEstablecimientosIds()
     }
@@ -60,8 +64,14 @@ class EstablecimientoRepository(
     suspend fun getEstablecimientoCupos(d:CuposEstablecimientoRequest):List<CupoEstablecimiento>{
         return establecimientoDataSourceImpl.getEstablecimientoCupos(d)
     }
-    suspend fun getEstablecimientos():List<EstablecimientoDto> {
-        val res = establecimientoDataSourceImpl.getEstablecimientos()
+    suspend fun getEstablecimientos(d:InitialDataFilter):InitialData {
+        val res = establecimientoDataSourceImpl.getEstablecimientos(d)
+//        establecimientoDao.upsertAll(res.map{ establecimientoMapper.map(it)})
+        return res
+    }
+
+    suspend fun getNearEstablecimientos(lng:String,lat:String):List<EstablecimientoDto> {
+        val res = establecimientoDataSourceImpl.getNearEstablecimientos(lng,lat)
 //        establecimientoDao.upsertAll(res.map{ establecimientoMapper.map(it)})
         return res
     }
