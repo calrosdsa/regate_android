@@ -152,6 +152,7 @@ class ChatSalaViewModel(
         val PAGING_CONFIG = PagingConfig(
             pageSize = 20,
             initialLoadSize = 20,
+            prefetchDistance = 5
         )
     }
 

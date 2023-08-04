@@ -67,6 +67,7 @@ import app.regate.data.auth.AppAuthState
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import app.regate.common.resources.R
+import app.regate.data.mappers.toInstalacion
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -140,9 +141,9 @@ internal fun Sala(
     refresh:()->Unit,
     clearMessage:(id:Long)->Unit
 ) {
-    val participantes = remember(viewState.profiles) {
+    val participantes = remember(viewState.data?.profiles) {
         derivedStateOf {
-            viewState.profiles.size
+            viewState.data?.profiles?.size
         }
     }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -169,7 +170,7 @@ internal fun Sala(
            SalaTopBar(onBack = navigateUp)
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewState.sala?.let { navigateToChat(it.grupo_id) } }) {
+            FloatingActionButton(onClick = { viewState.data?.sala?.let { navigateToChat(it.grupo_id) } }) {
                 Icon(imageVector = Icons.Default.Chat, contentDescription = "chat")
             }
         },
@@ -192,9 +193,10 @@ internal fun Sala(
             .pullRefresh(state = refreshState)
             .padding(paddingValues)
             .fillMaxSize()) {
+            viewState.data?.let {data->
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                viewState.sala?.let { sala ->
+                data.sala.let { sala ->
                     item {
                         Text(text = sala.titulo, style = MaterialTheme.typography.titleMedium)
                     }
@@ -223,9 +225,8 @@ internal fun Sala(
                         Divider(modifier = Modifier.padding(vertical = 10.dp))
                     }
                     item {
-                        viewState.instalacion?.let {
                             InstalacionCard(
-                                instalacion = it.copy(precio_hora = sala.precio),
+                                instalacion = data.instalacion.copy(precio_hora = sala.precio).toInstalacion(),
                                 navigate = {},
                                 modifier = Modifier
                                     .height(200.dp)
@@ -234,7 +235,6 @@ internal fun Sala(
                                 imageHeight = 155.dp
 
                             )
-                        }
                     }
                     spacerLazyList()
                     item {
@@ -267,7 +267,7 @@ internal fun Sala(
                     }
                     spacerLazyList()
                     items(
-                        items = viewState.profiles,
+                        items = data.profiles,
                         key = { it.profile_id }
                     ) { profile ->
                         ProfileItem(
@@ -291,6 +291,7 @@ internal fun Sala(
                 scale = true,
             )
         }
+    }
     }
 }
 

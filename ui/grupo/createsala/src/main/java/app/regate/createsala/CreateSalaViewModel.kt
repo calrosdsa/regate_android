@@ -11,6 +11,7 @@ import app.regate.data.daos.CupoDao
 import app.regate.data.dto.empresa.salas.SalaRequestDto
 import app.regate.data.sala.SalaRepository
 import app.regate.domain.observers.ObserveAuthState
+import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.plugins.ResponseException
 import io.ktor.http.HttpStatusCode
@@ -40,20 +41,23 @@ class CreateSalaViewModel(
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val instalacionCupos = MutableStateFlow<InstalacionCupos?>(null)
-    private val salaData = MutableStateFlow<SalaRequestDto>(SalaRequestDto())
+    private val salaData = MutableStateFlow(SalaRequestDto())
+    private val enableToContinue = MutableStateFlow(false)
     val state: StateFlow<CreateSalaState> = combine(
         uiMessageManager.message,
         loadingState.observable,
         observeAuthState.flow,
         instalacionCupos,
-        salaData
-    ) { message, loading, authState, instalacionCupos, salaData ->
+        salaData,
+        enableToContinue,
+    ) { message, loading, authState, instalacionCupos, salaData,enableToContinue ->
         CreateSalaState(
             message = message,
             authState = authState,
             loading = loading,
             instalacionCupos = instalacionCupos,
-            salaData = salaData
+            salaData = salaData,
+            enableToContinue = enableToContinue
         )
     }.stateIn(
         scope = viewModelScope,
@@ -69,6 +73,7 @@ class CreateSalaViewModel(
                     val instalacionC = cupoDao.getInstalacionCupos(cupo.instalacion_id)
                     instalacionCupos.tryEmit(instalacionC)
                     instalacionC.let { instalacionCupos1 ->
+                        enableToContinue.tryEmit(true)
                         salaData.tryEmit(
                             salaData.value.copy(
                                 category_id = instalacionCupos1.instalacion.category_id ?: 0,

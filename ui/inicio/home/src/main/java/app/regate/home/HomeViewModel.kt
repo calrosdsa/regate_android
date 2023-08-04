@@ -4,11 +4,16 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.data.account.AccountRepository
+import app.regate.data.common.AddressDevice
+import app.regate.data.common.getDataEntityFromJson
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
+import app.regate.data.dto.empresa.establecimiento.InitialData
+import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.data.sala.SalaRepository
+import app.regate.domain.Converter
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.extensions.combine
 import app.regate.settings.AppPreferences
@@ -18,6 +23,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -30,34 +36,23 @@ import java.util.UUID
 class HomeViewModel(
     private val accountRepository: AccountRepository,
     private val establecimientoRepository: EstablecimientoRepository,
-    private val salaRepository: SalaRepository,
-    private val preferences: AppPreferences,
+    private val converter:Converter,
 //    authStore: AuthStore,
     observeAuthState: ObserveAuthState,
     ):ViewModel() {
     private val loadingState = ObservableLoadingCounter()
-    private val establecimientos = MutableStateFlow<List<EstablecimientoDto>>(emptyList())
-    private val recommended = MutableStateFlow<List<EstablecimientoDto>>(emptyList())
-    private val nearEstablecimientos = MutableStateFlow<List<EstablecimientoDto>>(emptyList())
-    private val salas = MutableStateFlow<List<SalaDto>>(emptyList())
-    //    val token  =authStore.get()?.let {
-//        it.accessToken
-//    }
+    private val data = MutableStateFlow<InitialData?>(null)
     val state:StateFlow<HomeState> = combine(
         loadingState.observable,
-        establecimientos,
+        data,
+        converter.observeAddress(),
         observeAuthState.flow,
-        recommended,
-        nearEstablecimientos,
-        salas,
-    ){loading,establecimientos,authState,recommended,near,salas->
+    ){loading,data,addressDevice,authState->
         HomeState(
             loading = loading,
-            establecimientos = establecimientos,
             authState = authState,
-            recommended = recommended,
-            nearEstablecimientos = near,
-            salas = salas
+            data = data,
+            addressDevice = addressDevice
         )
     }.stateIn(
         scope = viewModelScope,
@@ -66,27 +61,29 @@ class HomeViewModel(
     )
 
     init{
-
-
         me()
-        getEstablecimientos()
         observeAuthState(Unit)
+        viewModelScope.launch {
+        converter.observeAddress().collectLatest {
+            getEstablecimientos(it)
+        }
+        }
     }
 //    fun getReccomendedEstablecimientos(){
 //    }
-    fun getEstablecimientos(){
+    fun getEstablecimientos(addressDevice: AddressDevice?){
         viewModelScope.launch {
             try{
-                val categories = Json.decodeFromString<List<Long>>(preferences.categories)
+                val categories = converter.getCategories()
                 loadingState.addLoader()
-                val res = async { establecimientoRepository.getEstablecimientos() }
-                val recommendedRes= async { establecimientoRepository.getRecommendedEstablecimientos(categories) }
-//                val salaRes = async { salaRepository.filterSalas(SalaFilterData(categories = categories)) }
-                delay(1000)
-                Log.d("API_REQUEST",res.toString())
-                establecimientos.tryEmit(res.await())
-                recommended.tryEmit(recommendedRes.await())
-//                salas.tryEmit(salaRes.await())
+                Log.d("DEBUG_APP_ADD",state.value.addressDevice.toString())
+                val initialFilterData = InitialDataFilter(
+                    categories = categories,
+                    lng = addressDevice?.longitud.toString(),
+                    lat = addressDevice?.latitud.toString(),
+                    )
+                val res = establecimientoRepository.getEstablecimientos(initialFilterData)
+                data.tryEmit(res)
                 loadingState.removeLoader()
             }catch(e:Exception){
                 loadingState.removeLoader()

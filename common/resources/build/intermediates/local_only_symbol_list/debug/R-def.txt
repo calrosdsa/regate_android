@@ -50,6 +50,7 @@ string chat_message_channel_name
 string chat_notification_id
 string chat_notification_name
 string choose_a_schedule
+string choose_where_create_room
 string clear_all
 string continuar
 string create_group
@@ -108,10 +109,12 @@ string save
 string save_image
 string saved_correctly
 string search_nearby_places
+string see
 string services
 string settings
 string show_less
 string show_more
+string show_results
 string terms_of_services
 string theme
 string there_are_not_available_schudules

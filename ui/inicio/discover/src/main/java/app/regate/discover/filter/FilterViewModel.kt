@@ -30,6 +30,7 @@ import app.regate.api.UiMessageManager
 import app.regate.data.common.AddressDevice
 import app.regate.data.common.getDataEntityFromJson
 import app.regate.data.dto.empresa.instalacion.FilterInstalacionData
+import app.regate.domain.Converter
 import app.regate.domain.observers.ObserveLabelType
 import app.regate.models.LabelType
 import app.regate.settings.AppPreferences
@@ -63,7 +64,8 @@ import java.util.Locale
 class FilterViewModel (
     observeLabelType: ObserveLabelType,
     private val preferences: AppPreferences,
-    private val appLocation: AppLocation
+    private val appLocation: AppLocation,
+    private val converter:Converter
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
@@ -71,19 +73,19 @@ class FilterViewModel (
     val visiblePermissionDialogQueue = mutableStateListOf<String>()
 
 
-//    la
-
     val state:StateFlow<FilterState> = combine(
         loadingCounter.observable,
         uiMessageManager.message,
         observeLabelType.flow,
-        filterData
-    ){loading,message,amenities,filterData->
+        filterData,
+        converter.observeAddress()
+    ){loading,message,amenities,filterData,addressDevice->
         FilterState(
             loading = loading,
             message = message,
             amenities = amenities,
-            filterData = filterData
+            filterData = filterData,
+            addressDevice = addressDevice
         )
     }.stateIn(
         scope = viewModelScope,
@@ -98,6 +100,7 @@ class FilterViewModel (
                 getDataEntityFromJson<FilterInstalacionData>(it)?.let { it1 -> filterData.emit(it1) }
             }
         }
+
     }
     fun dismissDialog() {
         visiblePermissionDialogQueue.removeFirst()
@@ -128,6 +131,11 @@ class FilterViewModel (
             amenities.add(amenityId)
         }
         preferences.filter =  Json.encodeToString(filterData.value.copy(amenities =amenities))
+    }
+    fun setNearMe(bool:Boolean){
+        preferences.filter =  Json.encodeToString(filterData.value.copy(
+            near_me = bool
+        ))
     }
     fun checkPermission(context:Context,permission:String):Boolean{
         val pm: PackageManager = context.packageManager

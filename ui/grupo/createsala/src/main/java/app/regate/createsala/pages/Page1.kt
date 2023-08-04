@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.components.input.InputForm
+import app.regate.compoundmodels.InstalacionCupos
+import kotlinx.datetime.Instant
 
 @Composable
 internal fun Page1(
@@ -23,7 +25,10 @@ internal fun Page1(
     onChangeAsunto:(v:String)->Unit,
     onChangeDescription:(v:String)->Unit,
     onChangeCupos:(v:String)->Unit,
-    max_cupos:Int,
+    instalacionCupos: InstalacionCupos?,
+    formatDate:(Instant)->String,
+    formatShortTime:(Instant)->String,
+//    max_cupos:Int,
     modifier: Modifier = Modifier
 ) {
 //    var asunto by remember{ mutableStateOf(asunto) }
@@ -33,10 +38,13 @@ internal fun Page1(
 //        mutableStateOf(false)
 //    }
     Box(modifier = modifier.fillMaxSize()) {
-
         Column {
 //        Text(text = "CreateSala ${viewState.loading}")
-
+            InstalacionSelected(
+                instalacionCupos = instalacionCupos,
+                formatDate = formatDate,
+                formatShortTime = formatShortTime
+            )
             Spacer(modifier = Modifier.height(10.dp))
             InputForm(value = asunto, onValueChange = {if(it.length <= 25){ onChangeAsunto(it)}},
                 label = "Asunto",
@@ -66,12 +74,7 @@ internal fun Page1(
             InputForm(value = cupos, onValueChange = {onChangeCupos(it)},
                 label = "Cupos",
                 keyboardType = KeyboardType.Number
-            ){
-                Text(text = "Max: $max_cupos",style = MaterialTheme.typography.labelSmall,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(2.dp))
-            }
+            )
 
 
         }

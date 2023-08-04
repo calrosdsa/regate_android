@@ -113,5 +113,8 @@
     <string name="what_kind_of_game_do_you_prefere">What kind of game do you prefer?</string>
     <string name="continuar">Continue</string>
     <string name="join_a_group">Join a group</string>
+    <string name="show_results">Show results</string>
+    <string name="see">See</string>
+    <string name="choose_where_create_room">Choose where to create the room</string>
 
 </resources>

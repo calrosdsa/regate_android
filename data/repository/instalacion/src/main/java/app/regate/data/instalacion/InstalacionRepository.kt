@@ -12,6 +12,7 @@ import app.regate.inject.ApplicationScope
 import app.regate.models.Instalacion
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import me.tatarka.inject.annotations.Inject
 @ApplicationScope
 @Inject
@@ -55,9 +56,11 @@ class InstalacionRepository(
     suspend fun getCupos(d:CuposRequest):List<CupoInstaDto>{
         return instalacionDataSourceImpl.getCupos(d)
     }
-    suspend fun getInstalaciones(id:Long):List<Instalacion>{
-        return instalacionDataSourceImpl.getInstalaciones(id).also{
-            instalacionDao.upsertAll(it)
+    suspend fun getInstalaciones(id:Long) {
+        withContext(dispatchers.computation) {
+            instalacionDataSourceImpl.getInstalaciones(id).also {
+                instalacionDao.upsertAll(it)
+            }
         }
     }
 

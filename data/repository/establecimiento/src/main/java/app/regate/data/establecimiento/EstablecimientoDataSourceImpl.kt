@@ -11,6 +11,7 @@ import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
+import app.regate.data.dto.empresa.establecimiento.PaginationEstablecimientoResponse
 import app.regate.models.Establecimiento
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -73,10 +74,10 @@ class EstablecimientoDataSourceImpl(
         }.body()
     }
 
-    override suspend fun getRecommendedEstablecimientos(categories: List<Long>): List<EstablecimientoDto> {
-        return client.post("/v1/establecimientos/recommended/"){
+    override suspend fun getRecommendedEstablecimientos(d:InitialDataFilter,page:Int): PaginationEstablecimientoResponse {
+        return client.post("/v1/establecimientos/recommended/?page=${page}"){
             contentType(ContentType.Application.Json)
-            setBody(categories)
+            setBody(d)
         }.body()
     }
 

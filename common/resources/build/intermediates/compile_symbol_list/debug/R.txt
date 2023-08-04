@@ -48,6 +48,7 @@ int string chat_message_channel_name 0x0
 int string chat_notification_id 0x0
 int string chat_notification_name 0x0
 int string choose_a_schedule 0x0
+int string choose_where_create_room 0x0
 int string clear_all 0x0
 int string continuar 0x0
 int string create_group 0x0
@@ -106,10 +107,12 @@ int string save 0x0
 int string save_image 0x0
 int string saved_correctly 0x0
 int string search_nearby_places 0x0
+int string see 0x0
 int string services 0x0
 int string settings 0x0
 int string show_less 0x0
 int string show_more 0x0
+int string show_results 0x0
 int string terms_of_services 0x0
 int string theme 0x0
 int string there_are_not_available_schudules 0x0

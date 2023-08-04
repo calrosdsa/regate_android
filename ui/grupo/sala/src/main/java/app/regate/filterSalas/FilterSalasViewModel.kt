@@ -1,5 +1,6 @@
 package app.regate.filterSalas
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -12,6 +13,7 @@ import app.regate.data.dto.empresa.instalacion.InstalacionDto
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.sala.SalaRepository
+import app.regate.domain.Converter
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.pagination.PaginationInstalacionFilter
 import app.regate.domain.pagination.PaginationSalaFilter
@@ -30,7 +32,7 @@ import me.tatarka.inject.annotations.Inject
 class FilterSalasViewModel(
     private val salaRepository: SalaRepository,
     observeAuthState: ObserveAuthState,
-    private val preferences: AppPreferences,
+    private val converter:Converter
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
     private val filterData = MutableStateFlow(FILTER_DATA)
@@ -66,10 +68,16 @@ class FilterSalasViewModel(
 
     fun setCategories(){
         viewModelScope.launch {
+            try{
+
+            val categories = converter.getCategories()
            filterData.tryEmit(filterData.value.copy(
                 isInit = true,
-                categories = listOf(1,2)
+                categories = categories
             ))
+            }catch(e:Exception){
+                Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")
+            }
         }
     }
 

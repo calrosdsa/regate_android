@@ -55,6 +55,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import androidx.lifecycle.viewmodel.compose.viewModel
 import app.regate.common.composes.components.CustomButton
 import app.regate.common.composes.components.dialog.CameraPermissionTextProvider
 import app.regate.common.composes.components.dialog.LocationPermissionTextProvider
@@ -135,6 +136,7 @@ internal fun Filter(
             )
         }
     Filter(
+        context = activity,
         viewState = viewState,
         navigateUp = navigateUp,
         setAmenity = viewModel::setAmenities,
@@ -142,46 +144,33 @@ internal fun Filter(
 //        onRequestPermission = viewModel::setLocation,
         checkPermission = viewModel::checkPermission,
         clearMessage = viewModel::clearMessage,
-        requestLocationPermission ={  locationPermission.launch(permissionsToRequest) }
+        requestLocationPermission ={  locationPermission.launch(permissionsToRequest) },
+        setNearMe = viewModel::setNearMe
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun Filter(
+    context:Activity,
     viewState:FilterState,
     navigateUp: () -> Unit,
     setAmenity:(Long)->Unit,
     setMaxPrice:(Int)->Unit,
+    setNearMe:(Boolean)->Unit,
 //    onRequestPermission:(Boolean, Context, (IntentSenderRequest)->Unit)->Unit,
     requestLocationPermission:()->Unit,
     checkPermission:(Context,String)->Boolean,
     clearMessage:(Long)->Unit
 ) {
-    val context = LocalContext.current
     var sliderValue by remember(viewState.filterData.max_price) {
         mutableStateOf(viewState.filterData.max_price?.toFloat() ?: 0f) // pass the initial values
     }
+    var nearMe by remember(viewState.filterData.near_me){
+        mutableStateOf(viewState.filterData.near_me)
+    }
 
-//    val locationResultLauncher = rememberLauncherForActivityResult(
-//        contract = ActivityResultContracts.StartIntentSenderForResult(),
-//        onResult = { result ->
-//            if (result.resultCode == Activity.RESULT_OK) {
-//                Log.d("DEBUG_APP", "OK")
-//
-//            } else {
-//                Log.d("DEBUG_APP", "CANCEL")
-//            }
-//        }
-//    )
-//    val locationPermissionResultLauncher = rememberLauncherForActivityResult(
-//        contract = ActivityResultContracts.RequestPermission()
-//    ) { isGranted ->
-//        onRequestPermission(isGranted, context) { senderRequest ->
-//            locationResultLauncher.launch(senderRequest)
-//        }
-//    }
-    var isEnabledLocation by remember { mutableStateOf(false) }
+//    var isEnabledLocation by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     val dismissSnackbarState = rememberDismissState(
         confirmValueChange = { value ->
@@ -193,8 +182,12 @@ internal fun Filter(
             }
         },
     )
-    LaunchedEffect(key1 = true, block = {
-        isEnabledLocation = checkPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+    LaunchedEffect(key1 = nearMe, block = {
+         checkPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+        Log.d("DEBUG_APP_NEAR",nearMe.toString())
+//        nearMe = isValid
+
+
     })
     viewState.message?.let { message ->
         LaunchedEffect(message) {
@@ -251,7 +244,7 @@ internal fun Filter(
                             Text(text = stringResource(id = R.string.clear_all))
                         }
                         CustomButton(onClick = { /*TODO*/ }) {
-                            Text(text = "Mostrar $12 canchas")
+                            Text(text = stringResource(id = R.string.show_results))
                         }
                     }
                 }
@@ -303,7 +296,11 @@ internal fun Filter(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(5.dp)
                 ) {
-                    RadioButton(selected = isEnabledLocation, onClick = {
+                    RadioButton(selected = nearMe, onClick = {
+                        if(viewState.addressDevice != null){
+                           setNearMe(!nearMe)
+                            nearMe = !nearMe
+                        }
                         requestLocationPermission()
                     })
                     Spacer(modifier = Modifier.width(10.dp))

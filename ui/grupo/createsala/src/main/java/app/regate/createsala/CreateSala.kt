@@ -163,7 +163,8 @@ internal fun CreateSala(
                     Text(text = "Volver")
                 }
                 }
-                Button(modifier = Modifier.align(Alignment.CenterEnd),onClick = {
+                Button(modifier = Modifier.align(Alignment.CenterEnd),
+                    enabled = viewState.enableToContinue,onClick = {
                     if(isLastPage){
                     showConfirmationDialog.value = true
                     }else{
@@ -190,16 +191,6 @@ internal fun CreateSala(
             state = pagerState
         ) { page ->
             when (page) {
-                1 -> Page1(
-                    modifier = Modifier.padding(horizontal = 10.dp),
-                    asunto = asunto,
-                    description = description,
-                    cupos = cupos,
-                    onChangeCupos = {cupos = it},
-                    onChangeDescription = {description = it},
-                    onChangeAsunto = { asunto=it},
-                    max_cupos = viewState.instalacionCupos?.instalacion?.cantidad_personas?:30
-                )
 
                 0 -> Page2(
                     reservarInstalacion = reservarInstalacion,
@@ -208,6 +199,18 @@ internal fun CreateSala(
                     formatDate = formatDate,
                     formatShortTime = formatShortTime,
 //                    createSala = { createSala(asunto,description,cupos)}
+                )
+                1 -> Page1(
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    asunto = asunto,
+                    description = description,
+                    cupos = cupos,
+                    onChangeCupos = {cupos = it},
+                    onChangeDescription = {description = it},
+                    onChangeAsunto = { asunto=it},
+                    instalacionCupos = viewState.instalacionCupos,
+                    formatDate = formatDate,
+                    formatShortTime = formatShortTime,
                 )
             }
         }

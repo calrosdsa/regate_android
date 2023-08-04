@@ -12,7 +12,8 @@ data class CreateSalaState(
     val user:User? = null,
     val authState:AppAuthState? = null,
     val instalacionCupos:InstalacionCupos? = null,
-    val salaData:SalaRequestDto = SalaRequestDto()
+    val salaData:SalaRequestDto = SalaRequestDto(),
+    val enableToContinue:Boolean = false
 //    val cupos:List<Cupo> = emptyList()
 ){
     companion object{

@@ -8,6 +8,7 @@ import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
+import app.regate.data.dto.empresa.establecimiento.PaginationEstablecimientoResponse
 import app.regate.data.mappers.EstablecimientoDtoToEstablecimiento
 import app.regate.data.mappers.SettingDtoToSetting
 import app.regate.inject.ApplicationScope
@@ -27,8 +28,8 @@ class EstablecimientoRepository(
     private val settingsDtoToSetting: SettingDtoToSetting,
     private val dispatchers: AppCoroutineDispatchers
 ){
-    suspend fun getRecommendedEstablecimientos(ids:List<Long>):List<EstablecimientoDto>{
-        return establecimientoDataSourceImpl.getRecommendedEstablecimientos(ids)
+    suspend fun getRecommendedEstablecimientos(d:InitialDataFilter,page:Int):PaginationEstablecimientoResponse{
+        return establecimientoDataSourceImpl.getRecommendedEstablecimientos(d,page)
     }
     fun checkIsFavorite():Flow<List<Long>>{
         return favoriteEstablecimientoDao.observeFavoriteEstablecimientosIds()

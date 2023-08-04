@@ -13,7 +13,8 @@ data class InitialData(
 
 @Serializable
 data class InitialDataFilter(
-    val categories:List<Long>,
-    val lng:String?,
-    val lat:String
+    val categories:List<Long> = emptyList(),
+    val lng:String? = null,
+    val lat:String? = null,
+    val isInit:Boolean = false
 )

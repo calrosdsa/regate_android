@@ -48,7 +48,7 @@ import java.time.ZoneId
 @Inject
 class EstablecimientoReservaViewModel(
     @Assisted savedStateHandle: SavedStateHandle,
-    private val updateInstalaciones: UpdateInstalaciones,
+//    private val updateInstalaciones: UpdateInstalaciones,
     private val establecimientoRepository: EstablecimientoRepository,
     private val instalacionRepository: InstalacionRepository,
     private val cupoRepository: CupoRepository,
@@ -102,15 +102,15 @@ class EstablecimientoReservaViewModel(
               }
             }
         }
-        try{
-        viewModelScope.launch {
-            updateInstalaciones(
-                UpdateInstalaciones.Params(establecimientoId)
-            ).collectStatus(loadingState,uiMessageManager)
-        }
-        }catch(e:Exception){
-            Log.d("DEBUG_APP_CUPO", e.localizedMessage ?: "")
-        }
+//        try{
+//        viewModelScope.launch {
+//            updateInstalaciones(
+//                UpdateInstalaciones.Params(establecimientoId)
+//            ).collectStatus(loadingState,uiMessageManager)
+//        }
+//        }catch(e:Exception){
+//            Log.d("DEBUG_APP_CUPO", e.localizedMessage ?: "")
+//        }
 
 
     }

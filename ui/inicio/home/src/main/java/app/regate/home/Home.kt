@@ -25,11 +25,14 @@ import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -40,11 +43,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.TextUnit
@@ -72,7 +77,6 @@ import kotlinx.datetime.Instant
 typealias Home = @Composable (
      navigateToComplejo:(id:Long) -> Unit,
      navController:NavController,
-     openDrawer:()->Unit,
      navigateToMap:()->Unit
 ) -> Unit
 
@@ -82,37 +86,56 @@ fun Home(
     viewModelFactory:()-> HomeViewModel,
     @Assisted navigateToComplejo: (id:Long) -> Unit,
     @Assisted navController:NavController,
-    @Assisted openDrawer: () -> Unit,
     @Assisted navigateToMap: () -> Unit
 ){
     Home(
         viewModel = viewModel(factory = viewModelFactory),
         navigateToComplejo = navigateToComplejo,
         navController = navController,
-        openDrawer = openDrawer,
         navigateToMap = navigateToMap
     )
 }
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun Home(
     viewModel: HomeViewModel,
     navController: NavController,
-    openDrawer: () -> Unit,
     navigateToComplejo: (id:Long) -> Unit,
     navigateToMap: () -> Unit,
 ) {
 
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold(
 //        modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopBar(openDrawer = openDrawer)
+            TopAppBar(
+                scrollBehavior = scrollBehavior,
+                title = { Text(text = "REGATE") },
+                navigationIcon = {
+                    Box() {
+                        Image(
+                            painter = painterResource(id = R.drawable.logo_app),
+                            contentDescription = "logo_home", modifier = Modifier
+                                .size(25.dp)
+                                .align(
+                                    Alignment.Center
+                                )
+                        )
+                    }
+                }
+            )
+
+//            TopBar(openDrawer = openDrawer)
         },
         bottomBar = {
             BottomBar(navController = navController)
-        }
+        },
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {paddingValues->
         Home(
             viewState = viewState,
@@ -151,7 +174,7 @@ internal fun Home(
         HomeMediaCarousel(list = listImage, onItemClicked = {})
         Spacer(modifier = Modifier.height(20.dp))
         Text(text = stringResource(id = R.string.recommended_places),
-            modifier = Modifier.padding(horizontal = 10.dp),style = MaterialTheme.typography.labelLarge)
+            modifier = Modifier.padding(horizontal = 10.dp),style =MaterialTheme.typography.titleLarge)
         LazyRow(contentPadding = PaddingValues(10.dp), modifier = Modifier.height(175.dp)){
             if(viewState.loading){
                 items(4){
@@ -160,13 +183,17 @@ internal fun Home(
                         .width(270.dp)
                         .padding(5.dp))
                 }
-            }else{
-                items(items = viewState.recommended){item->
-                    EstablecimientoCard(item = item, navigateToComplejo = navigateToComplejo,
-                    modifier = Modifier
-                        .height(175.dp)
-                        .width(270.dp)
-                        .padding(5.dp))
+            }else {
+                viewState.data?.recommended?.let { establecimientos ->
+                    items(items = establecimientos) { item ->
+                        EstablecimientoCard(
+                            item = item, navigateToComplejo = navigateToComplejo,
+                            modifier = Modifier
+                                .height(175.dp)
+                                .width(270.dp)
+                                .padding(5.dp)
+                        )
+                    }
                 }
             }
         }
@@ -183,52 +210,57 @@ internal fun Home(
                 modifier = Modifier.fillMaxWidth(), onClick = goToGroup)
         }
 
+        viewState.addressDevice?.let {
+            Text(text = stringResource(id = R.string.near_me),
+                modifier = Modifier.padding(horizontal = 10.dp),style =MaterialTheme.typography.titleLarge)
+//            ViewMore(label = stringResource(id = R.string.near_me),
+//                onClick = {})
+            LazyRow(contentPadding =PaddingValues(horizontal = 10.dp), modifier = containerHeight) {
+                if (viewState.loading) {
+                    items(4) {
+                        Skeleton(
+                            modifier = establecimientoSize
+                        )
+                    }
+                } else {
+                    viewState.data?.near?.let { establecimientos ->
+                        items(items = establecimientos) { item ->
+                            EstablecimientoCard(
+                                item = item, navigateToComplejo = navigateToComplejo,
+                                modifier = establecimientoSize
+                            )
+                        }
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(15.dp))
+        }
 
-        Text(text = stringResource(id = R.string.near_me),
-        modifier = Modifier.padding(horizontal = 10.dp),style = MaterialTheme.typography.labelLarge)
-        LazyRow(contentPadding = PaddingValues(10.dp), modifier = Modifier.height(120.dp)){
-        if(viewState.loading){
-            items(4){
-                Skeleton(modifier = Modifier
-                    .height(95.dp)
-                    .width(165.dp)
-                    .padding(5.dp))
-            }
-        }else{
-            items(items = viewState.establecimientos){item->
-            EstablecimientoCard(item = item, navigateToComplejo = navigateToComplejo,
-            modifier = Modifier
-                .height(95.dp)
-                .width(165.dp)
-                .padding(5.dp))
-            }
-        }
-        }
+
 
         Text(text = stringResource(id = R.string.explore_exceptional_destinations),
-            modifier = Modifier.padding(horizontal = 10.dp),style = MaterialTheme.typography.labelLarge)
-        LazyRow(contentPadding = PaddingValues(10.dp), modifier = Modifier.height(120.dp)){
+        modifier = Modifier.padding(horizontal = 10.dp),style =MaterialTheme.typography.titleLarge)
+//        ViewMore(label = stringResource(id = R.string.explore_exceptional_destinations),
+//            onClick = {})
+        LazyRow(contentPadding = PaddingValues(horizontal = 10.dp), modifier = containerHeight){
             if(viewState.loading){
                 items(4){
-                    Skeleton(modifier = Modifier
-                        .height(95.dp)
-                        .width(165.dp)
-                        .padding(5.dp))
+                    Skeleton(modifier = establecimientoSize)
                 }
             }else {
-                items(items = viewState.establecimientos) { item ->
+                viewState.data?.establecimientos?.let {establecimientos->
+                items(items = establecimientos) { item ->
                     EstablecimientoCard(item = item, navigateToComplejo = navigateToComplejo,
-                    modifier = Modifier
-                        .height(95.dp)
-                        .width(165.dp)
-                        .padding(5.dp))
+                    modifier = establecimientoSize)
+                }
                 }
             }
         }
 
-        ViewMore(label = stringResource(id = R.string.rooms),onClick={ viewMoreSalas()})
+        ViewMore(label = stringResource(id = R.string.rooms),onClick={ viewMoreSalas()},
+            styleText = MaterialTheme.typography.titleLarge)
         Column(modifier = Modifier.fillMaxWidth()) {
-            viewState.salas.map {
+            viewState.data?.salas?.map {
                 SalaItem(
                     sala = it,
                     formatDate = formatDate,
@@ -242,6 +274,11 @@ internal fun Home(
             MapImage { navigateToMap() }
     }
 }
+private val containerHeight = Modifier.height(130.dp)
+private val establecimientoSize = Modifier
+    .height(125.dp)
+    .width(185.dp)
+    .padding(5.dp)
 @Composable
 fun CardOption(
     modifier:Modifier= Modifier,
@@ -269,6 +306,7 @@ fun CardOption(
 @Composable
 fun ViewMore(
     label:String,
+    styleText: TextStyle = MaterialTheme.typography.titleMedium,
     onClick:() -> Unit
 ){
     Row(modifier = Modifier
@@ -276,7 +314,9 @@ fun ViewMore(
         .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.SpaceBetween){
-        Text(text = label,style = MaterialTheme.typography.titleLarge)
+        Text(text = label,style = styleText,modifier = Modifier.fillMaxWidth(0.7f),
+
+        )
 
         TextButton(onClick = { onClick() }) {
         Text(text = stringResource(id = R.string.show_more),color = MaterialTheme.colorScheme.primary, textDecoration = TextDecoration.Underline,
@@ -298,7 +338,7 @@ fun EstablecimientoCard(
                 .fillMaxSize()
                 .clickable { navigateToComplejo(item.id.toLong()) }
         )
-        Text(text = item.name + "293293 21 321323", style = MaterialTheme.typography.labelMedium,
+        Text(text = item.name, style = MaterialTheme.typography.labelMedium,
         modifier = Modifier
             .align(Alignment.BottomStart)
             .padding(5.dp), maxLines = 1,color = Color.White)

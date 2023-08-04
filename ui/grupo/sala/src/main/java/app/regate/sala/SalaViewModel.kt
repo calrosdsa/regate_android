@@ -8,6 +8,7 @@ import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.account.user.ProfileDto
+import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.sala.SalaRepository
 import app.regate.domain.observers.ObserveAuthState
@@ -36,23 +37,20 @@ class SalaViewModel(
     private val salaId: Long = savedStateHandle["id"]!!
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
+    private val data = MutableStateFlow<SalaDetail?>(null)
     private val sala = MutableStateFlow<SalaDto?>(null)
     private val profiles = MutableStateFlow<List<ProfileDto>>(emptyList())
     val state:StateFlow<SalaState> = combine(
         uiMessageManager.message,
         loadingState.observable,
-        sala,
-        observeInstalacion.flow,
         observeAuthState.flow,
-        profiles,
-    ){message,loading,sala,instalacion,authState,profiles ->
+        data
+    ){message,loading,authState,data->
         SalaState(
             message = message,
-            sala = sala,
-            instalacion = instalacion,
             authState = authState,
-            profiles = profiles,
-            loading = loading
+            loading = loading,
+            data = data
         )
     }.stateIn(
         scope = viewModelScope,
@@ -67,13 +65,7 @@ class SalaViewModel(
         viewModelScope.launch {
             try{
             salaRepository.getSala(salaId).let {result->
-
-                    sala.tryEmit(result.sala)
-                    result.let { profiles.tryEmit(it.profiles) }
-                     result.sala.instalacion_id.let { ObserveInstalacion.Params(id = it) }
-                    .let {
-                        observeInstalacion(it)
-                    }
+                data.tryEmit(result)
             }
             } catch (e:ResponseException){
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")

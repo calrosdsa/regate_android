@@ -56,12 +56,14 @@ import app.regate.models.Cupo
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import androidx.compose.ui.window.Dialog
+import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.ui.PosterCardImageDark
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.data.dto.empresa.establecimiento.PaidTypeEnum
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
+import kotlin.time.Duration.Companion.minutes
 
 
 typealias BottomReserva = @Composable (
@@ -103,7 +105,7 @@ internal fun BottomReserva(
 //    navigateToReserva: () -> Unit,
 ){
     val state by viewModel.state.collectAsState()
-//    val formatter = LocalAppDateFormatter.current
+    val formatter = LocalAppDateFormatter.current
     BottomReserva(
         viewState = state,
 //        navigateUp = navigateUp,
@@ -114,7 +116,9 @@ internal fun BottomReserva(
         confirmarReservas = viewModel::confirmarReservas,
         navigateUp = navigateUp,
         navigateToEstablecimiento = navigateToEstablecimiento,
-        navigateToConversation = navigateToConversation
+        navigateToConversation = navigateToConversation,
+        formatShortTime = {formatter.formatShortTime(it)},
+        formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
 //        navigateToReserva = navigateToReserva,
 //        openBottomSheet = { viewModel.openBottomSheet { navigateToReserva () } }
     )
@@ -129,7 +133,9 @@ internal fun BottomReserva(
     confirmarReservas:()->Unit,
     navigateUp: () -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
-    navigateToConversation: (Long) -> Unit
+    navigateToConversation: (Long) -> Unit,
+    formatShortTime:(time:Instant)->String,
+    formatDate:(date:Instant)->String,
 //    formatterDate:(date:String)->String,
 //    formatterDateReserva:(date:Instant)->String,
 ) {
@@ -233,14 +239,6 @@ internal fun BottomReserva(
             .fillMaxSize()) {
             Column(modifier = Modifier) {
                 Column(modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)) {
-//                    Text(
-//                        text = "Puede proceder con el pago, por la reserva de ${viewState.cupos.size}" +
-//                                "cupos para estas instalaciones",
-//                        style = MaterialTheme.typography.labelMedium
-//                    )
-
-                    //Establecimiento
-//                    Divider()
                     Row(modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
@@ -287,6 +285,26 @@ internal fun BottomReserva(
                         }
                     }
                     Divider(modifier = Modifier.padding(vertical = 5.dp))
+
+                    if(viewState.cupos.isNotEmpty()){
+
+                    Text(
+                        text = "Hora en la que se jugara",
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                    Text(
+                        text = formatDate(viewState.cupos.first().time) +
+                                " ${formatShortTime(viewState.cupos.first().time)} a ${
+                            formatShortTime(
+                                viewState.cupos.last().time.plus(30.minutes)
+                            )
+                        }",
+                        style = MaterialTheme.typography.titleSmall
+                    )
+
+                    Divider(modifier = Modifier.padding(vertical = 5.dp))
+                    }
+
                     Text(
                         text = stringResource(id = R.string.where_will_it_be_played),
                         style = MaterialTheme.typography.labelLarge

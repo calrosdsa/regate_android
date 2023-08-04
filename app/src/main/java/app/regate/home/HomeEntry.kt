@@ -53,7 +53,7 @@ fun HomeEntry(
     val bottomSheetNavigator = rememberBottomSheetNavigator()
     val navController = rememberAnimatedNavController(bottomSheetNavigator)
 //    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val coroutineScope = rememberCoroutineScope()
+//    val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(key1 = true, block = {
         if (establecimientoId != null) {
             navController.navigate(Route.ESTABLECIMIENTO id establecimientoId.toLong() id 0)
@@ -80,11 +80,6 @@ fun HomeEntry(
                     navController = navController,
                     composeScreens = composeScreens,
                     modifier = Modifier,
-                    openDrawer = {
-                        coroutineScope.launch {
-//                            drawerState.open()
-                        }
-                    },
                     startScreen = startScreen,
                     finishActivity = establecimientoId != null,
                     navigateToMap = navigateToMap
@@ -103,7 +98,6 @@ internal fun AppNavigation(
     finishActivity:Boolean,
     startScreen:String,
     modifier: Modifier = Modifier,
-    openDrawer:()->Unit,
     navigateToMap:()->Unit
 ) {
     val uri = "https://example.com"
@@ -266,7 +260,8 @@ internal fun AppNavigation(
                 navigateUp = navController::navigateUp,
                 navigateToCreateSala = {id,grupoId->
                     navController.navigate(Route.CREAR_SALA id id id grupoId)
-                }
+                },
+                navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)}
             )
         }
 
@@ -394,6 +389,7 @@ internal fun AppNavigation(
                 navigateUp = navController::navigateUp,
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
                 navigateToSala = {navController.navigate(Route.SALA id it)},
+                navigateToSelectEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id 0)}
             )
         }
 
@@ -409,7 +405,7 @@ internal fun AppNavigation(
             )
         }
 
-        AddMainNav(composeScreens, navController,openDrawer,navigateToMap)
+        AddMainNav(composeScreens, navController,navigateToMap)
     }
 }
 
@@ -418,7 +414,6 @@ internal fun AppNavigation(
 private fun NavGraphBuilder.AddMainNav(
     composeScreens: ComposeScreens,
     navController:NavController,
-    openDrawer:()->Unit,
     navigateToMap:()->Unit
 //    openSettings: () -> Unit,
 ) {
@@ -433,7 +428,6 @@ private fun NavGraphBuilder.AddMainNav(
                     navController.navigate(Route.ESTABLECIMIENTO id it id 0)
                 },
                 navController = navController,
-                openDrawer = openDrawer,
                 navigateToMap = navigateToMap
             )
         }

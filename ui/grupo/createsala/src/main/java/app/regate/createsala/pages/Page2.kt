@@ -55,54 +55,17 @@ internal  fun Page2(
 //            horizontalArrangement = Arrangement.SpaceBetween
         ) {
 //            Spacer(modifier = Modifier.height(100.dp))
+            Box(modifier = Modifier.height(400.dp)){
             reservarInstalacion()
-            Divider(modifier = Modifier.padding(vertical = 5.dp))
-            instalacionCupos?.let { item ->
-//            item.cupos.map { cupo ->
-//                Text(text = cupo.time.toString())
-//            }
-                Row(modifier = Modifier.padding(10.dp)) {
-                    PosterCardImage(
-                        model = item.instalacion.portada,
-                        modifier = Modifier
-                            .width(150.dp)
-                            .height(90.dp)
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Column {
-                        Text(
-                            text = item.instalacion.name,
-                            style = MaterialTheme.typography.titleMedium,
-                            maxLines = 1
-                        )
-                        Text(
-                            text = "Precio: ${item.cupos.sumOf { it.price }.toInt()}",
-                            style = MaterialTheme.typography.labelMedium
-                        )
-                        Text(
-                            text = "${formatDate(item.cupos.first().time)} ${formatShortTime(item.cupos.first().time)} a ${
-                                formatShortTime(
-                                    item.cupos.last().time.plus(30.minutes)
-                                )
-                            }",
-                            style = MaterialTheme.typography.labelMedium
-                        )
-                    }
-                }
-//            InstalacionCard(
-//                instalacion = item.instalacion.copy(precio_hora = item.cupos.sumOf { it.price }.toInt()),
-//                navigate ={},
-//                modifier = Modifier
-//                    .padding(horizontal = 25.dp)
-////                    .height(205.dp)
-//                    .clip(MaterialTheme.shapes.large)
-//                    .fillMaxWidth(),
-//                imageHeight = 150.dp
-//            ){
-//                Text("Fecha en la que se jugara",style = MaterialTheme.typography.labelMedium)
-//                Text("4 Jul de 20:00pm a 22:00pm",style = MaterialTheme.typography.titleSmall)
-//            }
             }
+            Divider(modifier = Modifier.padding(vertical = 5.dp))
+           InstalacionSelected(
+               instalacionCupos = instalacionCupos,
+               formatDate = formatDate,
+               formatShortTime = formatShortTime
+           )
+
+
         }
 
     }

@@ -35,8 +35,10 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.components.item.SalaItem
+import app.regate.common.composes.ui.Loader
 import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.viewModel
+import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.sala.SalaViewModel
 import kotlinx.datetime.Instant
@@ -49,6 +51,7 @@ typealias FilterSalas = @Composable (
 //    navigateToCreateSala: (id: Long) -> Unit,
     openAuthBottomSheet:()->Unit,
     navigateToSala:(Long)->Unit,
+    navigateToSelectEstablecimiento:()->Unit,
 ) -> Unit
 
 @Inject
@@ -58,14 +61,16 @@ fun FilterSalas(
     @Assisted navigateUp: () -> Unit,
 //    @Assisted navigateToCreateSala: (id: Long) -> Unit,
     @Assisted openAuthBottomSheet: () -> Unit,
-    @Assisted navigateToSala: (Long) -> Unit
+    @Assisted navigateToSala: (Long) -> Unit,
+    @Assisted navigateToSelectEstablecimiento: () -> Unit
 ){
     FilterSalas(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
 //        navigateToCreateSala = navigateToCreateSala,
         openAuthBottomSheet = openAuthBottomSheet,
-        navigateToSala = navigateToSala
+        navigateToSala = navigateToSala,
+        navigateToSelectEstablecimiento = navigateToSelectEstablecimiento
     )
 }
 
@@ -75,6 +80,7 @@ internal fun FilterSalas(
     navigateUp: () -> Unit,
 //    navigateToCreateSala: (id:Long) -> Unit,
     navigateToSala: (Long) -> Unit,
+    navigateToSelectEstablecimiento: () -> Unit,
     openAuthBottomSheet: () -> Unit,
 ){
     val state by viewModel.state.collectAsState()
@@ -87,7 +93,8 @@ internal fun FilterSalas(
         openAuthBottomSheet = openAuthBottomSheet,
         formatShortTime = {formatter.formatShortTime(it)},
         formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
-        navigateToSala = navigateToSala
+        navigateToSala = navigateToSala,
+        navigateToSelectEstablecimiento = navigateToSelectEstablecimiento,
     )
 }
 
@@ -99,6 +106,7 @@ internal fun FilterSalas(
     lazyPagingItems: LazyPagingItems<SalaDto>,
     navigateUp: () -> Unit,
 //    navigateToCreateSala: (id: Long) -> Unit,
+    navigateToSelectEstablecimiento: () -> Unit,
     formatShortTime:(time: Instant)->String,
     formatDate:(date: Instant)->String,
     navigateToSala:(Long)->Unit,
@@ -125,7 +133,13 @@ internal fun FilterSalas(
                     Text(text = stringResource(id = R.string.rooms))
                 },
                 actions = {
-                    IconButton(onClick = {openAuthBottomSheet()}) {
+                    IconButton(onClick = {
+                        if(viewState.authState == AppAuthState.LOGGED_IN){
+                            navigateToSelectEstablecimiento()
+                        }else{
+                        openAuthBottomSheet()
+                        }
+                    }) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "more_vert")
                     }
                     IconButton(onClick = {  }) {
@@ -157,21 +171,16 @@ internal fun FilterSalas(
                 }
             item{
                 if(lazyPagingItems.loadState.append == LoadState.Loading){
-                    Box(
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp),
-                    ) {
-                        CircularProgressIndicator(Modifier.align(Alignment.Center))
-                    }
+                    Loader()
                 }
             }
         })
             PullRefreshIndicator(
-                refreshing = viewState.loading,
+                refreshing = refreshing,
                 state = pullRefreshState,
                 modifier = Modifier.align(Alignment.TopCenter)
-                    .padding(paddingValues)
+                    .padding(paddingValues),
+                scale = true
             )
         }
     }

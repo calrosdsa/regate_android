@@ -78,4 +78,7 @@
     <string name="what_kind_of_game_do_you_prefere">¿Qué tipo de juego prefieres?</string>
     <string name="continuar">Continuar</string>
     <string name="join_a_group">Únete a un grupo</string>
+    <string name="show_results">Mostrar resultados</string>
+    <string name="see">Ver</string>
+    <string name="choose_where_create_room">Elige dónde crear la sala</string>
 </resources>

@@ -23,5 +23,6 @@ data class FilterInstalacionData(
     val longitud:Double? = null,
     val latitud:Double? = null,
     val interval:Long = 60,
+    val near_me:Boolean = false,
     val isInit:Boolean = false
 )

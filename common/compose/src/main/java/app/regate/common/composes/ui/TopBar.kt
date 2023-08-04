@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -70,29 +71,48 @@ fun TopBar(
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SimpleTopBar(
     navigateUp:()->Unit,
     modifier: Modifier = Modifier,
     title:String? = null,
+    scrollBehavior: TopAppBarScrollBehavior? = null
+
 ) {
-    Surface(color = MaterialTheme.colorScheme.inverseOnSurface,
-    modifier = modifier) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().padding(5.dp)
-        ) {
+    TopAppBar(
+        navigationIcon = {
             IconButton(onClick = { navigateUp() }) {
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
             }
+        },
+        modifier = modifier,
+        title = {
             if (title != null) {
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(
-                    text = title, style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.SemiBold
-                    )
-                )
+                Text(text = title)
             }
-        }
-    }
+        },
+        scrollBehavior = scrollBehavior
+    )
+//    Surface(color = MaterialTheme.colorScheme.inverseOnSurface,
+//    modifier = modifier) {
+//        Row(
+//            verticalAlignment = Alignment.CenterVertically,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(5.dp)
+//        ) {
+//            IconButton(onClick = { navigateUp() }) {
+//                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+//            }
+//            if (title != null) {
+//                Spacer(modifier = Modifier.width(10.dp))
+//                Text(
+//                    text = title, style = MaterialTheme.typography.titleMedium.copy(
+//                        fontWeight = FontWeight.SemiBold
+//                    )
+//                )
+//            }
+//        }
+//    }
 }
