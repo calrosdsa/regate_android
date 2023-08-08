@@ -10,7 +10,6 @@ import app.regate.data.dto.ResponseMessage
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.data.instalacion.InstalacionRepository
 import app.regate.data.reserva.ReservaRepository
-import app.regate.domain.interactors.UpdateEstablecimiento
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveCupos
 import app.regate.domain.observers.ObserveEstablecimientoDetail
@@ -18,7 +17,6 @@ import app.regate.domain.observers.ObserveInstalacion
 import app.regate.domain.observers.ObserveSettingEstablecimiento
 import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
-import app.regate.util.collectStatus
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import kotlinx.coroutines.async
@@ -26,12 +24,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toJavaLocalDateTime
-import kotlinx.datetime.toKotlinLocalDateTime
 import kotlinx.datetime.toLocalDateTime
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -102,7 +98,6 @@ class BottomReservaViewModel(
     private fun getData(){
         viewModelScope.launch {
             try{
-
             val res = async { establecimientoRepository.updateEstablecimiento(establecimientoId ) }
             res.await()
             val res2 = async { instalacionRepository.getInstalacion(instalacionId) }

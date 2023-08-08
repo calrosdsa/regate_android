@@ -48,6 +48,11 @@ class SalaDataSourceImpl(
         }.body()
     }
 
+    override suspend fun getGrupoSalas(id:Long,page:Int): PaginationSalaResponse {
+        return client.get("/v1/salas/grupo/${id}/?page=${page}").body()
+    }
+
+
     override suspend fun getMessagesSala(id: Long): List<GrupoMessageDto> {
         return client.get("/v1/grupo/messages/${id}/").body()
     }

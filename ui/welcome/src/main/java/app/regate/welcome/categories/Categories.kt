@@ -39,13 +39,13 @@ fun Categories(
     selectedCategories:List<Long>,
     addCategory:(Long)->Unit,
     modifier:Modifier = Modifier,
-    navigateToHome:()->Unit,
+    navigateToPage:(Int)->Unit,
 ){
     Scaffold(
         bottomBar = {
             BottomAppBar() {
                 Box(modifier = Modifier.fillMaxWidth()){
-                Button(onClick = { navigateToHome() },modifier = Modifier.align(Alignment.CenterEnd),
+                Button(onClick = { navigateToPage(2) },modifier = Modifier.align(Alignment.CenterEnd),
                 enabled = selectedCategories.isNotEmpty()) {
                     Text(text = stringResource(id = R.string.continuar))
                 }

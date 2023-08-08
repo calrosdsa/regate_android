@@ -566,7 +566,7 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
   @Override
   public Flow<List<InstalacionCategoryCount>> observeGroupInstalacionByCategory(final long id,
       final LabelType type) {
-    final String _sql = "select i.category_name,i.category_id,i.count,l.thumbnail from (select category_name,category_id,  count(category_id)  as count from instalaciones where establecimiento_id = ? group by category_id,category_name) as i inner join labels as l on l.id = i.category_id and type_label = ?;";
+    final String _sql = "select l.name,i.category_id,i.count,l.thumbnail from (select category_name,category_id,  count(category_id)  as count from instalaciones where establecimiento_id = ? group by category_id,category_name) as i inner join labels as l on l.id = i.category_id and type_label = ?;";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
@@ -580,15 +580,15 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
       public List<InstalacionCategoryCount> call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
-          final int _cursorIndexOfCategoryName = 0;
+          final int _cursorIndexOfName = 0;
           final int _cursorIndexOfCategoryId = 1;
           final int _cursorIndexOfCount = 2;
           final int _cursorIndexOfThumbnail = 3;
           final List<InstalacionCategoryCount> _result = new ArrayList<InstalacionCategoryCount>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final InstalacionCategoryCount _item;
-            final String _tmpCategory_name;
-            _tmpCategory_name = _cursor.getString(_cursorIndexOfCategoryName);
+            final String _tmpName;
+            _tmpName = _cursor.getString(_cursorIndexOfName);
             final Integer _tmpCategory_id;
             if (_cursor.isNull(_cursorIndexOfCategoryId)) {
               _tmpCategory_id = null;
@@ -599,7 +599,7 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
             _tmpCount = _cursor.getInt(_cursorIndexOfCount);
             final String _tmpThumbnail;
             _tmpThumbnail = _cursor.getString(_cursorIndexOfThumbnail);
-            _item = new InstalacionCategoryCount(_tmpCategory_name,_tmpCategory_id,_tmpCount,_tmpThumbnail);
+            _item = new InstalacionCategoryCount(_tmpName,_tmpCategory_id,_tmpCount,_tmpThumbnail);
             _result.add(_item);
           }
           return _result;

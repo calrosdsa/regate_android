@@ -1,43 +1,35 @@
 package app.regate.establecimiento
 
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.ThumbUp
-import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -46,13 +38,10 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.SheetValue
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDismissState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -64,28 +53,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.SavedStateHandle
+import app.regate.common.composes.LocalAppUtil
 import app.regate.common.composes.components.images.AsyncImage
-import app.regate.common.composes.ui.CommonTopBar
 import app.regate.common.composes.ui.PosterCardImage
-import app.regate.common.composes.util.Layout
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.models.Establecimiento
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -140,6 +124,7 @@ internal fun Establecimiento(
     currentPage: Int,
     navigateToPhoto: (String) -> Unit
     ) {
+    val appUtil = LocalAppUtil.current
     val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Hidden)
     val category = remember { mutableStateOf(0L) }
     val state by viewModel.state.collectAsState()
@@ -184,7 +169,9 @@ internal fun Establecimiento(
                 PosterCardImage(model = stringResource(id = R.string.location_static_url),
                     modifier = Modifier
                         .clickable {
-
+                            val lat = state.establecimiento?.latidud
+                            val lng = state.establecimiento?.longitud
+                            appUtil.openMap(lng,lat,state.establecimiento?.name)
                         }
                         .fillMaxWidth()
                         .height(200.dp)
@@ -346,7 +333,8 @@ internal fun Establecimiento(
                                             1
                                         )
                                     }
-                                }
+                                },
+                                openMap = appUtil::openMap
                             )
                         }
 

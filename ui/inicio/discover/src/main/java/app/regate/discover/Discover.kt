@@ -57,6 +57,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
@@ -95,7 +96,6 @@ import java.util.Locale
 
 typealias DiscoverScreen = @Composable (
     navController:NavController,
-    navigateToMap:()->Unit
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
 
@@ -103,13 +103,11 @@ typealias DiscoverScreen = @Composable (
 @Composable
 fun DiscoverScreen (
     @Assisted navController: NavController,
-    @Assisted navigateToMap: () -> Unit,
     viewModelFactory:()->DiscoverViewModel
 ){
         Discover(
             viewModel = viewModel(factory = viewModelFactory),
             navController= navController,
-            navigateToMap = navigateToMap
         )
 }
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
@@ -117,11 +115,13 @@ fun DiscoverScreen (
 internal fun Discover(
     viewModel:DiscoverViewModel,
     navController:NavController,
-    navigateToMap: () -> Unit
 ){
     val lazyPagingItems = viewModel.pagedList.collectAsLazyPagingItems()
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
+    val isEmpty by remember(key1 = lazyPagingItems.itemCount) {
+        derivedStateOf {  lazyPagingItems.itemCount == 0 }
+    }
     val treshhold = 7.days
     val endDate = (Clock.System.now() + treshhold).toEpochMilliseconds()
     val startDate = (Clock.System.now() - (1.days)).toEpochMilliseconds()
@@ -203,16 +203,6 @@ internal fun Discover(
         bottomBar = {
             BottomBar(navController = navController)
         },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { navigateToMap() }) {
-                Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.padding(horizontal = 10.dp)) {
-                Icon(imageVector = Icons.Default.Map, contentDescription = "map_floating",modifier = Modifier.size(20.dp))
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(text = stringResource(id = R.string.map),style = MaterialTheme.typography.labelLarge)
-                }
-            }
-        },
-        floatingActionButtonPosition = FabPosition.Center,
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState) { data ->
                 SwipeToDismiss(
@@ -224,7 +214,7 @@ internal fun Discover(
 //                        Snackbar(snackbarData = data) },
                     modifier = Modifier
                         .padding(horizontal = Layout.bodyMargin)
-                        .fillMaxWidth(),
+                        .fillMaxSize(),
                 )
             }
         }
@@ -234,12 +224,18 @@ internal fun Discover(
             .fillMaxSize()) {
             Discover(
                 viewState = viewState,
-                modifier = Modifier.padding(paddingValues),
+                modifier = Modifier.fillMaxSize().padding(paddingValues),
                 lazyPagingItems = lazyPagingItems,
             ) { instalacion ->
                 viewModel.openReservaBottomSheet(
                     instalacion
                 ) { navController.navigate(Route.RESERVAR id instalacion.id id instalacion.establecimiento_id) }
+            }
+
+            if(isEmpty){
+                Text(text = stringResource(id = R.string.no_result_found),
+                    modifier = Modifier.fillMaxWidth(0.7f).align(Alignment.Center), style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center)
             }
             PullRefreshIndicator(
                 refreshing = viewState.loading,
@@ -272,6 +268,7 @@ internal fun Discover(
             viewState.addressDevice != null
         }
     }
+
     LaunchedEffect(key1 = viewState.filter, block = {
         Log.d("DEBUG_APP_FILTER",viewState.filter.toString())
         if(viewState.filter.isInit){
@@ -292,6 +289,7 @@ internal fun Discover(
                 )
             }
         }
+
     }
 }
 
@@ -377,7 +375,7 @@ fun InstalacionResult(
                                     tint = Color.White
                                 )
                                 Text(
-                                    text = "A ${distance} Km de distancia",
+                                    text = "A $distance Km de distancia",
                                     style = MaterialTheme.typography.labelSmall,
                                     color = Color.White
                                 )

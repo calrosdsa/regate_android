@@ -1,16 +1,21 @@
 package app.regate.sala
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -59,6 +64,7 @@ import app.regate.common.composes.components.card.InstalacionCard
 import app.regate.common.composes.components.dialog.DialogConfirmation
 import app.regate.common.composes.components.item.ProfileItem
 import app.regate.common.composes.ui.CommonTopBar
+import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.util.dividerLazyList
 import app.regate.common.composes.util.spacerLazyList
@@ -76,7 +82,9 @@ import kotlin.time.Duration.Companion.minutes
 typealias Sala = @Composable (
     navigateUp:()->Unit,
     navigateToChat:(id:Long)->Unit,
-    openAuthBottomSheet:()->Unit
+    openAuthBottomSheet:()->Unit,
+    navigateToInstalacion:(Long) -> Unit,
+    navigateToEstablecimiento:(Long)->Unit
         ) -> Unit
 
 @Inject
@@ -85,13 +93,17 @@ fun Sala(
     viewModelFactory:(SavedStateHandle)-> SalaViewModel,
     @Assisted navigateUp: () -> Unit,
     @Assisted navigateToChat: (id:Long) -> Unit,
-    @Assisted openAuthBottomSheet: () -> Unit
+    @Assisted openAuthBottomSheet: () -> Unit,
+    @Assisted navigateToInstalacion: (Long) -> Unit,
+    @Assisted navigateToEstablecimiento: (Long) -> Unit
 ){
     Sala(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
         navigateToChat= navigateToChat,
-        openAuthBottomSheet = openAuthBottomSheet
+        openAuthBottomSheet = openAuthBottomSheet,
+        navigateToEstablecimiento = navigateToEstablecimiento,
+        navigateToInstalacion = navigateToInstalacion
     )
 }
 
@@ -100,7 +112,9 @@ internal fun Sala(
     viewModel: SalaViewModel,
     navigateUp: () -> Unit,
     navigateToChat: (id:Long) -> Unit,
-    openAuthBottomSheet: () -> Unit
+    openAuthBottomSheet: () -> Unit,
+    navigateToEstablecimiento: (Long) -> Unit,
+    navigateToInstalacion: (Long) -> Unit
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -116,7 +130,9 @@ internal fun Sala(
         openAuthBottomSheet = openAuthBottomSheet,
         openDialogConfirmation = {joinSalaDialog.value = true},
         clearMessage = viewModel::clearMessage,
-        refresh = viewModel::refresh
+        refresh = viewModel::refresh,
+        navigateToInstalacion = navigateToInstalacion,
+        navigateToEstablecimiento = navigateToEstablecimiento
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -139,7 +155,9 @@ internal fun Sala(
     openAuthBottomSheet: () -> Unit,
     openDialogConfirmation:()->Unit,
     refresh:()->Unit,
-    clearMessage:(id:Long)->Unit
+    clearMessage:(id:Long)->Unit,
+    navigateToInstalacion: (Long) -> Unit,
+    navigateToEstablecimiento: (Long) -> Unit
 ) {
     val participantes = remember(viewState.data?.profiles) {
         derivedStateOf {
@@ -222,12 +240,25 @@ internal fun Sala(
                         )
                     }
                     item {
-                        Divider(modifier = Modifier.padding(vertical = 10.dp))
+                        Divider(modifier = Modifier.padding(top = 10.dp))
+                    }
+                    item {
+                        Row(modifier = Modifier
+                            .clickable { navigateToEstablecimiento(1) }
+                            .fillMaxWidth()
+                            .padding(vertical = 5.dp),
+                        verticalAlignment = Alignment.CenterVertically) {
+                            PosterCardImage(model = sala.establecimiento_photo,
+                            modifier = Modifier.size(40.dp),shape = CircleShape)
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Text(text = sala.establecimiento_name,style = MaterialTheme.typography.labelLarge,
+                            maxLines = 1)
+                        }
                     }
                     item {
                             InstalacionCard(
                                 instalacion = data.instalacion.copy(precio_hora = sala.precio).toInstalacion(),
-                                navigate = {},
+                                navigate = navigateToInstalacion ,
                                 modifier = Modifier
                                     .height(200.dp)
                                     .clip(MaterialTheme.shapes.large)

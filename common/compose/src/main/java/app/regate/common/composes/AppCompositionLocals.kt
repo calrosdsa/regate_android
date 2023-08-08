@@ -16,13 +16,20 @@
 
 package app.regate.common.composes
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.staticCompositionLocalOf
 import app.regate.util.AppDateFormatter
+import app.regate.util.AppUtil
 
+@SuppressLint("ComposeCompositionLocalUsage")
 val LocalAppDateFormatter = staticCompositionLocalOf<AppDateFormatter> {
     error("TiviDateFormatter not provided")
 }
 
+@SuppressLint("ComposeCompositionLocalUsage")
+val LocalAppUtil = staticCompositionLocalOf<AppUtil> {
+    error("TiviDateFormatter not provided")
+}
 //val LocalTiviTextCreator = staticCompositionLocalOf<TiviTextCreator> {
 //    error("TiviTextCreator not provided")
 //}

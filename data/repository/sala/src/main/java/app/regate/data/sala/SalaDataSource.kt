@@ -11,6 +11,7 @@ import app.regate.data.dto.empresa.salas.SalaRequestDto
 
 interface SalaDataSource {
    suspend fun getSalas(id:Long):List<SalaDto>
+   suspend fun getGrupoSalas(id:Long,page: Int):PaginationSalaResponse
    suspend fun filterSalas(d:SalaFilterData,page:Int):PaginationSalaResponse
    suspend fun getSala(id:Long):SalaDetail
    suspend fun getMessagesSala(id:Long):List<GrupoMessageDto>

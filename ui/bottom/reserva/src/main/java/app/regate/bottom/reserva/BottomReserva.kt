@@ -57,6 +57,7 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import androidx.compose.ui.window.Dialog
 import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.LocalAppUtil
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.ui.PosterCardImageDark
 import app.regate.common.composes.ui.SimpleTopBar
@@ -106,6 +107,7 @@ internal fun BottomReserva(
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
+    val appUtil = LocalAppUtil.current
     BottomReserva(
         viewState = state,
 //        navigateUp = navigateUp,
@@ -119,6 +121,7 @@ internal fun BottomReserva(
         navigateToConversation = navigateToConversation,
         formatShortTime = {formatter.formatShortTime(it)},
         formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
+        openMap = appUtil::openMap
 //        navigateToReserva = navigateToReserva,
 //        openBottomSheet = { viewModel.openBottomSheet { navigateToReserva () } }
     )
@@ -136,6 +139,7 @@ internal fun BottomReserva(
     navigateToConversation: (Long) -> Unit,
     formatShortTime:(time:Instant)->String,
     formatDate:(date:Instant)->String,
+    openMap:(lng:String?,lat:String?,label:String?)->Unit,
 //    formatterDate:(date:String)->String,
 //    formatterDateReserva:(date:Instant)->String,
 ) {
@@ -237,7 +241,7 @@ internal fun BottomReserva(
         Box(modifier = Modifier
             .padding(paddingValues)
             .fillMaxSize()) {
-            Column(modifier = Modifier) {
+
                 Column(modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)) {
                     Row(modifier = Modifier
                         .fillMaxWidth()
@@ -327,12 +331,20 @@ internal fun BottomReserva(
                         Spacer(modifier = Modifier.height(5.dp))
                         instalacion.description?.let { Text(text = it,style = MaterialTheme.typography.bodySmall) }
                     }
+                    Spacer(modifier = Modifier.height(10.dp))
+
                     PosterCardImage(model = viewState.establecimiento?.address_photo,
                         modifier = Modifier
-                            .clickable { }
+                            .clickable {
+                                openMap(
+                                    viewState.establecimiento?.longitud,
+                                    viewState.establecimiento?.latidud,
+                                    viewState.establecimiento?.name,
+                                    )
+                            }
                             .fillMaxWidth()
-                            .height(200.dp)
-                            .padding(10.dp))
+                            .height(200.dp))
+
                     Text(
                         text = viewState.establecimiento?.address ?: "",
                         style = MaterialTheme.typography.titleSmall
@@ -340,7 +352,7 @@ internal fun BottomReserva(
                 }
 
 
-            }
+
             SnackbarHost(hostState = snackbarHostState) { data ->
                 SwipeToDismiss(
                     state = dismissSnackbarState,

@@ -110,7 +110,10 @@ internal fun AppNavigation(
         animatedComposable(route = Route.WELCOME_PAGE){
             composeScreens.welcome(
 //                navigateUp = navController::navigateUp
-                  navigateToHome = { navController.navigate(Route.MAIN)}
+                  navigateToHome = { navController.navigate(Route.MAIN){
+                      popUpTo(0)
+//                      popUpTo(Route.MAIN)
+                  } }
             )
         }
         animatedComposable(route = Route.RESERVAR arg "id" arg "establecimientoId",
@@ -214,7 +217,7 @@ internal fun AppNavigation(
         ) {
             composeScreens.instalacion(
                 navigateUp = navController::navigateUp,
-                navigateToReserva = { navController.navigate(Route.RESERVAR id it) }
+//                navigateToReserva = { navController.navigate(Route.RESERVAR id it) }
             )
         }
 
@@ -230,6 +233,8 @@ internal fun AppNavigation(
                 navigateUp = navController::navigateUp,
                 navigateToChat = {navController.navigate(Route.CHAT_SALA id it)},
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
+                navigateToInstalacion = {navController.navigate(Route.INSTALACION id it)},
+                navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)}
             )
         }
         animatedComposable(
@@ -293,7 +298,8 @@ internal fun AppNavigation(
                 createSala = { navController.navigate(Route.ESTABLECIMIENTO_FILTER id it)},
                 navigateToSala = { navController.navigate(Route.SALA id it)},
                 editGroup = {navController.navigate(Route.CREATE_GROUP + "?id=${it}" )},
-                navigateToProfile = {navController.navigate(Route.PROFILE id it)}
+                navigateToProfile = { navController.navigate(Route.PROFILE id it)},
+                navigateToSalas = { navController.navigate(Route.GRUPO_SALAS id it)}
                 )
         }
 
@@ -323,6 +329,18 @@ internal fun AppNavigation(
         ){
             composeScreens.editProfile(
                 navigateUp = navController::navigateUp
+            )
+        }
+        animatedComposable(
+            route = Route.RESERVA_DETAIL arg "id",
+            arguments = listOf(
+                navArgument("id") { type = NavType.LongType },
+            )
+        ){
+            composeScreens.reserva(
+                navigateUp = navController::navigateUp,
+                navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
+                navigateToConversation = {navController.navigate(Route.CONVERSATION id it)}
             )
         }
         animatedComposable(
@@ -377,6 +395,20 @@ internal fun AppNavigation(
                 navigateUp = navController::navigateUp,
             )
         }
+        animatedComposable(
+            route = Route.GRUPO_SALAS arg "id",
+            arguments = listOf(navArgument("id") {
+                type = NavType.LongType
+            })
+        ){
+            composeScreens.grupoSalas(
+                navigateUp = navController::navigateUp,
+                openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
+                navigateToSala = {navController.navigate(Route.SALA id it)},
+                navigateToSelectEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id it)}
+            )
+        }
+
         animatedComposable(route = Route.RECARGAR){
             composeScreens.recargar(
                 navigateUp = navController::navigateUp,
@@ -432,7 +464,7 @@ private fun NavGraphBuilder.AddMainNav(
             )
         }
         composable(route= Route.DISCOVER) {
-            composeScreens.discover(navController = navController,navigateToMap = navigateToMap)
+            composeScreens.discover(navController = navController)
         }
         composable(route = Route.ACCOUNT){
             composeScreens.account(

@@ -18,7 +18,10 @@ data class SalaDto(
     val  end_time:Instant,
     val fecha:Instant,
     val users:Int,
-    val grupo_id:Long
+    val grupo_id:Long,
+
+    val establecimiento_name: String = "",
+    val establecimiento_photo: String? = null
 )
 
 

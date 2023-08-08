@@ -11,6 +11,7 @@ int color tv_test_yellow 0x0
 int drawable check 0x0
 int drawable coin 0x0
 int drawable doble_check 0x0
+int drawable enabled_location 0x0
 int drawable ic_launcher_background 0x0
 int drawable ic_launcher_foreground 0x0
 int drawable icon128 0x0
@@ -19,6 +20,7 @@ int drawable icon_mac 0x0
 int drawable image 0x0
 int drawable logo_app 0x0
 int drawable map_background 0x0
+int drawable notification_image 0x0
 int drawable red_marker 0x0
 int drawable sample 0x0
 int drawable sample1 0x0
@@ -54,6 +56,7 @@ int string continuar 0x0
 int string create_group 0x0
 int string create_sala 0x0
 int string discount 0x0
+int string do_you_want_receive_notifications 0x0
 int string dynamic_color 0x0
 int string edit 0x0
 int string expiration_date 0x0
@@ -73,6 +76,7 @@ int string inbox 0x0
 int string inbox_to_establecimiento 0x0
 int string join_a_group 0x0
 int string language 0x0
+int string later 0x0
 int string leave_group 0x0
 int string location 0x0
 int string location_static_url 0x0
@@ -86,6 +90,7 @@ int string name 0x0
 int string near_me 0x0
 int string new_offers 0x0
 int string new_room_created 0x0
+int string no_result_found 0x0
 int string notification_sala 0x0
 int string notification_sala_channel 0x0
 int string notifications 0x0
@@ -99,6 +104,7 @@ int string qr_code_payment 0x0
 int string recommended_places 0x0
 int string remove_user 0x0
 int string remove_user_admin 0x0
+int string reservation_date 0x0
 int string rooms 0x0
 int string rules_of_the_place 0x0
 int string sala_help_text 0x0
@@ -120,6 +126,7 @@ int string time_interval 0x0
 int string unexpected_error 0x0
 int string user_since 0x0
 int string version 0x0
+int string what_is_your_location 0x0
 int string what_kind_of_game_do_you_prefere 0x0
 int string what_would_you_like_to_play 0x0
 int string where_will_it_be_played 0x0

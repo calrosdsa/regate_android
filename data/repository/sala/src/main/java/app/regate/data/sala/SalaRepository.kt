@@ -56,6 +56,9 @@ class SalaRepository(
     suspend fun filterSalas(d:SalaFilterData,page:Int = 1):PaginationSalaResponse{
         return salaDataSourceImpl.filterSalas(d,page)
     }
+    suspend fun getGrupoSalas(id:Long,page:Int = 1):PaginationSalaResponse{
+        return salaDataSourceImpl.getGrupoSalas(id,page)
+    }
 
     suspend fun saveMessage(data: GrupoMessageDto){
         messageProfileDao.upsert(messageMapper.map(data))

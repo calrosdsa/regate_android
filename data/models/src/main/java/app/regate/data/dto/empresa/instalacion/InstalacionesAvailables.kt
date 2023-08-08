@@ -15,5 +15,7 @@ data class InstalacionAvailable(
     val instalacion_id: Long,
     val precio: Int,
     val portada:String,
-    val name:String
+    val name:String,
+    val establecimiento_id:Long,
+    val category_id:Int,
 )

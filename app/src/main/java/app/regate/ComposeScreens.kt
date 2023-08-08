@@ -17,6 +17,7 @@
 package app.regate
 
 import app.regate.account.Account
+import app.regate.account.reserva.Reserva
 import app.regate.actividades.Actividades
 import app.regate.home.Home
 import app.regate.account.reservas.Reservas
@@ -51,6 +52,7 @@ import app.regate.sala.Sala
 import app.regate.settings.Setting
 import app.regate.auth.signup.SignUp
 import app.regate.filterSalas.FilterSalas
+import app.regate.sala.grupo.GrupoSalas
 import app.regate.welcome.Welcome
 import me.tatarka.inject.annotations.Inject
 
@@ -76,6 +78,7 @@ class ComposeScreens(
     val profile:Profile,
     val editProfile:EditProfile,
     val reservas: Reservas,
+    val reserva:Reserva,
 
     val actividadesEstablecimiento: ActividadesEstablecimiento,
     val establecimientoReserva:EstablecimientoReserva,
@@ -94,6 +97,7 @@ class ComposeScreens(
     val photo:Photo,
 
     val grupo:Grupo,
+    val grupoSalas:GrupoSalas,
     val filterGroups:FilterGroups,
     val createGroup: CreateGroup,
 

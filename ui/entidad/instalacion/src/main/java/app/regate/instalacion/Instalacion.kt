@@ -55,7 +55,6 @@ import me.tatarka.inject.annotations.Inject
 
 typealias InstalacionDetail = @Composable (
     navigateUp:()->Unit,
-    navigateToReserva:(id:Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
 
@@ -64,12 +63,10 @@ typealias InstalacionDetail = @Composable (
 fun InstalacionDetail(
     viewModelFactory:(SavedStateHandle)-> InstalacionViewModel,
     @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToReserva:(id:Long)->Unit,
     ){
     InstalacionDetail(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
-        navigateToReserva = navigateToReserva
     )
 }
 
@@ -78,19 +75,15 @@ fun InstalacionDetail(
 internal fun InstalacionDetail(
     viewModel: InstalacionViewModel,
     navigateUp: () -> Unit,
-    navigateToReserva: (id:Long) -> Unit,
+
 ){
     val state by viewModel.state.collectAsState()
-    val formatter = LocalAppDateFormatter.current
+//    val formatter = LocalAppDateFormatter.current
     InstalacionDetail(
         viewState = state,
         navigateUp = navigateUp,
         onMessageShown = viewModel::clearMessage,
-        formatDate = { formatter.formatShortDateTime(it) },
-        addCupo = viewModel::addCupoToSelectedList,
-        getCupos ={viewModel.getCupos(viewModel.now.toString())},
-//        navigateToReserva = navigateToReserva,
-        openBottomSheet = { viewModel.openBottomSheet { navigateToReserva(it) } }
+//        formatDate = { formatter.formatShortDateTime(it) },
     )
 }
 
@@ -102,11 +95,8 @@ internal fun InstalacionDetail(
     viewState: InstalacionState,
     navigateUp: () -> Unit,
     onMessageShown:(id:Long) -> Unit,
-    formatDate:(date:Instant) -> String,
-    addCupo:(cupo:CupoInstaDto) ->Unit,
-    getCupos:()->Unit,
-//    navigateToReserva: () -> Unit,
-    openBottomSheet:()->Unit
+//    formatDate:(date:Instant) -> String,
+
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val dismissSnackbarState = rememberDismissState(
@@ -122,7 +112,7 @@ internal fun InstalacionDetail(
     val showCheckBox = remember {
         mutableStateOf(false)
     }
-    val refreshState = rememberPullRefreshState(refreshing = false, onRefresh = { getCupos()})
+
 
     viewState.message?.let { message ->
         LaunchedEffect(message) {
@@ -144,19 +134,12 @@ internal fun InstalacionDetail(
                 )
             }
         },
-        floatingActionButton = {
-//            AnimatedVisibility(visible = showCheckBox.value)
-            if(viewState.selectedCupos.isNotEmpty()){
-            Button(onClick = { openBottomSheet() }) {
-                Text(text = "Confirmar Reserva",style = MaterialTheme.typography.titleMedium)
-            }
-            }
-        },
+
         floatingActionButtonPosition = FabPosition.Center,
     ) { padding ->
         Box(
             modifier = Modifier
-                .pullRefresh(state = refreshState)
+
                 .padding(vertical = padding.calculateTopPadding(), horizontal = 5.dp)
                 .fillMaxSize()
         ) {
@@ -195,35 +178,10 @@ internal fun InstalacionDetail(
                         }
                         Spacer(modifier = Modifier.height(10.dp))
                     }
-                    items(
-                    items = viewState.cupos,
-//                        key = {it.}
-                    ){cupo ->
-                            Cupos(
-                                item = cupo,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(70.dp)
-                                    .padding(horizontal = 8.dp, vertical = 10.dp),
-                                showCheckBox = showCheckBox.value,
-                                formatDate = formatDate,
-                                selected = viewState.selectedCupos.contains(cupo),
-                                addCupo = addCupo,
-                                isAvailable = cupo.available
-                            )
-                        Divider()
-                    }
+
                 }
             }
-            PullRefreshIndicator(
-                refreshing = viewState.loading,
-                state = refreshState,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(padding)
-                    .padding(top = 20.dp),
-                scale = true,
-            )
+
         }
     }
 }

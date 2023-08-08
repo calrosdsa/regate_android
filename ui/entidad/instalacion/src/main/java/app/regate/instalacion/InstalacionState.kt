@@ -9,8 +9,6 @@ data class InstalacionState(
     val loading:Boolean = false,
     val instalacion:Instalacion? = null,
     val message:UiMessage? = null,
-    val cupos:List<CupoInstaDto> = emptyList(),
-    val selectedCupos:List<CupoInstaDto> = emptyList()
 ){
     companion object{
         val Empty = InstalacionState()

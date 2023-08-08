@@ -40,6 +40,7 @@ object Route {
 
     const val GRUPO = "grupo"
     const val CREATE_GROUP = "create_group"
+    const val GRUPO_SALAS = "grupo_salas"
 
     const val ESTABLECIMIENTO_FILTER = "establecimiento_filter"
     const val PHOTO = "media_photo"

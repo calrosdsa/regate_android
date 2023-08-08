@@ -59,6 +59,7 @@ import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.components.CustomButton
 import app.regate.common.composes.components.item.SalaItem
+import app.regate.common.composes.components.util.ViewMore
 import app.regate.common.composes.ui.BottomBar
 import app.regate.common.composes.ui.PosterCardImageDark
 import app.regate.common.composes.ui.Skeleton
@@ -303,27 +304,7 @@ fun CardOption(
         }
     }
 }
-@Composable
-fun ViewMore(
-    label:String,
-    styleText: TextStyle = MaterialTheme.typography.titleMedium,
-    onClick:() -> Unit
-){
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    horizontalArrangement = Arrangement.SpaceBetween){
-        Text(text = label,style = styleText,modifier = Modifier.fillMaxWidth(0.7f),
 
-        )
-
-        TextButton(onClick = { onClick() }) {
-        Text(text = stringResource(id = R.string.show_more),color = MaterialTheme.colorScheme.primary, textDecoration = TextDecoration.Underline,
-            style = MaterialTheme.typography.labelLarge)
-        }
-    }
-}
 
 @Composable
 fun EstablecimientoCard(

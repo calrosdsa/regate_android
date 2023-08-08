@@ -57,6 +57,7 @@ import app.regate.common.composes.components.dialog.DialogConfirmation
 import app.regate.common.composes.components.item.ProfileItem
 import app.regate.common.composes.components.item.SalaItem
 import app.regate.common.composes.components.skeleton.SalaItemSkeleton
+import app.regate.common.composes.components.util.ViewMore
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.util.dividerLazyList
 import app.regate.common.composes.util.spacerLazyList
@@ -74,7 +75,8 @@ typealias Grupo = @Composable (
     openAuthBottomSheet:()->Unit,
     createSala:(id:Long)->Unit,
     navigateToSala:(id:Long)->Unit,
-    navigateToProfile:(id:Long)->Unit
+    navigateToProfile:(id:Long)->Unit,
+    navigateToSalas:(id:Long)->Unit
         ) -> Unit
 
 @Inject
@@ -86,7 +88,8 @@ fun Grupo(
     @Assisted openAuthBottomSheet: () -> Unit,
     @Assisted createSala: (id:Long) -> Unit,
     @Assisted navigateToSala: (id: Long) -> Unit,
-    @Assisted navigateToProfile: (id: Long) -> Unit
+    @Assisted navigateToProfile: (id: Long) -> Unit,
+    @Assisted navigateToSalas:(id:Long)->Unit
 ){
     Grupo(
         viewModel = viewModel(factory = viewModelFactory),
@@ -96,7 +99,8 @@ fun Grupo(
         createSala = createSala,
         navigateToSala = navigateToSala,
         editGroup = editGroup,
-        navigateToProfile = navigateToProfile
+        navigateToProfile = navigateToProfile,
+        navigateToSalas = navigateToSalas
     )
 }
 
@@ -109,7 +113,8 @@ internal fun Grupo(
     openAuthBottomSheet: () -> Unit,
     createSala: (id:Long) -> Unit,
     navigateToSala: (id: Long) -> Unit,
-    navigateToProfile: (id: Long) -> Unit
+    navigateToProfile: (id: Long) -> Unit,
+    navigateToSalas:(id:Long) -> Unit
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -134,7 +139,8 @@ internal fun Grupo(
         removeAdminUser = viewModel::removeUserAdmin,
         addAdminUser = viewModel::addUserAdmin,
         leaveGroup = { viewModel.leaveGroup(navigateUp) },
-        navigateToProfile = navigateToProfile
+        navigateToProfile = navigateToProfile,
+        navigateToSalas = navigateToSalas
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -166,7 +172,8 @@ internal fun Grupo(
     removeAdminUser:()->Unit,
     addAdminUser:()->Unit,
     leaveGroup:()->Unit,
-    navigateToProfile: (id: Long) -> Unit
+    navigateToProfile: (id: Long) -> Unit,
+    navigateToSalas:(Long)->Unit
     ) {
     val isLogged by remember(viewState.authState){
         derivedStateOf {
@@ -331,10 +338,12 @@ internal fun Grupo(
                     }
                     dividerLazyList()
                         item {
-                            Text(
-                                text = stringResource(R.string.rooms),
-                                style = MaterialTheme.typography.labelLarge,
-                            )
+                            ViewMore(label = stringResource(id = R.string.rooms),onClick = { navigateToSalas(grupo.id)},
+                            showTextButton = viewState.salas.size >=5 )
+//                            Text(
+//                                text = stringResource(R.string.rooms),
+//                                style = MaterialTheme.typography.labelLarge,
+//                            )
                         }
 
                     if(viewState.loading){

@@ -77,13 +77,33 @@ class EstablecimientoRepository(
         return res
     }
 
-    suspend fun  getEstablecimiento(id:Long): EstablecimientoDetailDto {
+    suspend fun  getEstablecimientoDetail(id:Long): EstablecimientoDetailDto {
+        return establecimientoDataSourceImpl.getEstablecimientoDetail(id)
+    }
+    suspend fun  getEstablecimiento(id:Long): EstablecimientoDto {
         return establecimientoDataSourceImpl.getEstablecimiento(id)
     }
 
     suspend fun updateEstablecimiento(id:Long){
-            val res = getEstablecimiento(id)
+        withContext(dispatchers.computation){
+            try{
+                val res = getEstablecimiento(id)
+                establecimientoDao.upsert(establecimientoMapper.map(res))
+            }catch (e:Exception){
+                //TODO()
+            }
+        }
+    }
+
+    suspend fun updateEstablecimientoDetail(id:Long){
+        withContext(dispatchers.computation){
+        try{
+            val res = getEstablecimientoDetail(id)
             establecimientoDao.upsert(establecimientoMapper.map(res.establecimiento))
             establecimientoDao.insertSettingEstablecimiento(settingsDtoToSetting.map(res.setting_establecimiento))
+        }catch (e:Exception){
+            //TODO()
+        }
+        }
     }
 }

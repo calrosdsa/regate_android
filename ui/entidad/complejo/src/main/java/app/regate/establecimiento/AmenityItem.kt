@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.SportsBasketball
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -48,12 +46,12 @@ fun InstalacionCategoryItem(
         ) {
             AsyncImage(
                 model = item.thumbnail,
-                contentDescription = item.category_name,
+                contentDescription = item.name,
                 modifier = Modifier.size(25.dp),
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
             )
             Text(
-                text = item.category_name,
+                text = item.name,
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Center
             )

@@ -46,6 +46,7 @@ fun EstablecimientoPage(
     openLocationSheet:()->Unit,
     navigateToReserva:(category:Long)->Unit,
     modifier: Modifier = Modifier,
+    openMap:(String?,String?,String?)->Unit
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
@@ -169,6 +170,7 @@ fun EstablecimientoPage(
         PosterCardImage(model = addressPhoto,
             modifier = Modifier
                 .clickable {
+                    openMap(establecimiento?.longitud,establecimiento?.latidud,establecimiento?.name)
                 }
                 .fillMaxWidth()
                 .height(200.dp)

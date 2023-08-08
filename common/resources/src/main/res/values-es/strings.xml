@@ -81,4 +81,9 @@
     <string name="show_results">Mostrar resultados</string>
     <string name="see">Ver</string>
     <string name="choose_where_create_room">Elige dónde crear la sala</string>
+    <string name="reservation_date">Fecha de la Reserva</string>
+    <string name="no_result_found">No se encontraron resultados prueba cambiando la fecha o la hora.</string>
+    <string name="do_you_want_receive_notifications">¿Quieres recibir notificaciones?</string>
+    <string name="later">Luego</string>
+    <string name="what_is_your_location">What is your location</string>
 </resources>

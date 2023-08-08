@@ -41,6 +41,7 @@ import app.regate.ComposeScreens
 import app.regate.common.resources.R
 //import app.regate.R
 import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.LocalAppUtil
 import app.regate.common.composes.theme.RegateTheme
 import app.regate.common.composes.util.shouldUseDarkColors
 import app.regate.common.composes.util.shouldUseDynamicColors
@@ -55,6 +56,7 @@ import app.regate.settings.AppPreferences
 import app.regate.util.AppDateFormatter
 import app.regate.util.AppLocation
 import app.regate.util.AppMedia
+import app.regate.util.AppUtil
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.LocationRequest
@@ -103,7 +105,8 @@ class MainActivity : ComponentActivity() {
 //        intent.flags = FLAG_ACTIVITY_SINGLE_TOP
         setContent {
             CompositionLocalProvider(
-                LocalAppDateFormatter provides component.appDateFormatter
+                LocalAppDateFormatter provides component.appDateFormatter,
+                LocalAppUtil provides component.appUtil
             ) {
                 RegateTheme(
                     useDarkColors = preferences.shouldUseDarkColors(),
@@ -231,109 +234,6 @@ class MainActivity : ComponentActivity() {
         ActivityCompat.requestPermissions(this, permissions, PERMISSION_REQUEST_CODE)
     }
 
-//    fun saveAddress() {
-//        try {
-//            locationManager = applicationContext.getSystemService(LOCATION_SERVICE) as LocationManager
-//            if (ActivityCompat.checkSelfPermission(
-//                    this,
-//                    Manifest.permission.ACCESS_FINE_LOCATION
-//                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-//                    this,
-//                    Manifest.permission.ACCESS_COARSE_LOCATION
-//                ) != PackageManager.PERMISSION_GRANTED
-//            ) {
-//
-//                Log.d("DEBUG_APP","No permiso")
-//                return
-//            }
-//        Log.d("DEBUG_APP","INITTT2")
-//            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
-//        }catch (e:Exception){
-//            Log.d("DEBUG_APP","ERROR MAIN ${e.localizedMessage}")
-//        }
-//    }
-//
-//
-//    private val locationListener: LocationListener = object : LocationListener {
-//        override fun onLocationChanged(location: Location) {
-//             Log.d("DEBUG_APP","INITTT3")
-////            val text = ("" + location.longitude + ":" + location.latitude)
-////            Log.d("DEBUG_APP",text)
-//            if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU){
-//                getCityNameApi33(location.latitude,location.longitude)
-//            }else{
-//                getCityName(location.latitude,location.longitude)
-//            }
-////            Log.d("DEBUG_APP",city.toString())
-//        }
-//        override fun onProviderEnabled(provider: String) {
-//            Log.d("DEBUG_APP","ENABLED")
-//
-//        }
-//        override fun onProviderDisabled(provider: String) {
-//            Log.d("DEBUG_APP","DISABLED")
-//
-//        }
-//    }
-//
-//    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-//    private fun getCityNameApi33(lat: Double, long: Double){
-//        Log.d("DEBUG_APP","INITTT4")
-//        val geoCoder = Geocoder(applicationContext, Locale.getDefault())
-//        geoCoder.getFromLocation(lat,long,1,
-//            object: Geocoder.GeocodeListener{
-//                override fun onGeocode(addresses: MutableList<Address>) {
-//                    Log.d("DEBUG_APP","INITTT $addresses")
-//                    addresses[0].let{
-//                        Log.d("DEBUG_APP",it.adminArea)
-//                        Log.d("DEBUG_APP",it.subAdminArea)
-//                        Log.d("DEBUG_APP",it.subLocality)
-//                        Log.d("DEBUG_APP",it.getAddressLine(0))
-//                        val  address = AddressDevice(
-//                            city = it.locality,
-//                            locale = it.locale.language,
-//                            country = it.countryName,
-//                            country_code = it.countryCode,
-//                            admin_area = it.adminArea,
-//                            sub_admin_area = it.subAdminArea,
-//                            longitud = it.longitude,
-//                            latitud = it.latitude,
-//                        )
-//                        val addressString = Json.encodeToString(address)
-//                        preferences.address = addressString
-//                    }
-//                    locationManager.removeUpdates(locationListener)
-//                    // code
-//                }
-//                override fun onError(errorMessage: String?) {
-//                    super.onError(errorMessage)
-//                    Log.d("DEBUG_APP_ERROR_LOC",errorMessage.toString())
-//                }
-//            })
-//    }
-//    @Suppress("DEPRECATION")
-//    private fun getCityName(lat: Double, long: Double){
-//        Log.d("DEBUG_APP","INITTT6")
-//        val geocoder = Geocoder(applicationContext, Locale.getDefault())
-//        val addresses = geocoder.getFromLocation(lat, long, 1)
-//        addresses?.get(0)?.let{
-//            val  address = AddressDevice(
-//                city = it.locality,
-//                locale = it.locale.language,
-//                country = it.countryName,
-//                country_code = it.countryCode,
-//                admin_area = it.adminArea,
-//                sub_admin_area = it.subAdminArea,
-//                longitud = it.longitude,
-//                latitud = it.latitude,
-//            )
-//            val addressString = Json.encodeToString(address)
-//            preferences.address = addressString
-//        }
-//
-//        locationManager.removeUpdates(locationListener)
-//    }
-
 }
 
 
@@ -345,6 +245,7 @@ abstract class MainActivityComponent(
     @Component val applicationComponent: ApplicationComponent = ApplicationComponent.from(activity),
 ) : ActivityComponent {
     abstract val appDateFormatter: AppDateFormatter
+    abstract val appUtil:AppUtil
     abstract val appLocation:AppLocation
     abstract val appMedia:AppMedia
     abstract val screens: ComposeScreens

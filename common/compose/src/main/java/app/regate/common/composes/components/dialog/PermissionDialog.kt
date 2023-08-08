@@ -98,11 +98,22 @@ class RecordAudioPermissionTextProvider: PermissionTextProvider {
 class LocationPermissionTextProvider: PermissionTextProvider {
     override fun getDescription(isPermanentlyDeclined: Boolean): String {
         return if(isPermanentlyDeclined) {
-            "Parece que rechazaste permanentemente el permiso de ubicación. " +
+            "Parece que rechazaste el permiso de ubicación. " +
                     "Puede ir a la configuración de la aplicación para otorgarlo."
         } else {
             "Para ofrecerte una experiencia personalizada y mejorar nuestros servicios, te pedimos que aceptes el permiso de ubicación." +
                     "Con esta autorización, podremos proporcionarte información relevante basada en tu ubicación actual."
+        }
+    }
+}
+
+class NotificationPermissionTextProvider: PermissionTextProvider {
+    override fun getDescription(isPermanentlyDeclined: Boolean): String {
+        return if(isPermanentlyDeclined) {
+            "Parece que rechazaste el permiso de ubicación. " +
+                    "Puede ir a la configuración de la aplicación para otorgarlo."
+        } else {
+            "Para ofrecerte una experiencia personalizada y mejorar nuestros servicios, te pedimos que aceptes el permiso de notificación."
         }
     }
 }

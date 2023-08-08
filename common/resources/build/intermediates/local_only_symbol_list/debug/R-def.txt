@@ -13,6 +13,7 @@ color tv_test_yellow
 drawable check
 drawable coin
 drawable doble_check
+drawable enabled_location
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable icon128
@@ -21,6 +22,7 @@ drawable icon_mac
 drawable image
 drawable logo_app
 drawable map_background
+drawable notification_image
 drawable red_marker
 drawable sample
 drawable sample1
@@ -56,6 +58,7 @@ string continuar
 string create_group
 string create_sala
 string discount
+string do_you_want_receive_notifications
 string dynamic_color
 string edit
 string expiration_date
@@ -75,6 +78,7 @@ string inbox
 string inbox_to_establecimiento
 string join_a_group
 string language
+string later
 string leave_group
 string location
 string location_static_url
@@ -88,6 +92,7 @@ string name
 string near_me
 string new_offers
 string new_room_created
+string no_result_found
 string notification_sala
 string notification_sala_channel
 string notifications
@@ -101,6 +106,7 @@ string qr_code_payment
 string recommended_places
 string remove_user
 string remove_user_admin
+string reservation_date
 string rooms
 string rules_of_the_place
 string sala_help_text
@@ -122,6 +128,7 @@ string time_interval
 string unexpected_error
 string user_since
 string version
+string what_is_your_location
 string what_kind_of_game_do_you_prefere
 string what_would_you_like_to_play
 string where_will_it_be_played

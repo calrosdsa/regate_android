@@ -116,5 +116,11 @@
     <string name="show_results">Show results</string>
     <string name="see">See</string>
     <string name="choose_where_create_room">Choose where to create the room</string>
+    <string name="reservation_date">Reservation date</string>
+    <string name="no_result_found">No results found. Try changing the date or time.</string>
+    <string name="do_you_want_receive_notifications">Do you want to receive notifications?</string>
+    <string name="later">Later</string>
+    <string name="what_is_your_location">What is your location</string>
+
 
 </resources>

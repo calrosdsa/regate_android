@@ -1,36 +1,25 @@
 package app.regate.reservar
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.HourglassEmpty
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
@@ -54,15 +43,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.components.card.InstalacionCard
 import app.regate.common.composes.components.dialog.CategoryDialog
 import app.regate.common.composes.components.dialog.DatePickerDialogComponent
 import app.regate.common.composes.components.dialog.DialogHour
@@ -70,12 +55,9 @@ import app.regate.common.composes.components.images.AsyncImage
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.data.dto.empresa.instalacion.InstalacionAvailable
-import app.regate.models.Instalacion
 import app.regate.models.Labels
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toInstant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import kotlin.time.Duration.Companion.days
@@ -172,10 +154,10 @@ internal fun EstablecimientoReserva(
     CategoryDialog(
         showDialog = showCategoryDialog.value,
         selectedCategory = state.selectedCategory.let{
-            Labels(id = it?.category_id?.toLong()?:0,name= it?.category_name.toString(),thumbnail = it?.thumbnail)
+            Labels(id = it?.category_id?.toLong()?:0,name= it?.name.toString(),thumbnail = it?.thumbnail)
                                                      },
         categories = state.categories.map {
-            Labels(id = it.category_id?.toLong()?:0L,name=it.category_name,thumbnail = it.thumbnail)
+            Labels(id = it.category_id?.toLong()?:0L,name=it.name,thumbnail = it.thumbnail)
                                           },
         closeDialog = { showCategoryDialog.value = false },
         setCategory ={  setCategory(it) }

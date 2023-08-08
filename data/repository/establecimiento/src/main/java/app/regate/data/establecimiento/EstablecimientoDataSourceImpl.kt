@@ -88,7 +88,11 @@ class EstablecimientoDataSourceImpl(
         return client.get("/v1/establecimientos/near/?lng=$lng&lat=$lat").body()
     }
 
-    override suspend fun getEstablecimiento(id: Long): EstablecimientoDetailDto {
+    override suspend fun getEstablecimientoDetail(id: Long): EstablecimientoDetailDto {
+        return client.get("/v1/establecimiento-detail/${id}/").body()
+    }
+
+    override suspend fun getEstablecimiento(id: Long): EstablecimientoDto {
         return client.get("/v1/establecimiento/${id}/").body()
     }
 }

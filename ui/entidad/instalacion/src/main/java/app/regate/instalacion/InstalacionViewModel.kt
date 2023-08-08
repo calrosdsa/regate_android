@@ -32,30 +32,24 @@ class InstalacionViewModel(
     observeInstalacion: ObserveInstalacion,
     private val updateInstalacion: UpdateInstalacion,
     private val instalacionRepository: InstalacionRepository,
-    private val cupoRepository: CupoRepository,
-    private val mapperCupo:DtoToCupo,
+
 //    private val appDateFormatter: AppDateFormatter,
 ):ViewModel(){
     private val instalacionId: Long = savedStateHandle["id"]!!
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
-    private val cupos = MutableStateFlow<List<CupoInstaDto>>(emptyList())
-    val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
-    private val selectedCupos = MutableStateFlow<List<CupoInstaDto>>(emptyList())
+
 
     val state: StateFlow<InstalacionState> = combine(
         observeInstalacion.flow,
         loadingState.observable,
         uiMessageManager.message,
-        cupos,
-        selectedCupos,
-    ){instalacion,loading,message,cupos,selectedCupos ->
+
+    ){instalacion,loading,message ->
         InstalacionState(
             loading = loading,
             message = message,
             instalacion = instalacion,
-            cupos = cupos,
-            selectedCupos = selectedCupos
         )
     }.stateIn(
         scope = viewModelScope,
@@ -65,7 +59,6 @@ class InstalacionViewModel(
 
     init {
         getInstalacion()
-        getCupos(now.toString())
         observeInstalacion(ObserveInstalacion.Params(instalacionId))
         Log.d("API_",instalacionId.toString())
     }
@@ -80,7 +73,6 @@ class InstalacionViewModel(
                     )
                 )
                 Log.d("API_",res.toString())
-                cupos.tryEmit(res)
                 loadingState.removeLoader()
             }catch(e:Exception){
                 loadingState.removeLoader()
@@ -94,26 +86,7 @@ class InstalacionViewModel(
         }
     }
 
-    fun addCupoToSelectedList(cupo:CupoInstaDto) {
-        Log.d("API_",cupo.toString())
-        viewModelScope.launch {
-            if(selectedCupos.value.contains(cupo)){
-                selectedCupos.tryEmit(selectedCupos.value.filter {
-                    it != cupo
-                })
-            }else{
-            selectedCupos.tryEmit(selectedCupos.value.plus(cupo))
-            }
-        }
-    }
-    fun openBottomSheet(open:(id:Long)->Unit){
-        viewModelScope.launch {
-            cupoRepository.insertCupos(selectedCupos.value.map {
-                mapperCupo.map(it)
-            })
-            open(instalacionId)
-        }
-    }
+
 
     fun clearMessage(id: Long) {
         viewModelScope.launch {

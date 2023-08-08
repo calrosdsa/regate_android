@@ -1,6 +1,7 @@
 package app.regate.data.reserva
 
 import app.regate.data.dto.ResponseMessage
+import app.regate.data.dto.account.reserva.ReservaDetail
 import app.regate.data.dto.account.reserva.ReservaDto
 import app.regate.data.dto.account.reserva.ReservaRequest
 import app.regate.data.mappers.CupoToCupoDto
@@ -14,7 +15,7 @@ class ReservaRepository(
     private val cupoToReservaRequest: CupoToCupoDto,
 //    private val cupoDao: CupoDao
 ) {
-    suspend fun getReserva(id: Long): ReservaDto {
+    suspend fun getReserva(id: Long): ReservaDetail {
         return reservaDataSourceImpl.getReserva(id)
     }
 
