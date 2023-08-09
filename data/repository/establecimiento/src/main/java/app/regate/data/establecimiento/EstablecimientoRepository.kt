@@ -26,7 +26,7 @@ class EstablecimientoRepository(
     private val favoriteEstablecimientoDao: FavoriteEstablecimientoDao,
     private val establecimientoMapper: EstablecimientoDtoToEstablecimiento,
     private val settingsDtoToSetting: SettingDtoToSetting,
-    private val dispatchers: AppCoroutineDispatchers
+    private val dispatchers: AppCoroutineDispatchers,
 ){
     suspend fun getRecommendedEstablecimientos(d:InitialDataFilter,page:Int):PaginationEstablecimientoResponse{
         return establecimientoDataSourceImpl.getRecommendedEstablecimientos(d,page)

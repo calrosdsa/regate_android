@@ -8,6 +8,7 @@ import androidx.room.EntityInsertionAdapter;
 import androidx.room.EntityUpsertionAdapter;
 import androidx.room.RoomDatabase;
 import androidx.room.RoomSQLiteQuery;
+import androidx.room.SharedSQLiteStatement;
 import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.room.util.StringUtil;
@@ -40,6 +41,10 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
   private final EntityDeletionOrUpdateAdapter<Instalacion> __deletionAdapterOfInstalacion;
 
   private final EntityDeletionOrUpdateAdapter<Instalacion> __updateAdapterOfInstalacion;
+
+  private final SharedSQLiteStatement __preparedStmtOfDelete;
+
+  private final SharedSQLiteStatement __preparedStmtOfDeleteAll;
 
   private final EntityUpsertionAdapter<Instalacion> __upsertionAdapterOfInstalacion;
 
@@ -102,6 +107,22 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
           statement.bindString(9, entity.getPortada());
         }
         statement.bindLong(10, entity.getId());
+      }
+    };
+    this.__preparedStmtOfDelete = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "DELETE from instalaciones where id = ?";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "DELETE FROM instalaciones";
+        return _query;
       }
     };
     this.__upsertionAdapterOfInstalacion = new EntityUpsertionAdapter<Instalacion>(new EntityInsertionAdapter<Instalacion>(__db) {
@@ -229,6 +250,48 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
           return Unit.INSTANCE;
         } finally {
           __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object delete(final long id, final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDelete.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, id);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDelete.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object deleteAll(final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteAll.acquire();
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteAll.release(_stmt);
         }
       }
     }, continuation);

@@ -1,7 +1,7 @@
 package app.regate.account.reserva
 
 import app.regate.api.UiMessage
-import app.regate.data.dto.account.reserva.ReservaDetail
+import app.regate.compoundmodels.ReservaDetail
 
 data class ReservaState(
     val loading:Boolean = false,

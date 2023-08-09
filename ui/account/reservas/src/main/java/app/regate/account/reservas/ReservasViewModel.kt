@@ -4,11 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
-import app.regate.data.dto.account.reserva.ReservaDto
 import app.regate.data.reserva.ReservaRepository
-import app.regate.discover.ReservasState
+import app.regate.domain.observers.ObserveReservas
 import app.regate.util.ObservableLoadingCounter
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -19,15 +17,15 @@ import me.tatarka.inject.annotations.Inject
 @Inject
 class ReservasViewModel(
     private val reservaRepository: ReservaRepository,
-
+    observeReservas: ObserveReservas,
 ): ViewModel() {
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
-    private val reservas = MutableStateFlow<List<ReservaDto>>(emptyList())
+
     val state:StateFlow<ReservasState> = combine(
         loadingState.observable,
         uiMessageManager.message,
-        reservas
+        observeReservas.flow
     ){loading,message,reservas->
         ReservasState(
             loading = loading,
@@ -41,6 +39,7 @@ class ReservasViewModel(
     )
 
     init{
+        observeReservas(Unit)
         getReservas()
     }
 
@@ -49,8 +48,7 @@ class ReservasViewModel(
         viewModelScope.launch {
             try {
                 loadingState.addLoader()
-                val res = reservaRepository.getReservas()
-                reservas.tryEmit(res)
+                reservaRepository.updateReservas()
                 loadingState.removeLoader()
             }catch(e:Exception){
                 loadingState.removeLoader()

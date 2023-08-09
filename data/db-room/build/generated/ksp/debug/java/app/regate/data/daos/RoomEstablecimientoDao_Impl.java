@@ -8,6 +8,7 @@ import androidx.room.EntityInsertionAdapter;
 import androidx.room.EntityUpsertionAdapter;
 import androidx.room.RoomDatabase;
 import androidx.room.RoomSQLiteQuery;
+import androidx.room.SharedSQLiteStatement;
 import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
@@ -42,6 +43,10 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
   private final EntityDeletionOrUpdateAdapter<Establecimiento> __deletionAdapterOfEstablecimiento;
 
   private final EntityDeletionOrUpdateAdapter<Establecimiento> __updateAdapterOfEstablecimiento;
+
+  private final SharedSQLiteStatement __preparedStmtOfDelete;
+
+  private final SharedSQLiteStatement __preparedStmtOfDeleteAll;
 
   private final EntityUpsertionAdapter<Establecimiento> __upsertionAdapterOfEstablecimiento;
 
@@ -165,6 +170,22 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
         final String _tmp_2 = AppTypeConverters.INSTANCE.fromListLong(entity.getRules());
         statement.bindString(15, _tmp_2);
         statement.bindLong(16, entity.getId());
+      }
+    };
+    this.__preparedStmtOfDelete = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "DELETE FROM establecimientos where id = ?";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "DELETE FROM establecimientos";
+        return _query;
       }
     };
     this.__upsertionAdapterOfEstablecimiento = new EntityUpsertionAdapter<Establecimiento>(new EntityInsertionAdapter<Establecimiento>(__db) {
@@ -376,6 +397,48 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
   }
 
   @Override
+  public Object delete(final long id, final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDelete.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, id);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDelete.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object deleteAll(final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteAll.acquire();
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteAll.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
   public Object upsert(final Establecimiento entity,
       final Continuation<? super Long> continuation) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
@@ -430,6 +493,138 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
         }
       }
     }, continuation);
+  }
+
+  @Override
+  public Flow<Establecimiento> getEstablecimiento(final long id) {
+    final String _sql = "SELECT * FROM establecimientos where id = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, id);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"establecimientos"}, new Callable<Establecimiento>() {
+      @Override
+      @NonNull
+      public Establecimiento call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfAddress = CursorUtil.getColumnIndexOrThrow(_cursor, "address");
+            final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
+            final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
+            final int _cursorIndexOfEmpresaId = CursorUtil.getColumnIndexOrThrow(_cursor, "empresa_id");
+            final int _cursorIndexOfLatidud = CursorUtil.getColumnIndexOrThrow(_cursor, "latidud");
+            final int _cursorIndexOfLongitud = CursorUtil.getColumnIndexOrThrow(_cursor, "longitud");
+            final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+            final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
+            final int _cursorIndexOfIsOpen = CursorUtil.getColumnIndexOrThrow(_cursor, "is_open");
+            final int _cursorIndexOfPhoneNumber = CursorUtil.getColumnIndexOrThrow(_cursor, "phone_number");
+            final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
+            final int _cursorIndexOfAddressPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "address_photo");
+            final int _cursorIndexOfAmenities = CursorUtil.getColumnIndexOrThrow(_cursor, "amenities");
+            final int _cursorIndexOfRules = CursorUtil.getColumnIndexOrThrow(_cursor, "rules");
+            final Establecimiento _result;
+            if (_cursor.moveToFirst()) {
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final String _tmpAddress;
+              if (_cursor.isNull(_cursorIndexOfAddress)) {
+                _tmpAddress = null;
+              } else {
+                _tmpAddress = _cursor.getString(_cursorIndexOfAddress);
+              }
+              final String _tmpCreated_at;
+              if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+                _tmpCreated_at = null;
+              } else {
+                _tmpCreated_at = _cursor.getString(_cursorIndexOfCreatedAt);
+              }
+              final String _tmpEmail;
+              if (_cursor.isNull(_cursorIndexOfEmail)) {
+                _tmpEmail = null;
+              } else {
+                _tmpEmail = _cursor.getString(_cursorIndexOfEmail);
+              }
+              final Integer _tmpEmpresa_id;
+              if (_cursor.isNull(_cursorIndexOfEmpresaId)) {
+                _tmpEmpresa_id = null;
+              } else {
+                _tmpEmpresa_id = _cursor.getInt(_cursorIndexOfEmpresaId);
+              }
+              final String _tmpLatidud;
+              if (_cursor.isNull(_cursorIndexOfLatidud)) {
+                _tmpLatidud = null;
+              } else {
+                _tmpLatidud = _cursor.getString(_cursorIndexOfLatidud);
+              }
+              final String _tmpLongitud;
+              if (_cursor.isNull(_cursorIndexOfLongitud)) {
+                _tmpLongitud = null;
+              } else {
+                _tmpLongitud = _cursor.getString(_cursorIndexOfLongitud);
+              }
+              final String _tmpName;
+              _tmpName = _cursor.getString(_cursorIndexOfName);
+              final String _tmpDescription;
+              if (_cursor.isNull(_cursorIndexOfDescription)) {
+                _tmpDescription = null;
+              } else {
+                _tmpDescription = _cursor.getString(_cursorIndexOfDescription);
+              }
+              final Boolean _tmpIs_open;
+              final Integer _tmp;
+              if (_cursor.isNull(_cursorIndexOfIsOpen)) {
+                _tmp = null;
+              } else {
+                _tmp = _cursor.getInt(_cursorIndexOfIsOpen);
+              }
+              _tmpIs_open = _tmp == null ? null : _tmp != 0;
+              final String _tmpPhone_number;
+              if (_cursor.isNull(_cursorIndexOfPhoneNumber)) {
+                _tmpPhone_number = null;
+              } else {
+                _tmpPhone_number = _cursor.getString(_cursorIndexOfPhoneNumber);
+              }
+              final String _tmpPhoto;
+              if (_cursor.isNull(_cursorIndexOfPhoto)) {
+                _tmpPhoto = null;
+              } else {
+                _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
+              }
+              final String _tmpAddress_photo;
+              if (_cursor.isNull(_cursorIndexOfAddressPhoto)) {
+                _tmpAddress_photo = null;
+              } else {
+                _tmpAddress_photo = _cursor.getString(_cursorIndexOfAddressPhoto);
+              }
+              final List<Long> _tmpAmenities;
+              final String _tmp_1;
+              _tmp_1 = _cursor.getString(_cursorIndexOfAmenities);
+              _tmpAmenities = AppTypeConverters.INSTANCE.toListLong(_tmp_1);
+              final List<Long> _tmpRules;
+              final String _tmp_2;
+              _tmp_2 = _cursor.getString(_cursorIndexOfRules);
+              _tmpRules = AppTypeConverters.INSTANCE.toListLong(_tmp_2);
+              _result = new Establecimiento(_tmpId,_tmpAddress,_tmpCreated_at,_tmpEmail,_tmpEmpresa_id,_tmpLatidud,_tmpLongitud,_tmpName,_tmpDescription,_tmpIs_open,_tmpPhone_number,_tmpPhoto,_tmpAddress_photo,_tmpAmenities,_tmpRules);
+            } else {
+              _result = null;
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
   }
 
   @Override

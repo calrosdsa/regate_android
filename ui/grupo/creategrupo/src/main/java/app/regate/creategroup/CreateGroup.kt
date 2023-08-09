@@ -39,7 +39,7 @@ import app.regate.data.dto.empresa.grupo.GroupVisibility
 
 typealias CreateGroup = @Composable (
     navigateUp:()->Unit,
-    navigateToGroup:(Long)->Unit,
+//    navigateToGroup:(Long)->Unit,
 //    groupId:Long,
 //    navigateToChat:(id:Long)->Unit,
     openAuthBottomSheet:()->Unit
@@ -50,13 +50,13 @@ typealias CreateGroup = @Composable (
 fun CreateGroup(
     viewModelFactory:(SavedStateHandle)-> CreateGroupViewModel,
     @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToGroup: (Long) -> Unit,
+//    @Assisted navigateToGroup: (Long) -> Unit,
     @Assisted openAuthBottomSheet: () -> Unit
 ){
     CreateGroup(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
-        navigateToGroup = navigateToGroup,
+//        navigateToGroup = navigateToGroup,
         openAuthBottomSheet = openAuthBottomSheet
 //        navigateToChat= navigateToChat,
 //        openAuthBottomSheet = openAuthBottomSheet
@@ -67,7 +67,7 @@ fun CreateGroup(
 internal fun CreateGroup(
     viewModel: CreateGroupViewModel,
     navigateUp: () -> Unit,
-    navigateToGroup: (Long) -> Unit,
+//    navigateToGroup: (Long) -> Unit,
     openAuthBottomSheet: () -> Unit
 //    navigateToChat: (id:Long) -> Unit,
 //    openAuthBottomSheet: () -> Unit
@@ -77,7 +77,7 @@ internal fun CreateGroup(
         viewState = viewState,
         navigateUp = navigateUp,
         createGroup = {name,description,visibility,removeLoader ->
-            viewModel.createGroup(name,description,visibility, navigateToGroup,openAuthBottomSheet,removeLoader)
+            viewModel.createGroup(name,description,visibility,openAuthBottomSheet,removeLoader,navigateUp)
         },
         clearMessage = viewModel::clearMessage,
         uploadImage = viewModel::uploadImage,

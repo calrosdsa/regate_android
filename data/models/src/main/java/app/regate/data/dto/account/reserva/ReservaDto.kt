@@ -7,12 +7,13 @@ import kotlinx.serialization.Serializable
 data class ReservaDto(
     val created_at: Instant,
     val id: Long,
-    val instalacion_id: Int,
-    val instalacion_name: String? = null,
+    val instalacion_id: Long,
+    val establecimiento_id:Long,
+    val instalacion_name: String = "",
     val paid: Int,
     val total_price:Int,
     val start_date: Instant,
     val end_date:Instant,
-    val user_id: String
+    val user_id: Long
 )
 

@@ -92,6 +92,13 @@ class GrupoDataSourceImpl(
         }
     }
 
+    override suspend fun getGroupsWhereUserIsAdmin(): List<GrupoDto> {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/grupo/user-groups/admin/"){
+            header("Authorization","Bearer $token")
+        }.body()
+    }
+
     override suspend fun getMessagesGrupo(id: Long,page:Int): List<GrupoMessageDto> {
         return client.get("/v1/grupo/messages/${id}/?page=${page}").body()
     }

@@ -16,8 +16,11 @@ import app.regate.data.dto.empresa.instalacion.InstalacionAvailable
 import app.regate.data.dto.empresa.instalacion.InstalacionRequest
 import app.regate.data.dto.empresa.instalacion.InstalacionesAvailables
 import app.regate.data.establecimiento.EstablecimientoRepository
+import app.regate.data.establecimiento.EstablecimientoStore
 import app.regate.data.instalacion.CupoRepository
 import app.regate.data.instalacion.InstalacionRepository
+import app.regate.data.util.fetch
+import app.regate.domain.interactors.UpdateEstablecimiento
 import app.regate.domain.interactors.UpdateInstalaciones
 import app.regate.domain.observers.ObserveInstalacionCategoryCount
 import app.regate.domain.observers.ObserveSettingEstablecimiento
@@ -50,6 +53,9 @@ class EstablecimientoReservaViewModel(
     @Assisted savedStateHandle: SavedStateHandle,
 //    private val updateInstalaciones: UpdateInstalaciones,
     private val establecimientoRepository: EstablecimientoRepository,
+    private val updateInstalaciones: UpdateInstalaciones,
+    private val establecimientoStore: EstablecimientoStore,
+    private val updateEstablecimiento: UpdateEstablecimiento,
     private val instalacionRepository: InstalacionRepository,
     private val cupoRepository: CupoRepository,
     observeSettingEstablecimiento: ObserveSettingEstablecimiento,
@@ -112,7 +118,18 @@ class EstablecimientoReservaViewModel(
 //            Log.d("DEBUG_APP_CUPO", e.localizedMessage ?: "")
 //        }
 
+        getData()
 
+    }
+    private fun getData(){
+        viewModelScope.launch {
+            try{
+                updateEstablecimiento.executeSync(UpdateEstablecimiento.Params(id = establecimientoId))
+                updateInstalaciones.executeSync(UpdateInstalaciones.Params(id = establecimientoId))
+            }catch(e:Exception){
+                Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")
+            }
+        }
     }
     private fun getHour(hour:Int):String{
         return if(hour < 10){

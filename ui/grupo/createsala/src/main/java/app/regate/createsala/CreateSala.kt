@@ -42,6 +42,7 @@ import app.regate.common.composes.util.Layout
 import app.regate.common.composes.viewModel
 import app.regate.createsala.pages.Page1
 import app.regate.createsala.pages.Page2
+import app.regate.createsala.pages.SelectGroup
 import app.regate.data.dto.empresa.grupo.GroupVisibility
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
@@ -50,7 +51,9 @@ import me.tatarka.inject.annotations.Inject
 
 typealias CreateSala = @Composable (
     navigateUp:()->Unit,
-    reservarInstalacion: @Composable () -> Unit
+    reservarInstalacion: @Composable () -> Unit,
+    navigateToCreateGroup:()->Unit,
+    navigateToGroup:(Long)->Unit
 //    navigateToChat:(id:Long)->Unit,
 //    openAuthBottomSheet:()->Unit
         ) -> Unit
@@ -60,14 +63,18 @@ typealias CreateSala = @Composable (
 fun CreateSala(
     viewModelFactory:(SavedStateHandle)-> CreateSalaViewModel,
     @Assisted navigateUp: () -> Unit,
-    @Assisted reservarInstalacion:@Composable () -> Unit
+    @Assisted reservarInstalacion:@Composable () -> Unit,
+    @Assisted navigateToCreateGroup: () -> Unit,
+    @Assisted navigateToGroup: (Long) -> Unit
 //    @Assisted navigateToChat: (id:Long) -> Unit,
 //    @Assisted openAuthBottomSheet: () -> Unit
 ){
     CreateSala(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
-        reservarInstalacion = reservarInstalacion
+        reservarInstalacion = reservarInstalacion,
+        navigateToCreateGroup = navigateToCreateGroup,
+        navigateToGroup = navigateToGroup
 //        navigateToChat= navigateToChat,
 //        openAuthBottomSheet = openAuthBottomSheet
     )
@@ -77,21 +84,30 @@ fun CreateSala(
 internal fun CreateSala(
     viewModel: CreateSalaViewModel,
     navigateUp: () -> Unit,
-    reservarInstalacion:@Composable () -> Unit
+    reservarInstalacion:@Composable () -> Unit,
+    navigateToCreateGroup: () -> Unit,
+    navigateToGroup: (Long) -> Unit
 //    navigateToChat: (id:Long) -> Unit,
 //    openAuthBottomSheet: () -> Unit
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
-    LoaderDialog(loading = viewState.loading)
+    LoaderDialog(loading = viewState.loadingDialog)
     CreateSala(
         viewState = viewState,
         navigateUp = navigateUp,
         reservarInstalacion = reservarInstalacion,
-        createSala = viewModel::createSala,
+        createSala = {asunto,descripcion,cupos->
+            viewModel.createSala(asunto,descripcion,cupos,navigateToGroup)
+        },
         clearMessage = viewModel::clearMessage,
         formatShortTime = {formatter.formatShortTime(it)},
         formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
+        groupExist = viewModel.isGroupExist(),
+        getGroupsUser = viewModel::getGroupsUser,
+        selectGroup = viewModel::updateSelectedGroup,
+        enableButton = viewModel::enableButton,
+        navigateToCreateGroup = navigateToCreateGroup
     )
 }
 
@@ -105,6 +121,11 @@ internal fun CreateSala(
     clearMessage:(id:Long)->Unit,
     formatShortTime:(time: Instant)->String,
     formatDate:(date: Instant)->String,
+    groupExist:Boolean,
+    getGroupsUser:()->Unit,
+    selectGroup:(Long)->Unit,
+    enableButton:()->Unit,
+    navigateToCreateGroup: () -> Unit
 //    onChangeAsunto:(v:String)->Unit,
 //    onChangeDescription:(v:String)->Unit,
 //    onChangeCupos:(v:String)->Unit,
@@ -123,10 +144,18 @@ internal fun CreateSala(
             clearMessage(message.id)
         }
     }
+    LaunchedEffect(key1 = pagerState.currentPage, block = {
+        when(pagerState.currentPage){
+            1 -> enableButton()
+            2 -> getGroupsUser()
+        }
+    })
     BackHandler(enabled = true) {
         when(pagerState.currentPage){
             0 -> navigateUp()
             1 -> coroutineScope.launch { pagerState.animateScrollToPage(0) }
+            2 -> coroutineScope.launch { pagerState.animateScrollToPage(1) }
+
         }
     }
 
@@ -135,7 +164,7 @@ internal fun CreateSala(
     }
     val isLastPage by remember{
         derivedStateOf{
-            pagerState.currentPage == 1
+            pagerState.currentPage == 1 && groupExist
         }
     }
     DialogConfirmation(open = showConfirmationDialog.value,
@@ -166,12 +195,14 @@ internal fun CreateSala(
                 Button(modifier = Modifier.align(Alignment.CenterEnd),
                     enabled = viewState.enableToContinue,onClick = {
                     if(isLastPage){
-                    showConfirmationDialog.value = true
+                        showConfirmationDialog.value = true
+                    }else if(pagerState.currentPage == 2) {
+                        showConfirmationDialog.value = true
                     }else{
                         coroutineScope.launch { pagerState.animateScrollToPage(pagerState.currentPage +1) }
                     }
                 }) {
-                    Text(text =if(isLastPage) "Crear Sala" else "Continuar")
+                    Text(text =if(isLastPage) "Crear Sala" else if(pagerState.currentPage == 2) "Crear Sala" else "Continuar")
                 }
             }
             }
@@ -184,8 +215,8 @@ internal fun CreateSala(
 //            .padding(10.dp)
     ) { paddingValues ->
         HorizontalPager(
-            pageCount = 2, modifier = Modifier
-//            .fillMaxSize()
+            pageCount = 3, modifier = Modifier
+                .fillMaxSize()
                 .padding(paddingValues),
             userScrollEnabled = false,
             state = pagerState
@@ -211,6 +242,13 @@ internal fun CreateSala(
                     instalacionCupos = viewState.instalacionCupos,
                     formatDate = formatDate,
                     formatShortTime = formatShortTime,
+                )
+                2 -> SelectGroup(
+                    grupos = viewState.grupos,
+                    selectedGroupId = viewState.selectedGroup,
+                    selectGroup = selectGroup,
+                    loading = viewState.loading,
+                    navigateToCreateGroup = navigateToCreateGroup
                 )
             }
         }

@@ -221,6 +221,13 @@ public abstract class ApplicationComponent implements app.regate.data.RoomDataba
     
     @org.jetbrains.annotations.NotNull
     @me.tatarka.inject.annotations.Provides
+    public app.regate.data.daos.ReservaDao provideReservaDao(@org.jetbrains.annotations.NotNull
+    app.regate.data.db.AppDatabase db) {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.NotNull
+    @me.tatarka.inject.annotations.Provides
     public app.regate.data.reserva.ReservaDataSource provideReservaDataSource(@org.jetbrains.annotations.NotNull
     app.regate.data.reserva.ReservaDataSourceImpl bind) {
         return null;

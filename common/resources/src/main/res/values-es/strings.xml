@@ -86,4 +86,6 @@
     <string name="do_you_want_receive_notifications">¿Quieres recibir notificaciones?</string>
     <string name="later">Luego</string>
     <string name="what_is_your_location">What is your location</string>
+    <string name="select_group_text">¿En qué grupo te gustaría crear esta sala?</string>
+    <string name="choose_the_time_and_place">Elije la hora y el lugar</string>
 </resources>

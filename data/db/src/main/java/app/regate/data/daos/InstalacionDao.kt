@@ -13,4 +13,6 @@ interface InstalacionDao:EntityDao<Instalacion> {
 
     fun observeInstalacionesAvailables(ids:List<Long>):Flow<List<Instalacion>>
     fun observeGroupInstalacionByCategory(id:Long,type:LabelType):Flow<List<InstalacionCategoryCount>>
+    suspend fun delete(id: Long)
+    suspend fun deleteAll()
 }

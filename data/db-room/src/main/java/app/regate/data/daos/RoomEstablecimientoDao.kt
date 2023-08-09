@@ -18,6 +18,10 @@ abstract class RoomEstablecimientoDao : EstablecimientoDao, RoomEntityDao<Establ
     @Query("SELECT * FROM establecimientos")
     abstract override fun getEstablecimientos(): Flow<List<Establecimiento>>
 
+    @Transaction
+    @Query("SELECT * FROM establecimientos where id = :id")
+    abstract override fun getEstablecimiento(id:Long): Flow<Establecimiento>
+
 //    @Transaction
 //    @Query("select l.id,l.name,l.thumbnail,l.type_label" +
 //            " from (select category_id  from instalaciones " +
@@ -35,4 +39,10 @@ abstract class RoomEstablecimientoDao : EstablecimientoDao, RoomEntityDao<Establ
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract override suspend fun insertSettingEstablecimiento(entity: Setting)
+
+    @Query("DELETE FROM establecimientos where id = :id")
+    abstract override suspend fun delete(id: Long)
+
+    @Query("DELETE FROM establecimientos")
+    abstract override suspend fun deleteAll()
 }

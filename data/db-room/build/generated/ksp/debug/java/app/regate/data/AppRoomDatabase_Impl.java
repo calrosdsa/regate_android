@@ -31,6 +31,8 @@ import app.regate.data.daos.RoomMyGroupsDao;
 import app.regate.data.daos.RoomMyGroupsDao_Impl;
 import app.regate.data.daos.RoomProfileDao;
 import app.regate.data.daos.RoomProfileDao_Impl;
+import app.regate.data.daos.RoomReservaDao;
+import app.regate.data.daos.RoomReservaDao_Impl;
 import app.regate.data.daos.RoomUserDao;
 import app.regate.data.daos.RoomUserDao_Impl;
 import app.regate.data.daos.RoomUserGrupoDao;
@@ -73,6 +75,8 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
 
   private volatile RoomMessageInboxDao _roomMessageInboxDao;
 
+  private volatile RoomReservaDao _roomReservaDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
@@ -96,8 +100,9 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `my_groups` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `group_id` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_establecimiento` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `establecimiento_id` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `message_inbox` (`id` INTEGER NOT NULL, `conversation_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `sender_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `reservas` (`id` INTEGER NOT NULL, `instalacion_id` INTEGER NOT NULL, `instalacion_name` TEXT NOT NULL, `establecimiento_id` INTEGER NOT NULL, `paid` INTEGER NOT NULL, `total_price` INTEGER NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `user_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '813673c9b43f4c00368142f5aa743a34')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7d75fe7626f768962210740e7b0991a4')");
       }
 
       @Override
@@ -115,6 +120,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("DROP TABLE IF EXISTS `my_groups`");
         db.execSQL("DROP TABLE IF EXISTS `favorite_establecimiento`");
         db.execSQL("DROP TABLE IF EXISTS `message_inbox`");
+        db.execSQL("DROP TABLE IF EXISTS `reservas`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -379,9 +385,29 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoMessageInbox + "\n"
                   + " Found:\n" + _existingMessageInbox);
         }
+        final HashMap<String, TableInfo.Column> _columnsReservas = new HashMap<String, TableInfo.Column>(10);
+        _columnsReservas.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsReservas.put("instalacion_id", new TableInfo.Column("instalacion_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsReservas.put("instalacion_name", new TableInfo.Column("instalacion_name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsReservas.put("establecimiento_id", new TableInfo.Column("establecimiento_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsReservas.put("paid", new TableInfo.Column("paid", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsReservas.put("total_price", new TableInfo.Column("total_price", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsReservas.put("start_date", new TableInfo.Column("start_date", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsReservas.put("end_date", new TableInfo.Column("end_date", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsReservas.put("user_id", new TableInfo.Column("user_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsReservas.put("created_at", new TableInfo.Column("created_at", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysReservas = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesReservas = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoReservas = new TableInfo("reservas", _columnsReservas, _foreignKeysReservas, _indicesReservas);
+        final TableInfo _existingReservas = TableInfo.read(db, "reservas");
+        if (!_infoReservas.equals(_existingReservas)) {
+          return new RoomOpenHelper.ValidationResult(false, "reservas(app.regate.models.Reserva).\n"
+                  + " Expected:\n" + _infoReservas + "\n"
+                  + " Found:\n" + _existingReservas);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "813673c9b43f4c00368142f5aa743a34", "debb6a414f9176d69f3bc1b2d4a01a1e");
+    }, "7d75fe7626f768962210740e7b0991a4", "2ca37dddf66f3b6cb4898f4d9c6f6963");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -392,7 +418,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas");
   }
 
   @Override
@@ -421,6 +447,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
       _db.execSQL("DELETE FROM `my_groups`");
       _db.execSQL("DELETE FROM `favorite_establecimiento`");
       _db.execSQL("DELETE FROM `message_inbox`");
+      _db.execSQL("DELETE FROM `reservas`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -450,6 +477,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
     _typeConvertersMap.put(RoomMyGroupsDao.class, RoomMyGroupsDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomFavoriteEstablecimientoDao.class, RoomFavoriteEstablecimientoDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomMessageInboxDao.class, RoomMessageInboxDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(RoomReservaDao.class, RoomReservaDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -632,6 +660,20 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
           _roomMessageInboxDao = new RoomMessageInboxDao_Impl(this);
         }
         return _roomMessageInboxDao;
+      }
+    }
+  }
+
+  @Override
+  public RoomReservaDao reservaDao() {
+    if (_roomReservaDao != null) {
+      return _roomReservaDao;
+    } else {
+      synchronized(this) {
+        if(_roomReservaDao == null) {
+          _roomReservaDao = new RoomReservaDao_Impl(this);
+        }
+        return _roomReservaDao;
       }
     }
   }

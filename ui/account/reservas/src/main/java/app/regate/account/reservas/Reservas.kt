@@ -26,19 +26,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.ui.CommonTopBar
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import app.regate.data.dto.account.reserva.ReservaDto
-import app.regate.discover.ReservasState
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
+import app.regate.models.Reserva
 
 typealias Reservas = @Composable (
     navigateUp:()->Unit,
-    navigateToReserva:(id:Long)->Unit,
+    navigateToReserva:(Long,Long,Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
 
@@ -46,7 +45,7 @@ typealias Reservas = @Composable (
 @Composable
 fun Reservas (
     @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToReserva: (id:Long) -> Unit,
+    @Assisted navigateToReserva: (Long,Long,Long) -> Unit,
     viewModelFactory:()-> ReservasViewModel
 ){
 
@@ -60,7 +59,7 @@ fun Reservas (
 @Composable
 internal fun Reservas(
     viewModel: ReservasViewModel,
-    navigateToReserva: (id: Long) -> Unit,
+    navigateToReserva: (Long,Long,Long) -> Unit,
     navigateUp: () -> Unit
 ){
     val viewState by viewModel.state.collectAsState()
@@ -83,7 +82,7 @@ internal fun Reservas(
     viewState: ReservasState,
     formatterDate:(Instant)->String,
     formatterDateReserva:(start:Instant,end:Instant)->String,
-    navigateToReserva: (id: Long) -> Unit,
+    navigateToReserva: (Long,Long,Long) -> Unit,
     navigateUp: () -> Unit
     ) {
     Scaffold(
@@ -101,7 +100,7 @@ internal fun Reservas(
                     item = reserva,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { navigateToReserva(reserva.id) }
+                        .clickable { navigateToReserva(reserva.id,reserva.establecimiento_id,reserva.instalacion_id) }
                         .padding(10.dp),
                     formatterDate = formatterDate,
                     formatterDateReserva = formatterDateReserva
@@ -114,16 +113,14 @@ internal fun Reservas(
 
 @Composable
 fun ReservaItem(
-    item:ReservaDto,
+    item: Reserva,
     formatterDate: (Instant) -> String,
     formatterDateReserva:(Instant,Instant)->String,
     modifier:Modifier =Modifier
 ) {
     Column(modifier = modifier) {
-        item.instalacion_name?.let {
-            Text(text = it, style = MaterialTheme.typography.titleMedium,
+        Text(text = item.instalacion_name, style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.primary)
-        }
         Text(
             text = "Hora de la reserva",
             style = MaterialTheme.typography.labelLarge

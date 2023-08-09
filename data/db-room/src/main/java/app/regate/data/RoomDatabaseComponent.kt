@@ -29,6 +29,7 @@ import app.regate.data.daos.MessageInboxDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.ProfileDao
+import app.regate.data.daos.ReservaDao
 import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
 import app.regate.data.db.AppDatabase
@@ -52,6 +53,8 @@ interface RoomDatabaseComponent {
     }
     @Provides
     fun provideAppDatabase(bind: AppRoomDatabase): AppDatabase = bind
+    @Provides
+    fun provideReservaDao(db: AppDatabase):ReservaDao = db.reservaDao()
     @Provides
     fun provideMessageInboxDao(db:AppDatabase):MessageInboxDao = db.messageInboxDao()
     @Provides

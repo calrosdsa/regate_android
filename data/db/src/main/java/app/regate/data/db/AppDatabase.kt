@@ -10,6 +10,7 @@ import app.regate.data.daos.MessageInboxDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.ProfileDao
+import app.regate.data.daos.ReservaDao
 import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
 
@@ -26,4 +27,5 @@ interface AppDatabase {
     fun myGroupsDao():MyGroupsDao
     fun favoriteEstablecimientos():FavoriteEstablecimientoDao
     fun messageInboxDao():MessageInboxDao
+    fun reservaDao():ReservaDao
 }

@@ -53,10 +53,10 @@ internal fun EnabledNotification(
             Image(painter = painterResource(id = R.drawable.notification_image), contentDescription = null,
             modifier = Modifier
                 .size(200.dp), contentScale = ContentScale.Fit)
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(60.dp))
                 
-                Text(text = stringResource(id = R.string.do_you_want_receive_notifications),
-                textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineLarge)
+//                Text(text = stringResource(id = R.string.do_you_want_receive_notifications),
+//                textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineLarge)
 
                 Spacer(modifier = Modifier.height(40.dp))
 

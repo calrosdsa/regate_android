@@ -29,10 +29,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.components.card.InstalacionCard
 import app.regate.common.composes.components.dialog.DialogConfirmation
 import app.regate.common.composes.ui.PosterCardImage
+import app.regate.common.resources.R
 import app.regate.compoundmodels.InstalacionCupos
 import kotlinx.datetime.Instant
 import kotlin.time.Duration.Companion.minutes
@@ -54,6 +56,8 @@ internal  fun Page2(
 //                .padding(bottom = 60.dp),
 //            horizontalArrangement = Arrangement.SpaceBetween
         ) {
+                Text(text = stringResource(id = R.string.choose_the_time_and_place),style = MaterialTheme.typography.titleMedium,
+                    modifier =  Modifier.padding(10.dp))
 //            Spacer(modifier = Modifier.height(100.dp))
             Box(modifier = Modifier.height(400.dp)){
             reservarInstalacion()

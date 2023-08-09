@@ -50,6 +50,9 @@ class GrupoRepository(
     private val myGroupsDao: MyGroupsDao,
     private val profileMapper:UserGroupDtoToProfile
 ){
+    suspend fun getGroupsWhereUserIsAdmin():List<GrupoDto>{
+        return grupoDataSourceImpl.getGroupsWhereUserIsAdmin()
+    }
     suspend fun myGroups(){
         withContext(dispatchers.computation){
             val grupos = grupoDataSourceImpl.myGroups().map { dtoToGrupo.map(it) }

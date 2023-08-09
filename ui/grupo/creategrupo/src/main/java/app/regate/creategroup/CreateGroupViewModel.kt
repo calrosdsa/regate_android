@@ -64,11 +64,11 @@ class CreateGroupViewModel(
     }
 
     @SuppressLint("SuspiciousIndentation")
-    fun createGroup(name: String, description: String, visibility: Int, navigateToGroup:(Long)->Unit,
-    openBottonAuth:()->Unit,removeLoader:()->Unit) {
+    fun createGroup(name: String, description: String, visibility: Int,
+    openBottonAuth:()->Unit,removeLoader:()->Unit,navigateUp:()->Unit) {
         viewModelScope.launch {
             try{
-                val res =  grupoRepository.createGrupo(GroupRequest(
+                 grupoRepository.createGrupo(GroupRequest(
                    name = name,
                    description = description,
                    visibility = visibility,
@@ -76,7 +76,8 @@ class CreateGroupViewModel(
                     id = groupId,
                     photo_url = state.value.group?.photo
                 ))
-                navigateToGroup(res.id)
+                navigateUp()
+//                uiMessageManager.emitMessage(UiMessage(message = "El grupo se ha creado exitosamente."))
                 removeLoader()
             }catch (e:ResponseException){
                 if(e.response.status == HttpStatusCode.Unauthorized){

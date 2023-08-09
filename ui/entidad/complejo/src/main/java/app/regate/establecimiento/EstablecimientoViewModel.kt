@@ -9,6 +9,7 @@ import androidx.savedstate.SavedStateRegistry
 import app.regate.api.UiMessageManager
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.domain.interactors.UpdateEstablecimiento
+import app.regate.domain.interactors.UpdateEstablecimientoDetail
 import app.regate.domain.observers.ObserveEstablecimientoDetail
 import app.regate.domain.observers.ObserveInstalacionCategoryCount
 import app.regate.domain.observers.ObserveLabelByIds
@@ -36,7 +37,7 @@ class EstablecimientoViewModel(
     observeEstablecimientoDetail: ObserveEstablecimientoDetail,
     observeAmenities: ObserveLabelByIds,
     observeRules:ObserveLabelByIds,
-    private val updateEstablecimiento: UpdateEstablecimiento,
+    private val updateEstablecimiento: UpdateEstablecimientoDetail,
     private val establecimientoRepository:EstablecimientoRepository
 
 //    private val salaRepository: SalaRepository
@@ -120,7 +121,7 @@ class EstablecimientoViewModel(
     fun getStablecimiento(){
         viewModelScope.launch {
             updateEstablecimiento(
-                UpdateEstablecimiento.Params(establecimientoId)
+                UpdateEstablecimientoDetail.Params(establecimientoId)
             ).collectStatus(loadingState,uiMessageManager)
         }
     }

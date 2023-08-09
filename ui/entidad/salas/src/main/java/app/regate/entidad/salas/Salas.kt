@@ -1,9 +1,12 @@
 package app.regate.entidad.salas
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,6 +27,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.LocalAppDateFormatter
@@ -35,6 +39,7 @@ import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 
 import me.tatarka.inject.annotations.Inject
+import app.regate.common.resources.R
 
 typealias Salas = @Composable (
     navigateToSala: (id:Long) ->Unit,
@@ -90,11 +95,18 @@ internal fun Salas(
             .pullRefresh(refreshState)
             .fillMaxSize()
             .padding(paddingValues)) {
-            TextButton(onClick = { crearSala() }) {
-                Text(text = "Crear una sala",style = MaterialTheme.typography.titleSmall)
-            }
+
             Spacer(modifier = Modifier.height(10.dp))
             LazyColumn(){
+                item {
+                    Row(modifier = Modifier.fillMaxWidth().padding(vertical = 5.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                        Text(text = stringResource(id = R.string.rooms),style = MaterialTheme.typography.titleLarge)
+                        TextButton(onClick = { crearSala() }) {
+                            Text(text = "Crear una sala",style = MaterialTheme.typography.titleSmall)
+                        }
+                    }
+                }
                 if(viewState.loading) {
                     items(5){
                         SalaItemSkeleton()

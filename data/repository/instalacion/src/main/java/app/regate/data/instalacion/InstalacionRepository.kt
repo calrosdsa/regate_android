@@ -47,28 +47,29 @@ class InstalacionRepository(
         return instalacionDao.observeInstalacionesAvailables(ids)
     }
     suspend fun getInstalacionesAvailables(d:InstalacionRequest):InstalacionesAvailables{
-        return instalacionDataSourceImpl.getInstalacionesAvailables(d).also {
-            withContext(dispatchers.computation){
-                try{
-                    establecimientoDao.upsert(Establecimiento(
-                        name = "",
-                        id =  it.instalaciones[0].establecimiento_id
-                    ))
-                    val instalaciones = it.instalaciones.map {
-                        Instalacion(
-                            name = it.name,
-                            portada = it.portada,
-                            establecimiento_id = it.establecimiento_id,
-                            id = it.instalacion_id,
-                            category_id = it.category_id
-                        )
-                    }
-                    instalacionDao.upsertAll(instalaciones)
-                }catch (e:Exception){
-                    //TODO()
-                }
-            }
-        }
+        return instalacionDataSourceImpl.getInstalacionesAvailables(d)
+//            .also {
+//            withContext(dispatchers.computation){
+//                try{
+//                    establecimientoDao.upsert(Establecimiento(
+//                        name = "",
+//                        id =  it.instalaciones[0].establecimiento_id
+//                    ))
+//                    val instalaciones = it.instalaciones.map {
+//                        Instalacion(
+//                            name = it.name,
+//                            portada = it.portada,
+//                            establecimiento_id = it.establecimiento_id,
+//                            id = it.instalacion_id,
+//                            category_id = it.category_id
+//                        )
+//                    }
+//                    instalacionDao.upsertAll(instalaciones)
+//                }catch (e:Exception){
+//                    //TODO()
+//                }
+//            }
+//        }
     }
     fun observeInstalaciones(id:Long): Flow<List<Instalacion>>{
         return instalacionDao.observeInstalaciones(id)

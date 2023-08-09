@@ -5,10 +5,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
-import app.regate.data.dto.account.reserva.ReservaDetail
-import app.regate.data.reserva.ReservaRepository
+import app.regate.domain.interactors.UpdateEstablecimiento
+import app.regate.domain.interactors.UpdateInstalacion
+import app.regate.domain.observers.ObserveReservaDetail
 import app.regate.util.ObservableLoadingCounter
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -20,16 +20,21 @@ import me.tatarka.inject.annotations.Inject
 @Inject
 class ReservaViewModel(
     @Assisted savedStateHandle: SavedStateHandle,
-    private val reservaRepository: ReservaRepository
+    observeReservaDetail: ObserveReservaDetail,
+    private val updateEstablecimiento: UpdateEstablecimiento,
+    private val updateInstalacion: UpdateInstalacion,
 ):ViewModel() {
     private val reservaId = savedStateHandle.get<Long>("id") ?: 0
+    private val instalacionId = savedStateHandle.get<Long>("instalacion_id") ?: 0
+    private val establecimientoId = savedStateHandle.get<Long>("establecimiento_id") ?: 0
+
     private val loadingCounter =ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
-    private val data = MutableStateFlow<ReservaDetail?>(null)
+
     val state:StateFlow<ReservaState> = combine(
         loadingCounter.observable,
         uiMessageManager.message,
-        data,
+        observeReservaDetail.flow,
     ){loading,message,data->
         ReservaState(
             loading = loading,
@@ -44,14 +49,15 @@ class ReservaViewModel(
 
     init{
         Log.d("DEBUG_APP_","RESERVA ID $reservaId")
+        observeReservaDetail(ObserveReservaDetail.Params(id = reservaId))
         getData()
     }
 
     fun getData(){
         viewModelScope.launch {
             try{
-                val res = reservaRepository.getReserva(reservaId)
-                data.emit(res)
+                updateEstablecimiento.executeSync(UpdateEstablecimiento.Params(id = establecimientoId))
+                updateInstalacion.executeSync(UpdateInstalacion.Params(id = instalacionId))
             }catch (e:Exception){
                 Log.d("DEBUG_APP",e.localizedMessage?:"")
             }

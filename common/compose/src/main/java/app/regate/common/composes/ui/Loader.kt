@@ -14,10 +14,10 @@ fun Loader(
     modifier: Modifier = Modifier
 ){
     Box(
-        Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(24.dp),
     ) {
-        CircularProgressIndicator(modifier.align(Alignment.Center))
+        CircularProgressIndicator(Modifier.align(Alignment.Center))
     }
 }

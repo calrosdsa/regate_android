@@ -2,7 +2,6 @@ package app.regate.data.reserva
 
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.ResponseMessage
-import app.regate.data.dto.account.reserva.ReservaDetail
 import app.regate.data.dto.account.reserva.ReservaDto
 import app.regate.data.dto.account.reserva.ReservaRequest
 import io.ktor.client.HttpClient
@@ -20,7 +19,7 @@ class ReservaDataSourceImpl(
     private val client:HttpClient,
     private val authStore: AuthStore
 ): ReservaDataSource {
-    override suspend fun getReserva(id: Long): ReservaDetail {
+    override suspend fun getReserva(id: Long): ReservaDto {
         val token = authStore.get()?.accessToken
         return client.get("/v1/reserva/${id}/"){
             header("Authorization","Bearer $token")

@@ -28,4 +28,9 @@ abstract class RoomInstalacionDao: InstalacionDao,RoomEntityDao<Instalacion> {
             "inner join labels as l on l.id = i.category_id and type_label = :type;")
     abstract override fun observeGroupInstalacionByCategory(id:Long,type:LabelType): Flow<List<InstalacionCategoryCount>>
 
+    @Query("DELETE from instalaciones where id = :id")
+    abstract override suspend fun delete(id: Long)
+
+    @Query("DELETE FROM instalaciones")
+    abstract override suspend fun deleteAll()
 }

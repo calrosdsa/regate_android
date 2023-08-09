@@ -52,6 +52,7 @@ string chat_message_channel_name
 string chat_notification_id
 string chat_notification_name
 string choose_a_schedule
+string choose_the_time_and_place
 string choose_where_create_room
 string clear_all
 string continuar
@@ -116,6 +117,7 @@ string save_image
 string saved_correctly
 string search_nearby_places
 string see
+string select_group_text
 string services
 string settings
 string show_less

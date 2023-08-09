@@ -121,22 +121,26 @@ internal fun Reserva(
                         .padding(8.dp), verticalAlignment = Alignment.CenterVertically
                 ) {
                     PosterCardImage(
-                        model = data.establecimiento.photo ?: "", modifier = Modifier
+                        model = data.establecimiento?.photo ?: "", modifier = Modifier
                             .clickable {
-                                navigateToEstablecimiento(
-                                    data.establecimiento.id.toLong()
-                                )
+                                data.establecimiento?.id?.let {
+                                    navigateToEstablecimiento(
+                                        it
+                                    )
+                                }
                             }
                             .size(55.dp), shape = CircleShape
                     )
                     Spacer(modifier = Modifier.width(10.dp))
                     Column() {
                         Text(
-                            text = data.establecimiento.name, modifier = Modifier
+                            text = data.establecimiento?.name?:"", modifier = Modifier
                                 .clickable {
-                                    navigateToEstablecimiento(
-                                        data.establecimiento.id.toLong()
-                                    )
+                                    data.establecimiento?.let {
+                                        navigateToEstablecimiento(
+                                            it.id
+                                        )
+                                    }
                                 }
                                 .padding(5.dp),
                             style = MaterialTheme.typography.titleMedium,
@@ -144,7 +148,7 @@ internal fun Reserva(
                             overflow = TextOverflow.Ellipsis
                         )
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                            .clickable { navigateToConversation(data.establecimiento.id.toLong()) }) {
+                            .clickable { data.establecimiento?.id?.let { navigateToConversation(it) } }) {
                             Icon(
                                 imageVector = Icons.Default.Chat,
                                 contentDescription = null,
@@ -206,37 +210,37 @@ internal fun Reserva(
                     .height(110.dp)
                     .padding(vertical = 5.dp)
                     .fillMaxWidth()) {
-                    PosterCardImageDark(model = data.instalacion.portada)
+                    PosterCardImageDark(model = data.instalacion?.portada)
                     Text(
-                        text = data.instalacion.name, modifier = Modifier
+                        text = data.instalacion?.name?:"", modifier = Modifier
                             .align(Alignment.BottomStart)
                             .padding(5.dp),
                         style = MaterialTheme.typography.labelLarge, color = Color.White
                     )
                 }
                 Spacer(modifier = Modifier.height(5.dp))
-                data.instalacion.description?.let {
+                data.instalacion?.description?.let {
                     Text(
                         text = it,
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                PosterCardImage(model = data.establecimiento.address_photo,
+                PosterCardImage(model = data.establecimiento?.address_photo,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
                         .clickable {
                             openMap(
-                                data.establecimiento.longitud,
-                                data.establecimiento.latitud,
-                                data.establecimiento.name,
+                                data.establecimiento?.longitud,
+                                data.establecimiento?.latidud,
+                                data.establecimiento?.name,
                             )
                         }
                 )
 
                 Text(
-                    text = data.establecimiento.address ?: "",
+                    text = data.establecimiento?.address ?: "",
                     style = MaterialTheme.typography.titleSmall
                 )
             }

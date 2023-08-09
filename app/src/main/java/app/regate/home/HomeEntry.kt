@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -195,7 +196,7 @@ internal fun AppNavigation(
                 salas = {
                     composeScreens.establecimientoSalas(
                         navigateToSala = { navController.navigate(Route.SALA id it ) },
-                        crearSala = { navController.navigate(Route.CREAR_SALA id it) }
+                        crearSala = { navController.navigate(Route.CREAR_SALA id it id 0) }
                     )
                 },
                 currentPage = page.toInt(),
@@ -251,6 +252,11 @@ internal fun AppNavigation(
                         navigateToReservaDetail = { _, _ ->},
                         category = 0
                     )
+                },
+                navigateToCreateGroup = { navController.navigate(Route.CREATE_GROUP)},
+                navigateToGroup = {navController.navigate(Route.GRUPO id it){
+                    popUpTo(navController.graph.findStartDestination().id)
+                }
                 }
             )
         }
@@ -332,10 +338,13 @@ internal fun AppNavigation(
             )
         }
         animatedComposable(
-            route = Route.RESERVA_DETAIL arg "id",
+            route = Route.RESERVA_DETAIL arg "id" arg "establecimiento_id" arg "instalacion_id",
             arguments = listOf(
                 navArgument("id") { type = NavType.LongType },
-            )
+                navArgument("establecimiento_id") { type = NavType.LongType },
+                navArgument("instalacion_id") { type = NavType.LongType },
+
+                )
         ){
             composeScreens.reserva(
                 navigateUp = navController::navigateUp,
@@ -348,8 +357,8 @@ internal fun AppNavigation(
         ){
             composeScreens.reservas(
                 navigateUp = navController::navigateUp,
-                navigateToReserva={
-                    navController.navigate(Route.RESERVA_DETAIL id it)
+                navigateToReserva={reservaId,establecimientoId,instalacionId->
+                    navController.navigate(Route.RESERVA_DETAIL id reservaId id establecimientoId id instalacionId)
                 }
             )
         }
@@ -370,9 +379,9 @@ internal fun AppNavigation(
         ){
             composeScreens.createGroup(
                 navigateUp = navController::navigateUp,
-                navigateToGroup = { navController.navigate(Route.GRUPO id it){
-                    popUpTo(Route.GRUPOS)
-                } },
+//                navigateToGroup = { navController.navigate(Route.GRUPO id it){
+//                    popUpTo(Route.GRUPOS)
+//                } },
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)}
 //                groupId = backStackEntry.arguments?.getLong("id")?:0
             )
