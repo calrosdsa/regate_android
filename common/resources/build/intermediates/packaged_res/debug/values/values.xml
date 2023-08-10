@@ -75,6 +75,7 @@
     <string name="price_range">Rango de precios</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privado">Privado</string>
+    <string name="problem_with_room">There was a problem with your room</string>
     <string name="publico">Public</string>
     <string name="purchase">Purchase</string>
     <string name="qr_code_payment">QR code payment</string>

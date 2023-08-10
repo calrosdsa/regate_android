@@ -51,6 +51,7 @@
     <string name="price_range">Rango de precios</string>
     <string name="privacy_policy">Política de Privacidad</string>
     <string name="privado">Privado</string>
+    <string name="problem_with_room">Se presentó un problema con tu sala.</string>
     <string name="publico">Público</string>
     <string name="purchase">Recargar</string>
     <string name="qr_code_payment">Pago con código QR</string>

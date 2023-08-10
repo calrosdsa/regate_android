@@ -88,4 +88,5 @@
     <string name="what_is_your_location">What is your location</string>
     <string name="select_group_text">¿En qué grupo te gustaría crear esta sala?</string>
     <string name="choose_the_time_and_place">Elije la hora y el lugar</string>
+    <string name="problem_with_room">Se presentó un problema con tu sala.</string>
 </resources>

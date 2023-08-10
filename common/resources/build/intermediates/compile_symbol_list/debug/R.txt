@@ -99,6 +99,7 @@ int string permission_required 0x0
 int string price_range 0x0
 int string privacy_policy 0x0
 int string privado 0x0
+int string problem_with_room 0x0
 int string publico 0x0
 int string purchase 0x0
 int string qr_code_payment 0x0

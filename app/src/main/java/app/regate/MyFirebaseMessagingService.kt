@@ -28,6 +28,7 @@ import androidx.work.WorkerParameters
 import app.regate.common.resources.R
 import app.regate.data.AppRoomDatabase
 import app.regate.data.dto.notifications.MessageGroupPayload
+import app.regate.data.dto.notifications.SalaConflict
 import app.regate.data.dto.notifications.SalaPayload
 import app.regate.data.dto.notifications.TypeNotification
 import app.regate.home.MainActivity
@@ -50,7 +51,7 @@ import kotlinx.serialization.json.Json
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.IO + job)
-
+    private val handler = HandleNotifications()
 
     //    @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("SuspiciousIndentation")
@@ -58,7 +59,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: ${remoteMessage.from}")
-        if (isAppRunning(applicationContext)) return
+
+//        if (isAppRunning(applicationContext)) return
         Log.d(TAG, "App no running send notifications")
         val data = remoteMessage.data
         // Check if message contains a data payload.
@@ -81,7 +83,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 try{
 
                 val newSala = Json.decodeFromString<SalaPayload>(data["payload"].toString())
-                sendNotificationSalaCreation(applicationContext,newSala)
+                handler.sendNotificationSalaCreation(applicationContext,newSala)
+                }catch (e:Exception){
+                    Log.d(TAG,e.localizedMessage?:"")
+                }
+            }
+            if(TypeNotification.NOTIFICATION_SALA_RESERVATION_CONFLICT.ordinal == data["type"]?.toInt()){
+                try{
+                    val payload = Json.decodeFromString<SalaConflict>(data["payload"].toString())
+                    handler.sendNotificationSalaConflict(applicationContext,payload)
                 }catch (e:Exception){
                     Log.d(TAG,e.localizedMessage?:"")
                 }
@@ -100,42 +110,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.d(TAG, "Message Notification Body: ${it.body}")
         }
     }
-    private fun sendNotificationSalaCreation(context:Context,payload:SalaPayload){
-        try{
 
-        val taskDetailIntent = Intent(
-            Intent.ACTION_VIEW,
-            "https://example.com/sala_id=${payload.id}".toUri(),
-            this,
-            MainActivity::class.java
-        )
-        val taskBuilder = TaskStackBuilder.create(this)
-        taskBuilder.addNextIntentWithParentStack(taskDetailIntent)
-        val pendingIntent = taskBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
-        val CHANNEL_ID = context.getString(R.string.notification_sala_channel)
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(context.getString(R.string.new_room_created))
-            .setContentText(payload.titulo)
-            .setSmallIcon(R.drawable.logo_app)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-            .build()
-
-        with(NotificationManagerCompat.from(this)) {
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
-            }
-//            Log.d(TAG,"SENDIN NOTIFICATION")
-            notify(payload.id.toInt(), notification)
-        }
-        }catch(e:Exception){
-            Log.d(TAG,e.localizedMessage?:"")
-        }
-    }
 
     @SuppressLint("RestrictedApi")
     private suspend fun sendNotificationGroupMessage(
@@ -253,7 +228,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
     companion object {
-        private const val TAG = "MyFirebaseMsgService"
+        private const val TAG = "DEBUG_APP_NOTIFICATIONS"
     }
 
     private fun isAppRunning(context: Context): Boolean {

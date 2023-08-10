@@ -8,6 +8,7 @@ import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.InstalacionCupos
 import app.regate.data.daos.CupoDao
+import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.salas.SalaRequestDto
 import app.regate.data.grupo.GrupoRepository
@@ -15,6 +16,7 @@ import app.regate.data.sala.SalaRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
+import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.delay
@@ -92,6 +94,7 @@ class CreateSalaViewModel(
                             salaData.value.copy(
                                 category_id = instalacionCupos1.instalacion.category_id ?: 0,
                                 instalacion_id = instalacionCupos1.instalacion.id,
+                                horas = instalacionCupos1.cupos.map { it.time },
                                 establecimiento_id = instalacionCupos1.instalacion.establecimiento_id,
                                 start_time = instalacionCupos1.cupos.first().time.toLocalDateTime(TimeZone.UTC).time.toString(),
                                 end_time = instalacionCupos1.cupos.last().time.toLocalDateTime(TimeZone.UTC).time.toString(),
@@ -110,9 +113,10 @@ class CreateSalaViewModel(
         viewModelScope.launch {
             try{
                 loadingState.addLoader()
+                if(state.value.selectedGroup == null && state.value.selectedGroup == 0L){
                 enableToContinue.tryEmit(false)
+                }
                 val res = grupoRepository.getGroupsWhereUserIsAdmin()
-                delay(2000)
                 loadingState.removeLoader()
                 Log.d("DEBUG_APP_RES",res.toString())
                 grupos.tryEmit(res)
@@ -174,7 +178,7 @@ class CreateSalaViewModel(
                         uiMessageManager.emitMessage(UiMessage(message = "Usuario no authorizado"))
                     }
                     else ->{
-                        uiMessageManager.emitMessage(UiMessage(message = "No se pudo crear el grupo"))
+                        uiMessageManager.emitMessage(UiMessage(message = e.response.body<ResponseMessage>().message))
                     }
                 }
                 Log.d("DEBUG_APP_ERROR_1", e.localizedMessage ?: "")

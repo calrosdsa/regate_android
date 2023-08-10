@@ -36,6 +36,7 @@ data class SalaRequestDto(
 //    val id: Long,
     val instalacion_id: Long = 0,
     val precio: Int = 100000,
+    val horas:List<Instant> = emptyList(),
     val titulo: String = "",
     val start_time:String = "",
     val end_time:String = "",

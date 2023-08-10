@@ -123,6 +123,7 @@
     <string name="what_is_your_location">What is your location</string>
     <string name="select_group_text">In which group would you like to create this room?</string>
     <string name="choose_the_time_and_place" >Choose the time and place</string>
+    <string name="problem_with_room">There was a problem with your room</string>
 
 
 </resources>

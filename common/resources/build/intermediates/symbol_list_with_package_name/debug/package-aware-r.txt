@@ -100,6 +100,7 @@ string permission_required
 string price_range
 string privacy_policy
 string privado
+string problem_with_room
 string publico
 string purchase
 string qr_code_payment
