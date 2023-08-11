@@ -59,6 +59,7 @@
     <string name="remove_user">Remover este  usuario del grupo</string>
     <string name="remove_user_admin">Revocar el estatus de administrador</string>
     <string name="reservation_date">Fecha de la Reserva</string>
+    <string name="room_has_been_reserved">La reserva ha sido confirmada</string>
     <string name="rooms">Salas</string>
     <string name="rules_of_the_place">Reglas del lugar</string>
     <string name="sala_help_text">En una sala se determina la hora, el lugar y los detalles de juego, incluyendo la capacidad máxima de personas y el precio por cupo.</string>

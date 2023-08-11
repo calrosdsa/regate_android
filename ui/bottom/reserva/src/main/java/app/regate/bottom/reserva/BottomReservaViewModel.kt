@@ -115,7 +115,7 @@ class BottomReservaViewModel(
                 val endTime = state.value.cupos.last().time.toLocalDateTime(TimeZone.UTC).toJavaLocalDateTime().plusMinutes(30)
 //                Log.d("DEBUG_APP_DATE",endTime.toString())
                 val res = reservaRepository.confirmarReservas(state.value.cupos,
-                    totalPrice.value!!,totalPrice.value!!,endTime.toString(),establecimientoId)
+                    totalPrice.value!!,totalPrice.value!!,endTime.toString(),establecimientoId,instalacionId)
                 Log.d("DEBUG_APP","ESTABLECIIENTO_ID $establecimientoId")
                 delay(1000)
 //                uiMessageManager.emitMessage(UiMessage(message = "Se ha completado el proceso"))

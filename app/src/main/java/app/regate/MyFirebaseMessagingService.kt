@@ -28,7 +28,7 @@ import androidx.work.WorkerParameters
 import app.regate.common.resources.R
 import app.regate.data.AppRoomDatabase
 import app.regate.data.dto.notifications.MessageGroupPayload
-import app.regate.data.dto.notifications.SalaConflict
+import app.regate.data.dto.notifications.MessagePayload
 import app.regate.data.dto.notifications.SalaPayload
 import app.regate.data.dto.notifications.TypeNotification
 import app.regate.home.MainActivity
@@ -90,8 +90,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
             if(TypeNotification.NOTIFICATION_SALA_RESERVATION_CONFLICT.ordinal == data["type"]?.toInt()){
                 try{
-                    val payload = Json.decodeFromString<SalaConflict>(data["payload"].toString())
+                    val payload = Json.decodeFromString<MessagePayload>(data["payload"].toString())
                     handler.sendNotificationSalaConflict(applicationContext,payload)
+                }catch (e:Exception){
+                    Log.d(TAG,e.localizedMessage?:"")
+                }
+            }
+            if(TypeNotification.NOTIFICATION_SALA_HAS_BEEN_RESERVED.ordinal == data["type"]?.toInt()){
+                try{
+                    val payload = Json.decodeFromString<MessagePayload>(data["payload"].toString())
+                    handler.sendNotificationSalaHasBeenReserved(applicationContext,payload)
                 }catch (e:Exception){
                     Log.d(TAG,e.localizedMessage?:"")
                 }

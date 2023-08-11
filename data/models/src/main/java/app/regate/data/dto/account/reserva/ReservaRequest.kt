@@ -9,7 +9,8 @@ data class ReservaRequest(
    val total_price:Int,
    val paid:Int,
    val end_time:String,
-   val establecimiento_id:Long
+   val establecimiento_id:Long,
+   val instalacion_id: Long,
 )
 
 @Serializable

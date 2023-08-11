@@ -108,6 +108,7 @@ string recommended_places
 string remove_user
 string remove_user_admin
 string reservation_date
+string room_has_been_reserved
 string rooms
 string rules_of_the_place
 string sala_help_text

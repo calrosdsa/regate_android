@@ -50,10 +50,10 @@ class ReservaRepository(
         }
     }
 
-    suspend fun confirmarReservas(data: List<Cupo>, totalPrice: Int,paid:Int,endTime:String,establecimientoId:Long): ResponseMessage {
+    suspend fun confirmarReservas(data: List<Cupo>, totalPrice: Int,paid:Int,endTime:String,establecimientoId:Long,instalacionId:Long): ResponseMessage {
         val cupos = data.map { cupoToReservaRequest.map(it) }
         val requestData = ReservaRequest(cupos = cupos, total_price = totalPrice,
-            paid = paid, end_time = endTime,establecimiento_id = establecimientoId)
+            paid = paid, end_time = endTime,establecimiento_id = establecimientoId,instalacion_id = instalacionId)
         return reservaDataSourceImpl.confirmarReservas(requestData)
     }
 }

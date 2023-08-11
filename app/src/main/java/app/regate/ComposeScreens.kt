@@ -25,7 +25,7 @@ import app.regate.servicios.Servicios
 import app.regate.auth.signin.Login
 import app.regate.bottom.auth.BottomAuth
 import app.regate.bottom.auth.Map
-import app.regate.bottom.reserva.BottomReserva
+import app.regate.bottom.reserva.Reservar
 import app.regate.entidad.salas.Salas
 import app.regate.establecimiento.Establecimiento
 import app.regate.instalacion.InstalacionDetail
@@ -35,8 +35,7 @@ import app.regate.coin.paid.Pay
 import app.regate.coin.recargar.Recargar
 import app.regate.inbox.Conversations
 import app.regate.creategroup.CreateGroup
-import app.regate.createsala.CreateSala
-import app.regate.createsala.establecimiento.EstablecimientoFilter
+import app.regate.create.sala.establecimiento.EstablecimientoFilter
 import app.regate.discover.DiscoverScreen
 import app.regate.discover.filter.Filter
 import app.regate.entidad.actividades.ActividadesEstablecimiento
@@ -51,6 +50,7 @@ import app.regate.profile.edit.EditProfile
 import app.regate.sala.Sala
 import app.regate.settings.Setting
 import app.regate.auth.signup.SignUp
+import app.regate.create.sala.CreateSala
 import app.regate.filterSalas.FilterSalas
 import app.regate.sala.grupo.GrupoSalas
 import app.regate.welcome.Welcome
@@ -70,7 +70,7 @@ class ComposeScreens(
     val actividades: Actividades,
     val establecimiento: Establecimiento,
     val instalacion: InstalacionDetail,
-    val bottomReserva:BottomReserva,
+    val bottomReserva:Reservar,
     val bottomAuth:BottomAuth,
 
     val map:Map,
@@ -86,7 +86,7 @@ class ComposeScreens(
     val sala: Sala,
     val filterSalas:FilterSalas,
     val chatSala: ChatSala,
-    val createSala:CreateSala,
+    val createSala: CreateSala,
     val settings:Setting,
     val favorites:Favorites,
     val conversation:Conversation,
@@ -101,6 +101,6 @@ class ComposeScreens(
     val filterGroups:FilterGroups,
     val createGroup: CreateGroup,
 
-    val establecimientoFilter:EstablecimientoFilter
+    val establecimientoFilter: EstablecimientoFilter
 
     )

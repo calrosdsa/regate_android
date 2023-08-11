@@ -83,6 +83,7 @@
     <string name="remove_user">Remove this user from the group</string>
     <string name="remove_user_admin">Revoke administrator status</string>
     <string name="reservation_date">Reservation date</string>
+    <string name="room_has_been_reserved">The reservation has been confirmed</string>
     <string name="rooms">Rooms</string>
     <string name="rules_of_the_place">Rules of the place</string>
     <string name="sala_help_text">In a room, the time, location, and game details are determined, including
