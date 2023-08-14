@@ -41,6 +41,8 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
 
   private final SharedSQLiteStatement __preparedStmtOfDeleteUserGroup;
 
+  private final SharedSQLiteStatement __preparedStmtOfDeleteUsersGroup;
+
   private final SharedSQLiteStatement __preparedStmtOfUpdateUser;
 
   private final EntityUpsertionAdapter<UserGrupo> __upsertionAdapterOfUserGrupo;
@@ -90,7 +92,15 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
       @Override
       @NonNull
       public String createQuery() {
-        final String _query = "DELETE FROM user_grupo where id = ?";
+        final String _query = "DELETE FROM user_grupo where  id = ?";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfDeleteUsersGroup = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "DELETE FROM user_grupo where  grupo_id = ?";
         return _query;
       }
     };
@@ -106,7 +116,7 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `user_grupo` (`id`,`profile_id`,`grupo_id`,`is_admin`) VALUES (?,?,?,?)";
+        return "INSERT INTO `user_grupo` (`id`,`profile_id`,`grupo_id`,`is_admin`) VALUES (nullif(?, 0),?,?,?)";
       }
 
       @Override
@@ -215,6 +225,29 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
         } finally {
           __db.endTransaction();
           __preparedStmtOfDeleteUserGroup.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object deleteUsersGroup(final long groupId,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteUsersGroup.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, groupId);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteUsersGroup.release(_stmt);
         }
       }
     }, continuation);

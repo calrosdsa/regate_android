@@ -395,7 +395,6 @@ internal fun Grupo(
                     spacerLazyList()
                     items(
                         items = viewState.usersProfileGrupo,
-                        key = { it.id }
                     ) { profile ->
                         ProfileItem(
                             id = profile.id,

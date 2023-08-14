@@ -146,10 +146,15 @@ internal fun MainPage(
                     .padding(2.dp))
         }
         Spacer(modifier = Modifier.height(10.dp))
-        InputForm(value = description,
-            onValueChange = {if(it.length < 255){onChangeDescription(it)}},
+        InputForm(
+            value = description,
+            onValueChange = {
+                if (it.length < 255) {
+                    onChangeDescription(it)
+                }
+            },
 //                placeholder = "Descripcion de la creacion del grupo",
-            label = "Descripcióm",
+            label = stringResource(id = R.string.description),
             modifier = Modifier.height(160.dp),
             maxLines = 5,
 //                maxCharacters = 255,
@@ -168,15 +173,19 @@ internal fun MainPage(
             style = MaterialTheme.typography.titleSmall,color = MaterialTheme.colorScheme.primary,
             modifier= Modifier.padding(5.dp))
 
-        Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.fillMaxWidth()
-            .clickable { onChangeVisibility(GroupVisibility.PUBLIC.ordinal) }.padding(5.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onChangeVisibility(GroupVisibility.PUBLIC.ordinal) }
+            .padding(5.dp)) {
             RadioButton(selected = visibility == GroupVisibility.PUBLIC.ordinal, onClick = { onChangeVisibility(GroupVisibility.PUBLIC.ordinal)})
             Spacer(modifier = Modifier.width(10.dp))
             Text(text = stringResource(id = R.string.publico))
         }
 
-        Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.fillMaxWidth()
-            .clickable { onChangeVisibility(GroupVisibility.PRIVATE.ordinal) }.padding(5.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onChangeVisibility(GroupVisibility.PRIVATE.ordinal) }
+            .padding(5.dp)) {
             RadioButton(selected = visibility == GroupVisibility.PRIVATE.ordinal, onClick = { onChangeVisibility(GroupVisibility.PRIVATE.ordinal)})
             Spacer(modifier = Modifier.width(10.dp))
             Text(text = stringResource(id = R.string.privado))

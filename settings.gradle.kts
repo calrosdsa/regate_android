@@ -47,7 +47,7 @@ include(
     ":core:preferences",
     ":ui:auth",
     ":ui:welcome",
-    ":ui:map",
+//    ":ui:map",
     ":ui:inicio:home",
     ":ui:inicio:discover",
     ":ui:inicio:actividades",
@@ -77,6 +77,7 @@ include(
     ":ui:account:inbox",
     ":ui:account:coin",
 
+    ":ui:review",
     ":ui:settings",
     ":ui:media",
 
@@ -87,7 +88,7 @@ include(
     ":domain",
     ":data:db",
     ":data:db-room",
-    ":data:api",
+//    ":data:api",
     ":data:legacy",
     ":data:auth",
 //    ":data:auth_app",

@@ -6,10 +6,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ProfileDto(
     val created_at: Instant?=null,
-    val email: String,
+    val email: String = "",
     val nombre: String,
     val apellido: String? = null,
     val profile_id: Long,
     val profile_photo: String?= null,
-    val user_id: Long,
+    val user_id: Long = 0,
 )
+
+

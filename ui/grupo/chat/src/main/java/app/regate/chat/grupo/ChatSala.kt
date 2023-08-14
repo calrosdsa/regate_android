@@ -43,6 +43,7 @@ import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
@@ -109,7 +110,7 @@ internal fun ChatSala   (
     viewState: ChatSalaState,
     lazyPagingItems: LazyPagingItems<MessageProfile>,
     navigateUp: () -> Unit,
-    sendMessage:(MessageData)->Unit,
+    sendMessage:(MessageData,()->Unit)->Unit,
     openAuthBottomSheet: () -> Unit,
     formatterRelativeTime:(date:Instant)->String,
     clearMessage:(id:Long)->Unit,
@@ -132,6 +133,7 @@ internal fun ChatSala   (
         mutableStateOf<ReplyMessageData?>(null)
     }
     val lazyListState = rememberLazyListState()
+
     val snackbarHostState = remember { SnackbarHostState() }
     val isLastItemVisible by remember {
         derivedStateOf {
@@ -209,7 +211,13 @@ internal fun ChatSala   (
                 clearFocus = { focusManager.clearFocus() },
                 focusRequester = focusRequester,
                 openAuthBottomSheet = openAuthBottomSheet,
-                sendMessage = {sendMessage(it)}
+                sendMessage = {sendMessage(it) {
+                    coroutineScope.launch {
+                        delay(300)
+                        lazyListState.animateScrollToItem(0)
+                    }
+                }
+                }
             )
         }
 

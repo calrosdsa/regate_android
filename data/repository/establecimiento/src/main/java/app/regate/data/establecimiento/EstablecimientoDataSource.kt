@@ -4,6 +4,8 @@ import app.regate.data.dto.empresa.establecimiento.CupoEstablecimiento
 import app.regate.data.dto.empresa.establecimiento.CuposEstablecimientoRequest
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.data.dto.empresa.establecimiento.PaginationEstablecimientoResponse
@@ -19,5 +21,8 @@ interface EstablecimientoDataSource {
     suspend fun getEstablecimientoFavoritos():List<EstablecimientoDto>
     suspend fun likeEstablecimiento(id:Long)
     suspend fun removeLikeEstablecimiento(id:Long)
+    suspend fun getEstablecimientoReview(id: Long, page: Int, size: Int): EstablecimientoReviews
+    suspend fun createEstablecimientoReview(d: EstablecimientoReview): EstablecimientoReview
+    suspend fun getReviewUser(establecimientoId:Long):EstablecimientoReview
 }
 

@@ -124,6 +124,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private suspend fun sendNotificationGroupMessage(
         messages:List<MessageGroupPayload>,grupo:Grupo,context:Context) {
         try {
+//            val dasd = messages.elementAt(2)
             val m1 = messages[2]
             val m2 = messages[1]
             val m3 = messages[0]

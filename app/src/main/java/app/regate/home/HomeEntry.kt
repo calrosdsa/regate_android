@@ -49,7 +49,7 @@ fun HomeEntry(
     composeScreens: ComposeScreens,
     establecimientoId:String?,
     startScreen:String,
-    navigateToMap:()->Unit
+//    navigateToMap:()->Unit
 ) {
     val bottomSheetNavigator = rememberBottomSheetNavigator()
     val navController = rememberAnimatedNavController(bottomSheetNavigator)
@@ -82,8 +82,8 @@ fun HomeEntry(
                     composeScreens = composeScreens,
                     modifier = Modifier,
                     startScreen = startScreen,
-                    finishActivity = establecimientoId != null,
-                    navigateToMap = navigateToMap
+//                    finishActivity = establecimientoId != null,
+//                    navigateToMap = navigateToMap
                 )
             }
         }
@@ -96,13 +96,12 @@ fun HomeEntry(
 internal fun AppNavigation(
     navController: NavHostController,
     composeScreens: ComposeScreens,
-    finishActivity:Boolean,
     startScreen:String,
     modifier: Modifier = Modifier,
-    navigateToMap:()->Unit
+//    navigateToMap:()->Unit
 ) {
     val uri = "https://example.com"
-    val context = LocalContext.current as Activity
+//    val context = LocalContext.current as Activity
     AnimatedNavHost(
         navController = navController,
         startDestination = startScreen,
@@ -180,9 +179,7 @@ internal fun AppNavigation(
         ) { it ->
             val page = it.arguments?.getLong("page")?:0
             composeScreens.establecimiento(
-                navigateUp = {
-                    if(finishActivity){ context.finish() }else{ navController.navigateUp() }
-                },
+                navigateUp = { navController.navigateUp() },
 //                navigateToInstalacion = { navController.navigate(Route.INSTALACION id it) },
                 actividades = {},
                 reservar = {category->
@@ -204,10 +201,36 @@ internal fun AppNavigation(
                     val url =  URLEncoder.encode(it, StandardCharsets.UTF_8.toString())
                     navController.navigate(Route.PHOTO id url)
                 },
+                navigateToProfile = { navController.navigate(Route.PROFILE id it)},
+                navigateToReviews = { navController.navigate(Route.REVIEWS id it)},
+                navigateToCreateReview = { navController.navigate(Route.CREATE_REVIEW id it)}
+                )
+        }
+
+        animatedComposable(
+            route = Route.REVIEWS arg "id",
+            arguments = listOf(
+                navArgument("id") { type = NavType.LongType },
+            )
+        ) {
+            composeScreens.reviews(
+                navigateUp = navController::navigateUp,
+                openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
+                navigateToProfile = { navController.navigate(Route.PROFILE id it)},
+//                navigateToReserva = { navController.navigate(Route.RESERVAR id it) }
             )
         }
 
-
+        slideInVerticallyComposable(
+            route = Route.CREATE_REVIEW arg "id",
+            arguments = listOf(
+                navArgument("id") { type = NavType.LongType },
+            )
+        ) {
+            composeScreens.createReview(
+                navigateUp = navController::navigateUp,
+            )
+        }
 
 
         animatedComposableVariant(
@@ -446,7 +469,7 @@ internal fun AppNavigation(
             )
         }
 
-        AddMainNav(composeScreens, navController,navigateToMap)
+        AddMainNav(composeScreens, navController)
     }
 }
 
@@ -455,7 +478,7 @@ internal fun AppNavigation(
 private fun NavGraphBuilder.AddMainNav(
     composeScreens: ComposeScreens,
     navController:NavController,
-    navigateToMap:()->Unit
+//    navigateToMap:()->Unit
 //    openSettings: () -> Unit,
 ) {
 
@@ -469,7 +492,7 @@ private fun NavGraphBuilder.AddMainNav(
                     navController.navigate(Route.ESTABLECIMIENTO id it id 0)
                 },
                 navController = navController,
-                navigateToMap = navigateToMap
+//                navigateToMap = navigateToMap
             )
         }
         composable(route= Route.DISCOVER) {

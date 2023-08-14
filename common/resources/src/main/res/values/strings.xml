@@ -125,6 +125,14 @@
     <string name="choose_the_time_and_place" >Choose the time and place</string>
     <string name="problem_with_room">There was a problem with your room</string>
     <string name="room_has_been_reserved">The reservation has been confirmed</string>
+    <string name="reviews">Reviews</string>
+    <string name="show_reviews">Show all %1$d reviews</string>
+    <string name="rate_this_place">Rate this place</string>
+    <string name="add_a_review">Add a review</string>
+    <string name="description">Description</string>
+    <string name="review">Review</string>
+    <string name="post">Post</string>
+    <string name="successfully_published">Successfully published</string>
 
 
 </resources>

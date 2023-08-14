@@ -11,6 +11,7 @@
     <color name="tv_test_red">#e10000</color>
     <color name="tv_test_yellow">#bdc200</color>
     <string name="about_regate">About Regate</string>
+    <string name="add_a_review">Add a review</string>
     <string name="amount">Amount:  %1$s</string>
     <string name="balance_coins">Coins Balance</string>
     <string name="book_a_court">Book a court</string>
@@ -30,6 +31,7 @@
     <string name="continuar">Continue</string>
     <string name="create_group">Create group</string>
     <string name="create_sala">Create sala</string>
+    <string name="description">Description</string>
     <string name="discount">Discount benefits are periodically launched.</string>
     <string name="do_you_want_receive_notifications">Do you want to receive notifications?</string>
     <string name="dynamic_color">Dynamic colors</string>
@@ -72,6 +74,7 @@
     <string name="notification_sala_channel" translatable="false">sala_channel_id</string>
     <string name="notifications">Notifications</string>
     <string name="permission_required">Permission required.</string>
+    <string name="post">Post</string>
     <string name="price_range">Rango de precios</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privado">Privado</string>
@@ -79,10 +82,13 @@
     <string name="publico">Public</string>
     <string name="purchase">Purchase</string>
     <string name="qr_code_payment">QR code payment</string>
+    <string name="rate_this_place">Rate this place</string>
     <string name="recommended_places">Recommended places</string>
     <string name="remove_user">Remove this user from the group</string>
     <string name="remove_user_admin">Revoke administrator status</string>
     <string name="reservation_date">Reservation date</string>
+    <string name="review">Review</string>
+    <string name="reviews">Reviews</string>
     <string name="room_has_been_reserved">The reservation has been confirmed</string>
     <string name="rooms">Rooms</string>
     <string name="rules_of_the_place">Rules of the place</string>
@@ -100,6 +106,8 @@
     <string name="show_less">Show less</string>
     <string name="show_more">Show more</string>
     <string name="show_results">Show results</string>
+    <string name="show_reviews">Show all %1$d reviews</string>
+    <string name="successfully_published">Successfully published</string>
     <string name="terms_of_services">Terms of Service</string>
     <string name="theme">Theme</string>
     <string name="there_are_not_available_schudules">There are no available schedules</string>

@@ -1,9 +1,11 @@
 package app.regate.data.coin
 
+import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.empresa.coin.QrRequest
 import app.regate.data.dto.empresa.coin.QrResponse
 import app.regate.data.dto.empresa.coin.RecargaCoinDto
 import app.regate.data.dto.empresa.coin.TokenQrReponse
+import app.regate.data.dto.empresa.coin.UserBalance
 import app.regate.data.dto.empresa.labels.LabelDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -19,8 +21,15 @@ import me.tatarka.inject.annotations.Inject
 @Inject
 class CoinDataSourceImpl(
     private val client:HttpClient,
-//    private val authStore: AuthStore
+    private val authStore: AuthStore
 ): CoinDataSource {
+    override suspend fun getUserBalance(): UserBalance {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/coin/user-balance/"){
+            header("Authorization","Bearer $token")
+        }.body()
+    }
+
     override suspend fun getRecargaCoins(): List<RecargaCoinDto> {
         return client.get("/v1/coin/list/").body()
     }

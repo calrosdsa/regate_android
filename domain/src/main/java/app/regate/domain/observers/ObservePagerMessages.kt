@@ -21,7 +21,7 @@ class ObservePagerMessages(
     override fun createObservable(params: Params): Flow<PagingData<MessageProfile>> {
         return Pager(
             config = params.pagingConfig,
-            remoteMediator = PagingMessagesMediator(currentPage = params.page, fetch = {
+            remoteMediator = PagingMessagesMediator(fetch = {
                 repository.getMessagesGrupo(params.grupoId,it)
             }),
             pagingSourceFactory = {

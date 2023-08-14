@@ -100,9 +100,9 @@ internal fun Chat(
         mutableStateOf<Long>(0)
     }
 
-    LaunchedEffect(key1 = lazyPagingItems.itemSnapshotList.items, block = {
-        lazyListState.animateScrollToItem(0)
-    })
+//    LaunchedEffect(key1 = lazyPagingItems.itemSnapshotList.items, block = {
+//        lazyListState.animateScrollToItem(0)
+//    })
     fun checkIsLast(date:LocalDate,item:MessageProfile):Boolean{
         return try{
             val isLast =  items

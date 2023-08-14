@@ -51,6 +51,8 @@ import app.regate.sala.Sala
 import app.regate.settings.Setting
 import app.regate.auth.signup.SignUp
 import app.regate.create.sala.CreateSala
+import app.regate.establecimiento.createreview.CreateReview
+import app.regate.establecimiento.reviews.Reviews
 import app.regate.filterSalas.FilterSalas
 import app.regate.sala.grupo.GrupoSalas
 import app.regate.welcome.Welcome
@@ -101,6 +103,8 @@ class ComposeScreens(
     val filterGroups:FilterGroups,
     val createGroup: CreateGroup,
 
-    val establecimientoFilter: EstablecimientoFilter
+    val establecimientoFilter: EstablecimientoFilter,
 
+    val reviews:Reviews,
+    val createReview:CreateReview,
     )

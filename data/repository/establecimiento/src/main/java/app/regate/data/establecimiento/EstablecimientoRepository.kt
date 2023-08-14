@@ -6,6 +6,8 @@ import app.regate.data.dto.empresa.establecimiento.CupoEstablecimiento
 import app.regate.data.dto.empresa.establecimiento.CuposEstablecimientoRequest
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.data.dto.empresa.establecimiento.PaginationEstablecimientoResponse
@@ -28,6 +30,15 @@ class EstablecimientoRepository(
     private val settingsDtoToSetting: SettingDtoToSetting,
     private val dispatchers: AppCoroutineDispatchers,
 ){
+    suspend fun getReviewUser(establecimientoId:Long):EstablecimientoReview{
+        return establecimientoDataSourceImpl.getReviewUser(establecimientoId)
+    }
+    suspend fun createEstablecimientoReview(d:EstablecimientoReview):EstablecimientoReview{
+        return establecimientoDataSourceImpl.createEstablecimientoReview(d)
+    }
+    suspend fun getEstablecimientoReviews(id: Long,page: Int,size:Int):EstablecimientoReviews{
+        return establecimientoDataSourceImpl.getEstablecimientoReview(id,page,size)
+    }
     suspend fun getRecommendedEstablecimientos(d:InitialDataFilter,page:Int):PaginationEstablecimientoResponse{
         return establecimientoDataSourceImpl.getRecommendedEstablecimientos(d,page)
     }

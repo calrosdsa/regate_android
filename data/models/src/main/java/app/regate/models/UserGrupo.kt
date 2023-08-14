@@ -18,11 +18,11 @@ import androidx.room.PrimaryKey
             onUpdate = ForeignKey.CASCADE,
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
 )
 data class UserGrupo(
-    @PrimaryKey
-    override val id: Long,
+    @PrimaryKey(autoGenerate = true)
+    override val id: Long = 0,
     val profile_id:Long,
     val grupo_id:Long,
     val is_admin:Boolean

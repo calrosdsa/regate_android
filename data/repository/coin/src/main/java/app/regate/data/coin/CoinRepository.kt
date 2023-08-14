@@ -5,6 +5,7 @@ import app.regate.data.dto.empresa.coin.QrRequest
 import app.regate.data.dto.empresa.coin.QrResponse
 import app.regate.data.dto.empresa.coin.RecargaCoinDto
 import app.regate.data.dto.empresa.coin.TokenQrReponse
+import app.regate.data.dto.empresa.coin.UserBalance
 import app.regate.data.mappers.AmenityToLabel
 import app.regate.data.mappers.CategoryToLabel
 import app.regate.data.mappers.RuleToLabel
@@ -16,6 +17,9 @@ import me.tatarka.inject.annotations.Inject
 class CoinRepository(
     private val coinDataSourceImpl: CoinDataSourceImpl
 ){
+    suspend fun getUserBalance():UserBalance {
+        return coinDataSourceImpl.getUserBalance()
+    }
     suspend fun getRecargaCoins():List<RecargaCoinDto>{
         return coinDataSourceImpl.getRecargaCoins()
     }

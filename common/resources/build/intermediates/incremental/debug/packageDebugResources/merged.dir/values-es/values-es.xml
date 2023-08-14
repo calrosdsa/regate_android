@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_regate">Sobre Regate</string>
+    <string name="add_a_review">Agrega una reseña</string>
     <string name="amount">Amount: %1$s</string>
     <string name="balance_coins">Saldo de monedas</string>
     <string name="book_a_court">Reservar una cancha</string>
@@ -14,6 +15,7 @@
     <string name="continuar">Continuar</string>
     <string name="create_group">Crear grupo</string>
     <string name="create_sala">Crear sala</string>
+    <string name="description">Descripción</string>
     <string name="discount">Los beneficios y descuento se lanzan regularmente</string>
     <string name="do_you_want_receive_notifications">¿Quieres recibir notificaciones?</string>
     <string name="dynamic_color">Dynamic colors</string>
@@ -48,6 +50,7 @@
     <string name="notification_sala">Notificaciones sala</string>
     <string name="notifications">Notifications</string>
     <string name="permission_required">Permiso requerido.</string>
+    <string name="post">Publicar</string>
     <string name="price_range">Rango de precios</string>
     <string name="privacy_policy">Política de Privacidad</string>
     <string name="privado">Privado</string>
@@ -55,10 +58,13 @@
     <string name="publico">Público</string>
     <string name="purchase">Recargar</string>
     <string name="qr_code_payment">Pago con código QR</string>
+    <string name="rate_this_place">Calificar</string>
     <string name="recommended_places">Lugares recomendados</string>
     <string name="remove_user">Remover este  usuario del grupo</string>
     <string name="remove_user_admin">Revocar el estatus de administrador</string>
     <string name="reservation_date">Fecha de la Reserva</string>
+    <string name="review">Reseña</string>
+    <string name="reviews">Reseñas</string>
     <string name="room_has_been_reserved">La reserva ha sido confirmada</string>
     <string name="rooms">Salas</string>
     <string name="rules_of_the_place">Reglas del lugar</string>
@@ -75,6 +81,8 @@
     <string name="show_less">Ver menos</string>
     <string name="show_more">Ver más</string>
     <string name="show_results">Mostrar resultados</string>
+    <string name="show_reviews">Mostrar las %1$d reseñas</string>
+    <string name="successfully_published">Publicado exitosamente</string>
     <string name="terms_of_services">Condiciones de Servicio</string>
     <string name="theme">Theme</string>
     <string name="there_are_not_available_schudules">No hay horarios disponibles</string>

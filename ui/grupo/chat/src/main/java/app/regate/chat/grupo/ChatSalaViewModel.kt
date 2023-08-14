@@ -33,6 +33,7 @@ import io.ktor.http.HttpMethod
 import io.ktor.websocket.Frame
 import io.ktor.websocket.readText
 import io.ktor.websocket.send
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -108,7 +109,7 @@ class ChatSalaViewModel(
         viewModelScope.launch {
             try{
 //            runBlocking {
-               client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
+               client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
                     port = 9090, path = "/v1/ws/chat-grupo?id=${grupoId}"){
                     launch { outputMessage() }
 //                    launch { inputMessage() }
@@ -152,7 +153,7 @@ class ChatSalaViewModel(
         val PAGING_CONFIG = PagingConfig(
             pageSize = 20,
             initialLoadSize = 20,
-            prefetchDistance = 5
+//            prefetchDistance = 1
         )
     }
 
@@ -200,12 +201,13 @@ class ChatSalaViewModel(
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
 
             }catch (e:Exception){
+                Log.d("DEBUG_ERROR","fail to fetchUsers")
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
             }
         }
     }
 
-    fun sendMessage(messageData: MessageData){
+    fun sendMessage(messageData: MessageData,animateScroll:()->Unit){
         viewModelScope.launch {
             val message =  Message(
                 content = messageData.content,
@@ -215,7 +217,9 @@ class ChatSalaViewModel(
                 grupo_id = grupoId,
                 id = UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE
             )
-            grupoRepository.saveMessageLocal(message)
+            val res = async { grupoRepository.saveMessageLocal(message) }
+            res.await()
+            animateScroll()
             messageChat.tryEmit(message)
         }
     }

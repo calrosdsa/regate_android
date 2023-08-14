@@ -37,7 +37,7 @@ data class UserGrupoDto(
     val profile_photo: String?= null,
     val is_admin:Boolean,
     //Only for user grupo table
-    val user_grupo_id:Long = 0
+    val id:Long = 0
 )
 
 @Serializable

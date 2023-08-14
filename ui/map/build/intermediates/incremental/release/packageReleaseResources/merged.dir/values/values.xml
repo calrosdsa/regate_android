@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="mock_items_consoles">
+        <item>Atari</item>
+        <item>Commodore 64</item>
+        <item>Nintendo</item>
+        <item>Sega</item>
+        <item>MSX</item>
+        <item>PC-98</item>
+        <item>NeoGeo</item>
+        <item>Playstation</item>
+        <item>Microsoft</item>
+        <item>Philips</item>
+        <item>Ouya</item>
+        <item>Gameboy</item>
+    </string-array>
+    <string-array name="mock_items_games">
+        <item>Asteroids</item>
+        <item>Pac-man</item>
+        <item>Space Invaders</item>
+        <item>Donkey Kong</item>
+        <item>Mario Brothers</item>
+        <item>Bomberman</item>
+        <item>Load Runner</item>
+        <item>Twin Bee</item>
+        <item>Ice Climber</item>
+        <item>Metroid</item>
+        <item>Castlevania</item>
+        <item>Legend of Zelda</item>
+        <item>Star Ocean</item>
+        <item>Final Fantasy</item>
+    </string-array>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="app_bar_height">270dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="level_10">10dp</dimen>
+    <dimen name="level_12">12dp</dimen>
+    <dimen name="level_16">16dp</dimen>
+    <dimen name="level_2">2dp</dimen>
+    <dimen name="level_4">4dp</dimen>
+    <dimen name="level_8">8dp</dimen>
+    <dimen name="level_flat">0dp</dimen>
+    <dimen name="profile_big_size">64dp</dimen>
+    <dimen name="profile_image_margin_max">12dp</dimen>
+    <dimen name="profile_misc_padding">12dp</dimen>
+    <dimen name="profile_small_size">32dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <string name="action_settings">Settings</string>
+    <string name="app_name">Collapsing Toolbar</string>
+    <string name="collapsing_profile_behavior" translatable="false">app.regate.map.behavior.CollapsingProfileBehavior</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="large_text">
+        "The Shiba Inu.\n\n"
+
+        "The Shiba Inu (柴犬) is the smallest of the six original and distinct spitz breeds of dog from Japan.\n\n"
+
+        "A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally bred for hunting. It looks similar to and is often mistaken for other Japanese dog breeds like the Akita Inu or Hokkaido, but the Shiba Inu is a different breed with a distinct blood line, temperament and smaller size than other Japanese dog breeds.\n\n"
+
+        "Inu is the Japanese word for dog, but the origin of the prefix \"Shiba\" is less clear. The word shiba means \"brushwood\" in Japanese, and refers to a type of tree or shrub whose leaves turn red in the fall. This leads some to believe that the Shiba was named with this in mind, either because the dogs were used to hunt in wild shrubs, or because the most common color of the Shiba Inu is a red color similar to that of the shrubs. However, in an old Nagano dialect, the word shiba also had the meaning of \"small\", thus this might be a reference to the dog's diminutive stature. Therefore, the Shiba Inu is sometimes translated as \"Little Brushwood Dog\".\n\n"
+
+        "Appearance\n\n"
+
+        "The Shiba's frame is compact with well-developed muscles. Males are 35 to 43 cm (14 to 17 in) at the withers. Females are 33 to 41 cm (13 to 16 in). The preferred size is the middle of the range for each sex. Average weight at preferred size is approximately 10 kg (22 lb) for males, 8 kg (18 lb) for females. Bone is moderate.\n\n"
+
+        "The Shiba is double coated, with the outer coat being stiff and straight and the undercoat soft and thick. Fur is short and even on the fox-like face, ears, and legs. Guard hairs stand off the body and are about 4 to 5 cm (1 1⁄2 to 2 in) long at the withers. Tail hair is slightly longer and stands open in a brush. Shibas may be red, black and tan, or sesame (red with black-tipped hairs), with a cream, buff, or grey undercoat. They may also be white (cream), though this color is considered a \"major fault\" by the American Kennel Club and should never be intentionally bred in a show dog, as the required markings known as \"urajiro\" (裏白) are not visible; \"Urajiro\" literally translates to \"underside white\". Conversely, a white (cream) coat is perfectly acceptable according to the British Kennel Club breed standard.\n\n"
+
+        "The urajiro (cream to white ventral color) is required in the following areas on all coat colors: on the sides of the muzzle, on the cheeks, inside the ears, on the underjaw and upper throat inside of legs, on the abdomen, around the vent and the ventral side of the tail. On reds: commonly on the throat, forechest, and chest. On blacks and sesames: commonly as a triangular mark on both sides of the forechest.\n\n"
+    </string>
+    <string name="map_title" translatable="false">map\n</string>
+    <string name="test_profile_image_desc">Profile Image</string>
+    <string name="test_profile_misc_title">misc title 12345</string>
+    <string name="test_profile_name">PROFILE NAME</string>
+    <string name="test_profile_subtitle">subtitle</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="view_annotation_mode_map_fixed_delay" translatable="false">Max Fixed Delay\n</string>
+    <string name="view_annotation_mode_map_sync" translatable="false">Map Sincronized\n</string>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="circleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="semiCircleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20%</item>
+    </style>
+    <declare-styleable name="CollapsingProfileHeaderView">
+        <attr format="reference" name="profileImage"/>
+        <attr format="string" name="profileName"/>
+        <attr format="string" name="profileSubtitle"/>
+        <attr format="string" name="profileMisc"/>
+        <attr format="reference" name="profileMiscIcon"/>
+        <attr format="integer" name="profileNameTextSizeSp"/>
+        <attr format="integer" name="profileSubtitleTextSizeSp"/>
+        <attr format="integer" name="profileMiscTextSizeSp"/>
+    </declare-styleable>
+</resources>

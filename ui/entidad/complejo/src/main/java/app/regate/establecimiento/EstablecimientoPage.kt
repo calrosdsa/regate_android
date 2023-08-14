@@ -4,14 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,8 +22,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,15 +36,20 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.components.input.AmenityItem
+import app.regate.common.composes.components.item.ReviewItem
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.resources.R
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 
 @OptIn(ExperimentalLayoutApi::class)
 @SuppressLint("QueryPermissionsNeeded")
@@ -45,6 +58,9 @@ fun EstablecimientoPage(
     state: EstablecimientoState ,
     openLocationSheet:()->Unit,
     navigateToReserva:(category:Long)->Unit,
+    createReview:(Long)->Unit,
+    navigateToProfile:(Long)->Unit,
+    navigateToReviews: (Long) -> Unit,
     modifier: Modifier = Modifier,
     openMap:(String?,String?,String?)->Unit
 ) {
@@ -170,12 +186,28 @@ fun EstablecimientoPage(
         PosterCardImage(model = addressPhoto,
             modifier = Modifier
                 .clickable {
-                    openMap(establecimiento?.longitud,establecimiento?.latidud,establecimiento?.name)
+                    openMap(
+                        establecimiento?.longitud,
+                        establecimiento?.latidud,
+                        establecimiento?.name
+                    )
                 }
                 .fillMaxWidth()
                 .height(200.dp)
                 .padding(10.dp))
         }
+
+        state.reviews?.let { data ->
+            ReviewBlock(
+                data = data,
+                navigateToReviews = { state.establecimiento?.let { navigateToReviews(it.id) } },
+                navigateToProfile = navigateToProfile,
+                createReview = { state.establecimiento?.let { createReview(it.id) } }
+            )
+//            }
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
 
         Divider(modifier = Modifier.padding(5.dp))
         Text(
@@ -189,6 +221,8 @@ fun EstablecimientoPage(
                     fontWeight = FontWeight.W400
                 )
             )
+
+
         }
         if(state.rules.size >= 5){
             Text(
@@ -206,3 +240,68 @@ fun EstablecimientoPage(
 
     }
 }
+
+@Composable
+internal fun ReviewBlock(
+    data:EstablecimientoReviews,
+    navigateToReviews:()->Unit,
+    navigateToProfile:(Long)->Unit,
+    createReview:()->Unit
+    ){
+    Column {
+    Divider(modifier = Modifier.padding(5.dp))
+    Spacer(modifier = Modifier.height(10.dp))
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(imageVector = Icons.Default.Star, contentDescription = "star")
+        Spacer(modifier = Modifier.height(5.dp))
+        Text(
+            text = "${data.average} - ${data.count} ${stringResource(id = R.string.reviews)}",
+            style = MaterialTheme.typography.titleLarge
+        )
+
+    }
+    Spacer(modifier = Modifier.height(10.dp))
+    data.results.map {
+        ReviewItem(review = it,navigateToProfile = navigateToProfile)
+    }
+        Divider()
+        Row(
+            modifier = Modifier
+                .clickable {
+                   createReview()
+                }
+                .fillMaxWidth()
+                .padding(10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = stringResource(id = R.string.rate_this_place))
+            Row() {
+                repeat(5) {
+                    Icon(
+                        imageVector = Icons.Outlined.StarOutline, contentDescription = null,
+                        modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
+        }
+        if(data.count > 5) {
+        Divider()
+
+                OutlinedButton(
+                    onClick = { navigateToReviews() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp),
+                    shape = MaterialTheme.shapes.medium
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.show_reviews, data.count),
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+    }
+}
+
+

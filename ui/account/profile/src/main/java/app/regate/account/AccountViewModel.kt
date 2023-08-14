@@ -6,9 +6,12 @@ import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
 import app.regate.data.account.AccountRepository
 import app.regate.data.auth.AuthRepository
+import app.regate.data.coin.CoinRepository
 import app.regate.data.common.AddressDevice
+import app.regate.data.dto.empresa.coin.UserBalance
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveUser
+import app.regate.extensions.combine
 import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,24 +30,28 @@ class AccountViewModel(
     private val authRepository: AuthRepository,
     private val accountRepository: AccountRepository,
     private val appPreferences: AppPreferences,
+    private val coinRepository: CoinRepository,
     observeAuthState: ObserveAuthState
 ):ViewModel() {
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val addressDevice = MutableStateFlow<AddressDevice?>(null)
+    private val userBalance = MutableStateFlow<UserBalance?>(null)
     val state:StateFlow<AccountState> = combine(
         loadingState.observable,
         uiMessageManager.message,
         observeUser.flow,
         observeAuthState.flow,
-        addressDevice
-    ){loading,message,user,authState,addressDevice ->
+        addressDevice,
+        userBalance,
+    ){loading,message,user,authState,addressDevice,userBalance ->
         AccountState(
             loading = loading,
             message = message,
             user = user,
             authState = authState,
-            addressDevice = addressDevice
+            addressDevice = addressDevice,
+            userBalance = userBalance
         )
     }.stateIn(
         scope = viewModelScope,
@@ -65,6 +72,17 @@ class AccountViewModel(
                 Log.d("DEBUG_APP",e.localizedMessage?:"")
             }
         }
+        }
+        getUserBalance()
+    }
+    fun getUserBalance(){
+        viewModelScope.launch {
+            try{
+                val res = coinRepository.getUserBalance()
+                userBalance.emit(res)
+            }catch (e:Exception){
+                //TODO()
+            }
         }
     }
 

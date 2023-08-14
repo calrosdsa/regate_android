@@ -190,10 +190,18 @@ internal fun Account(
                             Row(verticalAlignment = Alignment.CenterVertically){
                             Image(painter = painterResource(id = R.drawable.coin), contentDescription = null,
                             modifier = Modifier.size(25.dp))
-                                Spacer(modifier = Modifier.width(5.dp))
+                                Spacer(modifier = Modifier.width(10.dp))
                         Column() {
-                        Text(text = stringResource(id = R.string.balance_coins),style = MaterialTheme.typography.labelMedium)
-                            Text(text = user.coins.toString(),style = MaterialTheme.typography.labelLarge)
+                            Text(
+                                text = stringResource(id = R.string.balance_coins),
+                                style = MaterialTheme.typography.labelMedium
+                            )
+                            viewState.userBalance?.let {balance ->
+                                Text(
+                                    text = balance.coins.toString(),
+                                    style = MaterialTheme.typography.labelLarge
+                                )
+                            }
                             }
                         }
                         Button(onClick = { navigateToRecargaCoins() }) {

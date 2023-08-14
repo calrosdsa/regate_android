@@ -20,7 +20,6 @@
             <option value="$PROJECT_DIR$/core/base" />
             <option value="$PROJECT_DIR$/core/preferences" />
             <option value="$PROJECT_DIR$/data" />
-            <option value="$PROJECT_DIR$/data/api" />
             <option value="$PROJECT_DIR$/data/auth" />
             <option value="$PROJECT_DIR$/data/db" />
             <option value="$PROJECT_DIR$/data/db-room" />
@@ -71,8 +70,8 @@
             <option value="$PROJECT_DIR$/ui/inicio/grupos" />
             <option value="$PROJECT_DIR$/ui/inicio/home" />
             <option value="$PROJECT_DIR$/ui/inicio/servicios" />
-            <option value="$PROJECT_DIR$/ui/map" />
             <option value="$PROJECT_DIR$/ui/media" />
+            <option value="$PROJECT_DIR$/ui/review" />
             <option value="$PROJECT_DIR$/ui/settings" />
             <option value="$PROJECT_DIR$/ui/welcome" />
           </set>

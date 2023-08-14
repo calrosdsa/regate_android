@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "7d75fe7626f768962210740e7b0991a4",
+    "identityHash": "83dfeef63b4f8f66bf41d971b4ce4124",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -595,7 +595,7 @@
       },
       {
         "tableName": "user_grupo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`grupo_id`) REFERENCES `grupos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL, FOREIGN KEY(`grupo_id`) REFERENCES `grupos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -623,7 +623,7 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": false,
+          "autoGenerate": true,
           "columnNames": [
             "id"
           ]
@@ -839,7 +839,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7d75fe7626f768962210740e7b0991a4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '83dfeef63b4f8f66bf41d971b4ce4124')"
     ]
   }
 }

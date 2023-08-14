@@ -79,7 +79,7 @@ dependencies {
     implementation(projects.common.resources)
     implementation(projects.data.repository)
     implementation(projects.domain)
-    implementation(projects.data.api)
+//    implementation(projects.data.api)
 //    implementation(projects.common.ui.view)
 //    implementation(projects.core.powercontroller)
     implementation(projects.core.preferences)

@@ -90,4 +90,12 @@
     <string name="choose_the_time_and_place">Elije la hora y el lugar</string>
     <string name="problem_with_room">Se presentó un problema con tu sala.</string>
     <string name="room_has_been_reserved">La reserva ha sido confirmada</string>
+    <string name="reviews">Reseñas</string>
+    <string name="show_reviews">Mostrar las %1$d reseñas</string>
+    <string name="rate_this_place">Calificar</string>
+    <string name="add_a_review">Agrega una reseña</string>
+    <string name="description">Descripción</string>
+    <string name="review">Reseña</string>
+    <string name="post">Publicar</string>
+    <string name="successfully_published">Publicado exitosamente</string>
 </resources>

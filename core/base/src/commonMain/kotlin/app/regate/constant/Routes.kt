@@ -50,6 +50,9 @@ object Route {
     const val RECARGAR = "recargar"
     const val PAY = "pay"
 
+    const val REVIEWS = "review"
+    const val CREATE_REVIEW = "create_review"
+
 }
 
 

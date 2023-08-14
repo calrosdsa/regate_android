@@ -139,7 +139,7 @@ dependencies {
 
     implementation(projects.data.dbRoom)
 
-    implementation(projects.ui.map)
+//    implementation(projects.ui.map)
     implementation(projects.ui.welcome)
     implementation(projects.ui.auth)
 
@@ -168,6 +168,8 @@ dependencies {
     implementation(projects.ui.grupo.detail)
     implementation(projects.ui.grupo.createsala)
     implementation(projects.ui.grupo.creategrupo)
+
+    implementation(projects.ui.review)
 
     implementation(projects.tasks.android)
 

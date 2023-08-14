@@ -78,7 +78,7 @@ import kotlinx.datetime.Instant
 typealias Home = @Composable (
      navigateToComplejo:(id:Long) -> Unit,
      navController:NavController,
-     navigateToMap:()->Unit
+//     navigateToMap:()->Unit
 ) -> Unit
 
 @Inject
@@ -87,13 +87,13 @@ fun Home(
     viewModelFactory:()-> HomeViewModel,
     @Assisted navigateToComplejo: (id:Long) -> Unit,
     @Assisted navController:NavController,
-    @Assisted navigateToMap: () -> Unit
+//    @Assisted navigateToMap: () -> Unit
 ){
     Home(
         viewModel = viewModel(factory = viewModelFactory),
         navigateToComplejo = navigateToComplejo,
         navController = navController,
-        navigateToMap = navigateToMap
+//        navigateToMap = navigateToMap
     )
 }
 @OptIn(ExperimentalMaterial3Api::class)
@@ -102,7 +102,7 @@ internal fun Home(
     viewModel: HomeViewModel,
     navController: NavController,
     navigateToComplejo: (id:Long) -> Unit,
-    navigateToMap: () -> Unit,
+//    navigateToMap: () -> Unit,
 ) {
 
     val viewState by viewModel.state.collectAsState()
@@ -142,7 +142,7 @@ internal fun Home(
             viewState = viewState,
             navigateToComplejo = navigateToComplejo,
             modifier = Modifier.padding(paddingValues),
-            navigateToMap = navigateToMap,
+//            navigateToMap = navigateToMap,
             goToGroup = {navController.navigate(Route.GRUPOS)},
             goToReserva = {navController.navigate(Route.DISCOVER)},
             formatShortTime = {formatter.formatShortTime(it)},
@@ -158,7 +158,7 @@ internal fun Home(
 internal fun Home(
     viewState:HomeState,
     navigateToComplejo: (id:Long) -> Unit,
-    navigateToMap: () -> Unit,
+//    navigateToMap: () -> Unit,
     modifier: Modifier = Modifier,
     goToReserva:()->Unit,
     goToGroup:()->Unit,
@@ -272,7 +272,7 @@ internal fun Home(
         }
 
 
-            MapImage { navigateToMap() }
+//            MapImage { navigateToMap() }
     }
 }
 private val containerHeight = Modifier.height(130.dp)

@@ -9,6 +9,8 @@ import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.data.dto.empresa.establecimiento.PaginationEstablecimientoResponse
@@ -29,18 +31,7 @@ class EstablecimientoDataSourceImpl(
     private val client:HttpClient,
     private val authStore: AuthStore
 ): EstablecimientoDataSource {
-    //    override suspend fun me(): Me {
-//        return client.get("/v1/account/").body()
-//    }
-//
-//    override suspend fun login(d: LoginRequest): LoginResponse {
-//        val res =  client.post("/v1/account/login/"){
-//            contentType(ContentType.Application.Json)
-//            setBody(LoginRequest(email = d.email, password = d.password))
-//        }.body<LoginResponse>()
-//        return res
-//    }
-    override suspend fun getEstablecimientoFavoritos(): List<EstablecimientoDto> {
+        override suspend fun getEstablecimientoFavoritos(): List<EstablecimientoDto> {
         val token = authStore.get()?.accessToken
         return client.get("/v1/establecimiento/liked/"){
             header("Authorization","Bearer $token")
@@ -59,6 +50,26 @@ class EstablecimientoDataSourceImpl(
         client.put("/v1/establecimiento/dislike/${id}/"){
             header("Authorization","Bearer $token")
         }.body<ResponseMessage>()
+    }
+
+    override suspend fun getEstablecimientoReview(id: Long, page: Int,size:Int): EstablecimientoReviews {
+        return client.get("/v1/review/establecimiento/${id}/?page=${id}&size=${size}").body()
+    }
+
+    override suspend fun createEstablecimientoReview(d: EstablecimientoReview): EstablecimientoReview {
+        val token = authStore.get()?.accessToken
+        return client.post("/v1/review/establecimiento/") {
+            header("Authorization","Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
+    }
+
+    override suspend fun getReviewUser(establecimientoId: Long): EstablecimientoReview {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/review/establecimiento/profile/${establecimientoId}/") {
+            header("Authorization","Bearer $token")
+        }.body()
     }
 
     override suspend fun getEstablecimientoCupos(d: CuposEstablecimientoRequest):List<CupoEstablecimiento> {

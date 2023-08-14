@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.savedstate.SavedStateRegistry
 import app.regate.api.UiMessageManager
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.domain.interactors.UpdateEstablecimiento
 import app.regate.domain.interactors.UpdateEstablecimientoDetail
@@ -46,7 +47,7 @@ class EstablecimientoViewModel(
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val isFavorite  = MutableStateFlow(false)
-
+    private val reviews = MutableStateFlow<EstablecimientoReviews?>(null)
     val state:StateFlow<EstablecimientoState> = combine(
         observeEstablecimientoDetail.flow,
         observeInstalacionCategoryCount.flow,
@@ -55,7 +56,9 @@ class EstablecimientoViewModel(
         loadingState.observable,
         uiMessageManager.message,
         isFavorite,
-    ){establecimiento,instalacionCategoryCount,amenities,rules,loading,message,isFavorite->
+        reviews
+    ){establecimiento,instalacionCategoryCount,amenities,rules,
+      loading,message,isFavorite,reviews->
         EstablecimientoState(
             loading = loading,
             message = message,
@@ -63,8 +66,8 @@ class EstablecimientoViewModel(
             instalacionCategoryCount = instalacionCategoryCount,
             amenities = amenities,
             rules = rules,
-            isFavorite = isFavorite
-
+            isFavorite = isFavorite,
+            reviews=  reviews
         )
     }.stateIn(
         scope = viewModelScope,
@@ -83,6 +86,7 @@ class EstablecimientoViewModel(
         observeEstablecimientoDetail(ObserveEstablecimientoDetail.Params(establecimientoId))
         observeInstalacionCategoryCount(ObserveInstalacionCategoryCount.Params(establecimientoId,LabelType.CATEGORIES))
         getStablecimiento()
+        getReviews()
         checkIsFavorite()
     }
     fun checkIsFavorite(){
@@ -117,6 +121,18 @@ class EstablecimientoViewModel(
                 Log.d("DEBUG_APP",e.localizedMessage?:"")
             }
         }
+    }
+    fun getReviews(){
+        viewModelScope.launch {
+                try{
+                    val res =
+                        establecimientoRepository.getEstablecimientoReviews(establecimientoId, 1,5)
+                    Log.d("DEBUG_APP",res.toString())
+                    reviews.emit(res)
+                }catch (e:Exception){
+                    Log.d("DEBUG_APP",e.localizedMessage?:"")
+                }
+            }
     }
     fun getStablecimiento(){
         viewModelScope.launch {

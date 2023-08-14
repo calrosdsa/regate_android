@@ -9,10 +9,10 @@ import me.tatarka.inject.annotations.Inject
 class DtoToUserGrupo:MapperWithAttr<UserGrupoDto,UserGrupo> {
     override suspend fun map(from: UserGrupoDto,id:Long): UserGrupo {
         return UserGrupo(
-            id = from.user_grupo_id,
             profile_id = from.profile_id,
             grupo_id = id,
-            is_admin = from.is_admin
+            is_admin = from.is_admin,
+            id = from.id
         )
     }
 }

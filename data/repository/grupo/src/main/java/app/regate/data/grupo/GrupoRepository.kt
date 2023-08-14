@@ -117,8 +117,8 @@ class GrupoRepository(
         return  grupoDataSourceImpl.getGrupo(id).also { result->
             grupoDao.upsert(dtoToGrupo.map(result.grupo))
             val profiles = result.profiles.map { profileMapper.map(it) }
+            userGrupoDao.deleteUsersGroup(id)
             val usersGrupo = result.profiles.map { dtoToUserGrupo.map(it,result.grupo.id) }
-            userGrupoDao.deleteUserGroup(id)
             profileDao.upsertAll(profiles)
             userGrupoDao.upsertAll(usersGrupo)
         }.salas
@@ -135,7 +135,7 @@ class GrupoRepository(
     }
     suspend fun getUsersGroup(id:Long){
         withContext(dispatchers.computation){ 
-            userGrupoDao.deleteUserGroup(id)
+            userGrupoDao.deleteUsersGroup(id)
         grupoDataSourceImpl.getUsersGrupo(id).apply {
             val profiles = map {
 //                profileMapper.map(it)
@@ -152,20 +152,23 @@ class GrupoRepository(
         }
         }
     }
-    suspend fun getMessagesGrupo(id:Long,page:Int){
-         withContext(dispatchers.computation){
-             try{
-         grupoDataSourceImpl.getMessagesGrupo(id,page).also { apiResult ->
-                val messages =async{ apiResult.map { messageMapper.map(it) } }
-                val replies =async{ apiResult.filter { it.reply_to != null }.map {
+    suspend fun getMessagesGrupo(id:Long,page:Int):Int{
+          return   try{
+              val data = grupoDataSourceImpl.getMessagesGrupo(id,page)
+              withContext(dispatchers.computation){
+               data.let { apiResult ->
+                val messages =async{ apiResult.results.map { messageMapper.map(it) } }
+                val replies =async{ apiResult.results.filter { it.reply_to != null }.map {
                     replyMessageMapper.map(it.reply_message) }
                 }
              val results = messages.await() + replies.await()
              messageProfileDao.upsertAll(results)
+              }
              }
+              data.page
          }catch (e:Exception){
-             //TODO()
+             0
          }
-        }
+
     }
 }

@@ -84,30 +84,41 @@ typealias Establecimiento = @Composable (
     reservar:@Composable (category:Long) -> Unit,
     salas:@Composable () -> Unit,
     currentPage:Int,
-    navigateToPhoto:(String)->Unit
+    navigateToPhoto:(String)->Unit,
+    navigateToProfile:(Long)->Unit,
+    navigateToReviews:(Long)->Unit,
+    navigateToCreateReview:(Long)->Unit,
     ) -> Unit
 
 @Inject
 @Composable
 fun Establecimiento(
-    viewModelFactory:(SavedStateHandle)-> EstablecimientoViewModel,
-    @Assisted navigateUp:()->Unit,
+    viewModelFactory: (SavedStateHandle) -> EstablecimientoViewModel,
+    @Assisted navigateUp: () -> Unit,
 //    @Assisted navigateToInstalacion: (id: Long) -> Unit,
-    @Assisted actividades:@Composable () -> Unit,
-    @Assisted reservar:@Composable (category:Long) -> Unit,
-    @Assisted salas:@Composable () -> Unit,
-    @Assisted currentPage:Int,
-    @Assisted navigateToPhoto: (String) -> Unit
-    ){
+    @Assisted actividades: @Composable () -> Unit,
+    @Assisted reservar: @Composable (category: Long) -> Unit,
+    @Assisted salas: @Composable () -> Unit,
+    @Assisted currentPage: Int,
+    @Assisted navigateToPhoto: (String) -> Unit,
+    @Assisted navigateToProfile: (Long) -> Unit,
+    @Assisted navigateToReviews: (Long) -> Unit,
+    @Assisted navigateToCreateReview: (Long) -> Unit,
+) {
+
+
     Establecimiento(
         viewModel = viewModel(factory = viewModelFactory),
-        navigateUp=navigateUp ,
+        navigateUp = navigateUp,
 //        navigateToInstalacion =  navigateToInstalacion,
         actividades = actividades,
         reservar = reservar,
         salas = salas,
         currentPage = currentPage,
-        navigateToPhoto = navigateToPhoto
+        navigateToPhoto = navigateToPhoto,
+        navigateToProfile = navigateToProfile,
+        navigateToReviews = navigateToReviews,
+        navigateToCreateReview = navigateToCreateReview
     )
 }
 
@@ -122,7 +133,10 @@ internal fun Establecimiento(
     reservar:@Composable (category:Long) -> Unit,
     salas:@Composable () -> Unit,
     currentPage: Int,
-    navigateToPhoto: (String) -> Unit
+    navigateToPhoto: (String) -> Unit,
+    navigateToProfile: (Long) -> Unit,
+    navigateToReviews: (Long) -> Unit,
+    navigateToCreateReview: (Long) -> Unit
     ) {
     val appUtil = LocalAppUtil.current
     val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Hidden)
@@ -171,7 +185,7 @@ internal fun Establecimiento(
                         .clickable {
                             val lat = state.establecimiento?.latidud
                             val lng = state.establecimiento?.longitud
-                            appUtil.openMap(lng,lat,state.establecimiento?.name)
+                            appUtil.openMap(lng, lat, state.establecimiento?.name)
                         }
                         .fillMaxWidth()
                         .height(200.dp)
@@ -334,7 +348,10 @@ internal fun Establecimiento(
                                         )
                                     }
                                 },
-                                openMap = appUtil::openMap
+                                openMap = appUtil::openMap,
+                                navigateToProfile = navigateToProfile,
+                                navigateToReviews = navigateToReviews,
+                                createReview = navigateToCreateReview
                             )
                         }
 

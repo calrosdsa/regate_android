@@ -7,29 +7,36 @@ import app.cash.paging.RemoteMediator
 import app.regate.compoundmodels.MessageProfile
 
 internal class PagingMessagesMediator(
-    private var currentPage:Int,
-    private val fetch: suspend (page: Int) -> Unit,
+    private val fetch: suspend (page: Int) -> Int,
 ): RemoteMediator<Int, MessageProfile>() {
-    override suspend fun initialize(): InitializeAction {
-        fetch(1)
-        return  super.initialize()
-    }
+    private var currentPage:Int = 1
+//    override suspend fun initialize(): InitializeAction {
+//        fetch(1)
+//        return  super.initialize()
+//    }
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, MessageProfile>
     ): MediatorResult {
-       when (loadType) {
-            LoadType.REFRESH -> {}
+       val page = when (loadType) {
+            LoadType.REFRESH -> {
+               1
+            }
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             LoadType.APPEND -> {
                 state.lastItemOrNull()
                     ?: return MediatorResult.Success(endOfPaginationReached = true)
-                currentPage += 1
-                fetch(currentPage)
+               currentPage
             }
-        }
+
+           else -> { 0 }
+       }
         return try {
-            MediatorResult.Success(endOfPaginationReached = false)
+            if(currentPage != 0){
+                val nextPage = fetch(page)
+                currentPage = nextPage
+            }
+            MediatorResult.Success(endOfPaginationReached = currentPage == 0)
         } catch (t: Throwable) {
             MediatorResult.Error(t)
         }

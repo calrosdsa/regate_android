@@ -9,6 +9,7 @@ import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
+import app.regate.data.dto.empresa.grupo.PaginationGroupMessages
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.UserGrupoDto
 import app.regate.models.Message
@@ -99,7 +100,7 @@ class GrupoDataSourceImpl(
         }.body()
     }
 
-    override suspend fun getMessagesGrupo(id: Long,page:Int): List<GrupoMessageDto> {
+    override suspend fun getMessagesGrupo(id: Long,page:Int): PaginationGroupMessages {
         return client.get("/v1/grupo/messages/${id}/?page=${page}").body()
     }
 

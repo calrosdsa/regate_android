@@ -51,7 +51,7 @@ import app.regate.extensions.unsafeLazy
 import app.regate.inject.ActivityComponent
 import app.regate.inject.ActivityScope
 import app.regate.inject.ApplicationComponent
-import app.regate.map.MapActivity
+//import app.regate.map.MapActivity
 import app.regate.settings.AppPreferences
 import app.regate.util.AppDateFormatter
 import app.regate.util.AppLocation
@@ -100,7 +100,7 @@ class MainActivity : ComponentActivity() {
 //           enableLocation()
 //        }
         val establecimientoId = intent.getStringExtra("establecimientoId")
-        val mapIntent = Intent(this, MapActivity::class.java)
+//        val mapIntent = Intent(this, MapActivity::class.java)
         val startScreen = if(preferences.categories.isBlank()) Route.WELCOME_PAGE else Route.MAIN
 //        intent.flags = FLAG_ACTIVITY_SINGLE_TOP
         setContent {
@@ -128,7 +128,7 @@ class MainActivity : ComponentActivity() {
                             HomeEntry(
                                 composeScreens = component.screens,
                                 establecimientoId = establecimientoId,
-                                navigateToMap = { startActivity(mapIntent)},
+//                                navigateToMap = { startActivity(mapIntent)},
                                 startScreen = startScreen
                             )
 //                        }

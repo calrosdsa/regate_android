@@ -164,12 +164,13 @@ class AppLocation(
         geoCoder.getFromLocation(lat,long,1,
             object: Geocoder.GeocodeListener{
                 override fun onGeocode(addresses: MutableList<Address>) {
+
                     Log.d("DEBUG_APP","INITTT $addresses")
                     addresses[0].let{
+                    try{
                         Log.d("DEBUG_APP",it.adminArea)
                         Log.d("DEBUG_APP",it.subAdminArea)
-                        Log.d("DEBUG_APP",it.subLocality)
-                        Log.d("DEBUG_APP",it.getAddressLine(0))
+
                         val  address = AddressDevice(
                             city = it.locality,
                             locale = it.locale.language,
@@ -181,6 +182,7 @@ class AppLocation(
                             latitud = it.latitude,
                         )
                         val addressString = Json.encodeToString(address)
+                        Log.d("DEBUG_APP",addressString)
                         preferences.address = addressString
 //                        val filter = Json.decodeFromString<FilterInstalacionData>(preferences.filter)
 //                        val update = filter.copy(
@@ -188,6 +190,9 @@ class AppLocation(
 //                            latitud = address.latitud
 //                        )
 //                        preferences.filter = Json.encodeToString(update)
+                    }catch (e:Exception){
+                        Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")
+                    }
                     }
                     locationManager.removeUpdates(locationListener)
                     // code
@@ -200,7 +205,6 @@ class AppLocation(
     }
     @Suppress("DEPRECATION")
     private fun getCityName(lat: Double, long: Double,activity: Activity){
-        Log.d("DEBUG_APP","INITTT6")
         val geocoder = Geocoder(activity, Locale.getDefault())
         val addresses = geocoder.getFromLocation(lat, long, 1)
         addresses?.get(0)?.let{

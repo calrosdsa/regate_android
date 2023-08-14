@@ -25,6 +25,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -77,13 +78,14 @@ fun SimpleTopBar(
     navigateUp:()->Unit,
     modifier: Modifier = Modifier,
     title:String? = null,
+    iconBack:ImageVector = Icons.Default.ArrowBack,
     scrollBehavior: TopAppBarScrollBehavior? = null
 
 ) {
     TopAppBar(
         navigationIcon = {
             IconButton(onClick = { navigateUp() }) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                Icon(imageVector = iconBack, contentDescription = null)
             }
         },
         modifier = modifier,
@@ -94,25 +96,5 @@ fun SimpleTopBar(
         },
         scrollBehavior = scrollBehavior
     )
-//    Surface(color = MaterialTheme.colorScheme.inverseOnSurface,
-//    modifier = modifier) {
-//        Row(
-//            verticalAlignment = Alignment.CenterVertically,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(5.dp)
-//        ) {
-//            IconButton(onClick = { navigateUp() }) {
-//                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-//            }
-//            if (title != null) {
-//                Spacer(modifier = Modifier.width(10.dp))
-//                Text(
-//                    text = title, style = MaterialTheme.typography.titleMedium.copy(
-//                        fontWeight = FontWeight.SemiBold
-//                    )
-//                )
-//            }
-//        }
-//    }
+
 }

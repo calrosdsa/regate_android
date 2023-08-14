@@ -20,8 +20,10 @@ abstract class RoomUserGrupoDao:UserGrupoDao,RoomEntityDao<UserGrupo> {
     @Query("DELETE FROM user_grupo where grupo_id = :id")
     abstract override suspend fun deleteUsers(id:Long)
 
-    @Query("DELETE FROM user_grupo where id = :id")
-    abstract override suspend fun deleteUserGroup(id:Long)
+    @Query("DELETE FROM user_grupo where  grupo_id = :groupId")
+    abstract override suspend fun deleteUsersGroup(groupId:Long)
+    @Query("DELETE FROM user_grupo where  id = :id")
+    abstract override suspend fun deleteUserGroup(id: Long)
 
     @Query("UPDATE user_grupo set is_admin = :status where id = :id")
     abstract override suspend fun updateUser(id: Long, status: Boolean)

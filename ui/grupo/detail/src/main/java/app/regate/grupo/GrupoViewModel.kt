@@ -101,7 +101,7 @@ class GrupoViewModel(
             try {
                 loadingState.addLoader()
                 val res = grupoRepository.getGrupo(grupoId)
-                delay(2000)
+                delay(1000)
                 salas.tryEmit(res)
                 loadingState.removeLoader()
                 Log.d("DEBUG_APP", res.toString())
@@ -171,15 +171,24 @@ class GrupoViewModel(
     }
     fun leaveGroup(navigateUp:()->Unit){
         viewModelScope.launch {
+            try{
+
             val targetUser = state.value.usersProfileGrupo
                 .first { it.id == state.value.user?.profile_id }
                 grupoRepository.removeUserFromGroup(targetUser.user_group_id)
             navigateUp()
+            }catch (e:Exception){
+                //TODO()
+            }
         }
     }
     fun refresh(){
         viewModelScope.launch {
+            try{
             getGrupo()
+            }catch (e:Exception){
+                //TODO()
+            }
         }
     }
     fun clearMessage(id:Long) {
