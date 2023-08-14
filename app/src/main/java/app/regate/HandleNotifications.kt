@@ -127,4 +127,39 @@ class HandleNotifications {
         }
     }
 
+    fun sendNotificationBilling(context: Context, payload: MessagePayload){
+        try{
+//            val taskDetailIntent = Intent(
+//                Intent.ACTION_VIEW,
+//                "https://example.com/sala_id=${payload.id}".toUri(),
+//                context,
+//                MainActivity::class.java
+//            )
+//            val taskBuilder = TaskStackBuilder.create(context)
+//            taskBuilder.addNextIntentWithParentStack(taskDetailIntent)
+//            val pendingIntent = taskBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
+            val CHANNEL_ID = context.getString(R.string.notification_billing_channel)
+            val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+                .setContentTitle(context.getString(R.string.your_payment_has_been_confirmed))
+                .setContentText(payload.message)
+                .setSmallIcon(R.drawable.logo_app)
+//                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build()
+
+            with(NotificationManagerCompat.from(context)) {
+                if (ActivityCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return
+                }
+                notify(payload.id.toInt(), notification)
+            }
+        }catch(e:Exception){
+            Log.d(TAG,e.localizedMessage?:"")
+        }
+    }
+
 }

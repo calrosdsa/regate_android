@@ -123,7 +123,8 @@ internal fun Account(
             navigateToFavorites = { navController.navigate(Route.FAVORITES)},
             modifier = Modifier.padding(paddingValues),
             navigateToRecargaCoins = navigateToRecargaCoins,
-            navigateToInbox = {navController.navigate(Route.INBOX)}
+            navigateToInbox = {navController.navigate(Route.INBOX)},
+            navigateToBilling = { navController.navigate(Route.BILLING)}
         )
     }
 }
@@ -139,6 +140,7 @@ internal fun Account(
     navigateToProfile:(Long)->Unit,
     navigateToRecargaCoins: () -> Unit,
     navigateToInbox:()->Unit,
+    navigateToBilling:()->Unit,
     modifier:Modifier = Modifier
 ) {
     val settings = stringResource(id = R.string.settings)
@@ -182,7 +184,9 @@ internal fun Account(
                 Spacer(modifier = Modifier.height(10.dp))
                 if(viewState.authState == AppAuthState.LOGGED_IN){
                 Surface(color = MaterialTheme.colorScheme.inverseOnSurface,
-                    shape = MaterialTheme.shapes.medium) {
+                    shape = MaterialTheme.shapes.medium,
+                    onClick = navigateToBilling
+                ) {
                     Row(horizontalArrangement = Arrangement.SpaceBetween,modifier = Modifier
                         .fillMaxWidth()
                         .padding(10.dp),

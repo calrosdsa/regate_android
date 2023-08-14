@@ -59,6 +59,9 @@
     <string name="chat_message_channel_name">Message notification</string>
     <string name="channel_message_description" translatable="false">message_notification</string>
 
+    <string name="notification_billing_channel" translatable="false">billing_channel_id</string>
+    <string name="notification_billing">Deposit and payment notifications</string>
+
     <string name="notification_sala_channel" translatable="false">sala_channel_id</string>
     <string name="notification_sala">Room Notifications</string>
 
@@ -133,6 +136,8 @@
     <string name="review">Review</string>
     <string name="post">Post</string>
     <string name="successfully_published">Successfully published</string>
+    <string name="your_payment_has_been_confirmed">Your payment has been confirmed</string>
+    <string name="history">History</string>
 
 
 </resources>

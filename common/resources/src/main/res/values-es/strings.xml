@@ -36,6 +36,9 @@
     <string name="sala_help_text2">Cuando te unas a la sala, se retendrá el monto indicado. Si todos los cupos se completan, se realizará la reserva y se descontará el pago. En caso de que los cupos no se completen dentro del límite de tiempo, se liberará el monto retenido.</string>
     <string name="new_room_created">Se ha creado una sala nueva.</string>
     <string name="notification_sala">Notificaciones sala</string>
+
+    <string name="notification_billing">Notificaciones de depósito y pago</string>
+
     <string name="create_group">Crear grupo</string>
     <string name="rooms">Salas</string>
     <string name="save">Save</string>
@@ -98,4 +101,6 @@
     <string name="review">Reseña</string>
     <string name="post">Publicar</string>
     <string name="successfully_published">Publicado exitosamente</string>
+    <string name="your_payment_has_been_confirmed">Se han confirmado su pago</string>
+    <string name="history">Historial</string>
 </resources>

@@ -35,6 +35,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
+import app.regate.common.composes.ui.Loader
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.ui.Skeleton
 import app.regate.common.composes.viewModel
@@ -64,6 +65,7 @@ internal fun Pay(
 ) {
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
+
     Pay(
         viewState = state,
         navigateUp = navigateUp,
@@ -72,6 +74,7 @@ internal fun Pay(
         },
         clearMessage = viewModel::clearMessage
     )
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -81,64 +84,84 @@ internal fun Pay(
     navigateUp: () -> Unit,
     saveImage:(Bitmap)->Unit,
     clearMessage:(Long)->Unit
-){
+) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-    viewState.message?.let {message->
-    LaunchedEffect(key1 = message, block = {
-        snackbarHostState.showSnackbar(message.message)
-        clearMessage(message.id)
-    })
+    viewState.message?.let { message ->
+        LaunchedEffect(key1 = message, block = {
+            snackbarHostState.showSnackbar(message.message)
+            clearMessage(message.id)
+        })
     }
     Scaffold(topBar = {
-        SimpleTopBar(navigateUp = navigateUp,
-        title = stringResource(id = R.string.qr_code_payment))
+        SimpleTopBar(
+            navigateUp = navigateUp,
+            title = stringResource(id = R.string.qr_code_payment)
+        )
     },
-    snackbarHost = {SnackbarHost(hostState = snackbarHostState)}
-    ) {paddingValues ->
-        Box(modifier = Modifier
-            .padding(paddingValues)
-            .padding(top = 15.dp)
-            .fillMaxSize()) {
-            Column(modifier = Modifier
-                .align(Alignment.TopCenter),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Box(modifier = Modifier.fillMaxWidth()) {
-                    Image(
-                        painter = painterResource(id = R.drawable.logo_app),
-                        contentDescription = "logo_app", modifier = Modifier
-                            .size(30.dp)
-                            .align(
-                                Alignment.Center
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(top = 15.dp)
+                .fillMaxSize()
+        ) {
+            if (viewState.loading) {
+                Loader(modifier = Modifier.align(Alignment.Center))
+            } else {
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.TopCenter),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(modifier = Modifier.fillMaxWidth()) {
+                        Image(
+                            painter = painterResource(id = R.drawable.logo_app),
+                            contentDescription = "logo_app", modifier = Modifier
+                                .size(30.dp)
+                                .align(
+                                    Alignment.Center
+                                )
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Box(modifier = Modifier.size(240.dp)) {
+                        viewState.qr?.let {
+                            ImageWithLoader(
+                                model = it, loading = viewState.loading,
+                                modifier = Modifier.fillMaxSize()
                             )
-                    )
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-             Box(modifier = Modifier.size(240.dp)){
-            viewState.qr?.let {
-                ImageWithLoader(model = it, loading = viewState.loading,
-                modifier = Modifier.fillMaxSize()
-                )
 //                Image(bitmap = it.asImageBitmap(), contentDescription = null,
 
-             }
-            }
-                Spacer(modifier = Modifier.height(10.dp))
-             Button(onClick = { viewState.qr?.let { saveImage(it) } }) {
-                 Text(text = stringResource(id = R.string.save_image))
-             }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Button(onClick = { viewState.qr?.let { saveImage(it) } }) {
+                        Text(text = stringResource(id = R.string.save_image))
+                    }
 
-                viewState.qrData?.let { qrData->
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(text = stringResource(id = R.string.expiration_date,qrData.expirationDate),style= MaterialTheme.typography.labelMedium)
-                Text(text = stringResource(id = R.string.amount,"${qrData.amount}${qrData.currency}"),style= MaterialTheme.typography.labelMedium)
-                }
+                    viewState.qrData?.let { qrData ->
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(
+                            text = stringResource(
+                                id = R.string.expiration_date,
+                                qrData.expirationDate
+                            ), style = MaterialTheme.typography.labelMedium
+                        )
+                        Text(
+                            text = stringResource(
+                                id = R.string.amount,
+                                "${qrData.amount}${qrData.currency}"
+                            ), style = MaterialTheme.typography.labelMedium
+                        )
+                    }
                 }
 
             }
         }
     }
+}
 
 
 @Composable

@@ -9,6 +9,8 @@ import app.regate.data.dto.account.auth.LoginResponse
 import app.regate.data.dto.account.auth.UserDto
 import app.regate.data.dto.account.auth.FcmRequest
 import app.regate.data.dto.account.auth.SocialRequest
+import app.regate.data.dto.account.billing.ConsumePaginationResponse
+import app.regate.data.dto.account.billing.DepositPaginationResponse
 import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.mappers.DtoToUser
 import app.regate.models.User
@@ -85,6 +87,19 @@ class AccountDataSourceImpl(
         }
     }
 
+    override suspend fun getDeposits(page:Int):DepositPaginationResponse {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/account/billing/deposits/?page=${page}"){
+            header("Authorization","Bearer $token")
+        }.body()
+    }
+
+    override suspend fun getConsume(page:Int):ConsumePaginationResponse {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/account/billing/deposits/?page=${page}"){
+            header("Authorization","Bearer $token")
+        }.body()
+    }
 
 
 }

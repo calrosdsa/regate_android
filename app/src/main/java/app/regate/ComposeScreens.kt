@@ -17,6 +17,8 @@
 package app.regate
 
 import app.regate.account.Account
+import app.regate.account.billing.Billing
+import app.regate.account.billing.deposits.Deposits
 import app.regate.account.reserva.Reserva
 import app.regate.actividades.Actividades
 import app.regate.home.Home
@@ -93,6 +95,8 @@ class ComposeScreens(
     val favorites:Favorites,
     val conversation:Conversation,
     val inbox:Conversations,
+    val billing:Billing,
+    val deposits: Deposits,
     val recargar:Recargar,
     val pay:Pay,
 

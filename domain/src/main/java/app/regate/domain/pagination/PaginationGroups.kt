@@ -22,7 +22,7 @@ class PaginationGroups(
             LoadResult.Page(
                 data = res.results,
                 prevKey = null,
-                nextKey = if (res.page == 0) null else res.page.plus(1)
+                nextKey = if (res.page == 0) null else res.page
             )
         }catch(e:Exception){
             LoadResult.Error(e)

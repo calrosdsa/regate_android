@@ -49,6 +49,7 @@
     <string name="grant_permission">Grant permission</string>
     <string name="group_description">Group description</string>
     <string name="group_visibility">Group Visibility</string>
+    <string name="history">History</string>
     <string name="inbox">Inbox</string>
     <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
     <string name="join_a_group">Join a group</string>
@@ -70,6 +71,8 @@
     <string name="new_offers">New Offers Here!</string>
     <string name="new_room_created">A new room has been created.</string>
     <string name="no_result_found">No results found. Try changing the date or time.</string>
+    <string name="notification_billing">Deposit and payment notifications</string>
+    <string name="notification_billing_channel" translatable="false">billing_channel_id</string>
     <string name="notification_sala">Room Notifications</string>
     <string name="notification_sala_channel" translatable="false">sala_channel_id</string>
     <string name="notifications">Notifications</string>
@@ -120,4 +123,5 @@
     <string name="what_would_you_like_to_play">What would you like to play?</string>
     <string name="where_will_it_be_played">Where will it be played?</string>
     <string name="you">You</string>
+    <string name="your_payment_has_been_confirmed">Your payment has been confirmed</string>
 </resources>

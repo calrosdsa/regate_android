@@ -77,6 +77,7 @@ string get_started
 string grant_permission
 string group_description
 string group_visibility
+string history
 string inbox
 string inbox_to_establecimiento
 string join_a_group
@@ -96,6 +97,8 @@ string near_me
 string new_offers
 string new_room_created
 string no_result_found
+string notification_billing
+string notification_billing_channel
 string notification_sala
 string notification_sala_channel
 string notifications
@@ -145,3 +148,4 @@ string what_kind_of_game_do_you_prefere
 string what_would_you_like_to_play
 string where_will_it_be_played
 string you
+string your_payment_has_been_confirmed

@@ -27,6 +27,7 @@
             <option value="$PROJECT_DIR$/data/models" />
             <option value="$PROJECT_DIR$/data/repository" />
             <option value="$PROJECT_DIR$/data/repository/account" />
+            <option value="$PROJECT_DIR$/data/repository/billing" />
             <option value="$PROJECT_DIR$/data/repository/coin" />
             <option value="$PROJECT_DIR$/data/repository/conversation" />
             <option value="$PROJECT_DIR$/data/repository/establecimiento" />
@@ -42,6 +43,7 @@
             <option value="$PROJECT_DIR$/tasks/api" />
             <option value="$PROJECT_DIR$/ui" />
             <option value="$PROJECT_DIR$/ui/account" />
+            <option value="$PROJECT_DIR$/ui/account/billing" />
             <option value="$PROJECT_DIR$/ui/account/coin" />
             <option value="$PROJECT_DIR$/ui/account/favoritos" />
             <option value="$PROJECT_DIR$/ui/account/inbox" />

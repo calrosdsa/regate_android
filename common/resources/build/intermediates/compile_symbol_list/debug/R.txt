@@ -75,6 +75,7 @@ int string get_started 0x0
 int string grant_permission 0x0
 int string group_description 0x0
 int string group_visibility 0x0
+int string history 0x0
 int string inbox 0x0
 int string inbox_to_establecimiento 0x0
 int string join_a_group 0x0
@@ -94,6 +95,8 @@ int string near_me 0x0
 int string new_offers 0x0
 int string new_room_created 0x0
 int string no_result_found 0x0
+int string notification_billing 0x0
+int string notification_billing_channel 0x0
 int string notification_sala 0x0
 int string notification_sala_channel 0x0
 int string notifications 0x0
@@ -143,3 +146,4 @@ int string what_kind_of_game_do_you_prefere 0x0
 int string what_would_you_like_to_play 0x0
 int string where_will_it_be_played 0x0
 int string you 0x0
+int string your_payment_has_been_confirmed 0x0

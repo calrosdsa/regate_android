@@ -24,7 +24,7 @@ class PaginationEstablecimientos(
             LoadResult.Page(
                 data = res.results,
                 prevKey = null,
-                nextKey = if (res.page == 0) null else res.page.plus(1)
+                nextKey = if (res.page == 0) null else res.page
             )
             }else{
                 LoadResult.Invalid()

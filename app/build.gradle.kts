@@ -146,6 +146,7 @@ dependencies {
     implementation(projects.ui.account.profile)
     implementation(projects.ui.account.reservas)
     implementation(projects.ui.account.coin)
+    implementation(projects.ui.account.billing)
     implementation(projects.ui.account.inbox)
     implementation(projects.ui.account.favoritos)
     implementation(projects.ui.media)

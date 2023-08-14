@@ -201,14 +201,14 @@ class MainActivity : ComponentActivity() {
         notificationManager.createNotificationChannelGroup(NotificationChannelGroup(groupId, groupName))
 
     }
-    private fun createNotificationGroupChatChannel(){
+    private fun createNotificationGroupChatChannel() {
         val groupId = getString(R.string.chat_notification_id)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val messageGroupChannel = NotificationChannel(
                 getString(R.string.chat_group_channel_id),
                 getString(R.string.chat_group_channel_name),
                 NotificationManager.IMPORTANCE_HIGH
-                )
+            )
             messageGroupChannel.group = groupId
             val messageChannel = NotificationChannel(
                 getString(R.string.chat_message_channel_id),
@@ -221,8 +221,18 @@ class MainActivity : ComponentActivity() {
                 getString(R.string.notification_sala),
                 NotificationManager.IMPORTANCE_DEFAULT
             )
+            val billingChannel = NotificationChannel(
+                getString(R.string.notification_billing_channel),
+                getString(R.string.notification_billing),
+                NotificationManager.IMPORTANCE_HIGH
+            )
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannels(mutableListOf(messageChannel,messageGroupChannel,salaChannel))
+            notificationManager.createNotificationChannels(
+                mutableListOf(
+                    messageChannel, messageGroupChannel,
+                    salaChannel, billingChannel
+                )
+            )
         }
     }
     private fun requestPermisos(){

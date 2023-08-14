@@ -109,7 +109,9 @@ class ChatSalaViewModel(
         viewModelScope.launch {
             try{
 //            runBlocking {
-               client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
+//               client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
+                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
+
                     port = 9090, path = "/v1/ws/chat-grupo?id=${grupoId}"){
                     launch { outputMessage() }
 //                    launch { inputMessage() }

@@ -52,7 +52,7 @@ interface NetworkComponent {
         preferences:AppPreferences
     ) : HttpClient = HttpClient(OkHttp) {
         defaultRequest {
-            url("http://192.168.0.12:9090")
+            url("http://172.20.20.76:9090")
         }
         engine {
             preconfigured = client
@@ -119,7 +119,7 @@ fun provideKtorClient2(
 //    preferences:AppPreferences
 ) : HttpClientMessage = HttpClient(OkHttp) {
     defaultRequest {
-        url("http://192.168.0.12:9091")
+        url("http://172.20.20.76:9091")
     }
     engine {
         preconfigured = client

@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.coin.CoinRepository
 import app.regate.data.dto.empresa.coin.QrRequest
@@ -59,7 +60,7 @@ class PayViewModel(
         getQr()
     }
 
-    fun getQr() {
+    private fun getQr() {
         viewModelScope.launch {
             try {
                 if(!qrR.isNullOrBlank()){
@@ -67,15 +68,6 @@ class PayViewModel(
                 val res = coinRepository.getToken()
                 val qrRequest = Json.decodeFromString<QrRequest>(qrR)
                 qrData.tryEmit(qrRequest)
-//                    QrRequest(
-//                    currency = "BOB",
-//                    gloss = "Prueba QR",
-//                    amount = 1,
-//                    singleUse = true,
-//                    expirationDate = "2023-08-15",
-//                    additionalData = "Datos Adicionales para identificar el QR",
-//                    destinationAccountId = "1"
-//                )
                 val qrRes = coinRepository.getQr(qrRequest, res.message)
                 val decodedString: ByteArray = Base64.decode(qrRes.qr, Base64.DEFAULT)
                 val decodedByte =
@@ -90,6 +82,7 @@ class PayViewModel(
                 }
             } catch (e: Exception) {
                 loadingCounter.removeLoader()
+                uiMessageManager.emitMessage(UiMessage(message = "No se pudo generar el qr."))
                 Log.d("DEBUG_APP_ERR", e.localizedMessage ?: "")
             }
         }

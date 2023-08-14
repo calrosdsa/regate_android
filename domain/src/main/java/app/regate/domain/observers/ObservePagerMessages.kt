@@ -4,11 +4,10 @@ import app.cash.paging.Pager
 import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
 import app.regate.compoundmodels.MessageProfile
-import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.PagingInteractor
-import app.regate.domain.PagingMessagesMediator
+import app.regate.domain.pagination.mediator.PagingMessagesMediator
 import kotlinx.coroutines.flow.Flow
 import me.tatarka.inject.annotations.Inject
 

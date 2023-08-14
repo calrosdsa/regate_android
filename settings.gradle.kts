@@ -76,10 +76,11 @@ include(
     ":ui:account:favoritos",
     ":ui:account:inbox",
     ":ui:account:coin",
+    ":ui:account:billing",
 
-    ":ui:review",
     ":ui:settings",
     ":ui:media",
+    ":ui:review",
 
     ":app",
     ":common:resources",
@@ -103,6 +104,7 @@ include(
     ":data:repository:users",
     ":data:repository:grupo",
     ":data:repository:coin",
+    ":data:repository:billing",
     ":data:repository:conversation",
 
 

@@ -30,6 +30,7 @@
     <string name="grant_permission">Conceder permiso</string>
     <string name="group_description">Descripción del grupo</string>
     <string name="group_visibility">Visibilidad del Grupo</string>
+    <string name="history">Historial</string>
     <string name="inbox">Inbox</string>
     <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
     <string name="join_a_group">Únete a un grupo</string>
@@ -47,6 +48,7 @@
     <string name="new_offers">¡Nuevas ofertas aquí!</string>
     <string name="new_room_created">Se ha creado una sala nueva.</string>
     <string name="no_result_found">No se encontraron resultados prueba cambiando la fecha o la hora.</string>
+    <string name="notification_billing">Notificaciones de depósito y pago</string>
     <string name="notification_sala">Notificaciones sala</string>
     <string name="notifications">Notifications</string>
     <string name="permission_required">Permiso requerido.</string>
@@ -95,4 +97,5 @@
     <string name="what_would_you_like_to_play">¿Qué te gustaría jugar?</string>
     <string name="where_will_it_be_played">Donde estarás jugando</string>
     <string name="you">Tú</string>
+    <string name="your_payment_has_been_confirmed">Se han confirmado su pago</string>
 </resources>

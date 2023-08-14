@@ -104,6 +104,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     Log.d(TAG,e.localizedMessage?:"")
                 }
             }
+            if(TypeNotification.NOTIFICATION_BILLING.ordinal == data["type"]?.toInt()){
+                try{
+                    val payload = Json.decodeFromString<MessagePayload>(data["payload"].toString())
+                    handler.sendNotificationBilling(applicationContext,payload)
+                }catch (e:Exception){
+                    Log.d(TAG,e.localizedMessage?:"")
+                }
+            }
             // Check if data needs to be processed by long running job
             if (needsToBeScheduled()) {
                 scheduleJob()

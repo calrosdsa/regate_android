@@ -7,6 +7,8 @@ import app.regate.data.dto.account.auth.LoginResponse
 import app.regate.data.dto.account.auth.UserDto
 import app.regate.data.dto.account.auth.FcmRequest
 import app.regate.data.dto.account.auth.SocialRequest
+import app.regate.data.dto.account.billing.ConsumePaginationResponse
+import app.regate.data.dto.account.billing.DepositPaginationResponse
 import app.regate.data.mappers.DtoToUser
 import app.regate.inject.ApplicationScope
 import app.regate.models.Profile
@@ -78,5 +80,12 @@ class AccountRepository(
             //TODO()
         }
         }
+    }
+
+    suspend fun getDepositPagination(page:Int):DepositPaginationResponse{
+        return accountDataSourceImpl.getDeposits(page)
+    }
+    suspend fun getConsumePagination(page:Int):ConsumePaginationResponse{
+       return accountDataSourceImpl.getConsume(page)
     }
 }
