@@ -14,6 +14,7 @@ class ConsumesPagination(
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
     }
+    @Suppress("SuspiciousIndentation")
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ConsumeDto> {
         return try{
             val page = params.key?:1

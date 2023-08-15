@@ -1,11 +1,12 @@
 package app.regate.data.dto.account.billing
 
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ConsumeDto(
     val amount: Double,
-    val created_at: String,
+    val created_at: Instant,
     val id: Long,
     val message:String,
     val id_entity:Long,
@@ -19,3 +20,8 @@ data class ConsumePaginationResponse(
     val results:List<ConsumeDto>,
     val nextPage:Int,
 )
+
+enum class TypeEntity {
+    INSTALACION,
+    SALA
+}

@@ -45,6 +45,7 @@ typealias Billing = @Composable (
     navigateUp: () -> Unit,
     navigateToRecargaCoins:()->Unit,
     deposits: @Composable () -> Unit,
+    consume: @Composable () -> Unit
 ) -> Unit
 
 @Inject
@@ -53,13 +54,15 @@ fun Billing(
     viewModelFactory:()->BillingViewModel,
     @Assisted navigateUp: () -> Unit,
     @Assisted navigateToRecargaCoins: () -> Unit,
-    @Assisted deposits:@Composable () -> Unit
+    @Assisted deposits:@Composable () -> Unit,
+    @Assisted consume:@Composable () -> Unit
 ){
     Billing(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
         navigateToRecargaCoins = navigateToRecargaCoins,
-        deposits = deposits
+        deposits = deposits,
+        consume = consume
     )
 }
 
@@ -68,7 +71,8 @@ internal fun Billing(
     viewModel: BillingViewModel,
     navigateUp: () -> Unit,
     navigateToRecargaCoins: () -> Unit,
-    deposits:@Composable () -> Unit
+    deposits:@Composable () -> Unit,
+    consume:@Composable () -> Unit
 ){
     val state by viewModel.state.collectAsState()
     Billing(
@@ -76,6 +80,7 @@ internal fun Billing(
         navigateUp = navigateUp,
         navigateToRecargaCoins = navigateToRecargaCoins,
         deposits = deposits,
+        consume  = consume
     )
 
 }
@@ -86,7 +91,8 @@ internal fun Billing(
     viewState:BillingState,
     navigateUp: () -> Unit,
     navigateToRecargaCoins: () -> Unit,
-    deposits:@Composable () -> Unit
+    deposits:@Composable () -> Unit,
+    consume:@Composable () ->Unit,
 ) {
     val pagerState = rememberPagerState()
     val coroutine = rememberCoroutineScope()
@@ -152,7 +158,7 @@ internal fun Billing(
                     ) { page ->
                         when (page) {
                             0 -> deposits()
-                            1 -> deposits()
+                            1 -> consume()
                         }
                     }
                 }
@@ -169,14 +175,14 @@ internal fun Indicators(
 ){
     ScrollableTabRow(selectedTabIndex = currentTab, edgePadding = 1.dp) {
         Tab(
-            text = { Text(text = "Mis Grupos", style = MaterialTheme.typography.labelMedium) },
+            text = { Text(text = stringResource(id = R.string.deposits), style = MaterialTheme.typography.labelMedium) },
             selected = currentTab == 0,
             onClick = {
                 navToTab(0)
             },
         )
         Tab(
-            text = { Text(text = "Grupos",style = MaterialTheme.typography.labelMedium) },
+            text = { Text(text = stringResource(id = R.string.consume),style = MaterialTheme.typography.labelMedium) },
             selected = currentTab ==1,
             onClick = {
                 // Animate to the selected page when clicked

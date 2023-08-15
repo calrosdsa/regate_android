@@ -78,6 +78,7 @@ include(
     ":ui:account:coin",
     ":ui:account:billing",
 
+    ":ui:system",
     ":ui:settings",
     ":ui:media",
     ":ui:review",
@@ -104,7 +105,7 @@ include(
     ":data:repository:users",
     ":data:repository:grupo",
     ":data:repository:coin",
-    ":data:repository:billing",
+    ":data:repository:system",
     ":data:repository:conversation",
 
 

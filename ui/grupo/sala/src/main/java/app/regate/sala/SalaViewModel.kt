@@ -76,15 +76,19 @@ class SalaViewModel(
         viewModelScope.launch {
             try{
                 loadingState.addLoader()
-                val res = salaRepository.joinSala(salaId,200)
+                val res = state.value.data?.sala?.let { salaRepository.joinSala(salaId, it.precio,it.cupos) }
                 getSala()
                 loadingState.removeLoader()
-                uiMessageManager.emitMessage(UiMessage(message = res.message))
+                if (res != null) {
+                    uiMessageManager.emitMessage(UiMessage(message = res.message))
+                }
 //                Log.d("DEBUG_APP_ERROR",res.message)
             }catch(e:ResponseException){
                 loadingState.removeLoader()
                 uiMessageManager.emitMessage(UiMessage(message = e.response.body<ResponseMessage>().message))
                 Log.d("DEBUG_APP_ERROR",e.response.body()?:"error")
+            }catch (e:Exception){
+                //TODO()
             }
         }
     }

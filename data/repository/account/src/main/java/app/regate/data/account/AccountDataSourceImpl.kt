@@ -96,7 +96,7 @@ class AccountDataSourceImpl(
 
     override suspend fun getConsume(page:Int):ConsumePaginationResponse {
         val token = authStore.get()?.accessToken
-        return client.get("/v1/account/billing/deposits/?page=${page}"){
+        return client.get("/v1/account/billing/consume/?page=${page}"){
             header("Authorization","Bearer $token")
         }.body()
     }

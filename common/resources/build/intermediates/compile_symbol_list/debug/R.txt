@@ -54,9 +54,11 @@ int string choose_a_schedule 0x0
 int string choose_the_time_and_place 0x0
 int string choose_where_create_room 0x0
 int string clear_all 0x0
+int string consume 0x0
 int string continuar 0x0
 int string create_group 0x0
 int string create_sala 0x0
+int string deposits 0x0
 int string description 0x0
 int string discount 0x0
 int string do_you_want_receive_notifications 0x0

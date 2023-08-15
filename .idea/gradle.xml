@@ -27,7 +27,6 @@
             <option value="$PROJECT_DIR$/data/models" />
             <option value="$PROJECT_DIR$/data/repository" />
             <option value="$PROJECT_DIR$/data/repository/account" />
-            <option value="$PROJECT_DIR$/data/repository/billing" />
             <option value="$PROJECT_DIR$/data/repository/coin" />
             <option value="$PROJECT_DIR$/data/repository/conversation" />
             <option value="$PROJECT_DIR$/data/repository/establecimiento" />
@@ -36,6 +35,7 @@
             <option value="$PROJECT_DIR$/data/repository/labels" />
             <option value="$PROJECT_DIR$/data/repository/reserva" />
             <option value="$PROJECT_DIR$/data/repository/sala" />
+            <option value="$PROJECT_DIR$/data/repository/system" />
             <option value="$PROJECT_DIR$/data/repository/users" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/tasks" />
@@ -75,6 +75,7 @@
             <option value="$PROJECT_DIR$/ui/media" />
             <option value="$PROJECT_DIR$/ui/review" />
             <option value="$PROJECT_DIR$/ui/settings" />
+            <option value="$PROJECT_DIR$/ui/system" />
             <option value="$PROJECT_DIR$/ui/welcome" />
           </set>
         </option>

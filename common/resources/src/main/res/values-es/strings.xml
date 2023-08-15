@@ -103,4 +103,6 @@
     <string name="successfully_published">Publicado exitosamente</string>
     <string name="your_payment_has_been_confirmed">Se han confirmado su pago</string>
     <string name="history">Historial</string>
+    <string name="deposits">Depósitos</string>
+    <string name="consume">Consumo</string>
 </resources>

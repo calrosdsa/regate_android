@@ -28,9 +28,11 @@
     <string name="choose_the_time_and_place">Choose the time and place</string>
     <string name="choose_where_create_room">Choose where to create the room</string>
     <string name="clear_all">Clear all</string>
+    <string name="consume">Consume</string>
     <string name="continuar">Continue</string>
     <string name="create_group">Create group</string>
     <string name="create_sala">Create sala</string>
+    <string name="deposits">Deposits</string>
     <string name="description">Description</string>
     <string name="discount">Discount benefits are periodically launched.</string>
     <string name="do_you_want_receive_notifications">Do you want to receive notifications?</string>

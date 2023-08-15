@@ -56,9 +56,11 @@ string choose_a_schedule
 string choose_the_time_and_place
 string choose_where_create_room
 string clear_all
+string consume
 string continuar
 string create_group
 string create_sala
+string deposits
 string description
 string discount
 string do_you_want_receive_notifications

@@ -423,7 +423,11 @@ internal fun AppNavigation(
             composeScreens.billing(
                 navigateUp = navController::navigateUp,
                 navigateToRecargaCoins = { navController.navigate(Route.RECARGAR)},
-                deposits = composeScreens.deposits
+                deposits = composeScreens.deposits,
+                consume = { composeScreens.consume(
+                    navigateToSala = {navController.navigate(Route.SALA id it)},
+                    navigateToReserva = { navController.navigate(Route.RESERVAS) }
+                )}
             )
         }
 

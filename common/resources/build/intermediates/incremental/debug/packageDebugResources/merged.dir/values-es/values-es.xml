@@ -12,9 +12,11 @@
     <string name="choose_the_time_and_place">Elije la hora y el lugar</string>
     <string name="choose_where_create_room">Elige dónde crear la sala</string>
     <string name="clear_all">Resetear</string>
+    <string name="consume">Consumo</string>
     <string name="continuar">Continuar</string>
     <string name="create_group">Crear grupo</string>
     <string name="create_sala">Crear sala</string>
+    <string name="deposits">Depósitos</string>
     <string name="description">Descripción</string>
     <string name="discount">Los beneficios y descuento se lanzan regularmente</string>
     <string name="do_you_want_receive_notifications">¿Quieres recibir notificaciones?</string>

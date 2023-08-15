@@ -33,12 +33,13 @@ class SalaRepository(
     fun observeProfileSala(ids:List<Long>):Flow<List<Profile>>{
         return profileDao.observeProfileSalas(ids)
     }
-    suspend fun joinSala(salaId:Long,precio:Int):ResponseMessage{
+    suspend fun joinSala(salaId:Long,precio:Int,cupos:Int):ResponseMessage{
         val user  = userDao.getUser(0)
         val dataR = JoinSalaRequest(
             sala_id = salaId,
-            precio = precio,
-            profile_id = user.profile_id
+            precio_sala = precio,
+            profile_id = user.profile_id,
+            cupos = cupos
         )
         return salaDataSourceImpl.joinSala(dataR)
     }

@@ -138,6 +138,8 @@
     <string name="successfully_published">Successfully published</string>
     <string name="your_payment_has_been_confirmed">Your payment has been confirmed</string>
     <string name="history">History</string>
+    <string name="deposits">Deposits</string>
+    <string name="consume">Consume</string>
 
 
 </resources>
