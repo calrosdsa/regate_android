@@ -1,6 +1,8 @@
 package app.regate.constant
 
 object Route {
+    const val REPORT = "report"
+
     const val WELCOME_PAGE = "welcome"
     const val LOGIN_PAGE = "login"
     const val SIGNUP_SCREEN = "signup"
@@ -53,6 +55,7 @@ object Route {
 
     const val REVIEWS = "review"
     const val CREATE_REVIEW = "create_review"
+
 
 }
 

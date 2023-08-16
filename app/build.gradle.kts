@@ -136,12 +136,14 @@ dependencies {
     implementation(projects.data.repository.labels)
     implementation(projects.data.repository.grupo)
     implementation(projects.data.repository.coin)
+    implementation(projects.data.repository.system)
 
     implementation(projects.data.dbRoom)
 
 //    implementation(projects.ui.map)
     implementation(projects.ui.welcome)
     implementation(projects.ui.auth)
+    implementation(projects.ui.system)
 
     implementation(projects.ui.account.profile)
     implementation(projects.ui.account.reservas)

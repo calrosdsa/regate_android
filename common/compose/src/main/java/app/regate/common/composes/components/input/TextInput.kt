@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -13,6 +14,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 
 @SuppressLint("ComposeParameterOrder")
@@ -43,7 +45,8 @@ fun CustomOutlinedTextInput(
             if(icon != null){
             Icon(imageVector = icon, contentDescription = "Trailing icon")
             }
-        }
+        },
+
     )
 }
 
@@ -58,6 +61,8 @@ fun InputForm(
     label:String = "",
     maxLines:Int = 1,
     keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     icon:ImageVector? = null,
     content: @Composable() (BoxScope.() -> Unit) = {},
 ){
@@ -71,16 +76,18 @@ fun InputForm(
         maxLines = maxLines,
         label = { Text(text = label) },
         keyboardOptions = KeyboardOptions(
-            keyboardType = keyboardType
+            keyboardType = keyboardType,
+            imeAction = imeAction
         ),
         modifier = modifier.fillMaxWidth(),
 //        shape = CircleShape,
         placeholder = { Text(text = placeholder)},
-        trailingIcon = {
-            if(icon != null){
-                Icon(imageVector = icon, contentDescription = "Trailing icon")
+          trailingIcon = {
+                    if(icon != null){
+                        Icon(imageVector = icon, contentDescription = "Trailing icon")
             }
         },
+        keyboardActions = keyboardActions,
     )
     }
 }

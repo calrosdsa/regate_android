@@ -116,6 +116,14 @@ internal fun AppNavigation(
                   } }
             )
         }
+        animatedComposable(route = Route.REPORT arg  "data",
+            arguments = listOf(
+                navArgument("data"){ type = NavType.StringType },
+            )){
+            composeScreens.report(
+            navigateUp = navController::navigateUp
+            )
+        }
         animatedComposable(route = Route.RESERVAR arg "id" arg "establecimientoId",
         arguments = listOf(
             navArgument("id"){ type = NavType.LongType },
@@ -166,7 +174,8 @@ internal fun AppNavigation(
             val url = it.arguments?.getString("url")?:""
             composeScreens.photo(
                 navigateUp = navController::navigateUp,
-                url = url
+                url = url,
+                navigateToReport = {navController.navigate(Route.REPORT id it)}
             )
         }
         animatedComposableVariant(

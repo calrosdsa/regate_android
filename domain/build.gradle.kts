@@ -46,6 +46,7 @@ dependencies {
     api(projects.data.repository.grupo)
     api(projects.data.repository.coin)
     api(projects.data.repository.conversation)
+    api(projects.data.repository.system)
 
 //    implementation(projects.data.auth)
 //    api(projects.data.episodes)

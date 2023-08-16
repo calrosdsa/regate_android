@@ -40,7 +40,10 @@ fun DialogConfirmation(
                     TextButton(onClick = { dismiss() }) {
                         Text(text = "Descartar")
                     }
-                    TextButton(onClick = { confirm() }) {
+                    TextButton(onClick = {
+                        confirm()
+                        dismiss()
+                    }) {
                         Text(text = "Aceptar")
                     }
                 }

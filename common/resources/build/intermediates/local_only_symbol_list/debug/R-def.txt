@@ -80,6 +80,8 @@ string grant_permission
 string group_description
 string group_visibility
 string history
+string illegal_activity
+string inappropriate_material
 string inbox
 string inbox_to_establecimiento
 string join_a_group
@@ -104,6 +106,8 @@ string notification_billing_channel
 string notification_sala
 string notification_sala_channel
 string notifications
+string nudes
+string other
 string permission_required
 string post
 string price_range
@@ -117,6 +121,7 @@ string rate_this_place
 string recommended_places
 string remove_user
 string remove_user_admin
+string report
 string reservation_date
 string review
 string reviews
@@ -131,16 +136,19 @@ string saved_correctly
 string search_nearby_places
 string see
 string select_group_text
+string send
 string services
 string settings
 string show_less
 string show_more
 string show_results
 string show_reviews
+string spam_scam
 string successfully_published
 string terms_of_services
 string theme
 string there_are_not_available_schudules
+string threats_of_violence
 string time_interval
 string unexpected_error
 string user_since

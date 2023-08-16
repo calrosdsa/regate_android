@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -79,8 +80,8 @@ fun SimpleTopBar(
     modifier: Modifier = Modifier,
     title:String? = null,
     iconBack:ImageVector = Icons.Default.ArrowBack,
-    scrollBehavior: TopAppBarScrollBehavior? = null
-
+    scrollBehavior: TopAppBarScrollBehavior? = null ,
+    actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
         navigationIcon = {
@@ -94,7 +95,8 @@ fun SimpleTopBar(
                 Text(text = title)
             }
         },
-        scrollBehavior = scrollBehavior
+        scrollBehavior = scrollBehavior,
+        actions = actions
     )
 
 }

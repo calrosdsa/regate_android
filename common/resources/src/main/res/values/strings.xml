@@ -140,6 +140,14 @@
     <string name="history">History</string>
     <string name="deposits">Deposits</string>
     <string name="consume">Consume</string>
+    <string name="send">Send</string>
+    <string name="report">Report</string>
+    <string name="nudes">Nudity or sexual content</string>
+    <string name="inappropriate_material">Other inappropriate material</string>
+    <string name="illegal_activity">Illegal activity</string>
+    <string name="threats_of_violence">Threats of violence</string>
+    <string name="spam_scam">Spam/Scam</string>
+    <string name="other">Other</string>
 
 
 </resources>

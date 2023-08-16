@@ -78,6 +78,8 @@ int string grant_permission 0x0
 int string group_description 0x0
 int string group_visibility 0x0
 int string history 0x0
+int string illegal_activity 0x0
+int string inappropriate_material 0x0
 int string inbox 0x0
 int string inbox_to_establecimiento 0x0
 int string join_a_group 0x0
@@ -102,6 +104,8 @@ int string notification_billing_channel 0x0
 int string notification_sala 0x0
 int string notification_sala_channel 0x0
 int string notifications 0x0
+int string nudes 0x0
+int string other 0x0
 int string permission_required 0x0
 int string post 0x0
 int string price_range 0x0
@@ -115,6 +119,7 @@ int string rate_this_place 0x0
 int string recommended_places 0x0
 int string remove_user 0x0
 int string remove_user_admin 0x0
+int string report 0x0
 int string reservation_date 0x0
 int string review 0x0
 int string reviews 0x0
@@ -129,16 +134,19 @@ int string saved_correctly 0x0
 int string search_nearby_places 0x0
 int string see 0x0
 int string select_group_text 0x0
+int string send 0x0
 int string services 0x0
 int string settings 0x0
 int string show_less 0x0
 int string show_more 0x0
 int string show_results 0x0
 int string show_reviews 0x0
+int string spam_scam 0x0
 int string successfully_published 0x0
 int string terms_of_services 0x0
 int string theme 0x0
 int string there_are_not_available_schudules 0x0
+int string threats_of_violence 0x0
 int string time_interval 0x0
 int string unexpected_error 0x0
 int string user_since 0x0

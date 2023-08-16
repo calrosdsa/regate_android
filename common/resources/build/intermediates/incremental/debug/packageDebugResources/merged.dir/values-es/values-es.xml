@@ -33,6 +33,8 @@
     <string name="group_description">Descripción del grupo</string>
     <string name="group_visibility">Visibilidad del Grupo</string>
     <string name="history">Historial</string>
+    <string name="illegal_activity">Actividad ilegal</string>
+    <string name="inappropriate_material">Otro material inapropiado</string>
     <string name="inbox">Inbox</string>
     <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
     <string name="join_a_group">Únete a un grupo</string>
@@ -53,6 +55,8 @@
     <string name="notification_billing">Notificaciones de depósito y pago</string>
     <string name="notification_sala">Notificaciones sala</string>
     <string name="notifications">Notifications</string>
+    <string name="nudes">Desnudez o contenido sexual</string>
+    <string name="other">Otro</string>
     <string name="permission_required">Permiso requerido.</string>
     <string name="post">Publicar</string>
     <string name="price_range">Rango de precios</string>
@@ -66,6 +70,7 @@
     <string name="recommended_places">Lugares recomendados</string>
     <string name="remove_user">Remover este  usuario del grupo</string>
     <string name="remove_user_admin">Revocar el estatus de administrador</string>
+    <string name="report">Reportar</string>
     <string name="reservation_date">Fecha de la Reserva</string>
     <string name="review">Reseña</string>
     <string name="reviews">Reseñas</string>
@@ -80,16 +85,19 @@
     <string name="search_nearby_places">Buscar lugares cercanos</string>
     <string name="see">Ver</string>
     <string name="select_group_text">¿En qué grupo te gustaría crear esta sala?</string>
+    <string name="send">Enviar</string>
     <string name="services">Servicios</string>
     <string name="settings">Configuraciones</string>
     <string name="show_less">Ver menos</string>
     <string name="show_more">Ver más</string>
     <string name="show_results">Mostrar resultados</string>
     <string name="show_reviews">Mostrar las %1$d reseñas</string>
+    <string name="spam_scam">Spam/Scam</string>
     <string name="successfully_published">Publicado exitosamente</string>
     <string name="terms_of_services">Condiciones de Servicio</string>
     <string name="theme">Theme</string>
     <string name="there_are_not_available_schudules">No hay horarios disponibles</string>
+    <string name="threats_of_violence">Amenazas de violencia</string>
     <string name="time_interval">¿Por cuánto tiempo de gustaría jugar?</string>
     <string name="unexpected_error">Lo sentimos, se ha producido un error inesperado.</string>
     <string name="user_since">Usuario desde %1$s</string>

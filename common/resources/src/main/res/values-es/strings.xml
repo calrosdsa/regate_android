@@ -105,4 +105,13 @@
     <string name="history">Historial</string>
     <string name="deposits">Depósitos</string>
     <string name="consume">Consumo</string>
+    <string name="send">Enviar</string>
+    <string name="report">Reportar</string>
+    <string name="nudes">Desnudez o contenido sexual</string>
+    <string name="inappropriate_material">Otro material inapropiado</string>
+    <string name="illegal_activity">Actividad ilegal</string>
+    <string name="threats_of_violence">Amenazas de violencia</string>
+    <string name="spam_scam">Spam/Scam</string>
+    <string name="other">Otro</string>
+
 </resources>
