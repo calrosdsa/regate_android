@@ -91,8 +91,8 @@ internal fun FilterSalas(
         navigateUp = navigateUp,
 //        navigateToCreateSala = navigateToCreateSala,
         openAuthBottomSheet = openAuthBottomSheet,
-        formatShortTime = {formatter.formatShortTime(it)},
-        formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
+        formatShortTime = formatter::formatShortTime,
+        formatDate = formatter::formatShortDate,
         navigateToSala = navigateToSala,
         navigateToSelectEstablecimiento = navigateToSelectEstablecimiento,
     )
@@ -107,8 +107,8 @@ internal fun FilterSalas(
     navigateUp: () -> Unit,
 //    navigateToCreateSala: (id: Long) -> Unit,
     navigateToSelectEstablecimiento: () -> Unit,
-    formatShortTime:(time: Instant)->String,
-    formatDate:(date: Instant)->String,
+    formatShortTime:(time: String,plusMinutes:Long)->String,
+    formatDate:(date: String)->String,
     navigateToSala:(Long)->Unit,
     openAuthBottomSheet: () -> Unit
 ){
@@ -178,7 +178,7 @@ internal fun FilterSalas(
             PullRefreshIndicator(
                 refreshing = refreshing,
                 state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier.align(Alignment.Center)
                     .padding(paddingValues),
                 scale = true
             )

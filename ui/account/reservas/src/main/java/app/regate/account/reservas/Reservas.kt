@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.components.text.DateTextWithIcon
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import app.regate.data.dto.account.reserva.ReservaDto
@@ -100,7 +101,13 @@ internal fun Reservas(
                     item = reserva,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { navigateToReserva(reserva.id,reserva.establecimiento_id,reserva.instalacion_id) }
+                        .clickable {
+                            navigateToReserva(
+                                reserva.id,
+                                reserva.establecimiento_id,
+                                reserva.instalacion_id
+                            )
+                        }
                         .padding(10.dp),
                     formatterDate = formatterDate,
                     formatterDateReserva = formatterDateReserva
@@ -126,17 +133,7 @@ fun ReservaItem(
             style = MaterialTheme.typography.labelLarge
         )
         Text(text = formatterDateReserva(item.start_date,item.end_date),style = MaterialTheme.typography.labelMedium)
-        Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 3.dp)) {
-            Icon(imageVector = Icons.Default.Update, contentDescription = item.created_at.toString(),
-            modifier = Modifier.size(16.dp))
-            Spacer(modifier = Modifier.width(5.dp))
-        Text(text = formatterDate(item.created_at),
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.inverseSurface
-        )
-        }
+        DateTextWithIcon(date =  formatterDate(item.created_at))
     }
 }
 

@@ -16,8 +16,7 @@ interface SalaDataSource {
    suspend fun getSala(id:Long):SalaDetail
    suspend fun getMessagesSala(id:Long):List<GrupoMessageDto>
    suspend fun joinSala(d:JoinSalaRequest): ResponseMessage
-
    suspend fun createSala(d: SalaRequestDto):ResponseMessage
-
+//   suspend fun exitSala(id:Int)
 }
 

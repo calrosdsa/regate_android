@@ -20,6 +20,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -124,8 +125,8 @@ internal fun Sala(
     Sala(
         viewState = viewState,
         navigateUp = navigateUp,
-        formatShortTime = {formatter.formatShortTime(it)},
-        formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
+        formatShortTime = formatter::formatShortTime,
+        formatDate = formatter::formatShortDate,
         navigateToChat = navigateToChat,
         openAuthBottomSheet = openAuthBottomSheet,
         openDialogConfirmation = {joinSalaDialog.value = true},
@@ -149,8 +150,8 @@ internal fun Sala(
 internal fun Sala(
     viewState: SalaState,
     navigateUp: () -> Unit,
-    formatShortTime:(time:Instant)->String,
-    formatDate:(date:Instant)->String,
+    formatShortTime:(time:String,plusMinutes:Long)->String,
+    formatDate:(date:String)->String,
     navigateToChat: (id:Long) -> Unit,
     openAuthBottomSheet: () -> Unit,
     openDialogConfirmation:()->Unit,
@@ -162,6 +163,15 @@ internal fun Sala(
     val participantes = remember(viewState.data?.profiles) {
         derivedStateOf {
             viewState.data?.profiles?.size
+        }
+    }
+    val iAmInTheRoom by remember(key1 = viewState.data,key2 = viewState.authState) {
+        derivedStateOf {
+            viewState.user?.profile_id?.let { it2 ->
+                viewState.data?.profiles?.map{it.profile_id}?.contains(
+                    it2
+                ) ?: false
+            }
         }
     }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -205,11 +215,12 @@ internal fun Sala(
             }
         },
         modifier = Modifier
-            .padding(10.dp)
+            .fillMaxSize()
     ) { paddingValues ->
         Box(modifier = Modifier
             .pullRefresh(state = refreshState)
             .padding(paddingValues)
+            .padding(10.dp)
             .fillMaxSize()) {
             viewState.data?.let {data->
 
@@ -231,11 +242,8 @@ internal fun Sala(
                     }
                     item {
                         Text(
-                            text = "${formatDate(sala.fecha)} ${formatShortTime(sala.start_time)} a ${
-                                formatShortTime(
-                                    sala.end_time.plus(30.minutes)
-                                )
-                            }",
+                            text = "${formatDate(sala.horas.first())} ${formatShortTime(sala.horas.first(),0)} a ${
+                                formatShortTime(sala.horas.last(),30)}",
                             style = MaterialTheme.typography.titleSmall
                         )
                     }
@@ -272,12 +280,19 @@ internal fun Sala(
                         Row(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth().height(40.dp)
                         ) {
-                            Text(
-                                text = "${participantes.value}/${sala.cupos}",
-                                style = MaterialTheme.typography.labelLarge
-                            )
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text( text = "${participantes.value}/${sala.cupos}",
+                                    style = MaterialTheme.typography.labelLarge)
+                                Spacer(modifier = Modifier.width(5.dp))
+                                Icon(imageVector = Icons.Default.Group, contentDescription = sala.titulo,modifier = Modifier.size(18.dp))
+                            }
+//                            Text(
+//                                text = "${participantes.value}/${sala.cupos}",
+//                                style = MaterialTheme.typography.labelLarge
+//                            )
+                                if(iAmInTheRoom == false){
                             CustomButton(onClick = {
                                 if (viewState.authState == AppAuthState.LOGGED_IN) {
                                     openDialogConfirmation()
@@ -285,7 +300,8 @@ internal fun Sala(
                                     openAuthBottomSheet()
                                 }
                             }) {
-                                Text(text = "Unirse: ${sala.precio / sala.cupos}")
+                                Text(text = "Unirse: ${sala.precio_cupo}")
+                                }
                             }
                         }
                     }
@@ -306,12 +322,12 @@ internal fun Sala(
                             nombre = profile.nombre,
                             apellido = profile.apellido,
                             photo = profile.profile_photo,
-                            isCurrentUserAdmin = false
                         )
                     }
                 }
             }
 
+        }
             PullRefreshIndicator(
                 refreshing = viewState.loading,
                 state = refreshState,
@@ -321,7 +337,6 @@ internal fun Sala(
                     .padding(top = 20.dp),
                 scale = true,
             )
-        }
     }
     }
 }

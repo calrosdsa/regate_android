@@ -73,8 +73,8 @@ internal fun Salas(
         viewState = viewState,
         navigateToSala = navigateToSala,
         crearSala = {crearSala(viewModel.getEstablecimientoId())},
-        formatShortTime = {formatter.formatShortTime(it)},
-        formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
+        formatShortTime = formatter::formatShortTime,
+        formatDate = formatter::formatShortDate,
         getSalas = viewModel::getSalas
   )
 }
@@ -84,8 +84,8 @@ internal fun Salas(
 internal fun Salas(
     viewState: SalasState,
     navigateToSala: (id:Long) -> Unit,
-    formatShortTime:(time: Instant)->String,
-    formatDate:(date: Instant)->String,
+    formatShortTime:(time: String,plusMinutes:Long)->String,
+    formatDate:(date: String)->String,
     crearSala: () -> Unit,
     getSalas:()->Unit,
 ){

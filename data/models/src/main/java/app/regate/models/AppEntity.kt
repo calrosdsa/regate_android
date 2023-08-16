@@ -27,3 +27,9 @@ enum class LabelType(val storageKey: String) {
     AMENITIES("amenities"),
     RULES("rules")
 }
+
+enum class TypeEntity {
+    SALA,
+    GRUPO,
+    ACCOUNT
+}

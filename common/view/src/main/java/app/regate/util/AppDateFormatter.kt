@@ -33,16 +33,21 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 import kotlinx.datetime.toJavaInstant
 import kotlinx.datetime.toJavaLocalDate
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toJavaLocalTime
+import kotlinx.datetime.toKotlinLocalDate
+import kotlinx.datetime.toKotlinLocalDateTime
 import kotlinx.datetime.toKotlinLocalTime
 import kotlinx.datetime.toLocalDateTime
 import me.tatarka.inject.annotations.Inject
 import java.text.SimpleDateFormat
+import java.time.ZoneOffset
 import java.time.format.DecimalStyle
 import java.util.Calendar
+import kotlin.time.Duration.Companion.minutes
 
 @ActivityScope
 @Inject
@@ -99,6 +104,15 @@ class AppDateFormatter(
         return JavaLocalDateTime.ofInstant(toJavaInstant(), ZoneId.systemDefault())
     }
 
+    fun formatShortTime(date:String,minutes:Long = 0):String{
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val datetime = java.time.LocalDateTime.parse(date,formatter)
+        return if (minutes == 0L ){
+            datetime.toLocalTime().toString()
+        }else{
+            datetime.plusMinutes(minutes).toLocalTime().toString()
+        }
+    }
 
 
     fun formatShortDate(instant: Instant): String {
@@ -127,8 +141,13 @@ class AppDateFormatter(
 //        return shortTime.format(instant.toTemporal())
     }
 
-
-
+    fun formatShortDate(date:String):String{
+//        val pattern = DateFormat.getBestDateTimePattern(locale, monthDaySkeleton)
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val datetime = java.time.LocalDateTime.parse(date,formatter)
+        val timestamp = datetime.toKotlinLocalDateTime().toInstant(TimeZone.UTC).toEpochMilliseconds()
+        return formatWithSkeleton(timestamp,monthDaySkeleton)
+    }
     fun formatShortRelativeTime(dateTime: Instant): String {
         val nowInstant = kotlinx.datetime.Clock.System.now()
         val now = nowInstant.toLocalDateTime(TimeZone.currentSystemDefault())

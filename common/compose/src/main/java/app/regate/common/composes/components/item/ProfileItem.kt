@@ -39,24 +39,18 @@ fun ProfileItem(
     photo:String?,
     nombre:String,
     apellido:String?,
-    isCurrentUserAdmin:Boolean,
     modifier:Modifier = Modifier,
-    is_admin:Boolean = false,
     isMe:Boolean = false,
-    selectUser:()->Unit = {},
     navigateToProfile:(Long)->Unit= {}
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier
+            .clickable { navigateToProfile(id) }
+            .padding(5.dp)
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = modifier
-                .clickable { navigateToProfile(id) }
-                .padding(vertical = 5.dp)
-                .fillMaxWidth(0.7f),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+
             ProfileImage(
                 profileImage = photo,
                 modifier = Modifier
@@ -69,7 +63,6 @@ fun ProfileItem(
                 Text(
                     text = stringResource(id = R.string.you), style = MaterialTheme.typography.labelLarge,
                 )
-
             }else{
                 Text(
                     text = "$nombre ${apellido ?: ""}", style = MaterialTheme.typography.labelLarge,
@@ -77,28 +70,4 @@ fun ProfileItem(
                 )
             }
         }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            if (is_admin) {
-                Surface(
-                    shape = MaterialTheme.shapes.small,
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
-//            border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.primary)
-                ) {
-                    Text(
-                        text = "admin",
-                        modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                }
-            }
-            if (isCurrentUserAdmin && !isMe) {
-                Box() {
-                    IconButton(onClick = { selectUser() }) {
-                        Icon(imageVector = Icons.Default.MoreVert, contentDescription = null)
-                    }
-                }
-            }
-        }
-    }
 }

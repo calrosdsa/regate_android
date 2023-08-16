@@ -9,6 +9,8 @@ import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.salas.SalaDto
+import app.regate.data.dto.system.ReportData
+import app.regate.data.dto.system.ReportType
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveGrupo
@@ -24,6 +26,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -180,6 +184,19 @@ class GrupoViewModel(
             }catch (e:Exception){
                 //TODO()
             }
+        }
+    }
+    fun navigateToReport(navigate:(String)->Unit){
+        try{
+            val report = Json.encodeToString(
+                ReportData(
+                report_type = ReportType.GRUPO.ordinal,
+                entity_id = grupoId.toInt(),
+            )
+            )
+            navigate(report)
+        }catch (e:Exception){
+            //TODO()
         }
     }
     fun refresh(){

@@ -31,7 +31,10 @@ import app.regate.data.dto.notifications.MessageGroupPayload
 import app.regate.data.dto.notifications.MessagePayload
 import app.regate.data.dto.notifications.SalaPayload
 import app.regate.data.dto.notifications.TypeNotification
+import app.regate.extensions.unsafeLazy
 import app.regate.home.MainActivity
+import app.regate.inject.ApplicationComponent
+import app.regate.inject.DbComponent
 import app.regate.models.Grupo
 import coil.ImageLoader
 import coil.request.ImageRequest
@@ -48,10 +51,12 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 
+
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.IO + job)
     private val handler = HandleNotifications()
+//    val component:DbComponent = DbComponent::class.create(this)
 
     //    @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("SuspiciousIndentation")
@@ -83,7 +88,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 try{
 
                 val newSala = Json.decodeFromString<SalaPayload>(data["payload"].toString())
-                handler.sendNotificationSalaCreation(applicationContext,newSala)
+                    scope.launch {
+                        handler.sendNotificationSalaCreation(applicationContext,newSala)
+                    }
                 }catch (e:Exception){
                     Log.d(TAG,e.localizedMessage?:"")
                 }
@@ -91,7 +98,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             if(TypeNotification.NOTIFICATION_SALA_RESERVATION_CONFLICT.ordinal == data["type"]?.toInt()){
                 try{
                     val payload = Json.decodeFromString<MessagePayload>(data["payload"].toString())
+                    scope.launch {
                     handler.sendNotificationSalaConflict(applicationContext,payload)
+                    }
                 }catch (e:Exception){
                     Log.d(TAG,e.localizedMessage?:"")
                 }

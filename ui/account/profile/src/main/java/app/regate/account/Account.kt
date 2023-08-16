@@ -26,8 +26,11 @@ import androidx.compose.material.icons.outlined.CollectionsBookmark
 import androidx.compose.material.icons.outlined.Map
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -43,6 +46,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -124,7 +128,8 @@ internal fun Account(
             modifier = Modifier.padding(paddingValues),
             navigateToRecargaCoins = navigateToRecargaCoins,
             navigateToInbox = {navController.navigate(Route.INBOX)},
-            navigateToBilling = { navController.navigate(Route.BILLING)}
+            navigateToBilling = { navController.navigate(Route.BILLING)},
+            navigateToNotifications = { navController.navigate(Route.NOTIFICATIONS)}
         )
     }
 }
@@ -141,12 +146,14 @@ internal fun Account(
     navigateToRecargaCoins: () -> Unit,
     navigateToInbox:()->Unit,
     navigateToBilling:()->Unit,
+    navigateToNotifications:()->Unit,
     modifier:Modifier = Modifier
 ) {
     val settings = stringResource(id = R.string.settings)
     val isAuth by remember(viewState.authState) { derivedStateOf{
         viewState.authState == AppAuthState.LOGGED_IN
     }}
+
     Box(modifier = modifier
         .fillMaxHeight()
         .fillMaxWidth()
@@ -266,11 +273,14 @@ internal fun Account(
                     .clickable { navigateToInbox() }
                     .fillMaxWidth()
                     .padding(10.dp))
-                RowIconOption(icon = Icons.Outlined.Notifications, text = stringResource(id = R.string.notifications),
+
+                RowIconOptionWithBadged(icon = Icons.Outlined.Notifications, text = stringResource(id = R.string.notifications),
                     modifier = Modifier
-                        .clickable { navigateToReservas() }
+                        .clickable { navigateToNotifications() }
                         .fillMaxWidth()
-                        .padding(10.dp))
+                        .padding(10.dp),
+                    badgeText = viewState.unreadNotifications.toString()
+                )
 
                 RowIconOption(icon = Icons.Outlined.CollectionsBookmark, text = stringResource(id = R.string.bookings),
                     modifier = Modifier
@@ -317,6 +327,32 @@ internal fun RowIconOption(
 ){
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically){
         Icon(imageVector = icon, contentDescription = text)
+        Spacer(modifier = Modifier.width(15.dp))
+        Text(text = text,style = MaterialTheme.typography.labelLarge)
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun RowIconOptionWithBadged(
+    icon: ImageVector,
+    text:String,
+    badgeText:String,
+    modifier : Modifier = Modifier
+){
+    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically){
+        BadgedBox(badge = {
+        if(badgeText.toInt() != 0){
+            Badge {
+            Text(badgeText)
+        }
+        } }) {
+            Icon(
+                icon,
+                contentDescription = null
+            )
+        }
         Spacer(modifier = Modifier.width(15.dp))
         Text(text = text,style = MaterialTheme.typography.labelLarge)
     }

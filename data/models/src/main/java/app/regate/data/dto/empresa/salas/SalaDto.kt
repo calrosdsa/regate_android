@@ -14,12 +14,10 @@ data class SalaDto(
     val instalacion_id: Long,
     val precio: Int,
     val titulo: String,
-    val start_time:Instant,
-    val  end_time:Instant,
-    val fecha:Instant,
+    val precio_cupo:Double = 0.0,
     val users:Int,
     val grupo_id:Long,
-
+    val horas:List<String>,
     val establecimiento_name: String = "",
     val establecimiento_photo: String? = null
 )
@@ -38,8 +36,8 @@ data class SalaRequestDto(
     val precio: Int = 100000,
     val horas:List<Instant> = emptyList(),
     val titulo: String = "",
-    val start_time:String = "",
-    val end_time:String = "",
-    val fecha:String = "",
+//    val start_time:String = "",
+//    val end_time:String = "",
+//    val fecha:String = "",
     val grupo_id: Long? = null
 )

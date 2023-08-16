@@ -32,6 +32,7 @@ import app.regate.data.daos.RoomLabelDao
 import app.regate.data.daos.RoomMessageInboxDao
 import app.regate.data.daos.RoomMessageProfileDao
 import app.regate.data.daos.RoomMyGroupsDao
+import app.regate.data.daos.RoomNotificationDao
 import app.regate.data.daos.RoomProfileDao
 import app.regate.data.daos.RoomReservaDao
 import app.regate.data.daos.RoomUserDao
@@ -48,6 +49,7 @@ import app.regate.models.Labels
 import app.regate.models.Message
 import app.regate.models.MessageInbox
 import app.regate.models.MyGroups
+import app.regate.models.Notification
 import app.regate.models.Profile
 import app.regate.models.Reserva
 import app.regate.models.Setting
@@ -69,7 +71,8 @@ import app.regate.models.UserGrupo
         MyGroups::class,
         FavoriteEstablecimiento::class,
         MessageInbox::class,
-        Reserva::class
+        Reserva::class,
+        Notification::class,
     ],
 //    views = [
 //        ShowsWatchStats::class,
@@ -109,7 +112,7 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
     abstract override fun favoriteEstablecimientos(): RoomFavoriteEstablecimientoDao
     abstract override fun messageInboxDao(): RoomMessageInboxDao
     abstract override fun reservaDao(): RoomReservaDao
-
+    abstract override fun notificationDao(): RoomNotificationDao
 
     companion object {
 

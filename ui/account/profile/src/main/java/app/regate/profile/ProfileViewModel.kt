@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
+import app.regate.data.dto.system.ReportData
+import app.regate.data.dto.system.ReportType
 import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.ObserveProfile
 import app.regate.domain.observers.ObserveUser
@@ -13,6 +15,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -50,13 +54,25 @@ class ProfileViewModel(
         getProfile()
     }
 
-    fun getProfile(){
+    private fun getProfile(){
         viewModelScope.launch {
             try{
                 usersRepository.getProfile(id)
             }catch (e:Exception){
                 //TODO()
             }
+        }
+    }
+
+    fun navigateToReport(navigate:(String)->Unit){
+        try{
+            val report = Json.encodeToString(ReportData(
+                report_type = ReportType.PROFILE.ordinal,
+                entity_id = id.toInt(),
+            ))
+            navigate(report)
+        }catch (e:Exception){
+            //TODO()
         }
     }
 }

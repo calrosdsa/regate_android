@@ -28,6 +28,7 @@ import app.regate.data.daos.LabelDao
 import app.regate.data.daos.MessageInboxDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
+import app.regate.data.daos.NotificationDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.ReservaDao
 import app.regate.data.daos.UserDao
@@ -53,6 +54,8 @@ interface RoomDatabaseComponent {
     }
     @Provides
     fun provideAppDatabase(bind: AppRoomDatabase): AppDatabase = bind
+    @Provides
+    fun provideNotificationDao(db: AppDatabase):NotificationDao = db.notificationDao()
     @Provides
     fun provideReservaDao(db: AppDatabase):ReservaDao = db.reservaDao()
     @Provides

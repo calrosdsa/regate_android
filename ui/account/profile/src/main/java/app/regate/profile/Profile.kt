@@ -17,8 +17,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material.icons.outlined.Flag
 import androidx.compose.material.icons.outlined.ThumbUp
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -45,15 +47,21 @@ import app.regate.account.AccountViewModel
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.ui.CommonTopBar
 import app.regate.common.composes.ui.PosterCardImage
+import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
+import app.regate.data.dto.system.ReportData
+import app.regate.data.dto.system.ReportType
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 typealias Profile = @Composable (
     navigateUp:()->Unit,
-    navigateToEditProfile:(Long)->Unit
+    navigateToEditProfile:(Long)->Unit,
+    navigateToReport:(String)->Unit,
 ) -> Unit
 
 @Inject
@@ -61,12 +69,14 @@ typealias Profile = @Composable (
 fun Profile(
     viewModelFactory:(SavedStateHandle)-> ProfileViewModel,
     @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToEditProfile: (Long) -> Unit
+    @Assisted navigateToEditProfile: (Long) -> Unit,
+    @Assisted navigateToReport: (String) -> Unit,
 ) {
     Profile(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
-        navigateToEditProfile = navigateToEditProfile
+        navigateToEditProfile = navigateToEditProfile,
+        navigateToReport = navigateToReport
     )
 }
 
@@ -74,7 +84,8 @@ fun Profile(
 internal fun Profile(
     viewModel:ProfileViewModel,
     navigateUp: () -> Unit,
-    navigateToEditProfile: (Long) -> Unit
+    navigateToEditProfile: (Long) -> Unit,
+    navigateToReport:(String)->Unit
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -83,15 +94,22 @@ internal fun Profile(
         navigateUp = navigateUp,
         formatterDate = formatter::formatMediumDate,
         navigateToEditProfile = navigateToEditProfile,
+        navigateToReport = {
+            viewModel.navigateToReport{
+                navigateToReport(it)
+            }
+        }
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun Profile(
     viewState:ProfileState,
     navigateUp: () -> Unit,
     formatterDate:(Instant)->String,
     navigateToEditProfile: (Long) -> Unit,
+    navigateToReport:()->Unit
 ) {
     val scrollState = rememberScrollState()
 
@@ -101,27 +119,26 @@ internal fun Profile(
 
     Scaffold(
         topBar = {
-            Column() {
-                Row(horizontalArrangement = Arrangement.SpaceBetween,modifier = Modifier.fillMaxWidth()) {
-                IconButton(onClick = { navigateUp() }) {
-                    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
-                }
-                    if(viewState.profile?.id == viewState.user?.profile_id){
+            SimpleTopBar(navigateUp =  navigateUp,
+            actions = {
+                if(viewState.profile?.id == viewState.user?.profile_id){
                     TextButton(onClick = { viewState.profile?.id?.let { navigateToEditProfile(it) } }) {
                         Text(text = stringResource(id = R.string.edit),style = MaterialTheme.typography.labelLarge,
-                        textDecoration = TextDecoration.Underline)
+                            textDecoration = TextDecoration.Underline)
                     }
+                }else{
+                    IconButton(onClick = {navigateToReport()}) {
+                        Icon(imageVector = Icons.Outlined.Flag,
+                            contentDescription = stringResource(id = R.string.report))
                     }
                 }
-                Divider()
-            }
+            })
         },
         modifier = Modifier.padding(horizontal =  10.dp)
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)
-                .padding(vertical = 10.dp)
                 .verticalScroll(scrollState)
         ) {
             viewState.profile?.let {profile->

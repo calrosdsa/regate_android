@@ -71,7 +71,7 @@ import app.regate.common.resources.R
 import app.regate.constant.Route
 import app.regate.constant.id
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
-import app.regate.home.carousel.HomeMediaCarousel
+//import app.regate.home.carousel.HomeMediaCarousel
 import kotlinx.datetime.Instant
 
 
@@ -145,8 +145,8 @@ internal fun Home(
 //            navigateToMap = navigateToMap,
             goToGroup = {navController.navigate(Route.GRUPOS)},
             goToReserva = {navController.navigate(Route.DISCOVER)},
-            formatShortTime = {formatter.formatShortTime(it)},
-            formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
+            formatShortTime = formatter::formatShortTime,
+            formatDate = formatter::formatShortDate,
             goToSala = {navController.navigate(Route.SALA id it)},
             viewMoreSalas = { navController.navigate(Route.FILTER_SALAS)}
         )
@@ -162,18 +162,18 @@ internal fun Home(
     modifier: Modifier = Modifier,
     goToReserva:()->Unit,
     goToGroup:()->Unit,
-    formatShortTime:(time: Instant)->String,
-    formatDate:(date: Instant)->String,
+    formatShortTime:(time: String,plusMinutes:Long)->String,
+    formatDate:(date: String)->String,
     goToSala:(Long)->Unit,
     viewMoreSalas:()->Unit,
     ) {
 
-    val listImage = listOf("https://img.freepik.com/free-photo/abstract-grunge-decorative-relief-navy-blue-stucco-wall-texture-wide-angle-rough-colored-background_1258-28311.jpg",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-Ob3Iu4pkCSLtguCfIJiKrDZ9RTG01Vk9tQ",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCJo8cI1DBvDVUd3-EJh175ef2AnBOr38KiQ&usqp=CAU")
+//    val listImage = listOf("https://img.freepik.com/free-photo/abstract-grunge-decorative-relief-navy-blue-stucco-wall-texture-wide-angle-rough-colored-background_1258-28311.jpg",
+//    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-Ob3Iu4pkCSLtguCfIJiKrDZ9RTG01Vk9tQ",
+//    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCJo8cI1DBvDVUd3-EJh175ef2AnBOr38KiQ&usqp=CAU")
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
-        HomeMediaCarousel(list = listImage, onItemClicked = {})
-        Spacer(modifier = Modifier.height(20.dp))
+//        HomeMediaCarousel(list = listImage, onItemClicked = {})
+//        Spacer(modifier = Modifier.height(20.dp))
         Text(text = stringResource(id = R.string.recommended_places),
             modifier = Modifier.padding(horizontal = 10.dp),style =MaterialTheme.typography.titleLarge)
         LazyRow(contentPadding = PaddingValues(10.dp), modifier = Modifier.height(175.dp)){

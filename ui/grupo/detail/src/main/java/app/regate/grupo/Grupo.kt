@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -76,7 +78,8 @@ typealias Grupo = @Composable (
     createSala:(id:Long)->Unit,
     navigateToSala:(id:Long)->Unit,
     navigateToProfile:(id:Long)->Unit,
-    navigateToSalas:(id:Long)->Unit
+    navigateToSalas:(id:Long)->Unit,
+    navigateToReport:(String)->Unit
         ) -> Unit
 
 @Inject
@@ -89,7 +92,8 @@ fun Grupo(
     @Assisted createSala: (id:Long) -> Unit,
     @Assisted navigateToSala: (id: Long) -> Unit,
     @Assisted navigateToProfile: (id: Long) -> Unit,
-    @Assisted navigateToSalas:(id:Long)->Unit
+    @Assisted navigateToSalas:(id:Long)->Unit,
+    @Assisted navigateToReport: (String) -> Unit
 ){
     Grupo(
         viewModel = viewModel(factory = viewModelFactory),
@@ -100,7 +104,8 @@ fun Grupo(
         navigateToSala = navigateToSala,
         editGroup = editGroup,
         navigateToProfile = navigateToProfile,
-        navigateToSalas = navigateToSalas
+        navigateToSalas = navigateToSalas,
+        navigateToReport = navigateToReport,
     )
 }
 
@@ -114,7 +119,8 @@ internal fun Grupo(
     createSala: (id:Long) -> Unit,
     navigateToSala: (id: Long) -> Unit,
     navigateToProfile: (id: Long) -> Unit,
-    navigateToSalas:(id:Long) -> Unit
+    navigateToSalas:(id:Long) -> Unit,
+    navigateToReport: (String) -> Unit
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -124,8 +130,8 @@ internal fun Grupo(
     Grupo(
         viewState = viewState,
         navigateUp = navigateUp,
-        formatShortTime = {formatter.formatShortTime(it)},
-        formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
+        formatShortTime = formatter::formatShortTime,
+        formatDate = formatter::formatShortDate,
 //        navigateToChat = navigateToChat,
         openAuthBottomSheet = openAuthBottomSheet,
         openDialogConfirmation = {joinSalaDialog.value = true},
@@ -140,7 +146,10 @@ internal fun Grupo(
         addAdminUser = viewModel::addUserAdmin,
         leaveGroup = { viewModel.leaveGroup(navigateUp) },
         navigateToProfile = navigateToProfile,
-        navigateToSalas = navigateToSalas
+        navigateToSalas = navigateToSalas,
+        navigateToReport = {viewModel.navigateToReport {
+            navigateToReport(it)
+        }}
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -157,8 +166,8 @@ internal fun Grupo(
 internal fun Grupo(
     viewState: GrupoState,
     navigateUp: () -> Unit,
-    formatShortTime:(time:Instant)->String,
-    formatDate:(date:Instant)->String,
+    formatShortTime:(time:String,plusMinutes:Long)->String,
+    formatDate:(date:String)->String,
     editGroup: (Long) -> Unit,
 //    navigateToChat: (id:Long) -> Unit,
     openAuthBottomSheet: () -> Unit,
@@ -173,9 +182,10 @@ internal fun Grupo(
     addAdminUser:()->Unit,
     leaveGroup:()->Unit,
     navigateToProfile: (id: Long) -> Unit,
-    navigateToSalas:(Long)->Unit
+    navigateToSalas:(Long)->Unit,
+    navigateToReport: () -> Unit,
     ) {
-    val isLogged by remember(viewState.authState){
+    val isLogged by remember(viewState.authState) {
         derivedStateOf {
             viewState.authState == AppAuthState.LOGGED_IN
         }
@@ -188,23 +198,24 @@ internal fun Grupo(
 //    }
     val snackbarHostState = remember { SnackbarHostState() }
     var expanded by remember { mutableStateOf(false) }
-    val refreshState = rememberPullRefreshState(refreshing = viewState.loading, onRefresh = { refresh()})
-    val isCurrentUserSuperAdmin by remember(key1 = viewState.currentUser){
+    val refreshState =
+        rememberPullRefreshState(refreshing = viewState.loading, onRefresh = { refresh() })
+    val isCurrentUserSuperAdmin by remember(key1 = viewState.currentUser) {
         derivedStateOf {
             viewState.currentUser?.id == viewState.grupo?.profile_id
         }
     }
-    val isSelectedUserIsSuperAdmin by remember(key1 = viewState.selectedUser){
+    val isSelectedUserIsSuperAdmin by remember(key1 = viewState.selectedUser) {
         derivedStateOf {
             viewState.selectedUser?.id == viewState.grupo?.profile_id
         }
     }
-    val isSelectedUserIsAdmin by remember(key1 = viewState.selectedUser){
+    val isSelectedUserIsAdmin by remember(key1 = viewState.selectedUser) {
         derivedStateOf {
             viewState.selectedUser?.is_admin
         }
     }
-    val isCurrentUserisAdmin by remember(key1 = viewState.currentUser){
+    val isCurrentUserisAdmin by remember(key1 = viewState.currentUser) {
         derivedStateOf {
             viewState.currentUser?.is_admin
         }
@@ -215,18 +226,23 @@ internal fun Grupo(
             clearMessage(message.id)
         }
     }
-    if(dialogUserMenu){
+    if (dialogUserMenu) {
         Dialog(onDismissRequest = { dialogUserMenu = false }) {
-            Column(modifier = Modifier
-                .padding(10.dp)
-                .clip(MaterialTheme.shapes.small)
-                .background(MaterialTheme.colorScheme.background)
-                .fillMaxWidth()
+            Column(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(MaterialTheme.colorScheme.background)
+                    .fillMaxWidth()
             ) {
-             Text(text = "${viewState.selectedUser?.nombre} ${viewState.selectedUser?.apellido?:""}",
-             style = MaterialTheme.typography.titleSmall,modifier = Modifier.padding(horizontal = 8.dp, vertical = 10.dp))
-                if((viewState.currentUser?.is_admin == true && isSelectedUserIsAdmin == false &&
-                    !isSelectedUserIsSuperAdmin) || isCurrentUserSuperAdmin) {
+                Text(
+                    text = "${viewState.selectedUser?.nombre} ${viewState.selectedUser?.apellido ?: ""}",
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 10.dp)
+                )
+                if ((viewState.currentUser?.is_admin == true && isSelectedUserIsAdmin == false &&
+                            !isSelectedUserIsSuperAdmin) || isCurrentUserSuperAdmin
+                ) {
                     Text(text = stringResource(id = R.string.remove_user), modifier = Modifier
                         .clickable { removeUserFromGroup();dialogUserMenu = false }
                         .padding(8.dp)
@@ -235,63 +251,74 @@ internal fun Grupo(
                     )
                     Divider()
                 }
-                if(isSelectedUserIsAdmin == false && isCurrentUserSuperAdmin){
-            Text(text = stringResource(id = R.string.meke_user_admin),modifier = Modifier
-                .clickable { addAdminUser();dialogUserMenu = false }
-                .padding(8.dp)
-                .fillMaxWidth(),
-                style = MaterialTheme.typography.labelLarge
-            )
-                Divider()
+                if (isSelectedUserIsAdmin == false && isCurrentUserSuperAdmin) {
+                    Text(text = stringResource(id = R.string.meke_user_admin), modifier = Modifier
+                        .clickable { addAdminUser();dialogUserMenu = false }
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                    Divider()
                 }
-                if(isSelectedUserIsAdmin == true && !isSelectedUserIsSuperAdmin){
-                Text(text = stringResource(id = R.string.remove_user_admin),modifier = Modifier
-                    .clickable { removeAdminUser();dialogUserMenu = false }
-                    .padding(8.dp)
-                    .fillMaxWidth(),
-                    style = MaterialTheme.typography.labelLarge
-                )
+                if (isSelectedUserIsAdmin == true && !isSelectedUserIsSuperAdmin) {
+                    Text(text = stringResource(id = R.string.remove_user_admin), modifier = Modifier
+                        .clickable { removeAdminUser();dialogUserMenu = false }
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                        style = MaterialTheme.typography.labelLarge
+                    )
                 }
             }
         }
     }
     Scaffold(
         topBar = {
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-          IconButton(onClick = { navigateUp() }) {
-              Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back_arrow")
-          }
-            Box(modifier = Modifier){
-                IconButton(onClick = { expanded = !expanded }) {
-                    Icon(imageVector = Icons.Default.MoreVert, contentDescription = "dots_more")
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                IconButton(onClick = { navigateUp() }) {
+                    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back_arrow")
                 }
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false },
-                ) {
-                    if(isCurrentUserisAdmin == true){
-                    DropdownMenuItem(
-                        text = { Text(text = stringResource(id = R.string.create_sala)) },
-                        onClick = { viewState.grupo?.let { createSala(it.id) } }
-                    )
+                Box(modifier = Modifier) {
+                    IconButton(onClick = { expanded = !expanded }) {
+                        Icon(imageVector = Icons.Default.MoreVert, contentDescription = "dots_more")
                     }
-                    if(isCurrentUserSuperAdmin){
-                    DropdownMenuItem(
-                        text = { Text("Editar") },
-                        onClick = { viewState.grupo?.id?.let { editGroup(it) } }
-                    )
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                    ) {
+                        if (isCurrentUserisAdmin == true) {
+                            DropdownMenuItem(
+                                text = { Text(text = stringResource(id = R.string.create_sala)) },
+                                onClick = { viewState.grupo?.let { createSala(it.id) } }
+                            )
+                        }
+                        if (isCurrentUserSuperAdmin) {
+                            DropdownMenuItem(
+                                text = { Text("Editar") },
+                                onClick = { viewState.grupo?.id?.let { editGroup(it) } }
+                            )
+                        }
+                        DropdownMenuItem(
+                            text = { Text("Reportar Grupo") },
+                            onClick = { navigateToReport() }
+                        )
                     }
                 }
-            }
             }
         },
         floatingActionButton = {
-            if(viewState.user?.profile_id !in viewState.usersProfileGrupo.map { it.id })
-                               Button(onClick =  {
-                                   if(isLogged){ openDialogConfirmation() }else{ openAuthBottomSheet() }
-                               }) {
-                                   Text(text = "Unirme")
-                               }
+            if (viewState.user?.profile_id !in viewState.usersProfileGrupo.map { it.id })
+                Button(onClick = {
+                    if (isLogged) {
+                        openDialogConfirmation()
+                    } else {
+                        openAuthBottomSheet()
+                    }
+                }) {
+                    Text(text = "Unirme")
+                }
         },
         floatingActionButtonPosition = FabPosition.Center,
         snackbarHost = {
@@ -300,10 +327,20 @@ internal fun Grupo(
         modifier = Modifier
             .padding(10.dp)
     ) { paddingValues ->
-        Box(modifier = Modifier
-            .pullRefresh(state = refreshState)
-            .padding(paddingValues)
-            .fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .pullRefresh(state = refreshState)
+                .padding(paddingValues)
+                .fillMaxSize()
+        ) {
+            PullRefreshIndicator(
+                refreshing = viewState.loading,
+                state = refreshState,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(paddingValues),
+                scale = true
+            )
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 viewState.grupo?.let { grupo ->
@@ -329,39 +366,55 @@ internal fun Grupo(
                         }
                     }
                     dividerLazyList()
-                    item{
-                        Text(text = stringResource(id = R.string.group_description),modifier = Modifier.padding(5.dp),
-                        style = MaterialTheme.typography.labelLarge)
+                    item {
+                        Text(
+                            text = stringResource(id = R.string.group_description),
+                            modifier = Modifier.padding(5.dp),
+                            style = MaterialTheme.typography.labelLarge
+                        )
                     }
                     item {
-                        grupo.description?.let { Text(text = it, style = MaterialTheme.typography.bodySmall) }
+                        grupo.description?.let {
+                            Text(
+                                text = it,
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
                     }
                     dividerLazyList()
-                        item {
-                            ViewMore(label = stringResource(id = R.string.rooms),onClick = { navigateToSalas(grupo.id)},
-                            showTextButton = viewState.salas.size >=5 )
+                    item {
+                        ViewMore(
+                            label = stringResource(id = R.string.rooms),
+                            onClick = { navigateToSalas(grupo.id) },
+                            showTextButton = viewState.salas.size >= 5
+                        )
 //                            Text(
 //                                text = stringResource(R.string.rooms),
 //                                style = MaterialTheme.typography.labelLarge,
 //                            )
-                        }
+                    }
 
-                    if(viewState.loading){
-                        item{
-                        SalaItemSkeleton()
+                    if (viewState.loading) {
+                        item {
+                            SalaItemSkeleton()
                         }
-                    }else {
+                    } else {
                         if (viewState.salas.isNotEmpty()) {
-                            items(
-                                items = viewState.salas,
+                            item {
+                                LazyRow() {
+
+                                    items(
+                                        items = viewState.salas,
 //                            key = { it. }
-                            ) { sala ->
-                                SalaItem(
-                                    sala = sala,
-                                    formatDate = formatDate,
-                                    navigateToSala = navigateToSala,
-                                    formatShortTime = formatShortTime
-                                )
+                                    ) { sala ->
+                                        SalaItem(
+                                            sala = sala,
+                                            formatDate = formatDate,
+                                            navigateToSala = navigateToSala,
+                                            formatShortTime = formatShortTime
+                                        )
+                                    }
+                                }
                             }
                         } else {
                             if (isCurrentUserisAdmin == true) {
@@ -396,41 +449,45 @@ internal fun Grupo(
                     items(
                         items = viewState.usersProfileGrupo,
                     ) { profile ->
-                        ProfileItem(
+                        ProfileItemGrupo(
                             id = profile.id,
                             nombre = profile.nombre,
                             apellido = profile.apellido,
                             photo = profile.profile_photo,
                             is_admin = profile.is_admin,
-                            isCurrentUserAdmin= viewState.currentUser?.is_admin?:false,
+                            isCurrentUserAdmin = viewState.currentUser?.is_admin ?: false,
                             selectUser = {
                                 dialogUserMenu = true
                                 selectUser(profile.id)
                             },
-                            isMe = profile.id ==  viewState.user?.profile_id,
+                            isMe = profile.id == viewState.user?.profile_id,
                             navigateToProfile = navigateToProfile
                         )
                     }
 
-                    item{
+                    item {
                         Spacer(modifier = Modifier.height(10.dp))
-                        TextButton(modifier = Modifier
-                            .padding(10.dp)
-                            .fillMaxWidth(), onClick = { leaveGroup() },
-                        shape = CircleShape,
-                        border = BorderStroke(width = 1.dp,color = MaterialTheme.colorScheme.error)
+                        TextButton(
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .fillMaxWidth(), onClick = { leaveGroup() },
+                            shape = CircleShape,
+                            border = BorderStroke(
+                                width = 1.dp,
+                                color = MaterialTheme.colorScheme.error
+                            )
                         ) {
-                            Text(text= stringResource(id = R.string.leave_group),color = MaterialTheme.colorScheme.error)
+                            Text(
+                                text = stringResource(id = R.string.leave_group),
+                                color = MaterialTheme.colorScheme.error
+                            )
                         }
                     }
                 }
             }
-
-
         }
     }
 }
-
 
 
 

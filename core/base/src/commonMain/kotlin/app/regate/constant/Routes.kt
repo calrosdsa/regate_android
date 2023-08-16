@@ -2,6 +2,7 @@ package app.regate.constant
 
 object Route {
     const val REPORT = "report"
+    const val NOTIFICATIONS = "notification"
 
     const val WELCOME_PAGE = "welcome"
     const val LOGIN_PAGE = "login"

@@ -87,8 +87,8 @@ internal fun GrupoSalas(
         navigateUp = navigateUp,
 //        navigateToCreateSala = navigateToCreateSala,
         openAuthBottomSheet = openAuthBottomSheet,
-        formatShortTime = {formatter.formatShortTime(it)},
-        formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
+        formatShortTime = formatter::formatShortTime,
+        formatDate = formatter::formatShortDate,
         navigateToSala = navigateToSala,
         navigateToSelectEstablecimiento = {navigateToSelectEstablecimiento(viewModel.getGrupoId())},
     )
@@ -103,8 +103,8 @@ internal fun GrupoSalas(
     navigateUp: () -> Unit,
 //    navigateToCreateSala: (id: Long) -> Unit,
     navigateToSelectEstablecimiento: () -> Unit,
-    formatShortTime:(time: Instant)->String,
-    formatDate:(date: Instant)->String,
+    formatShortTime:(time: String,plusMinutes:Long)->String,
+    formatDate:(date: String)->String,
     navigateToSala:(Long)->Unit,
     openAuthBottomSheet: () -> Unit
 ){

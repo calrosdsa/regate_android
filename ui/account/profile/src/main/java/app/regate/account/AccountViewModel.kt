@@ -10,6 +10,8 @@ import app.regate.data.coin.CoinRepository
 import app.regate.data.common.AddressDevice
 import app.regate.data.dto.empresa.coin.UserBalance
 import app.regate.domain.observers.ObserveAuthState
+import app.regate.domain.observers.ObserveNotifications
+import app.regate.domain.observers.ObserveUnreadNotificationCount
 import app.regate.domain.observers.ObserveUser
 import app.regate.extensions.combine
 import app.regate.settings.AppPreferences
@@ -31,7 +33,8 @@ class AccountViewModel(
     private val accountRepository: AccountRepository,
     private val appPreferences: AppPreferences,
     private val coinRepository: CoinRepository,
-    observeAuthState: ObserveAuthState
+    observeAuthState: ObserveAuthState,
+    observeUnreadNotificationCount: ObserveUnreadNotificationCount,
 ):ViewModel() {
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
@@ -44,14 +47,16 @@ class AccountViewModel(
         observeAuthState.flow,
         addressDevice,
         userBalance,
-    ){loading,message,user,authState,addressDevice,userBalance ->
+        observeUnreadNotificationCount.flow,
+    ){loading,message,user,authState,addressDevice,userBalance,unreadNotications ->
         AccountState(
             loading = loading,
             message = message,
             user = user,
             authState = authState,
             addressDevice = addressDevice,
-            userBalance = userBalance
+            userBalance = userBalance,
+            unreadNotifications = unreadNotications
         )
     }.stateIn(
         scope = viewModelScope,
@@ -60,6 +65,7 @@ class AccountViewModel(
     )
     init {
         observeUser(Unit)
+        observeUnreadNotificationCount(Unit)
         observeAuthState(Unit)
         viewModelScope.launch {
         appPreferences.observeAddress().collect{

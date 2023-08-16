@@ -12,7 +12,8 @@ data class AccountState(
     val user: User? = null,
     val authState: AppAuthState? = null,
     val addressDevice: AddressDevice? = null,
-    val userBalance: UserBalance? = null
+    val userBalance: UserBalance? = null,
+    val unreadNotifications:Int = 0
 ){
     companion object{
         val Empty = AccountState()

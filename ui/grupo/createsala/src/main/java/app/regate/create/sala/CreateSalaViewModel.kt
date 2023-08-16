@@ -94,11 +94,11 @@ class CreateSalaViewModel(
                                 instalacion_id = instalacionCupos1.instalacion.id,
                                 horas = instalacionCupos1.cupos.map { it.time },
                                 establecimiento_id = instalacionCupos1.instalacion.establecimiento_id,
-                                start_time = instalacionCupos1.cupos.first().time.toLocalDateTime(TimeZone.UTC).time.toString(),
-                                end_time = instalacionCupos1.cupos.last().time.toLocalDateTime(TimeZone.UTC).time.toString(),
-                                fecha = instalacionCupos1.cupos.first().time.toLocalDateTime(
-                                    TimeZone.UTC
-                                ).date.toString(),
+//                                start_time = instalacionCupos1.cupos.first().time.toLocalDateTime(TimeZone.UTC).time.toString(),
+//                                end_time = instalacionCupos1.cupos.last().time.toLocalDateTime(TimeZone.UTC).time.toString(),
+//                                fecha = instalacionCupos1.cupos.first().time.toLocalDateTime(
+//                                    TimeZone.UTC
+//                                ).date.toString(),
                                 precio = instalacionCupos1.cupos.sumOf { it.price }.toInt()
                             )
                         )

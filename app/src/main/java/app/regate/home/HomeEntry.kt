@@ -124,6 +124,12 @@ internal fun AppNavigation(
             navigateUp = navController::navigateUp
             )
         }
+        animatedComposable(route = Route.NOTIFICATIONS){
+            composeScreens.notifications(
+                navigateUp = navController::navigateUp,
+                navigateToSala = {navController.navigate(Route.SALA id it)}
+            )
+        }
         animatedComposable(route = Route.RESERVAR arg "id" arg "establecimientoId",
         arguments = listOf(
             navArgument("id"){ type = NavType.LongType },
@@ -337,7 +343,8 @@ internal fun AppNavigation(
                 navigateToSala = { navController.navigate(Route.SALA id it)},
                 editGroup = {navController.navigate(Route.CREATE_GROUP + "?id=${it}" )},
                 navigateToProfile = { navController.navigate(Route.PROFILE id it)},
-                navigateToSalas = { navController.navigate(Route.GRUPO_SALAS id it)}
+                navigateToSalas = { navController.navigate(Route.GRUPO_SALAS id it)},
+                navigateToReport = {navController.navigate(Route.REPORT id it)}
                 )
         }
 
@@ -356,7 +363,8 @@ internal fun AppNavigation(
         ){
             composeScreens.profile(
                 navigateUp = navController::navigateUp,
-                navigateToEditProfile = {navController.navigate(Route.EDIT_PROFILE id it)}
+                navigateToEditProfile = {navController.navigate(Route.EDIT_PROFILE id it)},
+                navigateToReport = {navController.navigate(Route.REPORT id it)}
             )
         }
         animatedComposable(

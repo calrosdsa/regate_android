@@ -60,8 +60,6 @@ import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
 import app.regate.data.auth.AppAuthState
 import app.regate.settings.AppPreferences
-import app.regate.system.NotificationsDialog
-import app.regate.system.ThemeDialog
 
 typealias Report = @Composable (
     navigateUp:()->Unit
@@ -187,7 +185,9 @@ internal fun Report(
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 AnimatedVisibility(visible = showDetail) {
-                InputForm(onValueChange = { detail = it }, value = detail,
+                InputForm(
+                    onValueChange = {if(it.length <= 255) detail = it },
+                    value = detail,
                     modifier = Modifier
                         .height(120.dp)
                         .focusRequester(focusRequester),
@@ -198,7 +198,12 @@ internal fun Report(
                         }
                     ),
                     imeAction = ImeAction.Done
-                )
+                ){
+                    Text(text = "${detail.length}/255",style = MaterialTheme.typography.labelSmall,
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(2.dp))
+                }
                 }
                 }
         }

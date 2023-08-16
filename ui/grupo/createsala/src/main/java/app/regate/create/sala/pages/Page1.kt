@@ -56,7 +56,7 @@ internal fun Page1(
             }
             Spacer(modifier = Modifier.height(10.dp))
             InputForm(value = description,
-                onValueChange = {if(it.length < 255){onChangeDescription(it)}},
+                onValueChange = {if(it.length <= 255){onChangeDescription(it)}},
 //                placeholder = "Descripcion de la creacion del grupo",
                 label = "Descripcióm",
                 modifier = Modifier.height(160.dp),

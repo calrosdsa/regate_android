@@ -12,18 +12,41 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.net.toUri
 import app.regate.common.resources.R
+import app.regate.data.AppRoomDatabase
+import app.regate.data.daos.NotificationDao
 import app.regate.data.dto.notifications.MessagePayload
 import app.regate.data.dto.notifications.SalaPayload
+import app.regate.extensions.unsafeLazy
 import app.regate.home.MainActivity
+import app.regate.inject.ApplicationComponent
+import app.regate.inject.DbComponent
+import app.regate.inject.create
+import app.regate.models.Notification
+import app.regate.models.TypeEntity
+import me.tatarka.inject.annotations.Inject
 
-class HandleNotifications {
+class HandleNotifications(
+
+) {
+
 
     companion object{
         private const val TAG = "DEBUG_APP_NOTIFICATIONS"
     }
 
- fun sendNotificationSalaCreation(context: Context, payload: SalaPayload){
+ suspend fun sendNotificationSalaCreation(context: Context, payload: SalaPayload){
     try{
+        val title = context.getString(R.string.new_room_created)
+        val db = AppRoomDatabase.getInstance(context)
+        db.notificationDao().upsert(
+            Notification(
+                title = title,
+                content = payload.titulo,
+                typeEntity = TypeEntity.SALA,
+                entityId = payload.id
+            )
+        )
+        AppRoomDatabase.destroyInstance()
         val taskDetailIntent = Intent(
             Intent.ACTION_VIEW,
             "https://example.com/sala_id=${payload.id}".toUri(),
@@ -35,7 +58,7 @@ class HandleNotifications {
         val pendingIntent = taskBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
         val CHANNEL_ID = context.getString(R.string.notification_sala_channel)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setContentTitle(context.getString(R.string.new_room_created))
+            .setContentTitle(title)
             .setContentText(payload.titulo)
             .setSmallIcon(R.drawable.logo_app)
             .setContentIntent(pendingIntent)
@@ -53,12 +76,22 @@ class HandleNotifications {
             notify(payload.id.toInt(), notification)
         }
     }catch(e:Exception){
+        AppRoomDatabase.destroyInstance()
         Log.d(TAG,e.localizedMessage?:"")
     }
    }
 
-    fun sendNotificationSalaConflict(context: Context, payload: MessagePayload){
+    suspend fun sendNotificationSalaConflict(context: Context, payload: MessagePayload){
         try{
+            val db = AppRoomDatabase.getInstance(context)
+            db.notificationDao().upsert(
+                Notification(
+                    content = payload.message,
+                    typeEntity = TypeEntity.SALA,
+                    entityId = payload.id
+                )
+            )
+            AppRoomDatabase.destroyInstance()
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
                 "https://example.com/sala_id=${payload.id}".toUri(),
@@ -88,6 +121,7 @@ class HandleNotifications {
                 notify(payload.id.toInt(), notification)
             }
         }catch(e:Exception){
+            AppRoomDatabase.destroyInstance()
             Log.d(TAG,e.localizedMessage?:"")
         }
     }

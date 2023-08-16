@@ -13,6 +13,7 @@ import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.sala.SalaRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveInstalacion
+import app.regate.domain.observers.ObserveUser
 import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
@@ -33,6 +34,7 @@ class SalaViewModel(
     private val salaRepository: SalaRepository,
     private val observeInstalacion: ObserveInstalacion,
     observeAuthState: ObserveAuthState,
+    observeUser:ObserveUser,
     ):ViewModel() {
     private val salaId: Long = savedStateHandle["id"]!!
     private val loadingState = ObservableLoadingCounter()
@@ -44,13 +46,15 @@ class SalaViewModel(
         uiMessageManager.message,
         loadingState.observable,
         observeAuthState.flow,
-        data
-    ){message,loading,authState,data->
+        data,
+        observeUser.flow,
+    ){message,loading,authState,data,user->
         SalaState(
             message = message,
             authState = authState,
             loading = loading,
-            data = data
+            data = data,
+            user = user
         )
     }.stateIn(
         scope = viewModelScope,
@@ -59,6 +63,7 @@ class SalaViewModel(
     )
     init {
         observeAuthState(Unit)
+        observeUser(Unit)
         getSala()
     }
     fun getSala(){

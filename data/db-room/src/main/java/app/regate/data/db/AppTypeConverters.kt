@@ -21,6 +21,7 @@ import app.regate.data.dto.empresa.establecimiento.HorarioInterval
 import app.regate.data.dto.empresa.establecimiento.PaidType
 import app.regate.extensions.unsafeLazy
 import app.regate.models.LabelType
+import app.regate.models.TypeEntity
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -28,6 +29,7 @@ import kotlinx.serialization.json.Json
 
 object AppTypeConverters {
    private val imageTypeValues by unsafeLazy { LabelType.values() }
+   private val typeEntityValues by unsafeLazy { TypeEntity.values() }
 
     @TypeConverter
     @JvmStatic
@@ -55,4 +57,12 @@ object AppTypeConverters {
     @TypeConverter
     @JvmStatic
     fun toLabelType(value: String?) = imageTypeValues.firstOrNull { it.storageKey == value }
+
+    @TypeConverter
+    @JvmStatic
+    fun fromTypeEntity(value:TypeEntity) = value.ordinal
+
+    @TypeConverter
+    @JvmStatic
+    fun toTypeEntity(value:Int?) = typeEntityValues.firstOrNull{ it.ordinal == value }
 }

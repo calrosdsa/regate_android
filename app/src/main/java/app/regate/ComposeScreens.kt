@@ -58,6 +58,7 @@ import app.regate.establecimiento.createreview.CreateReview
 import app.regate.establecimiento.reviews.Reviews
 import app.regate.filterSalas.FilterSalas
 import app.regate.sala.grupo.GrupoSalas
+import app.regate.system.notification.Notifications
 import app.regate.system.report.Report
 import app.regate.welcome.Welcome
 import me.tatarka.inject.annotations.Inject
@@ -67,6 +68,7 @@ import me.tatarka.inject.annotations.Inject
 class ComposeScreens(
     val welcome:Welcome,
     val report:Report,
+    val notifications:Notifications,
     val filter:Filter,
     val login: Login,
     val signUp: SignUp,
