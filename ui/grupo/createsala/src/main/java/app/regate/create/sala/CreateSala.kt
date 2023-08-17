@@ -33,15 +33,15 @@ import app.regate.common.composes.components.dialog.DialogConfirmation
 import app.regate.common.composes.components.dialog.LoaderDialog
 import app.regate.common.composes.ui.CommonTopBar
 import app.regate.common.composes.viewModel
-import app.regate.create.sala.pages.Page1
-import app.regate.create.sala.pages.Page2
-import app.regate.create.sala.pages.SelectGroup
+import app.regate.create.sala.page.Page1
+import app.regate.create.sala.page.Page2
+import app.regate.create.sala.page.SelectGroup
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias CreateSala = @Composable (
+typealias CreateSala  = @Composable (
     navigateUp:()->Unit,
     reservarInstalacion: @Composable () -> Unit,
     navigateToCreateGroup:()->Unit,
@@ -116,7 +116,7 @@ internal fun CreateSala(
     groupExist:Boolean,
     getGroupsUser:()->Unit,
     selectGroup:(Long)->Unit,
-    enableButton:()->Unit,
+    enableButton:(Boolean)->Unit,
     navigateToCreateGroup: () -> Unit
 //    onChangeAsunto:(v:String)->Unit,
 //    onChangeDescription:(v:String)->Unit,
@@ -136,9 +136,16 @@ internal fun CreateSala(
             clearMessage(message.id)
         }
     }
+//    LaunchedEffect(key1 = viewState.selectedGroup, block = {
+//        if(pagerState.currentPage == 2 && viewState.selectedGroup!! > 0L){
+//            enableButton(true)
+//        }else{
+//            enableButton(false)
+//        }
+//    })
     LaunchedEffect(key1 = pagerState.currentPage, block = {
-        when(pagerState.currentPage){
-            1 -> enableButton()
+        when (pagerState.currentPage) {
+            1 -> enableButton(true)
             2 -> getGroupsUser()
         }
     })

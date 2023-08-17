@@ -65,6 +65,7 @@ string discount
 string do_you_want_receive_notifications
 string dynamic_color
 string edit
+string exit
 string expiration_date
 string explore_exceptional_destinations
 string family_name

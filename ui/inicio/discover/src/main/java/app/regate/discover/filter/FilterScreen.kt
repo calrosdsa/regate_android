@@ -7,10 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import android.util.Log
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -54,10 +51,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
-import androidx.lifecycle.viewmodel.compose.viewModel
 import app.regate.common.composes.components.CustomButton
-import app.regate.common.composes.components.dialog.CameraPermissionTextProvider
 import app.regate.common.composes.components.dialog.LocationPermissionTextProvider
 import app.regate.common.composes.components.dialog.PermissionDialog
 import app.regate.common.composes.components.input.RowCheckSelectWithImage
@@ -139,13 +133,14 @@ internal fun Filter(
         context = activity,
         viewState = viewState,
         navigateUp = navigateUp,
-        setAmenity = viewModel::setAmenities,
+//        setAmenity = viewModel::setCategories,
         setMaxPrice = viewModel::setMaxPrice,
 //        onRequestPermission = viewModel::setLocation,
         checkPermission = viewModel::checkPermission,
         clearMessage = viewModel::clearMessage,
         requestLocationPermission ={  locationPermission.launch(permissionsToRequest) },
-        setNearMe = viewModel::setNearMe
+        setNearMe = viewModel::setNearMe,
+        clearAll = viewModel::clearAlL
     )
 }
 
@@ -155,8 +150,9 @@ internal fun Filter(
     context:Activity,
     viewState:FilterState,
     navigateUp: () -> Unit,
-    setAmenity:(Long)->Unit,
+//    setAmenity:(Long)->Unit,
     setMaxPrice:(Int)->Unit,
+    clearAll:()->Unit,
     setNearMe:(Boolean)->Unit,
 //    onRequestPermission:(Boolean, Context, (IntentSenderRequest)->Unit)->Unit,
     requestLocationPermission:()->Unit,
@@ -240,10 +236,10 @@ internal fun Filter(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        TextButton(onClick = {}) {
+                        TextButton(onClick = { clearAll() }) {
                             Text(text = stringResource(id = R.string.clear_all))
                         }
-                        CustomButton(onClick = { /*TODO*/ }) {
+                        CustomButton(onClick = { navigateUp() }) {
                             Text(text = stringResource(id = R.string.show_results))
                         }
                     }
@@ -310,19 +306,19 @@ internal fun Filter(
 
             Divider(modifier = Modifier.padding(vertical = 10.dp))
 
-            Text(
-                text = stringResource(id = R.string.services),
-                style = MaterialTheme.typography.titleMedium
-            )
-
-            viewState.amenities.map { item ->
-                RowCheckSelectWithImage(
-                    selected = viewState.filterData.amenities.contains(item.id),
-                    onCheck = { setAmenity(item.id) },
-                    label = item.name,
-                    src = item.thumbnail
-                )
-            }
+//            Text(
+//                text = stringResource(id = R.string.services),
+//                style = MaterialTheme.typography.titleMedium
+//            )
+//
+//            viewState.amenities.map { item ->
+//                RowCheckSelectWithImage(
+//                    selected = viewState.filterData.amenities.contains(item.id),
+//                    onCheck = { setAmenity(item.id) },
+//                    label = item.name,
+//                    src = item.thumbnail
+//                )
+//            }
         }
     }
 }

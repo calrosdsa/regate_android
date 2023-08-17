@@ -31,5 +31,6 @@ enum class LabelType(val storageKey: String) {
 enum class TypeEntity {
     SALA,
     GRUPO,
-    ACCOUNT
+    ACCOUNT,
+    NONE,
 }

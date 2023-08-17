@@ -43,15 +43,15 @@ class SalaRepository(
         )
         return salaDataSourceImpl.joinSala(dataR)
     }
+    suspend fun exitSala(id:Int){
+        salaDataSourceImpl.exitSala(id)
+    }
     suspend fun getSala(id:Long):SalaDetail{
-        return  salaDataSourceImpl.getSala(id).also { result->
-            val profiles = result.profiles.map { profileMapper.map(it) }
-            profileDao.upsertAll(profiles)
-        }
+        return  salaDataSourceImpl.getSala(id)
     }
 
-    suspend fun getSalas(id:Long):List<SalaDto>{
-        return  salaDataSourceImpl.getSalas(id)
+    suspend fun getEstablecimientoSalas(id:Long):List<SalaDto>{
+        return  salaDataSourceImpl.getEstablecimientoSalas(id)
     }
 
     suspend fun filterSalas(d:SalaFilterData,page:Int = 1):PaginationSalaResponse{

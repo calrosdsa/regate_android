@@ -25,9 +25,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,7 +41,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import app.regate.common.composes.components.input.CustomOutlinedTextInput
@@ -48,6 +53,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import app.regate.common.resources.R
 
 
 typealias Login = @Composable (
@@ -78,7 +84,9 @@ internal fun Login(
 ) {
     var email by remember { mutableStateOf("jorge@gmail.com") }
     var password by remember { mutableStateOf("201120") }
-    val state by viewModel.state.collectAsState()
+    val viewState by viewModel.state.collectAsState()
+    val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val startForResult =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -91,14 +99,24 @@ internal fun Login(
             }
 //            }
         }
-    if (state.loading) {
+    if (viewState.loading) {
         Dialog(onDismissRequest = { /*TODO*/ }) {
 //        Text(text = "Title")
             CircularProgressIndicator()
         }
     }
+    viewState.message?.let { message->
+        LaunchedEffect(key1 = message, block = {
+            snackbarHostState.showSnackbar(message.message)
+            viewModel.clearMessage(message.id)
+        })
+    }
 
-    Scaffold() {padding->
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        }
+    ) {padding->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -107,17 +125,18 @@ internal fun Login(
 //                .padding(top = 40.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.height(20.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(
                     painter = painterResource(id = app.regate.common.resources.R.drawable.logo_app),
                     contentDescription = "logo", modifier = Modifier.size(25.dp)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
-                Text(text = "Leafboard", style = MaterialTheme.typography.titleLarge)
+                Text(text = stringResource(id = R.string.name), style = MaterialTheme.typography.titleLarge)
             }
 
             Text(
-                text = "Work without limits", style = MaterialTheme.typography.bodyLarge,
+                text = "Reserva juega comparte", style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 20.dp)
             )
 
@@ -155,7 +174,7 @@ internal fun Login(
 
             Button(
                 onClick = {
-                    viewModel.login(email, password, navigateToHomeScreen)
+                    viewModel.login(email, password, navigateToHomeScreen,context)
                 }, modifier = Modifier
                     .fillMaxWidth()
                     .height(45.dp)
@@ -234,30 +253,30 @@ internal fun Login(
             }
 
 
-            Spacer(modifier = Modifier.height(20.dp))
-
-            TextButton(
-                onClick = { }, modifier = Modifier
-                    .fillMaxWidth()
-                    .height(45.dp),
-                shape = CircleShape,
-                border = BorderStroke(1.dp, Color.LightGray)
-
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        painter = painterResource(id = app.regate.common.resources.R.drawable.icon_mac),
-                        contentDescription = "logo", modifier = Modifier.size(25.dp)
-                    )
-                    Spacer(modifier = Modifier.width(15.dp))
-                    Text(text = "Continuar con Apple", color = MaterialTheme.colorScheme.primary)
-
-                }
-            }
+//            Spacer(modifier = Modifier.height(20.dp))
+//
+//            TextButton(
+//                onClick = { }, modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(45.dp),
+//                shape = CircleShape,
+//                border = BorderStroke(1.dp, Color.LightGray)
+//
+//            ) {
+//                Row(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    horizontalArrangement = Arrangement.Center,
+//                    verticalAlignment = Alignment.CenterVertically
+//                ) {
+//                    Image(
+//                        painter = painterResource(id = app.regate.common.resources.R.drawable.icon_mac),
+//                        contentDescription = "logo", modifier = Modifier.size(25.dp)
+//                    )
+//                    Spacer(modifier = Modifier.width(15.dp))
+//                    Text(text = "Continuar con Apple", color = MaterialTheme.colorScheme.primary)
+//
+//                }
+//            }
 
             Spacer(modifier = Modifier.height(20.dp))
 

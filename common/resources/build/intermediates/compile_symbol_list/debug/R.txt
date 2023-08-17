@@ -64,6 +64,7 @@ int string discount 0x0
 int string do_you_want_receive_notifications 0x0
 int string dynamic_color 0x0
 int string edit 0x0
+int string exit 0x0
 int string expiration_date 0x0
 int string explore_exceptional_destinations 0x0
 int string family_name 0x0

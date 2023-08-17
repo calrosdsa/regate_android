@@ -60,7 +60,7 @@ public final class RoomUserDao_Impl extends RoomUserDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `users` SET `id` = ?,`user_id` = ?,`email` = ?,`estado` = ?,`username` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ?,`coins` = ?,`profile_id` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `users` SET `id` = ?,`user_id` = ?,`email` = ?,`estado` = ?,`username` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ?,`profile_id` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -82,13 +82,8 @@ public final class RoomUserDao_Impl extends RoomUserDao {
         } else {
           statement.bindString(8, entity.getApellido());
         }
-        if (entity.getCoins() == null) {
-          statement.bindNull(9);
-        } else {
-          statement.bindLong(9, entity.getCoins());
-        }
-        statement.bindLong(10, entity.getProfile_id());
-        statement.bindLong(11, entity.getId());
+        statement.bindLong(9, entity.getProfile_id());
+        statement.bindLong(10, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteUser = new SharedSQLiteStatement(__db) {
@@ -103,7 +98,7 @@ public final class RoomUserDao_Impl extends RoomUserDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `users` (`id`,`user_id`,`email`,`estado`,`username`,`profile_photo`,`nombre`,`apellido`,`coins`,`profile_id`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `users` (`id`,`user_id`,`email`,`estado`,`username`,`profile_photo`,`nombre`,`apellido`,`profile_id`) VALUES (?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -125,18 +120,13 @@ public final class RoomUserDao_Impl extends RoomUserDao {
         } else {
           statement.bindString(8, entity.getApellido());
         }
-        if (entity.getCoins() == null) {
-          statement.bindNull(9);
-        } else {
-          statement.bindLong(9, entity.getCoins());
-        }
-        statement.bindLong(10, entity.getProfile_id());
+        statement.bindLong(9, entity.getProfile_id());
       }
     }, new EntityDeletionOrUpdateAdapter<User>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `users` SET `id` = ?,`user_id` = ?,`email` = ?,`estado` = ?,`username` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ?,`coins` = ?,`profile_id` = ? WHERE `id` = ?";
+        return "UPDATE `users` SET `id` = ?,`user_id` = ?,`email` = ?,`estado` = ?,`username` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ?,`profile_id` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -158,13 +148,8 @@ public final class RoomUserDao_Impl extends RoomUserDao {
         } else {
           statement.bindString(8, entity.getApellido());
         }
-        if (entity.getCoins() == null) {
-          statement.bindNull(9);
-        } else {
-          statement.bindLong(9, entity.getCoins());
-        }
-        statement.bindLong(10, entity.getProfile_id());
-        statement.bindLong(11, entity.getId());
+        statement.bindLong(9, entity.getProfile_id());
+        statement.bindLong(10, entity.getId());
       }
     });
   }
@@ -301,7 +286,6 @@ public final class RoomUserDao_Impl extends RoomUserDao {
             final int _cursorIndexOfProfilePhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_photo");
             final int _cursorIndexOfNombre = CursorUtil.getColumnIndexOrThrow(_cursor, "nombre");
             final int _cursorIndexOfApellido = CursorUtil.getColumnIndexOrThrow(_cursor, "apellido");
-            final int _cursorIndexOfCoins = CursorUtil.getColumnIndexOrThrow(_cursor, "coins");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final User _result;
             if (_cursor.moveToFirst()) {
@@ -329,15 +313,9 @@ public final class RoomUserDao_Impl extends RoomUserDao {
               } else {
                 _tmpApellido = _cursor.getString(_cursorIndexOfApellido);
               }
-              final Integer _tmpCoins;
-              if (_cursor.isNull(_cursorIndexOfCoins)) {
-                _tmpCoins = null;
-              } else {
-                _tmpCoins = _cursor.getInt(_cursorIndexOfCoins);
-              }
               final long _tmpProfile_id;
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-              _result = new User(_tmpId,_tmpUser_id,_tmpEmail,_tmpEstado,_tmpUsername,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCoins,_tmpProfile_id);
+              _result = new User(_tmpId,_tmpUser_id,_tmpEmail,_tmpEstado,_tmpUsername,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpProfile_id);
             } else {
               _result = null;
             }
@@ -379,7 +357,6 @@ public final class RoomUserDao_Impl extends RoomUserDao {
           final int _cursorIndexOfProfilePhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_photo");
           final int _cursorIndexOfNombre = CursorUtil.getColumnIndexOrThrow(_cursor, "nombre");
           final int _cursorIndexOfApellido = CursorUtil.getColumnIndexOrThrow(_cursor, "apellido");
-          final int _cursorIndexOfCoins = CursorUtil.getColumnIndexOrThrow(_cursor, "coins");
           final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
           final User _result;
           if (_cursor.moveToFirst()) {
@@ -407,15 +384,9 @@ public final class RoomUserDao_Impl extends RoomUserDao {
             } else {
               _tmpApellido = _cursor.getString(_cursorIndexOfApellido);
             }
-            final Integer _tmpCoins;
-            if (_cursor.isNull(_cursorIndexOfCoins)) {
-              _tmpCoins = null;
-            } else {
-              _tmpCoins = _cursor.getInt(_cursorIndexOfCoins);
-            }
             final long _tmpProfile_id;
             _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-            _result = new User(_tmpId,_tmpUser_id,_tmpEmail,_tmpEstado,_tmpUsername,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCoins,_tmpProfile_id);
+            _result = new User(_tmpId,_tmpUser_id,_tmpEmail,_tmpEstado,_tmpUsername,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpProfile_id);
           } else {
             _result = null;
           }

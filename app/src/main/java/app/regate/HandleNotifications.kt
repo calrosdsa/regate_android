@@ -19,17 +19,11 @@ import app.regate.data.dto.notifications.SalaPayload
 import app.regate.extensions.unsafeLazy
 import app.regate.home.MainActivity
 import app.regate.inject.ApplicationComponent
-import app.regate.inject.DbComponent
-import app.regate.inject.create
 import app.regate.models.Notification
 import app.regate.models.TypeEntity
 import me.tatarka.inject.annotations.Inject
 
-class HandleNotifications(
-
-) {
-
-
+class HandleNotifications {
     companion object{
         private const val TAG = "DEBUG_APP_NOTIFICATIONS"
     }
@@ -83,11 +77,12 @@ class HandleNotifications(
 
     suspend fun sendNotificationSalaConflict(context: Context, payload: MessagePayload){
         try{
+            val title = context.getString(R.string.problem_with_room)
             val db = AppRoomDatabase.getInstance(context)
             db.notificationDao().upsert(
                 Notification(
                     content = payload.message,
-                    typeEntity = TypeEntity.SALA,
+                    typeEntity = TypeEntity.NONE,
                     entityId = payload.id
                 )
             )
@@ -103,7 +98,7 @@ class HandleNotifications(
             val pendingIntent = taskBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
             val CHANNEL_ID = context.getString(R.string.notification_sala_channel)
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setContentTitle(context.getString(R.string.problem_with_room))
+                .setContentTitle(title)
                 .setContentText(payload.message)
                 .setSmallIcon(R.drawable.logo_app)
                 .setContentIntent(pendingIntent)
@@ -126,8 +121,19 @@ class HandleNotifications(
         }
     }
 
-    fun sendNotificationSalaHasBeenReserved(context: Context, payload: MessagePayload){
+    suspend fun sendNotificationSalaHasBeenReserved(context: Context, payload: MessagePayload){
         try{
+            val title = context.getString(R.string.room_has_been_reserved)
+            val db = AppRoomDatabase.getInstance(context)
+            db.notificationDao().upsert(
+                Notification(
+                    content = payload.message,
+                    title = title,
+                    typeEntity = TypeEntity.SALA,
+                    entityId = payload.id
+                )
+            )
+            AppRoomDatabase.destroyInstance()
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
                 "https://example.com/sala_id=${payload.id}".toUri(),
@@ -139,7 +145,7 @@ class HandleNotifications(
             val pendingIntent = taskBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
             val CHANNEL_ID = context.getString(R.string.notification_sala_channel)
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setContentTitle(context.getString(R.string.room_has_been_reserved))
+                .setContentTitle(title)
                 .setContentText(payload.message)
                 .setSmallIcon(R.drawable.logo_app)
                 .setContentIntent(pendingIntent)
@@ -157,6 +163,7 @@ class HandleNotifications(
                 notify(payload.id.toInt(), notification)
             }
         }catch(e:Exception){
+            AppRoomDatabase.destroyInstance()
             Log.d(TAG,e.localizedMessage?:"")
         }
     }

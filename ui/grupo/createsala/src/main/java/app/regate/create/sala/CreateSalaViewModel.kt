@@ -47,7 +47,7 @@ class CreateSalaViewModel(
     private val instalacionCupos = MutableStateFlow<InstalacionCupos?>(null)
     private val salaData = MutableStateFlow(SalaRequestDto())
     private val grupos = MutableStateFlow<List<GrupoDto>>(emptyList())
-    private val selectedGroup = MutableStateFlow<Long?>(null)
+    private val selectedGroup = MutableStateFlow<Long>(0L)
     private val enableToContinue = MutableStateFlow(false)
     val state: StateFlow<CreateSalaState> = combine(
         uiMessageManager.message,
@@ -86,8 +86,8 @@ class CreateSalaViewModel(
                     val instalacionC = cupoDao.getInstalacionCupos(cupo.instalacion_id)
                     instalacionCupos.tryEmit(instalacionC)
                     instalacionC.let { instalacionCupos1 ->
+                        enableToContinue.emit(true)
                         Log.d("DEBUG_APP_INS",instalacionCupos1.instalacion.id.toString())
-                        enableToContinue.tryEmit(true)
                         salaData.tryEmit(
                             salaData.value.copy(
                                 category_id = instalacionCupos1.instalacion.category_id ?: 0,
@@ -111,7 +111,7 @@ class CreateSalaViewModel(
         viewModelScope.launch {
             try{
                 loadingState.addLoader()
-                if(state.value.selectedGroup == null && state.value.selectedGroup == 0L){
+                if( state.value.selectedGroup == 0L){
                 enableToContinue.tryEmit(false)
                 }
                 val res = grupoRepository.getGroupsWhereUserIsAdmin()
@@ -127,7 +127,7 @@ class CreateSalaViewModel(
 
     fun updateSelectedGroup(id:Long){
         if(id == selectedGroup.value){
-            selectedGroup.tryEmit(null)
+            selectedGroup.tryEmit(0L)
             enableToContinue.tryEmit(false)
         }else{
             selectedGroup.tryEmit(id)
@@ -162,8 +162,8 @@ class CreateSalaViewModel(
                     )
                     Log.d("DEBUG_APP_CUPOS", "SALA DATA $data")
                     val res = salaRepository.createSala(data)
-                    if(state.value.selectedGroup != null && state.value.selectedGroup != 0L){
-                    navigateToGroup(state.value.selectedGroup!!)
+                    if( state.value.selectedGroup != 0L){
+                    navigateToGroup(state.value.selectedGroup)
                     }
                     Log.d("DEBUG_APP_CUPOS", "SALA DATA $res")
                 }
@@ -193,9 +193,10 @@ class CreateSalaViewModel(
         return grupoId != 0L
     }
 
-    fun enableButton(){
+    fun enableButton(bool:Boolean){
         viewModelScope.launch {
-            enableToContinue.emit(true)
+            Log.d("DEBUG_APP_SELECTED",selectedGroup.value.toString())
+            enableToContinue.emit(bool)
         }
     }
     fun clearMessage(id:Long){

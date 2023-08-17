@@ -41,7 +41,7 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
 
-typealias Billing = @Composable (
+typealias Billing= @Composable (
     navigateUp: () -> Unit,
     navigateToRecargaCoins:()->Unit,
     deposits: @Composable () -> Unit,

@@ -20,12 +20,14 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.Button
 import androidx.compose.material3.DismissValue
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
@@ -35,6 +37,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.PlainTooltipBox
 import androidx.compose.material3.PlainTooltipState
 import androidx.compose.material3.Scaffold
@@ -56,6 +59,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
@@ -74,6 +78,7 @@ import app.regate.data.auth.AppAuthState
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import app.regate.common.resources.R
+import app.regate.data.dto.empresa.salas.SalaEstado
 import app.regate.data.mappers.toInstalacion
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
@@ -119,6 +124,7 @@ internal fun Sala(
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
+    val context = LocalContext.current
     val joinSalaDialog = remember {
         mutableStateOf(false)
     }
@@ -133,7 +139,8 @@ internal fun Sala(
         clearMessage = viewModel::clearMessage,
         refresh = viewModel::refresh,
         navigateToInstalacion = navigateToInstalacion,
-        navigateToEstablecimiento = navigateToEstablecimiento
+        navigateToEstablecimiento = navigateToEstablecimiento,
+        exitSala = {viewModel.exitSala(context,navigateUp)}
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -158,7 +165,8 @@ internal fun Sala(
     refresh:()->Unit,
     clearMessage:(id:Long)->Unit,
     navigateToInstalacion: (Long) -> Unit,
-    navigateToEstablecimiento: (Long) -> Unit
+    navigateToEstablecimiento: (Long) -> Unit,
+    exitSala:()->Unit,
 ) {
     val participantes = remember(viewState.data?.profiles) {
         derivedStateOf {
@@ -280,29 +288,37 @@ internal fun Sala(
                         Row(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth().height(40.dp)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(40.dp)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text( text = "${participantes.value}/${sala.cupos}",
-                                    style = MaterialTheme.typography.labelLarge)
+                                Text(
+                                    text = "${participantes.value}/${sala.cupos}",
+                                    style = MaterialTheme.typography.labelLarge
+                                )
                                 Spacer(modifier = Modifier.width(5.dp))
-                                Icon(imageVector = Icons.Default.Group, contentDescription = sala.titulo,modifier = Modifier.size(18.dp))
+                                Icon(
+                                    imageVector = Icons.Default.Group,
+                                    contentDescription = sala.titulo,
+                                    modifier = Modifier.size(18.dp)
+                                )
                             }
-//                            Text(
-//                                text = "${participantes.value}/${sala.cupos}",
-//                                style = MaterialTheme.typography.labelLarge
-//                            )
-                                if(iAmInTheRoom == false){
-                            CustomButton(onClick = {
-                                if (viewState.authState == AppAuthState.LOGGED_IN) {
-                                    openDialogConfirmation()
-                                } else {
-                                    openAuthBottomSheet()
-                                }
-                            }) {
-                                Text(text = "Unirse: ${sala.precio_cupo}")
+
+                            if (viewState.data.sala.estado == SalaEstado.AVAILABLE.ordinal) {
+                                if (iAmInTheRoom == false) {
+                                    CustomButton(onClick = {
+                                        if (viewState.authState == AppAuthState.LOGGED_IN) {
+                                            openDialogConfirmation()
+                                        } else {
+                                            openAuthBottomSheet()
+                                        }
+                                    }) {
+                                        Text(text = "Unirse: ${sala.precio_cupo}")
+                                    }
                                 }
                             }
+
                         }
                     }
                     dividerLazyList()
@@ -324,10 +340,25 @@ internal fun Sala(
                             photo = profile.profile_photo,
                         )
                     }
+                    
+                    item{
+                        if(viewState.data.sala.estado == SalaEstado.AVAILABLE.ordinal && iAmInTheRoom == true){
+                        Spacer(modifier = Modifier.height(10.dp))
+                        OutlinedButton(onClick = { exitSala() },
+                            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)) {
+                            Icon(imageVector = Icons.Default.ExitToApp, contentDescription = null)
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Text(text = stringResource(id = R.string.exit))
+                        }
+                        }
+                    }
                 }
             }
 
         }
+
+           
+
             PullRefreshIndicator(
                 refreshing = viewState.loading,
                 state = refreshState,

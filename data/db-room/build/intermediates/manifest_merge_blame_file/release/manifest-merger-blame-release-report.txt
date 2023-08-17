@@ -1,8 +1,0 @@
-1<?xml version="1.0" encoding="utf-8"?>
-2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="app.regate.data.room" >
-4
-5    <uses-sdk android:minSdkVersion="23" />
-5-->C:\Users\PC\Desktop\projects\regate_android\data\db-room\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest9252328463549292451.xml
-6
-7</manifest>

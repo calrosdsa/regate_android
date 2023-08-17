@@ -27,7 +27,7 @@ import app.regate.data.dto.account.billing.TypeEntity
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 
-typealias Consume = @Composable (
+typealias Consume= @Composable (
     navigateToSala: (Long) -> Unit,
     navigateToReserva: (Long) ->Unit
  ) ->Unit

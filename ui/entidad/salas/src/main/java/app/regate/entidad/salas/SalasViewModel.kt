@@ -1,5 +1,6 @@
 package app.regate.entidad.salas
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -57,14 +58,16 @@ class SalasViewModel(
         viewModelScope.launch(context = Dispatchers.IO) {
             try{
                 loadingState.addLoader()
-                val res = salaRepository.getSalas(establecimientoId)
-                delay(2000)
+                val res = salaRepository.getEstablecimientoSalas(establecimientoId)
+//                delay(2000)
                 salas.tryEmit(res)
                 loadingState.removeLoader()
             }catch(e: ResponseException){
+                Log.d("DEBUG_APP_",e.localizedMessage?:"")
                 loadingState.removeLoader()
                 uiMessageManager.emitMessage(UiMessage(message = e.response.body()))
             }catch(e:Exception){
+                Log.d("DEBUG_APP_",e.localizedMessage?:"")
                 loadingState.removeLoader()
             }
         }

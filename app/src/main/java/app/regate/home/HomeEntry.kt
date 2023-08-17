@@ -156,7 +156,7 @@ internal fun AppNavigation(
                 navigateToSignUp = {navController.navigate(Route.SIGNUP_SCREEN)},
             )
         }
-        animatedComposable(route = Route.FILTER){
+        slideInVerticallyComposable(route = Route.FILTER){
             composeScreens.filter(
                 navigateUp = navController::navigateUp
             )
@@ -171,7 +171,7 @@ internal fun AppNavigation(
         }
 
         animatedComposable(route = Route.SIGNUP_SCREEN) {
-            composeScreens.signUp(onBack = { navController.navigate(Route.HOME) })
+            composeScreens.signUp(onBack = navController::navigateUp)
         }
         animatedComposable(route = Route.PHOTO arg "url",
         arguments = listOf(
@@ -232,6 +232,7 @@ internal fun AppNavigation(
                 navigateUp = navController::navigateUp,
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
                 navigateToProfile = { navController.navigate(Route.PROFILE id it)},
+                navigateToCreateReview = { navController.navigate(Route.CREATE_REVIEW id it)}
 //                navigateToReserva = { navController.navigate(Route.RESERVAR id it) }
             )
         }

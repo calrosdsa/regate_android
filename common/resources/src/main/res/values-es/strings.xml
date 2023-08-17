@@ -113,5 +113,6 @@
     <string name="threats_of_violence">Amenazas de violencia</string>
     <string name="spam_scam">Spam/Scam</string>
     <string name="other">Otro</string>
+    <string name="exit">Salir</string>
 
 </resources>

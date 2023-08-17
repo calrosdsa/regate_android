@@ -92,7 +92,7 @@ fun SimpleTopBar(
         modifier = modifier,
         title = {
             if (title != null) {
-                Text(text = title)
+                Text(text = title, maxLines = 1,)
             }
         },
         scrollBehavior = scrollBehavior,

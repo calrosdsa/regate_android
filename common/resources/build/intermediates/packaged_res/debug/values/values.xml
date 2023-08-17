@@ -38,6 +38,7 @@
     <string name="do_you_want_receive_notifications">Do you want to receive notifications?</string>
     <string name="dynamic_color">Dynamic colors</string>
     <string name="edit">Edit</string>
+    <string name="exit">Exit</string>
     <string name="expiration_date">Expiration date:  %1$s</string>
     <string name="explore_exceptional_destinations">Explore exceptional destinations</string>
     <string name="family_name">Family name</string>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <bool name="is_dark_theme">true</bool>
-    <bool name="is_light_theme">false</bool>
-    <bool name="use_light_status_bar">false</bool>
-    <color name="status_bar_scrim">@color/system_ui_scrim_dark</color>
-</resources>

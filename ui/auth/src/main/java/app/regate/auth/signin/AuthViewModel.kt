@@ -1,17 +1,25 @@
 package app.regate.auth.signin
 
+import app.regate.common.resources.R
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.account.AccountRepository
+import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.account.auth.LoginRequest
+import app.regate.data.dto.account.auth.UserDto
 import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.tasks.Task
+import io.ktor.client.call.body
+import io.ktor.client.plugins.ResponseException
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -36,17 +44,18 @@ class AuthViewModel (
     private val uiMessageManager = UiMessageManager()
 
     val googleClient = googleSignInClient
-    val s = ""
 
     val state:StateFlow<AuthState> = combine(
         loadingState.observable,
         genero,
-        birtDay
-    ){loading,genero,birthDay->
+        birtDay,
+        uiMessageManager.message,
+    ){loading,genero,birthDay,message->
         AuthState(
             loading = loading,
             genero = genero,
-            birthDay = birthDay
+            birthDay = birthDay,
+            message = message,
         )
     }.stateIn(
         scope =viewModelScope,
@@ -69,21 +78,27 @@ class AuthViewModel (
     }
 
     @SuppressLint("SuspiciousIndentation")
-    fun login(email:String,password:String,redirect:()->Unit){
+    fun login(email:String,password:String,redirect:()->Unit,context:Context){
         viewModelScope.launch {
             loadingState.addLoader()
             try{
-                delay(2000)
                 accountRepository.login(
                     LoginRequest(
                     email = email, password = password)
                 )
                 loadingState.removeLoader()
                 redirect()
-//                redirect()
-            }catch(e:Exception){
+            }catch (e:ResponseException) {
+                loadingState.removeLoader()
+                if(e.response.status == HttpStatusCode.BadRequest){
+                uiMessageManager.emitMessage(UiMessage(message = e.response.body<ResponseMessage>().message))
+                }else{
+                    uiMessageManager.emitMessage(UiMessage(message = context.getString(R.string.unexpected_error)))
+                }
+            } catch(e:Exception){
 //                logger.d(e)
                 loadingState.removeLoader()
+                uiMessageManager.emitMessage(UiMessage(message = context.getString(R.string.unexpected_error)))
                 Log.d("API_REQUEST",e.localizedMessage?:"Error")
             }
         }
@@ -93,27 +108,36 @@ class AuthViewModel (
     }
 
     fun handleSignInResult(completedTask: Task<GoogleSignInAccount>,navigate:()->Unit) {
-        Log.d("AUTH-SUCCESS","EXECUTTINH");
         viewModelScope.launch {
-
-        try {
-//            val account = completedTask.result
-            val account = completedTask.result
-            Log.d("AUTH-SUCCESS", account.displayName.toString());
-            Log.d("AUTH-SUCCESS", account.email.toString());
-            Log.d("AUTH-SUCCESS", account.photoUrl.toString());
-            Log.d("AUTH-SUCCESS", account.id.toString());
-
-//            delay(500)
-            navigate()
-            // Signed in successfully, show authenticated UI.
-//            updateUI(account);
-        } catch (e: Exception) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.d("AUTH-ERROR", "signInResult:failed code22=" + e.localizedMessage);
-//            updateUI(null);
+            try {
+                val account = completedTask.result
+                account?.let{
+                    val profile = if(it.photoUrl?.path == null) null else it.photoUrl.toString()
+                    Log.d("DEBUG_APP", profile.toString());
+                    val user = UserDto(
+                        user_id = 0,
+                        profile_photo =profile,
+                        estado = 0,
+                        nombre = it.givenName?:"",
+                        apellido = it.familyName,
+                        email = it.email?:"",
+                        username = it.email?:"",
+                        social_id = it.id?:"",
+                        profile_id = 0,
+                    )
+                    accountRepository.socialLogin(user)
+                }
+                navigate()
+            } catch (e: Exception) {
+                uiMessageManager.emitMessage(UiMessage(message = e.localizedMessage?:"None"))
+            }
         }
     }
+
+
+    fun clearMessage(id:Long){
+        viewModelScope.launch {
+            uiMessageManager.clearMessage(id)
+        }
     }
 }

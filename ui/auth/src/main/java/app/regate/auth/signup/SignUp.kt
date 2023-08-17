@@ -47,7 +47,7 @@ import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias SignUp = @Composable (
+typealias SignUp= @Composable (
     onBack:()->Unit
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit

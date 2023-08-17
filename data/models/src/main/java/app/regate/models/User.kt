@@ -16,6 +16,5 @@ data class User(
     val profile_photo:String?=null,
     val nombre:String,
     val apellido:String? = null,
-    val coins:Int? = null,
     val profile_id:Long
 ):AppEntity

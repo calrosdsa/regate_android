@@ -105,12 +105,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     Log.d(TAG,e.localizedMessage?:"")
                 }
             }
-            if(TypeNotification.NOTIFICATION_SALA_HAS_BEEN_RESERVED.ordinal == data["type"]?.toInt()){
-                try{
+            if(TypeNotification.NOTIFICATION_SALA_HAS_BEEN_RESERVED.ordinal == data["type"]?.toInt()) {
+                try {
                     val payload = Json.decodeFromString<MessagePayload>(data["payload"].toString())
-                    handler.sendNotificationSalaHasBeenReserved(applicationContext,payload)
-                }catch (e:Exception){
-                    Log.d(TAG,e.localizedMessage?:"")
+                    scope.launch {
+                        handler.sendNotificationSalaHasBeenReserved(applicationContext, payload)
+                    }
+                } catch (e: Exception) {
+                    Log.d(TAG, e.localizedMessage ?: "")
                 }
             }
             if(TypeNotification.NOTIFICATION_BILLING.ordinal == data["type"]?.toInt()){

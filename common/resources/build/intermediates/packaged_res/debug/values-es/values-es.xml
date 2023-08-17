@@ -22,6 +22,7 @@
     <string name="do_you_want_receive_notifications">¿Quieres recibir notificaciones?</string>
     <string name="dynamic_color">Dynamic colors</string>
     <string name="edit">Editar</string>
+    <string name="exit">Salir</string>
     <string name="expiration_date">Expiration date:  %1$s</string>
     <string name="explore_exceptional_destinations">Explora destinos excepcionales</string>
     <string name="family_name">Apellido</string>

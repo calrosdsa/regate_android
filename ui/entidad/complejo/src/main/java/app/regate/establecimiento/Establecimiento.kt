@@ -1,8 +1,5 @@
 package app.regate.establecimiento
 
-import android.content.Intent
-import android.net.Uri
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
@@ -36,11 +33,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
@@ -57,12 +54,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.LocalAppUtil
 import app.regate.common.composes.components.images.AsyncImage
@@ -337,7 +332,7 @@ internal fun Establecimiento(
                 ) { page ->
                     when (page) {
                         0 -> {
-                            EstablecimientoPage(
+                            EstablecimientoInfo(
                                 state = state,
                                 openLocationSheet = { coroutineScope.launch { sheetState.show() } },
                                 navigateToReserva = {
@@ -407,11 +402,9 @@ fun Indicators(
     currentTab:Int,
     modifier:Modifier = Modifier
 ){
-//    val widthTab = LocalConfiguration.current.screenWidthDp.dp /4
-    ScrollableTabRow(selectedTabIndex = currentTab, edgePadding = 1.dp,
-        modifier = modifier) {
-//    Row(modifier = Modifier,
-//    horizontalArrangement = Arrangement.SpaceBetween) {
+//    ScrollableTabRow(selectedTabIndex = currentTab, edgePadding = 1.dp,
+//        modifier = modifier) {
+    TabRow(selectedTabIndex = currentTab,modifier = modifier) {
         Tab(
             text = { Text(text = "Info", style = MaterialTheme.typography.labelMedium) },
             selected = currentTab == 0,
@@ -440,15 +433,15 @@ fun Indicators(
             },
 //            modifier = Modifier.width(widthTab)
         )
-        Tab(
-            text = { Text(text = "Actividades", style = MaterialTheme.typography.labelMedium) },
-            selected = currentTab ==3,
-            onClick = {
-                // Animate to the selected page when clicked
-                navToTab(3)
-            },
-//            modifier = Modifier.width(widthTab)
-        )
+//        Tab(
+//            text = { Text(text = "Actividades", style = MaterialTheme.typography.labelMedium) },
+//            selected = currentTab ==3,
+//            onClick = {
+//                // Animate to the selected page when clicked
+//                navToTab(3)
+//            },
+////            modifier = Modifier.width(widthTab)
+//        )
 
 //
 //    }

@@ -24,6 +24,7 @@ class SalaDataSourceImpl(
     private val client:HttpClient,
     private val authStore: AuthStore
 ): SalaDataSource {
+
     override suspend fun createSala(d: SalaRequestDto):ResponseMessage {
         val token = authStore.get()?.accessToken
         return client.post("/v1/sala/"){
@@ -32,8 +33,16 @@ class SalaDataSourceImpl(
             setBody(d)
         }.body()
     }
-    override suspend fun getSalas(id: Long): List<SalaDto> {
-            return client.get("/v1/salas/${id}/").body()
+
+    override suspend fun exitSala(id: Int) {
+        val token = authStore.get()?.accessToken
+        client.get("/v1/sala/exit/${id}/"){
+            header("Authorization", "Bearer $token")
+        }
+    }
+
+    override suspend fun getEstablecimientoSalas(id: Long): List<SalaDto> {
+            return client.get("/v1/salas/establecimiento/${id}/").body()
 
 //            ResponseData.Success(data = res)
 //        }catch (e:ResponseException){

@@ -1,5 +1,6 @@
 package app.regate.sala
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -27,6 +28,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import app.regate.common.resources.R
 
 @Inject
 class SalaViewModel(
@@ -40,8 +42,6 @@ class SalaViewModel(
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val data = MutableStateFlow<SalaDetail?>(null)
-    private val sala = MutableStateFlow<SalaDto?>(null)
-    private val profiles = MutableStateFlow<List<ProfileDto>>(emptyList())
     val state:StateFlow<SalaState> = combine(
         uiMessageManager.message,
         loadingState.observable,
@@ -74,6 +74,8 @@ class SalaViewModel(
             }
             } catch (e:ResponseException){
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
+            } catch(e :Exception){
+                Log.d("DEBUG_ERROR",e.localizedMessage?:"")
             }
         }
     }
@@ -94,6 +96,23 @@ class SalaViewModel(
                 Log.d("DEBUG_APP_ERROR",e.response.body()?:"error")
             }catch (e:Exception){
                 //TODO()
+            }
+        }
+    }
+    fun exitSala(context:Context, navigateUp:()->Unit){
+        viewModelScope.launch {
+            try{
+                state.value.data?.profiles?.find {
+                    it.profile_id == state.value.user?.profile_id
+                }?.user_id.also {userSalaId->
+                    if(userSalaId != null){
+                        salaRepository.exitSala(userSalaId.toInt())
+                    }
+                }
+                navigateUp()
+            }catch (e:Exception){
+                uiMessageManager.emitMessage(UiMessage(message = context.getString(R.string.unexpected_error)))
+                Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"error")
             }
         }
     }

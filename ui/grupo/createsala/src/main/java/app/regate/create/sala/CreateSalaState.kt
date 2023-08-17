@@ -17,7 +17,7 @@ data class CreateSalaState(
     val salaData:SalaRequestDto = SalaRequestDto(),
     val enableToContinue:Boolean = false,
     val grupos:List<GrupoDto> = emptyList(),
-    val selectedGroup:Long? = null
+    val selectedGroup:Long = 0L
 //    val cupos:List<Cupo> = emptyList()
 ){
     companion object{

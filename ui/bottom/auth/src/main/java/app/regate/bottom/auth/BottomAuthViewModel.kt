@@ -46,18 +46,9 @@ class BottomAuthViewModel(
 
 
     fun handleSignInResult(completedTask: Task<GoogleSignInAccount>,navigate:()->Unit) {
-        Log.d("DEBUG_APP","EXECUTTINH");
         viewModelScope.launch {
-
             try {
                 val account = completedTask.result
-                Log.d("DEBUG_APP", account.displayName.toString());
-                Log.d("DEBUG_APP", account.email.toString());
-                Log.d("DEBUG_APP", account.photoUrl.toString());
-                Log.d("DEBUG_APP", account.id.toString());
-                Log.d("DEBUG_APP", account.familyName.toString());
-                Log.d("DEBUG_APP", account.givenName.toString());
-                Log.d("DEBUG_APP", account.idToken.toString());
                 account?.let{
                     val profile = if(it.photoUrl?.path == null) null else it.photoUrl.toString()
                     Log.d("DEBUG_APP", profile.toString());
@@ -72,21 +63,11 @@ class BottomAuthViewModel(
                         social_id = it.id?:"",
                         profile_id = 0,
                 )
-                    Log.d("DEBUG_APP",user.profile_photo.toString())
                     accountRepository.socialLogin(user)
                 }
-//                account.familyName
-
-//            delay(500)
                 navigate()
-                // Signed in successfully, show authenticated UI.
-//            updateUI(account);
             } catch (e: Exception) {
                 uiMessageManager.emitMessage(UiMessage(message = e.localizedMessage?:"None"))
-                // The ApiException status code indicates the detailed failure reason.
-                // Please refer to the GoogleSignInStatusCodes class reference for more information.
-                Log.d("AUTH-ERROR",  e.localizedMessage?:"DADA");
-//            updateUI(null);
             }
         }
     }

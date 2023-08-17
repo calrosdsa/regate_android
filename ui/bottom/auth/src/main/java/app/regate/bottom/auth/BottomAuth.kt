@@ -18,8 +18,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -218,12 +221,14 @@ internal fun BottomAuth(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.icon_mac),
-                        contentDescription = "logo", modifier = Modifier.size(25.dp)
-                    )
+//                    Image(
+//                        painter = painterResource(id = R.drawable.icon_mac),
+//                        contentDescription = "logo", modifier = Modifier.size(25.dp)
+//                    )
+                    Icon(imageVector = Icons.Default.Email, contentDescription = null,
+                    modifier = Modifier.size(25.dp))
                     Spacer(modifier = Modifier.width(15.dp))
-                    Text(text = "Continuar con Apple", color = MaterialTheme.colorScheme.primary)
+                    Text(text = "Continuar con Email", color = MaterialTheme.colorScheme.primary)
 
                 }
             }

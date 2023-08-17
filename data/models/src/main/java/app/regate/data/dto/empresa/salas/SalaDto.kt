@@ -17,12 +17,17 @@ data class SalaDto(
     val precio_cupo:Double = 0.0,
     val users:Int,
     val grupo_id:Long,
+    val estado:Int,
     val horas:List<String>,
     val establecimiento_name: String = "",
     val establecimiento_photo: String? = null
 )
 
-
+enum class SalaEstado{
+    AVAILABLE,
+    UNAVAILABLE,
+    RESERVED,
+}
 
 @Serializable
 data class SalaRequestDto(

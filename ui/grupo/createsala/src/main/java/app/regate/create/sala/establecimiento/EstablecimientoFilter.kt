@@ -46,7 +46,7 @@ import app.regate.models.Establecimiento
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias EstablecimientoFilter = @Composable (
+typealias EstablecimientoFilter= @Composable (
     navigateUp:()->Unit,
     navigateToCreateSala:(establecimientoId:Long,grupoId:Long)->Unit,
     navigateToEstablecimiento:(Long)->Unit

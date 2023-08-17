@@ -14,7 +14,7 @@ class DtoToUser:Mapper<UserDto,User> {
         apellido = from.apellido,
         profile_photo = from.profile_photo,
         estado = from.estado,
-        coins = from.coins,
+//        coins = from.coins,
         profile_id = from.profile_id
     )
 }

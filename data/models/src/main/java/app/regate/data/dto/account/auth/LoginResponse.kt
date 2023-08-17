@@ -17,7 +17,6 @@ data class UserDto(
     val profile_photo:String?=null,
     val nombre:String,
     val apellido:String? = null,
-    val coins:Int? = null,
     val social_id:String? = null,
     val profile_id:Long
 )
