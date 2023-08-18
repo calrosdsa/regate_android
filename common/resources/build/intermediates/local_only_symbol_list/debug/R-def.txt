@@ -66,6 +66,8 @@ string discount
 string do_you_want_receive_notifications
 string dynamic_color
 string edit
+string email_verification
+string email_verification_help_text
 string exit
 string expiration_date
 string explore_exceptional_destinations
@@ -153,6 +155,7 @@ string threats_of_violence
 string time_interval
 string unexpected_error
 string user_since
+string verify
 string version
 string what_is_your_location
 string what_kind_of_game_do_you_prefere

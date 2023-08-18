@@ -286,7 +286,7 @@ internal fun ReviewBlock(
             }
         }
         Divider()
-        if(data.count > 2) {
+        if(data.count > 0) {
 
                 OutlinedButton(
                     onClick = { navigateToReviews() },

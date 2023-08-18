@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "54c95dfa46acbe059be9b7964911f7d5",
+    "identityHash": "dbfa241dc70bd79fa3c42d190ca42b94",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -248,7 +248,7 @@
       },
       {
         "tableName": "users",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `user_id` INTEGER NOT NULL, `email` TEXT NOT NULL, `estado` INTEGER NOT NULL, `username` TEXT NOT NULL, `profile_photo` TEXT, `nombre` TEXT NOT NULL, `apellido` TEXT, `coins` INTEGER, `profile_id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `user_id` INTEGER NOT NULL, `email` TEXT NOT NULL, `estado` INTEGER NOT NULL, `username` TEXT NOT NULL, `profile_photo` TEXT, `nombre` TEXT NOT NULL, `apellido` TEXT, `profile_id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -296,12 +296,6 @@
             "fieldPath": "apellido",
             "columnName": "apellido",
             "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "coins",
-            "columnName": "coins",
-            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -895,7 +889,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '54c95dfa46acbe059be9b7964911f7d5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dbfa241dc70bd79fa3c42d190ca42b94')"
     ]
   }
 }

@@ -7,6 +7,7 @@ object Route {
     const val WELCOME_PAGE = "welcome"
     const val LOGIN_PAGE = "login"
     const val SIGNUP_SCREEN = "signup"
+    const val EMAIL_VERIFICATION = "email_verification"
 
     const val MAIN = "main"
     const val HOME = "home"

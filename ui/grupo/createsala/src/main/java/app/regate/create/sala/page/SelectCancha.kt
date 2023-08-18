@@ -43,7 +43,7 @@ internal fun Page1(
             InstalacionSelected(
                 instalacionCupos = instalacionCupos,
                 formatDate = formatDate,
-                formatShortTime = formatShortTime
+                formatShortTime = formatShortTime,
             )
             Spacer(modifier = Modifier.height(10.dp))
             InputForm(value = asunto, onValueChange = {if(it.length <= 25){ onChangeAsunto(it)}},

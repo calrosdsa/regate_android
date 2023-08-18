@@ -114,5 +114,8 @@
     <string name="spam_scam">Spam/Scam</string>
     <string name="other">Otro</string>
     <string name="exit">Salir</string>
+    <string name="email_verification">Verificacion de email</string>
+    <string name="verify">Verify</string>
+    <string name="email_verification_help_text">Antes de continuar, necesitamos verificar su correo electrónico. Por favor ingrese el código que fue enviado a su correo electrónico (<b>%1$s</b>)</string>
 
 </resources>

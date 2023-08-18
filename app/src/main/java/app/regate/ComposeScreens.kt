@@ -53,6 +53,7 @@ import app.regate.profile.edit.EditProfile
 import app.regate.sala.Sala
 import app.regate.settings.Setting
 import app.regate.auth.signup.SignUp
+import app.regate.auth.signup.emailverification.EmailVerification
 import app.regate.create.sala.CreateSala
 import app.regate.complejo.createreview.CreateReview
 import app.regate.complejo.reviews.Reviews
@@ -72,6 +73,7 @@ class ComposeScreens(
     val filter:Filter,
     val login: Login,
     val signUp: SignUp,
+    val emailVerification:EmailVerification,
     val home: Home,
     val grupos:Grupos,
     val servicios: Servicios,

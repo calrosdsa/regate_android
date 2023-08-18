@@ -167,11 +167,23 @@ internal fun AppNavigation(
                 navigateToSignUpScreen = { navController.navigate(Route.SIGNUP_SCREEN) },
                 navigateToHomeScreen = {
                     navController.navigate(Route.HOME)
-                })
+                },
+//                navigateToVerificationEmail = {
+//                    navController.navigate(Route.EMAIL_VERIFICATION)
+//                }
+            )
         }
 
         animatedComposable(route = Route.SIGNUP_SCREEN) {
-            composeScreens.signUp(onBack = navController::navigateUp)
+            composeScreens.signUp(
+                onBack = navController::navigateUp,
+            navigateToVerificationEmail = {
+                navController.navigate(Route.EMAIL_VERIFICATION)
+            })
+        }
+        animatedComposable(route = Route.EMAIL_VERIFICATION){
+            composeScreens.emailVerification(
+                navigateUp = navController::navigateUp)
         }
         animatedComposable(route = Route.PHOTO arg "url",
         arguments = listOf(

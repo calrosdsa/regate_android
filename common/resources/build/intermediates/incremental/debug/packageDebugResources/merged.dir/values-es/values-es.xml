@@ -22,6 +22,8 @@
     <string name="do_you_want_receive_notifications">¿Quieres recibir notificaciones?</string>
     <string name="dynamic_color">Dynamic colors</string>
     <string name="edit">Editar</string>
+    <string name="email_verification">Verificacion de email</string>
+    <string name="email_verification_help_text">Antes de continuar, necesitamos verificar su correo electrónico. Por favor ingrese el código que fue enviado a su correo electrónico (<b>%1$s</b>)</string>
     <string name="exit">Salir</string>
     <string name="expiration_date">Expiration date:  %1$s</string>
     <string name="explore_exceptional_destinations">Explora destinos excepcionales</string>
@@ -102,6 +104,7 @@
     <string name="time_interval">¿Por cuánto tiempo de gustaría jugar?</string>
     <string name="unexpected_error">Lo sentimos, se ha producido un error inesperado.</string>
     <string name="user_since">Usuario desde %1$s</string>
+    <string name="verify">Verify</string>
     <string name="version">Version %1$s</string>
     <string name="what_is_your_location">What is your location</string>
     <string name="what_kind_of_game_do_you_prefere">¿Qué tipo de juego prefieres?</string>

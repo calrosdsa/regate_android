@@ -1,5 +1,6 @@
 package app.regate.instalacion
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,7 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Surface
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -45,6 +48,8 @@ import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.components.CustomButton
 import app.regate.common.composes.ui.CommonTopBar
+import app.regate.common.composes.ui.PosterCardImage
+import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.viewModel
 import app.regate.data.dto.empresa.establecimiento.CupoInstaDto
@@ -109,9 +114,7 @@ internal fun InstalacionDetail(
             }
         },
     )
-    val showCheckBox = remember {
-        mutableStateOf(false)
-    }
+
 
 
     viewState.message?.let { message ->
@@ -122,6 +125,10 @@ internal fun InstalacionDetail(
         }
     }
     Scaffold(
+        topBar = {
+                 SimpleTopBar(navigateUp = navigateUp,
+                 title = viewState.instalacion?.name)
+        },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState) { data ->
                 SwipeToDismiss(
@@ -134,7 +141,6 @@ internal fun InstalacionDetail(
                 )
             }
         },
-
         floatingActionButtonPosition = FabPosition.Center,
     ) { padding ->
         Box(
@@ -144,39 +150,47 @@ internal fun InstalacionDetail(
                 .fillMaxSize()
         ) {
             LazyColumn() {
-                stickyHeader {
-                    CommonTopBar(onBack = navigateUp)
-                    Divider()
-                }
                 viewState.instalacion?.let { instalacion ->
-                    item {
-                        Text(text = instalacion.name, style = MaterialTheme.typography.titleLarge)
-                        Spacer(modifier = Modifier.height(10.dp))
+                    item{
+                        Box(){
+                        PosterCardImage(model = instalacion.portada,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp))
+                                viewState.instalacion.category_name?.let {
+                                    Surface(
+                                        color = MaterialTheme.colorScheme.primary,
+                                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                                        modifier = Modifier.align(Alignment.BottomStart),
+                                        shape = RoundedCornerShape(
+                                            bottomStart = 10.dp,
+                                            topEnd = 10.dp
+                                        ),
+                                        border = BorderStroke(1.dp,Color.White)
+                                    ) {
+                                        Text(
+                                            text = it, modifier = Modifier.padding(
+                                                horizontal = 10.dp,
+                                                vertical = 8.dp
+                                            ), color = Color.White,
+                                            style = MaterialTheme.typography.titleMedium
+                                        )
+                                    }
+                            }
+                        }
                     }
+                    item {
+                        Spacer(modifier = Modifier.height(20.dp))
+                    }
+
                     item {
                         instalacion.description?.let { it1 ->
                             Text(
                                 text = it1,
-                                style = MaterialTheme.typography.bodySmall
+                                style = MaterialTheme.typography.bodyMedium
                             )
                         }
-                        Spacer(modifier = Modifier.height(10.dp))
-                    }
-                    item {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "Cupos", style = MaterialTheme.typography.titleLarge,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                            CustomButton(onClick = { showCheckBox.value = !showCheckBox.value }) {
-                                Text(text = "Reservar")
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
+
                     }
 
                 }

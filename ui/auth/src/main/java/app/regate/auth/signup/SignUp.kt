@@ -48,7 +48,8 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
 typealias SignUp= @Composable (
-    onBack:()->Unit
+    onBack:()->Unit,
+    navigateToVerificationEmail:()->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
 
@@ -56,11 +57,13 @@ typealias SignUp= @Composable (
 @Composable
 fun SignUp(
     viewModelFactory:()-> SignUpViewModel,
-    @Assisted onBack: () -> Unit
+    @Assisted onBack: () -> Unit,
+    @Assisted navigateToVerificationEmail: () -> Unit
     ){
     SignUp(
         viewModel =viewModel(factory = viewModelFactory),
-        onBack = {onBack()}
+        onBack = {onBack()},
+        navigateToVerificationEmail = navigateToVerificationEmail
     )
 }
 
@@ -68,7 +71,8 @@ fun SignUp(
 @Composable
 internal fun SignUp(
     viewModel: SignUpViewModel,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    navigateToVerificationEmail: () -> Unit
 ){
     val viewState by viewModel.state.collectAsState()
     val pagerState = rememberPagerState()
@@ -90,9 +94,11 @@ internal fun SignUp(
 //            Column(modifier = Modifier.fillMaxSize()) {
                 when(page){
                     0 -> SignUp(goToSecondPage = {
-                        coroutine.launch {
-                            pagerState.animateScrollToPage(1)}
-                        }
+                        navigateToVerificationEmail()
+                    }
+//                        coroutine.launch {
+//                            pagerState.animateScrollToPage(1)}
+//                        }
                     )
                     1 -> ProfileSignup(title = "Fecha de Nacimiento"){
                         SelectBirthDay(navigateTab = {

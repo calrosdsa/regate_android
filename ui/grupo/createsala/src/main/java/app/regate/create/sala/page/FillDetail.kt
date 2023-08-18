@@ -45,7 +45,7 @@ internal  fun Page2(
            InstalacionSelected(
                instalacionCupos = instalacionCupos,
                formatDate = formatDate,
-               formatShortTime = formatShortTime
+               formatShortTime = formatShortTime,
            )
 
 

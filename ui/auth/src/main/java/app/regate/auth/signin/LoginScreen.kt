@@ -58,7 +58,7 @@ import app.regate.common.resources.R
 
 typealias Login = @Composable (
     navigateToSignUpScreen:() -> Unit,
-    navigateToHomeScreen:() ->Unit
+    navigateToHomeScreen:() ->Unit,
 ) -> Unit
 
 //@OptIn(ExperimentalTextApi::class)
