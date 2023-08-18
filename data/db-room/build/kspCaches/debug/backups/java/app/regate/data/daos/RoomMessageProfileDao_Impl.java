@@ -354,100 +354,106 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
-    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<MessageProfile>() {
+    return CoroutinesRoom.execute(__db, true, _cancellationSignal, new Callable<MessageProfile>() {
       @Override
       @NonNull
       public MessageProfile call() throws Exception {
-        final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+        __db.beginTransaction();
         try {
-          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(_cursor, "grupo_id");
-          final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
-          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
-          final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
-          final int _cursorIndexOfReplyTo = CursorUtil.getColumnIndexOrThrow(_cursor, "reply_to");
-          final int _cursorIndexOfSended = CursorUtil.getColumnIndexOrThrow(_cursor, "sended");
-          final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
-          final LongSparseArray<Message> _collectionReply = new LongSparseArray<Message>();
-          while (_cursor.moveToNext()) {
-            final long _tmpKey;
-            _tmpKey = _cursor.getLong(_cursorIndexOfProfileId);
-            _collectionProfile.put(_tmpKey, null);
-            final Long _tmpKey_1;
-            if (_cursor.isNull(_cursorIndexOfReplyTo)) {
-              _tmpKey_1 = null;
+          final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(_cursor, "grupo_id");
+            final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
+            final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
+            final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+            final int _cursorIndexOfReplyTo = CursorUtil.getColumnIndexOrThrow(_cursor, "reply_to");
+            final int _cursorIndexOfSended = CursorUtil.getColumnIndexOrThrow(_cursor, "sended");
+            final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
+            final LongSparseArray<Message> _collectionReply = new LongSparseArray<Message>();
+            while (_cursor.moveToNext()) {
+              final long _tmpKey;
+              _tmpKey = _cursor.getLong(_cursorIndexOfProfileId);
+              _collectionProfile.put(_tmpKey, null);
+              final Long _tmpKey_1;
+              if (_cursor.isNull(_cursorIndexOfReplyTo)) {
+                _tmpKey_1 = null;
+              } else {
+                _tmpKey_1 = _cursor.getLong(_cursorIndexOfReplyTo);
+              }
+              if (_tmpKey_1 != null) {
+                _collectionReply.put(_tmpKey_1, null);
+              }
+            }
+            _cursor.moveToPosition(-1);
+            __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
+            __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
+            final MessageProfile _result;
+            if (_cursor.moveToFirst()) {
+              final Message _tmpMessage;
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final long _tmpGrupo_id;
+              _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
+              final String _tmpContent;
+              _tmpContent = _cursor.getString(_cursorIndexOfContent);
+              final Instant _tmpCreated_at;
+              final String _tmp;
+              if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+                _tmp = null;
+              } else {
+                _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+              }
+              final Instant _tmp_1 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+              if (_tmp_1 == null) {
+                throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
+              } else {
+                _tmpCreated_at = _tmp_1;
+              }
+              final long _tmpProfile_id;
+              _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
+              final Long _tmpReply_to;
+              if (_cursor.isNull(_cursorIndexOfReplyTo)) {
+                _tmpReply_to = null;
+              } else {
+                _tmpReply_to = _cursor.getLong(_cursorIndexOfReplyTo);
+              }
+              final boolean _tmpSended;
+              final int _tmp_2;
+              _tmp_2 = _cursor.getInt(_cursorIndexOfSended);
+              _tmpSended = _tmp_2 != 0;
+              _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpCreated_at,_tmpProfile_id,_tmpReply_to,_tmpSended);
+              final Profile _tmpProfile;
+              final long _tmpKey_2;
+              _tmpKey_2 = _cursor.getLong(_cursorIndexOfProfileId);
+              _tmpProfile = _collectionProfile.get(_tmpKey_2);
+              final Message _tmpReply;
+              final Long _tmpKey_3;
+              if (_cursor.isNull(_cursorIndexOfReplyTo)) {
+                _tmpKey_3 = null;
+              } else {
+                _tmpKey_3 = _cursor.getLong(_cursorIndexOfReplyTo);
+              }
+              if (_tmpKey_3 != null) {
+                _tmpReply = _collectionReply.get(_tmpKey_3);
+              } else {
+                _tmpReply = null;
+              }
+              _result = new MessageProfile();
+              _result.message = _tmpMessage;
+              _result.setProfile(_tmpProfile);
+              _result.setReply(_tmpReply);
             } else {
-              _tmpKey_1 = _cursor.getLong(_cursorIndexOfReplyTo);
+              _result = null;
             }
-            if (_tmpKey_1 != null) {
-              _collectionReply.put(_tmpKey_1, null);
-            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+            _statement.release();
           }
-          _cursor.moveToPosition(-1);
-          __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
-          __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
-          final MessageProfile _result;
-          if (_cursor.moveToFirst()) {
-            final Message _tmpMessage;
-            final long _tmpId;
-            _tmpId = _cursor.getLong(_cursorIndexOfId);
-            final long _tmpGrupo_id;
-            _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
-            final String _tmpContent;
-            _tmpContent = _cursor.getString(_cursorIndexOfContent);
-            final Instant _tmpCreated_at;
-            final String _tmp;
-            if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
-              _tmp = null;
-            } else {
-              _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
-            }
-            final Instant _tmp_1 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
-            if (_tmp_1 == null) {
-              throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
-            } else {
-              _tmpCreated_at = _tmp_1;
-            }
-            final long _tmpProfile_id;
-            _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-            final Long _tmpReply_to;
-            if (_cursor.isNull(_cursorIndexOfReplyTo)) {
-              _tmpReply_to = null;
-            } else {
-              _tmpReply_to = _cursor.getLong(_cursorIndexOfReplyTo);
-            }
-            final boolean _tmpSended;
-            final int _tmp_2;
-            _tmp_2 = _cursor.getInt(_cursorIndexOfSended);
-            _tmpSended = _tmp_2 != 0;
-            _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpCreated_at,_tmpProfile_id,_tmpReply_to,_tmpSended);
-            final Profile _tmpProfile;
-            final long _tmpKey_2;
-            _tmpKey_2 = _cursor.getLong(_cursorIndexOfProfileId);
-            _tmpProfile = _collectionProfile.get(_tmpKey_2);
-            final Message _tmpReply;
-            final Long _tmpKey_3;
-            if (_cursor.isNull(_cursorIndexOfReplyTo)) {
-              _tmpKey_3 = null;
-            } else {
-              _tmpKey_3 = _cursor.getLong(_cursorIndexOfReplyTo);
-            }
-            if (_tmpKey_3 != null) {
-              _tmpReply = _collectionReply.get(_tmpKey_3);
-            } else {
-              _tmpReply = null;
-            }
-            _result = new MessageProfile();
-            _result.message = _tmpMessage;
-            _result.setProfile(_tmpProfile);
-            _result.setReply(_tmpReply);
-          } else {
-            _result = null;
-          }
-          return _result;
         } finally {
-          _cursor.close();
-          _statement.release();
+          __db.endTransaction();
         }
       }
     }, continuation);
@@ -460,96 +466,102 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
     __db.assertNotSuspendingTransaction();
-    final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+    __db.beginTransaction();
     try {
-      final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-      final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(_cursor, "grupo_id");
-      final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
-      final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
-      final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
-      final int _cursorIndexOfReplyTo = CursorUtil.getColumnIndexOrThrow(_cursor, "reply_to");
-      final int _cursorIndexOfSended = CursorUtil.getColumnIndexOrThrow(_cursor, "sended");
-      final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
-      final LongSparseArray<Message> _collectionReply = new LongSparseArray<Message>();
-      while (_cursor.moveToNext()) {
-        final long _tmpKey;
-        _tmpKey = _cursor.getLong(_cursorIndexOfProfileId);
-        _collectionProfile.put(_tmpKey, null);
-        final Long _tmpKey_1;
-        if (_cursor.isNull(_cursorIndexOfReplyTo)) {
-          _tmpKey_1 = null;
-        } else {
-          _tmpKey_1 = _cursor.getLong(_cursorIndexOfReplyTo);
+      final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+      try {
+        final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+        final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(_cursor, "grupo_id");
+        final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
+        final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
+        final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+        final int _cursorIndexOfReplyTo = CursorUtil.getColumnIndexOrThrow(_cursor, "reply_to");
+        final int _cursorIndexOfSended = CursorUtil.getColumnIndexOrThrow(_cursor, "sended");
+        final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
+        final LongSparseArray<Message> _collectionReply = new LongSparseArray<Message>();
+        while (_cursor.moveToNext()) {
+          final long _tmpKey;
+          _tmpKey = _cursor.getLong(_cursorIndexOfProfileId);
+          _collectionProfile.put(_tmpKey, null);
+          final Long _tmpKey_1;
+          if (_cursor.isNull(_cursorIndexOfReplyTo)) {
+            _tmpKey_1 = null;
+          } else {
+            _tmpKey_1 = _cursor.getLong(_cursorIndexOfReplyTo);
+          }
+          if (_tmpKey_1 != null) {
+            _collectionReply.put(_tmpKey_1, null);
+          }
         }
-        if (_tmpKey_1 != null) {
-          _collectionReply.put(_tmpKey_1, null);
+        _cursor.moveToPosition(-1);
+        __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
+        __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
+        final List<MessageProfile> _result = new ArrayList<MessageProfile>(_cursor.getCount());
+        while (_cursor.moveToNext()) {
+          final MessageProfile _item;
+          final Message _tmpMessage;
+          final long _tmpId;
+          _tmpId = _cursor.getLong(_cursorIndexOfId);
+          final long _tmpGrupo_id;
+          _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
+          final String _tmpContent;
+          _tmpContent = _cursor.getString(_cursorIndexOfContent);
+          final Instant _tmpCreated_at;
+          final String _tmp;
+          if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+            _tmp = null;
+          } else {
+            _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+          }
+          final Instant _tmp_1 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+          if (_tmp_1 == null) {
+            throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
+          } else {
+            _tmpCreated_at = _tmp_1;
+          }
+          final long _tmpProfile_id;
+          _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
+          final Long _tmpReply_to;
+          if (_cursor.isNull(_cursorIndexOfReplyTo)) {
+            _tmpReply_to = null;
+          } else {
+            _tmpReply_to = _cursor.getLong(_cursorIndexOfReplyTo);
+          }
+          final boolean _tmpSended;
+          final int _tmp_2;
+          _tmp_2 = _cursor.getInt(_cursorIndexOfSended);
+          _tmpSended = _tmp_2 != 0;
+          _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpCreated_at,_tmpProfile_id,_tmpReply_to,_tmpSended);
+          final Profile _tmpProfile;
+          final long _tmpKey_2;
+          _tmpKey_2 = _cursor.getLong(_cursorIndexOfProfileId);
+          _tmpProfile = _collectionProfile.get(_tmpKey_2);
+          final Message _tmpReply;
+          final Long _tmpKey_3;
+          if (_cursor.isNull(_cursorIndexOfReplyTo)) {
+            _tmpKey_3 = null;
+          } else {
+            _tmpKey_3 = _cursor.getLong(_cursorIndexOfReplyTo);
+          }
+          if (_tmpKey_3 != null) {
+            _tmpReply = _collectionReply.get(_tmpKey_3);
+          } else {
+            _tmpReply = null;
+          }
+          _item = new MessageProfile();
+          _item.message = _tmpMessage;
+          _item.setProfile(_tmpProfile);
+          _item.setReply(_tmpReply);
+          _result.add(_item);
         }
+        __db.setTransactionSuccessful();
+        return _result;
+      } finally {
+        _cursor.close();
+        _statement.release();
       }
-      _cursor.moveToPosition(-1);
-      __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
-      __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
-      final List<MessageProfile> _result = new ArrayList<MessageProfile>(_cursor.getCount());
-      while (_cursor.moveToNext()) {
-        final MessageProfile _item;
-        final Message _tmpMessage;
-        final long _tmpId;
-        _tmpId = _cursor.getLong(_cursorIndexOfId);
-        final long _tmpGrupo_id;
-        _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
-        final String _tmpContent;
-        _tmpContent = _cursor.getString(_cursorIndexOfContent);
-        final Instant _tmpCreated_at;
-        final String _tmp;
-        if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
-          _tmp = null;
-        } else {
-          _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
-        }
-        final Instant _tmp_1 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
-        if (_tmp_1 == null) {
-          throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
-        } else {
-          _tmpCreated_at = _tmp_1;
-        }
-        final long _tmpProfile_id;
-        _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-        final Long _tmpReply_to;
-        if (_cursor.isNull(_cursorIndexOfReplyTo)) {
-          _tmpReply_to = null;
-        } else {
-          _tmpReply_to = _cursor.getLong(_cursorIndexOfReplyTo);
-        }
-        final boolean _tmpSended;
-        final int _tmp_2;
-        _tmp_2 = _cursor.getInt(_cursorIndexOfSended);
-        _tmpSended = _tmp_2 != 0;
-        _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpCreated_at,_tmpProfile_id,_tmpReply_to,_tmpSended);
-        final Profile _tmpProfile;
-        final long _tmpKey_2;
-        _tmpKey_2 = _cursor.getLong(_cursorIndexOfProfileId);
-        _tmpProfile = _collectionProfile.get(_tmpKey_2);
-        final Message _tmpReply;
-        final Long _tmpKey_3;
-        if (_cursor.isNull(_cursorIndexOfReplyTo)) {
-          _tmpKey_3 = null;
-        } else {
-          _tmpKey_3 = _cursor.getLong(_cursorIndexOfReplyTo);
-        }
-        if (_tmpKey_3 != null) {
-          _tmpReply = _collectionReply.get(_tmpKey_3);
-        } else {
-          _tmpReply = null;
-        }
-        _item = new MessageProfile();
-        _item.message = _tmpMessage;
-        _item.setProfile(_tmpProfile);
-        _item.setReply(_tmpReply);
-        _result.add(_item);
-      }
-      return _result;
     } finally {
-      _cursor.close();
-      _statement.release();
+      __db.endTransaction();
     }
   }
 

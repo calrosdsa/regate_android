@@ -15,6 +15,7 @@ abstract class RoomReservaDao:RoomEntityDao<Reserva> ,ReservaDao {
     @Query("select * from reservas")
     abstract override fun observeReservas(): Flow<List<Reserva>>
 
+    @Transaction
     @Query("select * from reservas where id = :id")
     abstract override fun observeReservaDetail(id: Long): Flow<ReservaDetail>
 }

@@ -1,22 +1,15 @@
 package app.regate.home
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -38,7 +31,6 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.bottomSheet
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
-import kotlinx.coroutines.launch
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
@@ -287,7 +279,7 @@ internal fun AppNavigation(
                 navigateToChat = {navController.navigate(Route.CHAT_SALA id it)},
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
                 navigateToInstalacion = {navController.navigate(Route.INSTALACION id it)},
-                navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)}
+                navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
             )
         }
         animatedComposable(
@@ -329,18 +321,33 @@ internal fun AppNavigation(
         }
 
         animatedComposable(
+            route = Route.CHAT_GRUPO arg "id",
+            arguments = listOf(
+                navArgument("id") { type = NavType.LongType },
+            ),
+            deepLinks = listOf(navDeepLink { uriPattern = "$uri/chat-grupo/grupo_id={id}" })
+        ) {
+            composeScreens.chatGrupo(
+                navigateUp = navController::navigateUp,
+                openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
+                navigateToCreateSala = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id it)},
+                navigateToGroup = { navController.navigate(Route.GRUPO id it)}
+                )
+        }
+
+        animatedComposable(
             route = Route.CHAT_SALA arg "id",
             arguments = listOf(
                 navArgument("id") { type = NavType.LongType },
             ),
-            deepLinks = listOf(navDeepLink { uriPattern = "$uri/grupo_id={id}" })
+            deepLinks = listOf(navDeepLink { uriPattern = "$uri/chat-sala/sala_id={id}" })
         ) {
             composeScreens.chatSala(
                 navigateUp = navController::navigateUp,
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
                 navigateToCreateSala = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id it)},
                 navigateToGroup = { navController.navigate(Route.GRUPO id it)}
-                )
+            )
         }
 
         animatedComposable(

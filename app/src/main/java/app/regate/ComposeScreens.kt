@@ -33,7 +33,7 @@ import app.regate.entidad.salas.Salas
 import app.regate.establecimiento.Establecimiento
 import app.regate.instalacion.InstalacionDetail
 import app.regate.reservar.EstablecimientoReserva
-import app.regate.chat.grupo.ChatSala
+import app.regate.chat.grupo.ChatGrupo
 import app.regate.coin.paid.Pay
 import app.regate.coin.recargar.Recargar
 import app.regate.inbox.Conversations
@@ -54,6 +54,7 @@ import app.regate.sala.Sala
 import app.regate.settings.Setting
 import app.regate.auth.signup.SignUp
 import app.regate.auth.signup.emailverification.EmailVerification
+import app.regate.chat.sala.ChatSala
 import app.regate.create.sala.CreateSala
 import app.regate.complejo.createreview.CreateReview
 import app.regate.complejo.reviews.Reviews
@@ -96,7 +97,8 @@ class ComposeScreens(
     val establecimientoSalas: Salas,
     val sala: Sala,
     val filterSalas:FilterSalas,
-    val chatSala: ChatSala,
+    val chatGrupo: ChatGrupo,
+    val chatSala:ChatSala,
     val createSala: CreateSala,
     val settings:Setting,
     val favorites:Favorites,

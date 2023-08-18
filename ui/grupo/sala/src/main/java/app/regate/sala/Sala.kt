@@ -90,7 +90,7 @@ typealias Sala = @Composable (
     navigateToChat:(id:Long)->Unit,
     openAuthBottomSheet:()->Unit,
     navigateToInstalacion:(Long) -> Unit,
-    navigateToEstablecimiento:(Long)->Unit
+    navigateToEstablecimiento:(Long)->Unit,
         ) -> Unit
 
 @Inject
@@ -206,7 +206,7 @@ internal fun Sala(
            SalaTopBar(onBack = navigateUp)
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewState.data?.sala?.let { navigateToChat(it.grupo_id) } }) {
+            FloatingActionButton(onClick = { viewState.data?.sala?.let { navigateToChat(it.id) } }) {
                 Icon(imageVector = Icons.Default.Chat, contentDescription = "chat")
             }
         },

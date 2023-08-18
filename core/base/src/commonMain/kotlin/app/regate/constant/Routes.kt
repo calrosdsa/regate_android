@@ -31,6 +31,7 @@ object Route {
 
     const val AUTH_DIALOG = "auth_dialog"
     const val MAP = "map"
+    const val CHAT_GRUPO = "chat_grupo"
     const val CHAT_SALA = "chat_sala"
 
     const val SETTING = "setting"

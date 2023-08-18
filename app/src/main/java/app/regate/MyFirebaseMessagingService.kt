@@ -149,7 +149,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val m3 = messages[0]
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "https://example.com/grupo_id=${grupo.id}".toUri(),
+                "https://example.com/chat-grupo/grupo_id=${grupo.id}".toUri(),
                 this,
                 MainActivity::class.java
             )

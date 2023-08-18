@@ -6,6 +6,8 @@ import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
+import app.regate.data.dto.empresa.salas.MessageSalaDto
+import app.regate.data.dto.empresa.salas.MessageSalaPagination
 import app.regate.data.dto.empresa.salas.PaginationSalaResponse
 import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.dto.empresa.salas.SalaRequestDto
@@ -41,6 +43,13 @@ class SalaDataSourceImpl(
         }
     }
 
+    override suspend fun syncMessages(d: List<MessageSalaDto>): List<MessageSalaDto> {
+        return client.post("/v1/sala/message/sync-message/"){
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
+    }
+
     override suspend fun getEstablecimientoSalas(id: Long): List<SalaDto> {
             return client.get("/v1/salas/establecimiento/${id}/").body()
 
@@ -62,8 +71,8 @@ class SalaDataSourceImpl(
     }
 
 
-    override suspend fun getMessagesSala(id: Long): List<GrupoMessageDto> {
-        return client.get("/v1/grupo/messages/${id}/").body()
+    override suspend fun getMessagesSala(id: Long,page: Int): MessageSalaPagination {
+        return client.get("/v1/grupo/messages/${id}/?page=${page}").body()
     }
 
     override suspend fun getSala(id: Long): SalaDetail {

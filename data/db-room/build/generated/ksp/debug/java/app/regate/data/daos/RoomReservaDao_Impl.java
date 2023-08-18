@@ -376,111 +376,117 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
-    return CoroutinesRoom.createFlow(__db, false, new String[] {"establecimientos", "instalaciones",
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"establecimientos", "instalaciones",
         "reservas"}, new Callable<ReservaDetail>() {
       @Override
       @NonNull
       public ReservaDetail call() throws Exception {
-        final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+        __db.beginTransaction();
         try {
-          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfInstalacionId = CursorUtil.getColumnIndexOrThrow(_cursor, "instalacion_id");
-          final int _cursorIndexOfInstalacionName = CursorUtil.getColumnIndexOrThrow(_cursor, "instalacion_name");
-          final int _cursorIndexOfEstablecimientoId = CursorUtil.getColumnIndexOrThrow(_cursor, "establecimiento_id");
-          final int _cursorIndexOfPaid = CursorUtil.getColumnIndexOrThrow(_cursor, "paid");
-          final int _cursorIndexOfTotalPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "total_price");
-          final int _cursorIndexOfStartDate = CursorUtil.getColumnIndexOrThrow(_cursor, "start_date");
-          final int _cursorIndexOfEndDate = CursorUtil.getColumnIndexOrThrow(_cursor, "end_date");
-          final int _cursorIndexOfUserId = CursorUtil.getColumnIndexOrThrow(_cursor, "user_id");
-          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
-          final LongSparseArray<Establecimiento> _collectionEstablecimiento = new LongSparseArray<Establecimiento>();
-          final LongSparseArray<Instalacion> _collectionInstalacion = new LongSparseArray<Instalacion>();
-          while (_cursor.moveToNext()) {
-            final long _tmpKey;
-            _tmpKey = _cursor.getLong(_cursorIndexOfEstablecimientoId);
-            _collectionEstablecimiento.put(_tmpKey, null);
-            final long _tmpKey_1;
-            _tmpKey_1 = _cursor.getLong(_cursorIndexOfInstalacionId);
-            _collectionInstalacion.put(_tmpKey_1, null);
+          final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfInstalacionId = CursorUtil.getColumnIndexOrThrow(_cursor, "instalacion_id");
+            final int _cursorIndexOfInstalacionName = CursorUtil.getColumnIndexOrThrow(_cursor, "instalacion_name");
+            final int _cursorIndexOfEstablecimientoId = CursorUtil.getColumnIndexOrThrow(_cursor, "establecimiento_id");
+            final int _cursorIndexOfPaid = CursorUtil.getColumnIndexOrThrow(_cursor, "paid");
+            final int _cursorIndexOfTotalPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "total_price");
+            final int _cursorIndexOfStartDate = CursorUtil.getColumnIndexOrThrow(_cursor, "start_date");
+            final int _cursorIndexOfEndDate = CursorUtil.getColumnIndexOrThrow(_cursor, "end_date");
+            final int _cursorIndexOfUserId = CursorUtil.getColumnIndexOrThrow(_cursor, "user_id");
+            final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
+            final LongSparseArray<Establecimiento> _collectionEstablecimiento = new LongSparseArray<Establecimiento>();
+            final LongSparseArray<Instalacion> _collectionInstalacion = new LongSparseArray<Instalacion>();
+            while (_cursor.moveToNext()) {
+              final long _tmpKey;
+              _tmpKey = _cursor.getLong(_cursorIndexOfEstablecimientoId);
+              _collectionEstablecimiento.put(_tmpKey, null);
+              final long _tmpKey_1;
+              _tmpKey_1 = _cursor.getLong(_cursorIndexOfInstalacionId);
+              _collectionInstalacion.put(_tmpKey_1, null);
+            }
+            _cursor.moveToPosition(-1);
+            __fetchRelationshipestablecimientosAsappRegateModelsEstablecimiento(_collectionEstablecimiento);
+            __fetchRelationshipinstalacionesAsappRegateModelsInstalacion(_collectionInstalacion);
+            final ReservaDetail _result;
+            if (_cursor.moveToFirst()) {
+              final Reserva _tmpReserva;
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final long _tmpInstalacion_id;
+              _tmpInstalacion_id = _cursor.getLong(_cursorIndexOfInstalacionId);
+              final String _tmpInstalacion_name;
+              _tmpInstalacion_name = _cursor.getString(_cursorIndexOfInstalacionName);
+              final long _tmpEstablecimiento_id;
+              _tmpEstablecimiento_id = _cursor.getLong(_cursorIndexOfEstablecimientoId);
+              final int _tmpPaid;
+              _tmpPaid = _cursor.getInt(_cursorIndexOfPaid);
+              final int _tmpTotal_price;
+              _tmpTotal_price = _cursor.getInt(_cursorIndexOfTotalPrice);
+              final Instant _tmpStart_date;
+              final String _tmp;
+              if (_cursor.isNull(_cursorIndexOfStartDate)) {
+                _tmp = null;
+              } else {
+                _tmp = _cursor.getString(_cursorIndexOfStartDate);
+              }
+              final Instant _tmp_1 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+              if (_tmp_1 == null) {
+                throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
+              } else {
+                _tmpStart_date = _tmp_1;
+              }
+              final Instant _tmpEnd_date;
+              final String _tmp_2;
+              if (_cursor.isNull(_cursorIndexOfEndDate)) {
+                _tmp_2 = null;
+              } else {
+                _tmp_2 = _cursor.getString(_cursorIndexOfEndDate);
+              }
+              final Instant _tmp_3 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_2);
+              if (_tmp_3 == null) {
+                throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
+              } else {
+                _tmpEnd_date = _tmp_3;
+              }
+              final long _tmpUser_id;
+              _tmpUser_id = _cursor.getLong(_cursorIndexOfUserId);
+              final Instant _tmpCreated_at;
+              final String _tmp_4;
+              if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+                _tmp_4 = null;
+              } else {
+                _tmp_4 = _cursor.getString(_cursorIndexOfCreatedAt);
+              }
+              final Instant _tmp_5 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_4);
+              if (_tmp_5 == null) {
+                throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
+              } else {
+                _tmpCreated_at = _tmp_5;
+              }
+              _tmpReserva = new Reserva(_tmpId,_tmpInstalacion_id,_tmpInstalacion_name,_tmpEstablecimiento_id,_tmpPaid,_tmpTotal_price,_tmpStart_date,_tmpEnd_date,_tmpUser_id,_tmpCreated_at);
+              final Establecimiento _tmpEstablecimiento;
+              final long _tmpKey_2;
+              _tmpKey_2 = _cursor.getLong(_cursorIndexOfEstablecimientoId);
+              _tmpEstablecimiento = _collectionEstablecimiento.get(_tmpKey_2);
+              final Instalacion _tmpInstalacion;
+              final long _tmpKey_3;
+              _tmpKey_3 = _cursor.getLong(_cursorIndexOfInstalacionId);
+              _tmpInstalacion = _collectionInstalacion.get(_tmpKey_3);
+              _result = new ReservaDetail();
+              _result.reserva = _tmpReserva;
+              _result.setEstablecimiento(_tmpEstablecimiento);
+              _result.setInstalacion(_tmpInstalacion);
+            } else {
+              _result = null;
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
           }
-          _cursor.moveToPosition(-1);
-          __fetchRelationshipestablecimientosAsappRegateModelsEstablecimiento(_collectionEstablecimiento);
-          __fetchRelationshipinstalacionesAsappRegateModelsInstalacion(_collectionInstalacion);
-          final ReservaDetail _result;
-          if (_cursor.moveToFirst()) {
-            final Reserva _tmpReserva;
-            final long _tmpId;
-            _tmpId = _cursor.getLong(_cursorIndexOfId);
-            final long _tmpInstalacion_id;
-            _tmpInstalacion_id = _cursor.getLong(_cursorIndexOfInstalacionId);
-            final String _tmpInstalacion_name;
-            _tmpInstalacion_name = _cursor.getString(_cursorIndexOfInstalacionName);
-            final long _tmpEstablecimiento_id;
-            _tmpEstablecimiento_id = _cursor.getLong(_cursorIndexOfEstablecimientoId);
-            final int _tmpPaid;
-            _tmpPaid = _cursor.getInt(_cursorIndexOfPaid);
-            final int _tmpTotal_price;
-            _tmpTotal_price = _cursor.getInt(_cursorIndexOfTotalPrice);
-            final Instant _tmpStart_date;
-            final String _tmp;
-            if (_cursor.isNull(_cursorIndexOfStartDate)) {
-              _tmp = null;
-            } else {
-              _tmp = _cursor.getString(_cursorIndexOfStartDate);
-            }
-            final Instant _tmp_1 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
-            if (_tmp_1 == null) {
-              throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
-            } else {
-              _tmpStart_date = _tmp_1;
-            }
-            final Instant _tmpEnd_date;
-            final String _tmp_2;
-            if (_cursor.isNull(_cursorIndexOfEndDate)) {
-              _tmp_2 = null;
-            } else {
-              _tmp_2 = _cursor.getString(_cursorIndexOfEndDate);
-            }
-            final Instant _tmp_3 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_2);
-            if (_tmp_3 == null) {
-              throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
-            } else {
-              _tmpEnd_date = _tmp_3;
-            }
-            final long _tmpUser_id;
-            _tmpUser_id = _cursor.getLong(_cursorIndexOfUserId);
-            final Instant _tmpCreated_at;
-            final String _tmp_4;
-            if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
-              _tmp_4 = null;
-            } else {
-              _tmp_4 = _cursor.getString(_cursorIndexOfCreatedAt);
-            }
-            final Instant _tmp_5 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_4);
-            if (_tmp_5 == null) {
-              throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
-            } else {
-              _tmpCreated_at = _tmp_5;
-            }
-            _tmpReserva = new Reserva(_tmpId,_tmpInstalacion_id,_tmpInstalacion_name,_tmpEstablecimiento_id,_tmpPaid,_tmpTotal_price,_tmpStart_date,_tmpEnd_date,_tmpUser_id,_tmpCreated_at);
-            final Establecimiento _tmpEstablecimiento;
-            final long _tmpKey_2;
-            _tmpKey_2 = _cursor.getLong(_cursorIndexOfEstablecimientoId);
-            _tmpEstablecimiento = _collectionEstablecimiento.get(_tmpKey_2);
-            final Instalacion _tmpInstalacion;
-            final long _tmpKey_3;
-            _tmpKey_3 = _cursor.getLong(_cursorIndexOfInstalacionId);
-            _tmpInstalacion = _collectionInstalacion.get(_tmpKey_3);
-            _result = new ReservaDetail();
-            _result.reserva = _tmpReserva;
-            _result.setEstablecimiento(_tmpEstablecimiento);
-            _result.setInstalacion(_tmpInstalacion);
-          } else {
-            _result = null;
-          }
-          return _result;
         } finally {
-          _cursor.close();
+          __db.endTransaction();
         }
       }
 

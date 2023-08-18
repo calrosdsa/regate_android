@@ -22,6 +22,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import app.regate.data.daos.MessageInboxDao
+import app.regate.data.daos.MessageSalaDao
 import app.regate.data.daos.ReservaDao
 import app.regate.data.daos.RoomCupoDao
 import app.regate.data.daos.RoomEstablecimientoDao
@@ -31,6 +32,7 @@ import app.regate.data.daos.RoomInstalacionDao
 import app.regate.data.daos.RoomLabelDao
 import app.regate.data.daos.RoomMessageInboxDao
 import app.regate.data.daos.RoomMessageProfileDao
+import app.regate.data.daos.RoomMessageSalaDao
 import app.regate.data.daos.RoomMyGroupsDao
 import app.regate.data.daos.RoomNotificationDao
 import app.regate.data.daos.RoomProfileDao
@@ -48,6 +50,7 @@ import app.regate.models.Instalacion
 import app.regate.models.Labels
 import app.regate.models.Message
 import app.regate.models.MessageInbox
+import app.regate.models.MessageSala
 import app.regate.models.MyGroups
 import app.regate.models.Notification
 import app.regate.models.Profile
@@ -73,6 +76,7 @@ import app.regate.models.UserGrupo
         MessageInbox::class,
         Reserva::class,
         Notification::class,
+        MessageSala::class,
     ],
 //    views = [
 //        ShowsWatchStats::class,
@@ -99,6 +103,7 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
 //        DeleteColumn(tableName = "shows", columnName = "last_trakt_data_update"),
 //    )
 //    class AutoMigrationSpec31 : AutoMigrationSpec
+    abstract override fun messageSalaDao(): RoomMessageSalaDao
     abstract override fun establecimientoDao(): RoomEstablecimientoDao
     abstract override fun instalacionDao(): RoomInstalacionDao
     abstract override fun cupoDao(): RoomCupoDao
