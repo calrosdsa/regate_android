@@ -47,6 +47,7 @@ import app.regate.common.composes.components.input.AmenityItem
 import app.regate.common.composes.components.item.ReviewItem
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.resources.R
+import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.establecimiento.component.Detail
 import app.regate.establecimiento.component.InstalacionCategoryItem
@@ -61,8 +62,9 @@ fun EstablecimientoInfo(
     createReview:(Long)->Unit,
     navigateToProfile:(Long)->Unit,
     navigateToReviews: (Long) -> Unit,
+//    openAuthBottomSheet:()->Unit,
+    openMap:(String?,String?,String?)->Unit,
     modifier: Modifier = Modifier,
-    openMap:(String?,String?,String?)->Unit
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
@@ -202,7 +204,13 @@ fun EstablecimientoInfo(
                 data = data,
                 navigateToReviews = { state.establecimiento?.let { navigateToReviews(it.id) } },
                 navigateToProfile = navigateToProfile,
-                createReview = { state.establecimiento?.let { createReview(it.id) } }
+                createReview = {
+//                    if (state.authState == AppAuthState.LOGGED_IN) {
+                        state.establecimiento?.let { createReview(it.id) }
+//                    } else {
+//                        openAuthBottomSheet()
+//                    }
+                }
             )
 //            }
         }
@@ -286,7 +294,7 @@ internal fun ReviewBlock(
             }
         }
         Divider()
-        if(data.count > 0) {
+        if(data.count >= 5) {
 
                 OutlinedButton(
                     onClick = { navigateToReviews() },

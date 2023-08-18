@@ -85,6 +85,8 @@
     <string name="notifications">Notifications</string>
     <string name="nudes">Nudity or sexual content</string>
     <string name="other">Other</string>
+    <string name="password_dont_match">Passwords don\'t match</string>
+    <string name="password_length">The password must be longer than 8 characters.</string>
     <string name="permission_required">Permission required.</string>
     <string name="post">Post</string>
     <string name="price_range">Rango de precios</string>

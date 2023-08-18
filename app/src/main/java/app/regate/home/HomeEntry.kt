@@ -230,7 +230,8 @@ internal fun AppNavigation(
                 },
                 navigateToProfile = { navController.navigate(Route.PROFILE id it)},
                 navigateToReviews = { navController.navigate(Route.REVIEWS id it)},
-                navigateToCreateReview = { navController.navigate(Route.CREATE_REVIEW id it)}
+                navigateToCreateReview = { navController.navigate(Route.CREATE_REVIEW id it)},
+//                openAuthBottomSheet = { navController.navigate(Route.AUTH_DIALOG) },
                 )
         }
 

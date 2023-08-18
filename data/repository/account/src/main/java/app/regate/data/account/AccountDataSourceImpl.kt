@@ -5,15 +5,14 @@ import app.regate.data.auth.AuthRepository
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.daos.UserDao
 import app.regate.data.dto.account.auth.LoginRequest
-import app.regate.data.dto.account.auth.LoginResponse
+import app.regate.data.dto.account.auth.AuthResponse
 import app.regate.data.dto.account.auth.UserDto
 import app.regate.data.dto.account.auth.FcmRequest
+import app.regate.data.dto.account.auth.SignUpRequest
 import app.regate.data.dto.account.auth.SocialRequest
 import app.regate.data.dto.account.billing.ConsumePaginationResponse
 import app.regate.data.dto.account.billing.DepositPaginationResponse
-import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.mappers.DtoToUser
-import app.regate.models.User
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -44,11 +43,11 @@ class AccountDataSourceImpl(
         }
     }
 
-    override suspend fun login(d: LoginRequest): LoginResponse {
+    override suspend fun login(d: LoginRequest): AuthResponse {
         val res =  client.post("/v1/account/login/"){
             contentType(ContentType.Application.Json)
-            setBody(LoginRequest(email = d.email, password = d.password))
-        }.body<LoginResponse>()
+            setBody(d)
+        }.body<AuthResponse>()
 //        userDao.upsert(dtoToUser.map(res.user))
         return res.also {
             authRepository.clearAuth()
@@ -57,11 +56,26 @@ class AccountDataSourceImpl(
         }
     }
 
-    override suspend fun socialLogin(request: SocialRequest): LoginResponse {
+    override suspend fun signUp(d:SignUpRequest): AuthResponse {
+        return client.post("/v1/account/signup/"){
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
+    }
+
+    override suspend fun verifyEmail(userId: Long, otp: Int):AuthResponse {
+        return client.get("v1/account/verify-email/${userId}/${otp}/").body<AuthResponse>().also{
+            authRepository.clearAuth()
+            val state = AppAuthAuthStateWrapper(it.access_token,)
+            authRepository.onNewAuthState(state)
+        }
+    }
+
+    override suspend fun socialLogin(request: SocialRequest): AuthResponse {
         val res =  client.post("/v1/account/social-login/"){
             contentType(ContentType.Application.Json)
             setBody(request)
-        }.body<LoginResponse>()
+        }.body<AuthResponse>()
 
 //        userDao.upsert(dtoToUser.map(res.user))
         return res.also {

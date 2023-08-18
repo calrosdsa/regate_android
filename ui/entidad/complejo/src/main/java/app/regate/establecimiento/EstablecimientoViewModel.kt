@@ -11,6 +11,7 @@ import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.domain.interactors.UpdateEstablecimiento
 import app.regate.domain.interactors.UpdateEstablecimientoDetail
+import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveEstablecimientoDetail
 import app.regate.domain.observers.ObserveInstalacionCategoryCount
 import app.regate.domain.observers.ObserveLabelByIds
@@ -38,6 +39,7 @@ class EstablecimientoViewModel(
     observeEstablecimientoDetail: ObserveEstablecimientoDetail,
     observeAmenities: ObserveLabelByIds,
     observeRules:ObserveLabelByIds,
+    observeAuthState: ObserveAuthState,
     private val updateEstablecimiento: UpdateEstablecimientoDetail,
     private val establecimientoRepository:EstablecimientoRepository
 
@@ -53,11 +55,12 @@ class EstablecimientoViewModel(
         observeInstalacionCategoryCount.flow,
         observeAmenities.flow,
         observeRules.flow,
+        observeAuthState.flow,
         loadingState.observable,
         uiMessageManager.message,
         isFavorite,
         reviews
-    ){establecimiento,instalacionCategoryCount,amenities,rules,
+    ){establecimiento,instalacionCategoryCount,amenities,rules,authState,
       loading,message,isFavorite,reviews->
         EstablecimientoState(
             loading = loading,
@@ -67,7 +70,8 @@ class EstablecimientoViewModel(
             amenities = amenities,
             rules = rules,
             isFavorite = isFavorite,
-            reviews=  reviews
+            reviews=  reviews,
+            authState = authState
         )
     }.stateIn(
         scope = viewModelScope,
@@ -85,6 +89,7 @@ class EstablecimientoViewModel(
         }
         observeEstablecimientoDetail(ObserveEstablecimientoDetail.Params(establecimientoId))
         observeInstalacionCategoryCount(ObserveInstalacionCategoryCount.Params(establecimientoId,LabelType.CATEGORIES))
+        observeAuthState(Unit)
         getStablecimiento()
         getReviews()
         checkIsFavorite()

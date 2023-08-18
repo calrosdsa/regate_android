@@ -117,5 +117,7 @@
     <string name="email_verification">Verificacion de email</string>
     <string name="verify">Verify</string>
     <string name="email_verification_help_text">Antes de continuar, necesitamos verificar su correo electrónico. Por favor ingrese el código que fue enviado a su correo electrónico (<b>%1$s</b>)</string>
+    <string name="password_dont_match">Las contraseñas no coinciden</string>
+    <string name="password_length">La contraseña debe tener más de 8 caracteres.</string>
 
 </resources>

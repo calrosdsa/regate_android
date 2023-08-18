@@ -152,6 +152,8 @@
     <string name="email_verification">Email Verification</string>
     <string name="verify">Verify</string>
     <string name="email_verification_help_text">Before proceeding we need to verify your email. Please enter the code that was sent to your email (<b>%1$s</b>)</string>
+    <string name="password_dont_match">Passwords don\'t match</string>
+    <string name="password_length">The password must be longer than 8 characters.</string>
 
 
 </resources>

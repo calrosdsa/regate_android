@@ -3,9 +3,9 @@ package app.regate.data.account
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
 import app.regate.data.dto.account.auth.LoginRequest
-import app.regate.data.dto.account.auth.LoginResponse
 import app.regate.data.dto.account.auth.UserDto
 import app.regate.data.dto.account.auth.FcmRequest
+import app.regate.data.dto.account.auth.SignUpRequest
 import app.regate.data.dto.account.auth.SocialRequest
 import app.regate.data.dto.account.billing.ConsumePaginationResponse
 import app.regate.data.dto.account.billing.DepositPaginationResponse
@@ -62,6 +62,23 @@ class AccountRepository(
             updateUser(dtoToUser.map(it.user))
             insertProfile(it.user)
         }
+        }
+    }
+    suspend fun signUp(d:SignUpRequest){
+        withContext(dispatchers.computation){
+            accountDataSourceImpl.signUp(d).also {
+                updateUser(dtoToUser.map(it.user))
+                insertProfile(it.user)
+            }
+        }
+    }
+    suspend fun verifyEmail(otp:Int){
+        withContext(dispatchers.computation) {
+            val user = userDao.getUser(0)
+            accountDataSourceImpl.verifyEmail(userId = user.user_id, otp = otp).also {
+                updateUser(dtoToUser.map(it.user))
+                insertProfile(it.user)
+            }
         }
     }
     suspend fun  socialLogin(user: UserDto){

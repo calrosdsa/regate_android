@@ -30,7 +30,7 @@ dependencies {
     implementation(projects.data)
     implementation(projects.common.resources)
     implementation(projects.common.compose)
-    implementation(projects.data.repository.account)
+//    implementation(projects.data.repository.account)
 
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

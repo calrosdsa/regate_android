@@ -109,6 +109,8 @@ int string notification_sala_channel 0x0
 int string notifications 0x0
 int string nudes 0x0
 int string other 0x0
+int string password_dont_match 0x0
+int string password_length 0x0
 int string permission_required 0x0
 int string post 0x0
 int string price_range 0x0

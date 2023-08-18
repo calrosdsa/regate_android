@@ -65,6 +65,7 @@ import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.models.Establecimiento
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -74,7 +75,6 @@ import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
 
 typealias Establecimiento = @Composable (
     navigateUp:()->Unit,
-//    navigateToInstalacion:(id:Long) -> Unit,
     actividades:@Composable () -> Unit,
     reservar:@Composable (category:Long) -> Unit,
     salas:@Composable () -> Unit,
@@ -83,6 +83,7 @@ typealias Establecimiento = @Composable (
     navigateToProfile:(Long)->Unit,
     navigateToReviews:(Long)->Unit,
     navigateToCreateReview:(Long)->Unit,
+//    openAuthBottomSheet:()->Unit,
     ) -> Unit
 
 @Inject
@@ -90,7 +91,6 @@ typealias Establecimiento = @Composable (
 fun Establecimiento(
     viewModelFactory: (SavedStateHandle) -> EstablecimientoViewModel,
     @Assisted navigateUp: () -> Unit,
-//    @Assisted navigateToInstalacion: (id: Long) -> Unit,
     @Assisted actividades: @Composable () -> Unit,
     @Assisted reservar: @Composable (category: Long) -> Unit,
     @Assisted salas: @Composable () -> Unit,
@@ -99,6 +99,7 @@ fun Establecimiento(
     @Assisted navigateToProfile: (Long) -> Unit,
     @Assisted navigateToReviews: (Long) -> Unit,
     @Assisted navigateToCreateReview: (Long) -> Unit,
+//    @Assisted openAuthBottomSheet: () -> Unit,
 ) {
 
 
@@ -113,7 +114,7 @@ fun Establecimiento(
         navigateToPhoto = navigateToPhoto,
         navigateToProfile = navigateToProfile,
         navigateToReviews = navigateToReviews,
-        navigateToCreateReview = navigateToCreateReview
+        navigateToCreateReview = navigateToCreateReview,
     )
 }
 
@@ -336,8 +337,9 @@ internal fun Establecimiento(
                                 state = state,
                                 openLocationSheet = { coroutineScope.launch { sheetState.show() } },
                                 navigateToReserva = {
-                                    category.value = it
                                     coroutineScope.launch {
+                                        category.value = it
+                                        delay(100)
                                         pagerState.animateScrollToPage(
                                             1
                                         )
@@ -346,7 +348,7 @@ internal fun Establecimiento(
                                 openMap = appUtil::openMap,
                                 navigateToProfile = navigateToProfile,
                                 navigateToReviews = navigateToReviews,
-                                createReview = navigateToCreateReview
+                                createReview = navigateToCreateReview,
                             )
                         }
 

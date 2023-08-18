@@ -83,7 +83,7 @@ class SalaViewModel(
         viewModelScope.launch {
             try{
                 loadingState.addLoader()
-                val res = state.value.data?.sala?.let { salaRepository.joinSala(salaId, it.precio,it.cupos) }
+                val res = state.value.data?.sala?.let { salaRepository.joinSala(salaId, it.precio,it.cupos,it.grupo_id) }
                 getSala()
                 loadingState.removeLoader()
                 if (res != null) {

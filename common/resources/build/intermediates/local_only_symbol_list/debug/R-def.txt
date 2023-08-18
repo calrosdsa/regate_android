@@ -111,6 +111,8 @@ string notification_sala_channel
 string notifications
 string nudes
 string other
+string password_dont_match
+string password_length
 string permission_required
 string post
 string price_range

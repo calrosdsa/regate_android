@@ -26,27 +26,39 @@ fun CustomOutlinedTextInput(
     placeholder:String="",
     label:String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     icon:ImageVector? = null,
+    supportText:String?= null,
+    isError:Boolean = false,
     maxLines:Int = 1
 ){
 //    var email by remember { mutableStateOf("") }
-      OutlinedTextField(
+    OutlinedTextField(
         value = value,
         onValueChange = { onValueChange(it) },
         maxLines = maxLines,
         label = { Text(text = label) },
         keyboardOptions = KeyboardOptions(
-            keyboardType = keyboardType
+            keyboardType = keyboardType,
+            imeAction = imeAction
+
         ),
+        keyboardActions =keyboardActions,
         modifier = modifier.fillMaxWidth(),
 //        shape = CircleShape,
-        placeholder = { Text(text = placeholder)},
+        placeholder = { Text(text = placeholder) },
         trailingIcon = {
-            if(icon != null){
-            Icon(imageVector = icon, contentDescription = "Trailing icon")
+            if (icon != null) {
+                Icon(imageVector = icon, contentDescription = "Trailing icon")
             }
         },
-
+        supportingText = {
+            if (supportText != null) {
+                Text(text = supportText)
+            }
+        },
+        isError = isError,
     )
 }
 

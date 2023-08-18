@@ -3,6 +3,7 @@ package app.regate.establecimiento
 import androidx.compose.runtime.Immutable
 import app.regate.api.UiMessage
 import app.regate.compoundmodels.InstalacionCategoryCount
+import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.models.Establecimiento
@@ -18,7 +19,8 @@ data class EstablecimientoState(
     val rules:List<Labels> = emptyList(),
     val amenities:List<Labels> = emptyList(),
     val isFavorite:Boolean = false,
-    val reviews:EstablecimientoReviews? = null
+    val reviews:EstablecimientoReviews? = null,
+    val authState:AppAuthState = AppAuthState.LOGGED_OUT
 ){
     companion object{
         val Empty = EstablecimientoState()

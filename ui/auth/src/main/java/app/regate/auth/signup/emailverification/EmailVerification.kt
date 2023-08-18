@@ -1,4 +1,5 @@
 package app.regate.auth.signup.emailverification
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import app.regate.common.resources.R
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -23,8 +25,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import app.regate.common.composes.components.dialog.LoaderDialog
 import app.regate.common.composes.components.input.OtpTextField
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
@@ -56,7 +62,8 @@ fun EmailVerification(
     EmailVerification(
         viewState = state,
         navigateUp = navigateUp,
-        clearMessage = viewModel::clearMessage
+        clearMessage = viewModel::clearMessage,
+        verifyEmail = viewModel::verifyEmail
     )
 }
 
@@ -66,7 +73,10 @@ internal fun EmailVerification(
     viewState: EmailVerificationState,
     navigateUp: () -> Unit,
     clearMessage:(Long)->Unit,
+    verifyEmail:(String,()->Unit,Context)->Unit
 ){
+    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
     val snackbarHostState = remember {
         SnackbarHostState()
     }
@@ -82,11 +92,13 @@ internal fun EmailVerification(
             clearMessage(message.id)
         })
     }
-
+    LoaderDialog(loading = viewState.loading)
     Scaffold(topBar = {
         SimpleTopBar(navigateUp = navigateUp,
             title = stringResource(id = R.string.email_verification))
-    }) {paddingValues ->
+    },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState)}
+    ) {paddingValues ->
         Column(modifier = Modifier
             .padding(10.dp)
             .padding(paddingValues),
@@ -108,7 +120,10 @@ internal fun EmailVerification(
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(20.dp))
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = {
+                focusManager.clearFocus(true)
+                verifyEmail(otpValue,navigateUp,context)
+                             },
             enabled = enableButton) {
                 Text(text = stringResource(id = R.string.verify))
             }
