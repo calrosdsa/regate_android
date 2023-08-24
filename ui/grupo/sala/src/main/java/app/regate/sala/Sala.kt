@@ -41,6 +41,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.PlainTooltipBox
 import androidx.compose.material3.PlainTooltipState
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -68,7 +69,6 @@ import app.regate.common.composes.components.CustomButton
 import app.regate.common.composes.components.card.InstalacionCard
 import app.regate.common.composes.components.dialog.DialogConfirmation
 import app.regate.common.composes.components.item.ProfileItem
-import app.regate.common.composes.ui.CommonTopBar
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.util.dividerLazyList
@@ -80,10 +80,8 @@ import kotlinx.datetime.toInstant
 import app.regate.common.resources.R
 import app.regate.data.dto.empresa.salas.SalaEstado
 import app.regate.data.mappers.toInstalacion
-import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import kotlin.time.Duration.Companion.minutes
 
 typealias Sala = @Composable (
     navigateUp:()->Unit,
@@ -91,25 +89,29 @@ typealias Sala = @Composable (
     openAuthBottomSheet:()->Unit,
     navigateToInstalacion:(Long) -> Unit,
     navigateToEstablecimiento:(Long)->Unit,
+    navigateToComplete:(Long) -> Unit,
         ) -> Unit
 
 @Inject
 @Composable
 fun Sala(
-    viewModelFactory:(SavedStateHandle)-> SalaViewModel,
+    viewModelFactory: (SavedStateHandle) -> SalaViewModel,
     @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToChat: (id:Long) -> Unit,
+    @Assisted navigateToChat: (id: Long) -> Unit,
     @Assisted openAuthBottomSheet: () -> Unit,
     @Assisted navigateToInstalacion: (Long) -> Unit,
-    @Assisted navigateToEstablecimiento: (Long) -> Unit
-){
+    @Assisted navigateToEstablecimiento: (Long) -> Unit,
+    @Assisted navigateToComplete:(Long) -> Unit
+) {
+
     Sala(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
-        navigateToChat= navigateToChat,
+        navigateToChat = navigateToChat,
         openAuthBottomSheet = openAuthBottomSheet,
         navigateToEstablecimiento = navigateToEstablecimiento,
-        navigateToInstalacion = navigateToInstalacion
+        navigateToInstalacion = navigateToInstalacion,
+        navigateToComplete = navigateToComplete
     )
 }
 
@@ -120,11 +122,12 @@ internal fun Sala(
     navigateToChat: (id:Long) -> Unit,
     openAuthBottomSheet: () -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
-    navigateToInstalacion: (Long) -> Unit
+    navigateToInstalacion: (Long) -> Unit,
+    navigateToComplete: (Long) -> Unit
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
-    val context = LocalContext.current
+//    val context = LocalContext.current
     val joinSalaDialog = remember {
         mutableStateOf(false)
     }
@@ -140,7 +143,8 @@ internal fun Sala(
         refresh = viewModel::refresh,
         navigateToInstalacion = navigateToInstalacion,
         navigateToEstablecimiento = navigateToEstablecimiento,
-        exitSala = {viewModel.exitSala(context,navigateUp)}
+//        exitSala = {viewModel.exitSala(context,navigateUp)},
+        navigateToComplete = navigateToComplete
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -166,11 +170,19 @@ internal fun Sala(
     clearMessage:(id:Long)->Unit,
     navigateToInstalacion: (Long) -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
-    exitSala:()->Unit,
+//    exitSala:()->Unit,
+    navigateToComplete: (Long) -> Unit,
 ) {
     val participantes = remember(viewState.data?.profiles) {
         derivedStateOf {
             viewState.data?.profiles?.size
+        }
+    }
+    val isPriceOverlap by remember(viewState.data){
+        derivedStateOf {
+           viewState.data?.sala?.let{sala->
+               (sala.paid + sala.precio_cupo) > sala.precio
+           }
         }
     }
     val iAmInTheRoom by remember(key1 = viewState.data,key2 = viewState.authState) {
@@ -206,8 +218,10 @@ internal fun Sala(
            SalaTopBar(onBack = navigateUp)
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewState.data?.sala?.let { navigateToChat(it.id) } }) {
+            if(iAmInTheRoom == true){
+            SmallFloatingActionButton(onClick = { viewState.data?.sala?.let { navigateToChat(it.id) } }) {
                 Icon(imageVector = Icons.Default.Chat, contentDescription = "chat")
+            }
             }
         },
         snackbarHost = {
@@ -273,7 +287,8 @@ internal fun Sala(
                     }
                     item {
                             InstalacionCard(
-                                instalacion = data.instalacion.copy(precio_hora = sala.precio).toInstalacion(),
+                                instalacion = data.instalacion.copy(precio_hora = sala.precio)
+                                    .toInstalacion(),
                                 navigate = navigateToInstalacion ,
                                 modifier = Modifier
                                     .height(200.dp)
@@ -305,9 +320,11 @@ internal fun Sala(
                                 )
                             }
 
-                            if (viewState.data.sala.estado == SalaEstado.AVAILABLE.ordinal) {
+                            if (sala.estado == SalaEstado.AVAILABLE.ordinal ||
+                                    sala.estado == SalaEstado.RESERVED.ordinal) {
                                 if (iAmInTheRoom == false) {
-                                    CustomButton(onClick = {
+                                    if(isPriceOverlap == false){
+                                    CustomButton( onClick = {
                                         if (viewState.authState == AppAuthState.LOGGED_IN) {
                                             openDialogConfirmation()
                                         } else {
@@ -315,6 +332,17 @@ internal fun Sala(
                                         }
                                     }) {
                                         Text(text = "Unirse: ${sala.precio_cupo}")
+                                    }
+                                    }
+                                }else  {
+                                    CustomButton(onClick = {
+                                        if (viewState.authState == AppAuthState.LOGGED_IN) {
+                                            navigateToComplete(sala.id)
+                                        } else {
+                                            openAuthBottomSheet()
+                                        }
+                                    }) {
+                                        Text( text = "Completar ${sala.paid}/${sala.precio}")
                                     }
                                 }
                             }
@@ -331,27 +359,30 @@ internal fun Sala(
                     spacerLazyList()
                     items(
                         items = data.profiles,
-                        key = { it.profile_id }
+//                        key = { it.profile_id }
                     ) { profile ->
                         ProfileItem(
                             id = profile.profile_id,
                             nombre = profile.nombre,
                             apellido = profile.apellido,
                             photo = profile.profile_photo,
+                            isMe = viewState.user?.profile_id == profile.profile_id
                         )
                     }
                     
-                    item{
-                        if(viewState.data.sala.estado == SalaEstado.AVAILABLE.ordinal && iAmInTheRoom == true){
-                        Spacer(modifier = Modifier.height(10.dp))
-                        OutlinedButton(onClick = { exitSala() },
-                            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)) {
-                            Icon(imageVector = Icons.Default.ExitToApp, contentDescription = null)
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Text(text = stringResource(id = R.string.exit))
-                        }
-                        }
-                    }
+//                    item{
+//                        if(viewState.data.sala.estado == SalaEstado.AVAILABLE.ordinal && iAmInTheRoom == true){
+//                        Spacer(modifier = Modifier.height(10.dp))
+//                        OutlinedButton(onClick = { exitSala() },
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .padding(horizontal = 20.dp)) {
+//                            Icon(imageVector = Icons.Default.ExitToApp, contentDescription = null)
+//                            Spacer(modifier = Modifier.width(10.dp))
+//                            Text(text = stringResource(id = R.string.exit))
+//                        }
+//                        }
+//                    }
                 }
             }
 

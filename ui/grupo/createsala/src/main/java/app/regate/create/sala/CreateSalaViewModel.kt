@@ -41,6 +41,7 @@ class CreateSalaViewModel(
     ):ViewModel() {
 //        private val salaId: Long = savedStateHandle["id"]!!
     private val grupoId: Long = savedStateHandle["grupo_id"]!!
+    private val page:Int = savedStateHandle.get<Int>("page")?:0
     private val loadingStateDialog = ObservableLoadingCounter()
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
@@ -81,7 +82,7 @@ class CreateSalaViewModel(
         observeAuthState(Unit)
         viewModelScope.launch {
             selectedGroup.tryEmit(grupoId)
-            cupoDao.deleteCupos()
+//            cupoDao.deleteCupos()
             cupoDao.observeLastCupo().filterNotNull().collectLatest { cupo ->
                     val instalacionC = cupoDao.getInstalacionCupos(cupo.instalacion_id)
                     instalacionCupos.tryEmit(instalacionC)
@@ -198,6 +199,9 @@ class CreateSalaViewModel(
             Log.d("DEBUG_APP_SELECTED",selectedGroup.value.toString())
             enableToContinue.emit(bool)
         }
+    }
+    fun getPage():Int{
+        return page
     }
     fun clearMessage(id:Long){
         viewModelScope.launch {

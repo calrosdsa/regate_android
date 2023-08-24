@@ -67,8 +67,8 @@ include(
 
     ":ui:grupo:sala",
     ":ui:grupo:chat",
-    ":ui:grupo:chatsala",
     ":ui:grupo:creategrupo",
+    ":ui:grupo:chatsala",
     ":ui:grupo:createsala",
     ":ui:grupo:detail",
 

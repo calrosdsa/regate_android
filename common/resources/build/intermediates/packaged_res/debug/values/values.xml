@@ -28,8 +28,10 @@
     <string name="choose_the_time_and_place">Choose the time and place</string>
     <string name="choose_where_create_room">Choose where to create the room</string>
     <string name="clear_all">Clear all</string>
+    <string name="complete">Complete</string>
     <string name="consume">Consume</string>
     <string name="continuar">Continue</string>
+    <string name="contributed_amount">Contributed amount %1$s</string>
     <string name="create_group">Create group</string>
     <string name="create_sala">Create sala</string>
     <string name="deposits">Deposits</string>
@@ -54,6 +56,7 @@
     <string name="grant_permission">Grant permission</string>
     <string name="group_description">Group description</string>
     <string name="group_visibility">Group Visibility</string>
+    <string name="groups">Groups</string>
     <string name="history">History</string>
     <string name="illegal_activity">Illegal activity</string>
     <string name="inappropriate_material">Other inappropriate material</string>
@@ -130,6 +133,9 @@
     <string name="there_are_not_available_schudules">There are no available schedules</string>
     <string name="threats_of_violence">Threats of violence</string>
     <string name="time_interval">¿Cuánto tiempo quieres jugar?</string>
+    <string name="total_paid">Total paid </string>
+    <string name="total_price">Total price </string>
+    <string name="total_remaining">Total remaining</string>
     <string name="unexpected_error">Sorry, an unexpected error has occurred.</string>
     <string name="user_since">User since %1$s</string>
     <string name="verify">Verify</string>

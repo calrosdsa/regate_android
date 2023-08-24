@@ -50,7 +50,7 @@ import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias ChatSala   = @Composable (
+typealias ChatSala = @Composable (
     navigateUp:()->Unit,
     openAuthBottomSheet:()->Unit,
     navigateToCreateSala:(id:Long)->Unit,
@@ -236,7 +236,7 @@ internal fun ChatSala   (
                 formatterRelatimeTime = formatterRelativeTime,
                 setReply = {
                     focusRequester.requestFocus()
-                    replyMessage.value = it
+                    replyMessage.value =it
                 },
                 lazyListState = lazyListState,
                 getUserProfileGrupo = getUserProfileGrupo,

@@ -18,7 +18,7 @@ import app.regate.compoundmodels.InstalacionCupos
 import kotlinx.datetime.Instant
 
 @Composable
-internal fun Page1(
+internal fun Page1 (
     asunto:String,
     description:String,
     cupos:String,
@@ -43,8 +43,7 @@ internal fun Page1(
             InstalacionSelected(
                 instalacionCupos = instalacionCupos,
                 formatDate = formatDate,
-                formatShortTime = formatShortTime,
-            )
+                formatShortTime = formatShortTime,)
             Spacer(modifier = Modifier.height(10.dp))
             InputForm(value = asunto, onValueChange = {if(it.length <= 25){ onChangeAsunto(it)}},
                 label = "Asunto",

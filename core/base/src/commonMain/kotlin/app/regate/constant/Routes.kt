@@ -24,6 +24,7 @@ object Route {
     const val INSTALACION = "instalacion"
 
     const val SALA = "establecimiento_salas"
+    const val SALA_COMPLETE = "sala_complete"
     const val FILTER_SALAS = "filter_salas"
     const val CREAR_SALA = "crear_sala"
 

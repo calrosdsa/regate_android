@@ -59,9 +59,11 @@ import app.regate.create.sala.CreateSala
 import app.regate.complejo.createreview.CreateReview
 import app.regate.complejo.reviews.Reviews
 import app.regate.filterSalas.FilterSalas
+import app.regate.sala.complete.SalaComplete
 import app.regate.sala.grupo.GrupoSalas
 import app.regate.system.notification.Notifications
 import app.regate.system.report.Report
+import app.regate.usersalas.UserSalas
 import app.regate.welcome.Welcome
 import me.tatarka.inject.annotations.Inject
 
@@ -96,6 +98,7 @@ class ComposeScreens(
     val establecimientoReserva:EstablecimientoReserva,
     val establecimientoSalas: Salas,
     val sala: Sala,
+    val salaComplete: SalaComplete,
     val filterSalas:FilterSalas,
     val chatGrupo: ChatGrupo,
     val chatSala:ChatSala,
@@ -114,6 +117,7 @@ class ComposeScreens(
 
     val grupo:Grupo,
     val grupoSalas:GrupoSalas,
+    val userSalas:UserSalas,
     val filterGroups:FilterGroups,
     val createGroup: CreateGroup,
 

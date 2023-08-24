@@ -1,6 +1,5 @@
 package app.regate.data.sala
 
-import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MessageSalaDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
@@ -8,24 +7,23 @@ import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
-import app.regate.data.dto.empresa.grupo.GrupoMessageDto
+import app.regate.data.dto.empresa.salas.CompleteSalaRequest
 import app.regate.data.dto.empresa.salas.MessageSalaDto
 import app.regate.data.dto.empresa.salas.PaginationSalaResponse
+import app.regate.data.dto.empresa.salas.SalaCompleteDetail
 import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.dto.empresa.salas.SalaRequestDto
-import app.regate.data.mappers.DtoToProfile
-import app.regate.data.mappers.MessageDtoToMessage
 import app.regate.data.mappers.MessageDtoToMessageSala
 import app.regate.data.mappers.MessageToMessageSalaDto
+import app.regate.data.mappers.SalaDtoToSalaEntity
 import app.regate.inject.ApplicationScope
-import app.regate.models.Message
 import app.regate.models.MessageSala
 import app.regate.models.Profile
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Clock
+import kotlinx.datetime.toInstant
 import me.tatarka.inject.annotations.Inject
 @ApplicationScope
 @Inject
@@ -36,10 +34,19 @@ class SalaRepository(
     private val messageSalaDao: MessageSalaDao,
     private val messageMapperSalaDto:MessageToMessageSalaDto,
     private val messageMapperSala:MessageDtoToMessageSala,
-    private val profileMapper:DtoToProfile,
     private val userDao: UserDao,
-    private val dispatchers:AppCoroutineDispatchers
+    private val dispatchers:AppCoroutineDispatchers,
+    private val salaDtoToSalaEntity: SalaDtoToSalaEntity
 ){
+//    suspend fun insertSalas(){
+//        salaEntityDao.upsert(SalaEntity(id=10))
+//    }
+    suspend fun getSalaCompleteHistory(salaId: Long):SalaCompleteDetail{
+        return salaDataSourceImpl.getCompleteSalaHistory(salaId)
+    }
+    suspend fun salaComplete(d:CompleteSalaRequest){
+        salaDataSourceImpl.completeSala(d)
+    }
     suspend fun createSala(d:SalaRequestDto):ResponseMessage{
         return salaDataSourceImpl.createSala(d)
     }
@@ -99,6 +106,9 @@ class SalaRepository(
         }
     }
 
+    suspend fun getSalasUser(page:Int):PaginationSalaResponse{
+      return salaDataSourceImpl.getSalasUser(page)
+    }
      suspend fun getMessagesSala(id:Long,page:Int):Int{
         return   try{
             val data = salaDataSourceImpl.getMessagesSala(id,page)
@@ -112,12 +122,12 @@ class SalaRepository(
                     val replies = async {
                         apiResult.results.filter { it.reply_to != null }.map {
                             MessageSala(
-                                id = it.id,
-                                sala_id = it.sala_id,
-                                profile_id = it.profile_id,
-                                content = it.content,
-                                reply_to = it.reply_to,
-                                created_at = it.created_at?:Clock.System.now()
+                                id = it.reply_message.id,
+                                sala_id = it.reply_message.sala_id,
+                                profile_id = it.reply_message.profile_id,
+                                content = it.reply_message.content,
+                                reply_to = it.reply_message.reply_to,
+                                created_at = it.reply_message.created_at.toInstant()
                             )
                         }
                     }

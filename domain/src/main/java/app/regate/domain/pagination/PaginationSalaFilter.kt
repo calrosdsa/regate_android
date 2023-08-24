@@ -4,10 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import app.regate.data.dto.empresa.salas.PaginationSalaResponse
 import app.regate.data.dto.empresa.salas.SalaDto
-import app.regate.data.grupo.GrupoRepository
-import app.regate.data.instalacion.InstalacionRepository
-import app.regate.util.ObservableLoadingCounter
-import kotlinx.coroutines.delay
 
 class PaginationSalaFilter(
     private val isInit:Boolean,
@@ -28,7 +24,7 @@ class PaginationSalaFilter(
             LoadResult.Page(
                 data = res.results,
                 prevKey = null,
-                nextKey = if (res.page == 0) null else res.page
+                nextKey = if (res.nextPage == 0) null else res.nextPage
             )
             }else{
                 LoadResult.Invalid()

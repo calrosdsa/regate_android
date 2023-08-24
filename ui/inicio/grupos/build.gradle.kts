@@ -52,6 +52,9 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
 
+    implementation(libs.compose.material.material)
+
+
 //    ksp(libs.kotlininject.compiler)
 
 //    lintChecks(libs.slack.lint.compose)

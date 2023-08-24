@@ -154,6 +154,12 @@
     <string name="email_verification_help_text">Before proceeding we need to verify your email. Please enter the code that was sent to your email (<b>%1$s</b>)</string>
     <string name="password_dont_match">Passwords don\'t match</string>
     <string name="password_length">The password must be longer than 8 characters.</string>
+    <string name="complete">Complete</string>
+    <string name="contributed_amount">Contributed amount %1$s</string>
+    <string name="total_price">Total price </string>
+    <string name="total_paid">Total paid </string>
+    <string name="total_remaining">Total remaining</string>
+    <string name="groups">Groups</string>
 
 
 </resources>

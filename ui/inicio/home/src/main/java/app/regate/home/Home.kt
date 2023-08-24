@@ -76,7 +76,7 @@ import app.regate.home.carousel.HomeMediaCarousel
 import kotlinx.datetime.Instant
 
 
-typealias Home = @Composable (
+typealias Home= @Composable (
      navigateToComplejo:(id:Long) -> Unit,
      navController:NavController,
 //     navigateToMap:()->Unit

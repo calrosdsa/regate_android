@@ -59,7 +59,7 @@ import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
-fun Chat(
+fun Chat (
     lazyPagingItems: LazyPagingItems<MessageConversation>,
     setReply:(message: ReplyMessageData?)->Unit,
     formatShortDate:(Instant)->String,

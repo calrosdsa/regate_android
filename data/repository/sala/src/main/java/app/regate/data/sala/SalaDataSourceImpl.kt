@@ -6,9 +6,12 @@ import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
+import app.regate.data.dto.empresa.salas.CompleteSalaRequest
 import app.regate.data.dto.empresa.salas.MessageSalaDto
 import app.regate.data.dto.empresa.salas.MessageSalaPagination
 import app.regate.data.dto.empresa.salas.PaginationSalaResponse
+import app.regate.data.dto.empresa.salas.SalaCompleteDetail
+import app.regate.data.dto.empresa.salas.SalaCompleteDto
 import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.dto.empresa.salas.SalaRequestDto
 import io.ktor.client.HttpClient
@@ -43,6 +46,22 @@ class SalaDataSourceImpl(
         }
     }
 
+    override suspend fun getCompleteSalaHistory(salaId: Long): SalaCompleteDetail {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/sala/sala-complete-history/${salaId}/"){
+            header("Authorization", "Bearer $token")
+        }.body()
+    }
+
+    override suspend fun completeSala(d: CompleteSalaRequest) {
+        val token = authStore.get()?.accessToken
+        client.post("/v1/sala/sala-complete/"){
+            header("Authorization", "Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }
+    }
+
     override suspend fun syncMessages(d: List<MessageSalaDto>): List<MessageSalaDto> {
         return client.post("/v1/sala/message/sync-message/"){
             contentType(ContentType.Application.Json)
@@ -65,6 +84,12 @@ class SalaDataSourceImpl(
             setBody(d)
         }.body()
     }
+    override suspend fun getSalasUser(page:Int): PaginationSalaResponse {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/salas/user/?page=${page}"){
+            header("Authorization","Bearer $token")
+        }.body()
+    }
 
     override suspend fun getGrupoSalas(id:Long,page:Int): PaginationSalaResponse {
         return client.get("/v1/salas/grupo/${id}/?page=${page}").body()
@@ -72,7 +97,7 @@ class SalaDataSourceImpl(
 
 
     override suspend fun getMessagesSala(id: Long,page: Int): MessageSalaPagination {
-        return client.get("/v1/grupo/messages/${id}/?page=${page}").body()
+        return client.get("/v1/sala/messages/${id}/?page=${page}").body()
     }
 
     override suspend fun getSala(id: Long): SalaDetail {

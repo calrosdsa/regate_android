@@ -21,9 +21,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import app.regate.data.daos.MessageInboxDao
-import app.regate.data.daos.MessageSalaDao
-import app.regate.data.daos.ReservaDao
 import app.regate.data.daos.RoomCupoDao
 import app.regate.data.daos.RoomEstablecimientoDao
 import app.regate.data.daos.RoomFavoriteEstablecimientoDao
@@ -77,7 +74,8 @@ import app.regate.models.UserGrupo
         Reserva::class,
         Notification::class,
         MessageSala::class,
-    ],
+//        SalaEntity::class,
+       ],
 //    views = [
 //        ShowsWatchStats::class,
 //        ShowsLastWatched::class,
@@ -103,7 +101,6 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
 //        DeleteColumn(tableName = "shows", columnName = "last_trakt_data_update"),
 //    )
 //    class AutoMigrationSpec31 : AutoMigrationSpec
-    abstract override fun messageSalaDao(): RoomMessageSalaDao
     abstract override fun establecimientoDao(): RoomEstablecimientoDao
     abstract override fun instalacionDao(): RoomInstalacionDao
     abstract override fun cupoDao(): RoomCupoDao
@@ -118,6 +115,8 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
     abstract override fun messageInboxDao(): RoomMessageInboxDao
     abstract override fun reservaDao(): RoomReservaDao
     abstract override fun notificationDao(): RoomNotificationDao
+    abstract override fun messageSalaDao(): RoomMessageSalaDao
+//    abstract override fun salaEntityDao(): RoomSalaEntityDao
 
     companion object {
 

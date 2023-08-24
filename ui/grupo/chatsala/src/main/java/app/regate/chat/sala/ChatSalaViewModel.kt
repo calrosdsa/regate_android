@@ -9,33 +9,24 @@ import app.cash.paging.PagingData
 import app.cash.paging.cachedIn
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
-import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.MessageSalaWithProfile
 import app.regate.compoundmodels.UserProfileGrupo
-import app.regate.data.auth.AppAuthState
 import app.regate.data.common.MessageData
-import app.regate.data.daos.MessageProfileDao
-import app.regate.data.dto.empresa.grupo.GrupoEvent
-import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.salas.MessageSalaDto
 import app.regate.data.dto.empresa.salas.SalaEvent
-import app.regate.data.grupo.GrupoRepository
 import app.regate.data.sala.SalaRepository
 import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveGrupo
-import app.regate.domain.observers.ObservePagerMessages
-import app.regate.domain.observers.ObservePagerMessagesSala
+import app.regate.domain.observers.pagination.ObservePagerMessagesSala
 import app.regate.domain.observers.ObserveUser
 import app.regate.domain.observers.ObserveUsersGrupo
 import app.regate.extensions.combine
-import app.regate.models.Message
 import app.regate.models.MessageSala
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
 import io.ktor.client.plugins.websocket.webSocket
-import io.ktor.client.plugins.websocket.webSocketSession
 import io.ktor.http.HttpMethod
 import io.ktor.websocket.Frame
 import io.ktor.websocket.readText
@@ -50,7 +41,6 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
-import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -116,7 +106,9 @@ class ChatSalaViewModel(
 //            runBlocking {
 //               client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
 //                val ws = client.webSocketSession {  }
-             client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
+//             client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
+                client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
+
                     port = 9090, path = "/v1/ws/chat-sala?id=${salaId}"){
                     launch { outputMessage() }
 //                    launch { inputMessage() }

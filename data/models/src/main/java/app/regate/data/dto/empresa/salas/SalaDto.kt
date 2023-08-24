@@ -13,6 +13,7 @@ data class SalaDto(
     val id: Long,
     val instalacion_id: Long,
     val precio: Int,
+    val paid:Double,
     val titulo: String,
     val precio_cupo:Double = 0.0,
     val users:Int,

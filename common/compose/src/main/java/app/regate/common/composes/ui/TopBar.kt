@@ -75,7 +75,7 @@ fun TopBar(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SimpleTopBar(
+fun SimpleTopBar (
     navigateUp:()->Unit,
     modifier: Modifier = Modifier,
     title:String? = null,

@@ -32,7 +32,7 @@ import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
 import kotlinx.datetime.Instant
 
-typealias Conversation = @Composable (
+typealias Conversation= @Composable (
     navigateUp:()->Unit
 //    navigateToReserva:(id:Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
@@ -123,7 +123,7 @@ internal fun Conversation(
                 lazyPagingItems = lazyPagingItems,
                 setReply = {
                     focusRequester.requestFocus()
-                    replyMessage.value = it
+                    replyMessage.value =it
                 },
                 formatShortDate = formatShortDate,
                 formatterRelatimeTime = formatterRelativeTime,

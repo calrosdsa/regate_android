@@ -41,11 +41,11 @@ import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias CreateSala  = @Composable (
+typealias CreateSala = @Composable (
     navigateUp:()->Unit,
     reservarInstalacion: @Composable () -> Unit,
     navigateToCreateGroup:()->Unit,
-    navigateToGroup:(Long)->Unit
+    navigateToGroup:(Long)->Unit,
 //    navigateToChat:(id:Long)->Unit,
 //    openAuthBottomSheet:()->Unit
         ) -> Unit
@@ -99,7 +99,8 @@ internal fun CreateSala(
         getGroupsUser = viewModel::getGroupsUser,
         selectGroup = viewModel::updateSelectedGroup,
         enableButton = viewModel::enableButton,
-        navigateToCreateGroup = navigateToCreateGroup
+        navigateToCreateGroup = navigateToCreateGroup,
+        page = viewModel.getPage()
     )
 }
 
@@ -117,7 +118,8 @@ internal fun CreateSala(
     getGroupsUser:()->Unit,
     selectGroup:(Long)->Unit,
     enableButton:(Boolean)->Unit,
-    navigateToCreateGroup: () -> Unit
+    navigateToCreateGroup: () -> Unit,
+    page:Int,
 //    onChangeAsunto:(v:String)->Unit,
 //    onChangeDescription:(v:String)->Unit,
 //    onChangeCupos:(v:String)->Unit,
@@ -125,7 +127,7 @@ internal fun CreateSala(
     var asunto by remember{ mutableStateOf("Sala de juegos") }
     var description by remember{ mutableStateOf("Armemos 2 equipos de 10 ") }
     var cupos by remember{ mutableStateOf("15") }
-    val pagerState = rememberPagerState(initialPage = 0)
+    val pagerState = rememberPagerState(initialPage = page)
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 

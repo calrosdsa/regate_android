@@ -119,5 +119,11 @@
     <string name="email_verification_help_text">Antes de continuar, necesitamos verificar su correo electrónico. Por favor ingrese el código que fue enviado a su correo electrónico (<b>%1$s</b>)</string>
     <string name="password_dont_match">Las contraseñas no coinciden</string>
     <string name="password_length">La contraseña debe tener más de 8 caracteres.</string>
+    <string name="complete">Completar</string>
+    <string name="contributed_amount">Monto aportado %1$s</string>
+    <string name="total_price">Precio total</string>
+    <string name="total_paid">Total pagado</string>
+    <string name="total_remaining">Total restante</string>
+    <string name="groups">Grupos</string>
 
 </resources>

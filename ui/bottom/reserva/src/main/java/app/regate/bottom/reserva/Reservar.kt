@@ -16,12 +16,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DismissValue
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
@@ -36,6 +40,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -68,6 +73,7 @@ typealias Reservar = @Composable (
     navigateUp:()->Unit,
     navigateToEstablecimiento:(Long)->Unit,
     navigateToConversation:(Long)->Unit,
+    navigateToCreateSala:(Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
 
@@ -78,7 +84,8 @@ fun Reservar(
     @Assisted openAuthDialog: () -> Unit,
     @Assisted navigateUp: () -> Unit,
     @Assisted navigateToEstablecimiento: (Long) -> Unit,
-    @Assisted navigateToConversation: (Long) -> Unit
+    @Assisted navigateToConversation: (Long) -> Unit,
+    @Assisted navigateToCreateSala: (Long) -> Unit,
 //    @Assisted navigateToReserva:()->Unit,
     ){
     Reservar(
@@ -86,7 +93,8 @@ fun Reservar(
         openAuthDialog = openAuthDialog,
         navigateUp = navigateUp,
         navigateToEstablecimiento=navigateToEstablecimiento,
-        navigateToConversation = navigateToConversation
+        navigateToConversation = navigateToConversation,
+        navigateToCreateSala = navigateToCreateSala
 //        navigateToReserva = navigateToReserva
     )
 }
@@ -98,7 +106,8 @@ internal fun Reservar(
     openAuthDialog: () -> Unit,
     navigateUp: () -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
-    navigateToConversation: (Long) -> Unit
+    navigateToConversation: (Long) -> Unit,
+    navigateToCreateSala: (Long) -> Unit
 //    navigateToReserva: () -> Unit,
 ){
     val state by viewModel.state.collectAsState()
@@ -117,7 +126,8 @@ internal fun Reservar(
         navigateToConversation = navigateToConversation,
         formatShortTime = {formatter.formatShortTime(it)},
         formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
-        openMap = appUtil::openMap
+        openMap = appUtil::openMap,
+        navigateToCreateSala = navigateToCreateSala
 //        navigateToReserva = navigateToReserva,
 //        openBottomSheet = { viewModel.openBottomSheet { navigateToReserva () } }
     )
@@ -136,8 +146,7 @@ internal fun Reservar(
     formatShortTime:(time:Instant)->String,
     formatDate:(date:Instant)->String,
     openMap:(lng:String?,lat:String?,label:String?)->Unit,
-//    formatterDate:(date:String)->String,
-//    formatterDateReserva:(date:Instant)->String,
+    navigateToCreateSala: (Long) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val dismissSnackbarState = rememberDismissState(
@@ -151,6 +160,9 @@ internal fun Reservar(
         },
     )
     val confirmate = remember {
+        mutableStateOf(false)
+    }
+    var expanded by remember {
         mutableStateOf(false)
     }
 //    val price =  viewState.cupos.reduce{sum,element->
@@ -181,7 +193,23 @@ internal fun Reservar(
     }
     Scaffold(
         topBar = {
-            SimpleTopBar(navigateUp = { navigateUp()},title = viewState.instalacion?.name)
+            SimpleTopBar(navigateUp = { navigateUp()},title = viewState.instalacion?.name,
+            actions = {
+                Box() {
+                IconButton(onClick = { expanded = true }) {
+                    Icon(imageVector = Icons.Default.MoreVert, contentDescription = "menu")
+                }
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                    ) {
+                            DropdownMenuItem(
+                                text = { Text(text = stringResource(id = R.string.create_sala)) },
+                                onClick = { viewState.instalacion?.let { navigateToCreateSala(it.establecimiento_id) }  }
+                            )
+                    }
+                }
+            })
 //            IconButton(onClick = { navigateUp() }) {
 //                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
 //            }
@@ -336,7 +364,7 @@ internal fun Reservar(
                                     viewState.establecimiento?.longitud,
                                     viewState.establecimiento?.latidud,
                                     viewState.establecimiento?.name,
-                                    )
+                                )
                             }
                             .fillMaxWidth()
                             .height(200.dp))

@@ -43,7 +43,7 @@ import app.regate.common.resources.R
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun HomeMediaCarousel(
+fun HomeMediaCarousel (
     list: List<String>,
 //    totalItemsToShow: Int = 10,
 //    carouselLabel: String = "Carousel Label",

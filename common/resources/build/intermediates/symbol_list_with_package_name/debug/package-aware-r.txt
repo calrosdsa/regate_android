@@ -55,8 +55,10 @@ string choose_a_schedule
 string choose_the_time_and_place
 string choose_where_create_room
 string clear_all
+string complete
 string consume
 string continuar
+string contributed_amount
 string create_group
 string create_sala
 string deposits
@@ -81,6 +83,7 @@ string get_started
 string grant_permission
 string group_description
 string group_visibility
+string groups
 string history
 string illegal_activity
 string inappropriate_material
@@ -154,6 +157,9 @@ string theme
 string there_are_not_available_schudules
 string threats_of_violence
 string time_interval
+string total_paid
+string total_price
+string total_remaining
 string unexpected_error
 string user_since
 string verify

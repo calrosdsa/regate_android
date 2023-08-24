@@ -3,6 +3,6 @@
 3    package="app.regate.common.compose" >
 4
 5    <uses-sdk android:minSdkVersion="23" />
-5-->D:\Regate\RegateApp\common\compose\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest17673001104855745501.xml
+5-->C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9058418316320873919.xml
 6
 7</manifest>

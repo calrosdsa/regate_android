@@ -26,15 +26,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import app.regate.common.composes.components.images.AsyncImage
-import app.regate.common.composes.components.images.DefaultImageUser
 import app.regate.common.composes.components.images.ProfileImage
-import app.regate.compoundmodels.UserProfileGrupo
-import app.regate.data.dto.account.user.ProfileDto
 import app.regate.common.resources.R
 
 @Composable
-fun ProfileItem(
+fun ProfileItem (
     id:Long,
     photo:String?,
     nombre:String,
@@ -51,7 +47,7 @@ fun ProfileItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-            ProfileImage(
+            ProfileImage (
                 profileImage = photo,
                 modifier = Modifier
                     .clip(CircleShape)

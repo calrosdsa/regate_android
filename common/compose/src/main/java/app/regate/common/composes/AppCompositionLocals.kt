@@ -22,7 +22,7 @@ import app.regate.util.AppDateFormatter
 import app.regate.util.AppUtil
 
 @SuppressLint("ComposeCompositionLocalUsage")
-val LocalAppDateFormatter = staticCompositionLocalOf<AppDateFormatter> {
+val LocalAppDateFormatter= staticCompositionLocalOf<AppDateFormatter> {
     error("TiviDateFormatter not provided")
 }
 

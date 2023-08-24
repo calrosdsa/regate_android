@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PaginationSalaResponse(
     val results:List<SalaDto>,
-    val page:Int
+    val nextPage:Int
 )

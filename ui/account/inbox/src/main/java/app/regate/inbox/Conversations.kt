@@ -30,7 +30,7 @@ import app.regate.data.dto.empresa.conversation.Conversation
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias Conversations = @Composable (
+typealias Conversations= @Composable (
     navigateUp:()->Unit,
     navigateToConversation:(Long)->Unit
 //    navigateToReserva:(id:Long)->Unit,

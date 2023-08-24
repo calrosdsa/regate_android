@@ -19,7 +19,7 @@ import app.regate.compoundmodels.InstalacionCupos
 import kotlinx.datetime.Instant
 
 @Composable
-internal  fun Page2(
+internal  fun Page2 (
     reservarInstalacion:@Composable ()->Unit,
     formatShortTime:(time: Instant)->String,
     formatDate:(date: Instant)->String,
@@ -45,8 +45,7 @@ internal  fun Page2(
            InstalacionSelected(
                instalacionCupos = instalacionCupos,
                formatDate = formatDate,
-               formatShortTime = formatShortTime,
-           )
+               formatShortTime = formatShortTime,)
 
 
         }

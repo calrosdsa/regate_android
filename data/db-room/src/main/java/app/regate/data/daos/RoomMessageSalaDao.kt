@@ -14,8 +14,10 @@ abstract class RoomMessageSalaDao:MessageSalaDao,RoomEntityDao<MessageSala> {
     @Query("SELECT * FROM message_sala where sala_id = :id ORDER BY datetime(created_at) DESC")
     abstract override fun observeMessages(id: Long): PagingSource<Int, MessageSalaWithProfile>
 
+    @Transaction
     @Query("SELECT * FROM message_sala where sala_id = :id ORDER BY datetime(created_at) DESC LIMIT 5")
     abstract override fun getMessages(id: Long):List<MessageSalaWithProfile>
+    @Transaction
     @Query("SELECT * FROM message_sala where id = :id")
     abstract override suspend fun getReplyMessage(id: Long): MessageSalaWithProfile
 

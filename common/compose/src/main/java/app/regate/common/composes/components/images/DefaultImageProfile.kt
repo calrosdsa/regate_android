@@ -8,7 +8,7 @@ import androidx.compose.ui.res.painterResource
 import app.regate.common.resources.R
 
 @Composable
-fun DefaultImageUser(
+fun DefaultImageUser (
     modifier:Modifier = Modifier,
     contentDescription:String = "profile"
 ){

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.data.account.AccountRepository
 import app.regate.data.common.AddressDevice
-import app.regate.data.common.getDataEntityFromJson
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
@@ -37,6 +36,7 @@ class HomeViewModel(
     private val accountRepository: AccountRepository,
     private val establecimientoRepository: EstablecimientoRepository,
     private val converter:Converter,
+//    private val salaRepository: SalaRepository,
 //    authStore: AuthStore,
     observeAuthState: ObserveAuthState,
     ):ViewModel() {
@@ -64,6 +64,7 @@ class HomeViewModel(
         me()
         observeAuthState(Unit)
         viewModelScope.launch {
+//            salaRepository.insertSalas()
         converter.observeAddress().collectLatest {
             getEstablecimientos(it)
         }

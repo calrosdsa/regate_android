@@ -55,7 +55,7 @@ fun <T : Any> LazyListScope.itemsCustomIndexed(
 }
 
 
-fun <T : Any> LazyListScope.itemsCustom(
+fun <T : Any> LazyListScope.itemsCustom (
     items: LazyPagingItems<T>,
     key: ((item: T) -> Any)? = null,
     contentType: (item: T) -> Any? = { null },

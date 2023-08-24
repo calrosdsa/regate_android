@@ -45,7 +45,7 @@ import app.regate.models.Grupo
 
 
 @Composable
-fun TopBarChat(
+fun TopBarChat (
     navigateUp:()->Unit,
     grupo:Grupo?,
     navigateTocreateSala:(id:Long)->Unit,

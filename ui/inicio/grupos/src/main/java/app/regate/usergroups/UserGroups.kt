@@ -33,14 +33,14 @@ import me.tatarka.inject.annotations.Inject
 //}
 
 
-@Composable
-internal fun UserGroups (
-    viewModel: UserGroupsViewModel,
-    navigateToChat: (id: Long) -> Unit
-){
-    val state by viewModel.state.collectAsState()
-    UserGroups(viewState = state, navigateToChat = navigateToChat)
-}
+//@Composable
+//internal fun UserGroups (
+//    viewModel: UserGroupsViewModel,
+//    navigateToChat: (id: Long) -> Unit
+//){
+//    val state by viewModel.state.collectAsState()
+//    UserGroups(viewState = state, navigateToChat = navigateToChat)
+//}
 
 
 @Composable

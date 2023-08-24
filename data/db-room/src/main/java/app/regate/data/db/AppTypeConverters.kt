@@ -65,4 +65,11 @@ object AppTypeConverters {
     @TypeConverter
     @JvmStatic
     fun toTypeEntity(value:Int?) = typeEntityValues.firstOrNull{ it.ordinal == value }
+
+    @TypeConverter
+    @JvmStatic
+    fun fromHorasSala(value:List<String>):String = Json.encodeToString(value)
+    @TypeConverter
+    @JvmStatic
+    fun toHorasSala(value:String):List<String> = Json.decodeFromString(value)
 }

@@ -12,7 +12,7 @@ import app.regate.compoundmodels.MessageConversation
 import app.regate.data.coin.ConversationRepository
 import app.regate.data.common.MessageData
 import app.regate.data.dto.empresa.conversation.ConversationMessage
-import app.regate.domain.observers.ObservePagerMessagesInbox
+import app.regate.domain.observers.pagination.ObservePagerMessagesInbox
 import app.regate.domain.observers.ObserveUser
 import app.regate.inbox.ConversationsState
 import app.regate.models.MessageInbox
@@ -47,7 +47,7 @@ class ConversationViewModel(
     private val client: HttpClient,
     private val conversationRepository: ConversationRepository,
     observeUser: ObserveUser,
-    pagingInteractor:ObservePagerMessagesInbox
+    pagingInteractor: ObservePagerMessagesInbox
     ):ViewModel() {
     private val conversationId = savedStateHandle.get<Long>("id")?:0
     private val loadingCounter = ObservableLoadingCounter()

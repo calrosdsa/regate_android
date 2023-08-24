@@ -35,7 +35,7 @@ import app.regate.usergroups.UserGroupsViewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias FilterGroups = @Composable (
+typealias FilterGroups= @Composable (
     navigateToGroup:(id:Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 
@@ -94,7 +94,6 @@ internal fun FilterGroups(
     LazyColumn(modifier = Modifier.padding(paddingValues)){
         itemsCustom(
             items = lazyPagingItems,
-            key = { it.id }
         ){result->
             if (result != null) {
                 GrupoItemDto(grupo = result, navigateToChatGrupo = navigateToGroup)

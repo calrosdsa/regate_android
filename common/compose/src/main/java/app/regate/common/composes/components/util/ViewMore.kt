@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import app.regate.common.resources.R
 
 @Composable
-fun ViewMore(
+fun ViewMore (
     label:String,
     modifier:Modifier= Modifier,
     styleText: TextStyle = MaterialTheme.typography.titleMedium,

@@ -8,14 +8,14 @@ import androidx.compose.material3.Divider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-fun LazyListScope.dividerLazyList(){
+fun LazyListScope.dividerLazyList() {
     item{
     Divider(modifier = Modifier.padding(vertical = 10.dp))
     }
 }
 
 
-fun LazyListScope.spacerLazyList(){
+fun LazyListScope.spacerLazyList() {
     item{
         Spacer(modifier = Modifier.height(10.dp))
     }

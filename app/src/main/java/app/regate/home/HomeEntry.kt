@@ -132,7 +132,8 @@ internal fun AppNavigation(
                 openAuthDialog = {navController.navigate(Route.AUTH_DIALOG)},
                 navigateUp = navController::navigateUp,
                 navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
-                navigateToConversation = {navController.navigate(Route.CONVERSATION id it)}
+                navigateToConversation = {navController.navigate(Route.CONVERSATION id it)},
+                navigateToCreateSala = {navController.navigate(Route.CREAR_SALA id it id 0 id 1)}
             )
         }
 
@@ -212,7 +213,7 @@ internal fun AppNavigation(
                 salas = {
                     composeScreens.establecimientoSalas(
                         navigateToSala = { navController.navigate(Route.SALA id it ) },
-                        crearSala = { navController.navigate(Route.CREAR_SALA id it id 0) }
+                        crearSala = { navController.navigate(Route.CREAR_SALA id it id 0 id 0) }
                     )
                 },
                 currentPage = page.toInt(),
@@ -265,8 +266,17 @@ internal fun AppNavigation(
 //                navigateToReserva = { navController.navigate(Route.RESERVAR id it) }
             )
         }
-
-
+        animatedComposableVariant(
+            route = Route.SALA_COMPLETE arg "id",
+            arguments = listOf(
+                navArgument("id") { type = NavType.LongType },
+            )
+        ) {
+            composeScreens.salaComplete(
+                navigateUp = navController::navigateUp,
+//                navigateToReserva = { navController.navigate(Route.RESERVAR id it) }
+            )
+        }
         animatedComposable(
             route = Route.SALA arg "id",
             arguments = listOf(
@@ -280,14 +290,15 @@ internal fun AppNavigation(
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
                 navigateToInstalacion = {navController.navigate(Route.INSTALACION id it)},
                 navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
+                navigateToComplete = {navController.navigate(Route.SALA_COMPLETE id it)}
             )
         }
         animatedComposable(
-            route = Route.CREAR_SALA arg "id" arg "grupo_id",
+            route = Route.CREAR_SALA arg "id" arg "grupo_id" arg "page",
             arguments = listOf(
                 navArgument("id") { type = NavType.LongType },
                 navArgument("grupo_id") { type = NavType.LongType },
-                )
+              navArgument("page") { type = NavType.IntType })
         ) {
             composeScreens.createSala(
                 navigateUp = navController::navigateUp,
@@ -314,7 +325,7 @@ internal fun AppNavigation(
             composeScreens.establecimientoFilter(
                 navigateUp = navController::navigateUp,
                 navigateToCreateSala = {id,grupoId->
-                    navController.navigate(Route.CREAR_SALA id id id grupoId)
+                    navController.navigate(Route.CREAR_SALA id id id grupoId id 0)
                 },
                 navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)}
             )
@@ -567,6 +578,9 @@ private fun NavGraphBuilder.AddMainNav(
             composeScreens.grupos(navController = navController,filterGroups={
                 composeScreens.filterGroups(
                     navigateToGroup = {navController.navigate(Route.GRUPO id it)},
+                )},
+                userSalas = { composeScreens.userSalas(
+                    navigateToSala = { navController.navigate(Route.SALA id it)}
                 )
             }
         )}

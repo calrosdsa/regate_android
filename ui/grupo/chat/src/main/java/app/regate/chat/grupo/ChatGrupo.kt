@@ -48,7 +48,7 @@ import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias ChatGrupo   = @Composable (
+typealias ChatGrupo  = @Composable (
     navigateUp:()->Unit,
     openAuthBottomSheet:()->Unit,
     navigateToCreateSala:(id:Long)->Unit,
@@ -205,7 +205,7 @@ internal fun ChatGrupo(
                 authState = viewState.authState,
                 replyMessage = replyMessage.value,
                 clearReplyMessage = {replyMessage.value = null},
-                updateMessage = { message.value = it},
+                updateMessage = { message.value =it},
                 message = message.value,
                 clearFocus = { focusManager.clearFocus() },
                 focusRequester = focusRequester,
@@ -234,7 +234,7 @@ internal fun ChatGrupo(
                 formatterRelatimeTime = formatterRelativeTime,
                 setReply = {
                     focusRequester.requestFocus()
-                    replyMessage.value = it
+                    replyMessage.value =it
                 },
                 lazyListState = lazyListState,
                 getUserProfileGrupo = getUserProfileGrupo,

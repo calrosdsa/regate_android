@@ -51,7 +51,7 @@ import app.regate.data.common.ReplyMessageData
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun ChatInput(
+fun ChatInput (
     replyMessage:ReplyMessageData?,
     clearFocus:()->Unit,
     clearReplyMessage:() ->Unit,
