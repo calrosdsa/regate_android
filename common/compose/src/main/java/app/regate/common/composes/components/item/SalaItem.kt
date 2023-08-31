@@ -2,6 +2,7 @@ package app.regate.common.composes.components.item
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,8 +21,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import app.regate.data.dto.empresa.salas.SalaDto
+import app.regate.data.dto.empresa.salas.SalaEstado
 import app.regate.models.SalaEntity
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
@@ -35,25 +38,52 @@ fun SalaItem(
     formatShortTime:(String,Long)->String,
     navigateToSala:(id:Long)->Unit,
     modifier:Modifier = Modifier
-){
-    Surface(modifier = modifier.padding( 5.dp).height(65.dp),
-    onClick = {
-        navigateToSala(sala.id)
-    }) {
+) {
+    Surface(modifier = modifier
+        .padding(5.dp)
+        .height(65.dp),
+        onClick = {
+            navigateToSala(sala.id)
+        }) {
 //        LocalDateTime.parse()
-        Column(modifier = Modifier
-            .fillMaxWidth()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
 //            .background(MaterialTheme.colorScheme.surface)
-            .padding(5.dp)
+                .padding(5.dp)
         ) {
-            Text(text = sala.titulo,style = MaterialTheme.typography.labelLarge, maxLines = 1)
-            Text(text = "Se jugara:${formatDate(sala.horas.first())} de ${formatShortTime(sala.horas.first(),0)} a ${
-                formatShortTime(sala.horas.last(), 30)
-            }",style = MaterialTheme.typography.labelMedium)
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "${sala.users}/${sala.cupos}",style = MaterialTheme.typography.labelSmall)
-                Spacer(modifier = Modifier.width(5.dp))
-                Icon(imageVector = Icons.Default.Group, contentDescription = sala.titulo,modifier = Modifier.size(15.dp))
+            Text(text = sala.titulo, style = MaterialTheme.typography.labelLarge, maxLines = 1)
+            Text(
+                text = "Se jugara:${formatDate(sala.horas.first())} de ${
+                    formatShortTime(
+                        sala.horas.first(),
+                        0
+                    )
+                } a ${
+                    formatShortTime(sala.horas.last(), 30)
+                }", style = MaterialTheme.typography.labelMedium
+            )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "${sala.users}/${sala.cupos}",
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Icon(
+                        imageVector = Icons.Default.Group,
+                        contentDescription = sala.titulo,
+                        modifier = Modifier.size(15.dp)
+                    )
+                }
+                when(sala.estado){
+                    SalaEstado.UNAVAILABLE.ordinal -> Text(text = "Sala no disponible",color = Color.Red,
+                        style = MaterialTheme.typography.labelMedium)
+                    SalaEstado.RESERVED.ordinal -> Text(text = "Sala reservada",color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.labelMedium)
+                }
+//                Text(text = )
             }
         }
     }
@@ -69,7 +99,9 @@ fun SalaItem(
     navigateToSala:(id:Long)->Unit,
     modifier:Modifier = Modifier
 ){
-    Surface(modifier = modifier.padding( 5.dp).height(65.dp),
+    Surface(modifier = modifier
+        .padding(5.dp)
+        .height(65.dp),
         onClick = {
             navigateToSala(sala.id)
         }) {

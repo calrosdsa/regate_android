@@ -30,17 +30,18 @@ class NotificationViewModel(
   started = SharingStarted.WhileSubscribed(),
   initialValue = NotificationState.Empty
  )
+
  init {
-     observeNotifications(Unit)
+  observeNotifications(Unit)
   updateUnreadNotifications()
  }
 
- private fun updateUnreadNotifications(){
+ private fun updateUnreadNotifications() {
   viewModelScope.launch {
-   try{
+   try {
     systemRepository.updateUnreadNotifications()
-   }catch(e:Exception){
-    Log.d("DEBUG_APP",e.localizedMessage?:"")
+   } catch (e: Exception) {
+    Log.d("DEBUG_APP", e.localizedMessage ?: "")
    }
   }
  }

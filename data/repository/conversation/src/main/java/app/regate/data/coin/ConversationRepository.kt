@@ -4,6 +4,7 @@ import app.regate.data.daos.MessageInboxDao
 import app.regate.data.daos.UserDao
 import app.regate.data.dto.empresa.coin.RecargaCoinDto
 import app.regate.data.dto.empresa.conversation.Conversation
+import app.regate.data.dto.empresa.conversation.ConversationId
 import app.regate.data.dto.empresa.conversation.ConversationMessage
 import app.regate.data.dto.empresa.conversation.Reply
 import app.regate.data.mappers.MessageConversationToMessage
@@ -22,12 +23,15 @@ class ConversationRepository(
     private val messageConversationMapper:MessageConversationToMessage,
     private val messageInboxDao: MessageInboxDao,
     private val userDao:UserDao
-){
-    suspend fun syncMessages(conversationId:Long){
-        withContext(dispatchers.computation){
-            try{
+) {
+    suspend fun getConversationId(establecimientoId:Long):ConversationId{
+        return  conversationDataSourceImpl.getConversationId(establecimientoId)
+    }
+    suspend fun syncMessages(conversationId: Long) {
+        withContext(dispatchers.computation) {
+            try {
                 val profileId = userDao.getUser(0).profile_id
-                val messages = messageInboxDao.getUnSendedMessage(profileId,conversationId)
+                val messages = messageInboxDao.getUnSendedMessage(profileId, conversationId)
                 val data = messages.map {
                     ConversationMessage(
                         id = it.id,
@@ -43,29 +47,34 @@ class ConversationRepository(
                     messageConversationMapper.map(it)
                 }
                 messageInboxDao.upsertAll(results)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 //TODO()
             }
         }
     }
-    suspend fun saveMessage(message:ConversationMessage){
-        withContext(dispatchers.computation){
+
+    suspend fun saveMessage(message: ConversationMessage) {
+        withContext(dispatchers.computation) {
             val data = messageConversationMapper.map(message)
             messageInboxDao.upsert(data)
         }
     }
-    suspend fun saveMessageLocal(message:MessageInbox){
-        withContext(dispatchers.computation){
+
+    suspend fun saveMessageLocal(message: MessageInbox) {
+        withContext(dispatchers.computation) {
             messageInboxDao.upsert(message)
         }
     }
-    suspend fun getConversations():List<Conversation>{
+
+    suspend fun getConversations(): List<Conversation> {
         return conversationDataSourceImpl.getConversations()
     }
-    suspend fun getMessages(id:Long,page:Int) {
-        withContext(dispatchers.computation) {
-            try {
-                conversationDataSourceImpl.getMessages(id, page).also { results ->
+
+    suspend fun getMessages(id: Long, page: Int): Int {
+        return try {
+            val response = conversationDataSourceImpl.getMessages(id, page)
+            withContext(dispatchers.computation) {
+                response.results.also { results ->
                     val messages = async { results.map { messageConversationMapper.map(it) } }
                     val replies = async {
                         results.filter { it.reply_to != null }.map {
@@ -82,10 +91,11 @@ class ConversationRepository(
                     val result = messages.await() + replies.await()
                     messageInboxDao.upsertAll(result)
                 }
-            } catch (e: Exception) {
-                //TODO()
             }
-//                 messageProfileDao.upsertAll(results)
+            response.nextPage
+        } catch (e: Exception) {
+            //TODO()
+            0
         }
     }
 }

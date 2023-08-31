@@ -32,5 +32,6 @@ enum class TypeEntity {
     SALA,
     GRUPO,
     ACCOUNT,
+    BILLING,
     NONE,
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "0e0079d7ecba7dc900bb0ac36fb98a6e",
+    "identityHash": "d6f3807b75bee6d62a8ea84b7e5d23bc",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -940,128 +940,12 @@
         },
         "indices": [],
         "foreignKeys": []
-      },
-      {
-        "tableName": "sala",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `category_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, `cupos` INTEGER NOT NULL, `descripcion` TEXT NOT NULL, `establecimiento_id` INTEGER NOT NULL, `instalacion_id` INTEGER NOT NULL, `precio` INTEGER NOT NULL, `paid` REAL NOT NULL, `titulo` TEXT NOT NULL, `precio_cupo` REAL NOT NULL, `users` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `estado` INTEGER NOT NULL, `horas` TEXT NOT NULL, `establecimiento_name` TEXT NOT NULL, `establecimiento_photo` TEXT)",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "category_id",
-            "columnName": "category_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "created_at",
-            "columnName": "created_at",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "cupos",
-            "columnName": "cupos",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "descripcion",
-            "columnName": "descripcion",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "establecimiento_id",
-            "columnName": "establecimiento_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "instalacion_id",
-            "columnName": "instalacion_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "precio",
-            "columnName": "precio",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "paid",
-            "columnName": "paid",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "titulo",
-            "columnName": "titulo",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "precio_cupo",
-            "columnName": "precio_cupo",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "users",
-            "columnName": "users",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "grupo_id",
-            "columnName": "grupo_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "estado",
-            "columnName": "estado",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "horas",
-            "columnName": "horas",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "establecimiento_name",
-            "columnName": "establecimiento_name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "establecimiento_photo",
-            "columnName": "establecimiento_photo",
-            "affinity": "TEXT",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "id"
-          ]
-        },
-        "indices": [],
-        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0e0079d7ecba7dc900bb0ac36fb98a6e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd6f3807b75bee6d62a8ea84b7e5d23bc')"
     ]
   }
 }

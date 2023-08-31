@@ -117,7 +117,7 @@ internal fun FilterSalas(
         refreshing = refreshing,
         onRefresh = lazyPagingItems::refresh
     )
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -178,7 +178,8 @@ internal fun FilterSalas(
             PullRefreshIndicator(
                 refreshing = refreshing,
                 state = pullRefreshState,
-                modifier = Modifier.align(Alignment.Center)
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
                     .padding(paddingValues),
                 scale = true
             )

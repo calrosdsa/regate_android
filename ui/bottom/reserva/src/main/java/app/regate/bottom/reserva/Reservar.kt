@@ -72,7 +72,7 @@ typealias Reservar = @Composable (
     openAuthDialog:()->Unit,
     navigateUp:()->Unit,
     navigateToEstablecimiento:(Long)->Unit,
-    navigateToConversation:(Long)->Unit,
+    navigateToConversation:(Long,Long)->Unit,
     navigateToCreateSala:(Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
@@ -84,7 +84,7 @@ fun Reservar(
     @Assisted openAuthDialog: () -> Unit,
     @Assisted navigateUp: () -> Unit,
     @Assisted navigateToEstablecimiento: (Long) -> Unit,
-    @Assisted navigateToConversation: (Long) -> Unit,
+    @Assisted navigateToConversation: (Long,Long) -> Unit,
     @Assisted navigateToCreateSala: (Long) -> Unit,
 //    @Assisted navigateToReserva:()->Unit,
     ){
@@ -106,7 +106,7 @@ internal fun Reservar(
     openAuthDialog: () -> Unit,
     navigateUp: () -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
-    navigateToConversation: (Long) -> Unit,
+    navigateToConversation: (Long,Long) -> Unit,
     navigateToCreateSala: (Long) -> Unit
 //    navigateToReserva: () -> Unit,
 ){
@@ -123,7 +123,10 @@ internal fun Reservar(
         confirmarReservas = viewModel::confirmarReservas,
         navigateUp = navigateUp,
         navigateToEstablecimiento = navigateToEstablecimiento,
-        navigateToConversation = navigateToConversation,
+        navigateToConversation ={
+            viewModel.navigateToConversationE(navigateToConversation)
+
+        },
         formatShortTime = {formatter.formatShortTime(it)},
         formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
         openMap = appUtil::openMap,
@@ -142,7 +145,7 @@ internal fun Reservar(
     confirmarReservas:()->Unit,
     navigateUp: () -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
-    navigateToConversation: (Long) -> Unit,
+    navigateToConversation: () -> Unit,
     formatShortTime:(time:Instant)->String,
     formatDate:(date:Instant)->String,
     openMap:(lng:String?,lat:String?,label:String?)->Unit,
@@ -300,7 +303,7 @@ internal fun Reservar(
                             overflow = TextOverflow.Ellipsis
                         )
                             Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier
-                                .clickable { viewState.establecimiento?.let {  navigateToConversation(it.id)} }) {
+                                .clickable { viewState.establecimiento?.let {  navigateToConversation()} }) {
                                 Icon(
                                     imageVector = Icons.Default.Chat,
                                     contentDescription = null,

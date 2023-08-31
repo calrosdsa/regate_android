@@ -14,4 +14,4 @@ suspend inline fun <reified T> HttpResponse.handleApi(
     }
 }
 
-typealias HttpClientMessage = HttpClient
+//typealias HttpClientMessage = HttpClient

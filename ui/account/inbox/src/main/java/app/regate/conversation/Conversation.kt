@@ -1,25 +1,41 @@
 package app.regate.conversation
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.components.input.ChatInput
+import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import app.regate.inbox.ConversationsState
@@ -30,6 +46,8 @@ import app.regate.compoundmodels.MessageConversation
 import app.regate.data.auth.AppAuthState
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 
 typealias Conversation= @Composable (
@@ -64,7 +82,8 @@ internal fun Conversation(
     Conversation(
         viewState = state,
         navigateUp = navigateUp,
-        sendMessage = viewModel::sendMessage,
+        sendMessage = {it1,it2 ->
+            viewModel.sendMessage(it1,it2) },
         lazyPagingItems = viewModel.pagedList.collectAsLazyPagingItems(),
         formatterRelativeTime = formatter::formatShortRelativeTime,
         formatShortDate = {
@@ -81,13 +100,17 @@ internal fun Conversation(
     formatterRelativeTime:(date: Instant)->String,
     formatShortDate:(Instant)->String,
     navigateUp: () -> Unit,
-    sendMessage:(MessageData)->Unit,
+    sendMessage:(MessageData,()->Unit)->Unit,
     ){
     val message = remember {
         mutableStateOf("")
     }
+    val colors = listOf(
+        MaterialTheme.colorScheme.inverseOnSurface,
+        MaterialTheme.colorScheme.inverseOnSurface
+    )
     val lazyListState = rememberLazyListState()
-//    val coroutineScope = rememberCoroutineScope()
+    val coroutineScope = rememberCoroutineScope()
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     val replyMessage = remember {
@@ -95,12 +118,21 @@ internal fun Conversation(
     }
     Scaffold(
         topBar = {
-            SimpleTopBar(navigateUp =  navigateUp, title = stringResource(id = R.string.inbox))
-//            Row() {
-//                IconButton(onClick = { navigateUp() }) {
-//                    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-//                }
-//            }
+//            SimpleTopBar(navigateUp =  navigateUp, title = stringResource(id = R.string.inbox))
+              Row(modifier = Modifier
+                  .fillMaxWidth()
+                  .padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
+                  IconButton(onClick = { navigateUp() }) {
+                      Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                  }
+                  viewState.establecimiento?.let {
+                  PosterCardImage(model = it.photo,modifier = Modifier.size(40.dp),
+                  shape = CircleShape)
+                      Spacer(modifier = Modifier.width(10.dp))
+                      Text(text = it.name,style = MaterialTheme.typography.titleMedium)
+                  }
+
+              }
         },
         bottomBar = {
             ChatInput(
@@ -112,7 +144,12 @@ internal fun Conversation(
                 focusRequester = focusRequester,
                 authState = AppAuthState.LOGGED_IN,
                 openAuthBottomSheet = { /*TODO*/ },
-                sendMessage = {sendMessage(it)}
+                sendMessage = {sendMessage(it){
+                    coroutineScope.launch {
+                        delay(300)
+                        lazyListState.animateScrollToItem(0)
+                    }
+                } }
             )
         }
     ) {paddingValues ->
@@ -125,6 +162,7 @@ internal fun Conversation(
                     focusRequester.requestFocus()
                     replyMessage.value =it
                 },
+                colors = colors,
                 formatShortDate = formatShortDate,
                 formatterRelatimeTime = formatterRelativeTime,
                 lazyListState = lazyListState,

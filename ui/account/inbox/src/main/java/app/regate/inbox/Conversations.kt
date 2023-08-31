@@ -32,7 +32,7 @@ import me.tatarka.inject.annotations.Inject
 
 typealias Conversations= @Composable (
     navigateUp:()->Unit,
-    navigateToConversation:(Long)->Unit
+    navigateToConversation:(Long,Long)->Unit
 //    navigateToReserva:(id:Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
@@ -42,7 +42,7 @@ typealias Conversations= @Composable (
 fun Conversations (
     viewModelFactory:()-> ConversationsViewModel,
     @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToConversation: (Long) -> Unit,
+    @Assisted navigateToConversation: (Long,Long) -> Unit,
 //    @Assisted navigateToReserva: (id:Long) -> Unit,
 //    viewModelFactory:()->ReservasViewModel
 ){
@@ -57,7 +57,7 @@ fun Conversations (
 internal fun Conversations(
     viewModel: ConversationsViewModel,
     navigateUp: () -> Unit,
-    navigateToConversation: (Long) -> Unit,
+    navigateToConversation: (Long,Long) -> Unit,
 ){
     val state by viewModel.state.collectAsState()
     Conversations(
@@ -72,7 +72,7 @@ internal fun Conversations(
 internal fun Conversations(
     viewState: ConversationsState,
     navigateUp: () -> Unit,
-    navigateToConversation: (Long) -> Unit,
+    navigateToConversation: (Long,Long) -> Unit,
 ){
     Scaffold(
         topBar = {
@@ -85,7 +85,7 @@ internal fun Conversations(
             items(
                 items = viewState.conversations,
             ){item->
-                ConversationItem(item = item, onClick = { navigateToConversation(item.id) })
+                ConversationItem(item = item, onClick = { navigateToConversation(item.id,item.establecimiento_id) })
                 Divider()
             }
         }

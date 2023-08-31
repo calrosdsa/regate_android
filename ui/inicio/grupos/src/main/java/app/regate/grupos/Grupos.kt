@@ -161,7 +161,7 @@ internal fun Indicators(
         .fillMaxWidth(),
     verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
     ScrollableTabRow(selectedTabIndex = currentTab, edgePadding = 1.dp,
-        modifier = modifier.fillMaxWidth(0.6f)) {
+        modifier = modifier.fillMaxWidth(0.8f)) {
         Tab(
             text = { Text(text = "Mis Grupos", style = MaterialTheme.typography.labelMedium) },
             selected = currentTab == 0,
@@ -186,6 +186,7 @@ internal fun Indicators(
             },
         )
     }
+        AnimatedVisibility(visible = currentTab != 1) {
         Row() {
             Box() {
             IconButton(onClick = { expanded = !expanded }) {
@@ -195,21 +196,26 @@ internal fun Indicators(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
                 ) {
+                    if(currentTab == 0) {
+                        DropdownMenuItem(
+                            text = { Text(text = stringResource(id = R.string.create_group)) },
+                            onClick = { createGroup() }
+                        )
+                    }
+                    if(currentTab == 2){
                     DropdownMenuItem(
-                        text = { Text(text = stringResource(id = R.string.create_group)) },
-                        onClick = { createGroup() }
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Save") },
+                        text = { Text(text = stringResource(id = R.string.create_sala)) },
                         onClick = {  }
                     )
-                }
-            }
-                AnimatedVisibility(visible = currentTab == 1) {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Default.Sort, contentDescription = "sort")
                     }
                 }
+            }
+//                AnimatedVisibility(visible = currentTab == 1) {
+//                    IconButton(onClick = { /*TODO*/ }) {
+//                        Icon(imageVector = Icons.Default.Sort, contentDescription = "sort")
+//                    }
+//                }
+        }
         }
     }
 }

@@ -118,7 +118,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             if(TypeNotification.NOTIFICATION_BILLING.ordinal == data["type"]?.toInt()){
                 try{
                     val payload = Json.decodeFromString<MessagePayload>(data["payload"].toString())
-                    handler.sendNotificationBilling(applicationContext,payload)
+                    scope.launch {
+                        handler.sendNotificationBilling(applicationContext,payload)
+                    }
                 }catch (e:Exception){
                     Log.d(TAG,e.localizedMessage?:"")
                 }

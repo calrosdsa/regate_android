@@ -48,7 +48,7 @@ import kotlin.time.Duration.Companion.minutes
 typealias Reserva = @Composable (
     navigateUp:()->Unit,
     navigateToEstablecimiento:(Long)->Unit,
-    navigateToConversation:(Long)->Unit,
+    navigateToConversation:(Long,Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
 
@@ -57,7 +57,7 @@ typealias Reserva = @Composable (
 fun Reserva (
     @Assisted navigateUp: () -> Unit,
     @Assisted navigateToEstablecimiento:(Long)->Unit,
-    @Assisted navigateToConversation: (Long) -> Unit,
+    @Assisted navigateToConversation: (Long,Long) -> Unit,
     viewModelFactory:(SavedStateHandle)-> ReservaViewModel
 ){
 
@@ -74,7 +74,7 @@ internal fun Reserva(
     viewModel: ReservaViewModel,
     navigateUp: () -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
-    navigateToConversation: (Long) -> Unit
+    navigateToConversation: (Long,Long) -> Unit
 ){
     val state  by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -99,7 +99,7 @@ internal fun Reserva(
     formatDate:(date: Instant)->String,
     navigateUp: () -> Unit,
     navigateToEstablecimiento:(Long)->Unit,
-    navigateToConversation: (Long) -> Unit
+    navigateToConversation: (Long,Long) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -148,7 +148,7 @@ internal fun Reserva(
                             overflow = TextOverflow.Ellipsis
                         )
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                            .clickable { data.establecimiento?.id?.let { navigateToConversation(it) } }) {
+                            .clickable { data.establecimiento?.id?.let { navigateToConversation(it,0) } }) {
                             Icon(
                                 imageVector = Icons.Default.Chat,
                                 contentDescription = null,

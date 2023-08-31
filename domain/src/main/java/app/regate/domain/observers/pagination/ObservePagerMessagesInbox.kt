@@ -20,7 +20,7 @@ class ObservePagerMessagesInbox(
     override fun createObservable(params: Params): Flow<PagingData<MessageConversation>> {
         return Pager(
             config = params.pagingConfig,
-            remoteMediator = PagingMessagesInboxMediator(currentPage = params.page, fetch = {
+            remoteMediator = PagingMessagesInboxMediator(fetch = {
                 repository.getMessages(params.conversationId,it)
             }),
             pagingSourceFactory = {

@@ -8,9 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class RoomNotificationDao:NotificationDao,RoomEntityDao<Notification> {
-
     @Transaction
-    @Query("select * from notification limit 500")
+    @Query("select * from notification order by created_at desc limit 500")
     abstract override fun getNotificaciones(): Flow<List<Notification>>
 
     @Transaction

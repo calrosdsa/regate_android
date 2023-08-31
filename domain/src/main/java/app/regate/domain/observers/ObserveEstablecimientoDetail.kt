@@ -13,7 +13,7 @@ class ObserveEstablecimientoDetail (
     ):SubjectInteractor<ObserveEstablecimientoDetail.Params,Establecimiento>(){
 
     override fun createObservable(params: Params): Flow<Establecimiento> {
-        return establecimientoRepository.observeEstablecimiento(params.id).debounce(100)
+        return establecimientoRepository.observeEstablecimiento(params.id)
     }
 
     data class Params(val id: Long)

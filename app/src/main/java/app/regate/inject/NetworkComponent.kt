@@ -1,7 +1,6 @@
 package app.regate.inject
 
 import android.app.Application
-import app.regate.api.HttpClientMessage
 import app.regate.api.MissingPageException
 import app.regate.settings.AppPreferences
 import io.ktor.client.HttpClient
@@ -52,8 +51,8 @@ interface NetworkComponent {
         preferences:AppPreferences
     ) : HttpClient = HttpClient(OkHttp) {
         defaultRequest {
-//            url("http://172.20.20.76:9090")
-            url("http://192.168.0.12:9090")
+            url("http://172.20.20.76:9090")
+//            url("http://192.168.0.12:9090")
         }
         engine {
             preconfigured = client
@@ -110,40 +109,40 @@ interface NetworkComponent {
 //                    BearerTokens(preferences.token,preferences.token)
 //                }
 //            }
-//        }
     }
-
-@ApplicationScope
-@Provides
-fun provideKtorClient2(
-    client:OkHttpClient,
-//    preferences:AppPreferences
-) : HttpClientMessage = HttpClient(OkHttp) {
-    defaultRequest {
-        url("http://172.20.20.76:9091")
-    }
-    engine {
-        preconfigured = client
-    }
-    install(ContentNegotiation){
-        json(Json {
-            prettyPrint = true
-            isLenient = true
-            ignoreUnknownKeys = true
-        })
-    }
-    install(WebSockets) {
-        pingInterval = 20_000
-    }
-    expectSuccess = true
-//        install(Auth){
-//            bearer {
-//                loadTokens {
-//                    BearerTokens(preferences.token,preferences.token)
-//                }
-//            }
-//        }
-
 }
 
-}
+//@ApplicationScope
+//@Provides
+//fun provideKtorClient2(
+//    client:OkHttpClient,
+////    preferences:AppPreferences
+//) : HttpClientMessage = HttpClient(OkHttp) {
+//    defaultRequest {
+//        url("http://172.20.20.76:9091")
+//    }
+//    engine {
+//        preconfigured = client
+//    }
+//    install(ContentNegotiation){
+//        json(Json {
+//            prettyPrint = true
+//            isLenient = true
+//            ignoreUnknownKeys = true
+//        })
+//    }
+//    install(WebSockets) {
+//        pingInterval = 20_000
+//    }
+//    expectSuccess = true
+////        install(Auth){
+////            bearer {
+////                loadTokens {
+////                    BearerTokens(preferences.token,preferences.token)
+////                }
+////            }
+////        }
+//
+//}
+//
+//}

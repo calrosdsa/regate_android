@@ -12,6 +12,8 @@ import app.regate.compoundmodels.MessageConversation
 import app.regate.data.coin.ConversationRepository
 import app.regate.data.common.MessageData
 import app.regate.data.dto.empresa.conversation.ConversationMessage
+import app.regate.domain.interactors.UpdateEstablecimiento
+import app.regate.domain.observers.ObserveEstablecimientoDetail
 import app.regate.domain.observers.pagination.ObservePagerMessagesInbox
 import app.regate.domain.observers.ObserveUser
 import app.regate.inbox.ConversationsState
@@ -24,6 +26,7 @@ import io.ktor.http.HttpMethod
 import io.ktor.websocket.Frame
 import io.ktor.websocket.readText
 import io.ktor.websocket.send
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -46,37 +49,47 @@ class ConversationViewModel(
     @Assisted savedStateHandle: SavedStateHandle,
     private val client: HttpClient,
     private val conversationRepository: ConversationRepository,
+    private val updateEstablecimiento: UpdateEstablecimiento,
     observeUser: ObserveUser,
+    observeEstablecimientoDetail: ObserveEstablecimientoDetail,
     pagingInteractor: ObservePagerMessagesInbox
     ):ViewModel() {
     private val conversationId = savedStateHandle.get<Long>("id")?:0
+    private val establecimientoId = savedStateHandle.get<Long>("establecimientoId")?:0
     private val loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val messageInbox = MutableStateFlow<MessageInbox?>(null)
-
     val pagedList: Flow<PagingData<MessageConversation>> =
         pagingInteractor.flow.cachedIn(viewModelScope)
     val state:StateFlow<ConversationsState>  = combine(
         loadingCounter.observable,
         uiMessageManager.message,
         observeUser.flow,
-        messageInbox
-    ){loading,message,user,messageInbox->
+        messageInbox,
+        observeEstablecimientoDetail.flow
+    ){loading,message,user,messageInbox,establecimiento->
         ConversationsState(
             loading = loading,
             message = message,
             user = user,
-            messageInbox = messageInbox
+            messageInbox = messageInbox,
+            establecimiento = establecimiento
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
         initialValue = ConversationState.Empty
     )
-    init{
+    init {
+        pagingInteractor(ObservePagerMessagesInbox.Params(PAGING_CONFIG,conversationId))
+        viewModelScope.launch {
+            updateEstablecimiento.executeSync(UpdateEstablecimiento.Params(
+                id = establecimientoId
+            ))
+        }
         syncMessages()
         observeUser(Unit)
-        pagingInteractor(ObservePagerMessagesInbox.Params(PAGING_CONFIG,conversationId))
+        observeEstablecimientoDetail(ObserveEstablecimientoDetail.Params(id = establecimientoId))
         Log.d("DEBUG_APP",conversationId.toString())
         viewModelScope.launch {
             try{
@@ -123,7 +136,7 @@ class ConversationViewModel(
         }
     }
 
-    fun sendMessage(message:MessageData){
+    fun sendMessage(message:MessageData,animateScroll:()->Unit){
         viewModelScope.launch {
             try{
                 val data = MessageInbox(
@@ -134,7 +147,9 @@ class ConversationViewModel(
                     conversation_id = conversationId,
                     id = UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE
                 )
-                conversationRepository.saveMessageLocal(data)
+                val res = async{ conversationRepository.saveMessageLocal(data) }
+                res.await()
+                animateScroll()
                 messageInbox.tryEmit(data)
             }catch (e:Exception){
               Log.d("DEBUG_APP",message.toString())
@@ -146,6 +161,7 @@ class ConversationViewModel(
         val PAGING_CONFIG = PagingConfig(
             pageSize = 20,
             initialLoadSize = 20,
+            prefetchDistance = 5
         )
     }
 }

@@ -305,7 +305,7 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
 
   @Override
   public Flow<List<Notification>> getNotificaciones() {
-    final String _sql = "select * from notification limit 500";
+    final String _sql = "select * from notification order by created_at desc limit 500";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, true, new String[] {"notification"}, new Callable<List<Notification>>() {
       @Override

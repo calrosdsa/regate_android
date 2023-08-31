@@ -44,6 +44,7 @@ import me.tatarka.inject.annotations.Inject
 typealias Notifications = @Composable (
     navigateUp:()->Unit,
     navigateToSala:(Long)->Unit,
+    navigateToAccount:()->Unit,
         ) -> Unit
 
 @Inject
@@ -51,12 +52,14 @@ typealias Notifications = @Composable (
 fun Notifications(
     viewModelFactory:()->NotificationViewModel,
     @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToSala: (Long) -> Unit
+    @Assisted navigateToSala: (Long) -> Unit,
+    @Assisted navigateToAccount:()->Unit,
 ){
     Notifications(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
-        navigateToSala = navigateToSala
+        navigateToSala = navigateToSala,
+        navigateToAccount = navigateToAccount
     )
 }
 
@@ -64,7 +67,8 @@ fun Notifications(
 internal fun Notifications(
   viewModel: NotificationViewModel,
   navigateUp: () -> Unit,
-  navigateToSala: (Long) -> Unit
+  navigateToSala: (Long) -> Unit,
+  navigateToAccount: () -> Unit
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -72,7 +76,8 @@ internal fun Notifications(
         viewState = state,
         navigateUp = navigateUp,
         navigateToSala = navigateToSala,
-        formatRelativeTime = formatter::formatShortRelativeTime
+        formatRelativeTime = formatter::formatShortRelativeTime,
+        navigateToAccount = navigateToAccount
     )
 }
 
@@ -82,7 +87,8 @@ internal fun Notifications(
     viewState:NotificationState,
     navigateUp: () -> Unit,
     navigateToSala: (Long) -> Unit,
-    formatRelativeTime:(Instant)->String
+    formatRelativeTime:(Instant)->String,
+    navigateToAccount: () -> Unit
 ){
     Scaffold(
         topBar = {
@@ -105,6 +111,7 @@ internal fun Notifications(
                 navigate = {
                     when(item.typeEntity){
                         TypeEntity.SALA -> item.entityId?.let { navigateToSala(it) }
+                        TypeEntity.BILLING -> item.entityId?.let { navigateToAccount() }
                         else -> {}
                     }
                 })
@@ -133,7 +140,9 @@ internal fun NotificationItem(
         modifier  = Modifier.rotate(30f))
         Spacer(modifier = Modifier.width(10.dp))
         Column() {
+            if(item.title.isNotBlank()){
             Text(text = item.title, style = MaterialTheme.typography.titleMedium)
+            }
             Text(text = item.content ,
                 style = MaterialTheme.typography.labelMedium)
         }

@@ -116,10 +116,11 @@ internal fun AppNavigation(
             navigateUp = navController::navigateUp
             )
         }
-        animatedComposable(route = Route.NOTIFICATIONS){
+        animatedComposable(route = Route.NOTIFICATIONS) {
             composeScreens.notifications(
                 navigateUp = navController::navigateUp,
-                navigateToSala = {navController.navigate(Route.SALA id it)}
+                navigateToSala = { navController.navigate(Route.SALA id it) },
+                navigateToAccount = { navController.navigate(Route.BILLING) }
             )
         }
         animatedComposable(route = Route.RESERVAR arg "id" arg "establecimientoId",
@@ -132,7 +133,9 @@ internal fun AppNavigation(
                 openAuthDialog = {navController.navigate(Route.AUTH_DIALOG)},
                 navigateUp = navController::navigateUp,
                 navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
-                navigateToConversation = {navController.navigate(Route.CONVERSATION id it)},
+                navigateToConversation = {it1,it2->
+                    navController.navigate(Route.CONVERSATION id it1 id it2 )
+                },
                 navigateToCreateSala = {navController.navigate(Route.CREAR_SALA id it id 0 id 1)}
             )
         }
@@ -421,7 +424,9 @@ internal fun AppNavigation(
             composeScreens.reserva(
                 navigateUp = navController::navigateUp,
                 navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
-                navigateToConversation = {navController.navigate(Route.CONVERSATION id it)}
+                navigateToConversation = {it1,it2->
+                    navController.navigate(Route.CONVERSATION id it1 id it2 )
+                }
             )
         }
         animatedComposable(
@@ -463,7 +468,9 @@ internal fun AppNavigation(
         ){
             composeScreens.inbox(
                 navigateUp = navController::navigateUp,
-                navigateToConversation = { navController.navigate(Route.CONVERSATION id it) }
+                navigateToConversation = {it1,it2->
+                    navController.navigate(Route.CONVERSATION id it1 id it2 )
+                }
             )
         }
         animatedComposable(
@@ -481,8 +488,10 @@ internal fun AppNavigation(
         }
 
             animatedComposable(
-            route = Route.CONVERSATION arg "id",
+            route = Route.CONVERSATION arg "id" arg "establecimientoId",
             arguments = listOf(navArgument("id") {
+                type = NavType.LongType
+            },navArgument("establecimientoId") {
                 type = NavType.LongType
             })
         ){

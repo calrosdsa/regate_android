@@ -14,8 +14,8 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 class UpdateEstablecimiento(
-    private val establecimientoRepository: EstablecimientoRepository,
-    private val instalacionRepository: InstalacionRepository,
+//    private val establecimientoRepository: EstablecimientoRepository,
+//    private val instalacionRepository: InstalacionRepository,
     private val dispatchers: AppCoroutineDispatchers,
     private val establecimientoStore: EstablecimientoStore
 ) : Interactor<UpdateEstablecimiento.Params>(){
@@ -25,8 +25,8 @@ class UpdateEstablecimiento(
                 key = params.id,
                 forceFresh = params.forceLoad
             )
-            establecimientoRepository.updateEstablecimientoDetail(params.id)
-            instalacionRepository.getInstalaciones(params.id)
+//            establecimientoRepository.updateEstablecimientoDetail(params.id)
+//            instalacionRepository.getInstalaciones(params.id)
         }
     }
 
