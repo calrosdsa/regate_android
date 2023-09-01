@@ -106,6 +106,7 @@
     <string name="theme">Theme</string>
     <string name="there_are_not_available_schudules">No hay horarios disponibles</string>
     <string name="threats_of_violence">Amenazas de violencia</string>
+    <string name="time_game_will_played">Hora en que se jugará</string>
     <string name="time_interval">¿Por cuánto tiempo de gustaría jugar?</string>
     <string name="total_paid">Total pagado</string>
     <string name="total_price">Precio total</string>

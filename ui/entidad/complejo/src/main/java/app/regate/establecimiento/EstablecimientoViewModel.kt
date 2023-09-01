@@ -11,6 +11,7 @@ import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.domain.interactors.UpdateEstablecimiento
 import app.regate.domain.interactors.UpdateEstablecimientoDetail
+import app.regate.domain.interactors.UpdateInstalaciones
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveEstablecimientoDetail
 import app.regate.domain.observers.ObserveInstalacionCategoryCount
@@ -41,6 +42,7 @@ class EstablecimientoViewModel(
     observeRules:ObserveLabelByIds,
     observeAuthState: ObserveAuthState,
     private val updateEstablecimiento: UpdateEstablecimientoDetail,
+//    private val updateInstalaciones:UpdateInstalaciones,
     private val establecimientoRepository:EstablecimientoRepository
 
 //    private val salaRepository: SalaRepository
@@ -82,19 +84,24 @@ class EstablecimientoViewModel(
 
     init{
         viewModelScope.launch {
-        observeEstablecimientoDetail.flow.collect{
-            observeAmenities(ObserveLabelByIds.Params(LabelType.AMENITIES,it.amenities))
-            observeRules(ObserveLabelByIds.Params(LabelType.RULES,it.rules))
+        getStablecimiento()
+        observeEstablecimientoDetail.flow.collect{establecimiento->
+            try{
+            Log.d("DEBUG_APP",establecimiento.toString())
+            observeAmenities(ObserveLabelByIds.Params(LabelType.AMENITIES,establecimiento.amenities))
+            observeRules(ObserveLabelByIds.Params(LabelType.RULES,establecimiento.rules))
+            observeInstalacionCategoryCount(ObserveInstalacionCategoryCount.Params(establecimientoId,LabelType.CATEGORIES))
+            }catch(e:Exception){
+                Log.d("DEBUG_APP",e.localizedMessage?:"")
+            }
         }
         }
         observeEstablecimientoDetail(ObserveEstablecimientoDetail.Params(establecimientoId))
-        observeInstalacionCategoryCount(ObserveInstalacionCategoryCount.Params(establecimientoId,LabelType.CATEGORIES))
         observeAuthState(Unit)
-        getStablecimiento()
         getReviews()
         checkIsFavorite()
     }
-    fun checkIsFavorite(){
+    private fun checkIsFavorite(){
         viewModelScope.launch {
         try{
             establecimientoRepository.checkIsFavorite().collectLatest {
@@ -127,7 +134,7 @@ class EstablecimientoViewModel(
             }
         }
     }
-    fun getReviews(){
+    private fun getReviews(){
         viewModelScope.launch {
                 try{
                     val res =

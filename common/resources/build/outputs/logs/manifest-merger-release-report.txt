@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml:2:13-83
+INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml:2:13-83
+INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml:2:13-83
+	package
+		INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml
+		ADDED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml:2:13-83
+		INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml
+	xmlns:android
+		ADDED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml:2:23-81
+uses-sdk
+INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml reason: use-sdk injection requested
+INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml
+INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml
+INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml
+INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml
+	android:targetSdkVersion
+		INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml
+		ADDED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml
+		INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml
+	android:minSdkVersion
+		INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml
+		ADDED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml
+		INJECTED from D:\Regate\RegateApp\common\resources\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest8238091513537302020.xml

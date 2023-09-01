@@ -125,7 +125,7 @@ class EstablecimientoReservaViewModel(
         viewModelScope.launch {
             try{
                 updateEstablecimiento.executeSync(UpdateEstablecimiento.Params(id = establecimientoId))
-                updateInstalaciones.executeSync(UpdateInstalaciones.Params(id = establecimientoId))
+                updateInstalaciones.executeSync(UpdateInstalaciones.Params(id = establecimientoId,forceLoad = true))
             }catch(e:Exception){
                 Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")
             }

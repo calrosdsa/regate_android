@@ -8,6 +8,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,6 +54,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -60,6 +62,7 @@ import androidx.paging.compose.LazyPagingItems
 import app.regate.common.composes.components.images.ProfileImage
 import app.regate.common.composes.components.input.MessengerIcon
 import app.regate.common.composes.components.input.MessengerIcon2
+import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.util.itemsCustomIndexed
@@ -70,11 +73,17 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
 import app.regate.data.common.ReplyMessageData
+import app.regate.data.dto.empresa.grupo.CupoInstalacion
+import app.regate.data.dto.empresa.grupo.GrupoMessageInstalacion
+import app.regate.data.dto.empresa.grupo.GrupoMessageType
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
+import kotlin.time.Duration.Companion.minutes
 
 
 @Composable
@@ -83,7 +92,9 @@ internal fun Chat (
     colors: List<Color>,
     setReply:(message:ReplyMessageData?)->Unit,
     formatShortDate:(Instant)->String,
+    formatShortTime:(Instant)->String,
     formatterRelatimeTime:(date:Instant)->String,
+    navigateToInstalacionReserva:(Long,Long,List<CupoInstalacion>)->Unit,
     lazyListState:LazyListState,
     modifier: Modifier = Modifier,
     user:User? = null,
@@ -209,9 +220,12 @@ internal fun Chat (
                                         )
                                     }
 
-                                    Text(
-                                        text = item.message.content,
-                                        style = MaterialTheme.typography.bodySmall,
+                                    MessageContent(
+                                        content = item.message.content,
+                                        messageType = item.message.type_message,
+                                        navigateToInstalacionReserva = navigateToInstalacionReserva,
+                                        formatShortDate = formatShortDate,
+                                        formatShortTime = formatShortTime,
                                     )
                                     Row(
                                         modifier = Modifier.fillMaxWidth(),
@@ -316,9 +330,12 @@ internal fun Chat (
                                             }
                                         }, getUserProfileGrupo = getUserProfileGrupo)
                                     }
-                                    Text(
-                                        text = item.message.content,
-                                        style = MaterialTheme.typography.bodySmall
+                                    MessageContent(
+                                        content = item.message.content,
+                                        messageType = item.message.type_message,
+                                        navigateToInstalacionReserva = navigateToInstalacionReserva,
+                                        formatShortDate = formatShortDate,
+                                        formatShortTime = formatShortTime,
                                     )
                                     Text(
                                         text = formatterRelatimeTime(item.message.created_at),
@@ -348,6 +365,55 @@ internal fun Chat (
                             )
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun MessageContent(
+    content:String,
+    messageType:Int,
+    navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
+    formatShortDate: (Instant) -> String,
+    formatShortTime: (Instant) -> String,
+    modifier: Modifier = Modifier
+){
+    when(messageType){
+        GrupoMessageType.MESSAGE.ordinal ->{
+            Text(
+                text = content,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = modifier
+            )
+        }
+        GrupoMessageType.INSTALACION.ordinal ->{
+            val instalacion = try{ Json.decodeFromString<GrupoMessageInstalacion>(content) }catch (e:Exception){ null }
+            if(instalacion != null){
+                Column(modifier = Modifier.clickable {
+                    navigateToInstalacionReserva(instalacion.id.toLong(),instalacion.establecimiento_id.toLong(),instalacion.cupos)
+                }) {
+                    PosterCardImage(model = instalacion.photo,modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp))
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(text = instalacion.name,style = MaterialTheme.typography.labelLarge)
+                    Text(text = "${stringResource(id = R.string.total_price)}: ${instalacion.total_price}",
+                        style = MaterialTheme.typography.labelMedium)
+                    Text(
+                        text = stringResource(id = R.string.time_game_will_played),
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                    Text(
+                        text = formatShortDate(instalacion.cupos.first().time) +
+                                " ${formatShortTime(instalacion.cupos.first().time)} a ${
+                                    formatShortTime(
+                                        instalacion.cupos.last().time.plus(30.minutes)
+                                    )
+                                }",
+                        style = MaterialTheme.typography.labelMedium
+                    )
                 }
             }
         }
@@ -387,54 +453,3 @@ fun MessageReply(
     }
     }
 }
-
-
-
-
-
-
-//fun <T : Any> LazyListScope.itemsCustom(
-//    items: LazyPagingItems<T>,
-//    key: ((item: T) -> Any)? = null,
-//    contentType: (item: T) -> Any? = { null },
-//    itemContent: @Composable LazyItemScope.(item: T?) -> Unit,
-//) {
-//    items(
-//        count = items.itemCount,
-//        contentType = { index ->
-//            items.peek(index)?.let { contentType(it) }
-//        },
-//        key = if (key == null) {
-//            null
-//        } else {
-//            { index ->
-//                val item = items.peek(index)
-//                if (item == null) {
-//                    PagingPlaceholderKey(index)
-//                } else {
-//                    key(item)
-//                }
-//            }
-//        },
-//    ) { index ->
-//        itemContent(items[index])
-//    }
-//}
-//
-//@SuppressLint("BanParcelableUsage")
-//internal data class PagingPlaceholderKey(private val index: Int) : Parcelable {
-//    override fun writeToParcel(parcel: Parcel, flags: Int) = parcel.writeInt(index)
-//    override fun describeContents(): Int = 0
-//
-//    companion object {
-//        @Suppress("unused")
-//        @JvmField
-//        val CREATOR: Parcelable.Creator<PagingPlaceholderKey> =
-//            object : Parcelable.Creator<PagingPlaceholderKey> {
-//                override fun createFromParcel(parcel: Parcel) =
-//                    PagingPlaceholderKey(parcel.readInt())
-//
-//                override fun newArray(size: Int) = arrayOfNulls<PagingPlaceholderKey?>(size)
-//            }
-//    }
-//}

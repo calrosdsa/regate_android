@@ -42,6 +42,7 @@ import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
+import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
@@ -52,7 +53,8 @@ typealias ChatGrupo  = @Composable (
     navigateUp:()->Unit,
     openAuthBottomSheet:()->Unit,
     navigateToCreateSala:(id:Long)->Unit,
-    navigateToGroup:(id:Long)->Unit
+    navigateToGroup:(id:Long)->Unit,
+    navigateToInstalacionReserva:(Long,Long)->Unit
         ) -> Unit
 
 @Inject
@@ -62,14 +64,16 @@ fun ChatGrupo(
     @Assisted navigateUp: () -> Unit,
     @Assisted  openAuthBottomSheet:()->Unit,
     @Assisted navigateToCreateSala: (id: Long) -> Unit,
-    @Assisted navigateToGroup: (id: Long) -> Unit
+    @Assisted navigateToGroup: (id: Long) -> Unit,
+    @Assisted navigateToInstalacionReserva:(Long,Long)->Unit
 ){
     ChatGrupo(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
         openAuthBottomSheet = openAuthBottomSheet,
         navigateToCreateSala = navigateToCreateSala,
-        navigateToGroup = navigateToGroup
+        navigateToGroup = navigateToGroup,
+        navigateToInstalacionReserva = navigateToInstalacionReserva
     )
 }
 
@@ -79,7 +83,8 @@ internal fun ChatGrupo(
     navigateUp: () -> Unit,
     openAuthBottomSheet: () -> Unit,
     navigateToCreateSala: (id: Long) -> Unit,
-    navigateToGroup: (id: Long) -> Unit
+    navigateToGroup: (id: Long) -> Unit,
+    navigateToInstalacionReserva: (Long, Long) -> Unit,
 ){
     val viewState by viewModel.state.collectAsState()
 
@@ -97,6 +102,10 @@ internal fun ChatGrupo(
         getUserProfileGrupo = viewModel::getUserGrupo,
         formatShortDate = {
             formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)
+        },
+        formatShortTime = formatter::formatShortTime,
+        navigateToInstalacionReserva = {instalacionId,establecimientoId,cupos->
+            viewModel.navigateToInstalacionReserva(instalacionId,establecimientoId,cupos,navigateToInstalacionReserva)
         }
 //        formatShortTime = {formatter.formatShortTime(it.toInstant())},
 //        formatDate = {formatter.formatWithSkeleton(it.toInstant().toEpochMilliseconds(),formatter.monthDaySkeleton)}
@@ -116,7 +125,9 @@ internal fun ChatGrupo(
     navigateToCreateSala: (id: Long) -> Unit,
     navigateToGroup: (id: Long) -> Unit,
     getUserProfileGrupo:(id:Long)->UserProfileGrupo?,
-    formatShortDate:(Instant)->String
+    formatShortDate:(Instant)->String,
+    formatShortTime:(Instant)->String,
+    navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit
 ) {
     val colors = listOf(
         MaterialTheme.colorScheme.inverseOnSurface,
@@ -238,8 +249,9 @@ internal fun ChatGrupo(
                 },
                 lazyListState = lazyListState,
                 getUserProfileGrupo = getUserProfileGrupo,
-                formatShortDate = formatShortDate
-
+                formatShortDate = formatShortDate,
+                navigateToInstalacionReserva = navigateToInstalacionReserva,
+                formatShortTime = formatShortTime
             )
         }
     }

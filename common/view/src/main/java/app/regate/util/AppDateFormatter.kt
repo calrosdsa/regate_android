@@ -148,6 +148,11 @@ class AppDateFormatter(
         val timestamp = datetime.toKotlinLocalDateTime().toInstant(TimeZone.UTC).toEpochMilliseconds()
         return formatWithSkeleton(timestamp,monthDaySkeleton)
     }
+    fun getLocalDateTimeFromString(date:String):LocalDateTime{
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val datetime = java.time.LocalDateTime.parse(date,formatter)
+        return datetime.toKotlinLocalDateTime()
+    }
     fun formatShortRelativeTime(dateTime: Instant): String {
         val nowInstant = kotlinx.datetime.Clock.System.now()
         val now = nowInstant.toLocalDateTime(TimeZone.currentSystemDefault())

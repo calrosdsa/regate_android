@@ -160,6 +160,7 @@
     <string name="total_paid">Total paid </string>
     <string name="total_remaining">Total remaining</string>
     <string name="groups">Groups</string>
+    <string name="time_game_will_played">Time the game will be played</string>
 
 
 </resources>

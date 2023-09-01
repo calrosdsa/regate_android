@@ -107,8 +107,8 @@ class ChatSalaViewModel(
 //            runBlocking {
 //               client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
 //                val ws = client.webSocketSession {  }
-//             client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
-                client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
+             client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
+//                client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
                     port = 9090, path = "/v1/ws/chat-sala?id=${salaId}"){
                     launch { outputMessage() }
 //                    launch { inputMessage() }

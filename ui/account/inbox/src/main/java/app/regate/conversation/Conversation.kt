@@ -72,8 +72,6 @@ fun Conversation (
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp
     )
-
-
 }
 
 @Composable

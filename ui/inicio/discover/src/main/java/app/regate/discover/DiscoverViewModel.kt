@@ -1,6 +1,7 @@
 package app.regate.discover
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -15,6 +16,7 @@ import app.regate.data.dto.account.reserva.ReservaDto
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.instalacion.FilterInstalacionData
 import app.regate.data.dto.empresa.instalacion.InstalacionDto
+import app.regate.data.dto.notifications.SalaConflictPayload
 import app.regate.data.instalacion.CupoRepository
 import app.regate.data.instalacion.InstalacionRepository
 import app.regate.data.reserva.ReservaRepository
@@ -26,6 +28,7 @@ import app.regate.models.Cupo
 import app.regate.models.LabelType
 import app.regate.models.Labels
 import app.regate.settings.AppPreferences
+import app.regate.util.AppDateFormatter
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
@@ -49,17 +52,19 @@ import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
 @Inject
 class DiscoverViewModel(
-    private val reservaRepository: ReservaRepository,
+    @Assisted savedStateHandle: SavedStateHandle,
     private val appPreferences: AppPreferences,
     private val instalacionRepository: InstalacionRepository,
     observeLabelType: ObserveLabelType,
-    private val cupoRepository: CupoRepository
-//    private val instalacionRepository: InstalacionRepository,
+    private val cupoRepository: CupoRepository,
+    private val appDateFormatter: AppDateFormatter
 ): ViewModel() {
+    private var dataFilter =  savedStateHandle.get<String>("data")?:""
     private val filterData = MutableStateFlow(FILTER_DATA)
     private val loadingState = ObservableLoadingCounter()
     val pagedList: Flow<PagingData<InstalacionDto>> = Pager(PAGING_CONFIG){
@@ -98,13 +103,10 @@ class DiscoverViewModel(
     init{
         observeLabelType(ObserveLabelType.Params(LabelType.CATEGORIES))
         viewModelScope.launch {
-//            appPreferences.filter = Json.encodeToString(FilterInstalacionData())
             appPreferences.observeAddress().flowOn(Dispatchers.IO).collectLatest{
                 try{
                     val addressUser = getDataEntityFromJson<AddressDevice>(it)
-                    Log.d("DEBUG_APP_ADDRESS",it)
                     addressDevice.emit(getDataEntityFromJson<AddressDevice>(it))
-//                    if(it.isNotBlank()){
                     val filter = Json.decodeFromString<FilterInstalacionData>(appPreferences.filter)
                     val update = filter.copy(
                         longitud = addressUser?.longitud,
@@ -120,22 +122,14 @@ class DiscoverViewModel(
         viewModelScope.launch {
             appPreferences.observeFilter().flowOn(Dispatchers.IO).collectLatest{
                 try{
-                Log.d("DEBUG_APP",it)
-                getDataEntityFromJson<FilterInstalacionData>(it)?.let {filter->
-//                    filterData.emit(filter)
-                    getInstalaciones(filter)
+                    getDataEntityFromJson<FilterInstalacionData>(it)?.let {filter->
+                        getInstalaciones(filter)
                 }
                 }catch(e:Exception){
                     Log.d("DEBUG_APP_ERROR_ADD",e.localizedMessage?:"")
                 }
             }
-//            }
         }
-//        viewModelScope.launch {
-//            filterData.drop(1).collectLatest{
-//            getInstalaciones()
-//            }
-//        }
     }
 
     companion object {
@@ -181,26 +175,18 @@ class DiscoverViewModel(
                 "${Instant.fromEpochMilliseconds(filter.currentDate).toLocalDateTime(TimeZone.UTC).date} $it"
             }
             try {
-//                loadingState.addLoader()
-//                val address = getAddress()
+
                 val data = filter.copy(
                     time = listTime,
                     date = listDate,
                     isInit = true
                     )
                 filterData.emit(data)
-//                val res = instalacionRepository.filterInstacion(
-//                   data, 1)
-//                Log.d("DEBUG_",filter.toString())
-////                Log.d("DEBUG_",res.toString())
-//                instalacionResult.tryEmit(res)
-//                loadingState.removeLoader()
             } catch (e: ResponseException) {
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"c")
                 uiMessageManager.emitMessage(UiMessage(message = e.response.body()))
             } catch (e: Exception) {
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"c")
-//                loadingState.removeLoader()
                 uiMessageManager.emitMessage(UiMessage(message = e.localizedMessage ?: ""))
             }
         }
@@ -249,5 +235,32 @@ class DiscoverViewModel(
         viewModelScope.launch {
             uiMessageManager.clearMessage(id)
         }
+    }
+
+    fun getDataFilter(){
+        try{
+            if(dataFilter.isNotBlank()){
+                Log.d("DEBUG_APP", dataFilter)
+                val filterPayload = Json.decodeFromString<SalaConflictPayload>(dataFilter)
+                appPreferences.filter =  Json.encodeToString(filterData.value.copy(
+                    currentDate = filterPayload.created_at.toEpochMilliseconds(),
+                    day_week = Instant.fromEpochMilliseconds(filterPayload.created_at.toEpochMilliseconds())
+                        .toLocalDateTime(
+                            TimeZone.UTC
+                        ).dayOfWeek.value,
+                    currentTime = appDateFormatter.getLocalDateTimeFromString(filterPayload.horas[0]).time,
+                    interval = (30 * filterPayload.horas.size).toLong()
+                ))
+                dataFilter = ""
+            }else{
+                Log.d("DEBUG_APP", "is null")
+            }
+        }catch (e:Exception){
+            Log.d("DEBUG_APP_ERR",e.localizedMessage?:"")
+        }
+    }
+
+    fun isDateAvailable():Boolean{
+        return dataFilter.isNotBlank()
     }
 }

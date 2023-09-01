@@ -125,5 +125,6 @@
     <string name="total_paid">Total pagado</string>
     <string name="total_remaining">Total restante</string>
     <string name="groups">Grupos</string>
+    <string name="time_game_will_played">Hora en que se jugará</string>
 
 </resources>

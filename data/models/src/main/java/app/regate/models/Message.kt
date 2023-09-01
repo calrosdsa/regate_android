@@ -2,6 +2,7 @@ package app.regate.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import app.regate.data.dto.empresa.grupo.GrupoMessageType
 import kotlinx.datetime.Instant
 
 @Entity(
@@ -25,6 +26,7 @@ data class Message(
     val grupo_id:Long,
     val content:String,
     val created_at:Instant,
+    val type_message:Int = GrupoMessageType.MESSAGE.ordinal,
     val profile_id:Long,
     val reply_to:Long? = null,
     val sended:Boolean = false,

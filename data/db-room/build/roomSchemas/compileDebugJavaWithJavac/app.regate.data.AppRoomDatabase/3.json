@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "d6f3807b75bee6d62a8ea84b7e5d23bc",
+    "identityHash": "9d51eded58213f3a92a63d19801b754d",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -316,7 +316,7 @@
       },
       {
         "tableName": "messages",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `type_message` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -340,6 +340,12 @@
             "fieldPath": "created_at",
             "columnName": "created_at",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type_message",
+            "columnName": "type_message",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -945,7 +951,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd6f3807b75bee6d62a8ea84b7e5d23bc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9d51eded58213f3a92a63d19801b754d')"
     ]
   }
 }

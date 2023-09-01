@@ -69,7 +69,7 @@ fun NavController.currentScreenAsState(): State<String> {
                 destination.hierarchy.any { it.route == Route.HOME } -> {
                     selectedItem.value = Route.HOME
                 }
-                destination.hierarchy.any { it.route == Route.DISCOVER } -> {
+                destination.hierarchy.any { it.route == Route.DISCOVER + "?data={data}" } -> {
                     selectedItem.value = Route.DISCOVER
                 }
                 destination.hierarchy.any { it.route == Route.GRUPOS} -> {

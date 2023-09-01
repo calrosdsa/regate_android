@@ -1,6 +1,7 @@
 package app.regate.data.instalacion
 
 import app.regate.data.daos.CupoDao
+import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import app.regate.inject.ApplicationScope
 import app.regate.models.Cupo
 import app.regate.util.AppCoroutineDispatchers
@@ -25,7 +26,6 @@ class CupoRepository (
     }
     suspend fun insertCuposReserva(dates:List<Instant>,id:Long,price:Double){
         withContext(dispatchers.computation){
-
         cupoDao.deleteCupos()
         dates.map {
             val cupoD = Cupo(
@@ -35,6 +35,20 @@ class CupoRepository (
             )
             cupoDao.upsert(cupoD)
         }
+        }
+    }
+
+    suspend fun insertDeleteCupos(cupos:List<CupoInstalacion>,id:Long){
+        withContext(dispatchers.computation){
+            cupoDao.deleteCupos()
+            cupos.map {
+                val cupoD = Cupo(
+                    time = it.time,
+                    instalacion_id =id,
+                    price = it.price
+                )
+                cupoDao.upsert(cupoD)
+            }
         }
     }
 

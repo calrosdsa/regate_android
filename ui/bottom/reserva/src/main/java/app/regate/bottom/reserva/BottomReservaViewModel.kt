@@ -8,6 +8,10 @@ import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.coin.ConversationRepository
 import app.regate.data.dto.ResponseMessage
+import app.regate.data.dto.empresa.grupo.CupoInstalacion
+import app.regate.data.dto.empresa.grupo.GrupoMessageData
+import app.regate.data.dto.empresa.grupo.GrupoMessageInstalacion
+import app.regate.data.dto.empresa.grupo.GrupoMessageType
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.data.instalacion.InstalacionRepository
 import app.regate.data.reserva.ReservaRepository
@@ -30,6 +34,8 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -141,6 +147,29 @@ class BottomReservaViewModel(
             Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")
             //TODO()
         }
+        }
+    }
+
+    fun navigateToInstalacion(navigate:(String)->Unit){
+        try{
+            val cupos = state.value.cupos.map{ CupoInstalacion(
+                price = it.price,
+                time = it.time
+            )}
+            val instalacionReserva = GrupoMessageInstalacion(
+                id = instalacionId.toInt(),
+                establecimiento_id = establecimientoId.toInt(),
+                photo = state.value.instalacion?.portada,
+                name = state.value.instalacion?.name?:"",
+                cupos = cupos
+            )
+            val data = GrupoMessageData(
+                type_data = GrupoMessageType.INSTALACION.ordinal,
+                data =  Json.encodeToString(instalacionReserva)
+            )
+            navigate(Json.encodeToString(data))
+        }catch (e:Exception){
+            //TODO()
         }
     }
 

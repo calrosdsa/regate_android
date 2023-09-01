@@ -74,6 +74,7 @@ typealias Reservar = @Composable (
     navigateToEstablecimiento:(Long)->Unit,
     navigateToConversation:(Long,Long)->Unit,
     navigateToCreateSala:(Long)->Unit,
+    navigateToSelectGroup:(String)->Unit
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
 
@@ -86,6 +87,7 @@ fun Reservar(
     @Assisted navigateToEstablecimiento: (Long) -> Unit,
     @Assisted navigateToConversation: (Long,Long) -> Unit,
     @Assisted navigateToCreateSala: (Long) -> Unit,
+    @Assisted navigateToSelectGroup: (String) -> Unit
 //    @Assisted navigateToReserva:()->Unit,
     ){
     Reservar(
@@ -94,7 +96,8 @@ fun Reservar(
         navigateUp = navigateUp,
         navigateToEstablecimiento=navigateToEstablecimiento,
         navigateToConversation = navigateToConversation,
-        navigateToCreateSala = navigateToCreateSala
+        navigateToCreateSala = navigateToCreateSala,
+        navigateToSelectGroup = navigateToSelectGroup
 //        navigateToReserva = navigateToReserva
     )
 }
@@ -107,7 +110,8 @@ internal fun Reservar(
     navigateUp: () -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
     navigateToConversation: (Long,Long) -> Unit,
-    navigateToCreateSala: (Long) -> Unit
+    navigateToCreateSala: (Long) -> Unit,
+    navigateToSelectGroup: (String) -> Unit
 //    navigateToReserva: () -> Unit,
 ){
     val state by viewModel.state.collectAsState()
@@ -130,7 +134,10 @@ internal fun Reservar(
         formatShortTime = {formatter.formatShortTime(it)},
         formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
         openMap = appUtil::openMap,
-        navigateToCreateSala = navigateToCreateSala
+        navigateToCreateSala = navigateToCreateSala,
+        navigateToSelectGroup = {
+            viewModel.navigateToInstalacion(navigateToSelectGroup)
+        }
 //        navigateToReserva = navigateToReserva,
 //        openBottomSheet = { viewModel.openBottomSheet { navigateToReserva () } }
     )
@@ -149,7 +156,8 @@ internal fun Reservar(
     formatShortTime:(time:Instant)->String,
     formatDate:(date:Instant)->String,
     openMap:(lng:String?,lat:String?,label:String?)->Unit,
-    navigateToCreateSala: (Long) -> Unit
+    navigateToCreateSala: (Long) -> Unit,
+    navigateToSelectGroup: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val dismissSnackbarState = rememberDismissState(
@@ -210,6 +218,16 @@ internal fun Reservar(
                                 text = { Text(text = stringResource(id = R.string.create_sala)) },
                                 onClick = { viewState.instalacion?.let { navigateToCreateSala(it.establecimiento_id) }  }
                             )
+                        DropdownMenuItem(
+                            text = { Text(text = "Enviar a un grupo") },
+                            onClick = {
+                            if(viewState.authState == AppAuthState.LOGGED_IN){
+                                navigateToSelectGroup()
+                            }else{
+                                openAuthDialog()
+                            }
+                            }
+                        )
                     }
                 }
             })

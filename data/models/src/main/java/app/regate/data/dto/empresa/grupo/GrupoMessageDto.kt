@@ -10,6 +10,7 @@ data class GrupoMessageDto(
     val id: Long = 0,
     val profile_id: Long,
     val grupo_id:Long,
+    val type_message:Int = GrupoMessageType.MESSAGE.ordinal,
     val reply_to:Long? = null,
     val reply_message: ReplyMessage = ReplyMessage.Empty
     )

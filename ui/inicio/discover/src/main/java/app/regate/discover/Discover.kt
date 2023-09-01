@@ -60,6 +60,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -103,7 +104,7 @@ typealias DiscoverScreen = @Composable (
 @Composable
 fun DiscoverScreen (
     @Assisted navController: NavController,
-    viewModelFactory:()->DiscoverViewModel
+    viewModelFactory:(SavedStateHandle)->DiscoverViewModel
 ){
         Discover(
             viewModel = viewModel(factory = viewModelFactory),
@@ -141,12 +142,19 @@ internal fun Discover(
             }
         },
     )
-    val refreshState = rememberPullRefreshState(refreshing = viewState.loading, onRefresh = { lazyPagingItems.refresh() })
+    val refreshState = rememberPullRefreshState(refreshing = viewState.loading, onRefresh = {
+        lazyPagingItems.refresh()
+//        viewModel.getDataFilter()
+    })
     val dateState = rememberDatePickerState(
         initialSelectedDateMillis = Clock.System.now().toEpochMilliseconds()
     )
     LaunchedEffect(key1 = dateState.selectedDateMillis, block = {
-        dateState.selectedDateMillis?.let { viewModel.setCurrentDate(it) }
+        if(viewModel.isDateAvailable()){
+            viewModel.getDataFilter()
+        }else{
+            dateState.selectedDateMillis?.let { viewModel.setCurrentDate(it) }
+        }
     })
     viewState.message?.let { message ->
         LaunchedEffect(message) {

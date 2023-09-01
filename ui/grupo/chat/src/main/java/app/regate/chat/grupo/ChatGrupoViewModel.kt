@@ -9,13 +9,16 @@ import app.cash.paging.PagingData
 import app.cash.paging.cachedIn
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
+import app.regate.compoundmodels.InstalacionCupos
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.data.common.MessageData
 import app.regate.data.daos.MessageProfileDao
+import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import app.regate.data.dto.empresa.grupo.GrupoEvent
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.grupo.GrupoRepository
+import app.regate.data.instalacion.CupoRepository
 import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveGrupo
@@ -56,6 +59,7 @@ class ChatGrupoViewModel(
     private val client:HttpClient,
     private val grupoRepository:GrupoRepository,
     private val usersRepository: UsersRepository,
+    private val cupoRepository: CupoRepository,
 //    private val profileDao: ProfileDao,
     private val messageProfileDao: MessageProfileDao,
     observeUser: ObserveUser,
@@ -70,7 +74,6 @@ class ChatGrupoViewModel(
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val messageChat = MutableStateFlow<Message?>(null)
-
     val pagedList: Flow<PagingData<MessageProfile>> =
         pagingInteractor.flow.cachedIn(viewModelScope)
     val state:StateFlow<ChatGrupoState> = combine(
@@ -177,7 +180,7 @@ class ChatGrupoViewModel(
                         content = data.content,
                         grupo_id = grupoId,
                         reply_to = data.reply_to,
-                        id = data.id
+                        id = data.id,
                     )
                     val event =  GrupoEvent(
                         type = "message",
@@ -200,7 +203,6 @@ class ChatGrupoViewModel(
                 Log.d("DEBUG_ERROR",e.message.toString())
                 Log.d("DEBUG_ERROR","serialization exeption")
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
-
             }catch (e:Exception){
                 Log.d("DEBUG_ERROR","fail to fetchUsers")
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
@@ -240,6 +242,19 @@ class ChatGrupoViewModel(
     fun getUserGrupo(profileId:Long):UserProfileGrupo?{
         return state.value.usersGrupo.find {
             it.id == profileId
+        }
+    }
+
+    fun navigateToInstalacionReserva(instalacionId:Long,establecimientoId:Long,cupos:List<CupoInstalacion>,
+      navigate:(Long,Long)->Unit){
+        viewModelScope.launch {
+            try{
+                val res = async { cupoRepository.insertDeleteCupos(cupos,instalacionId) }
+                res.await()
+                navigate(instalacionId,establecimientoId)
+            }catch(e:Exception){
+                //TODO()
+            }
         }
     }
 

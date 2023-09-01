@@ -29,6 +29,7 @@ import app.regate.common.resources.R
 import app.regate.data.AppRoomDatabase
 import app.regate.data.dto.notifications.MessageGroupPayload
 import app.regate.data.dto.notifications.MessagePayload
+import app.regate.data.dto.notifications.SalaConflictPayload
 import app.regate.data.dto.notifications.SalaPayload
 import app.regate.data.dto.notifications.TypeNotification
 import app.regate.extensions.unsafeLazy
@@ -97,9 +98,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
             if(TypeNotification.NOTIFICATION_SALA_RESERVATION_CONFLICT.ordinal == data["type"]?.toInt()){
                 try{
-                    val payload = Json.decodeFromString<MessagePayload>(data["payload"].toString())
+                    val payload = Json.decodeFromString<SalaConflictPayload>(data["payload"].toString())
                     scope.launch {
-                    handler.sendNotificationSalaConflict(applicationContext,payload)
+                    handler.sendNotificationSalaConflict(applicationContext,payload,data["payload"].toString())
                     }
                 }catch (e:Exception){
                     Log.d(TAG,e.localizedMessage?:"")

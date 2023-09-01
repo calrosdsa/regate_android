@@ -15,6 +15,7 @@ import app.regate.common.resources.R
 import app.regate.data.AppRoomDatabase
 import app.regate.data.daos.NotificationDao
 import app.regate.data.dto.notifications.MessagePayload
+import app.regate.data.dto.notifications.SalaConflictPayload
 import app.regate.data.dto.notifications.SalaPayload
 import app.regate.extensions.unsafeLazy
 import app.regate.home.MainActivity
@@ -75,13 +76,13 @@ class HandleNotifications {
     }
    }
 
-    suspend fun sendNotificationSalaConflict(context: Context, payload: MessagePayload){
+    suspend fun sendNotificationSalaConflict(context: Context, payload: SalaConflictPayload,payloadString:String){
         try{
             val title = context.getString(R.string.problem_with_room)
             val db = AppRoomDatabase.getInstance(context)
             db.notificationDao().upsert(
                 Notification(
-                    content = payload.message,
+                    content = "Lamentamos informarte que alguien más ha reservado la cancha que habías seleccionado para la sala.",
                     typeEntity = TypeEntity.NONE,
                     entityId = payload.id,
                     title = title
@@ -90,7 +91,7 @@ class HandleNotifications {
             AppRoomDatabase.destroyInstance()
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "https://example.com/sala_id=${payload.id}".toUri(),
+                "https://example.com/discover/data=${payloadString}".toUri(),
                 context,
                 MainActivity::class.java
             )
@@ -98,12 +99,21 @@ class HandleNotifications {
             taskBuilder.addNextIntentWithParentStack(taskDetailIntent)
             val pendingIntent = taskBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
             val CHANNEL_ID = context.getString(R.string.notification_sala_channel)
+//            val snoozeIntent = Intent(this, MyBroadcastReceiver::class.java).apply {
+//                action = ACTION_SNOOZE
+//                putExtra(EXTRA_NOTIFICATION_ID, 0)
+//            }
+//            val snoozePendingIntent: PendingIntent =
+//                PendingIntent.getBroadcast(this, 0, snoozeIntent, 0)
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(payload.message)
                 .setSmallIcon(R.drawable.logo_app)
-                .setContentIntent(pendingIntent)
+//                .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
+                .addAction(
+                    androidx.core.R.drawable.notification_action_background,"Ver mas opciones",
+                    pendingIntent)
                 .build()
 
             with(NotificationManagerCompat.from(context)) {

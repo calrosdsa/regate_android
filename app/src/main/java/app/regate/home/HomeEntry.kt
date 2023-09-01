@@ -34,6 +34,8 @@ import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
+const val uri = "https://example.com"
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -92,7 +94,6 @@ internal fun AppNavigation(
     modifier: Modifier = Modifier,
 //    navigateToMap:()->Unit
 ) {
-    val uri = "https://example.com"
 //    val context = LocalContext.current as Activity
     AnimatedNavHost(
         navController = navController,
@@ -136,7 +137,8 @@ internal fun AppNavigation(
                 navigateToConversation = {it1,it2->
                     navController.navigate(Route.CONVERSATION id it1 id it2 )
                 },
-                navigateToCreateSala = {navController.navigate(Route.CREAR_SALA id it id 0 id 1)}
+                navigateToCreateSala = {navController.navigate(Route.CREAR_SALA id it id 0 id 1)},
+                navigateToSelectGroup = {navController.navigate(Route.MY_GROUPS + "?data=${it}")}
             )
         }
 
@@ -336,20 +338,36 @@ internal fun AppNavigation(
         }
 
         animatedComposable(
-            route = Route.CHAT_GRUPO arg "id",
+            route = Route.CHAT_GRUPO arg "id" + "?data={data}",
             arguments = listOf(
                 navArgument("id") { type = NavType.LongType },
-            ),
+                navArgument("data") { type = NavType.StringType;defaultValue ="" },
+                ),
             deepLinks = listOf(navDeepLink { uriPattern = "$uri/chat-grupo/grupo_id={id}" })
         ) {
             composeScreens.chatGrupo(
                 navigateUp = navController::navigateUp,
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
                 navigateToCreateSala = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id it)},
-                navigateToGroup = { navController.navigate(Route.GRUPO id it)}
+                navigateToGroup = { navController.navigate(Route.GRUPO id it)},
+                navigateToInstalacionReserva = {instalacionId,establecimientoId ->
+                    navController.navigate(Route.RESERVAR id instalacionId id establecimientoId)
+                },
                 )
         }
-
+        animatedComposable(
+            route = Route.MY_GROUPS + "?data={data}",
+            arguments = listOf(
+                navArgument("data") { type = NavType.StringType;defaultValue ="" },
+            ),
+        ) {
+            composeScreens.myGroups(
+                navigateUp = navController::navigateUp,
+                navigateToChatGrupo= {it1,it2->
+                    navController.navigate(Route.CHAT_GRUPO + "/$it1?data=$it2")
+                }
+                )
+        }
         animatedComposable(
             route = Route.CHAT_SALA arg "id" arg "title",
             arguments = listOf(
@@ -419,7 +437,6 @@ internal fun AppNavigation(
                 navArgument("id") { type = NavType.LongType },
                 navArgument("establecimiento_id") { type = NavType.LongType },
                 navArgument("instalacion_id") { type = NavType.LongType },
-
                 )
         ){
             composeScreens.reserva(
@@ -568,7 +585,12 @@ private fun NavGraphBuilder.AddMainNav(
 //                navigateToMap = navigateToMap
             )
         }
-        composable(route= Route.DISCOVER) {
+        composable(route= Route.DISCOVER+ "?data={data}",
+            arguments = listOf(navArgument("data") {
+                defaultValue = ""
+                type = NavType.StringType
+            }),
+            deepLinks = listOf(navDeepLink { uriPattern = "$uri/discover/data={data}" })) {
             composeScreens.discover(navController = navController)
         }
         composable(route = Route.ACCOUNT){

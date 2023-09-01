@@ -169,11 +169,11 @@ internal fun Chat (
                                             bottom = 5.dp
                                         )
                                 ) {
-                                    Text(
-                                        text = "${item.profile?.nombre ?: ""} ${item.profile?.apellido ?: ""}",
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.primary
-                                    )
+//                                    Text(
+//                                        text = "${item.profile?.nombre ?: ""} ${item.profile?.apellido ?: ""}",
+//                                        style = MaterialTheme.typography.labelSmall,
+//                                        color = MaterialTheme.colorScheme.primary
+//                                    )
 
                                     if (item.message.reply_to != null) {
                                         MessageReply(
@@ -196,10 +196,6 @@ internal fun Chat (
                                                             e.localizedMessage ?: ""
                                                         )
                                                     }
-
-////                                                    lazyPagingItems.itemCount
-//                                                    lazyListState.scrollToItem( lazyPagingItems.itemCount)
-
                                                 }
                                             }, getUserProfileGrupo = getUserProfileGrupo
                                         )

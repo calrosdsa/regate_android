@@ -16,8 +16,9 @@ class UpdateEstablecimientoDetail(
 
     override suspend fun doWork(params: Params) {
         withContext(dispatchers.computation){
-            establecimientoRepository.updateEstablecimientoDetail(params.id)
+            establecimientoRepository.updateEstablecimientoDetail(params.id).also {
             instalacionRepository.getInstalaciones(params.id)
+            }
         }
     }
 
