@@ -1,6 +1,8 @@
 package app.regate.conversation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,9 +13,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.IconButton
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -119,20 +123,27 @@ internal fun Conversation(
     Scaffold(
         topBar = {
 //            SimpleTopBar(navigateUp =  navigateUp, title = stringResource(id = R.string.inbox))
+//            Surface(contentColor = MaterialTheme.colorScheme.onPrimary,
+//            color = MaterialTheme.colorScheme.primary) {
+            Column {
               Row(modifier = Modifier
                   .fillMaxWidth()
-                  .padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
+                  .padding(5.dp)
+                  ,verticalAlignment = Alignment.CenterVertically) {
                   IconButton(onClick = { navigateUp() }) {
                       Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                   }
+                  Spacer(modifier = Modifier.width(5.dp))
                   viewState.establecimiento?.let {
-                  PosterCardImage(model = it.photo,modifier = Modifier.size(40.dp),
+                  PosterCardImage(model = it.photo,modifier = Modifier.size(35.dp),
                   shape = CircleShape)
                       Spacer(modifier = Modifier.width(10.dp))
                       Text(text = it.name,style = MaterialTheme.typography.titleMedium)
                   }
-
               }
+                Divider()
+            }
+//            }
         },
         bottomBar = {
             ChatInput(

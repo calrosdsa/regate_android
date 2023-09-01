@@ -24,6 +24,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.components.item.SalaItem
+import app.regate.common.composes.components.item.SalaItemUser
 import app.regate.common.composes.ui.Loader
 import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.viewModel
@@ -35,14 +36,14 @@ import me.tatarka.inject.annotations.Inject
 
 
 typealias UserSalas = @Composable (
-    navigateToSala:(Long)->Unit,
+    navigateToSala:(Long,String)->Unit,
 ) -> Unit
 
 @Inject
 @Composable
 fun UserSalas(
     viewModelFactory:()-> UserSalasViewModel,
-    @Assisted navigateToSala: (Long) -> Unit,
+    @Assisted navigateToSala: (Long,String) -> Unit,
 ){
     UserSalas(
         viewModel = viewModel(factory = viewModelFactory),
@@ -53,7 +54,7 @@ fun UserSalas(
 @Composable
 internal fun UserSalas(
     viewModel: UserSalasViewModel,
-    navigateToSala: (Long) -> Unit,
+    navigateToSala: (Long,String) -> Unit,
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -75,7 +76,7 @@ internal fun UserSalas(
     lazyPagingItems: LazyPagingItems<SalaDto>,
     formatShortTime:(time: String,plusMinutes:Long)->String,
     formatDate:(date: String)->String,
-    navigateToSala:(Long)->Unit,
+    navigateToSala:(Long,String)->Unit,
 ){
     val refreshing = lazyPagingItems.loadState.refresh == LoadState.Loading
     val pullRefreshState = rememberPullRefreshState(
@@ -102,7 +103,7 @@ internal fun UserSalas(
                     items = lazyPagingItems
                 ){sala->
                 if ( sala != null) {
-                    SalaItem (
+                    SalaItemUser (
                         sala = sala,
                         formatDate = formatDate,
                         formatShortTime = formatShortTime,

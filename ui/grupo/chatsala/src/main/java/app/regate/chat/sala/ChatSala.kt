@@ -5,11 +5,17 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardDoubleArrowDown
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -19,6 +25,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -27,9 +35,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -53,8 +63,7 @@ import me.tatarka.inject.annotations.Inject
 typealias ChatSala = @Composable (
     navigateUp:()->Unit,
     openAuthBottomSheet:()->Unit,
-    navigateToCreateSala:(id:Long)->Unit,
-    navigateToGroup:(id:Long)->Unit
+    navigateToSala:(id:Long)->Unit
         ) -> Unit
 
 @Inject
@@ -63,15 +72,13 @@ fun ChatSala    (
     viewModelFactory:(SavedStateHandle)-> ChatSalaViewModel,
     @Assisted navigateUp: () -> Unit,
     @Assisted  openAuthBottomSheet:()->Unit,
-    @Assisted navigateToCreateSala: (id: Long) -> Unit,
-    @Assisted navigateToGroup: (id: Long) -> Unit
+    @Assisted navigateToSala: (id: Long) -> Unit
 ){
     ChatSala(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
         openAuthBottomSheet = openAuthBottomSheet,
-        navigateToCreateSala = navigateToCreateSala,
-        navigateToGroup = navigateToGroup
+        navigateToSala = navigateToSala
     )
 }
 
@@ -80,8 +87,7 @@ internal fun ChatSala   (
     viewModel: ChatSalaViewModel,
     navigateUp: () -> Unit,
     openAuthBottomSheet: () -> Unit,
-    navigateToCreateSala: (id: Long) -> Unit,
-    navigateToGroup: (id: Long) -> Unit
+    navigateToSala: (id: Long) -> Unit
 ){
     val viewState by viewModel.state.collectAsState()
 
@@ -94,12 +100,13 @@ internal fun ChatSala   (
         openAuthBottomSheet = openAuthBottomSheet,
         formatterRelativeTime = formatter::formatShortRelativeTime,
         clearMessage = viewModel::clearMessage,
-        navigateToCreateSala = navigateToCreateSala,
-        navigateToGroup = navigateToGroup,
+        navigateToSala = navigateToSala,
         getUserProfileGrupo = viewModel::getUserGrupo,
         formatShortDate = {
             formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)
-        }
+        },
+        titleSala = viewModel.getTitleSala(),
+        salaId = viewModel.getIdSala()
 //        formatShortTime = {formatter.formatShortTime(it.toInstant())},
 //        formatDate = {formatter.formatWithSkeleton(it.toInstant().toEpochMilliseconds(),formatter.monthDaySkeleton)}
     )
@@ -110,13 +117,14 @@ internal fun ChatSala   (
 internal fun ChatSala   (
     viewState: ChatSalaState,
     lazyPagingItems: LazyPagingItems<MessageSalaWithProfile>,
+    titleSala:String,
+    salaId:Long,
     navigateUp: () -> Unit,
     sendMessage:(MessageData,()->Unit)->Unit,
     openAuthBottomSheet: () -> Unit,
     formatterRelativeTime:(date:Instant)->String,
     clearMessage:(id:Long)->Unit,
-    navigateToCreateSala: (id: Long) -> Unit,
-    navigateToGroup: (id: Long) -> Unit,
+    navigateToSala: (id: Long) -> Unit,
     getUserProfileGrupo:(id:Long)->UserProfileGrupo?,
     formatShortDate:(Instant)->String
 ) {
@@ -168,13 +176,23 @@ internal fun ChatSala   (
 
     Scaffold(
         topBar = {
-            TopBarChat(
-                navigateUp = navigateUp,
-                grupo = viewState.grupo,
-                navigateTocreateSala = navigateToCreateSala,
-                navigateToGroup = navigateToGroup,
-                users = viewState.usersGrupo
-            )
+            Surface(
+                color = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            ) {
+                Row(modifier =Modifier.fillMaxWidth().padding(5.dp),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = { navigateUp() }) {
+                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back",
+                        tint = MaterialTheme.colorScheme.onPrimary)
+                    }
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(text = titleSala,style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.clickable {
+                        navigateToSala(salaId)
+                    })
+                }
+            }
         },
         modifier = Modifier
             .fillMaxSize(),

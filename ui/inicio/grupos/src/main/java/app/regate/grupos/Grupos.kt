@@ -100,7 +100,8 @@ internal fun Grupos(
                    pagerState.animateScrollToPage(it)
                }
             } , currentTab = pagerState.currentPage,
-               createGroup = { navController.navigate(Route.CREATE_GROUP)}
+               createGroup = { navController.navigate(Route.CREATE_GROUP)},
+                navigateToCreateSala = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id 0)}
             )
 
     }
@@ -152,6 +153,7 @@ internal fun Indicators(
     navToTab:(tab:Int) ->Unit,
     createGroup:()->Unit,
     currentTab:Int,
+    navigateToCreateSala:()->Unit,
     modifier:Modifier = Modifier
 ){
     var expanded by remember { mutableStateOf(false) }
@@ -205,7 +207,7 @@ internal fun Indicators(
                     if(currentTab == 2){
                     DropdownMenuItem(
                         text = { Text(text = stringResource(id = R.string.create_sala)) },
-                        onClick = {  }
+                        onClick = { navigateToCreateSala() }
                     )
                     }
                 }

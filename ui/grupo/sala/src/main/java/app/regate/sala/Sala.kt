@@ -85,7 +85,7 @@ import me.tatarka.inject.annotations.Inject
 
 typealias Sala = @Composable (
     navigateUp:()->Unit,
-    navigateToChat:(id:Long)->Unit,
+    navigateToChat:(id:Long,title:String)->Unit,
     openAuthBottomSheet:()->Unit,
     navigateToInstalacion:(Long) -> Unit,
     navigateToEstablecimiento:(Long)->Unit,
@@ -97,7 +97,7 @@ typealias Sala = @Composable (
 fun Sala(
     viewModelFactory: (SavedStateHandle) -> SalaViewModel,
     @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToChat: (id: Long) -> Unit,
+    @Assisted navigateToChat: (id: Long,title:String) -> Unit,
     @Assisted openAuthBottomSheet: () -> Unit,
     @Assisted navigateToInstalacion: (Long) -> Unit,
     @Assisted navigateToEstablecimiento: (Long) -> Unit,
@@ -119,7 +119,7 @@ fun Sala(
 internal fun Sala(
     viewModel: SalaViewModel,
     navigateUp: () -> Unit,
-    navigateToChat: (id:Long) -> Unit,
+    navigateToChat: (id:Long,title:String) -> Unit,
     openAuthBottomSheet: () -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
     navigateToInstalacion: (Long) -> Unit,
@@ -163,7 +163,7 @@ internal fun Sala(
     navigateUp: () -> Unit,
     formatShortTime:(time:String,plusMinutes:Long)->String,
     formatDate:(date:String)->String,
-    navigateToChat: (id:Long) -> Unit,
+    navigateToChat: (id:Long,title:String) -> Unit,
     openAuthBottomSheet: () -> Unit,
     openDialogConfirmation:()->Unit,
     refresh:()->Unit,
@@ -219,7 +219,7 @@ internal fun Sala(
         },
         floatingActionButton = {
             if(iAmInTheRoom == true){
-            SmallFloatingActionButton(onClick = { viewState.data?.sala?.let { navigateToChat(it.id) } }) {
+            SmallFloatingActionButton(onClick = { viewState.data?.sala?.let { navigateToChat(it.id,it.titulo) } }) {
                 Icon(imageVector = Icons.Default.Chat, contentDescription = "chat")
             }
             }

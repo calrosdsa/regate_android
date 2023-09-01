@@ -14,6 +14,7 @@ import app.regate.data.dto.empresa.salas.SalaCompleteDetail
 import app.regate.data.dto.empresa.salas.SalaCompleteDto
 import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.dto.empresa.salas.SalaRequestDto
+import app.regate.data.dto.empresa.salas.UserSala
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -44,6 +45,10 @@ class SalaDataSourceImpl(
         client.get("/v1/sala/exit/${id}/"){
             header("Authorization", "Bearer $token")
         }
+    }
+
+    override suspend fun getUsersSala(salaId: Long): List<UserSala> {
+        return client.get("/v1/sala/users/${salaId}/").body()
     }
 
     override suspend fun getCompleteSalaHistory(salaId: Long): SalaCompleteDetail {

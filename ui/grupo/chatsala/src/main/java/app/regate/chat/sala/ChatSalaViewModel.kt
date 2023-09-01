@@ -63,7 +63,8 @@ class ChatSalaViewModel(
 //    private val observeInstalacion: ObserveInstalacion
 ):ViewModel() {
 //    private val grupoId2:Long = savedStateHandle["id"]!!
-    private val salaId:Long = savedStateHandle["id"]!!
+    private val salaId:Long = savedStateHandle.get<Long>("id")?:0
+    private val titleSala:String = savedStateHandle.get<String>("title")?:""
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val messageChat = MutableStateFlow<MessageSala?>(null)
@@ -99,15 +100,15 @@ class ChatSalaViewModel(
         observeAuthState(Unit)
         observeGrupo(ObserveGrupo.Param(id = salaId))
         observeUsersGrupo(ObserveUsersGrupo.Params(id = salaId))
-        syncMessages()
+        syncData()
         pagingInteractor(ObservePagerMessagesSala.Params(PAGING_CONFIG,salaId))
         viewModelScope.launch {
             try{
 //            runBlocking {
 //               client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
 //                val ws = client.webSocketSession {  }
-             client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
-//                client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
+//             client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
+                client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
                     port = 9090, path = "/v1/ws/chat-sala?id=${salaId}"){
                     launch { outputMessage() }
 //                    launch { inputMessage() }
@@ -211,10 +212,11 @@ class ChatSalaViewModel(
             messageChat.tryEmit(message)
         }
     }
-    fun syncMessages(){
+    fun syncData(){
         viewModelScope.launch {
 //            if(state.value.authState == AppAuthState.LOGGED_IN){
-               salaRepository.syncMessages(salaId)
+               launch { salaRepository.insertUsersSala(salaId) }
+               launch{ salaRepository.syncMessages(salaId) }
 //            }
         }
     }
@@ -228,6 +230,14 @@ class ChatSalaViewModel(
         return state.value.usersGrupo.find {
             it.id == profileId
         }
+    }
+
+    fun getTitleSala():String{
+        return  titleSala
+    }
+
+    fun getIdSala(): Long {
+        return salaId
     }
 
 }

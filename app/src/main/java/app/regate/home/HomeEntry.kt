@@ -289,7 +289,8 @@ internal fun AppNavigation(
         ) {
             composeScreens.sala(
                 navigateUp = navController::navigateUp,
-                navigateToChat = {navController.navigate(Route.CHAT_SALA id it)},
+                navigateToChat = {it1,it2->
+                    navController.navigate(Route.CHAT_SALA id it1 id it2) },
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
                 navigateToInstalacion = {navController.navigate(Route.INSTALACION id it)},
                 navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
@@ -350,17 +351,17 @@ internal fun AppNavigation(
         }
 
         animatedComposable(
-            route = Route.CHAT_SALA arg "id",
+            route = Route.CHAT_SALA arg "id" arg "title",
             arguments = listOf(
                 navArgument("id") { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
             ),
-            deepLinks = listOf(navDeepLink { uriPattern = "$uri/chat-sala/sala_id={id}" })
+            deepLinks = listOf(navDeepLink { uriPattern = "$uri/chat-sala/sala_id={id}/title={title}" })
         ) {
             composeScreens.chatSala(
                 navigateUp = navController::navigateUp,
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
-                navigateToCreateSala = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id it)},
-                navigateToGroup = { navController.navigate(Route.GRUPO id it)}
+                navigateToSala = { navController.navigate(Route.SALA id it)}
             )
         }
 
@@ -589,7 +590,8 @@ private fun NavGraphBuilder.AddMainNav(
                     navigateToGroup = {navController.navigate(Route.GRUPO id it)},
                 )},
                 userSalas = { composeScreens.userSalas(
-                    navigateToSala = { navController.navigate(Route.SALA id it)}
+                    navigateToSala = { it1,it2->
+                        navController.navigate(Route.CHAT_SALA id it1 id it2)},
                 )
             }
         )}

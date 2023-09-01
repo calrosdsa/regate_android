@@ -82,7 +82,9 @@ class CreateSalaViewModel(
         observeAuthState(Unit)
         viewModelScope.launch {
             selectedGroup.tryEmit(grupoId)
-//            cupoDao.deleteCupos()
+            if(page == 0){
+            cupoDao.deleteCupos()
+            }
             cupoDao.observeLastCupo().filterNotNull().collectLatest { cupo ->
                     val instalacionC = cupoDao.getInstalacionCupos(cupo.instalacion_id)
                     instalacionCupos.tryEmit(instalacionC)

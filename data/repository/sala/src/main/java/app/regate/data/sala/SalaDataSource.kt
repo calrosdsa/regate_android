@@ -13,6 +13,7 @@ import app.regate.data.dto.empresa.salas.SalaCompleteDetail
 import app.regate.data.dto.empresa.salas.SalaCompleteDto
 import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.dto.empresa.salas.SalaRequestDto
+import app.regate.data.dto.empresa.salas.UserSala
 
 interface SalaDataSource {
    suspend fun getCompleteSalaHistory(salaId:Long):SalaCompleteDetail
@@ -28,5 +29,6 @@ interface SalaDataSource {
    suspend fun joinSala(d:JoinSalaRequest): ResponseMessage
    suspend fun createSala(d: SalaRequestDto):ResponseMessage
    suspend fun exitSala(id:Int)
+   suspend fun getUsersSala(salaId: Long):List<UserSala>
 }
 

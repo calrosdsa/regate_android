@@ -41,6 +41,24 @@ class SalaRepository(
 //    suspend fun insertSalas(){
 //        salaEntityDao.upsert(SalaEntity(id=10))
 //    }
+    suspend fun insertUsersSala(salaId: Long){
+        withContext(dispatchers.computation){
+            try {
+                val res = salaDataSourceImpl.getUsersSala(salaId)
+                val profiles = res.map {
+                    Profile(
+                        id = it.profile_id,
+                        profile_photo = it.profile_photo,
+                        nombre = it.nombre,
+                        apellido = it.apellido,
+                    )
+                }
+                profileDao.upsertAll(profiles)
+            }catch (e:Exception){
+                //TODO()
+            }
+        }
+    }
     suspend fun getSalaCompleteHistory(salaId: Long):SalaCompleteDetail{
         return salaDataSourceImpl.getCompleteSalaHistory(salaId)
     }

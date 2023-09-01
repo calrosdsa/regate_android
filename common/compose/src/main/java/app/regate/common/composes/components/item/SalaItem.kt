@@ -37,7 +37,7 @@ fun SalaItem(
     formatDate:(String)->String,
     formatShortTime:(String,Long)->String,
     navigateToSala:(id:Long)->Unit,
-    modifier:Modifier = Modifier
+    modifier:Modifier = Modifier,
 ) {
     Surface(modifier = modifier
         .padding(5.dp)
@@ -92,18 +92,18 @@ fun SalaItem(
 
 
 @Composable
-fun SalaItem(
-    sala: SalaEntity,
+fun SalaItemUser(
+    sala: SalaDto,
     formatDate:(String)->String,
     formatShortTime:(String,Long)->String,
-    navigateToSala:(id:Long)->Unit,
+    navigateToSala:(id:Long,title:String)->Unit,
     modifier:Modifier = Modifier
 ){
     Surface(modifier = modifier
         .padding(5.dp)
         .height(65.dp),
         onClick = {
-            navigateToSala(sala.id)
+            navigateToSala(sala.id,sala.titulo)
         }) {
 //        LocalDateTime.parse()
         Column(modifier = Modifier

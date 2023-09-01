@@ -21,15 +21,18 @@ class ConversationDataSourceImpl(
     private val client:HttpClient,
     private val authStore: AuthStore
 ): ConversationDataSource {
+    companion object {
+        const val baseUrl = "http://192.168.0.12:9091"
+    }
     override suspend fun getMessages(id: Long, page: Int): PaginationConversationMessages{
         return client.get{
-            url("http://172.20.20.76:9091/v1/conversation/messages/${id}/?page=${page}")
+            url("${baseUrl}/v1/conversation/messages/${id}/?page=${page}")
         }.body()
     }
 
     override suspend fun syncMessages(d:List<ConversationMessage>): List<ConversationMessage> {
         return client.post{
-            url("http://172.20.20.76:9091/v1/conversation/sync-messages/")
+            url("${baseUrl}/v1/conversation/sync-messages/")
             contentType(ContentType.Application.Json)
             setBody(d)
         }.body()
@@ -38,7 +41,7 @@ class ConversationDataSourceImpl(
     override suspend fun getConversationId(establecimientoId: Long): ConversationId {
         val token = authStore.get()?.accessToken
         return client.get {
-            url("http://172.20.20.76:9091/v1/conversation/get-id/1/")
+            url("${baseUrl}/v1/conversation/get-id/1/")
             header("Authorization","Bearer $token")
         }.body()
     }
@@ -46,7 +49,7 @@ class ConversationDataSourceImpl(
     override suspend fun getConversations(): List<Conversation> {
         val token = authStore.get()?.accessToken
         return  client.get{
-            url("http://172.20.20.76:9091/v1/conversations/")
+            url("${baseUrl}/v1/conversations/")
             header("Authorization","Bearer $token")
         }.body()
     }
