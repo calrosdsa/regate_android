@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "app.regate.sala.chat.chatsala-merged_res-86:/animator-v21/design_appbar_state_list_animator.xml",
+        "source": "app.regate.sala.chat.chatsala-material-1.9.0-54:/animator-v21/design_appbar_state_list_animator.xml"
+    },
+    {
+        "merged": "app.regate.sala.chat.chatsala-merged_res-86:/animator-v21/m3_appbar_state_list_animator.xml",
+        "source": "app.regate.sala.chat.chatsala-material-1.9.0-54:/animator-v21/m3_appbar_state_list_animator.xml"
+    }
+]

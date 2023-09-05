@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "app.regate.servicios-merged_res-85:/layout-watch-v20/abc_alert_dialog_button_bar_material.xml",
+        "source": "app.regate.servicios-appcompat-1.6.1-45:/layout-watch-v20/abc_alert_dialog_button_bar_material.xml"
+    },
+    {
+        "merged": "app.regate.servicios-merged_res-85:/layout-watch-v20/abc_alert_dialog_title_material.xml",
+        "source": "app.regate.servicios-appcompat-1.6.1-45:/layout-watch-v20/abc_alert_dialog_title_material.xml"
+    }
+]

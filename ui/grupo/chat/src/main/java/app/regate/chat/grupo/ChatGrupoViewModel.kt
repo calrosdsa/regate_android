@@ -16,7 +16,9 @@ import app.regate.data.common.MessageData
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import app.regate.data.dto.empresa.grupo.GrupoEvent
+import app.regate.data.dto.empresa.grupo.GrupoMessageData
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
+import app.regate.data.dto.empresa.grupo.GrupoMessageType
 import app.regate.data.grupo.GrupoRepository
 import app.regate.data.instalacion.CupoRepository
 import app.regate.data.users.UsersRepository
@@ -28,6 +30,7 @@ import app.regate.domain.observers.ObserveUsersGrupo
 import app.regate.extensions.combine
 import app.regate.models.Message
 import app.regate.util.ObservableLoadingCounter
+import app.regate.util.getLongUuid
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
 import io.ktor.client.plugins.websocket.webSocket
@@ -36,6 +39,7 @@ import io.ktor.websocket.Frame
 import io.ktor.websocket.readText
 import io.ktor.websocket.send
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -71,6 +75,7 @@ class ChatGrupoViewModel(
 ):ViewModel() {
 //    private val grupoId2:Long = savedStateHandle["id"]!!
     private val grupoId:Long = savedStateHandle["id"]!!
+    private var data = savedStateHandle.get<String>("data")?:""
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val messageChat = MutableStateFlow<Message?>(null)
@@ -111,8 +116,8 @@ class ChatGrupoViewModel(
         viewModelScope.launch {
             try{
 //            runBlocking {
-//               client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
-                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
+               client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
+//                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
 
                     port = 9090, path = "/v1/ws/chat-grupo?id=${grupoId}"){
                     launch { outputMessage() }
@@ -152,6 +157,14 @@ class ChatGrupoViewModel(
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
             }
         }
+
+        viewModelScope.launch {
+            observeUser.flow.collect{user ->
+                delay(100)
+                sendSharedMessage()
+            Log.d("DEBUG_APP_USER",user.toString())
+            }
+        }
     }
     companion object {
         val PAGING_CONFIG = PagingConfig(
@@ -160,16 +173,6 @@ class ChatGrupoViewModel(
 //            prefetchDistance = 1
         )
     }
-
-    suspend fun addUser(id:Long){
-        try{
-            val res = usersRepository.getProfile(id)
-            uiMessageManager.emitMessage(UiMessage(message = "${res.nombre} acaba de unirse al grupo"))
-        }catch(e:Exception){
-            uiMessageManager.emitMessage(UiMessage(message = e.localizedMessage?:""))
-        }
-    }
-
     suspend fun DefaultClientWebSocketSession.outputMessage(){
         messageChat.filterNotNull().collectLatest {data->
             if (data.content != "") {
@@ -179,7 +182,9 @@ class ChatGrupoViewModel(
                         profile_id = it.profile_id,
                         content = data.content,
                         grupo_id = grupoId,
+                        type_message = data.type_message,
                         reply_to = data.reply_to,
+                        data = data.data,
                         id = data.id,
                     )
                     val event =  GrupoEvent(
@@ -209,6 +214,21 @@ class ChatGrupoViewModel(
             }
         }
     }
+    private fun sendSharedMessage(){
+        try {
+            if(data.isBlank()) return
+            Log.d("DEBUG_APP_DATA",data)
+            val grupoMessageData = Json.decodeFromString<GrupoMessageData>(data)
+            val message = MessageData(
+                data = grupoMessageData.data,
+                content = grupoMessageData.content,
+                type_message = grupoMessageData.type_data
+            )
+            sendMessage(message,{})
+        }catch (e:Exception){
+            //todo()
+        }
+    }
 
     fun sendMessage(messageData: MessageData,animateScroll:()->Unit){
         viewModelScope.launch {
@@ -218,7 +238,9 @@ class ChatGrupoViewModel(
                 profile_id = state.value.user?.profile_id?:0,
                 created_at = Clock.System.now(),
                 grupo_id = grupoId,
-                id = UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE
+                id = getLongUuid(),
+                type_message = messageData.type_message,
+                data = messageData.data
             )
             val res = async { grupoRepository.saveMessageLocal(message) }
             res.await()
@@ -257,5 +279,8 @@ class ChatGrupoViewModel(
             }
         }
     }
+
+
+
 
 }

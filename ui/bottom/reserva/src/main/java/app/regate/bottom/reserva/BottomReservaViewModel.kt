@@ -167,6 +167,7 @@ class BottomReservaViewModel(
                 type_data = GrupoMessageType.INSTALACION.ordinal,
                 data =  Json.encodeToString(instalacionReserva)
             )
+            Log.d("DEBUG_APP",Json.encodeToString(data))
             navigate(Json.encodeToString(data))
         }catch (e:Exception){
             //TODO()

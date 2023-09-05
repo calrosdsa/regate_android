@@ -26,12 +26,15 @@ enum class LabelType(val storageKey: String) {
     CATEGORIES("categories"),
     AMENITIES("amenities"),
     RULES("rules")
-}
 
-enum class TypeEntity {
-    SALA,
-    GRUPO,
-    ACCOUNT,
-    BILLING,
-    NONE,
+}
+enum class TypeEntity(val value: Int) {
+    NONE(0),
+    SALA(1),
+    GRUPO(2),
+    ACCOUNT(3),
+    BILLING(4);
+    companion object {
+        fun fromInt(value: Int) =TypeEntity.values().first { it.value == value }
+    }
 }

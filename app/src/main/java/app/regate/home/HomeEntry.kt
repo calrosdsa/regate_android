@@ -338,10 +338,12 @@ internal fun AppNavigation(
         }
 
         animatedComposable(
-            route = Route.CHAT_GRUPO arg "id" + "?data={data}",
+            route = Route.CHAT_GRUPO  +"?id={id}&data={data}",
             arguments = listOf(
                 navArgument("id") { type = NavType.LongType },
-                navArgument("data") { type = NavType.StringType;defaultValue ="" },
+                navArgument("data") {
+                    type = NavType.StringType
+                    defaultValue ="2312312" },
                 ),
             deepLinks = listOf(navDeepLink { uriPattern = "$uri/chat-grupo/grupo_id={id}" })
         ) {
@@ -364,7 +366,7 @@ internal fun AppNavigation(
             composeScreens.myGroups(
                 navigateUp = navController::navigateUp,
                 navigateToChatGrupo= {it1,it2->
-                    navController.navigate(Route.CHAT_GRUPO + "/$it1?data=$it2")
+                    navController.navigate(Route.CHAT_GRUPO + "?id=$it1&data=$it2")
                 }
                 )
         }

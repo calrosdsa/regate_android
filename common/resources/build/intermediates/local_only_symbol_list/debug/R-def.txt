@@ -39,6 +39,7 @@ layout item_callout_view
 layout mapbox
 mipmap ic_launcher
 string about_regate
+string add_a_message
 string add_a_review
 string amount
 string balance_coins
@@ -60,6 +61,7 @@ string complete
 string consume
 string continuar
 string contributed_amount
+string count_selected
 string create_group
 string create_sala
 string deposits

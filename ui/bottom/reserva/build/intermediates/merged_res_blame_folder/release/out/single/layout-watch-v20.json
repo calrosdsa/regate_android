@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "app.regate.bottom.reserva-merged_res-86:/layout-watch-v20/abc_alert_dialog_button_bar_material.xml",
+        "source": "app.regate.bottom.reserva-appcompat-1.6.1-45:/layout-watch-v20/abc_alert_dialog_button_bar_material.xml"
+    },
+    {
+        "merged": "app.regate.bottom.reserva-merged_res-86:/layout-watch-v20/abc_alert_dialog_title_material.xml",
+        "source": "app.regate.bottom.reserva-appcompat-1.6.1-45:/layout-watch-v20/abc_alert_dialog_title_material.xml"
+    }
+]

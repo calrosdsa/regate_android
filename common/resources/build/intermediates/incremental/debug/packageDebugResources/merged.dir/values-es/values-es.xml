@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_regate">Sobre Regate</string>
+    <string name="add_a_message">Añade un mensaje</string>
     <string name="add_a_review">Agrega una reseña</string>
     <string name="amount">Amount: %1$s</string>
     <string name="balance_coins">Saldo de monedas</string>
@@ -16,6 +17,7 @@
     <string name="consume">Consumo</string>
     <string name="continuar">Continuar</string>
     <string name="contributed_amount">Monto aportado %1$s</string>
+    <string name="count_selected">%1$d seleccionado</string>
     <string name="create_group">Crear grupo</string>
     <string name="create_sala">Crear sala</string>
     <string name="deposits">Depósitos</string>

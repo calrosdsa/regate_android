@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GrupoMessageDto(
     val content: String,
+    val data:String? = null,
     val created_at: Instant? = null,
     val id: Long = 0,
     val profile_id: Long,
@@ -19,9 +20,11 @@ data class GrupoMessageDto(
 data class ReplyMessage(
     val content: String = "",
     val created_at: String = "",
+    val type_message:Int = GrupoMessageType.MESSAGE.ordinal,
     val id: Long = 0,
     val profile_id: Long = 0,
     val grupo_id:Long = 0,
+    val data:String? = null,
     val reply_to:Long? = null,
 ){
     companion object{

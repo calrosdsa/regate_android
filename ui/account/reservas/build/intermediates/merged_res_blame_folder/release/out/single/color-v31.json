@@ -1,0 +1,86 @@
+[
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_ref_palette_dynamic_neutral22.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_ref_palette_dynamic_neutral22.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_ref_palette_dynamic_neutral96.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_ref_palette_dynamic_neutral96.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_ref_palette_dynamic_neutral12.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_ref_palette_dynamic_neutral12.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_dynamic_highlighted_text.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_dynamic_highlighted_text.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_ref_palette_dynamic_neutral6.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_ref_palette_dynamic_neutral6.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_dynamic_default_color_secondary_text.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_dynamic_default_color_secondary_text.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_ref_palette_dynamic_neutral92.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_ref_palette_dynamic_neutral92.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_ref_palette_dynamic_neutral98.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_ref_palette_dynamic_neutral98.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_dynamic_primary_text_disable_only.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_dynamic_primary_text_disable_only.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_dynamic_hint_foreground.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_dynamic_hint_foreground.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_ref_palette_dynamic_neutral4.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_ref_palette_dynamic_neutral4.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_ref_palette_dynamic_neutral87.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_ref_palette_dynamic_neutral87.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_dynamic_dark_hint_foreground.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_dynamic_dark_hint_foreground.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_dynamic_dark_highlighted_text.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_dynamic_dark_highlighted_text.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_ref_palette_dynamic_neutral94.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_ref_palette_dynamic_neutral94.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_ref_palette_dynamic_neutral24.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_ref_palette_dynamic_neutral24.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_dynamic_dark_primary_text_disable_only.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_dynamic_dark_primary_text_disable_only.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_ref_palette_dynamic_neutral17.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_ref_palette_dynamic_neutral17.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_dynamic_dark_default_color_primary_text.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_dynamic_dark_default_color_primary_text.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_dynamic_dark_default_color_secondary_text.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_dynamic_dark_default_color_secondary_text.xml"
+    },
+    {
+        "merged": "app.regate.account.reservas-merged_res-86:/color-v31/m3_dynamic_default_color_primary_text.xml",
+        "source": "app.regate.account.reservas-material-1.9.0-53:/color-v31/m3_dynamic_default_color_primary_text.xml"
+    }
+]

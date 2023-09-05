@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "app.regate.core.preferences-merged_res-9:/layout-v21/notification_action_tombstone.xml",
+        "source": "app.regate.core.preferences-core-1.9.0-2:/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "app.regate.core.preferences-merged_res-9:/layout-v21/notification_template_icon_group.xml",
+        "source": "app.regate.core.preferences-core-1.9.0-2:/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "app.regate.core.preferences-merged_res-9:/layout-v21/notification_template_custom_big.xml",
+        "source": "app.regate.core.preferences-core-1.9.0-2:/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "app.regate.core.preferences-merged_res-9:/layout-v21/notification_action.xml",
+        "source": "app.regate.core.preferences-core-1.9.0-2:/layout-v21/notification_action.xml"
+    }
+]

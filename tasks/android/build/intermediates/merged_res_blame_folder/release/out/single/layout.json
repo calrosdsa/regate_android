@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "app.regate.tasks.android-merged_res-16:/layout/custom_dialog.xml",
+        "source": "app.regate.tasks.android-core-1.9.0-7:/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "app.regate.tasks.android-merged_res-16:/layout/notification_template_part_chronometer.xml",
+        "source": "app.regate.tasks.android-core-1.9.0-7:/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "app.regate.tasks.android-merged_res-16:/layout/notification_template_part_time.xml",
+        "source": "app.regate.tasks.android-core-1.9.0-7:/layout/notification_template_part_time.xml"
+    }
+]

@@ -1,0 +1,14 @@
+app.regate.core.preferences-jetified-annotation-experimental-1.3.0-0 C:\Users\PC\.gradle\caches\transforms-3\43c6338627191fac236c2a5976c33916\transformed\jetified-annotation-experimental-1.3.0\res
+app.regate.core.preferences-jetified-play-services-basement-18.0.0-1 C:\Users\PC\.gradle\caches\transforms-3\b46dc9ba027441d2beaaa5e8c6699cd8\transformed\jetified-play-services-basement-18.0.0\res
+app.regate.core.preferences-core-1.9.0-2 C:\Users\PC\.gradle\caches\transforms-3\cbb18c9e7d11febd05d0c912c72f3ecb\transformed\core-1.9.0\res
+app.regate.core.preferences-jetified-play-services-base-18.0.1-3 C:\Users\PC\.gradle\caches\transforms-3\dd5c688c15eb905eef27483769bfb251\transformed\jetified-play-services-base-18.0.1\res
+app.regate.core.preferences-jetified-core-ktx-1.9.0-4 C:\Users\PC\.gradle\caches\transforms-3\ddb66f91532cdb0f5959d7172e07ea7c\transformed\jetified-core-ktx-1.9.0\res
+app.regate.core.preferences-lifecycle-runtime-2.3.1-5 C:\Users\PC\.gradle\caches\transforms-3\df1caf1f1d4739fd20e7939b964d6f75\transformed\lifecycle-runtime-2.3.1\res
+app.regate.core.preferences-coordinatorlayout-1.0.0-6 C:\Users\PC\.gradle\caches\transforms-3\e816a8783a16db92a7b5a8e2a51e78ef\transformed\coordinatorlayout-1.0.0\res
+app.regate.core.preferences-pngs-7 C:\Users\PC\Desktop\projects\regate_android\core\preferences\build\generated\res\pngs\release
+app.regate.core.preferences-mergeReleaseResources-8 C:\Users\PC\Desktop\projects\regate_android\core\preferences\build\intermediates\incremental\release\mergeReleaseResources\merged.dir
+app.regate.core.preferences-mergeReleaseResources-9 C:\Users\PC\Desktop\projects\regate_android\core\preferences\build\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+app.regate.core.preferences-merged_res-10 C:\Users\PC\Desktop\projects\regate_android\core\preferences\build\intermediates\merged_res\release
+app.regate.core.preferences-androidMain-11 C:\Users\PC\Desktop\projects\regate_android\core\preferences\src\androidMain\res
+app.regate.core.preferences-main-12 C:\Users\PC\Desktop\projects\regate_android\core\preferences\src\main\res
+app.regate.core.preferences-release-13 C:\Users\PC\Desktop\projects\regate_android\core\preferences\src\release\res

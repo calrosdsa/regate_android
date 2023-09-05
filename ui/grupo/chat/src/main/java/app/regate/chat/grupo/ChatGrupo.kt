@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
@@ -106,13 +107,13 @@ internal fun ChatGrupo(
         formatShortTime = formatter::formatShortTime,
         navigateToInstalacionReserva = {instalacionId,establecimientoId,cupos->
             viewModel.navigateToInstalacionReserva(instalacionId,establecimientoId,cupos,navigateToInstalacionReserva)
-        }
+        },
 //        formatShortTime = {formatter.formatShortTime(it.toInstant())},
 //        formatDate = {formatter.formatWithSkeleton(it.toInstant().toEpochMilliseconds(),formatter.monthDaySkeleton)}
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun ChatGrupo(
     viewState: ChatGrupoState,
@@ -127,7 +128,7 @@ internal fun ChatGrupo(
     getUserProfileGrupo:(id:Long)->UserProfileGrupo?,
     formatShortDate:(Instant)->String,
     formatShortTime:(Instant)->String,
-    navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit
+    navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
 ) {
     val colors = listOf(
         MaterialTheme.colorScheme.inverseOnSurface,
@@ -227,7 +228,7 @@ internal fun ChatGrupo(
                         lazyListState.animateScrollToItem(0)
                     }
                 }
-                }
+                },
             )
         }
 
@@ -244,14 +245,15 @@ internal fun ChatGrupo(
                 user = viewState.user,
                 formatterRelatimeTime = formatterRelativeTime,
                 setReply = {
-                    focusRequester.requestFocus()
-                    replyMessage.value =it
+                    coroutineScope.launch {
+                    launch{ replyMessage.value =it }
+                    }
                 },
                 lazyListState = lazyListState,
                 getUserProfileGrupo = getUserProfileGrupo,
                 formatShortDate = formatShortDate,
                 navigateToInstalacionReserva = navigateToInstalacionReserva,
-                formatShortTime = formatShortTime
+                formatShortTime = formatShortTime,
             )
         }
     }

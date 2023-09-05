@@ -1,0 +1,48 @@
+{
+    "logs": [
+        {
+            "outputFile": "app.regate.common.view-mergeReleaseResources-42:/values-notnight-v27/values-notnight-v27.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\PC\\Desktop\\projects\\regate_android\\common\\view\\src\\main\\res\\values-notnight-v27\\sys_ui.xml",
+                    "from": {
+                        "startLines": "20,19",
+                        "startColumns": "4,4",
+                        "startOffsets": "832,762",
+                        "endColumns": "46,68",
+                        "endOffsets": "874,826"
+                    },
+                    "to": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,102",
+                        "endColumns": "46,68",
+                        "endOffsets": "97,166"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "app.regate.common.view-merged_res-44:/values-notnight-v27/values-notnight-v27.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\PC\\Desktop\\projects\\regate_android\\common\\view\\src\\main\\res\\values-notnight-v27\\sys_ui.xml",
+                    "from": {
+                        "startLines": "20,19",
+                        "startColumns": "4,4",
+                        "startOffsets": "832,762",
+                        "endColumns": "46,68",
+                        "endOffsets": "874,826"
+                    },
+                    "to": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,102",
+                        "endColumns": "46,68",
+                        "endOffsets": "97,166"
+                    }
+                }
+            ]
+        }
+    ]
+}

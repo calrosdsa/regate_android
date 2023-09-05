@@ -112,7 +112,7 @@ internal fun Grupos(
                 0 -> UserGroups(
 //                    modifier = Modifier,
                     viewState = viewState,
-                    navigateToChat = { navController.navigate(Route.CHAT_GRUPO id it) }
+                    navigateToChat = { navController.navigate(Route.CHAT_GRUPO + "?id=$it") }
                 )
                 1 -> filterGroups()
                 2 -> userSalas()

@@ -150,7 +150,9 @@ internal fun Chat (
                                         nombre = item.profile?.nombre?:"",
                                         apellido = item.profile?.apellido,
                                         content = item.message.content,
-                                        id = item.message.id
+                                        id = item.message.id,
+                                        type_message = item.message.type_message,
+                                        data = item.message.data
                                     ))
                                 }
                             )),
@@ -216,17 +218,27 @@ internal fun Chat (
 //                                                    lazyListState.scrollToItem( lazyPagingItems.itemCount)
 
                                                 }
-                                            }, getUserProfileGrupo = getUserProfileGrupo
+                                            }, getUserProfileGrupo = getUserProfileGrupo,
+                                            navigateToInstalacionReserva = navigateToInstalacionReserva,
+                                            formatShortDate = formatShortDate,
+                                            formatShortTime = formatShortTime,
                                         )
                                     }
-
+                                    item.message.data?.let {data->
                                     MessageContent(
-                                        content = item.message.content,
+                                        content = data,
                                         messageType = item.message.type_message,
                                         navigateToInstalacionReserva = navigateToInstalacionReserva,
                                         formatShortDate = formatShortDate,
                                         formatShortTime = formatShortTime,
                                     )
+                                    }
+//                                    if(item.message.content.isBlank()) {
+                                        Text(
+                                            text = item.message.content,
+                                            style = MaterialTheme.typography.bodySmall,
+                                        )
+//                                    }
                                     Row(
                                         modifier = Modifier.fillMaxWidth(),
                                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -269,7 +281,9 @@ internal fun Chat (
                                         nombre = item.profile?.nombre?:"",
                                         apellido = item.profile?.apellido,
                                         content = item.message.content,
-                                        id = item.message.id
+                                        id = item.message.id,
+                                        type_message = item.message.type_message,
+                                        data = item.message.data
                                     ))
                                 }
                             )),
@@ -328,14 +342,23 @@ internal fun Chat (
                                                     }
                                                 }
                                             }
-                                        }, getUserProfileGrupo = getUserProfileGrupo)
+                                        }, getUserProfileGrupo = getUserProfileGrupo,
+                                            navigateToInstalacionReserva = navigateToInstalacionReserva,
+                                            formatShortDate = formatShortDate,
+                                            formatShortTime = formatShortTime,)
                                     }
-                                    MessageContent(
-                                        content = item.message.content,
-                                        messageType = item.message.type_message,
-                                        navigateToInstalacionReserva = navigateToInstalacionReserva,
-                                        formatShortDate = formatShortDate,
-                                        formatShortTime = formatShortTime,
+                                    item.message.data?.let {data->
+                                        MessageContent(
+                                            content = data,
+                                            messageType = item.message.type_message,
+                                            navigateToInstalacionReserva = navigateToInstalacionReserva,
+                                            formatShortDate = formatShortDate,
+                                            formatShortTime = formatShortTime,
+                                        )
+                                    }
+                                    Text(
+                                        text = item.message.content,
+                                        style = MaterialTheme.typography.bodySmall,
                                     )
                                     Text(
                                         text = formatterRelatimeTime(item.message.created_at),
@@ -389,9 +412,14 @@ fun MessageContent(
             )
         }
         GrupoMessageType.INSTALACION.ordinal ->{
-            val instalacion = try{ Json.decodeFromString<GrupoMessageInstalacion>(content) }catch (e:Exception){ null }
+            val instalacion = try{ Json.decodeFromString<GrupoMessageInstalacion>(content) }catch (e:Exception){
+                Log.d("DEBUG_APP",e.localizedMessage?:"")
+                null
+            }
             if(instalacion != null){
-                Column(modifier = Modifier.clickable {
+                Column(modifier = Modifier
+                    .padding(vertical = 5.dp)
+                    .clickable {
                     navigateToInstalacionReserva(instalacion.id.toLong(),instalacion.establecimiento_id.toLong(),instalacion.cupos)
                 }) {
                     PosterCardImage(model = instalacion.photo,modifier = Modifier
@@ -425,6 +453,9 @@ fun MessageReply(
     item:MessageProfile,
     scrollToItem:()->Unit,
     getUserProfileGrupo: (id:Long)->UserProfileGrupo?,
+    navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
+    formatShortDate: (Instant) -> String,
+    formatShortTime: (Instant) -> String,
     modifier:Modifier = Modifier
 ){
     val profile = item.reply?.let { getUserProfileGrupo(it.profile_id) }
@@ -446,9 +477,18 @@ fun MessageReply(
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.primary
         )
+        item.reply?.data?.let { data->
+        MessageContent(
+            content = data,
+            messageType = item.reply?.type_message?:0,
+            navigateToInstalacionReserva = navigateToInstalacionReserva,
+            formatShortDate = formatShortDate,
+            formatShortTime = formatShortTime,
+        )
+        }
         Text(
-            text = item.reply?.content?:"",
-            style = MaterialTheme.typography.bodySmall
+            text = item.message.content,
+            style = MaterialTheme.typography.bodySmall,
         )
     }
     }

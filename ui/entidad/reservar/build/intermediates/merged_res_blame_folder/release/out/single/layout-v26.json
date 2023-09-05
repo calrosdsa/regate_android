@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "app.regate.entidad.reservar-merged_res-86:/layout-v26/abc_screen_toolbar.xml",
+        "source": "app.regate.entidad.reservar-appcompat-1.6.1-45:/layout-v26/abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "app.regate.entidad.reservar-merged_res-86:/layout-v26/mtrl_calendar_month.xml",
+        "source": "app.regate.entidad.reservar-material-1.9.0-53:/layout-v26/mtrl_calendar_month.xml"
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "app.regate.common.resources-merged_res-35:/drawable-anydpi-v26/ic_launcher_background.xml",
+        "source": "app.regate.common.resources-main-36:/drawable-anydpi-v26/ic_launcher_background.xml"
+    },
+    {
+        "merged": "app.regate.common.resources-merged_res-35:/drawable-anydpi-v26/ic_launcher_foreground.xml",
+        "source": "app.regate.common.resources-main-36:/drawable-anydpi-v26/ic_launcher_foreground.xml"
+    }
+]

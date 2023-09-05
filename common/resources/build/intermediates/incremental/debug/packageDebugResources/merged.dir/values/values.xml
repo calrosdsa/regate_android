@@ -11,6 +11,7 @@
     <color name="tv_test_red">#e10000</color>
     <color name="tv_test_yellow">#bdc200</color>
     <string name="about_regate">About Regate</string>
+    <string name="add_a_message">Add a message</string>
     <string name="add_a_review">Add a review</string>
     <string name="amount">Amount:  %1$s</string>
     <string name="balance_coins">Coins Balance</string>
@@ -32,6 +33,7 @@
     <string name="consume">Consume</string>
     <string name="continuar">Continue</string>
     <string name="contributed_amount">Contributed amount %1$s</string>
+    <string name="count_selected">%1$d selected</string>
     <string name="create_group">Create group</string>
     <string name="create_sala">Create sala</string>
     <string name="deposits">Deposits</string>

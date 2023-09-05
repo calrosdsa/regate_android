@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "app.regate.bottom.reserva-merged_res-86:/layout-sw600dp-v13/mtrl_layout_snackbar.xml",
+        "source": "app.regate.bottom.reserva-material-1.9.0-53:/layout-sw600dp-v13/mtrl_layout_snackbar.xml"
+    },
+    {
+        "merged": "app.regate.bottom.reserva-merged_res-86:/layout-sw600dp-v13/design_layout_snackbar.xml",
+        "source": "app.regate.bottom.reserva-material-1.9.0-53:/layout-sw600dp-v13/design_layout_snackbar.xml"
+    }
+]

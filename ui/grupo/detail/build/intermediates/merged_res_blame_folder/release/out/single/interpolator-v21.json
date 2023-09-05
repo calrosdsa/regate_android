@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "app.regate.grupo.detail-merged_res-86:/interpolator-v21/mtrl_linear_out_slow_in.xml",
+        "source": "app.regate.grupo.detail-material-1.9.0-53:/interpolator-v21/mtrl_linear_out_slow_in.xml"
+    },
+    {
+        "merged": "app.regate.grupo.detail-merged_res-86:/interpolator-v21/m3_sys_motion_easing_emphasized_decelerate.xml",
+        "source": "app.regate.grupo.detail-material-1.9.0-53:/interpolator-v21/m3_sys_motion_easing_emphasized_decelerate.xml"
+    },
+    {
+        "merged": "app.regate.grupo.detail-merged_res-86:/interpolator-v21/m3_sys_motion_easing_linear.xml",
+        "source": "app.regate.grupo.detail-material-1.9.0-53:/interpolator-v21/m3_sys_motion_easing_linear.xml"
+    },
+    {
+        "merged": "app.regate.grupo.detail-merged_res-86:/interpolator-v21/m3_sys_motion_easing_standard_accelerate.xml",
+        "source": "app.regate.grupo.detail-material-1.9.0-53:/interpolator-v21/m3_sys_motion_easing_standard_accelerate.xml"
+    },
+    {
+        "merged": "app.regate.grupo.detail-merged_res-86:/interpolator-v21/m3_sys_motion_easing_emphasized_accelerate.xml",
+        "source": "app.regate.grupo.detail-material-1.9.0-53:/interpolator-v21/m3_sys_motion_easing_emphasized_accelerate.xml"
+    },
+    {
+        "merged": "app.regate.grupo.detail-merged_res-86:/interpolator-v21/mtrl_fast_out_slow_in.xml",
+        "source": "app.regate.grupo.detail-material-1.9.0-53:/interpolator-v21/mtrl_fast_out_slow_in.xml"
+    },
+    {
+        "merged": "app.regate.grupo.detail-merged_res-86:/interpolator-v21/m3_sys_motion_easing_standard_decelerate.xml",
+        "source": "app.regate.grupo.detail-material-1.9.0-53:/interpolator-v21/m3_sys_motion_easing_standard_decelerate.xml"
+    },
+    {
+        "merged": "app.regate.grupo.detail-merged_res-86:/interpolator-v21/m3_sys_motion_easing_standard.xml",
+        "source": "app.regate.grupo.detail-material-1.9.0-53:/interpolator-v21/m3_sys_motion_easing_standard.xml"
+    },
+    {
+        "merged": "app.regate.grupo.detail-merged_res-86:/interpolator-v21/mtrl_fast_out_linear_in.xml",
+        "source": "app.regate.grupo.detail-material-1.9.0-53:/interpolator-v21/mtrl_fast_out_linear_in.xml"
+    },
+    {
+        "merged": "app.regate.grupo.detail-merged_res-86:/interpolator-v21/m3_sys_motion_easing_emphasized.xml",
+        "source": "app.regate.grupo.detail-material-1.9.0-53:/interpolator-v21/m3_sys_motion_easing_emphasized.xml"
+    }
+]

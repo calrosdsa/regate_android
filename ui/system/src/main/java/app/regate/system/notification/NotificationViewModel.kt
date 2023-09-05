@@ -34,6 +34,17 @@ class NotificationViewModel(
  init {
   observeNotifications(Unit)
   updateUnreadNotifications()
+  getData()
+ }
+
+ fun getData(){
+  viewModelScope.launch {
+   try{
+       systemRepository.getNotifications()
+   }catch (e:Exception){
+      Log.d("DEBUG_APP_ERR",e.localizedMessage?:"")
+   }
+  }
  }
 
  private fun updateUnreadNotifications() {

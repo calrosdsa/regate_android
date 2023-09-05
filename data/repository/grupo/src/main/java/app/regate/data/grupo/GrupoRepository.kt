@@ -1,6 +1,5 @@
 package app.regate.data.grupo
 
-import app.regate.compoundmodels.MessageProfile
 import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
@@ -53,6 +52,9 @@ class GrupoRepository(
     suspend fun getGroupsWhereUserIsAdmin():List<GrupoDto>{
         return grupoDataSourceImpl.getGroupsWhereUserIsAdmin()
     }
+    suspend fun sendShareMessage(d:List<GrupoMessageDto>){
+            grupoDataSourceImpl.sendShareMessage(d)
+    }
     suspend fun myGroups(){
         withContext(dispatchers.computation){
             val grupos = grupoDataSourceImpl.myGroups().map { dtoToGrupo.map(it) }
@@ -93,7 +95,7 @@ class GrupoRepository(
                     messageMapper.map(it)
                 }
                 messageProfileDao.upsertAll(results)
-            }catch (e:Exception){
+            } catch (e:Exception){
                 //TODO()
             }
 
@@ -127,7 +129,12 @@ class GrupoRepository(
         return grupoDataSourceImpl.filterGrupos(d,page)
     }
     suspend fun saveMessage(data:GrupoMessageDto){
+        try{
+
         messageProfileDao.upsert(messageMapper.map(data))
+        }catch (e:Exception){
+            //todo()
+        }
     }
 
     suspend fun saveMessageLocal(data:Message){

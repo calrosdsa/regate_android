@@ -126,5 +126,7 @@
     <string name="total_remaining">Total restante</string>
     <string name="groups">Grupos</string>
     <string name="time_game_will_played">Hora en que se jugará</string>
+    <string name="add_a_message">Añade un mensaje</string>
+    <string name="count_selected">%1$d seleccionado</string>
 
 </resources>

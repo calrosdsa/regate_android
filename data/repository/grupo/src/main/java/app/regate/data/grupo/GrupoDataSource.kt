@@ -27,6 +27,7 @@ interface GrupoDataSource {
    suspend fun removeUserFromGroup(id:Long)
    suspend fun changeStatusUser(id:Long,status:Boolean)
    suspend fun getGroupsWhereUserIsAdmin():List<GrupoDto>
+   suspend fun sendShareMessage(d:List<GrupoMessageDto>)
 //   suspend fun userGroups()
 //   suspend fun createGrupo(d: SalaRequestDto):ResponseMessage
 

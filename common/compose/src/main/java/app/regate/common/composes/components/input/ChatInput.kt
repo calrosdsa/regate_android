@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,9 +23,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.outlined.Cancel
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.EmojiEmotions
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -34,6 +39,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,12 +51,23 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
+import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.ui.PosterCardImage
+import app.regate.common.resources.R
 import app.regate.compoundmodels.MessageProfile
 import app.regate.data.auth.AppAuthState
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
+import app.regate.data.dto.empresa.grupo.GrupoMessageData
+import app.regate.data.dto.empresa.grupo.GrupoMessageInstalacion
+import app.regate.data.dto.empresa.grupo.GrupoMessageType
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -63,6 +83,7 @@ fun ChatInput (
     sendMessage:(MessageData)->Unit,
     modifier:Modifier = Modifier,
 ){
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -76,6 +97,10 @@ fun ChatInput (
             border = BorderStroke(1.dp, Color.LightGray)
         ) {
             Column {
+//                if(sharedMessage.isNotBlank()){
+//                    SharedMessage(data = sharedMessage,
+//                    clearSharedMessage = clearSharedMessage)
+//                }
                 AnimatedVisibility(visible = replyMessage != null,
                     enter = scaleIn(),
                     exit = scaleOut()
@@ -87,7 +112,7 @@ fun ChatInput (
                             .border(BorderStroke(1.dp, Color.LightGray))
                             .clip(MaterialTheme.shapes.medium)
                             .padding(10.dp)){
-                            Icon(imageVector = Icons.Outlined.Cancel, contentDescription = "cancel",
+                            Icon(imageVector = Icons.Outlined.Close, contentDescription = "cancel",
                                 modifier = Modifier
                                     .size(20.dp)
                                     .clickable {
@@ -104,10 +129,16 @@ fun ChatInput (
                                     color = MaterialTheme.colorScheme.primary
                                 )
                                 }
+                                item.data?.let {data->
+                                MessageContent(data = data,
+                                    messageType = item.type_message)
+                                }
+
                                 Text(
                                     text = item.content,
-                                    style = MaterialTheme.typography.bodySmall
+                                    style = MaterialTheme.typography.bodySmall,
                                 )
+
                             }
                         }
                     }
@@ -121,14 +152,9 @@ fun ChatInput (
 //                        .background(Color.White)
                         .fillMaxWidth(0.85f)
                         .focusRequester(focusRequester),
-                    maxLines = 1,
+                    maxLines = 3,
                     textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
                     decorationBox = { innerTextField ->
-//                        Row(
-//                            modifier = Modifier.fillMaxWidth()
-//                                .padding(10.dp),
-//                            horizontalArrangement = Arrangement.SpaceBetween
-//                        ) {
                         Surface(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -146,16 +172,16 @@ fun ChatInput (
         }
         IconButton(onClick = {
             if (authState == AppAuthState.LOGGED_IN) {
-                if(message.isNotEmpty()){
-                    if(replyMessage != null) {
-                        sendMessage(MessageData(content = message, reply_to = replyMessage.id))
-                        updateMessage("")
-                        clearReplyMessage()
-                    }else{
-                        sendMessage(MessageData(content = message))
-                        updateMessage("")
+                    if (message.isNotEmpty()) {
+                        if (replyMessage != null) {
+                            sendMessage(MessageData(content = message, reply_to = replyMessage.id))
+                            updateMessage("")
+                            clearReplyMessage()
+                        } else {
+                            sendMessage(MessageData(content = message))
+                            updateMessage("")
+                        }
                     }
-                }
             } else {
                 openAuthBottomSheet()
             }
@@ -168,7 +194,67 @@ fun ChatInput (
     }
 }
 
-
+@Composable
+internal fun MessageContent(
+    data:String,
+    messageType:Int,
+//    clearSharedMessage:()->Unit
+) {
+        when(messageType){
+            GrupoMessageType.MESSAGE.ordinal ->{
+                Text(
+                    text = data,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+            GrupoMessageType.INSTALACION.ordinal ->{
+                val formatter = LocalAppDateFormatter.current
+                val instalacion = try{ Json.decodeFromString<GrupoMessageInstalacion>(data) }catch (e:Exception){ null }
+                if(instalacion != null){
+                    Column(modifier = Modifier
+                        .padding(5.dp)
+                        .fillMaxWidth()
+                        .clickable {
+//                        navigateToInstalacionReserva(instalacion.id.toLong(),instalacion.establecimiento_id.toLong(),instalacion.cupos)
+                        }) {
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)){
+//                            IconButton(onClick = { clearSharedMessage() },modifier = Modifier
+//                                .align(Alignment.TopEnd)
+//                                .zIndex(1f)) {
+//                                Icon(
+//                                    imageVector = Icons.Outlined.Close,
+//                                    contentDescription = null,
+//                                    tint = Color.White
+//                                )
+//                            }
+                        PosterCardImage(model = instalacion.photo,
+                            modifier = Modifier
+                            .fillMaxSize())
+                        }
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(text = instalacion.name,style = MaterialTheme.typography.labelLarge)
+                        Text(text = "${stringResource(id = R.string.total_price)}: ${instalacion.total_price}",
+                            style = MaterialTheme.typography.labelMedium)
+                        Text(
+                            text = stringResource(id = R.string.time_game_will_played),
+                            style = MaterialTheme.typography.labelMedium
+                        )
+                        Text(
+                            text = formatter.formatShortDate(instalacion.cupos.first().time) +
+                                    " ${formatter.formatShortTime(instalacion.cupos.first().time)} a ${
+                                        formatter.formatShortTime(
+                                            instalacion.cupos.last().time.plus(30.minutes)
+                                        )
+                                    }",
+                            style = MaterialTheme.typography.labelMedium
+                        )
+                    }
+                }
+            }
+    }
+}
 
 @Composable
 fun MessengerIcon2(

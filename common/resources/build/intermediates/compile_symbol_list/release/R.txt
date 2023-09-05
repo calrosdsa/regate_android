@@ -37,6 +37,7 @@ int layout item_callout_view 0x0
 int layout mapbox 0x0
 int mipmap ic_launcher 0x0
 int string about_regate 0x0
+int string add_a_message 0x0
 int string add_a_review 0x0
 int string amount 0x0
 int string balance_coins 0x0
@@ -58,6 +59,7 @@ int string complete 0x0
 int string consume 0x0
 int string continuar 0x0
 int string contributed_amount 0x0
+int string count_selected 0x0
 int string create_group 0x0
 int string create_sala 0x0
 int string deposits 0x0
@@ -155,6 +157,7 @@ int string terms_of_services 0x0
 int string theme 0x0
 int string there_are_not_available_schudules 0x0
 int string threats_of_violence 0x0
+int string time_game_will_played 0x0
 int string time_interval 0x0
 int string total_paid 0x0
 int string total_price 0x0

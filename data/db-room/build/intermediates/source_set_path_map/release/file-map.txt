@@ -1,0 +1,16 @@
+app.regate.data.room.db-room-jetified-room-paging-2.6.0-alpha01-0 C:\Users\PC\.gradle\caches\transforms-3\1e888b5533c4f33afc31dd56350e2f34\transformed\jetified-room-paging-2.6.0-alpha01\res
+app.regate.data.room.db-room-sqlite-framework-2.4.0-alpha01-1 C:\Users\PC\.gradle\caches\transforms-3\4e7e1a0d176790d5901ba17e93e64258\transformed\sqlite-framework-2.4.0-alpha01\res
+app.regate.data.room.db-room-jetified-paging-runtime-ktx-3.1.1-2 C:\Users\PC\.gradle\caches\transforms-3\587bee889824939f973cd3a242fd2691\transformed\jetified-paging-runtime-ktx-3.1.1\res
+app.regate.data.room.db-room-recyclerview-1.2.0-3 C:\Users\PC\.gradle\caches\transforms-3\58ef6d4505cc6085fdce2dc677300fe8\transformed\recyclerview-1.2.0\res
+app.regate.data.room.db-room-core-1.3.2-4 C:\Users\PC\.gradle\caches\transforms-3\71438f45418c25453345a8996a396480\transformed\core-1.3.2\res
+app.regate.data.room.db-room-sqlite-2.4.0-alpha01-5 C:\Users\PC\.gradle\caches\transforms-3\78b0ceafe091ddff3314418672355f07\transformed\sqlite-2.4.0-alpha01\res
+app.regate.data.room.db-room-room-runtime-2.6.0-alpha01-6 C:\Users\PC\.gradle\caches\transforms-3\7f9090d29193b04874f78a060a70a68a\transformed\room-runtime-2.6.0-alpha01\res
+app.regate.data.room.db-room-jetified-room-ktx-2.6.0-alpha01-7 C:\Users\PC\.gradle\caches\transforms-3\e2f88e4fb2de528778643ba9ca50a3cc\transformed\jetified-room-ktx-2.6.0-alpha01\res
+app.regate.data.room.db-room-jetified-annotation-experimental-1.1.0-rc01-8 C:\Users\PC\.gradle\caches\transforms-3\e92e8b174a6829dd600bedda3815586b\transformed\jetified-annotation-experimental-1.1.0-rc01\res
+app.regate.data.room.db-room-paging-runtime-3.1.1-9 C:\Users\PC\.gradle\caches\transforms-3\ed8d380201ae699e8749d2b03b892d5b\transformed\paging-runtime-3.1.1\res
+app.regate.data.room.db-room-pngs-10 C:\Users\PC\Desktop\projects\regate_android\data\db-room\build\generated\res\pngs\release
+app.regate.data.room.db-room-mergeReleaseResources-11 C:\Users\PC\Desktop\projects\regate_android\data\db-room\build\intermediates\incremental\release\mergeReleaseResources\merged.dir
+app.regate.data.room.db-room-mergeReleaseResources-12 C:\Users\PC\Desktop\projects\regate_android\data\db-room\build\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+app.regate.data.room.db-room-merged_res-13 C:\Users\PC\Desktop\projects\regate_android\data\db-room\build\intermediates\merged_res\release
+app.regate.data.room.db-room-main-14 C:\Users\PC\Desktop\projects\regate_android\data\db-room\src\main\res
+app.regate.data.room.db-room-release-15 C:\Users\PC\Desktop\projects\regate_android\data\db-room\src\release\res

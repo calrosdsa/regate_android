@@ -110,6 +110,7 @@ internal fun Notifications(
                 NotificationItem(item = item,formatRelativeTime = formatRelativeTime,
                 navigate = {
                     when(item.typeEntity){
+                        TypeEntity.NONE -> item.typeEntity?.let { navigateToAccount() }
                         TypeEntity.SALA -> item.entityId?.let { navigateToSala(it) }
                         TypeEntity.BILLING -> item.entityId?.let { navigateToAccount() }
                         else -> {}
@@ -133,21 +134,18 @@ internal fun NotificationItem(
         Box(modifier = Modifier.fillMaxWidth()){
     Row(modifier = Modifier
         .clickable { navigate() }
-        .padding(top = 5.dp, bottom = 12.dp)
+        .padding(top = 5.dp, bottom = 5.dp)
         .height(IntrinsicSize.Min)
         .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-        Icon(imageVector = Icons.Outlined.Notifications, contentDescription = null,
-        modifier  = Modifier.rotate(30f))
-        Spacer(modifier = Modifier.width(10.dp))
+
         Column() {
-            if(item.title.isNotBlank()){
-            Text(text = item.title, style = MaterialTheme.typography.titleMedium)
+            if(item.title?.isNotBlank() == true){
+            Text(text = item.title!!, style = MaterialTheme.typography.labelLarge)
             }
             Text(text = item.content ,
                 style = MaterialTheme.typography.labelMedium)
+            DateTextWithIcon(date = formatRelativeTime(item.created_at))
         }
         }
-            DateTextWithIcon(date = formatRelativeTime(item.created_at),
-                modifier = Modifier.align(Alignment.BottomEnd).padding(top=9.dp))
     }
 }

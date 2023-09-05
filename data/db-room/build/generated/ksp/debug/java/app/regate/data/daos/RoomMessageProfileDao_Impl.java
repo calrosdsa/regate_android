@@ -68,7 +68,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `messages` SET `id` = ?,`grupo_id` = ?,`content` = ?,`created_at` = ?,`type_message` = ?,`profile_id` = ?,`reply_to` = ?,`sended` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `messages` SET `id` = ?,`grupo_id` = ?,`content` = ?,`data` = ?,`created_at` = ?,`type_message` = ?,`profile_id` = ?,`reply_to` = ?,`sended` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -77,29 +77,34 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         statement.bindLong(1, entity.getId());
         statement.bindLong(2, entity.getGrupo_id());
         statement.bindString(3, entity.getContent());
-        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
-        if (_tmp == null) {
+        if (entity.getData() == null) {
           statement.bindNull(4);
         } else {
-          statement.bindString(4, _tmp);
+          statement.bindString(4, entity.getData());
         }
-        statement.bindLong(5, entity.getType_message());
-        statement.bindLong(6, entity.getProfile_id());
-        if (entity.getReply_to() == null) {
-          statement.bindNull(7);
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp == null) {
+          statement.bindNull(5);
         } else {
-          statement.bindLong(7, entity.getReply_to());
+          statement.bindString(5, _tmp);
+        }
+        statement.bindLong(6, entity.getType_message());
+        statement.bindLong(7, entity.getProfile_id());
+        if (entity.getReply_to() == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindLong(8, entity.getReply_to());
         }
         final int _tmp_1 = entity.getSended() ? 1 : 0;
-        statement.bindLong(8, _tmp_1);
-        statement.bindLong(9, entity.getId());
+        statement.bindLong(9, _tmp_1);
+        statement.bindLong(10, entity.getId());
       }
     };
     this.__upsertionAdapterOfMessage = new EntityUpsertionAdapter<Message>(new EntityInsertionAdapter<Message>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `messages` (`id`,`grupo_id`,`content`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`) VALUES (?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `messages` (`id`,`grupo_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`) VALUES (?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -108,27 +113,32 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         statement.bindLong(1, entity.getId());
         statement.bindLong(2, entity.getGrupo_id());
         statement.bindString(3, entity.getContent());
-        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
-        if (_tmp == null) {
+        if (entity.getData() == null) {
           statement.bindNull(4);
         } else {
-          statement.bindString(4, _tmp);
+          statement.bindString(4, entity.getData());
         }
-        statement.bindLong(5, entity.getType_message());
-        statement.bindLong(6, entity.getProfile_id());
-        if (entity.getReply_to() == null) {
-          statement.bindNull(7);
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp == null) {
+          statement.bindNull(5);
         } else {
-          statement.bindLong(7, entity.getReply_to());
+          statement.bindString(5, _tmp);
+        }
+        statement.bindLong(6, entity.getType_message());
+        statement.bindLong(7, entity.getProfile_id());
+        if (entity.getReply_to() == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindLong(8, entity.getReply_to());
         }
         final int _tmp_1 = entity.getSended() ? 1 : 0;
-        statement.bindLong(8, _tmp_1);
+        statement.bindLong(9, _tmp_1);
       }
     }, new EntityDeletionOrUpdateAdapter<Message>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `messages` SET `id` = ?,`grupo_id` = ?,`content` = ?,`created_at` = ?,`type_message` = ?,`profile_id` = ?,`reply_to` = ?,`sended` = ? WHERE `id` = ?";
+        return "UPDATE `messages` SET `id` = ?,`grupo_id` = ?,`content` = ?,`data` = ?,`created_at` = ?,`type_message` = ?,`profile_id` = ?,`reply_to` = ?,`sended` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -137,22 +147,27 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         statement.bindLong(1, entity.getId());
         statement.bindLong(2, entity.getGrupo_id());
         statement.bindString(3, entity.getContent());
-        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
-        if (_tmp == null) {
+        if (entity.getData() == null) {
           statement.bindNull(4);
         } else {
-          statement.bindString(4, _tmp);
+          statement.bindString(4, entity.getData());
         }
-        statement.bindLong(5, entity.getType_message());
-        statement.bindLong(6, entity.getProfile_id());
-        if (entity.getReply_to() == null) {
-          statement.bindNull(7);
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp == null) {
+          statement.bindNull(5);
         } else {
-          statement.bindLong(7, entity.getReply_to());
+          statement.bindString(5, _tmp);
+        }
+        statement.bindLong(6, entity.getType_message());
+        statement.bindLong(7, entity.getProfile_id());
+        if (entity.getReply_to() == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindLong(8, entity.getReply_to());
         }
         final int _tmp_1 = entity.getSended() ? 1 : 0;
-        statement.bindLong(8, _tmp_1);
-        statement.bindLong(9, entity.getId());
+        statement.bindLong(9, _tmp_1);
+        statement.bindLong(10, entity.getId());
       }
     });
   }
@@ -263,6 +278,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(cursor, "id");
         final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(cursor, "grupo_id");
         final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(cursor, "content");
+        final int _cursorIndexOfData = CursorUtil.getColumnIndexOrThrow(cursor, "data");
         final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(cursor, "created_at");
         final int _cursorIndexOfTypeMessage = CursorUtil.getColumnIndexOrThrow(cursor, "type_message");
         final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(cursor, "profile_id");
@@ -297,6 +313,12 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           _tmpGrupo_id = cursor.getLong(_cursorIndexOfGrupoId);
           final String _tmpContent;
           _tmpContent = cursor.getString(_cursorIndexOfContent);
+          final String _tmpData;
+          if (cursor.isNull(_cursorIndexOfData)) {
+            _tmpData = null;
+          } else {
+            _tmpData = cursor.getString(_cursorIndexOfData);
+          }
           final Instant _tmpCreated_at;
           final String _tmp;
           if (cursor.isNull(_cursorIndexOfCreatedAt)) {
@@ -324,7 +346,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final int _tmp_2;
           _tmp_2 = cursor.getInt(_cursorIndexOfSended);
           _tmpSended = _tmp_2 != 0;
-          _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended);
+          _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended);
           final Profile _tmpProfile;
           final long _tmpKey_2;
           _tmpKey_2 = cursor.getLong(_cursorIndexOfProfileId);
@@ -371,6 +393,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
             final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(_cursor, "grupo_id");
             final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
+            final int _cursorIndexOfData = CursorUtil.getColumnIndexOrThrow(_cursor, "data");
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
             final int _cursorIndexOfTypeMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "type_message");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
@@ -404,6 +427,12 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
               final String _tmpContent;
               _tmpContent = _cursor.getString(_cursorIndexOfContent);
+              final String _tmpData;
+              if (_cursor.isNull(_cursorIndexOfData)) {
+                _tmpData = null;
+              } else {
+                _tmpData = _cursor.getString(_cursorIndexOfData);
+              }
               final Instant _tmpCreated_at;
               final String _tmp;
               if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
@@ -431,7 +460,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               final int _tmp_2;
               _tmp_2 = _cursor.getInt(_cursorIndexOfSended);
               _tmpSended = _tmp_2 != 0;
-              _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended);
+              _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended);
               final Profile _tmpProfile;
               final long _tmpKey_2;
               _tmpKey_2 = _cursor.getLong(_cursorIndexOfProfileId);
@@ -482,6 +511,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
         final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(_cursor, "grupo_id");
         final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
+        final int _cursorIndexOfData = CursorUtil.getColumnIndexOrThrow(_cursor, "data");
         final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
         final int _cursorIndexOfTypeMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "type_message");
         final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
@@ -516,6 +546,12 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
           final String _tmpContent;
           _tmpContent = _cursor.getString(_cursorIndexOfContent);
+          final String _tmpData;
+          if (_cursor.isNull(_cursorIndexOfData)) {
+            _tmpData = null;
+          } else {
+            _tmpData = _cursor.getString(_cursorIndexOfData);
+          }
           final Instant _tmpCreated_at;
           final String _tmp;
           if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
@@ -543,7 +579,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final int _tmp_2;
           _tmp_2 = _cursor.getInt(_cursorIndexOfSended);
           _tmpSended = _tmp_2 != 0;
-          _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended);
+          _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended);
           final Profile _tmpProfile;
           final long _tmpKey_2;
           _tmpKey_2 = _cursor.getLong(_cursorIndexOfProfileId);
@@ -596,6 +632,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
           final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(_cursor, "grupo_id");
           final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
+          final int _cursorIndexOfData = CursorUtil.getColumnIndexOrThrow(_cursor, "data");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
           final int _cursorIndexOfTypeMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "type_message");
           final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
@@ -610,6 +647,12 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
             final String _tmpContent;
             _tmpContent = _cursor.getString(_cursorIndexOfContent);
+            final String _tmpData;
+            if (_cursor.isNull(_cursorIndexOfData)) {
+              _tmpData = null;
+            } else {
+              _tmpData = _cursor.getString(_cursorIndexOfData);
+            }
             final Instant _tmpCreated_at;
             final String _tmp;
             if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
@@ -637,7 +680,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             final int _tmp_2;
             _tmp_2 = _cursor.getInt(_cursorIndexOfSended);
             _tmpSended = _tmp_2 != 0;
-            _item = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended);
+            _item = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended);
             _result.add(_item);
           }
           return _result;
@@ -756,7 +799,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       return;
     }
     final StringBuilder _stringBuilder = StringUtil.newStringBuilder();
-    _stringBuilder.append("SELECT `id`,`grupo_id`,`content`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended` FROM `messages` WHERE `id` IN (");
+    _stringBuilder.append("SELECT `id`,`grupo_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended` FROM `messages` WHERE `id` IN (");
     final int _inputSize = _map.size();
     StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
     _stringBuilder.append(")");
@@ -778,11 +821,12 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       final int _cursorIndexOfId = 0;
       final int _cursorIndexOfGrupoId = 1;
       final int _cursorIndexOfContent = 2;
-      final int _cursorIndexOfCreatedAt = 3;
-      final int _cursorIndexOfTypeMessage = 4;
-      final int _cursorIndexOfProfileId = 5;
-      final int _cursorIndexOfReplyTo = 6;
-      final int _cursorIndexOfSended = 7;
+      final int _cursorIndexOfData = 3;
+      final int _cursorIndexOfCreatedAt = 4;
+      final int _cursorIndexOfTypeMessage = 5;
+      final int _cursorIndexOfProfileId = 6;
+      final int _cursorIndexOfReplyTo = 7;
+      final int _cursorIndexOfSended = 8;
       while (_cursor.moveToNext()) {
         final long _tmpKey;
         _tmpKey = _cursor.getLong(_itemKeyIndex);
@@ -794,6 +838,12 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
           final String _tmpContent;
           _tmpContent = _cursor.getString(_cursorIndexOfContent);
+          final String _tmpData;
+          if (_cursor.isNull(_cursorIndexOfData)) {
+            _tmpData = null;
+          } else {
+            _tmpData = _cursor.getString(_cursorIndexOfData);
+          }
           final Instant _tmpCreated_at;
           final String _tmp;
           if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
@@ -821,7 +871,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final int _tmp_2;
           _tmp_2 = _cursor.getInt(_cursorIndexOfSended);
           _tmpSended = _tmp_2 != 0;
-          _item_1 = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended);
+          _item_1 = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended);
           _map.put(_tmpKey, _item_1);
         }
       }

@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "app.regate.actividades-merged_res-85:/layout-v26/abc_screen_toolbar.xml",
+        "source": "app.regate.actividades-appcompat-1.6.1-45:/layout-v26/abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "app.regate.actividades-merged_res-85:/layout-v26/mtrl_calendar_month.xml",
+        "source": "app.regate.actividades-material-1.9.0-53:/layout-v26/mtrl_calendar_month.xml"
+    }
+]

@@ -100,6 +100,13 @@ class GrupoDataSourceImpl(
         }.body()
     }
 
+    override suspend fun sendShareMessage(d:List<GrupoMessageDto>) {
+        client.post("/v1/grupo/send/share-message/"){
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }
+    }
+
     override suspend fun getMessagesGrupo(id: Long,page:Int): PaginationGroupMessages {
         return client.get("/v1/grupo/messages/${id}/?page=${page}").body()
     }

@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "app.regate.entidad.reservar-merged_res-86:/color-night-v8/material_timepicker_clockface.xml",
+        "source": "app.regate.entidad.reservar-material-1.9.0-53:/color-night-v8/material_timepicker_clockface.xml"
+    },
+    {
+        "merged": "app.regate.entidad.reservar-merged_res-86:/color-night-v8/material_timepicker_modebutton_tint.xml",
+        "source": "app.regate.entidad.reservar-material-1.9.0-53:/color-night-v8/material_timepicker_modebutton_tint.xml"
+    },
+    {
+        "merged": "app.regate.entidad.reservar-merged_res-86:/color-night-v8/material_timepicker_button_stroke.xml",
+        "source": "app.regate.entidad.reservar-material-1.9.0-53:/color-night-v8/material_timepicker_button_stroke.xml"
+    }
+]

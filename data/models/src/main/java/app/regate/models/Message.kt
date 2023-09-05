@@ -25,6 +25,7 @@ data class Message(
     override val id: Long,
     val grupo_id:Long,
     val content:String,
+    val data:String? = null,
     val created_at:Instant,
     val type_message:Int = GrupoMessageType.MESSAGE.ordinal,
     val profile_id:Long,

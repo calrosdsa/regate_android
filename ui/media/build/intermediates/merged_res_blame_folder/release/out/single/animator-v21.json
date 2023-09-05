@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "app.regate.media-merged_res-86:/animator-v21/m3_appbar_state_list_animator.xml",
+        "source": "app.regate.media-material-1.9.0-53:/animator-v21/m3_appbar_state_list_animator.xml"
+    },
+    {
+        "merged": "app.regate.media-merged_res-86:/animator-v21/design_appbar_state_list_animator.xml",
+        "source": "app.regate.media-material-1.9.0-53:/animator-v21/design_appbar_state_list_animator.xml"
+    }
+]

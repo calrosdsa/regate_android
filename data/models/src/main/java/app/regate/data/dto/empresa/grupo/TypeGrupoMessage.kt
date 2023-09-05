@@ -28,6 +28,6 @@ data class  CupoInstalacion(
 @Serializable
 data class GrupoMessageData(
     val type_data:Int,
+    val content:String = "",
     val data:String,
 )
-
