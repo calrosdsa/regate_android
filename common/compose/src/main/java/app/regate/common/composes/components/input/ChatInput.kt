@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Send
@@ -53,6 +55,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import app.regate.common.composes.LocalAppDateFormatter
@@ -130,7 +134,7 @@ fun ChatInput (
                                 )
                                 }
                                 item.data?.let {data->
-                                MessageContent(data = data,
+                                MessageContent2(data = data,
                                     messageType = item.type_message)
                                 }
 
@@ -166,6 +170,28 @@ fun ChatInput (
 //                            Icon(imageVector = Icons.Outlined.EmojiEmotions, contentDescription = "emoji")
 //                        }
                     },
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            if (authState == AppAuthState.LOGGED_IN) {
+                                if (message.isNotEmpty()) {
+                                    if (replyMessage != null) {
+                                        sendMessage(MessageData(content = message, reply_to = replyMessage.id))
+                                        updateMessage("")
+                                        clearReplyMessage()
+                                    } else {
+                                        sendMessage(MessageData(content = message))
+                                        updateMessage("")
+                                    }
+                                }
+                            } else {
+                                openAuthBottomSheet()
+                            }
+                        }
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done,
+                    ),
                 )
 
             }
@@ -195,7 +221,7 @@ fun ChatInput (
 }
 
 @Composable
-internal fun MessageContent(
+internal fun MessageContent2(
     data:String,
     messageType:Int,
 //    clearSharedMessage:()->Unit

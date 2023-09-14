@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.RemoveRedEye
@@ -39,11 +40,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import app.regate.common.composes.components.input.CustomOutlinedTextInput
@@ -87,6 +92,7 @@ internal fun Login(
     val viewState by viewModel.state.collectAsState()
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
+    val focusManager = LocalFocusManager.current
 
     val startForResult =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -151,7 +157,14 @@ internal fun Login(
                     onValueChange = { email = it },
                     modifier = Modifier.fillMaxWidth(),
                     placeholder = "jan@gmail.com",
-                    icon = Icons.Outlined.Email
+                    icon = Icons.Outlined.Email,
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Next)
+                        }
+                    ),
+                    imeAction = ImeAction.Next,
+                    keyboardType = KeyboardType.Email
                 )
             }
 
@@ -166,7 +179,14 @@ internal fun Login(
                     onValueChange = { password = it },
                     modifier = Modifier.fillMaxWidth(),
                     placeholder = "*********",
-                    icon = Icons.Outlined.RemoveRedEye
+                    icon = Icons.Outlined.RemoveRedEye,
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            viewModel.login(email, password, navigateToHomeScreen,context)
+                        }
+                    ),
+                    imeAction = ImeAction.Done,
+                    keyboardType = KeyboardType.Password
                 )
             }
 
@@ -252,31 +272,6 @@ internal fun Login(
                 }
             }
 
-
-//            Spacer(modifier = Modifier.height(20.dp))
-//
-//            TextButton(
-//                onClick = { }, modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(45.dp),
-//                shape = CircleShape,
-//                border = BorderStroke(1.dp, Color.LightGray)
-//
-//            ) {
-//                Row(
-//                    modifier = Modifier.fillMaxWidth(),
-//                    horizontalArrangement = Arrangement.Center,
-//                    verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    Image(
-//                        painter = painterResource(id = app.regate.common.resources.R.drawable.icon_mac),
-//                        contentDescription = "logo", modifier = Modifier.size(25.dp)
-//                    )
-//                    Spacer(modifier = Modifier.width(15.dp))
-//                    Text(text = "Continuar con Apple", color = MaterialTheme.colorScheme.primary)
-//
-//                }
-//            }
 
             Spacer(modifier = Modifier.height(20.dp))
 

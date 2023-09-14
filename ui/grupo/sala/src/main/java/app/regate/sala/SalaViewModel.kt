@@ -99,23 +99,23 @@ class SalaViewModel(
             }
         }
     }
-    fun exitSala(context:Context, navigateUp:()->Unit){
-        viewModelScope.launch {
-            try{
-                state.value.data?.profiles?.find {
-                    it.profile_id == state.value.user?.profile_id
-                }?.user_id.also {userSalaId->
-                    if(userSalaId != null){
-                        salaRepository.exitSala(userSalaId.toInt())
-                    }
-                }
-                navigateUp()
-            }catch (e:Exception){
-                uiMessageManager.emitMessage(UiMessage(message = context.getString(R.string.unexpected_error)))
-                Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"error")
-            }
-        }
-    }
+//    fun exitSala(context:Context, navigateUp:()->Unit){
+//        viewModelScope.launch {
+//            try{
+//                state.value.data?.profiles?.find {
+//                    it.profile_id == state.value.user?.profile_id
+//                }?.user_id.also {userSalaId->
+//                    if(userSalaId != null){
+//                        salaRepository.exitSala(userSalaId.toInt())
+//                    }
+//                }
+//                navigateUp()
+//            }catch (e:Exception){
+//                uiMessageManager.emitMessage(UiMessage(message = context.getString(R.string.unexpected_error)))
+//                Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"error")
+//            }
+//        }
+//    }
 
     fun refresh(){
         viewModelScope.launch {

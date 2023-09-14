@@ -5,23 +5,23 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SalaDto(
-    val category_id: Int,
-    val created_at: String,
-    val cupos: Int,
-    val descripcion: String,
-    val establecimiento_id: Long,
     val id: Long,
     val instalacion_id: Long,
+    val establecimiento_id: Long,
+    val cupos: Int,
+    val descripcion: String,
+    val titulo: String,
     val precio: Int,
     val paid:Double,
-    val titulo: String,
+    val horas:List<String>,
+    val created_at: String,
     val precio_cupo:Double = 0.0,
     val users:Int,
     val grupo_id:Long,
     val estado:Int,
-    val horas:List<String>,
     val establecimiento_name: String = "",
-    val establecimiento_photo: String? = null
+    val establecimiento_photo: String? = null,
+    val category_id: Int = 0,
 )
 
 enum class SalaEstado{

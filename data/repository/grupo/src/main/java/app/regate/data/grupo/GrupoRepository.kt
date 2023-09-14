@@ -1,5 +1,6 @@
 package app.regate.data.grupo
 
+import app.regate.compoundmodels.MessageProfile
 import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
@@ -7,17 +8,14 @@ import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
 import app.regate.data.dto.ResponseMessage
-import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
-import app.regate.data.dto.empresa.grupo.GrupoResponse
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.mappers.DtoToGrupo
-import app.regate.data.mappers.DtoToProfile
 import app.regate.data.mappers.DtoToUserGrupo
 import app.regate.data.mappers.MessageDtoToMessage
 import app.regate.data.mappers.MessageToMessageDto
@@ -29,6 +27,7 @@ import app.regate.models.MyGroups
 import app.regate.models.Profile
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import me.tatarka.inject.annotations.Inject
 @ApplicationScope
@@ -49,6 +48,9 @@ class GrupoRepository(
     private val myGroupsDao: MyGroupsDao,
     private val profileMapper:UserGroupDtoToProfile
 ){
+    fun observeMessages(id: Long): Flow<List<MessageProfile>> {
+        return messageProfileDao.getMessages(id)
+    }
     suspend fun getGroupsWhereUserIsAdmin():List<GrupoDto>{
         return grupoDataSourceImpl.getGroupsWhereUserIsAdmin()
     }

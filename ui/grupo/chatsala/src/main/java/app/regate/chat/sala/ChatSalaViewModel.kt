@@ -11,6 +11,7 @@ import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageSalaWithProfile
 import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.constant.Host
 import app.regate.data.common.MessageData
 import app.regate.data.dto.empresa.salas.MessageSalaDto
 import app.regate.data.dto.empresa.salas.SalaEvent
@@ -107,9 +108,9 @@ class ChatSalaViewModel(
 //            runBlocking {
 //               client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
 //                val ws = client.webSocketSession {  }
-             client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
+             client.webSocket(method = HttpMethod.Get, host = Host.host,
 //                client.webSocket(method = HttpMethod.Get, host = "192.168.0.12",
-                    port = 9090, path = "/v1/ws/chat-sala?id=${salaId}"){
+                    port =Host.port, path = "/v1/ws/chat-sala?id=${salaId}"){
                     launch { outputMessage() }
 //                    launch { inputMessage() }
                    while (true){

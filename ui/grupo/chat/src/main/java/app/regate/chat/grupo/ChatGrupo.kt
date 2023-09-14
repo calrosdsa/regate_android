@@ -1,5 +1,6 @@
 package app.regate.chat.grupo
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.scaleIn
@@ -152,6 +153,10 @@ internal fun ChatGrupo(
         }
     }
 
+    LaunchedEffect(key1 = viewState.scrollToBottom, block = {
+        delay(500)
+        lazyListState.animateScrollToItem(0)
+    })
     viewState.message?.let { messageSnack ->
         LaunchedEffect(messageSnack) {
             snackbarHostState.showSnackbar(messageSnack.message)
@@ -225,7 +230,7 @@ internal fun ChatGrupo(
                 sendMessage = {sendMessage(it) {
                     coroutineScope.launch {
                         delay(300)
-                        lazyListState.animateScrollToItem(0)
+//                        lazyListState.animateScrollToItem(0)
                     }
                 }
                 },

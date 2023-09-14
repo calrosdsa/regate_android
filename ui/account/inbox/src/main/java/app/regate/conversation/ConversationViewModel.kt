@@ -9,6 +9,7 @@ import androidx.paging.PagingData
 import app.cash.paging.cachedIn
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageConversation
+import app.regate.constant.HostMessage
 import app.regate.data.coin.ConversationRepository
 import app.regate.data.common.MessageData
 import app.regate.data.dto.empresa.conversation.ConversationMessage
@@ -93,8 +94,9 @@ class ConversationViewModel(
         Log.d("DEBUG_APP",conversationId.toString())
         viewModelScope.launch {
             try{
-                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
-                port = 9091, path = "v1/ws/conversation/?id=$conversationId"){
+//                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
+                client.webSocket(method = HttpMethod.Get, host = HostMessage.host,
+                    port = HostMessage.port, path = "v1/ws/conversation/?id=$conversationId"){
                     launch { outputMessage() }
                     while (true){
                         val othersMessage = incoming.receive() as? Frame.Text

@@ -14,7 +14,10 @@ class DtoToGrupo:Mapper<GrupoDto,Grupo> {
             name = from.name,
             photo = from.photo,
             profile_id = from.profile_id,
-            visibility = from.visibility
-         )
+            visibility = from.visibility,
+            last_message = from.last_message,
+            last_message_created = from.last_message_created,
+            messages_count = from.messages_count
+        )
     }
 }

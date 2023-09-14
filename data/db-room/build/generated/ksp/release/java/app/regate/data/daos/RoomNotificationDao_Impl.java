@@ -72,7 +72,11 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Notification entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindString(2, entity.getTitle());
+        if (entity.getTitle() == null) {
+          statement.bindNull(2);
+        } else {
+          statement.bindString(2, entity.getTitle());
+        }
         statement.bindString(3, entity.getContent());
         if (entity.getEntityId() == null) {
           statement.bindNull(4);
@@ -120,7 +124,11 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Notification entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindString(2, entity.getTitle());
+        if (entity.getTitle() == null) {
+          statement.bindNull(2);
+        } else {
+          statement.bindString(2, entity.getTitle());
+        }
         statement.bindString(3, entity.getContent());
         if (entity.getEntityId() == null) {
           statement.bindNull(4);
@@ -158,7 +166,11 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Notification entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindString(2, entity.getTitle());
+        if (entity.getTitle() == null) {
+          statement.bindNull(2);
+        } else {
+          statement.bindString(2, entity.getTitle());
+        }
         statement.bindString(3, entity.getContent());
         if (entity.getEntityId() == null) {
           statement.bindNull(4);
@@ -328,7 +340,11 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
               final String _tmpTitle;
-              _tmpTitle = _cursor.getString(_cursorIndexOfTitle);
+              if (_cursor.isNull(_cursorIndexOfTitle)) {
+                _tmpTitle = null;
+              } else {
+                _tmpTitle = _cursor.getString(_cursorIndexOfTitle);
+              }
               final String _tmpContent;
               _tmpContent = _cursor.getString(_cursorIndexOfContent);
               final Long _tmpEntityId;

@@ -119,7 +119,6 @@ internal fun Chat (
             val isLast =  items
 //                .sortedBy { it.first }
                 .map {
-                    Log.d("DEBUG_APP_MAP",it.toString())
                     it
                 }
                 .last { it.message.created_at.toLocalDateTime(TimeZone.UTC).date == date }
@@ -225,7 +224,7 @@ internal fun Chat (
                                         )
                                     }
                                     item.message.data?.let {data->
-                                    MessageContent(
+                                    MessageContent1(
                                         content = data,
                                         messageType = item.message.type_message,
                                         navigateToInstalacionReserva = navigateToInstalacionReserva,
@@ -348,7 +347,7 @@ internal fun Chat (
                                             formatShortTime = formatShortTime,)
                                     }
                                     item.message.data?.let {data->
-                                        MessageContent(
+                                        MessageContent1(
                                             content = data,
                                             messageType = item.message.type_message,
                                             navigateToInstalacionReserva = navigateToInstalacionReserva,
@@ -395,9 +394,9 @@ internal fun Chat (
 }
 
 @Composable
-fun MessageContent(
-    content:String,
+internal fun MessageContent1(
     messageType:Int,
+    content:String,
     navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
     formatShortDate: (Instant) -> String,
     formatShortTime: (Instant) -> String,
@@ -478,7 +477,7 @@ fun MessageReply(
             color = MaterialTheme.colorScheme.primary
         )
         item.reply?.data?.let { data->
-        MessageContent(
+        MessageContent1(
             content = data,
             messageType = item.reply?.type_message?:0,
             navigateToInstalacionReserva = navigateToInstalacionReserva,

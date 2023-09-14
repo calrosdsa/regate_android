@@ -1,8 +1,7 @@
 package app.regate.domain.observers
 
-import app.regate.data.daos.GrupoDao
+import app.regate.compoundmodels.GrupoWithMessage
 import app.regate.data.daos.MyGroupsDao
-import app.regate.data.daos.UserGrupoDao
 import app.regate.domain.SubjectInteractor
 import app.regate.models.Grupo
 import kotlinx.coroutines.flow.Flow

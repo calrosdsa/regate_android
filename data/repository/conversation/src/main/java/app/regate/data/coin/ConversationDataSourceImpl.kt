@@ -1,5 +1,6 @@
 package app.regate.data.coin
 
+import app.regate.constant.HostMessage
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.empresa.conversation.Conversation
 import app.regate.data.dto.empresa.conversation.ConversationId
@@ -22,8 +23,8 @@ class ConversationDataSourceImpl(
     private val authStore: AuthStore
 ): ConversationDataSource {
     companion object {
-//        const val baseUrl = "http://192.168.0.12:9091"
-          const val baseUrl = "http://172.20.20.76:9091"
+        const val baseUrl = HostMessage.url
+//          const val baseUrl = "http://172.20.20.76:9091"
     }
     override suspend fun getMessages(id: Long, page: Int): PaginationConversationMessages{
         return client.get{

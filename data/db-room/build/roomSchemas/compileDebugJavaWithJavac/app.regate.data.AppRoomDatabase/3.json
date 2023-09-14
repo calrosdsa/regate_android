@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "79b505b983ce75199819dd27626239b6",
+    "identityHash": "34db2affd057771f95725cf3fcbc5df8",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -545,7 +545,7 @@
       },
       {
         "tableName": "grupos",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, `profile_id` INTEGER NOT NULL, `visibility` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, `profile_id` INTEGER NOT NULL, `visibility` INTEGER NOT NULL, `last_message` TEXT NOT NULL, `last_message_created` TEXT, `messages_count` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -586,6 +586,24 @@
           {
             "fieldPath": "visibility",
             "columnName": "visibility",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "last_message",
+            "columnName": "last_message",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "last_message_created",
+            "columnName": "last_message_created",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "messages_count",
+            "columnName": "messages_count",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -957,7 +975,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '79b505b983ce75199819dd27626239b6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '34db2affd057771f95725cf3fcbc5df8')"
     ]
   }
 }

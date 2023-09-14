@@ -7,6 +7,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SalaDetail(
     val sala:SalaDto,
-    val profiles: List<ProfileDto>,
+    val profiles: List<UserSala>,
     val instalacion:InstalacionDto
 )

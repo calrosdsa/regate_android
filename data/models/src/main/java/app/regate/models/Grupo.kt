@@ -17,4 +17,7 @@ data class Grupo(
     //id del usuario que creo
     val profile_id:Long,
     val visibility:Int,
+    val last_message:String = "",
+    val last_message_created: Instant? = null,
+    val messages_count:Int = 0,
 ):AppEntity

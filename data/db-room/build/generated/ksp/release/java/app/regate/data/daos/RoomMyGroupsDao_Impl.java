@@ -12,6 +12,7 @@ import androidx.room.SharedSQLiteStatement;
 import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
+import app.regate.compoundmodels.GrupoWithMessage;
 import app.regate.data.db.DateTimeTypeConverters;
 import app.regate.models.Grupo;
 import app.regate.models.MyGroups;
@@ -220,60 +221,175 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
   }
 
   @Override
-  public Flow<List<Grupo>> observeUserGroups() {
-    final String _sql = "select g.* from my_groups as ug inner join grupos as g on g.id = ug.group_id";
+  public Flow<List<GrupoWithMessage>> observeUserGroupsWithMessage() {
+    final String _sql = "\n"
+            + "        select g.*,(select count(*) from messages as m where g.id = m.grupo_id ) as local_count_messages\n"
+            + "        from my_groups as ug inner join grupos as g on g.id = ug.group_id\n"
+            + "        ";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
-    return CoroutinesRoom.createFlow(__db, false, new String[] {"my_groups",
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"messages", "my_groups",
+        "grupos"}, new Callable<List<GrupoWithMessage>>() {
+      @Override
+      @NonNull
+      public List<GrupoWithMessage> call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+            final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
+            final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
+            final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
+            final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+            final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
+            final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
+            final int _cursorIndexOfLastMessageCreated = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message_created");
+            final int _cursorIndexOfMessagesCount = CursorUtil.getColumnIndexOrThrow(_cursor, "messages_count");
+            final int _cursorIndexOfLocalCountMessages = CursorUtil.getColumnIndexOrThrow(_cursor, "local_count_messages");
+            final List<GrupoWithMessage> _result = new ArrayList<GrupoWithMessage>(_cursor.getCount());
+            while (_cursor.moveToNext()) {
+              final GrupoWithMessage _item;
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final String _tmpName;
+              _tmpName = _cursor.getString(_cursorIndexOfName);
+              final String _tmpDescription;
+              if (_cursor.isNull(_cursorIndexOfDescription)) {
+                _tmpDescription = null;
+              } else {
+                _tmpDescription = _cursor.getString(_cursorIndexOfDescription);
+              }
+              final Instant _tmpCreated_at;
+              final String _tmp;
+              if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+                _tmp = null;
+              } else {
+                _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+              }
+              _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+              final String _tmpPhoto;
+              if (_cursor.isNull(_cursorIndexOfPhoto)) {
+                _tmpPhoto = null;
+              } else {
+                _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
+              }
+              final long _tmpProfile_id;
+              _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
+              final int _tmpVisibility;
+              _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
+              final String _tmpLast_message;
+              _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
+              final Instant _tmpLast_message_created;
+              final String _tmp_1;
+              if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
+                _tmp_1 = null;
+              } else {
+                _tmp_1 = _cursor.getString(_cursorIndexOfLastMessageCreated);
+              }
+              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_1);
+              final int _tmpMessages_count;
+              _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
+              final int _tmpLocal_count_messages;
+              _tmpLocal_count_messages = _cursor.getInt(_cursorIndexOfLocalCountMessages);
+              _item = new GrupoWithMessage(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpLocal_count_messages);
+              _result.add(_item);
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public Flow<List<Grupo>> observeUserGroups() {
+    final String _sql = "\n"
+            + "        select g.* from my_groups as ug inner join grupos as g on g.id = ug.group_id\n"
+            + "        ";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"my_groups",
         "grupos"}, new Callable<List<Grupo>>() {
       @Override
       @NonNull
       public List<Grupo> call() throws Exception {
-        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        __db.beginTransaction();
         try {
-          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
-          final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
-          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
-          final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
-          final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
-          final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
-          final List<Grupo> _result = new ArrayList<Grupo>(_cursor.getCount());
-          while (_cursor.moveToNext()) {
-            final Grupo _item;
-            final long _tmpId;
-            _tmpId = _cursor.getLong(_cursorIndexOfId);
-            final String _tmpName;
-            _tmpName = _cursor.getString(_cursorIndexOfName);
-            final String _tmpDescription;
-            if (_cursor.isNull(_cursorIndexOfDescription)) {
-              _tmpDescription = null;
-            } else {
-              _tmpDescription = _cursor.getString(_cursorIndexOfDescription);
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+            final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
+            final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
+            final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
+            final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+            final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
+            final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
+            final int _cursorIndexOfLastMessageCreated = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message_created");
+            final int _cursorIndexOfMessagesCount = CursorUtil.getColumnIndexOrThrow(_cursor, "messages_count");
+            final List<Grupo> _result = new ArrayList<Grupo>(_cursor.getCount());
+            while (_cursor.moveToNext()) {
+              final Grupo _item;
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final String _tmpName;
+              _tmpName = _cursor.getString(_cursorIndexOfName);
+              final String _tmpDescription;
+              if (_cursor.isNull(_cursorIndexOfDescription)) {
+                _tmpDescription = null;
+              } else {
+                _tmpDescription = _cursor.getString(_cursorIndexOfDescription);
+              }
+              final Instant _tmpCreated_at;
+              final String _tmp;
+              if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+                _tmp = null;
+              } else {
+                _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+              }
+              _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+              final String _tmpPhoto;
+              if (_cursor.isNull(_cursorIndexOfPhoto)) {
+                _tmpPhoto = null;
+              } else {
+                _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
+              }
+              final long _tmpProfile_id;
+              _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
+              final int _tmpVisibility;
+              _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
+              final String _tmpLast_message;
+              _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
+              final Instant _tmpLast_message_created;
+              final String _tmp_1;
+              if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
+                _tmp_1 = null;
+              } else {
+                _tmp_1 = _cursor.getString(_cursorIndexOfLastMessageCreated);
+              }
+              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_1);
+              final int _tmpMessages_count;
+              _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
+              _item = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
+              _result.add(_item);
             }
-            final Instant _tmpCreated_at;
-            final String _tmp;
-            if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
-              _tmp = null;
-            } else {
-              _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
-            }
-            _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
-            final String _tmpPhoto;
-            if (_cursor.isNull(_cursorIndexOfPhoto)) {
-              _tmpPhoto = null;
-            } else {
-              _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
-            }
-            final long _tmpProfile_id;
-            _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-            final int _tmpVisibility;
-            _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
-            _item = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility);
-            _result.add(_item);
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
           }
-          return _result;
         } finally {
-          _cursor.close();
+          __db.endTransaction();
         }
       }
 

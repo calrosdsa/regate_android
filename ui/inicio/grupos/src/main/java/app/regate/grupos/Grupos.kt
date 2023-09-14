@@ -5,9 +5,11 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -36,8 +38,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.ui.BottomBar
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.viewModel
@@ -48,6 +53,7 @@ import app.regate.models.Grupo
 import app.regate.usergroups.UserGroups
 import app.regate.usergroups.UserGroupsViewModel
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -70,10 +76,12 @@ fun Grupos (
 //    @Assisted navigateToReserva: (id:Long) -> Unit,
 //    viewModelFactory:()->ReservasViewModel
 ){
+    val formatter = LocalAppDateFormatter.current
     Grupos(navController = navController,
         viewModel = viewModel(factory = viewModelFactory),
         filterGroups = filterGroups,
-        userSalas = userSalas
+        userSalas = userSalas,
+        formatShortRelativeTime = formatter::formatShortRelativeTime
     )
 }
 
@@ -83,6 +91,7 @@ fun Grupos (
 internal fun Grupos(
     navController: NavController,
     viewModel:UserGroupsViewModel,
+    formatShortRelativeTime: (Instant) -> String,
     filterGroups:@Composable () -> Unit,
     userSalas:@Composable () -> Unit,
     ) {
@@ -112,6 +121,7 @@ internal fun Grupos(
                 0 -> UserGroups(
 //                    modifier = Modifier,
                     viewState = viewState,
+                    formatShortRelativeTime = formatShortRelativeTime,
                     navigateToChat = { navController.navigate(Route.CHAT_GRUPO + "?id=$it") }
                 )
                 1 -> filterGroups()
@@ -127,6 +137,7 @@ internal fun Grupos(
 fun GrupoItem(
     grupo:Grupo,
     navigateToChatGrupo: (id: Long) -> Unit,
+    formatShortRelativeTime:(Instant)->String,
     modifier:Modifier = Modifier
 ) {
     Row(
@@ -141,7 +152,26 @@ fun GrupoItem(
                 .size(70.dp), shape = CircleShape
         )
         Spacer(modifier = Modifier.width(10.dp))
-        Text(text = grupo.name, style = MaterialTheme.typography.titleMedium)
+        Column() {
+            Row(modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
+                Text(text = grupo.name ,style = MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.fillMaxWidth(0.65f), overflow = TextOverflow.Ellipsis)
+                if(grupo.last_message_created != null){
+                    Text(text = formatShortRelativeTime(grupo.last_message_created!!),
+                        style = MaterialTheme.typography.labelSmall, maxLines = 1,
+                    overflow = TextOverflow.Ellipsis)
+                }
+            }
+
+            if(grupo.last_message.isNotBlank()){
+                Spacer(modifier = Modifier.height(5.dp))
+                Text(text = grupo.last_message,style = MaterialTheme.typography.labelMedium.copy(
+                    fontWeight = FontWeight.Normal
+                ), overflow = TextOverflow.Ellipsis, maxLines = 1)
+            }
+        }
+
     }
 }
 

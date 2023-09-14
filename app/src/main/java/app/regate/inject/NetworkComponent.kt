@@ -2,6 +2,7 @@ package app.regate.inject
 
 import android.app.Application
 import app.regate.api.MissingPageException
+import app.regate.constant.Host
 import app.regate.settings.AppPreferences
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
@@ -52,7 +53,7 @@ interface NetworkComponent {
     ) : HttpClient = HttpClient(OkHttp) {
         defaultRequest {
 //            url("http://172.20.20.76:9090")
-            url("http://192.168.0.12:9090")
+            url(Host.url)
         }
         engine {
             preconfigured = client
