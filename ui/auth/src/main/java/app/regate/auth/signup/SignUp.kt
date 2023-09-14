@@ -172,7 +172,7 @@ fun SignUp(
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     var username by remember { mutableStateOf("jorge") }
-    var email by remember { mutableStateOf("jorge@gmail.com") }
+    var email by remember { mutableStateOf("carlosduram71@gmail.com") }
     var password by remember { mutableStateOf("12ab34cd56ef") }
     var confirmPassword by remember { mutableStateOf("12ab34cd56ef") }
     var passwordError by remember{ mutableStateOf(false) }

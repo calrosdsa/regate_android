@@ -19,4 +19,6 @@ abstract class RoomNotificationDao:NotificationDao,RoomEntityDao<Notification> {
     @Transaction
     @Query("update notification set read = 1")
     abstract override suspend fun updateUnreadNotifications()
+    @Query("delete from notification")
+    abstract override suspend fun deleteAll()
 }

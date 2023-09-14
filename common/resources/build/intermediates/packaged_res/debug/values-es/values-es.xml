@@ -24,6 +24,7 @@
     <string name="description">Descripción</string>
     <string name="discount">Los beneficios y descuento se lanzan regularmente</string>
     <string name="do_you_want_receive_notifications">¿Quieres recibir notificaciones?</string>
+    <string name="dont_receive_code">¿No recibiste el código?</string>
     <string name="dynamic_color">Dynamic colors</string>
     <string name="edit">Editar</string>
     <string name="email_verification">Verificacion de email</string>
@@ -81,6 +82,7 @@
     <string name="remove_user">Remover este  usuario del grupo</string>
     <string name="remove_user_admin">Revocar el estatus de administrador</string>
     <string name="report">Reportar</string>
+    <string name="resend_email_verification">Se enviará un correo electrónico a la dirección (%1$s) con el código de verificación.</string>
     <string name="reservation_date">Fecha de la Reserva</string>
     <string name="review">Reseña</string>
     <string name="reviews">Reseñas</string>
@@ -122,5 +124,6 @@
     <string name="what_would_you_like_to_play">¿Qué te gustaría jugar?</string>
     <string name="where_will_it_be_played">Donde estarás jugando</string>
     <string name="you">Tú</string>
+    <string name="you_may_request_a_new_code">Podrás solicitar un nuevo código en %1$d</string>
     <string name="your_payment_has_been_confirmed">Se han confirmado su pago</string>
 </resources>

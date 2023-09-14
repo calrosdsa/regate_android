@@ -1,6 +1,10 @@
 package app.regate.data.account
 
+import app.regate.data.daos.FavoriteEstablecimientoDao
+import app.regate.data.daos.MyGroupsDao
+import app.regate.data.daos.NotificationDao
 import app.regate.data.daos.ProfileDao
+import app.regate.data.daos.ReservaDao
 import app.regate.data.daos.UserDao
 import app.regate.data.dto.account.auth.LoginRequest
 import app.regate.data.dto.account.auth.UserDto
@@ -25,11 +29,28 @@ class AccountRepository(
     private val dtoToUser: DtoToUser,
     private val profileDao: ProfileDao,
     private val dispatchers: AppCoroutineDispatchers,
-    private val appPreferences: AppPreferences
+    private val appPreferences: AppPreferences,
+    private val myGroupsDao: MyGroupsDao,
+    private val favoriteEstablecimientoDao: FavoriteEstablecimientoDao,
+    private val notificationDao: NotificationDao,
+    private val reservaDao: ReservaDao
 //    private val establecimientoDao: EstablecimientoDao
 ){
+    suspend fun resendEmailVerification(id: Long){
+        accountDataSourceImpl.resendEmailVerification(id)
+    }
     suspend fun clearAuthData(){
-        userDao.deleteUser()
+        withContext(dispatchers.computation){
+            try{
+                userDao.deleteUser()
+                myGroupsDao.deleteAll()
+                favoriteEstablecimientoDao.removeAll()
+                notificationDao.deleteAll()
+                reservaDao.deleteAll()
+            }catch(e:Exception){
+                //TODO()
+            }
+        }
     }
     suspend fun me(): UserDto {
         return accountDataSourceImpl.me()

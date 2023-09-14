@@ -1,13 +1,15 @@
 package app.regate.constant
 
 object Host {
-    const val host = "192.168.0.8"
+    private const val base = "172.20.20.76"
+    const val host = base
     const val port = 9090
-    const val url = "http://192.168.0.8:9090"
-}
+    const val url = "http://$base:9090"
+    }
 
 object HostMessage {
-    const val host = "192.168.0.8"
+    private const val base = "172.20.20.76"
+    const val host = base
     const val port = 9091
-    const val url = "http://192.168.0.8:9091"
+    const val url = "http://$base:9091"
 }

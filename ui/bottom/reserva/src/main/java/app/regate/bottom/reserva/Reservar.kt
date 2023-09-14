@@ -216,7 +216,13 @@ internal fun Reservar(
                     ) {
                             DropdownMenuItem(
                                 text = { Text(text = stringResource(id = R.string.create_sala)) },
-                                onClick = { viewState.instalacion?.let { navigateToCreateSala(it.establecimiento_id) }  }
+                                onClick = { viewState.instalacion?.let {
+                                if(viewState.authState == AppAuthState.LOGGED_IN){
+                                    navigateToCreateSala(it.establecimiento_id)
+                                }else {
+                                    openAuthDialog()
+                                }
+                                }  }
                             )
                         DropdownMenuItem(
                             text = { Text(text = "Enviar a un grupo") },
@@ -321,7 +327,14 @@ internal fun Reservar(
                             overflow = TextOverflow.Ellipsis
                         )
                             Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier
-                                .clickable { viewState.establecimiento?.let {  navigateToConversation()} }) {
+                                .clickable { viewState.establecimiento?.let {
+                                    if (viewState.authState == AppAuthState.LOGGED_IN) {
+                                        navigateToConversation()
+                                    }else{
+                                        openAuthDialog()
+                                    }
+                                }
+                                }) {
                                 Icon(
                                     imageVector = Icons.Default.Chat,
                                     contentDescription = null,

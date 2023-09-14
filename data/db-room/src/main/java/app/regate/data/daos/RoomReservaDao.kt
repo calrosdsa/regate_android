@@ -18,4 +18,8 @@ abstract class RoomReservaDao:RoomEntityDao<Reserva> ,ReservaDao {
     @Transaction
     @Query("select * from reservas where id = :id")
     abstract override fun observeReservaDetail(id: Long): Flow<ReservaDetail>
+
+    @Transaction
+    @Query("delete from reservas")
+    abstract override suspend fun deleteAll()
 }

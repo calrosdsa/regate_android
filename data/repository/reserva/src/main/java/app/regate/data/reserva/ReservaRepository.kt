@@ -34,7 +34,7 @@ class ReservaRepository(
                             instalacion_id = it.instalacion_id,
                             instalacion_name = it.instalacion_name,
                             establecimiento_id = it.establecimiento_id,
-                            user_id =it.user_id,
+                            user_id =it.profile_id,
                             paid = it.paid,
                             total_price = it.total_price,
                             start_date = it.start_date,
@@ -43,6 +43,7 @@ class ReservaRepository(
                         )
                     }
                 }
+                reservaDao.deleteAll()
                 reservaDao.upsertAll(res)
             }catch(e:Exception){
                 throw e

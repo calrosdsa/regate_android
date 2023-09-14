@@ -80,7 +80,7 @@ class ChatGrupoViewModel(
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val messageChat = MutableStateFlow<Message?>(null)
-    private val scrollToBottom = MutableStateFlow(false)
+    private val scrollToBottom = MutableStateFlow<Boolean?>(null)
     val pagedList: Flow<PagingData<MessageProfile>> =
         pagingInteractor.flow.cachedIn(viewModelScope)
     val state:StateFlow<ChatGrupoState> = combine(
@@ -122,14 +122,20 @@ class ChatGrupoViewModel(
         viewModelScope.launch {
             grupoRepository.observeMessages(grupoId).collectLatest {
                 Log.d("DEBUG_APP_MESSAGE",it.toString())
-                scrollToBottom.tryEmit(!scrollToBottom.value)
+                val scroll = scrollToBottom.value?:false
+                scrollToBottom.tryEmit(!scroll)
             }
         }
         viewModelScope.launch {
             observeUser.flow.collect{user ->
-                delay(100)
-                sendSharedMessage()
-            Log.d("DEBUG_APP_USER",user.toString())
+                try{
+                    delay(100)
+                    sendSharedMessage()
+                    Log.d("DEBUG_APP_USER",user.toString())
+                }catch(e:Exception){
+                    Log.d("DEBUG_APP",e.localizedMessage?:"")
+                }
+
             }
         }
     }

@@ -15,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,13 +30,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.regate.common.composes.components.dialog.DialogConfirmation
 import app.regate.common.composes.components.dialog.LoaderDialog
 import app.regate.common.composes.components.input.OtpTextField
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
+import kotlinx.coroutines.delay
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.seconds
 
 typealias EmailVerification = @Composable (
     navigateUp:()->Unit
@@ -63,7 +69,8 @@ fun EmailVerification(
         viewState = state,
         navigateUp = navigateUp,
         clearMessage = viewModel::clearMessage,
-        verifyEmail = viewModel::verifyEmail
+        verifyEmail = viewModel::verifyEmail,
+        resendEmail = viewModel::resendEmail
     )
 }
 
@@ -73,6 +80,7 @@ internal fun EmailVerification(
     viewState: EmailVerificationState,
     navigateUp: () -> Unit,
     clearMessage:(Long)->Unit,
+    resendEmail:()->Unit,
     verifyEmail:(String,()->Unit,Context)->Unit
 ){
     val context = LocalContext.current
@@ -80,18 +88,37 @@ internal fun EmailVerification(
     val snackbarHostState = remember {
         SnackbarHostState()
     }
+    var openDialogResendEmail by remember{
+        mutableStateOf(false)
+    }
     var otpValue by remember {
         mutableStateOf("")
     }
     var enableButton by remember {
         mutableStateOf(false)
     }
+    var fireTrigger by remember{ mutableStateOf(true) }
+    var ticks by remember { mutableStateOf(10) }
+    LaunchedEffect(key1 = fireTrigger, block = {
+        while (ticks >= 1 ){
+            delay(1000)
+            ticks--
+        }
+    })
     viewState.message?.let {message->
         LaunchedEffect(key1 = message, block = {
             snackbarHostState.showSnackbar(message.message)
             clearMessage(message.id)
         })
     }
+    DialogConfirmation(open = openDialogResendEmail,
+        dismiss = { openDialogResendEmail = false }, confirm = {
+            resendEmail()
+            openDialogResendEmail = false
+            ticks = 10
+            fireTrigger = !fireTrigger
+        },
+    descripcion = stringResource(id = R.string.resend_email_verification,viewState.user?.email?:""))
     LoaderDialog(loading = viewState.loading)
     Scaffold(topBar = {
         SimpleTopBar(navigateUp = navigateUp,
@@ -126,6 +153,14 @@ internal fun EmailVerification(
                              },
             enabled = enableButton) {
                 Text(text = stringResource(id = R.string.verify))
+            }
+            
+            TextButton(onClick = { openDialogResendEmail = true }, enabled = ticks == 0) {
+                Text(text = stringResource(id = R.string.dont_receive_code))
+            }
+            if(ticks != 0){
+            Text(text = stringResource(id = R.string.you_may_request_a_new_code,ticks),
+            style =MaterialTheme.typography.labelMedium)
             }
         }
     }

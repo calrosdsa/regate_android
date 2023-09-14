@@ -40,6 +40,7 @@
     <string name="description">Description</string>
     <string name="discount">Discount benefits are periodically launched.</string>
     <string name="do_you_want_receive_notifications">Do you want to receive notifications?</string>
+    <string name="dont_receive_code">Don\'t receive code?</string>
     <string name="dynamic_color">Dynamic colors</string>
     <string name="edit">Edit</string>
     <string name="email_verification">Email Verification</string>
@@ -106,6 +107,7 @@
     <string name="remove_user">Remove this user from the group</string>
     <string name="remove_user_admin">Revoke administrator status</string>
     <string name="report">Report</string>
+    <string name="resend_email_verification">An email will be sent to the address (%1$s) with the verification code.</string>
     <string name="reservation_date">Reservation date</string>
     <string name="review">Review</string>
     <string name="reviews">Reviews</string>
@@ -148,5 +150,6 @@
     <string name="what_would_you_like_to_play">What would you like to play?</string>
     <string name="where_will_it_be_played">Where will it be played?</string>
     <string name="you">You</string>
+    <string name="you_may_request_a_new_code">You may request a new code in %1$d</string>
     <string name="your_payment_has_been_confirmed">Your payment has been confirmed</string>
 </resources>

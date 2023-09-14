@@ -1,0 +1,2 @@
+int string nudes 0x0
+int string spam_scam 0x0

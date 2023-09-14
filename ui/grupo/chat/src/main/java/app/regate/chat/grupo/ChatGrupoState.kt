@@ -13,7 +13,7 @@ data class ChatGrupoState(
     val message:UiMessage? = null,
     val messageChat:Message? = null,
     val messages:List<MessageProfile> = emptyList(),
-    val scrollToBottom:Boolean = false,
+    val scrollToBottom:Boolean? = null,
     val grupo:Grupo? = null,
     val user:User? = null,
     val authState:AppAuthState? = null,

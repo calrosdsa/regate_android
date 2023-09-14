@@ -67,6 +67,7 @@ string deposits
 string description
 string discount
 string do_you_want_receive_notifications
+string dont_receive_code
 string dynamic_color
 string edit
 string email_verification
@@ -131,6 +132,7 @@ string recommended_places
 string remove_user
 string remove_user_admin
 string report
+string resend_email_verification
 string reservation_date
 string review
 string reviews
@@ -172,4 +174,5 @@ string what_kind_of_game_do_you_prefere
 string what_would_you_like_to_play
 string where_will_it_be_played
 string you
+string you_may_request_a_new_code
 string your_payment_has_been_confirmed

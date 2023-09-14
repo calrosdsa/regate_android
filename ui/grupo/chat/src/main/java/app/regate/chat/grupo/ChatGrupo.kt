@@ -155,6 +155,7 @@ internal fun ChatGrupo(
 
     LaunchedEffect(key1 = viewState.scrollToBottom, block = {
         delay(500)
+        if(viewState.scrollToBottom == null) return@LaunchedEffect
         lazyListState.animateScrollToItem(0)
     })
     viewState.message?.let { messageSnack ->

@@ -14,6 +14,7 @@ data class ReservaDto(
     val total_price:Int,
     val start_date: Instant,
     val end_date:Instant,
-    val user_id: Long
+    val profile_id: Long,
+    val sala_id:Long? = null
 )
 

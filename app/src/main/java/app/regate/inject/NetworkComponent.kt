@@ -113,37 +113,4 @@ interface NetworkComponent {
     }
 }
 
-//@ApplicationScope
-//@Provides
-//fun provideKtorClient2(
-//    client:OkHttpClient,
-////    preferences:AppPreferences
-//) : HttpClientMessage = HttpClient(OkHttp) {
-//    defaultRequest {
-//        url("http://172.20.20.76:9091")
-//    }
-//    engine {
-//        preconfigured = client
-//    }
-//    install(ContentNegotiation){
-//        json(Json {
-//            prettyPrint = true
-//            isLenient = true
-//            ignoreUnknownKeys = true
-//        })
-//    }
-//    install(WebSockets) {
-//        pingInterval = 20_000
-//    }
-//    expectSuccess = true
-////        install(Auth){
-////            bearer {
-////                loadTokens {
-////                    BearerTokens(preferences.token,preferences.token)
-////                }
-////            }
-////        }
-//
-//}
-//
-//}
+

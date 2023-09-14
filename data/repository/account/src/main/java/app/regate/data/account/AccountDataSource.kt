@@ -19,5 +19,6 @@ interface AccountDataSource {
     suspend fun updateFcmToken(fcm_token:String)
     suspend fun getDeposits(page: Int):DepositPaginationResponse
     suspend fun getConsume(page:Int):ConsumePaginationResponse
+    suspend fun resendEmailVerification(id:Long)
 }
 

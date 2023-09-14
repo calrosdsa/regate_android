@@ -163,5 +163,8 @@
     <string name="time_game_will_played">Time the game will be played</string>
     <string name="add_a_message">Add a message</string>
     <string name="count_selected">%1$d selected</string>
+    <string name="dont_receive_code">Don\'t receive code?</string>
+    <string name="resend_email_verification">An email will be sent to the address (%1$s) with the verification code.</string>
+    <string name="you_may_request_a_new_code">You may request a new code in %1$d</string>
 
 </resources>

@@ -137,6 +137,7 @@ class EstablecimientoViewModel(
     private fun getReviews(){
         viewModelScope.launch {
                 try{
+                    Log.d("DEBUG_APP",establecimientoId.toString())
                     val res =
                         establecimientoRepository.getEstablecimientoReviews(establecimientoId, 1,5)
                     Log.d("DEBUG_APP",res.toString())

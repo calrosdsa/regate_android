@@ -53,7 +53,7 @@ class EstablecimientoDataSourceImpl(
     }
 
     override suspend fun getEstablecimientoReview(id: Long, page: Int,size:Int): EstablecimientoReviews {
-        return client.get("/v1/review/establecimiento/${id}/?page=${id}&size=${size}").body()
+        return client.get("/v1/review/establecimiento/${id}/?page=${page}&size=${size}").body()
     }
 
     override suspend fun createEstablecimientoReview(d: EstablecimientoReview): EstablecimientoReview {

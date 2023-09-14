@@ -49,6 +49,7 @@ import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.constant.Route
 import app.regate.constant.id
+import app.regate.data.auth.AppAuthState
 import app.regate.models.Grupo
 import app.regate.usergroups.UserGroups
 import app.regate.usergroups.UserGroupsViewModel
@@ -81,7 +82,8 @@ fun Grupos (
         viewModel = viewModel(factory = viewModelFactory),
         filterGroups = filterGroups,
         userSalas = userSalas,
-        formatShortRelativeTime = formatter::formatShortRelativeTime
+        formatShortRelativeTime = formatter::formatShortRelativeTime,
+        openAuthBottomSheet = { navController.navigate(Route.AUTH_DIALOG) }
     )
 }
 
@@ -92,6 +94,7 @@ internal fun Grupos(
     navController: NavController,
     viewModel:UserGroupsViewModel,
     formatShortRelativeTime: (Instant) -> String,
+    openAuthBottomSheet:()->Unit,
     filterGroups:@Composable () -> Unit,
     userSalas:@Composable () -> Unit,
     ) {
@@ -110,7 +113,8 @@ internal fun Grupos(
                }
             } , currentTab = pagerState.currentPage,
                createGroup = { navController.navigate(Route.CREATE_GROUP)},
-                navigateToCreateSala = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id 0)}
+                navigateToCreateSala = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id 0)},
+                openAuthBottomSheet = openAuthBottomSheet
             )
 
     }
@@ -183,7 +187,9 @@ internal fun Indicators(
     navToTab:(tab:Int) ->Unit,
     createGroup:()->Unit,
     currentTab:Int,
+    appAuthState:AppAuthState,
     navigateToCreateSala:()->Unit,
+    openAuthBottomSheet: () -> Unit,
     modifier:Modifier = Modifier
 ){
     var expanded by remember { mutableStateOf(false) }
@@ -231,13 +237,25 @@ internal fun Indicators(
                     if(currentTab == 0) {
                         DropdownMenuItem(
                             text = { Text(text = stringResource(id = R.string.create_group)) },
-                            onClick = { createGroup() }
+                            onClick = {
+                                if (appAuthState == AppAuthState.LOGGED_IN) {
+                                    createGroup()
+                                }else{
+                                    openAuthBottomSheet()
+                                }
+                            }
                         )
                     }
                     if(currentTab == 2){
                     DropdownMenuItem(
                         text = { Text(text = stringResource(id = R.string.create_sala)) },
-                        onClick = { navigateToCreateSala() }
+                        onClick = {
+                            if (appAuthState == AppAuthState.LOGGED_IN) {
+                                navigateToCreateSala()
+                            } else {
+                                openAuthBottomSheet()
+                            }
+                        }
                     )
                     }
                 }

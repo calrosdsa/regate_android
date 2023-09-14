@@ -115,5 +115,9 @@ class AccountDataSourceImpl(
         }.body()
     }
 
+    override suspend fun resendEmailVerification(id:Long) {
+        client.get("/v1/account/send-again-email-verfication/${id}/")
+    }
+
 
 }

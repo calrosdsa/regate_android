@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
 import app.regate.domain.interactors.UpdateEstablecimiento
 import app.regate.domain.interactors.UpdateInstalacion
+import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveReservaDetail
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.SharingStarted

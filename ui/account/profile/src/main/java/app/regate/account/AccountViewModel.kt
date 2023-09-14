@@ -75,9 +75,9 @@ class AccountViewModel(
         appPreferences.observeAddress().collect{
             Log.d("DEBUG_APP","address $it")
             try{
-            val address: AddressDevice = Json.decodeFromString(it)
-            addressDevice.emit(address)
-            Log.d("DEBUG_APP",address.toString())
+                val address: AddressDevice = Json.decodeFromString(it)
+                addressDevice.emit(address)
+                Log.d("DEBUG_APP",address.toString())
             }catch (e:Exception){
                 Log.d("DEBUG_APP",e.localizedMessage?:"")
             }

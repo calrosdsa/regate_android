@@ -63,6 +63,7 @@ import app.regate.common.resources.R
 import app.regate.constant.Route
 import app.regate.constant.id
 import app.regate.data.auth.AppAuthState
+import app.regate.data.dto.account.auth.UserEstado
 
 typealias Account = @Composable (
     navController:NavController,
@@ -129,7 +130,8 @@ internal fun Account(
             navigateToRecargaCoins = navigateToRecargaCoins,
             navigateToInbox = {navController.navigate(Route.INBOX)},
             navigateToBilling = { navController.navigate(Route.BILLING)},
-            navigateToNotifications = { navController.navigate(Route.NOTIFICATIONS)}
+            navigateToNotifications = { navController.navigate(Route.NOTIFICATIONS)},
+            navigateToVerificationEmail = {navController.navigate(Route.EMAIL_VERIFICATION)}
         )
     }
 }
@@ -147,6 +149,7 @@ internal fun Account(
     navigateToInbox:()->Unit,
     navigateToBilling:()->Unit,
     navigateToNotifications:()->Unit,
+    navigateToVerificationEmail:()->Unit,
     modifier:Modifier = Modifier
 ) {
     val settings = stringResource(id = R.string.settings)
@@ -299,11 +302,13 @@ internal fun Account(
                 }
         }
 
-
-
-
                 Column(modifier = Modifier.align(Alignment.BottomCenter)) {
-
+                    if((viewState.user?.estado ?: 0) == UserEstado.DISABLED.ordinal){
+                    OutlinedButton(onClick = { navigateToVerificationEmail()},modifier = Modifier.fillMaxWidth()) {
+                        Text(text = stringResource(id = R.string.email_verification),style  = MaterialTheme.typography.labelLarge,
+                            textAlign = TextAlign.Center)
+                    }
+                    }
                     if(isAuth){
                     OutlinedButton(onClick = { logout() },modifier = Modifier.fillMaxWidth()) {
                         Text(text = stringResource(id = R.string.logout),style  = MaterialTheme.typography.labelLarge,

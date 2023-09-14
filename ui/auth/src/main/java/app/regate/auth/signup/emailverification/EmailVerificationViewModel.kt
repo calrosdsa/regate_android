@@ -68,6 +68,19 @@ class EmailVerificationViewModel(
         }
     }
 
+    fun resendEmail(){
+        viewModelScope.launch {
+            try{
+                loadingCounter.addLoader()
+                state.value.user?.let { accountRepository.resendEmailVerification(it.user_id) }
+                loadingCounter.removeLoader()
+            }catch (e:Exception){
+                loadingCounter.removeLoader()
+                //TODO()
+            }
+        }
+    }
+
     fun clearMessage(id:Long){
         viewModelScope.launch {
             uiMessageManager.clearMessage(id)

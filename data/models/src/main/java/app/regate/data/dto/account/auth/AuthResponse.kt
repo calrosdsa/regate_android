@@ -22,3 +22,8 @@ data class UserDto(
     val profile_id:Long
 )
 
+
+enum class UserEstado {
+    ENABLED,
+    DISABLED,
+}
