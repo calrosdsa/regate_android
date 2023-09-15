@@ -18,7 +18,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -42,10 +41,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.ui.BottomBar
-import app.regate.common.composes.ui.PosterCardImage
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.ui.BottomBar
+import app.regate.common.compose.ui.PosterCardImage
+import app.regate.common.compose.viewModel
 import app.regate.common.resources.R
 import app.regate.constant.Route
 import app.regate.constant.id
@@ -114,7 +113,8 @@ internal fun Grupos(
             } , currentTab = pagerState.currentPage,
                createGroup = { navController.navigate(Route.CREATE_GROUP)},
                 navigateToCreateSala = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id 0)},
-                openAuthBottomSheet = openAuthBottomSheet
+                openAuthBottomSheet = openAuthBottomSheet,
+                appAuthState = viewState.authState
             )
 
     }

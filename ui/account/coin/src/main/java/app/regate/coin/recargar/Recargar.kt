@@ -36,8 +36,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import app.regate.common.composes.ui.SimpleTopBar
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.ui.SimpleTopBar
+import app.regate.common.compose.viewModel
 import app.regate.common.resources.R
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject

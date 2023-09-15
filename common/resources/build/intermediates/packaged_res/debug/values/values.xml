@@ -14,6 +14,7 @@
     <string name="add_a_message">Add a message</string>
     <string name="add_a_review">Add a review</string>
     <string name="amount">Amount:  %1$s</string>
+    <string name="available_courts">Available courts</string>
     <string name="balance_coins">Coins Balance</string>
     <string name="book_a_court">Book a court</string>
     <string name="bookings">Bookings</string>

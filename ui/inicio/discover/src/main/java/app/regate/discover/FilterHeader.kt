@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -35,8 +34,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import app.regate.common.composes.components.dialog.CategoryDialog
-import app.regate.common.composes.components.images.AsyncImage
+import app.regate.common.compose.components.dialog.CategoryDialog
+import app.regate.common.compose.components.images.AsyncImage
 import app.regate.data.common.AddressDevice
 import app.regate.common.resources.R
 import app.regate.models.Labels

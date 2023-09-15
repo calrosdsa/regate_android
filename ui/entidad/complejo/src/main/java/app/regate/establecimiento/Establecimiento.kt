@@ -59,10 +59,10 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.composes.LocalAppUtil
-import app.regate.common.composes.components.images.AsyncImage
-import app.regate.common.composes.ui.PosterCardImage
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.LocalAppUtil
+import app.regate.common.compose.components.images.AsyncImage
+import app.regate.common.compose.ui.PosterCardImage
+import app.regate.common.compose.viewModel
 import app.regate.common.resources.R
 import app.regate.models.Establecimiento
 import kotlinx.coroutines.delay

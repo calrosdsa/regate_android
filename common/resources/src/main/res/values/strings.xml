@@ -166,5 +166,6 @@
     <string name="dont_receive_code">Don\'t receive code?</string>
     <string name="resend_email_verification">An email will be sent to the address (%1$s) with the verification code.</string>
     <string name="you_may_request_a_new_code">You may request a new code in %1$d</string>
+    <string name="available_courts">Available courts</string>
 
 </resources>

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -54,19 +53,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.components.dialog.DialogConfirmation
-import app.regate.common.composes.components.item.ProfileItem
-import app.regate.common.composes.components.item.SalaItem
-import app.regate.common.composes.components.skeleton.SalaItemSkeleton
-import app.regate.common.composes.components.util.ViewMore
-import app.regate.common.composes.ui.PosterCardImage
-import app.regate.common.composes.util.dividerLazyList
-import app.regate.common.composes.util.spacerLazyList
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.components.dialog.DialogConfirmation
+import app.regate.common.compose.components.item.SalaItem
+import app.regate.common.compose.components.skeleton.SalaItemSkeleton
+import app.regate.common.compose.components.util.ViewMore
+import app.regate.common.compose.ui.PosterCardImage
+import app.regate.common.compose.util.dividerLazyList
+import app.regate.common.compose.util.spacerLazyList
+import app.regate.common.compose.viewModel
 import app.regate.data.auth.AppAuthState
 import app.regate.common.resources.R
-import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 

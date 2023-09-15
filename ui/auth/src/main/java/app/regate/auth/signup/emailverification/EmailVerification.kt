@@ -1,7 +1,5 @@
 package app.regate.auth.signup.emailverification
 import android.content.Context
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +14,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -30,18 +27,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import app.regate.common.composes.components.dialog.DialogConfirmation
-import app.regate.common.composes.components.dialog.LoaderDialog
-import app.regate.common.composes.components.input.OtpTextField
-import app.regate.common.composes.ui.SimpleTopBar
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.components.dialog.DialogConfirmation
+import app.regate.common.compose.components.dialog.LoaderDialog
+import app.regate.common.compose.components.input.OtpTextField
+import app.regate.common.compose.ui.SimpleTopBar
+import app.regate.common.compose.viewModel
 import kotlinx.coroutines.delay
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import kotlin.time.Duration.Companion.seconds
-import kotlin.time.seconds
 
 typealias EmailVerification = @Composable (
     navigateUp:()->Unit

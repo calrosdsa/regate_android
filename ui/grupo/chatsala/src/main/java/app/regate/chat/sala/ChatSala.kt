@@ -1,6 +1,5 @@
 package app.regate.chat.sala
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.scaleIn
@@ -43,13 +42,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.components.input.ChatInput
-import app.regate.common.composes.util.appendErrorOrNull
-import app.regate.common.composes.util.prependErrorOrNull
-import app.regate.common.composes.util.refreshErrorOrNull
-import app.regate.common.composes.viewModel
-import app.regate.compoundmodels.MessageProfile
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.components.input.ChatInput
+import app.regate.common.compose.util.appendErrorOrNull
+import app.regate.common.compose.util.prependErrorOrNull
+import app.regate.common.compose.util.refreshErrorOrNull
+import app.regate.common.compose.viewModel
 import app.regate.compoundmodels.MessageSalaWithProfile
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.data.common.MessageData

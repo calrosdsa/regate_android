@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import app.regate.common.composes.components.select.SelectComponent
+import app.regate.common.compose.components.select.SelectComponent
 
 @Composable
 fun SelectGenero(

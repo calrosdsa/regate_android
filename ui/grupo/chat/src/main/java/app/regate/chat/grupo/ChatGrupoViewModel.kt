@@ -121,7 +121,7 @@ class ChatGrupoViewModel(
         }
         viewModelScope.launch {
             grupoRepository.observeMessages(grupoId).collectLatest {
-                Log.d("DEBUG_APP_MESSAGE",it.toString())
+                Log.d("DEBUG_APP_MESSAGE",it.size.toString())
                 val scroll = scrollToBottom.value?:false
                 scrollToBottom.tryEmit(!scroll)
             }
@@ -315,7 +315,11 @@ class ChatGrupoViewModel(
         }
     }
 
-
+    fun resetScroll(){
+        viewModelScope.launch {
+            scrollToBottom.tryEmit(null)
+        }
+    }
 
 
 }

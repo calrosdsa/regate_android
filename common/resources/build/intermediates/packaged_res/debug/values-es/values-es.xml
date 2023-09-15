@@ -4,6 +4,7 @@
     <string name="add_a_message">Añade un mensaje</string>
     <string name="add_a_review">Agrega una reseña</string>
     <string name="amount">Amount: %1$s</string>
+    <string name="available_courts">Canchas disponibles</string>
     <string name="balance_coins">Saldo de monedas</string>
     <string name="book_a_court">Reservar una cancha</string>
     <string name="bookings">Reservas</string>

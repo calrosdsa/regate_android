@@ -2,7 +2,6 @@ package app.regate.filterSalas
 import androidx.compose.foundation.layout.Box
 import app.regate.common.resources.R
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
@@ -13,7 +12,6 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,20 +26,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.SavedStateHandle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.components.item.SalaItem
-import app.regate.common.composes.ui.Loader
-import app.regate.common.composes.util.itemsCustom
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.components.item.SalaItem
+import app.regate.common.compose.ui.Loader
+import app.regate.common.compose.util.itemsCustom
+import app.regate.common.compose.viewModel
 import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.salas.SalaDto
-import app.regate.sala.SalaViewModel
-import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 

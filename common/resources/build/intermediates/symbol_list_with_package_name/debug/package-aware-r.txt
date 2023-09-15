@@ -11,6 +11,7 @@ color tv_test_red
 color tv_test_yellow
 drawable check
 drawable coin
+drawable default_image
 drawable doble_check
 drawable enabled_location
 drawable ic_launcher_background
@@ -41,6 +42,7 @@ string about_regate
 string add_a_message
 string add_a_review
 string amount
+string available_courts
 string balance_coins
 string book_a_court
 string bookings

@@ -28,11 +28,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.components.dialog.DialogConfirmation
-import app.regate.common.composes.components.dialog.LoaderDialog
-import app.regate.common.composes.ui.CommonTopBar
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.components.dialog.DialogConfirmation
+import app.regate.common.compose.components.dialog.LoaderDialog
+import app.regate.common.compose.ui.CommonTopBar
+import app.regate.common.compose.viewModel
 import app.regate.create.sala.page.Page1
 import app.regate.create.sala.page.Page2
 import app.regate.create.sala.page.SelectGroup

@@ -1,8 +1,6 @@
 package app.regate.chat.sala
 
 import android.content.Intent
-import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,9 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
-import app.regate.common.compose.BuildConfig
-import app.regate.common.composes.ui.PosterCardImage
+import app.regate.common.compose.ui.PosterCardImage
 import app.regate.common.resources.R
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.models.Grupo

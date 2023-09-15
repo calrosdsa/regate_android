@@ -42,12 +42,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.composes.components.dialog.DialogConfirmation
-import app.regate.common.composes.components.dialog.LoaderDialog
-import app.regate.common.composes.components.images.ProfileImage
-import app.regate.common.composes.ui.SimpleTopBar
-import app.regate.common.composes.util.spacerLazyList
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.components.dialog.DialogConfirmation
+import app.regate.common.compose.components.dialog.LoaderDialog
+import app.regate.common.compose.components.images.ProfileImage
+import app.regate.common.compose.ui.SimpleTopBar
+import app.regate.common.compose.util.spacerLazyList
+import app.regate.common.compose.viewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 

@@ -2,14 +2,12 @@ package app.regate.creategroup
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -27,15 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.composes.components.dialog.DialogConfirmation
-import app.regate.common.composes.components.dialog.LoaderDialog
-import app.regate.common.composes.ui.CommonTopBar
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.components.dialog.DialogConfirmation
+import app.regate.common.compose.components.dialog.LoaderDialog
+import app.regate.common.compose.ui.CommonTopBar
+import app.regate.common.compose.viewModel
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
-import app.regate.data.dto.empresa.grupo.GroupVisibility
 
 typealias CreateGroup = @Composable (
     navigateUp:()->Unit,

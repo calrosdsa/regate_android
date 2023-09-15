@@ -1,13 +1,8 @@
 package app.regate.system.report
 
-import android.content.pm.PackageManager.PackageInfoFlags
-import android.os.Build
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,20 +13,15 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,26 +30,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.composes.components.dialog.DialogConfirmation
-import app.regate.common.composes.components.dialog.LoaderDialog
-import app.regate.common.composes.components.input.InputForm
-import app.regate.common.composes.components.select.SelectComponent
-import app.regate.common.composes.ui.BottomBar
-import app.regate.common.composes.ui.SimpleTopBar
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.components.dialog.DialogConfirmation
+import app.regate.common.compose.components.dialog.LoaderDialog
+import app.regate.common.compose.components.input.InputForm
+import app.regate.common.compose.components.select.SelectComponent
+import app.regate.common.compose.ui.SimpleTopBar
+import app.regate.common.compose.viewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
-import app.regate.data.auth.AppAuthState
-import app.regate.settings.AppPreferences
 
 typealias Report = @Composable (
     navigateUp:()->Unit

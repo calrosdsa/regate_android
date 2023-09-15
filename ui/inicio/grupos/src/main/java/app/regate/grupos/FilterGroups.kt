@@ -1,10 +1,8 @@
 package app.regate.grupos
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,12 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.composes.ui.PosterCardImage
-import app.regate.common.composes.util.itemsCustom
-import app.regate.common.composes.viewModel
-import app.regate.compoundmodels.MessageProfile
+import app.regate.common.compose.ui.PosterCardImage
+import app.regate.common.compose.util.itemsCustom
+import app.regate.common.compose.viewModel
 import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.usergroups.UserGroupsViewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 

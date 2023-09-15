@@ -10,6 +10,7 @@ int color tv_test_red 0x0
 int color tv_test_yellow 0x0
 int drawable check 0x0
 int drawable coin 0x0
+int drawable default_image 0x0
 int drawable doble_check 0x0
 int drawable enabled_location 0x0
 int drawable ic_launcher_background 0x0
@@ -40,6 +41,7 @@ int string about_regate 0x0
 int string add_a_message 0x0
 int string add_a_review 0x0
 int string amount 0x0
+int string available_courts 0x0
 int string balance_coins 0x0
 int string book_a_court 0x0
 int string bookings 0x0

@@ -9,15 +9,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import app.regate.common.composes.ui.PosterCardImage
+import app.regate.common.compose.ui.PosterCardImage
 import app.regate.compoundmodels.InstalacionCupos
 import kotlinx.datetime.Instant
-import kotlin.math.ceil
 import kotlin.time.Duration.Companion.minutes
 
 @Composable

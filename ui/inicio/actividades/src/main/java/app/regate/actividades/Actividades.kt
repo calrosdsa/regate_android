@@ -7,8 +7,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import app.regate.common.composes.ui.BottomBar
-import app.regate.common.composes.ui.TopBar
+import app.regate.common.compose.ui.BottomBar
+import app.regate.common.compose.ui.TopBar
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 

@@ -39,7 +39,7 @@ const val uri = "https://example.com"
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun HomeEntry(
+fun HomeEntry (
     composeScreens: ComposeScreens,
     establecimientoId:String?,
     startScreen:String,
@@ -138,7 +138,7 @@ internal fun AppNavigation(
                     navController.navigate(Route.CONVERSATION id it1 id it2 )
                 },
                 navigateToCreateSala = {navController.navigate(Route.CREAR_SALA id it id 0 id 1)},
-                navigateToSelectGroup = {navController.navigate(Route.MY_GROUPS + "?data=${it}")}
+                navigateToSelectGroup = {navController.navigate(Route.MY_GROUPS + "?data=${it}")},
             )
         }
 

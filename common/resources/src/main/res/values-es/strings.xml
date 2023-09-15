@@ -131,5 +131,6 @@
     <string name="dont_receive_code">¿No recibiste el código?</string>
     <string name="resend_email_verification">Se enviará un correo electrónico a la dirección (%1$s) con el código de verificación.</string>
     <string name="you_may_request_a_new_code">Podrás solicitar un nuevo código en %1$d</string>
+    <string name="available_courts">Canchas disponibles</string>
 
 </resources>

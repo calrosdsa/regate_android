@@ -1,7 +1,6 @@
 package app.regate.complejo.reviews
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +16,6 @@ import androidx.compose.material3.Icon
 import app.regate.common.resources.R
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallFloatingActionButton
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -31,11 +29,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.composes.components.item.ReviewItem
-import app.regate.common.composes.ui.Loader
-import app.regate.common.composes.ui.SimpleTopBar
-import app.regate.common.composes.util.itemsCustom
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.components.item.ReviewItem
+import app.regate.common.compose.ui.Loader
+import app.regate.common.compose.ui.SimpleTopBar
+import app.regate.common.compose.util.itemsCustom
+import app.regate.common.compose.viewModel
 import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
 import me.tatarka.inject.annotations.Assisted

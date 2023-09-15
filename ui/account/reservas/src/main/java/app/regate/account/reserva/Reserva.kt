@@ -1,7 +1,6 @@
 package app.regate.account.reserva
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,13 +31,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
-import app.regate.account.reservas.ReservasViewModel
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.LocalAppUtil
-import app.regate.common.composes.ui.PosterCardImage
-import app.regate.common.composes.ui.PosterCardImageDark
-import app.regate.common.composes.ui.SimpleTopBar
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.LocalAppUtil
+import app.regate.common.compose.ui.PosterCardImage
+import app.regate.common.compose.ui.PosterCardImageDark
+import app.regate.common.compose.ui.SimpleTopBar
+import app.regate.common.compose.viewModel
 import app.regate.common.resources.R
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted

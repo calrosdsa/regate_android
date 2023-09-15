@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import app.regate.common.composes.theme.RegateTheme
-import app.regate.common.composes.util.DarkLightPreviews
+import app.regate.common.compose.theme.RegateTheme
+import app.regate.common.compose.util.DarkLightPreviews
 
 
 @Composable

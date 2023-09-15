@@ -1,5 +1,6 @@
 package app.regate.reservar
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +34,7 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,17 +49,21 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.components.dialog.CategoryDialog
-import app.regate.common.composes.components.dialog.DatePickerDialogComponent
-import app.regate.common.composes.components.dialog.DialogHour
-import app.regate.common.composes.components.images.AsyncImage
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.components.dialog.CategoryDialog
+import app.regate.common.compose.components.dialog.DatePickerDialogComponent
+import app.regate.common.compose.components.dialog.DialogHour
+import app.regate.common.compose.components.images.AsyncImage
+import app.regate.common.compose.components.images.CardImage
+import app.regate.common.compose.viewModel
 import app.regate.common.resources.R
 import app.regate.data.dto.empresa.instalacion.InstalacionAvailable
 import app.regate.models.Labels
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import kotlin.time.Duration.Companion.days
@@ -127,12 +133,14 @@ internal fun EstablecimientoReserva(
     setCategory:(Long)->Unit
 
 ) {
-    val treshhold = 7.days
-    val endDate = (Clock.System.now() + treshhold).toEpochMilliseconds()
-    val startDate = (Clock.System.now() - (1.days)).toEpochMilliseconds()
+    val treshhold = 14.days
+    val now =Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).toInstant(
+        TimeZone.UTC)
+    val endDate = (now + treshhold).toEpochMilliseconds()
+    val startDate = (now - (1.days)).toEpochMilliseconds()
     val showDialog = remember { mutableStateOf(false) }
     val dateState = rememberDatePickerState(
-        initialSelectedDateMillis = Clock.System.now().toEpochMilliseconds()
+        initialSelectedDateMillis = now.toEpochMilliseconds()
     )
     val showDialogIntervalo = remember {
         mutableStateOf(false)
@@ -149,6 +157,7 @@ internal fun EstablecimientoReserva(
         }
     })
     LaunchedEffect(key1 = dateState.selectedDateMillis, block = {
+        Log.d("DEBUG_APP_TIME",now.toString())
         dateState.selectedDateMillis?.let { updateCurrentDate(it) }
     })
     CategoryDialog(
@@ -195,7 +204,6 @@ internal fun EstablecimientoReserva(
 //                    tonalElevation = 5.dp
         ) {
             Column() {
-
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -319,7 +327,7 @@ internal fun EstablecimientoReserva(
             }
 
             Text(
-                text = "Canchas disponibles", style = MaterialTheme.typography.titleMedium,
+                text = stringResource(id = R.string.available_courts), style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
             LazyRow(modifier = Modifier.fillMaxSize()) {
@@ -375,13 +383,11 @@ internal fun InstalacionAvailable(
                     .fillMaxWidth()
                     .height(imageHeight)
             ) {
-                AsyncImage(
-                    model = instalacion.portada,
-                    requestBuilder = { crossfade(true) },
+                CardImage(
+                    src = instalacion.portada,
                     contentDescription = instalacion.portada,
                     modifier = Modifier
                         .fillMaxSize(),
-                    contentScale = ContentScale.Crop,
                 )
                 PriceLabel(precio = instalacion.precio.toString(),
                     modifier = Modifier

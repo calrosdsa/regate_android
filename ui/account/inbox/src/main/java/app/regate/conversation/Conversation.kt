@@ -1,6 +1,5 @@
 package app.regate.conversation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.IconButton
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -32,20 +30,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.components.input.ChatInput
-import app.regate.common.composes.ui.PosterCardImage
-import app.regate.common.composes.ui.SimpleTopBar
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.components.input.ChatInput
+import app.regate.common.compose.ui.PosterCardImage
+import app.regate.common.compose.viewModel
 import app.regate.inbox.ConversationsState
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import app.regate.common.resources.R
 import app.regate.compoundmodels.MessageConversation
 import app.regate.data.auth.AppAuthState
 import app.regate.data.common.MessageData

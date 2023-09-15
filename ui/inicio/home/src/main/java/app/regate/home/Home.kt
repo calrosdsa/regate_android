@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -30,7 +29,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -45,26 +43,20 @@ import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.components.CustomButton
-import app.regate.common.composes.components.item.SalaItem
-import app.regate.common.composes.components.util.ViewMore
-import app.regate.common.composes.ui.BottomBar
-import app.regate.common.composes.ui.PosterCardImageDark
-import app.regate.common.composes.ui.Skeleton
-import app.regate.common.composes.ui.TopBar
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.components.CustomButton
+import app.regate.common.compose.components.item.SalaItem
+import app.regate.common.compose.components.util.ViewMore
+import app.regate.common.compose.ui.BottomBar
+import app.regate.common.compose.ui.PosterCardImageDark
+import app.regate.common.compose.ui.Skeleton
+import app.regate.common.compose.viewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
@@ -73,7 +65,6 @@ import app.regate.constant.id
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.home.carousel.HomeMediaCarousel
 //import app.regate.home.carousel.HomeMediaCarousel
-import kotlinx.datetime.Instant
 
 
 typealias Home= @Composable (
@@ -133,7 +124,7 @@ internal fun Home(
 //            TopBar(openDrawer = openDrawer)
         },
         bottomBar = {
-            BottomBar(navController = navController)
+             BottomBar(navController = navController)
         },
         modifier = Modifier
             .fillMaxSize()

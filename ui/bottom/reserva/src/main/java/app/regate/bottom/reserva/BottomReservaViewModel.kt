@@ -150,7 +150,7 @@ class BottomReservaViewModel(
         }
     }
 
-    fun navigateToInstalacion(navigate:(String)->Unit){
+    fun navigateSelect(navigate:(String)->Unit){
         try{
             val cupos = state.value.cupos.map{ CupoInstalacion(
                 price = it.price,

@@ -28,8 +28,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import app.regate.common.composes.util.Layout
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.util.Layout
+import app.regate.common.compose.viewModel
 import app.regate.common.resources.R
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView

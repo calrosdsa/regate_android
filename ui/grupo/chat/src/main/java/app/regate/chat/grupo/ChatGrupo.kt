@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardDoubleArrowDown
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -20,6 +19,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
@@ -27,19 +27,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.components.input.ChatInput
-import app.regate.common.composes.util.appendErrorOrNull
-import app.regate.common.composes.util.prependErrorOrNull
-import app.regate.common.composes.util.refreshErrorOrNull
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.components.input.ChatInput
+import app.regate.common.compose.util.appendErrorOrNull
+import app.regate.common.compose.util.prependErrorOrNull
+import app.regate.common.compose.util.refreshErrorOrNull
+import app.regate.common.compose.viewModel
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.data.common.MessageData
@@ -109,6 +108,7 @@ internal fun ChatGrupo(
         navigateToInstalacionReserva = {instalacionId,establecimientoId,cupos->
             viewModel.navigateToInstalacionReserva(instalacionId,establecimientoId,cupos,navigateToInstalacionReserva)
         },
+        resetScroll = viewModel::resetScroll,
 //        formatShortTime = {formatter.formatShortTime(it.toInstant())},
 //        formatDate = {formatter.formatWithSkeleton(it.toInstant().toEpochMilliseconds(),formatter.monthDaySkeleton)}
     )
@@ -130,6 +130,7 @@ internal fun ChatGrupo(
     formatShortDate:(Instant)->String,
     formatShortTime:(Instant)->String,
     navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
+    resetScroll:()->Unit,
 ) {
     val colors = listOf(
         MaterialTheme.colorScheme.inverseOnSurface,
@@ -152,10 +153,21 @@ internal fun ChatGrupo(
             lazyListState.firstVisibleItemIndex > 5
         }
     }
-
+    DisposableEffect(key1 = viewState.scrollToBottom, effect = {
+        coroutineScope.launch {
+        delay(500)
+        if(viewState.scrollToBottom == null) return@launch
+        Log.d("DEBUG_APP_SCROLL","SCROLLING")
+        lazyListState.animateScrollToItem(0)
+        }
+        onDispose {
+            resetScroll()
+        }
+    })
     LaunchedEffect(key1 = viewState.scrollToBottom, block = {
         delay(500)
         if(viewState.scrollToBottom == null) return@LaunchedEffect
+        Log.d("DEBUG_APP_SCROLL","SCROLLING")
         lazyListState.animateScrollToItem(0)
     })
     viewState.message?.let { messageSnack ->

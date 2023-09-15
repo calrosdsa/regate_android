@@ -19,21 +19,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import app.regate.common.composes.ui.PosterCardImage
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.ui.PosterCardImage
 import app.regate.compoundmodels.GrupoWithMessage
-import app.regate.grupos.GrupoItem
-import app.regate.models.Grupo
 import kotlinx.datetime.Instant
-import me.tatarka.inject.annotations.Assisted
-import me.tatarka.inject.annotations.Inject
 
 //typealias UserGroups = @Composable (
 //    navigateToChat:(id:Long)->Unit,

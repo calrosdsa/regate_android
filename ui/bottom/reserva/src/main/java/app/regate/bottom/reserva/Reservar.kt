@@ -1,6 +1,5 @@
 package app.regate.bottom.reserva
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -48,23 +47,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.composes.components.CustomButton
-import app.regate.common.composes.components.dialog.DialogConfirmation
-import app.regate.common.composes.util.Layout
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.components.CustomButton
+import app.regate.common.compose.components.dialog.DialogConfirmation
+import app.regate.common.compose.util.Layout
+import app.regate.common.compose.viewModel
 import app.regate.data.auth.AppAuthState
 import app.regate.models.Cupo
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import androidx.compose.ui.window.Dialog
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.LocalAppUtil
-import app.regate.common.composes.ui.PosterCardImage
-import app.regate.common.composes.ui.PosterCardImageDark
-import app.regate.common.composes.ui.SimpleTopBar
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.LocalAppUtil
+import app.regate.common.compose.ui.PosterCardImage
+import app.regate.common.compose.ui.PosterCardImageDark
+import app.regate.common.compose.ui.SimpleTopBar
 import app.regate.data.dto.empresa.establecimiento.PaidTypeEnum
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Duration.Companion.minutes
 
 
@@ -74,7 +77,7 @@ typealias Reservar = @Composable (
     navigateToEstablecimiento:(Long)->Unit,
     navigateToConversation:(Long,Long)->Unit,
     navigateToCreateSala:(Long)->Unit,
-    navigateToSelectGroup:(String)->Unit
+    navigateToSelectGroup:(String)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
 
@@ -87,7 +90,7 @@ fun Reservar(
     @Assisted navigateToEstablecimiento: (Long) -> Unit,
     @Assisted navigateToConversation: (Long,Long) -> Unit,
     @Assisted navigateToCreateSala: (Long) -> Unit,
-    @Assisted navigateToSelectGroup: (String) -> Unit
+    @Assisted navigateToSelectGroup: (String) -> Unit,
 //    @Assisted navigateToReserva:()->Unit,
     ){
     Reservar(
@@ -97,7 +100,7 @@ fun Reservar(
         navigateToEstablecimiento=navigateToEstablecimiento,
         navigateToConversation = navigateToConversation,
         navigateToCreateSala = navigateToCreateSala,
-        navigateToSelectGroup = navigateToSelectGroup
+        navigateToSelectGroup = navigateToSelectGroup,
 //        navigateToReserva = navigateToReserva
     )
 }
@@ -111,7 +114,7 @@ internal fun Reservar(
     navigateToEstablecimiento: (Long) -> Unit,
     navigateToConversation: (Long,Long) -> Unit,
     navigateToCreateSala: (Long) -> Unit,
-    navigateToSelectGroup: (String) -> Unit
+    navigateToSelectGroup: (String) -> Unit,
 //    navigateToReserva: () -> Unit,
 ){
     val state by viewModel.state.collectAsState()
@@ -136,14 +139,12 @@ internal fun Reservar(
         openMap = appUtil::openMap,
         navigateToCreateSala = navigateToCreateSala,
         navigateToSelectGroup = {
-            viewModel.navigateToInstalacion(navigateToSelectGroup)
-        }
-//        navigateToReserva = navigateToReserva,
-//        openBottomSheet = { viewModel.openBottomSheet { navigateToReserva () } }
+            viewModel.navigateSelect(navigateToSelectGroup)
+        },
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun Reservar(
     viewState: BottomReservaState,
@@ -157,7 +158,7 @@ internal fun Reservar(
     formatDate:(date:Instant)->String,
     openMap:(lng:String?,lat:String?,label:String?)->Unit,
     navigateToCreateSala: (Long) -> Unit,
-    navigateToSelectGroup: () -> Unit
+    navigateToSelectGroup: () -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val dismissSnackbarState = rememberDismissState(
@@ -176,6 +177,8 @@ internal fun Reservar(
     var expanded by remember {
         mutableStateOf(false)
     }
+    val currentTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).toInstant(
+        TimeZone.currentSystemDefault())
 //    val price =  viewState.cupos.reduce{sum,element->
 //        sum.price+element.price
 //    }.price
@@ -206,7 +209,7 @@ internal fun Reservar(
         topBar = {
             SimpleTopBar(navigateUp = { navigateUp()},title = viewState.instalacion?.name,
             actions = {
-                Box() {
+                Box(){
                 IconButton(onClick = { expanded = true }) {
                     Icon(imageVector = Icons.Default.MoreVert, contentDescription = "menu")
                 }
@@ -274,13 +277,17 @@ internal fun Reservar(
                                 ) }
                             }
                         }
+//                            viewState.cupos.map{
+//                                Text(text = it.time.toString())
+//                            }
                         CustomButton(onClick = {
                             if (viewState.authState == AppAuthState.LOGGED_IN) {
                                 confirmate.value = true
                             } else {
                                 openAuthDialog()
                             }
-                        }) {
+                        }, enabled = if(viewState.cupos.isNotEmpty()) currentTime < viewState.cupos.first().time else true
+                        ) {
                             Text(text = stringResource(id = R.string.full_payment))
                         }
                     }
@@ -374,8 +381,8 @@ internal fun Reservar(
 
                     viewState.instalacion?.let {instalacion->
                     Box(modifier = Modifier
-                        .clickable { }
-                        .height(110.dp)
+                        .clickable {  }
+                        .height(120.dp)
                         .padding(vertical = 5.dp)
                         .fillMaxWidth()) {
                         PosterCardImageDark(model = viewState.instalacion.portada)

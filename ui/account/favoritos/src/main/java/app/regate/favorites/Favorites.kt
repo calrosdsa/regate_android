@@ -14,8 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import app.regate.common.composes.components.item.EstablecimientoItem
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.components.item.EstablecimientoItem
+import app.regate.common.compose.viewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 

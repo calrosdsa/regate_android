@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
 import app.regate.data.grupo.GrupoRepository
+import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveUser
 import app.regate.domain.observers.ObserveUserGroups
 import app.regate.domain.observers.ObserveUserGroupsWithMessage
@@ -20,6 +21,7 @@ import me.tatarka.inject.annotations.Inject
 class UserGroupsViewModel(
     observeGrupos: ObserveUserGroupsWithMessage,
     private val grupoRepository: GrupoRepository,
+    observeAuthState: ObserveAuthState,
 //    private val updateFilterGrupos: UpdateFilterGrupos
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
@@ -27,12 +29,14 @@ class UserGroupsViewModel(
     val state:StateFlow<UserGroupsState> = combine(
         observeGrupos.flow,
         loadingCounter.observable,
-        uiMessageManager.message
-    ){grupos,loading,message->
+        uiMessageManager.message,
+        observeAuthState.flow
+    ){grupos,loading,message,authState->
         UserGroupsState(
             loading = loading,
             message = message,
-            grupos = grupos
+            grupos = grupos,
+            authState = authState
         )
     }.stateIn(
         scope = viewModelScope,
@@ -41,6 +45,7 @@ class UserGroupsViewModel(
     )
 
     init {
+        observeAuthState(Unit)
         observeGrupos(Unit)
         getUserGrupos()
     }

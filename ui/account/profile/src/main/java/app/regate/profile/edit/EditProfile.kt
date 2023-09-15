@@ -46,10 +46,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.composes.components.dialog.LoaderDialog
-import app.regate.common.composes.components.input.InputForm
-import app.regate.common.composes.ui.UploadImageBitmap
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.components.dialog.LoaderDialog
+import app.regate.common.compose.components.input.InputForm
+import app.regate.common.compose.ui.UploadImageBitmap
+import app.regate.common.compose.viewModel
 import app.regate.common.resources.R
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject

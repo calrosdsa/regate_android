@@ -9,7 +9,6 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,19 +17,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.components.item.SalaItem
-import app.regate.common.composes.components.item.SalaItemUser
-import app.regate.common.composes.ui.Loader
-import app.regate.common.composes.util.itemsCustom
-import app.regate.common.composes.viewModel
-import app.regate.data.auth.AppAuthState
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.components.item.SalaItemUser
+import app.regate.common.compose.ui.Loader
+import app.regate.common.compose.util.itemsCustom
+import app.regate.common.compose.viewModel
 import app.regate.data.dto.empresa.salas.SalaDto
-import app.regate.models.SalaEntity
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 

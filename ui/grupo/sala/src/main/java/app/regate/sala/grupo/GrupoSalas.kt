@@ -30,14 +30,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.composes.LocalAppDateFormatter
-import app.regate.common.composes.components.item.SalaItem
-import app.regate.common.composes.ui.Loader
-import app.regate.common.composes.util.itemsCustom
-import app.regate.common.composes.viewModel
+import app.regate.common.compose.LocalAppDateFormatter
+import app.regate.common.compose.components.item.SalaItem
+import app.regate.common.compose.ui.Loader
+import app.regate.common.compose.util.itemsCustom
+import app.regate.common.compose.viewModel
 import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.salas.SalaDto
-import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
