@@ -107,13 +107,13 @@ internal fun HeaderFilter(
                 }
                 }
                 Row() {
-                IconButton(onClick = { navigateToFilter() }) {
-                    Icon(
-                        imageVector = Icons.Default.FilterAlt,
-                        contentDescription = "filteralt",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
+//                IconButton(onClick = { navigateToFilter() }) {
+//                    Icon(
+//                        imageVector = Icons.Default.FilterAlt,
+//                        contentDescription = "filteralt",
+//                        tint = MaterialTheme.colorScheme.primary
+//                    )
+//                }
                     IconButton(onClick = { navigateToFilter() }) {
                         Icon(
                             imageVector = Icons.Default.Sort,

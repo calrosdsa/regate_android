@@ -177,8 +177,10 @@ internal fun Reservar(
     var expanded by remember {
         mutableStateOf(false)
     }
-    val currentTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).toInstant(
-        TimeZone.currentSystemDefault())
+    val currentTime =Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).toInstant(
+        TimeZone.UTC)
+//    val currentTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).toInstant(
+//        TimeZone.currentSystemDefault())
 //    val price =  viewState.cupos.reduce{sum,element->
 //        sum.price+element.price
 //    }.price

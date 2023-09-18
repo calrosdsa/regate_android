@@ -51,7 +51,7 @@ fun InstalacionCard (
                 contentScale = ContentScale.Crop,
             )
             Surface(
-                shape = RoundedCornerShape(topEnd = 10.dp),
+                shape = RoundedCornerShape(topEnd = 10.dp),     
                 border = BorderStroke(1.dp, Color.White),
                 modifier = Modifier
                     .align(Alignment.BottomStart)

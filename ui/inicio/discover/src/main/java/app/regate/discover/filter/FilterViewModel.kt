@@ -36,7 +36,7 @@ class FilterViewModel (
     observeLabelType: ObserveLabelType,
     private val preferences: AppPreferences,
     private val appLocation: AppLocation,
-    private val converter:Converter
+    converter:Converter
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
@@ -71,12 +71,13 @@ class FilterViewModel (
                 getDataEntityFromJson<FilterInstalacionData>(it)?.let { it1 -> filterData.emit(it1) }
             }
         }
-
     }
     fun dismissDialog() {
         visiblePermissionDialogQueue.removeFirst()
     }
-
+    fun applyResults(){
+        preferences.filter = Json.encodeToString(filterData.value)
+    }
     fun onPermissionResult(
         permission: String,
         isGranted: Boolean,
@@ -92,7 +93,10 @@ class FilterViewModel (
         }
     }
     fun setMaxPrice(price:Int){
-        preferences.filter =  Json.encodeToString(filterData.value.copy(max_price = price))
+        viewModelScope.launch {
+        filterData.tryEmit(filterData.value.copy(max_price = price))
+        }
+//        preferences.filter =  Json.encodeToString(filterData.value.copy(max_price = price))
     }
     fun setCategories(amenityId:Long){
         val categories = filterData.value.amenities.toMutableList()
@@ -104,12 +108,18 @@ class FilterViewModel (
         preferences.filter =  Json.encodeToString(filterData.value.copy(amenities =categories))
     }
     fun clearAlL(){
-        preferences.filter = Json.encodeToString(FilterInstalacionData())
+        viewModelScope.launch {
+            filterData.tryEmit(FilterInstalacionData())
+        }
+//        preferences.filter = Json.encodeToString(FilterInstalacionData())
     }
     fun setNearMe(bool:Boolean){
-        preferences.filter =  Json.encodeToString(filterData.value.copy(
-            near_me = bool
-        ))
+        viewModelScope.launch {
+            filterData.tryEmit(filterData.value.copy(near_me = bool))
+        }
+//        preferences.filter =  Json.encodeToString(filterData.value.copy(
+//            near_me = bool
+//        ))
     }
     fun checkPermission(context:Context,permission:String):Boolean{
         val pm: PackageManager = context.packageManager

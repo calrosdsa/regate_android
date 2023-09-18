@@ -139,7 +139,8 @@ internal fun Filter(
         clearMessage = viewModel::clearMessage,
         requestLocationPermission ={  locationPermission.launch(permissionsToRequest) },
         setNearMe = viewModel::setNearMe,
-        clearAll = viewModel::clearAlL
+        clearAll = viewModel::clearAlL,
+        applyResults = viewModel::applyResults
     )
 }
 
@@ -156,7 +157,8 @@ internal fun Filter(
 //    onRequestPermission:(Boolean, Context, (IntentSenderRequest)->Unit)->Unit,
     requestLocationPermission:()->Unit,
     checkPermission:(Context,String)->Boolean,
-    clearMessage:(Long)->Unit
+    clearMessage:(Long)->Unit,
+    applyResults:()->Unit
 ) {
     var sliderValue by remember(viewState.filterData.max_price) {
         mutableStateOf(viewState.filterData.max_price?.toFloat() ?: 0f) // pass the initial values
@@ -238,7 +240,10 @@ internal fun Filter(
                         TextButton(onClick = { clearAll() }) {
                             Text(text = stringResource(id = R.string.clear_all))
                         }
-                        CustomButton(onClick = { navigateUp() }) {
+                        CustomButton(onClick = {
+                            applyResults()
+                            navigateUp()
+                        }) {
                             Text(text = stringResource(id = R.string.show_results))
                         }
                     }

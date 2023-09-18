@@ -136,9 +136,12 @@ internal fun Profile(
                     .fillMaxWidth()) {
                     Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.fillMaxWidth(0.8f)) {
                     PosterCardImage(
-                        model = profile.profile_photo, modifier = Modifier
-                            .size(60.dp), shape = CircleShape
+                        model = profile.profile_photo,
+                        modifier = Modifier.size(60.dp),
+                        isUser = true,
+                        shape = CircleShape
                     )
+
                     Spacer(modifier = Modifier.width(10.dp))
                     Column() {
                         Text(

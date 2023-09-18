@@ -24,6 +24,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
@@ -50,7 +51,7 @@ class GrupoViewModel(
         uiMessageManager.message,
         loadingState.observable,
         observeAuthState.flow,
-        observeUsersGrupo.flow,
+        observeUsersGrupo.flow.debounce(100),
         observeGrupo.flow,
         salas,
         observeUser.flow,

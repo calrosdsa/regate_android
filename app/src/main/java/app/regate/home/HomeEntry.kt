@@ -117,7 +117,8 @@ internal fun AppNavigation(
             navigateUp = navController::navigateUp
             )
         }
-        animatedComposable(route = Route.NOTIFICATIONS) {
+        animatedComposable(route = Route.NOTIFICATIONS,
+            deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.NOTIFICATIONS}" })) {
             composeScreens.notifications(
                 navigateUp = navController::navigateUp,
                 navigateToSala = { navController.navigate(Route.SALA id it) },

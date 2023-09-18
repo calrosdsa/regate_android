@@ -129,7 +129,6 @@ internal fun Grupo(
         navigateUp = navigateUp,
         formatShortTime = formatter::formatShortTime,
         formatDate = formatter::formatShortDate,
-//        navigateToChat = navigateToChat,
         openAuthBottomSheet = openAuthBottomSheet,
         openDialogConfirmation = {joinSalaDialog.value = true},
         clearMessage = viewModel::clearMessage,
@@ -155,7 +154,6 @@ internal fun Grupo(
             joinSalaDialog.value = false
         }
     )
-
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -166,7 +164,6 @@ internal fun Grupo(
     formatShortTime:(time:String,plusMinutes:Long)->String,
     formatDate:(date:String)->String,
     editGroup: (Long) -> Unit,
-//    navigateToChat: (id:Long) -> Unit,
     openAuthBottomSheet: () -> Unit,
     openDialogConfirmation:()->Unit,
     refresh:()->Unit,
@@ -268,6 +265,7 @@ internal fun Grupo(
             }
         }
     }
+
     Scaffold(
         topBar = {
             Row(
@@ -297,6 +295,12 @@ internal fun Grupo(
                                 onClick = { viewState.grupo?.id?.let { editGroup(it) } }
                             )
                         }
+                        if (viewState.currentUser != null){
+                            DropdownMenuItem(
+                                text = { Text(stringResource(id = R.string.leave_group)) },
+                                onClick = { leaveGroup() }
+                            )
+                        }
                         DropdownMenuItem(
                             text = { Text("Reportar Grupo") },
                             onClick = { navigateToReport() }
@@ -306,7 +310,9 @@ internal fun Grupo(
             }
         },
         floatingActionButton = {
-            if (viewState.user?.profile_id !in viewState.usersProfileGrupo.map { it.id })
+            if (!viewState.usersProfileGrupo.map { it.id }.contains(viewState.user?.profile_id)
+                        && viewState.usersProfileGrupo.isNotEmpty()
+                ){
                 Button(onClick = {
                     if (isLogged) {
                         openDialogConfirmation()
@@ -316,7 +322,7 @@ internal fun Grupo(
                 }) {
                     Text(text = "Unirme")
                 }
-        },
+        }},
         floatingActionButtonPosition = FabPosition.Center,
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
@@ -436,12 +442,15 @@ internal fun Grupo(
                     }
                     dividerLazyList()
 
-                    item {
-                        Text(
-                            text = "${viewState.usersProfileGrupo.size} miembros",
-                            style = MaterialTheme.typography.labelLarge
-                        )
+                    if (viewState.usersProfileGrupo.isNotEmpty()) {
+                        item {
+                            Text(
+                                text = "${viewState.usersProfileGrupo.size} miembros",
+                                style = MaterialTheme.typography.labelLarge
+                            )
+                        }
                     }
+
                     spacerLazyList()
                     items(
                         items = viewState.usersProfileGrupo,
@@ -462,24 +471,25 @@ internal fun Grupo(
                         )
                     }
 
-                    item {
-                        Spacer(modifier = Modifier.height(10.dp))
-                        TextButton(
-                            modifier = Modifier
-                                .padding(10.dp)
-                                .fillMaxWidth(), onClick = { leaveGroup() },
-                            shape = CircleShape,
-                            border = BorderStroke(
-                                width = 1.dp,
-                                color = MaterialTheme.colorScheme.error
-                            )
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.leave_group),
-                                color = MaterialTheme.colorScheme.error
-                            )
-                        }
-                    }
+//                    item {
+//                        Spacer(modifier = Modifier.height(10.dp))
+//                        TextButton(
+//                            modifier = Modifier
+//                                .padding(10.dp)
+//                                .fillMaxWidth(), onClick = { leaveGroup() },
+//                            shape = CircleShape,
+//                            border = BorderStroke(
+//                                width = 1.dp,
+//                                color = MaterialTheme.colorScheme.error
+//                            )
+//                        ) {
+//                            Text(
+//                                text = stringResource(id = R.string.leave_group),
+//                                color = MaterialTheme.colorScheme.error
+//                            )
+//                        }
+//                    }
+
                 }
             }
         }

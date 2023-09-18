@@ -119,9 +119,9 @@ class GrupoRepository(
     }
     suspend fun getGrupo(id:Long):List<SalaDto>{
         return  grupoDataSourceImpl.getGrupo(id).also { result->
+            userGrupoDao.deleteUsersGroup(id)
             grupoDao.upsert(dtoToGrupo.map(result.grupo))
             val profiles = result.profiles.map { profileMapper.map(it) }
-            userGrupoDao.deleteUsersGroup(id)
             val usersGrupo = result.profiles.map { dtoToUserGrupo.map(it,result.grupo.id) }
             profileDao.upsertAll(profiles)
             userGrupoDao.upsertAll(usersGrupo)
@@ -144,8 +144,8 @@ class GrupoRepository(
     }
     suspend fun getUsersGroup(id:Long){
         withContext(dispatchers.computation){ 
-            userGrupoDao.deleteUsersGroup(id)
         grupoDataSourceImpl.getUsersGrupo(id).apply {
+            userGrupoDao.deleteUsersGroup(id)
             val profiles = map {
 //                profileMapper.map(it)
                 Profile(

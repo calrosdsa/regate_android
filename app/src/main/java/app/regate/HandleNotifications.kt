@@ -12,12 +12,12 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.net.toUri
 import app.regate.common.resources.R
+import app.regate.constant.Route
 import app.regate.data.AppRoomDatabase
 import app.regate.data.daos.NotificationDao
 import app.regate.data.dto.notifications.MessagePayload
 import app.regate.data.dto.notifications.SalaConflictPayload
 import app.regate.data.dto.notifications.SalaPayload
-import app.regate.extensions.unsafeLazy
 import app.regate.home.MainActivity
 import app.regate.inject.ApplicationComponent
 import app.regate.models.Notification
@@ -179,20 +179,20 @@ class HandleNotifications {
         }
     }
 
-    suspend fun sendNotificationBilling(context: Context, payload: MessagePayload){
+    fun sendNotificationBilling(context: Context, payload: MessagePayload){
         try{
-            val db = AppRoomDatabase.getInstance(context)
-            db.notificationDao().upsert(
-                Notification(
-                    content = payload.message,
-                    typeEntity = TypeEntity.BILLING,
-                    entityId = payload.id
-                )
-            )
-            AppRoomDatabase.destroyInstance()
+//            val db = AppRoomDatabase.getInstance(context)
+//            db.notificationDao().upsert(
+//                Notification(
+//                    content = payload.message,
+//                    typeEntity = TypeEntity.BILLING,
+//                    entityId = payload.id
+//                )
+//            )
+//            AppRoomDatabase.destroyInstance()
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "https://example.com/sala_id=${payload.id}".toUri(),
+                "https://example.com/${Route.NOTIFICATIONS}".toUri(),
                 context,
                 MainActivity::class.java
             )
@@ -202,7 +202,7 @@ class HandleNotifications {
 
             val CHANNEL_ID = context.getString(R.string.notification_billing_channel)
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-//                .setContentTitle(context.getString(R.string.your_payment_has_been_confirmed))
+                .setContentTitle(payload.title)
                 .setContentText(payload.message)
                 .setSmallIcon(R.drawable.logo_app)
                 .setContentIntent(pendingIntent)

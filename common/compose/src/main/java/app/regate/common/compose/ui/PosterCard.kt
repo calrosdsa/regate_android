@@ -62,13 +62,15 @@ fun PosterCardImage (
     model:String?,
     modifier: Modifier = Modifier,
     shape:Shape = CardDefaults.shape,
+    isUser:Boolean = false,
     contentScale:ContentScale = ContentScale.Crop
 ) {
     CardImage(
         src = model,
         shape = shape,
         modifier = modifier,
-        contentScale = contentScale
+        contentScale = contentScale,
+        isUser = isUser
     )
 //    Card(modifier = modifier,
 //    shape = shape) {
