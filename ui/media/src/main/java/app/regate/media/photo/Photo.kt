@@ -95,6 +95,8 @@ internal fun Photo(
             .background(MaterialTheme.colorScheme.background)
             .padding(paddingValues)
             .fillMaxSize()){
+            if(viewState.images.isNotEmpty()){
+
             Text(text = viewState.images[0])
             PosterCardImage(model = viewState.images[0],
             shape = RoundedCornerShape(0.dp),
@@ -103,6 +105,7 @@ internal fun Photo(
                 .align(Alignment.Center),
             contentScale = ContentScale.Fit
             )
+            }
         }
     }
 }

@@ -186,7 +186,7 @@ internal fun AppNavigation(
         }
         animatedComposable(route = Route.PHOTO arg "data",
         arguments = listOf(
-            navArgument("url") { type = NavType.StringType }
+            navArgument("data") { type = NavType.StringType }
         )){
 
             composeScreens.photo(

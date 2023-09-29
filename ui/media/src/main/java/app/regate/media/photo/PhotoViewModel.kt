@@ -1,5 +1,6 @@
 package app.regate.media.photo
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,6 +39,7 @@ class PhotoViewModel(
     }
 
     private fun getImages(){
+        Log.d("DEBUG_APP_IMAGES",data.toString())
         if(data == null) return
         viewModelScope.launch {
         try{

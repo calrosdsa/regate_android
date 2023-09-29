@@ -1,5 +1,6 @@
 package app.regate.establecimiento
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
@@ -74,6 +75,8 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import moe.tlaster.nestedscrollview.VerticalNestedScrollView
 import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 
 typealias Establecimiento = @Composable (
@@ -391,10 +394,13 @@ fun HeaderEstablecimiento(
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }
                     ) {
+                        val url = URLEncoder.encode(establecimiento.photo.toString(), StandardCharsets.UTF_8.toString())
                         val data = MediaData(
-                            images = listOf(establecimiento.photo.toString())
+                            images = listOf(url)
                         )
-                        navigateToPhoto(Json.encodeToString(data))
+                        val payload = Json.encodeToString(data)
+                        Log.d("DEBUG_APP_PAYLOAD",payload)
+                        navigateToPhoto(payload)
                     }
                     .fillMaxWidth()
                     .height(170.dp),
