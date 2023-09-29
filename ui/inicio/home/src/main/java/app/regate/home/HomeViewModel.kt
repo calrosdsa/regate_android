@@ -61,11 +61,12 @@ class HomeViewModel(
     )
 
     init{
-        me()
+//        me()
         observeAuthState(Unit)
         viewModelScope.launch {
 //            salaRepository.insertSalas()
         converter.observeAddress().collectLatest {
+            Log.d("API_REQUEST","$it DATA ------")
             getEstablecimientos(it)
         }
         }
@@ -78,8 +79,9 @@ class HomeViewModel(
                 val categories = converter.getCategories()
                 loadingState.addLoader()
                 Log.d("DEBUG_APP_ADD",state.value.addressDevice.toString())
+
                 val initialFilterData = InitialDataFilter(
-                    categories = categories,
+                    categories = categories?: emptyList(),
                     lng = addressDevice?.longitud.toString(),
                     lat = addressDevice?.latitud.toString(),
                     )
@@ -88,7 +90,7 @@ class HomeViewModel(
                 loadingState.removeLoader()
             }catch(e:Exception){
                 loadingState.removeLoader()
-                Log.d("API_REQUEST",e.localizedMessage?:"None")
+                Log.d("API_REQUEST",e.localizedMessage?:e.message?:"Unexpected")
             }
         }
     }

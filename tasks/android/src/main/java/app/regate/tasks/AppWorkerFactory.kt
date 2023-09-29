@@ -22,6 +22,7 @@ import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import app.regate.tasks.works.InitSync
 import app.regate.tasks.works.SyncLibraryShows
+import app.regate.tasks.works.SyncMessages
 import me.tatarka.inject.annotations.Inject
 
 @Inject
@@ -36,6 +37,7 @@ class AppWorkerFactory(
     ): ListenableWorker? = when (workerClassName) {
         name<SyncLibraryShows>() -> syncLibraryShows(appContext, workerParameters)
         name<InitSync>() -> initSync(appContext,workerParameters)
+        name<SyncMessages>() -> initSync(appContext,workerParameters)
         else -> null
     }
 

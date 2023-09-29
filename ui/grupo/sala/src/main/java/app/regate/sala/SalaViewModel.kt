@@ -1,6 +1,5 @@
 package app.regate.sala
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -8,18 +7,14 @@ import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.dto.ResponseMessage
-import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.dto.empresa.salas.SalaDetail
-import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.sala.SalaRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveInstalacion
 import app.regate.domain.observers.ObserveUser
-import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +23,11 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import app.regate.common.resources.R
+import app.regate.data.dto.empresa.grupo.GrupoMessageData
+import app.regate.data.dto.empresa.grupo.GrupoMessageType
+import app.regate.data.dto.empresa.grupo.MessageSalaPayload
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @Inject
 class SalaViewModel(
@@ -97,6 +96,31 @@ class SalaViewModel(
             }catch (e:Exception){
                 //TODO()
             }
+        }
+    }
+
+    fun navigateSelect(navigate:(String)->Unit){
+        try{
+            val sala = state.value.data?.sala
+            if(sala != null){
+            val salaData = MessageSalaPayload(
+                id = sala.id.toInt(),
+                titulo = sala.titulo,
+                cupos = sala.cupos,
+                precio = sala.precio,
+                precio_cupo=sala.precio_cupo,
+                start = sala.horas[0],
+                end = sala.horas.last()
+            )
+            val data = GrupoMessageData(
+                type_data = GrupoMessageType.SALA.ordinal,
+                data =  Json.encodeToString(salaData)
+            )
+            Log.d("DEBUG_APP", Json.encodeToString(data))
+            navigate(Json.encodeToString(data))
+            }
+        }catch (e:Exception){
+            //TODO()
         }
     }
 //    fun exitSala(context:Context, navigateUp:()->Unit){

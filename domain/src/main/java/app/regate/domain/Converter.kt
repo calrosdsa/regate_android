@@ -23,8 +23,12 @@ class Converter(
             }
         }
     }
-    fun getCategories():List<Long>{
-        return getDataEntityFromJson(preference.categories)!!
+    fun getCategories():List<Long>?{
+        return try{
+             getDataEntityFromJson<List<Long>>(preference.categories)
+        }catch (e:Exception){
+            null
+        }
     }
     fun getAddress():AddressDevice?{
         return getDataEntityFromJson(preference.address)

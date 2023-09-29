@@ -21,7 +21,10 @@ import kotlinx.coroutines.flow.Flow
 interface AppPreferences {
 
     fun setup()
+
     var categories:String
+
+    var keyBoardHeight:Int
 
     var filter:String
     fun observeFilter(): Flow<String>

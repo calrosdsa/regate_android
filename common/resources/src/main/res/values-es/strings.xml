@@ -132,5 +132,17 @@
     <string name="resend_email_verification">Se enviará un correo electrónico a la dirección (%1$s) con el código de verificación.</string>
     <string name="you_may_request_a_new_code">Podrás solicitar un nuevo código en %1$d</string>
     <string name="available_courts">Canchas disponibles</string>
+    <string name="emileys_emotion">EMOCIONES Y EMOCIONES</string>
+    <string name="people">PERSONAS</string>
+    <string name="animals_and_nature">ANIMALES Y NATURALEZA</string>
+    <string name="travel_and_places">VIAJES Y LUGARES</string>
+    <string name="activities_and_event">ACTIVIDADES Y EVENTOS</string>
+    <string name="objects">OBJECTS</string>
+    <string name="symbols">SÍMBOLOS</string>
+    <string name="flags">BANDERAS</string>
+    <string name="food_and_drink">COMIDA Y BEBIDA</string>
+    <string name="send_to_a_group">Enviar a un grupo</string>
+    <string name="precio_per_person">Precio por persona</string>
+
 
 </resources>

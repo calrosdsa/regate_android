@@ -22,25 +22,22 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.DismissValue
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallFloatingActionButton
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -60,7 +57,6 @@ import app.regate.common.compose.components.card.InstalacionCard
 import app.regate.common.compose.components.dialog.DialogConfirmation
 import app.regate.common.compose.components.item.ProfileItem
 import app.regate.common.compose.ui.PosterCardImage
-import app.regate.common.compose.util.Layout
 import app.regate.common.compose.util.dividerLazyList
 import app.regate.common.compose.util.spacerLazyList
 import app.regate.common.compose.viewModel
@@ -78,7 +74,8 @@ typealias Sala = @Composable (
     navigateToInstalacion:(Long) -> Unit,
     navigateToEstablecimiento:(Long)->Unit,
     navigateToComplete:(Long) -> Unit,
-        ) -> Unit
+    navigateToSelectGroup:(String)->Unit,
+    ) -> Unit
 
 @Inject
 @Composable
@@ -89,7 +86,8 @@ fun Sala(
     @Assisted openAuthBottomSheet: () -> Unit,
     @Assisted navigateToInstalacion: (Long) -> Unit,
     @Assisted navigateToEstablecimiento: (Long) -> Unit,
-    @Assisted navigateToComplete:(Long) -> Unit
+    @Assisted navigateToComplete:(Long) -> Unit,
+    @Assisted navigateToSelectGroup: (String) -> Unit
 ) {
 
     Sala(
@@ -99,7 +97,8 @@ fun Sala(
         openAuthBottomSheet = openAuthBottomSheet,
         navigateToEstablecimiento = navigateToEstablecimiento,
         navigateToInstalacion = navigateToInstalacion,
-        navigateToComplete = navigateToComplete
+        navigateToComplete = navigateToComplete,
+        navigateToSelectGroup = navigateToSelectGroup
     )
 }
 
@@ -111,7 +110,8 @@ internal fun Sala(
     openAuthBottomSheet: () -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
     navigateToInstalacion: (Long) -> Unit,
-    navigateToComplete: (Long) -> Unit
+    navigateToComplete: (Long) -> Unit,
+    navigateToSelectGroup: (String) -> Unit
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -132,7 +132,10 @@ internal fun Sala(
         navigateToInstalacion = navigateToInstalacion,
         navigateToEstablecimiento = navigateToEstablecimiento,
 //        exitSala = {viewModel.exitSala(context,navigateUp)},
-        navigateToComplete = navigateToComplete
+        navigateToComplete = navigateToComplete,
+        shareSalaWithGroup = {
+            viewModel.navigateSelect(navigateToSelectGroup)
+        }
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -160,6 +163,7 @@ internal fun Sala(
     navigateToEstablecimiento: (Long) -> Unit,
 //    exitSala:()->Unit,
     navigateToComplete: (Long) -> Unit,
+    shareSalaWithGroup:()->Unit,
 ) {
     val participantes = remember(viewState.data?.profiles) {
         derivedStateOf {
@@ -194,7 +198,10 @@ internal fun Sala(
     }
     Scaffold(
         topBar = {
-           SalaTopBar(onBack = navigateUp)
+           SalaTopBar(
+               onBack = navigateUp,
+               shareSalaWithGroup = shareSalaWithGroup
+           )
         },
         floatingActionButton = {
             if(iAmInTheRoom == true){
@@ -340,19 +347,7 @@ internal fun Sala(
                         )
                     }
                     
-//                    item{
-//                        if(viewState.data.sala.estado == SalaEstado.AVAILABLE.ordinal && iAmInTheRoom == true){
-//                        Spacer(modifier = Modifier.height(10.dp))
-//                        OutlinedButton(onClick = { exitSala() },
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(horizontal = 20.dp)) {
-//                            Icon(imageVector = Icons.Default.ExitToApp, contentDescription = null)
-//                            Spacer(modifier = Modifier.width(10.dp))
-//                            Text(text = stringResource(id = R.string.exit))
-//                        }
-//                        }
-//                    }
+
                 }
             }
 
@@ -375,10 +370,16 @@ internal fun Sala(
 
 
 @Composable
-fun SalaTopBar(modifier:Modifier = Modifier,
-                 onBack:()->Unit) {
+fun SalaTopBar(
+    shareSalaWithGroup: () -> Unit,
+    onBack:()->Unit,
+    modifier:Modifier = Modifier,
+) {
 
     val expanded = remember { mutableStateOf(false) }
+    val expandedMenu = remember {
+        mutableStateOf(false)
+    }
 
     Column (modifier = modifier){
         Row(
@@ -409,10 +410,24 @@ fun SalaTopBar(modifier:Modifier = Modifier,
                              Text(text = stringResource(id = R.string.sala_help_text2),style = MaterialTheme.typography.labelMedium)
                          }
                      }
-             }    
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Default.Share, contentDescription = "back_esta")
+             }
+
+                Box(modifier = Modifier) {
+
+                IconButton(onClick = { expandedMenu.value = !expandedMenu.value }) {
+                Icon(imageVector = Icons.Default.MoreVert, contentDescription = "menu")
             }
+
+                    DropdownMenu(
+                        expanded = expandedMenu.value,
+                        onDismissRequest = { expandedMenu.value = false },
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(text = stringResource(id = R.string.send_to_a_group)) },
+                            onClick = { shareSalaWithGroup() }
+                        )
+                    }
+                }
             }
         }
         Divider()

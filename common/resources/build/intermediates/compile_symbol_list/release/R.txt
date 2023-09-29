@@ -10,6 +10,7 @@ int color tv_test_red 0x0
 int color tv_test_yellow 0x0
 int drawable check 0x0
 int drawable coin 0x0
+int drawable default_image 0x0
 int drawable doble_check 0x0
 int drawable enabled_location 0x0
 int drawable ic_launcher_background 0x0
@@ -37,9 +38,12 @@ int layout item_callout_view 0x0
 int layout mapbox 0x0
 int mipmap ic_launcher 0x0
 int string about_regate 0x0
+int string activities_and_event 0x0
 int string add_a_message 0x0
 int string add_a_review 0x0
 int string amount 0x0
+int string animals_and_nature 0x0
+int string available_courts 0x0
 int string balance_coins 0x0
 int string book_a_court 0x0
 int string bookings 0x0
@@ -66,18 +70,22 @@ int string deposits 0x0
 int string description 0x0
 int string discount 0x0
 int string do_you_want_receive_notifications 0x0
+int string dont_receive_code 0x0
 int string dynamic_color 0x0
 int string edit 0x0
 int string email_verification 0x0
 int string email_verification_help_text 0x0
+int string emileys_emotion 0x0
 int string exit 0x0
 int string expiration_date 0x0
 int string explore_exceptional_destinations 0x0
 int string family_name 0x0
 int string favorites 0x0
 int string filters 0x0
+int string flags 0x0
 int string floating1 0x0
 int string floating2 0x0
+int string food_and_drink 0x0
 int string full_payment 0x0
 int string gcp_id 0x0
 int string get_started 0x0
@@ -113,9 +121,11 @@ int string notification_sala 0x0
 int string notification_sala_channel 0x0
 int string notifications 0x0
 int string nudes 0x0
+int string objects 0x0
 int string other 0x0
 int string password_dont_match 0x0
 int string password_length 0x0
+int string people 0x0
 int string permission_required 0x0
 int string post 0x0
 int string price_range 0x0
@@ -130,6 +140,7 @@ int string recommended_places 0x0
 int string remove_user 0x0
 int string remove_user_admin 0x0
 int string report 0x0
+int string resend_email_verification 0x0
 int string reservation_date 0x0
 int string review 0x0
 int string reviews 0x0
@@ -153,6 +164,7 @@ int string show_results 0x0
 int string show_reviews 0x0
 int string spam_scam 0x0
 int string successfully_published 0x0
+int string symbols 0x0
 int string terms_of_services 0x0
 int string theme 0x0
 int string there_are_not_available_schudules 0x0
@@ -162,6 +174,7 @@ int string time_interval 0x0
 int string total_paid 0x0
 int string total_price 0x0
 int string total_remaining 0x0
+int string travel_and_places 0x0
 int string unexpected_error 0x0
 int string user_since 0x0
 int string verify 0x0
@@ -171,4 +184,5 @@ int string what_kind_of_game_do_you_prefere 0x0
 int string what_would_you_like_to_play 0x0
 int string where_will_it_be_played 0x0
 int string you 0x0
+int string you_may_request_a_new_code 0x0
 int string your_payment_has_been_confirmed 0x0

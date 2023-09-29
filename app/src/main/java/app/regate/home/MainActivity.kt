@@ -2,6 +2,8 @@
 
 package app.regate.home
 
+//import app.regate.R
+//import app.regate.map.MapActivity
 import android.Manifest
 import android.app.Activity
 import android.app.NotificationChannel
@@ -12,6 +14,7 @@ import android.content.IntentSender
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.IntentSenderRequest
@@ -25,21 +28,21 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.viewmodel.viewModelFactory
 import app.regate.ComposeScreens
-import app.regate.common.resources.R
-//import app.regate.R
 import app.regate.common.compose.LocalAppDateFormatter
 import app.regate.common.compose.LocalAppUtil
 import app.regate.common.compose.theme.RegateTheme
 import app.regate.common.compose.util.shouldUseDarkColors
 import app.regate.common.compose.util.shouldUseDynamicColors
+import app.regate.common.resources.R
 import app.regate.constant.Route
 import app.regate.extensions.unsafeLazy
 import app.regate.inject.ActivityComponent
 import app.regate.inject.ActivityScope
 import app.regate.inject.ApplicationComponent
-//import app.regate.map.MapActivity
 import app.regate.settings.AppPreferences
 import app.regate.util.AppDateFormatter
 import app.regate.util.AppLocation
@@ -76,15 +79,10 @@ class MainActivity : ComponentActivity() {
             createNotificationGroup()
             createNotificationGroupChatChannel()
         }
-//        requestPermisos()
-//        saveAddress()
-//        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
+
         component = MainActivityComponent::class.create(this)
         viewModel
-//        if(preferences.address.isBlank()){
-//            Log.d("DEBUG_APP","NO ADDDRESS")
-//           enableLocation()
-//        }
+
         val establecimientoId = intent.getStringExtra("establecimientoId")
 //        val mapIntent = Intent(this, MapActivity::class.java)
         val startScreen = if(preferences.categories.isBlank()) Route.WELCOME_PAGE else Route.MAIN

@@ -1,0 +1,2514 @@
+[
+    {
+      "emoji": "🏧",
+      "description": "signo de cajero automático",
+      "category": "Símbolos",
+      "aliases": [
+        "Cajero automático"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚮",
+      "description": "basura en el cartel de la papelera",
+      "category": "Símbolos",
+      "aliases": [
+        "poner_basura_en_su_lugar"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚰",
+      "description": "agua potable",
+      "category": "Símbolos",
+      "aliases": [
+        "agua potable"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♿",
+      "description": "símbolo de silla de ruedas",
+      "category": "Símbolos",
+      "aliases": [
+        "silla de ruedas"
+      ],
+      "tags": [
+        "accesibilidad"
+      ],
+      "unicode_version": "4.1",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚹",
+      "description": "Cuarto de hombres",
+      "category": "Símbolos",
+      "aliases": [
+        "de los hombres"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚺",
+      "description": "cuarto de mujeres",
+      "category": "Símbolos",
+      "aliases": [
+        "De las mujeres"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚻",
+      "description": "baño",
+      "category": "Símbolos",
+      "aliases": [
+        "baño"
+      ],
+      "tags": [
+        "baño"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚼",
+      "description": "símbolo de bebé",
+      "category": "Símbolos",
+      "aliases": [
+        "símbolo_bebe"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚾",
+      "description": "inodoro",
+      "category": "Símbolos",
+      "aliases": [
+        "WC"
+      ],
+      "tags": [
+        "baño",
+        "baño"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🛂",
+      "description": "control de pasaportes",
+      "category": "Símbolos",
+      "aliases": [
+        "control de pasaportes"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🛃",
+      "description": "aduanas",
+      "category": "Símbolos",
+      "aliases": [
+        "aduanas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🛄",
+      "description": "recogida de equipaje",
+      "category": "Símbolos",
+      "aliases": [
+        "recogida de equipaje"
+      ],
+      "tags": [
+        "aeropuerto"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🛅",
+      "description": "dejar equipaje",
+      "category": "Símbolos",
+      "aliases": [
+        "dejar equipaje"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⚠️",
+      "description": "advertencia",
+      "category": "Símbolos",
+      "aliases": [
+        "advertencia"
+      ],
+      "tags": [
+        "limpiar"
+      ],
+      "unicode_version": "4.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚸",
+      "description": "niños cruzando",
+      "category": "Símbolos",
+      "aliases": [
+        "niños cruzando"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⛔",
+      "description": "No hay entrada",
+      "category": "Símbolos",
+      "aliases": [
+        "No hay entrada"
+      ],
+      "tags": [
+        "límite"
+      ],
+      "unicode_version": "5.2",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚫",
+      "description": "prohibido",
+      "category": "Símbolos",
+      "aliases": [
+        "sin_entrada_señal"
+      ],
+      "tags": [
+        "bloquear",
+        "prohibido"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚳",
+      "description": "No Bicicletas",
+      "category": "Símbolos",
+      "aliases": [
+        "No Bicicletas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚭",
+      "description": "No Fumar",
+      "category": "Símbolos",
+      "aliases": [
+        "No Fumar"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚯",
+      "description": "no tirar basura",
+      "category": "Símbolos",
+      "aliases": [
+        "no la basura"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚱",
+      "description": "agua no potable",
+      "category": "Símbolos",
+      "aliases": [
+        "agua_no-potable"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚷",
+      "description": "Prohibido para peatones",
+      "category": "Símbolos",
+      "aliases": [
+        "Prohibido para peatones"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "📵",
+      "description": "sin teléfonos móviles",
+      "category": "Símbolos",
+      "aliases": [
+        "no_teléfonos_móviles"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔞",
+      "description": "nadie menor de dieciocho años",
+      "category": "Símbolos",
+      "aliases": [
+        "menor de edad"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "☢️",
+      "description": "radioactivo",
+      "category": "Símbolos",
+      "aliases": [
+        "radioactivo"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "☣️",
+      "description": "riesgo biológico",
+      "category": "Símbolos",
+      "aliases": [
+        "riesgo biológico"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "⬆️",
+      "description": "flecha arriba",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha arriba"
+      ],
+      "tags": [],
+      "unicode_version": "4.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "↗️",
+      "description": "flecha arriba derecha",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_superior_derecha"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "➡️",
+      "description": "flecha correcta",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_derecha"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "↘️",
+      "description": "flecha abajo derecha",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_inferior_derecha"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⬇️",
+      "description": "flecha hacia abajo",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_abajo"
+      ],
+      "tags": [],
+      "unicode_version": "4.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "↙️",
+      "description": "flecha abajo-izquierda",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_inferior_izquierda"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⬅️",
+      "description": "flecha izquierda",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_izquierda"
+      ],
+      "tags": [],
+      "unicode_version": "4.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "↖️",
+      "description": "flecha arriba-izquierda",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_superior_izquierda"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "↕️",
+      "description": "flecha arriba-abajo",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_arriba_abajo"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "↔️",
+      "description": "flecha izquierda-derecha",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_izquierda_derecha"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "↩️",
+      "description": "flecha derecha curvando hacia la izquierda",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_izquierda_con_gancho"
+      ],
+      "tags": [
+        "devolver"
+      ],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "↪️",
+      "description": "flecha izquierda curvada hacia la derecha",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_derecha_hook"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⤴️",
+      "description": "flecha derecha curvándose hacia arriba",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_encabezado_arriba"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⤵️",
+      "description": "flecha derecha curvándose hacia abajo",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_encabezado_abajo"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔃",
+      "description": "flechas verticales en el sentido de las agujas del reloj",
+      "category": "Símbolos",
+      "aliases": [
+        "flechas_en el sentido de las agujas del reloj"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔄",
+      "description": "botón de flechas en sentido antihorario",
+      "category": "Símbolos",
+      "aliases": [
+        "flechas_en sentido contrario a las agujas del reloj"
+      ],
+      "tags": [
+        "sincronizar"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔙",
+      "description": "Flecha ATRÁS",
+      "category": "Símbolos",
+      "aliases": [
+        "atrás"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔚",
+      "description": "Flecha FINAL",
+      "category": "Símbolos",
+      "aliases": [
+        "fin"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔛",
+      "description": "¡EN! ",
+      "category": "Símbolos",
+      "aliases": [
+        "en"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔜",
+      "description": "PRONTO flecha",
+      "category": "Símbolos",
+      "aliases": [
+        "pronto"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔝",
+      "description": "Flecha SUPERIOR",
+      "category": "Símbolos",
+      "aliases": [
+        "arriba"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🛐",
+      "description": "lugar de adoración",
+      "category": "Símbolos",
+      "aliases": [
+        "lugar de adoración"
+      ],
+      "tags": [],
+      "unicode_version": "8.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "⚛️",
+      "description": "símbolo del átomo",
+      "category": "Símbolos",
+      "aliases": [
+        "símbolo_átomo"
+      ],
+      "tags": [],
+      "unicode_version": "4.1",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "🕉️",
+      "description": "om",
+      "category": "Símbolos",
+      "aliases": [
+        "om"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "✡️",
+      "description": "estrella de David",
+      "category": "Símbolos",
+      "aliases": [
+        "estrella de David"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "☸️",
+      "description": "rueda del dharma",
+      "category": "Símbolos",
+      "aliases": [
+        "rueda_del_dharma"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "☯️",
+      "description": "yin yang",
+      "category": "Símbolos",
+      "aliases": [
+        "yin_yang"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "✝️",
+      "description": "cruz latina",
+      "category": "Símbolos",
+      "aliases": [
+        "cruz_latina"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "☦️",
+      "description": "cruz ortodoxa",
+      "category": "Símbolos",
+      "aliases": [
+        "cruz_ortodoxa"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "☪️",
+      "description": "estrella y media luna",
+      "category": "Símbolos",
+      "aliases": [
+        "estrella_y_creciente"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "☮️",
+      "description": "Simbolo de paz",
+      "category": "Símbolos",
+      "aliases": [
+        "Simbolo de paz"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "🕎",
+      "description": "menorá",
+      "category": "Símbolos",
+      "aliases": [
+        "menorá"
+      ],
+      "tags": [],
+      "unicode_version": "8.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "🔯",
+      "description": "estrella punteada de seis puntas",
+      "category": "Símbolos",
+      "aliases": [
+        "estrella_de_seispuntas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🪯",
+      "description": "khanda",
+      "category": "Símbolos",
+      "aliases": [
+        "khanda"
+      ],
+      "tags": [],
+      "unicode_version": "15.0",
+      "ios_version": "16.4"
+    },
+    {
+      "emoji": "♈",
+      "description": "Aries",
+      "category": "Símbolos",
+      "aliases": [
+        "Aries"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♉",
+      "description": "Tauro",
+      "category": "Símbolos",
+      "aliases": [
+        "Tauro"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♊",
+      "description": "Geminis",
+      "category": "Símbolos",
+      "aliases": [
+        "Geminis"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♋",
+      "description": "Cáncer",
+      "category": "Símbolos",
+      "aliases": [
+        "cáncer"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♌",
+      "description": "León",
+      "category": "Símbolos",
+      "aliases": [
+        "León"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♍",
+      "description": "Virgo",
+      "category": "Símbolos",
+      "aliases": [
+        "Virgo"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♎",
+      "description": "Libra",
+      "category": "Símbolos",
+      "aliases": [
+        "Libra"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♏",
+      "description": "Escorpión",
+      "category": "Símbolos",
+      "aliases": [
+        "escorpio"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♐",
+      "description": "Sagitario",
+      "category": "Símbolos",
+      "aliases": [
+        "Sagitario"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♑",
+      "description": "Capricornio",
+      "category": "Símbolos",
+      "aliases": [
+        "Capricornio"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♒",
+      "description": "Acuario",
+      "category": "Símbolos",
+      "aliases": [
+        "Acuario"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♓",
+      "description": "Piscis",
+      "category": "Símbolos",
+      "aliases": [
+        "Piscis"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⛎",
+      "description": "Ofiuco",
+      "category": "Símbolos",
+      "aliases": [
+        "ofiuco"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔀",
+      "description": "botón de reproducción aleatoria de pistas",
+      "category": "Símbolos",
+      "aliases": [
+        "flechas_giradas_derechas"
+      ],
+      "tags": [
+        "barajar"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔁",
+      "description": "botón repetir",
+      "category": "Símbolos",
+      "aliases": [
+        "repetir"
+      ],
+      "tags": [
+        "bucle"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔂",
+      "description": "repetir un solo botón",
+      "category": "Símbolos",
+      "aliases": [
+        "repetir_uno"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "▶️",
+      "description": "botón de play",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_adelante"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⏩",
+      "description": "botón de avance rápido",
+      "category": "Símbolos",
+      "aliases": [
+        "avance rápido"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⏭️",
+      "description": "botón de siguiente pista",
+      "category": "Símbolos",
+      "aliases": [
+        "botón_siguiente_pista"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "⏯️",
+      "description": "botón reproducir o pausar",
+      "category": "Símbolos",
+      "aliases": [
+        "botón_reproducir_o_pausa"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "◀️",
+      "description": "botón de retroceso",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_hacia atrás"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⏪",
+      "description": "botón de retroceso rápido",
+      "category": "Símbolos",
+      "aliases": [
+        "rebobinar"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⏮️",
+      "description": "botón de última pista",
+      "category": "Símbolos",
+      "aliases": [
+        "botón_pista_anterior"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "🔼",
+      "description": "botón hacia arriba",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_arriba_pequeña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⏫",
+      "description": "botón de avance rápido",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_doble_arriba"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔽",
+      "description": "botón hacia abajo",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_abajo_pequeña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⏬",
+      "description": "botón de descenso rápido",
+      "category": "Símbolos",
+      "aliases": [
+        "flecha_doble_abajo"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⏸️",
+      "description": "botón de pausa",
+      "category": "Símbolos",
+      "aliases": [
+        "botón de pausa"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "⏹️",
+      "description": "botón Detener",
+      "category": "Símbolos",
+      "aliases": [
+        "botón Detener"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "⏺️",
+      "description": "botón de grabación",
+      "category": "Símbolos",
+      "aliases": [
+        "botón_grabar"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "⏏️",
+      "description": "Botón de expulsión",
+      "category": "Símbolos",
+      "aliases": [
+        "Botón de expulsión"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🎦",
+      "description": "cine",
+      "category": "Símbolos",
+      "aliases": [
+        "cine"
+      ],
+      "tags": [
+        "película",
+        "película"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔅",
+      "description": "botón tenue",
+      "category": "Símbolos",
+      "aliases": [
+        "bajo_brillo"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔆",
+      "description": "botón brillante",
+      "category": "Símbolos",
+      "aliases": [
+        "brillo alto"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "📶",
+      "description": "barras de antena",
+      "category": "Símbolos",
+      "aliases": [
+        "Intensidad de señal"
+      ],
+      "tags": [
+        "Wifi"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🛜",
+      "description": "inalámbrico",
+      "category": "Símbolos",
+      "aliases": [
+        "inalámbrico"
+      ],
+      "tags": [
+        "Wifi"
+      ],
+      "unicode_version": "15.0",
+      "ios_version": "16.4"
+    },
+    {
+      "emoji": "📳",
+      "description": "modo de vibración",
+      "category": "Símbolos",
+      "aliases": [
+        "modo_vibración"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "📴",
+      "description": "teléfono móvil apagado",
+      "category": "Símbolos",
+      "aliases": [
+        "teléfono_movil_apagado"
+      ],
+      "tags": [
+        "silenciar",
+        "apagado"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "♀️",
+      "description": "signo femenino",
+      "category": "Símbolos",
+      "aliases": [
+        "signo_femenino"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "♂️",
+      "description": "signo masculino",
+      "category": "Símbolos",
+      "aliases": [
+        "signo_masculino"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "⚧️",
+      "description": "símbolo transgénero",
+      "category": "Símbolos",
+      "aliases": [
+        "símbolo_transgénero"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0"
+    },
+    {
+      "emoji": "✖️",
+      "description": "multiplicar",
+      "category": "Símbolos",
+      "aliases": [
+        "multiplicacion_pesada_x"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "➕",
+      "description": "más",
+      "category": "Símbolos",
+      "aliases": [
+        "signo_plus_pesado"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "➖",
+      "description": "menos",
+      "category": "Símbolos",
+      "aliases": [
+        "signo_menos_pesado"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "➗",
+      "description": "dividir",
+      "category": "Símbolos",
+      "aliases": [
+        "signo_división_pesada"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🟰",
+      "description": "signo igual pesado",
+      "category": "Símbolos",
+      "aliases": [
+        "signo_equals_pesado"
+      ],
+      "tags": [],
+      "unicode_version": "14.0",
+      "ios_version": "15.4"
+    },
+    {
+      "emoji": "♾️",
+      "description": "infinidad",
+      "category": "Símbolos",
+      "aliases": [
+        "infinidad"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "‼️",
+      "description": "doble signo de exclamación",
+      "category": "Símbolos",
+      "aliases": [
+        "bangbang"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⁉️",
+      "description": "signo de interrogación de exclamación",
+      "category": "Símbolos",
+      "aliases": [
+        "interrobang"
+      ],
+      "tags": [],
+      "unicode_version": "3.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "❓",
+      "description": "signo de interrogación rojo",
+      "category": "Símbolos",
+      "aliases": [
+        "pregunta"
+      ],
+      "tags": [
+        "confundido"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "❔",
+      "description": "signo de interrogación blanco",
+      "category": "Símbolos",
+      "aliases": [
+        "pregunta_gris"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "❕",
+      "description": "signo de exclamación blanco",
+      "category": "Símbolos",
+      "aliases": [
+        "exclamación_gris"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "❗",
+      "description": "signo de exclamación rojo",
+      "category": "Símbolos",
+      "aliases": [
+        "exclamación",
+        "marca_de_exclamación_pesada"
+      ],
+      "tags": [
+        "estallido"
+      ],
+      "unicode_version": "5.2",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "〰️",
+      "description": "guión ondulado",
+      "category": "Símbolos",
+      "aliases": [
+        "ondulado_dash"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "💱",
+      "description": "cambio de divisas",
+      "category": "Símbolos",
+      "aliases": [
+        "cambio de divisas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "💲",
+      "description": "signo de dólar pesado",
+      "category": "Símbolos",
+      "aliases": [
+        "signo_de_dolar_pesado"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⚕️",
+      "description": "símbolo medico",
+      "category": "Símbolos",
+      "aliases": [
+        "símbolo_medico"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "♻️",
+      "description": "símbolo de reciclaje",
+      "category": "Símbolos",
+      "aliases": [
+        "reciclar"
+      ],
+      "tags": [
+        "ambiente",
+        "verde"
+      ],
+      "unicode_version": "3.2",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⚜️",
+      "description": "flor de lis",
+      "category": "Símbolos",
+      "aliases": [
+        "flor de lis"
+      ],
+      "tags": [],
+      "unicode_version": "4.1",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "🔱",
+      "description": "emblema tridente",
+      "category": "Símbolos",
+      "aliases": [
+        "tridente"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "📛",
+      "description": "insignia de identificación",
+      "category": "Símbolos",
+      "aliases": [
+        "insignia de identificación"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔰",
+      "description": "Símbolo japonés para principiantes.",
+      "category": "Símbolos",
+      "aliases": [
+        "principiante"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⭕",
+      "description": "círculo rojo hueco",
+      "category": "Símbolos",
+      "aliases": [
+        "oh"
+      ],
+      "tags": [],
+      "unicode_version": "5.2",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "✅",
+      "description": "botón de marca de verificación",
+      "category": "Símbolos",
+      "aliases": [
+        "marca_de_verificación_blanca"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "☑️",
+      "description": "casilla de verificación con cheque",
+      "category": "Símbolos",
+      "aliases": [
+        "urna_con_cheque"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "✔️",
+      "description": "marca de verificación",
+      "category": "Símbolos",
+      "aliases": [
+        "marca_de_verificación_pesada"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "❌",
+      "description": "Marca de la cruz",
+      "category": "Símbolos",
+      "aliases": [
+        "X"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "❎",
+      "description": "botón de marca de cruz",
+      "category": "Símbolos",
+      "aliases": [
+        "marca_cruz_cuadrada_negativa"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "➰",
+      "description": "lazo rizado",
+      "category": "Símbolos",
+      "aliases": [
+        "bucle_rizado"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "➿",
+      "description": "bucle doble rizado",
+      "category": "Símbolos",
+      "aliases": [
+        "bucle"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "〽️",
+      "description": "marca de alternancia de piezas",
+      "category": "Símbolos",
+      "aliases": [
+        "marca_alternancia_parte"
+      ],
+      "tags": [],
+      "unicode_version": "3.2",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "✳️",
+      "description": "asterisco de ocho radios",
+      "category": "Símbolos",
+      "aliases": [
+        "ocho_asterisco_hablado"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "✴️",
+      "description": "estrella de ocho puntas",
+      "category": "Símbolos",
+      "aliases": [
+        "estrella_negra_ocho_puntas"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "❇️",
+      "description": "brillar",
+      "category": "Símbolos",
+      "aliases": [
+        "brillar"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "©️",
+      "description": "derechos de autor",
+      "category": "Símbolos",
+      "aliases": [
+        "derechos de autor"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "®️",
+      "description": "registrado",
+      "category": "Símbolos",
+      "aliases": [
+        "registrado"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "™️",
+      "description": "marca comercial",
+      "category": "Símbolos",
+      "aliases": [
+        "tm"
+      ],
+      "tags": [
+        "marca comercial"
+      ],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "",
+      "description": "tecla:",
+      "category": "Símbolos",
+      "aliases": [
+        "picadillo"
+      ],
+      "tags": [
+        "número"
+      ],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "*️⃣",
+      "description": "tecla: *",
+      "category": "Símbolos",
+      "aliases": [
+        "asterisco"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "0️⃣",
+      "description": "tecla: 0",
+      "category": "Símbolos",
+      "aliases": [
+        "cero"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "1️⃣",
+      "description": "tecla: 1",
+      "category": "Símbolos",
+      "aliases": [
+        "uno"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "2️⃣",
+      "description": "tecla: 2",
+      "category": "Símbolos",
+      "aliases": [
+        "dos"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "3️⃣",
+      "description": "tecla: 3",
+      "category": "Símbolos",
+      "aliases": [
+        "tres"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "4️⃣",
+      "description": "tecla: 4",
+      "category": "Símbolos",
+      "aliases": [
+        "cuatro"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "5️⃣",
+      "description": "tecla: 5",
+      "category": "Símbolos",
+      "aliases": [
+        "cinco"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "6️⃣",
+      "description": "tecla: 6",
+      "category": "Símbolos",
+      "aliases": [
+        "seis"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "7️⃣",
+      "description": "tecla: 7",
+      "category": "Símbolos",
+      "aliases": [
+        "Siete"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "8️⃣",
+      "description": "tecla: 8",
+      "category": "Símbolos",
+      "aliases": [
+        "ocho"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "9️⃣",
+      "description": "tecla: 9",
+      "category": "Símbolos",
+      "aliases": [
+        "nueve"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔟",
+      "description": "tecla: 10",
+      "category": "Símbolos",
+      "aliases": [
+        "keycap_diez"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔠",
+      "description": "entrada latina mayúscula",
+      "category": "Símbolos",
+      "aliases": [
+        "capital_abcd"
+      ],
+      "tags": [
+        "letras"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔡",
+      "description": "entrada latina minúscula",
+      "category": "Símbolos",
+      "aliases": [
+        "a B C D"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔢",
+      "description": "números de entrada",
+      "category": "Símbolos",
+      "aliases": [
+        "1234"
+      ],
+      "tags": [
+        "números"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔣",
+      "description": "símbolos de entrada",
+      "category": "Símbolos",
+      "aliases": [
+        "simbolos"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔤",
+      "description": "ingresar letras latinas",
+      "category": "Símbolos",
+      "aliases": [
+        "a B C"
+      ],
+      "tags": [
+        "alfabeto"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🅰️",
+      "description": "Un botón (tipo de sangre)",
+      "category": "Símbolos",
+      "aliases": [
+        "a"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🆎",
+      "description": "Botón AB (tipo de sangre)",
+      "category": "Símbolos",
+      "aliases": [
+        "ab"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🅱️",
+      "description": "Botón B (tipo de sangre)",
+      "category": "Símbolos",
+      "aliases": [
+        "b"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🆑",
+      "description": "botón CL",
+      "category": "Símbolos",
+      "aliases": [
+        "cl"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🆒",
+      "description": "Botón FRÍO",
+      "category": "Símbolos",
+      "aliases": [
+        "Frío"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🆓",
+      "description": "botón GRATIS",
+      "category": "Símbolos",
+      "aliases": [
+        "gratis"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "ℹ️",
+      "description": "información",
+      "category": "Símbolos",
+      "aliases": [
+        "Fuente de información"
+      ],
+      "tags": [],
+      "unicode_version": "3.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🆔",
+      "description": "botón de identificación",
+      "category": "Símbolos",
+      "aliases": [
+        "identificación"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "Ⓜ️",
+      "description": "M en un círculo",
+      "category": "Símbolos",
+      "aliases": [
+        "metro"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🆕",
+      "description": "Botón NUEVO",
+      "category": "Símbolos",
+      "aliases": [
+        "nuevo"
+      ],
+      "tags": [
+        "fresco"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🆖",
+      "description": "botón NG",
+      "category": "Símbolos",
+      "aliases": [
+        "ng"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🅾️",
+      "description": "Botón O (tipo de sangre)",
+      "category": "Símbolos",
+      "aliases": [
+        "o2"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🆗",
+      "description": "botón Aceptar",
+      "category": "Símbolos",
+      "aliases": [
+        "OK"
+      ],
+      "tags": [
+        "Sí"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🅿️",
+      "description": "botón P",
+      "category": "Símbolos",
+      "aliases": [
+        "estacionamiento"
+      ],
+      "tags": [],
+      "unicode_version": "5.2",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🆘",
+      "description": "botón de socorro",
+      "category": "Símbolos",
+      "aliases": [
+        "llamada de socorro"
+      ],
+      "tags": [
+        "ayuda",
+        "emergencia"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🆙",
+      "description": "¡ARRIBA! ",
+      "category": "Símbolos",
+      "aliases": [
+        "arriba"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🆚",
+      "description": "botón VS",
+      "category": "Símbolos",
+      "aliases": [
+        "vs"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈁",
+      "description": "Botón japonés \"aquí\"",
+      "category": "Símbolos",
+      "aliases": [
+        "koko"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈂️",
+      "description": "Botón japonés de “cargo por servicio”",
+      "category": "Símbolos",
+      "aliases": [
+        "sa"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈷️",
+      "description": "Botón japonés “cantidad mensual”",
+      "category": "Símbolos",
+      "aliases": [
+        "u6708"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈶",
+      "description": "Botón japonés “no gratuito”",
+      "category": "Símbolos",
+      "aliases": [
+        "u6709"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈯",
+      "description": "Botón japonés \"reservado\"",
+      "category": "Símbolos",
+      "aliases": [
+        "u6307"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🉐",
+      "description": "Botón japonés de “oferta”",
+      "category": "Símbolos",
+      "aliases": [
+        "ventaja_ideográfica"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈹",
+      "description": "Botón japonés de “descuento”",
+      "category": "Símbolos",
+      "aliases": [
+        "u5272"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈚",
+      "description": "Botón japonés “gratis”",
+      "category": "Símbolos",
+      "aliases": [
+        "u7121"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈲",
+      "description": "Botón japonés \"prohibido\"",
+      "category": "Símbolos",
+      "aliases": [
+        "u7981"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🉑",
+      "description": "Botón japonés \"aceptable\"",
+      "category": "Símbolos",
+      "aliases": [
+        "aceptar"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈸",
+      "description": "Botón japonés de “aplicación”",
+      "category": "Símbolos",
+      "aliases": [
+        "u7533"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈴",
+      "description": "Botón japonés de “calificación aprobatoria”",
+      "category": "Símbolos",
+      "aliases": [
+        "u5408"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈳",
+      "description": "Botón japonés de “vacante”",
+      "category": "Símbolos",
+      "aliases": [
+        "u7a7a"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "㊗️",
+      "description": "Botón japonés de “felicitaciones”",
+      "category": "Símbolos",
+      "aliases": [
+        "Felicidades"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "㊙️",
+      "description": "Botón \"secreto\" japonés",
+      "category": "Símbolos",
+      "aliases": [
+        "secreto"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈺",
+      "description": "Botón japonés \"abierto al público\"",
+      "category": "Símbolos",
+      "aliases": [
+        "u55b6"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🈵",
+      "description": "Botón japonés “no hay vacantes”",
+      "category": "Símbolos",
+      "aliases": [
+        "u6e80"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔴",
+      "description": "circulo rojo",
+      "category": "Símbolos",
+      "aliases": [
+        "circulo rojo"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🟠",
+      "description": "circulo naranja",
+      "category": "Símbolos",
+      "aliases": [
+        "círculo_naranja"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "🟡",
+      "description": "circulo amarillo",
+      "category": "Símbolos",
+      "aliases": [
+        "círculo_amarillo"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "🟢",
+      "description": "circulo verde",
+      "category": "Símbolos",
+      "aliases": [
+        "círculo_verde"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "🔵",
+      "description": "circulo azul",
+      "category": "Símbolos",
+      "aliases": [
+        "círculo_azul_grande"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🟣",
+      "description": "circulo morado",
+      "category": "Símbolos",
+      "aliases": [
+        "círculo_púrpura"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "🟤",
+      "description": "círculo marrón",
+      "category": "Símbolos",
+      "aliases": [
+        "círculo_marrón"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "⚫",
+      "description": "circulo negro",
+      "category": "Símbolos",
+      "aliases": [
+        "círculo_negro"
+      ],
+      "tags": [],
+      "unicode_version": "4.1",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⚪",
+      "description": "circulo blanco",
+      "category": "Símbolos",
+      "aliases": [
+        "círculo_blanco"
+      ],
+      "tags": [],
+      "unicode_version": "4.1",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🟥",
+      "description": "cuadrado rojo",
+      "category": "Símbolos",
+      "aliases": [
+        "cuadrado rojo"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "🟧",
+      "description": "cuadrado naranja",
+      "category": "Símbolos",
+      "aliases": [
+        "cuadrado_naranja"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "🟨",
+      "description": "cuadrado amarillo",
+      "category": "Símbolos",
+      "aliases": [
+        "cuadrado_amarillo"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "🟩",
+      "description": "cuadrado verde",
+      "category": "Símbolos",
+      "aliases": [
+        "cuadrado_verde"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "🟦",
+      "description": "Cuadrado azul",
+      "category": "Símbolos",
+      "aliases": [
+        "Cuadrado azul"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "🟪",
+      "description": "cuadrado morado",
+      "category": "Símbolos",
+      "aliases": [
+        "cuadrado_morado"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "🟫",
+      "description": "cuadrado marrón",
+      "category": "Símbolos",
+      "aliases": [
+        "cuadrado_marrón"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "⬛",
+      "description": "cuadrado grande negro",
+      "category": "Símbolos",
+      "aliases": [
+        "cuadrado_grande_negro"
+      ],
+      "tags": [],
+      "unicode_version": "5.1",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "⬜",
+      "description": "cuadrado grande blanco",
+      "category": "Símbolos",
+      "aliases": [
+        "blanco_cuadrado_grande"
+      ],
+      "tags": [],
+      "unicode_version": "5.1",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "◼️",
+      "description": "cuadrado mediano negro",
+      "category": "Símbolos",
+      "aliases": [
+        "negro_cuadrado_medio"
+      ],
+      "tags": [],
+      "unicode_version": "3.2",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "◻️",
+      "description": "cuadrado mediano blanco",
+      "category": "Símbolos",
+      "aliases": [
+        "blanco_medio_cuadrado"
+      ],
+      "tags": [],
+      "unicode_version": "3.2",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "◾",
+      "description": "cuadrado negro mediano-pequeño",
+      "category": "Símbolos",
+      "aliases": [
+        "negro_mediano_pequeño_cuadrado"
+      ],
+      "tags": [],
+      "unicode_version": "3.2",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "◽",
+      "description": "cuadrado blanco mediano-pequeño",
+      "category": "Símbolos",
+      "aliases": [
+        "blanco_mediano_pequeño_cuadrado"
+      ],
+      "tags": [],
+      "unicode_version": "3.2",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "▪️",
+      "description": "pequeño cuadrado negro",
+      "category": "Símbolos",
+      "aliases": [
+        "negro_pequeño_cuadrado"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "▫️",
+      "description": "pequeño cuadrado blanco",
+      "category": "Símbolos",
+      "aliases": [
+        "blanco_pequeño_cuadrado"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔶",
+      "description": "gran diamante naranja",
+      "category": "Símbolos",
+      "aliases": [
+        "diamante_naranja_grande"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔷",
+      "description": "gran diamante azul",
+      "category": "Símbolos",
+      "aliases": [
+        "diamante_azul_grande"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔸",
+      "description": "pequeño diamante naranja",
+      "category": "Símbolos",
+      "aliases": [
+        "pequeño_diamante_naranja"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔹",
+      "description": "pequeño diamante azul",
+      "category": "Símbolos",
+      "aliases": [
+        "pequeño_diamante_azul"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔺",
+      "description": "triangulo rojo apuntando hacia arriba",
+      "category": "Símbolos",
+      "aliases": [
+        "pequeño_triángulo_rojo"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔻",
+      "description": "triángulo rojo apuntando hacia abajo",
+      "category": "Símbolos",
+      "aliases": [
+        "pequeño_triángulo_rojo_abajo"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "💠",
+      "description": "diamante con un punto",
+      "category": "Símbolos",
+      "aliases": [
+        "forma_de_diamante_con_un_punto_dentro"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔘",
+      "description": "boton de radio",
+      "category": "Símbolos",
+      "aliases": [
+        "boton de radio"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔳",
+      "description": "botón cuadrado blanco",
+      "category": "Símbolos",
+      "aliases": [
+        "botón_cuadrado_blanco"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🔲",
+      "description": "botón cuadrado negro",
+      "category": "Símbolos",
+      "aliases": [
+        "botón_cuadrado_negro"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    }
+  ]

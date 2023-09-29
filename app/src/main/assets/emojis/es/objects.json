@@ -1,0 +1,3088 @@
+[
+  {
+    "emoji": "👓",
+    "description": "anteojos",
+    "category": "Objetos",
+    "aliases": [
+      "los anteojos"
+    ],
+    "tags": [
+      "anteojos"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕶️",
+    "description": "Gafas de sol",
+    "category": "Objetos",
+    "aliases": [
+      "gafas de sol oscuras"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🥽",
+    "description": "gafas de protección",
+    "category": "Objetos",
+    "aliases": [
+      "gafas de protección"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥼",
+    "description": "bata de laboratorio",
+    "category": "Objetos",
+    "aliases": [
+      "bata de laboratorio"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🦺",
+    "description": "chaleco de seguridad",
+    "category": "Objetos",
+    "aliases": [
+      "chaleco de seguridad"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "👔",
+    "description": "corbata",
+    "category": "Objetos",
+    "aliases": [
+      "corbata"
+    ],
+    "tags": [
+      "camisa",
+      "formal"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👕",
+    "description": "camiseta",
+    "category": "Objetos",
+    "aliases": [
+      "camisa",
+      "camiseta"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👖",
+    "description": "vaqueros",
+    "category": "Objetos",
+    "aliases": [
+      "vaqueros"
+    ],
+    "tags": [
+      "pantalones"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🧣",
+    "description": "bufanda",
+    "category": "Objetos",
+    "aliases": [
+      "bufanda"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧤",
+    "description": "guantes",
+    "category": "Objetos",
+    "aliases": [
+      "guantes"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧥",
+    "description": "abrigo",
+    "category": "Objetos",
+    "aliases": [
+      "abrigo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧦",
+    "description": "medias",
+    "category": "Objetos",
+    "aliases": [
+      "medias"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "👗",
+    "description": "vestido",
+    "category": "Objetos",
+    "aliases": [
+      "vestido"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👘",
+    "description": "kimono",
+    "category": "Objetos",
+    "aliases": [
+      "kimono"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥻",
+    "description": "sari",
+    "category": "Objetos",
+    "aliases": [
+      "sari"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🩱",
+    "description": "traje de baño de una pieza",
+    "category": "Objetos",
+    "aliases": [
+      "traje de baño de una sola pieza"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🩲",
+    "description": "bragas",
+    "category": "Objetos",
+    "aliases": [
+      "nadar_brief"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🩳",
+    "description": "bermudas",
+    "category": "Objetos",
+    "aliases": [
+      "bermudas"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "👙",
+    "description": "bikini",
+    "category": "Objetos",
+    "aliases": [
+      "bikini"
+    ],
+    "tags": [
+      "playa"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👚",
+    "description": "ropa de mujer",
+    "category": "Objetos",
+    "aliases": [
+      "ropa_de_mujer"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪭",
+    "description": "abanico de mano plegable",
+    "category": "Objetos",
+    "aliases": [
+      "ventilador_de_mano_plegable"
+    ],
+    "tags": [
+      "sentido"
+    ],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "👛",
+    "description": "cartera",
+    "category": "Objetos",
+    "aliases": [
+      "cartera"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👜",
+    "description": "bolso",
+    "category": "Objetos",
+    "aliases": [
+      "bolso"
+    ],
+    "tags": [
+      "bolsa"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👝",
+    "description": "bolso de mano",
+    "category": "Objetos",
+    "aliases": [
+      "bolsa"
+    ],
+    "tags": [
+      "bolsa"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛍️",
+    "description": "bolsas de compra",
+    "category": "Objetos",
+    "aliases": [
+      "compras"
+    ],
+    "tags": [
+      "bolsas"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🎒",
+    "description": "mochila",
+    "category": "Objetos",
+    "aliases": [
+      "cartera_escuela"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🩴",
+    "description": "sandalia tanga",
+    "category": "Objetos",
+    "aliases": [
+      "tanga_sandalia"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "👞",
+    "description": "zapato de hombre",
+    "category": "Objetos",
+    "aliases": [
+      "zapato_hombre",
+      "zapato"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👟",
+    "description": "Zapatos para correr",
+    "category": "Objetos",
+    "aliases": [
+      "zapato_atlético"
+    ],
+    "tags": [
+      "zapatilla de deporte",
+      "deporte",
+      "correr"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥾",
+    "description": "bota de senderismo",
+    "category": "Objetos",
+    "aliases": [
+      "bota_de_senderismo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥿",
+    "description": "zapato plano",
+    "category": "Objetos",
+    "aliases": [
+      "zapato_plano"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "👠",
+    "description": "zapato de tacón alto",
+    "category": "Objetos",
+    "aliases": [
+      "tacón alto"
+    ],
+    "tags": [
+      "zapato"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👡",
+    "description": "sandalia de mujer",
+    "category": "Objetos",
+    "aliases": [
+      "sandalia"
+    ],
+    "tags": [
+      "zapato"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🩰",
+    "description": "zapatillas de ballet",
+    "category": "Objetos",
+    "aliases": [
+      "zapatillas de ballet"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "👢",
+    "description": "bota de mujer",
+    "category": "Objetos",
+    "aliases": [
+      "bota"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪮",
+    "description": "recoger el cabello",
+    "category": "Objetos",
+    "aliases": [
+      "recoger el cabello"
+    ],
+    "tags": [],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "👑",
+    "description": "corona",
+    "category": "Objetos",
+    "aliases": [
+      "corona"
+    ],
+    "tags": [
+      "rey",
+      "reina",
+      "real"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👒",
+    "description": "sombrero de mujer",
+    "category": "Objetos",
+    "aliases": [
+      "sombrero_mujer"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎩",
+    "description": "sombrero de copa",
+    "category": "Objetos",
+    "aliases": [
+      "sombrero de copa"
+    ],
+    "tags": [
+      "sombrero",
+      "de buen tono"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎓",
+    "description": "gorro de graduación",
+    "category": "Objetos",
+    "aliases": [
+      "birrete"
+    ],
+    "tags": [
+      "educación",
+      "colega",
+      "universidad",
+      "graduación"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🧢",
+    "description": "gorra facturada",
+    "category": "Objetos",
+    "aliases": [
+      "gorra_facturada"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🪖",
+    "description": "casco militar",
+    "category": "Objetos",
+    "aliases": [
+      "casco_militar"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "⛑️",
+    "description": "casco de rescatista",
+    "category": "Objetos",
+    "aliases": [
+      "casco_trabajador_rescate"
+    ],
+    "tags": [],
+    "unicode_version": "5.2",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "📿",
+    "description": "Rosario",
+    "category": "Objetos",
+    "aliases": [
+      "Rosario"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "💄",
+    "description": "lápiz labial",
+    "category": "Objetos",
+    "aliases": [
+      "lápiz labial"
+    ],
+    "tags": [
+      "constituir"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💍",
+    "description": "anillo",
+    "category": "Objetos",
+    "aliases": [
+      "anillo"
+    ],
+    "tags": [
+      "boda",
+      "casamiento",
+      "comprometido"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💎",
+    "description": "piedra preciosa",
+    "category": "Objetos",
+    "aliases": [
+      "joya"
+    ],
+    "tags": [
+      "diamante"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔇",
+    "description": "altavoz silenciado",
+    "category": "Objetos",
+    "aliases": [
+      "silenciar"
+    ],
+    "tags": [
+      "sonido",
+      "volumen"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔈",
+    "description": "altavoz de bajo volumen",
+    "category": "Objetos",
+    "aliases": [
+      "vocero"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔉",
+    "description": "altavoz de volumen medio",
+    "category": "Objetos",
+    "aliases": [
+      "sonido"
+    ],
+    "tags": [
+      "volumen"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔊",
+    "description": "altavoz de alto volumen",
+    "category": "Objetos",
+    "aliases": [
+      "Sonido alto"
+    ],
+    "tags": [
+      "volumen"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📢",
+    "description": "altoparlante",
+    "category": "Objetos",
+    "aliases": [
+      "altoparlante"
+    ],
+    "tags": [
+      "anuncio"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📣",
+    "description": "megáfono",
+    "category": "Objetos",
+    "aliases": [
+      "mega"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📯",
+    "description": "bocina postal",
+    "category": "Objetos",
+    "aliases": [
+      "cuerno_postal"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔔",
+    "description": "campana",
+    "category": "Objetos",
+    "aliases": [
+      "campana"
+    ],
+    "tags": [
+      "sonido",
+      "notificación"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔕",
+    "description": "campana con barra",
+    "category": "Objetos",
+    "aliases": [
+      "sin campana"
+    ],
+    "tags": [
+      "volumen",
+      "apagado"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎼",
+    "description": "puntuación musical",
+    "category": "Objetos",
+    "aliases": [
+      "puntuación musical"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎵",
+    "description": "nota musical",
+    "category": "Objetos",
+    "aliases": [
+      "nota musical"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎶",
+    "description": "notas musicales",
+    "category": "Objetos",
+    "aliases": [
+      "notas"
+    ],
+    "tags": [
+      "música"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎙️",
+    "description": "micrófono de estudio",
+    "category": "Objetos",
+    "aliases": [
+      "micrófono_estudio"
+    ],
+    "tags": [
+      "podcast"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🎚️",
+    "description": "control deslizante de nivel",
+    "category": "Objetos",
+    "aliases": [
+      "control deslizante de nivel"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🎛️",
+    "description": "perillas de control",
+    "category": "Objetos",
+    "aliases": [
+      "perillas de control"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🎤",
+    "description": "micrófono",
+    "category": "Objetos",
+    "aliases": [
+      "micrófono"
+    ],
+    "tags": [
+      "cantar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎧",
+    "description": "auricular",
+    "category": "Objetos",
+    "aliases": [
+      "auriculares"
+    ],
+    "tags": [
+      "música",
+      "auriculares"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📻",
+    "description": "radio",
+    "category": "Objetos",
+    "aliases": [
+      "radio"
+    ],
+    "tags": [
+      "podcast"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎷",
+    "description": "saxofón",
+    "category": "Objetos",
+    "aliases": [
+      "saxofón"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪗",
+    "description": "acordeón",
+    "category": "Objetos",
+    "aliases": [
+      "acordeón"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🎸",
+    "description": "guitarra",
+    "category": "Objetos",
+    "aliases": [
+      "guitarra"
+    ],
+    "tags": [
+      "roca"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎹",
+    "description": "teclado musical",
+    "category": "Objetos",
+    "aliases": [
+      "teclado_musical"
+    ],
+    "tags": [
+      "piano"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎺",
+    "description": "trompeta",
+    "category": "Objetos",
+    "aliases": [
+      "trompeta"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎻",
+    "description": "violín",
+    "category": "Objetos",
+    "aliases": [
+      "violín"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪕",
+    "description": "banjo",
+    "category": "Objetos",
+    "aliases": [
+      "banjo"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🥁",
+    "description": "tambor",
+    "category": "Objetos",
+    "aliases": [
+      "tambor"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🪘",
+    "description": "tambor largo",
+    "category": "Objetos",
+    "aliases": [
+      "tambor_largo"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🪇",
+    "description": "maracas",
+    "category": "Objetos",
+    "aliases": [
+      "maracas"
+    ],
+    "tags": [
+      "criba vibradora"
+    ],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "🪈",
+    "description": "flauta",
+    "category": "Objetos",
+    "aliases": [
+      "flauta"
+    ],
+    "tags": [
+      "grabadora"
+    ],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "📱",
+    "description": "teléfono móvil",
+    "category": "Objetos",
+    "aliases": [
+      "iPhone"
+    ],
+    "tags": [
+      "teléfono inteligente",
+      "móvil"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📲",
+    "description": "teléfono móvil con flecha",
+    "category": "Objetos",
+    "aliases": [
+      "vocación"
+    ],
+    "tags": [
+      "llamar",
+      "entrante"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "☎️",
+    "description": "teléfono",
+    "category": "Objetos",
+    "aliases": [
+      "teléfono",
+      "teléfono"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📞",
+    "description": "receptor de teléfono",
+    "category": "Objetos",
+    "aliases": [
+      "receptor de teléfono"
+    ],
+    "tags": [
+      "teléfono",
+      "llamar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📟",
+    "description": "buscapersonas",
+    "category": "Objetos",
+    "aliases": [
+      "buscapersonas"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📠",
+    "description": "máquina de fax",
+    "category": "Objetos",
+    "aliases": [
+      "fax"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔋",
+    "description": "batería",
+    "category": "Objetos",
+    "aliases": [
+      "batería"
+    ],
+    "tags": [
+      "fuerza"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪫",
+    "description": "batería baja",
+    "category": "Objetos",
+    "aliases": [
+      "batería baja"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🔌",
+    "description": "Enchufe electrico",
+    "category": "Objetos",
+    "aliases": [
+      "Enchufe electrico"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💻",
+    "description": "computadora portátil",
+    "category": "Objetos",
+    "aliases": [
+      "computadora"
+    ],
+    "tags": [
+      "escritorio",
+      "pantalla"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🖥️",
+    "description": "computadora de escritorio",
+    "category": "Objetos",
+    "aliases": [
+      "computadora_de_escritorio"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🖨️",
+    "description": "impresora",
+    "category": "Objetos",
+    "aliases": [
+      "impresora"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "⌨️",
+    "description": "teclado",
+    "category": "Objetos",
+    "aliases": [
+      "teclado"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🖱️",
+    "description": "ratón de computadora",
+    "category": "Objetos",
+    "aliases": [
+      "ratón de computadora"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🖲️",
+    "description": "bola de seguimiento",
+    "category": "Objetos",
+    "aliases": [
+      "bola de seguimiento"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "💽",
+    "description": "disco de computadora",
+    "category": "Objetos",
+    "aliases": [
+      "minidisco"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💾",
+    "description": "disco flexible",
+    "category": "Objetos",
+    "aliases": [
+      "disquete_disquete"
+    ],
+    "tags": [
+      "ahorrar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💿",
+    "description": "disco óptico",
+    "category": "Objetos",
+    "aliases": [
+      "cd"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📀",
+    "description": "DVD",
+    "category": "Objetos",
+    "aliases": [
+      "DVD"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🧮",
+    "description": "ábaco",
+    "category": "Objetos",
+    "aliases": [
+      "ábaco"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🎥",
+    "description": "cámara de cine",
+    "category": "Objetos",
+    "aliases": [
+      "camara_pelicula"
+    ],
+    "tags": [
+      "película",
+      "video"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎞️",
+    "description": "fotogramas de película",
+    "category": "Objetos",
+    "aliases": [
+      "tira de película"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "📽️",
+    "description": "proyector de cine",
+    "category": "Objetos",
+    "aliases": [
+      "proyector_pelicula"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🎬",
+    "description": "claqueta",
+    "category": "Objetos",
+    "aliases": [
+      "badajo"
+    ],
+    "tags": [
+      "película"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📺",
+    "description": "televisión",
+    "category": "Objetos",
+    "aliases": [
+      "televisor"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📷",
+    "description": "cámara",
+    "category": "Objetos",
+    "aliases": [
+      "cámara"
+    ],
+    "tags": [
+      "foto"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📸",
+    "description": "cámara con flash",
+    "category": "Objetos",
+    "aliases": [
+      "Flash de la cámara"
+    ],
+    "tags": [
+      "foto"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "📹",
+    "description": "camara de video",
+    "category": "Objetos",
+    "aliases": [
+      "camara de video"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📼",
+    "description": "videocasetera",
+    "category": "Objetos",
+    "aliases": [
+      "vhs"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔍",
+    "description": "lupa inclinada hacia la izquierda",
+    "category": "Objetos",
+    "aliases": [
+      "revista"
+    ],
+    "tags": [
+      "buscar",
+      "zoom"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔎",
+    "description": "lupa inclinada hacia la derecha",
+    "category": "Objetos",
+    "aliases": [
+      "mag_right"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕯️",
+    "description": "vela",
+    "category": "Objetos",
+    "aliases": [
+      "vela"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "💡",
+    "description": "bombilla",
+    "category": "Objetos",
+    "aliases": [
+      "bulbo"
+    ],
+    "tags": [
+      "idea",
+      "luz"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔦",
+    "description": "Linterna",
+    "category": "Objetos",
+    "aliases": [
+      "Linterna"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏮",
+    "description": "linterna de papel roja",
+    "category": "Objetos",
+    "aliases": [
+      "linterna_izakaya",
+      "linterna"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪔",
+    "description": "lámpara diya",
+    "category": "Objetos",
+    "aliases": [
+      "lámpara_diya"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "📔",
+    "description": "cuaderno con tapa decorativa",
+    "category": "Objetos",
+    "aliases": [
+      "cuaderno_con_tapa_decorativa"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📕",
+    "description": "libro cerrado",
+    "category": "Objetos",
+    "aliases": [
+      "libro cerrado"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📖",
+    "description": "libro abierto",
+    "category": "Objetos",
+    "aliases": [
+      "libro",
+      "libro abierto"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📗",
+    "description": "libro Verde",
+    "category": "Objetos",
+    "aliases": [
+      "libro Verde"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📘",
+    "description": "libro Azul",
+    "category": "Objetos",
+    "aliases": [
+      "libro Azul"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📙",
+    "description": "libro naranja",
+    "category": "Objetos",
+    "aliases": [
+      "libro_naranja"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📚",
+    "description": "libros",
+    "category": "Objetos",
+    "aliases": [
+      "libros"
+    ],
+    "tags": [
+      "biblioteca"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📓",
+    "description": "computadora portátil",
+    "category": "Objetos",
+    "aliases": [
+      "computadora portátil"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📒",
+    "description": "libro mayor",
+    "category": "Objetos",
+    "aliases": [
+      "libro mayor"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📃",
+    "description": "página con rizo",
+    "category": "Objetos",
+    "aliases": [
+      "página_con_curvatura"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📜",
+    "description": "Desplazarse",
+    "category": "Objetos",
+    "aliases": [
+      "Desplazarse"
+    ],
+    "tags": [
+      "documento"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📄",
+    "description": "página hacia arriba",
+    "category": "Objetos",
+    "aliases": [
+      "página_hacia arriba"
+    ],
+    "tags": [
+      "documento"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📰",
+    "description": "periódico",
+    "category": "Objetos",
+    "aliases": [
+      "periódico"
+    ],
+    "tags": [
+      "prensa"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🗞️",
+    "description": "periódico enrollado",
+    "category": "Objetos",
+    "aliases": [
+      "rollo_periódico"
+    ],
+    "tags": [
+      "prensa"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "📑",
+    "description": "pestañas de marcadores",
+    "category": "Objetos",
+    "aliases": [
+      "pestañas_marcadores"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔖",
+    "description": "marcador",
+    "category": "Objetos",
+    "aliases": [
+      "marcador"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏷️",
+    "description": "etiqueta",
+    "category": "Objetos",
+    "aliases": [
+      "etiqueta"
+    ],
+    "tags": [
+      "etiqueta"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "💰",
+    "description": "bolsa de dinero",
+    "category": "Objetos",
+    "aliases": [
+      "bolsa de dinero"
+    ],
+    "tags": [
+      "dólar",
+      "crema"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪙",
+    "description": "moneda",
+    "category": "Objetos",
+    "aliases": [
+      "moneda"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "💴",
+    "description": "billete de yenes",
+    "category": "Objetos",
+    "aliases": [
+      "yen"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💵",
+    "description": "billete de dólar",
+    "category": "Objetos",
+    "aliases": [
+      "dólar"
+    ],
+    "tags": [
+      "dinero"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💶",
+    "description": "billete de euro",
+    "category": "Objetos",
+    "aliases": [
+      "euro"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💷",
+    "description": "billete de libra",
+    "category": "Objetos",
+    "aliases": [
+      "libra"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💸",
+    "description": "dinero con alas",
+    "category": "Objetos",
+    "aliases": [
+      "dinero_con_alas"
+    ],
+    "tags": [
+      "dólar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💳",
+    "description": "tarjeta de crédito",
+    "category": "Objetos",
+    "aliases": [
+      "tarjeta de crédito"
+    ],
+    "tags": [
+      "suscripción"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🧾",
+    "description": "recibo",
+    "category": "Objetos",
+    "aliases": [
+      "recibo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "💹",
+    "description": "gráfico que aumenta con el yen",
+    "category": "Objetos",
+    "aliases": [
+      "cuadro"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "✉️",
+    "description": "sobre",
+    "category": "Objetos",
+    "aliases": [
+      "sobre"
+    ],
+    "tags": [
+      "carta",
+      "correo electrónico"
+    ],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📧",
+    "description": "correo electrónico",
+    "category": "Objetos",
+    "aliases": [
+      "correo electrónico",
+      "correo electrónico"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📨",
+    "description": "sobre entrante",
+    "category": "Objetos",
+    "aliases": [
+      "sobre_entrante"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📩",
+    "description": "sobre con flecha",
+    "category": "Objetos",
+    "aliases": [
+      "sobre_con_flecha"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📤",
+    "description": "bandeja de salida",
+    "category": "Objetos",
+    "aliases": [
+      "bandeja_salida"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📥",
+    "description": "bandeja de entrada",
+    "category": "Objetos",
+    "aliases": [
+      "bandeja_entrada"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📦",
+    "description": "paquete",
+    "category": "Objetos",
+    "aliases": [
+      "paquete"
+    ],
+    "tags": [
+      "envío"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📫",
+    "description": "Buzón cerrado con bandera levantada",
+    "category": "Objetos",
+    "aliases": [
+      "buzón"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📪",
+    "description": "Buzón cerrado con bandera bajada.",
+    "category": "Objetos",
+    "aliases": [
+      "buzón_cerrado"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📬",
+    "description": "buzón abierto con bandera levantada",
+    "category": "Objetos",
+    "aliases": [
+      "buzón_con_correo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📭",
+    "description": "buzón abierto con bandera bajada",
+    "category": "Objetos",
+    "aliases": [
+      "buzón_con_no_correo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📮",
+    "description": "buzón",
+    "category": "Objetos",
+    "aliases": [
+      "buzón"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🗳️",
+    "description": "urna con papeleta",
+    "category": "Objetos",
+    "aliases": [
+      "urna electoral"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "✏️",
+    "description": "lápiz",
+    "category": "Objetos",
+    "aliases": [
+      "lápiz2"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "✒️",
+    "description": "punta negra",
+    "category": "Objetos",
+    "aliases": [
+      "punta_negra"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🖋️",
+    "description": "Pluma fuente",
+    "category": "Objetos",
+    "aliases": [
+      "Pluma fuente"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🖊️",
+    "description": "bolígrafo",
+    "category": "Objetos",
+    "aliases": [
+      "bolígrafo"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🖌️",
+    "description": "Cepillo de pintura",
+    "category": "Objetos",
+    "aliases": [
+      "Cepillo de pintura"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🖍️",
+    "description": "lápiz de color",
+    "category": "Objetos",
+    "aliases": [
+      "lápiz de color"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "📝",
+    "description": "memorándum",
+    "category": "Objetos",
+    "aliases": [
+      "memorándum",
+      "lápiz"
+    ],
+    "tags": [
+      "documento",
+      "nota"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💼",
+    "description": "maletín",
+    "category": "Objetos",
+    "aliases": [
+      "maletín"
+    ],
+    "tags": [
+      "negocio"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📁",
+    "description": "carpeta de archivos",
+    "category": "Objetos",
+    "aliases": [
+      "carpeta_archivo"
+    ],
+    "tags": [
+      "directorio"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📂",
+    "description": "abrir carpeta de archivos",
+    "category": "Objetos",
+    "aliases": [
+      "carpeta_archivo_abierto"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🗂️",
+    "description": "divisores de índice de tarjetas",
+    "category": "Objetos",
+    "aliases": [
+      "card_index_dividers"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "📅",
+    "description": "calendario",
+    "category": "Objetos",
+    "aliases": [
+      "fecha"
+    ],
+    "tags": [
+      "calendario",
+      "cronograma"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📆",
+    "description": "calendario desprendible",
+    "category": "Objetos",
+    "aliases": [
+      "calendario"
+    ],
+    "tags": [
+      "cronograma"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🗒️",
+    "description": "bloc de notas de espiral",
+    "category": "Objetos",
+    "aliases": [
+      "bloc de notas en espiral"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🗓️",
+    "description": "calendario espiral",
+    "category": "Objetos",
+    "aliases": [
+      "calendario_espiral"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "📇",
+    "description": "fichero",
+    "category": "Objetos",
+    "aliases": [
+      "fichero"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📈",
+    "description": "gráfico creciente",
+    "category": "Objetos",
+    "aliases": [
+      "chart_with_upwards_trend"
+    ],
+    "tags": [
+      "grafico",
+      "métrica"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📉",
+    "description": "gráfico decreciente",
+    "category": "Objetos",
+    "aliases": [
+      "chart_with_downwards_trend"
+    ],
+    "tags": [
+      "grafico",
+      "métrica"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📊",
+    "description": "gráfico de barras",
+    "category": "Objetos",
+    "aliases": [
+      "gráfico de barras"
+    ],
+    "tags": [
+      "estadísticas",
+      "métrica"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📋",
+    "description": "portapapeles",
+    "category": "Objetos",
+    "aliases": [
+      "portapapeles"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📌",
+    "description": "chincheta",
+    "category": "Objetos",
+    "aliases": [
+      "chincheta"
+    ],
+    "tags": [
+      "ubicación"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📍",
+    "description": "chincheta redonda",
+    "category": "Objetos",
+    "aliases": [
+      "chincheta redonda"
+    ],
+    "tags": [
+      "ubicación"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📎",
+    "description": "clip de papel",
+    "category": "Objetos",
+    "aliases": [
+      "clip de papel"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🖇️",
+    "description": "clips vinculados",
+    "category": "Objetos",
+    "aliases": [
+      "clips de papel"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "📏",
+    "description": "regla recta",
+    "category": "Objetos",
+    "aliases": [
+      "regla_recta"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📐",
+    "description": "regla triangular",
+    "category": "Objetos",
+    "aliases": [
+      "regla_triangular"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "✂️",
+    "description": "tijeras",
+    "category": "Objetos",
+    "aliases": [
+      "tijeras"
+    ],
+    "tags": [
+      "cortar"
+    ],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🗃️",
+    "description": "caja de archivo de tarjeta",
+    "category": "Objetos",
+    "aliases": [
+      "caja_archivo_tarjeta"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🗄️",
+    "description": "archivador",
+    "category": "Objetos",
+    "aliases": [
+      "archivador"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🗑️",
+    "description": "papelera",
+    "category": "Objetos",
+    "aliases": [
+      "papelera"
+    ],
+    "tags": [
+      "basura"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🔒",
+    "description": "bloqueado",
+    "category": "Objetos",
+    "aliases": [
+      "cerrar"
+    ],
+    "tags": [
+      "seguridad",
+      "privado"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔓",
+    "description": "desbloqueado",
+    "category": "Objetos",
+    "aliases": [
+      "desbloquear"
+    ],
+    "tags": [
+      "seguridad"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔏",
+    "description": "bloqueado con bolígrafo",
+    "category": "Objetos",
+    "aliases": [
+      "cerradura_con_pluma_tinta"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔐",
+    "description": "cerrado con llave",
+    "category": "Objetos",
+    "aliases": [
+      "cerradura_cerrada_con_llave"
+    ],
+    "tags": [
+      "seguridad"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔑",
+    "description": "llave",
+    "category": "Objetos",
+    "aliases": [
+      "llave"
+    ],
+    "tags": [
+      "cerrar",
+      "contraseña"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🗝️",
+    "description": "llave vieja",
+    "category": "Objetos",
+    "aliases": [
+      "llave vieja"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🔨",
+    "description": "martillo",
+    "category": "Objetos",
+    "aliases": [
+      "martillo"
+    ],
+    "tags": [
+      "herramienta"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪓",
+    "description": "hacha",
+    "category": "Objetos",
+    "aliases": [
+      "hacha"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "⛏️",
+    "description": "elegir",
+    "category": "Objetos",
+    "aliases": [
+      "elegir"
+    ],
+    "tags": [],
+    "unicode_version": "5.2",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "⚒️",
+    "description": "martillo y pico",
+    "category": "Objetos",
+    "aliases": [
+      "martillo_y_pica"
+    ],
+    "tags": [],
+    "unicode_version": "4.1",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🛠️",
+    "description": "martillo y llave",
+    "category": "Objetos",
+    "aliases": [
+      "martillo_y_llave"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🗡️",
+    "description": "daga",
+    "category": "Objetos",
+    "aliases": [
+      "daga"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "⚔️",
+    "description": "espadas cruzadas",
+    "category": "Objetos",
+    "aliases": [
+      "espadas_cruzadas"
+    ],
+    "tags": [],
+    "unicode_version": "4.1",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "💣",
+    "description": "bomba",
+    "category": "Objetos",
+    "aliases": [
+      "bomba"
+    ],
+    "tags": [
+      "auge"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪃",
+    "description": "bumerang",
+    "category": "Objetos",
+    "aliases": [
+      "bumerang"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🏹",
+    "description": "arco y flecha",
+    "category": "Objetos",
+    "aliases": [
+      "arco y flecha"
+    ],
+    "tags": [
+      "tiro al arco"
+    ],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🛡️",
+    "description": "blindaje",
+    "category": "Objetos",
+    "aliases": [
+      "blindaje"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🪚",
+    "description": "sierra de carpintería",
+    "category": "Objetos",
+    "aliases": [
+      "sierra_carpinteria"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🔧",
+    "description": "llave inglesa",
+    "category": "Objetos",
+    "aliases": [
+      "llave inglesa"
+    ],
+    "tags": [
+      "herramienta"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪛",
+    "description": "destornillador",
+    "category": "Objetos",
+    "aliases": [
+      "destornillador"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🔩",
+    "description": "tuerca y el perno",
+    "category": "Objetos",
+    "aliases": [
+      "tuerca y el perno"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⚙️",
+    "description": "engranaje",
+    "category": "Objetos",
+    "aliases": [
+      "engranaje"
+    ],
+    "tags": [],
+    "unicode_version": "4.1",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🗜️",
+    "description": "abrazadera",
+    "category": "Objetos",
+    "aliases": [
+      "abrazadera"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "⚖️",
+    "description": "balanza",
+    "category": "Objetos",
+    "aliases": [
+      "balanza"
+    ],
+    "tags": [],
+    "unicode_version": "4.1",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🦯",
+    "description": "bastón blanco",
+    "category": "Objetos",
+    "aliases": [
+      "bastón_sondeo"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🔗",
+    "description": "enlace",
+    "category": "Objetos",
+    "aliases": [
+      "enlace"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⛓️",
+    "description": "cadenas",
+    "category": "Objetos",
+    "aliases": [
+      "cadenas"
+    ],
+    "tags": [],
+    "unicode_version": "5.2",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🪝",
+    "description": "gancho",
+    "category": "Objetos",
+    "aliases": [
+      "gancho"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🧰",
+    "description": "caja de herramientas",
+    "category": "Objetos",
+    "aliases": [
+      "caja de herramientas"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧲",
+    "description": "imán",
+    "category": "Objetos",
+    "aliases": [
+      "imán"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🪜",
+    "description": "escalera",
+    "category": "Objetos",
+    "aliases": [
+      "escalera"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "⚗️",
+    "description": "alambique",
+    "category": "Objetos",
+    "aliases": [
+      "alambique"
+    ],
+    "tags": [],
+    "unicode_version": "4.1",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🧪",
+    "description": "tubo de ensayo",
+    "category": "Objetos",
+    "aliases": [
+      "tubo de ensayo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧫",
+    "description": "placa de Petri",
+    "category": "Objetos",
+    "aliases": [
+      "placa de Petri"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧬",
+    "description": "adn",
+    "category": "Objetos",
+    "aliases": [
+      "adn"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🔬",
+    "description": "microscopio",
+    "category": "Objetos",
+    "aliases": [
+      "microscopio"
+    ],
+    "tags": [
+      "ciencia",
+      "laboratorio",
+      "investigar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔭",
+    "description": "telescopio",
+    "category": "Objetos",
+    "aliases": [
+      "telescopio"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "📡",
+    "description": "antena satelital",
+    "category": "Objetos",
+    "aliases": [
+      "satélite"
+    ],
+    "tags": [
+      "señal"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💉",
+    "description": "jeringuilla",
+    "category": "Objetos",
+    "aliases": [
+      "jeringuilla"
+    ],
+    "tags": [
+      "salud",
+      "hospital",
+      "aguja"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🩸",
+    "description": "gota de sangre",
+    "category": "Objetos",
+    "aliases": [
+      "gota de sangre"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "💊",
+    "description": "píldora",
+    "category": "Objetos",
+    "aliases": [
+      "píldora"
+    ],
+    "tags": [
+      "salud",
+      "medicamento"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🩹",
+    "description": "banda adhesiva",
+    "category": "Objetos",
+    "aliases": [
+      "banda adhesiva"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🩼",
+    "description": "muleta",
+    "category": "Objetos",
+    "aliases": [
+      "muleta"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🩺",
+    "description": "estetoscopio",
+    "category": "Objetos",
+    "aliases": [
+      "estetoscopio"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🩻",
+    "description": "radiografía",
+    "category": "Objetos",
+    "aliases": [
+      "radiografía"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🚪",
+    "description": "puerta",
+    "category": "Objetos",
+    "aliases": [
+      "puerta"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛗",
+    "description": "ascensor",
+    "category": "Objetos",
+    "aliases": [
+      "ascensor"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🪞",
+    "description": "espejo",
+    "category": "Objetos",
+    "aliases": [
+      "espejo"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🪟",
+    "description": "ventana",
+    "category": "Objetos",
+    "aliases": [
+      "ventana"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🛏️",
+    "description": "cama",
+    "category": "Objetos",
+    "aliases": [
+      "cama"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🛋️",
+    "description": "sofá y lámpara",
+    "category": "Objetos",
+    "aliases": [
+      "sofá_y_lampara"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🪑",
+    "description": "silla",
+    "category": "Objetos",
+    "aliases": [
+      "silla"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🚽",
+    "description": "baño",
+    "category": "Objetos",
+    "aliases": [
+      "baño"
+    ],
+    "tags": [
+      "WC"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪠",
+    "description": "émbolo",
+    "category": "Objetos",
+    "aliases": [
+      "émbolo"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🚿",
+    "description": "ducha",
+    "category": "Objetos",
+    "aliases": [
+      "ducha"
+    ],
+    "tags": [
+      "baño"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛁",
+    "description": "bañera",
+    "category": "Objetos",
+    "aliases": [
+      "bañera"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪤",
+    "description": "trampa para ratones",
+    "category": "Objetos",
+    "aliases": [
+      "ratonera"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🪒",
+    "description": "maquinilla de afeitar",
+    "category": "Objetos",
+    "aliases": [
+      "maquinilla de afeitar"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🧴",
+    "description": "botella de loción",
+    "category": "Objetos",
+    "aliases": [
+      "botella_loción"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧷",
+    "description": "imperdible",
+    "category": "Objetos",
+    "aliases": [
+      "pasador de seguridad"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧹",
+    "description": "escoba",
+    "category": "Objetos",
+    "aliases": [
+      "escoba"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧺",
+    "description": "cesta",
+    "category": "Objetos",
+    "aliases": [
+      "cesta"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧻",
+    "description": "rollo de papel",
+    "category": "Objetos",
+    "aliases": [
+      "rollo de papel"
+    ],
+    "tags": [
+      "baño"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🪣",
+    "description": "balde",
+    "category": "Objetos",
+    "aliases": [
+      "balde"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🧼",
+    "description": "jabón",
+    "category": "Objetos",
+    "aliases": [
+      "jabón"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🫧",
+    "description": "burbujas",
+    "category": "Objetos",
+    "aliases": [
+      "burbujas"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🪥",
+    "description": "cepillo de dientes",
+    "category": "Objetos",
+    "aliases": [
+      "cepillo de dientes"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🧽",
+    "description": "esponja",
+    "category": "Objetos",
+    "aliases": [
+      "esponja"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧯",
+    "description": "extintor de incendios",
+    "category": "Objetos",
+    "aliases": [
+      "extintor de incendios"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🛒",
+    "description": "carro de la compra",
+    "category": "Objetos",
+    "aliases": [
+      "carro de la compra"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🚬",
+    "description": "cigarrillo",
+    "category": "Objetos",
+    "aliases": [
+      "de fumar"
+    ],
+    "tags": [
+      "cigarrillo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⚰️",
+    "description": "ataúd",
+    "category": "Objetos",
+    "aliases": [
+      "ataúd"
+    ],
+    "tags": [
+      "funeral"
+    ],
+    "unicode_version": "4.1",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🪦",
+    "description": "lápida mortuoria",
+    "category": "Objetos",
+    "aliases": [
+      "lápida mortuoria"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "⚱️",
+    "description": "urna funeraria",
+    "category": "Objetos",
+    "aliases": [
+      "urna_funeraria"
+    ],
+    "tags": [],
+    "unicode_version": "4.1",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🧿",
+    "description": "amuleto de nazar",
+    "category": "Objetos",
+    "aliases": [
+      "amuleto_nazar"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🪬",
+    "description": "hamsa",
+    "category": "Objetos",
+    "aliases": [
+      "hamsa"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🗿",
+    "description": "moái",
+    "category": "Objetos",
+    "aliases": [
+      "moyai"
+    ],
+    "tags": [
+      "piedra"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪧",
+    "description": "cartel",
+    "category": "Objetos",
+    "aliases": [
+      "cartel"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🪪",
+    "description": "tarjeta de identificación",
+    "category": "Objetos",
+    "aliases": [
+      "tarjeta de identificación"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  }
+]

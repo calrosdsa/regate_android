@@ -20,11 +20,13 @@ import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import app.regate.extensions.fluentIf
 import app.regate.tasks.works.InitSync
 import app.regate.tasks.works.SyncLibraryShows
+import app.regate.tasks.works.SyncMessages
 import java.util.concurrent.TimeUnit
 import me.tatarka.inject.annotations.Inject
 
@@ -61,6 +63,21 @@ class AppTasksImpl(
 //        )
 //    }
 
+    override fun syncMessages() {
+        val nightlyConstraints = Constraints.Builder()
+//            .setRequiredNetworkType(NetworkType.UNMETERED)
+//            .setRequiresCharging(true)
+            .build()
+        PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS
+
+        workManager.enqueueUniquePeriodicWork(
+            SyncMessages.TAG,
+            ExistingPeriodicWorkPolicy.KEEP,
+            PeriodicWorkRequestBuilder<SyncMessages>(16, TimeUnit.MINUTES)
+                .setConstraints(nightlyConstraints)
+                .build(),
+        )
+    }
     override fun initSync() {
         val request = OneTimeWorkRequestBuilder<InitSync>()
             .addTag(InitSync.TAG)

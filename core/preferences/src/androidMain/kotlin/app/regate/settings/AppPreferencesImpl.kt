@@ -50,6 +50,7 @@ class AppPreferencesImpl(
         preferenceKeyChangedFlow.tryEmit(key)
     }
     companion object {
+        const val KEY_KEYBOARD_HEIGHT = "keyboard_height"
         const val KEY_CATEGORIES = "categories"
         const val KEY_FILTER = "filter"
         const val KEY_ADDRESS = "address"
@@ -66,6 +67,11 @@ class AppPreferencesImpl(
     override fun setup() {
         sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
     }
+    override var keyBoardHeight: Int
+        get() = sharedPreferences.getInt(KEY_KEYBOARD_HEIGHT, 750)
+        set(value) = sharedPreferences.edit{
+            putInt(KEY_KEYBOARD_HEIGHT,value)
+        }
     override var categories: String
         get() = sharedPreferences.getString(KEY_CATEGORIES, "")!!
         set(value) = sharedPreferences.edit{

@@ -9,6 +9,7 @@ import androidx.room.EntityInsertionAdapter;
 import androidx.room.EntityUpsertionAdapter;
 import androidx.room.RoomDatabase;
 import androidx.room.RoomSQLiteQuery;
+import androidx.room.SharedSQLiteStatement;
 import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.room.util.RelationUtil;
@@ -47,6 +48,8 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
   private final EntityDeletionOrUpdateAdapter<Reserva> __deletionAdapterOfReserva;
 
   private final EntityDeletionOrUpdateAdapter<Reserva> __updateAdapterOfReserva;
+
+  private final SharedSQLiteStatement __preparedStmtOfDeleteAll;
 
   private final EntityUpsertionAdapter<Reserva> __upsertionAdapterOfReserva;
 
@@ -101,6 +104,14 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
           statement.bindString(10, _tmp_2);
         }
         statement.bindLong(11, entity.getId());
+      }
+    };
+    this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "delete from reservas";
+        return _query;
       }
     };
     this.__upsertionAdapterOfReserva = new EntityUpsertionAdapter<Reserva>(new EntityInsertionAdapter<Reserva>(__db) {
@@ -212,6 +223,26 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
           return Unit.INSTANCE;
         } finally {
           __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object deleteAll(final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteAll.acquire();
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteAll.release(_stmt);
         }
       }
     }, continuation);

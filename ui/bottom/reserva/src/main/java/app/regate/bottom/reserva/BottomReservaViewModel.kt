@@ -10,7 +10,7 @@ import app.regate.data.coin.ConversationRepository
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import app.regate.data.dto.empresa.grupo.GrupoMessageData
-import app.regate.data.dto.empresa.grupo.GrupoMessageInstalacion
+import app.regate.data.dto.empresa.grupo.MessageInstalacionPayload
 import app.regate.data.dto.empresa.grupo.GrupoMessageType
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.data.instalacion.InstalacionRepository
@@ -156,7 +156,7 @@ class BottomReservaViewModel(
                 price = it.price,
                 time = it.time
             )}
-            val instalacionReserva = GrupoMessageInstalacion(
+            val instalacionReserva = MessageInstalacionPayload(
                 id = instalacionId.toInt(),
                 establecimiento_id = establecimientoId.toInt(),
                 photo = state.value.instalacion?.portada,

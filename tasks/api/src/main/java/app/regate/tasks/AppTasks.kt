@@ -20,4 +20,5 @@ interface AppTasks {
 //    fun syncLibraryShows(deferUntilIdle: Boolean = false)
 //    fun setupNightSyncs()
     fun initSync()
+    fun syncMessages()
 }

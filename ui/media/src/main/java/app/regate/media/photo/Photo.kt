@@ -14,13 +14,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.SavedStateHandle
 import app.regate.common.compose.ui.PosterCardImage
 import app.regate.common.compose.ui.SimpleTopBar
+import app.regate.common.compose.viewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
@@ -32,7 +36,6 @@ import kotlinx.serialization.json.Json
 
 typealias Photo = @Composable (
     navigateUp:()->Unit,
-    url:String,
     navigateToReport:(String)->Unit
 ) -> Unit
 
@@ -40,19 +43,32 @@ typealias Photo = @Composable (
 @Inject
 @Composable
 fun Photo(
+    viewModelFactory:(SavedStateHandle)->PhotoViewModel,
     @Assisted navigateUp: () -> Unit,
-    @Assisted url :String,
     @Assisted navigateToReport:(String)->Unit
 ){
-    Photo(navigateUp = navigateUp, url_ = url,
-    navigateToReport = navigateToReport)
+    Photo(
+        viewModel = viewModel(factory = viewModelFactory),
+        navigateUp = navigateUp,
+        navigateToReport = navigateToReport)
 }
 
+@Composable
+internal fun Photo(
+    viewModel: PhotoViewModel,
+    navigateUp:()->Unit,
+    navigateToReport:(String)->Unit
+){
+    val state by viewModel.state.collectAsState()
+    Photo(viewState = state,
+        navigateUp = navigateUp,
+        navigateToReport = navigateToReport)
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun Photo(
-    url_:String,
+    viewState:PhotoState,
     navigateUp:()->Unit,
     navigateToReport:(String)->Unit
 ) {
@@ -79,8 +95,8 @@ internal fun Photo(
             .background(MaterialTheme.colorScheme.background)
             .padding(paddingValues)
             .fillMaxSize()){
-            Text(text = url_)
-            PosterCardImage(model = url_,
+            Text(text = viewState.images[0])
+            PosterCardImage(model = viewState.images[0],
             shape = RoundedCornerShape(0.dp),
             modifier = Modifier
                 .fillMaxSize()

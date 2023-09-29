@@ -188,7 +188,7 @@ dependencies {
 
     implementation(libs.play.service.auth)
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation(libs.androidx.core)
 //    implementation("androidx.activity:activity-compose:1.7.0")
     implementation("androidx.activity:activity-compose:1.7.2")
 

@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
@@ -100,7 +101,7 @@ internal fun Conversation(
     sendMessage:(MessageData,()->Unit)->Unit,
     ){
     val message = remember {
-        mutableStateOf("")
+        mutableStateOf(TextFieldValue())
     }
     val colors = listOf(
         MaterialTheme.colorScheme.inverseOnSurface,

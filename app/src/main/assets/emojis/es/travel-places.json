@@ -1,0 +1,2509 @@
+[
+  {
+    "emoji": "🌍",
+    "description": "Globo que muestra Europa-África",
+    "category": "Viajar",
+    "aliases": [
+      "tierra_africa"
+    ],
+    "tags": [
+      "globo",
+      "mundo",
+      "internacional"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌎",
+    "description": "globo que muestra las américas",
+    "category": "Viajar",
+    "aliases": [
+      "tierra_americas"
+    ],
+    "tags": [
+      "globo",
+      "mundo",
+      "internacional"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌏",
+    "description": "Globo mostrando Asia-Australia",
+    "category": "Viajar",
+    "aliases": [
+      "tierra_asia"
+    ],
+    "tags": [
+      "globo",
+      "mundo",
+      "internacional"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌐",
+    "description": "globo con meridianos",
+    "category": "Viajar",
+    "aliases": [
+      "globo_con_meridianos"
+    ],
+    "tags": [
+      "mundo",
+      "global",
+      "internacional"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🗺️",
+    "description": "mapa del mundo",
+    "category": "Viajar",
+    "aliases": [
+      "mapa del mundo"
+    ],
+    "tags": [
+      "viajar"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🗾",
+    "description": "mapa de japon",
+    "category": "Viajar",
+    "aliases": [
+      "Japón"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🧭",
+    "description": "Brújula",
+    "category": "Viajar",
+    "aliases": [
+      "Brújula"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🏔️",
+    "description": "Montaña cubierta de nieve",
+    "category": "Viajar",
+    "aliases": [
+      "montaña_nieve"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "⛰️",
+    "description": "montaña",
+    "category": "Viajar",
+    "aliases": [
+      "montaña"
+    ],
+    "tags": [],
+    "unicode_version": "5.2",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌋",
+    "description": "volcán",
+    "category": "Viajar",
+    "aliases": [
+      "volcán"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🗻",
+    "description": "Monte Fuji",
+    "category": "Viajar",
+    "aliases": [
+      "Monte Fuji"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏕️",
+    "description": "cámping",
+    "category": "Viajar",
+    "aliases": [
+      "cámping"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏖️",
+    "description": "playa con sombrilla",
+    "category": "Viajar",
+    "aliases": [
+      "sombrilla de playa"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏜️",
+    "description": "desierto",
+    "category": "Viajar",
+    "aliases": [
+      "desierto"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏝️",
+    "description": "isla desierta",
+    "category": "Viajar",
+    "aliases": [
+      "isla desierta"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏞️",
+    "description": "parque Nacional",
+    "category": "Viajar",
+    "aliases": [
+      "parque Nacional"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏟️",
+    "description": "estadio",
+    "category": "Viajar",
+    "aliases": [
+      "estadio"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏛️",
+    "description": "edificio clasico",
+    "category": "Viajar",
+    "aliases": [
+      "edificio_clasico"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏗️",
+    "description": "Construcción de edificio",
+    "category": "Viajar",
+    "aliases": [
+      "Construcción de edificio"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🧱",
+    "description": "ladrillo",
+    "category": "Viajar",
+    "aliases": [
+      "ladrillos"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🪨",
+    "description": "roca",
+    "category": "Viajar",
+    "aliases": [
+      "roca"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🪵",
+    "description": "madera",
+    "category": "Viajar",
+    "aliases": [
+      "madera"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🛖",
+    "description": "cabaña",
+    "category": "Viajar",
+    "aliases": [
+      "cabaña"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🏘️",
+    "description": "casas",
+    "category": "Viajar",
+    "aliases": [
+      "casas"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏚️",
+    "description": "casa abandonada",
+    "category": "Viajar",
+    "aliases": [
+      "casa_abandonada"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏠",
+    "description": "casa",
+    "category": "Viajar",
+    "aliases": [
+      "casa"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏡",
+    "description": "casa con jardin",
+    "category": "Viajar",
+    "aliases": [
+      "casa_con_jardin"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏢",
+    "description": "edificio de oficinas",
+    "category": "Viajar",
+    "aliases": [
+      "oficina"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏣",
+    "description": "oficina de correos japonesa",
+    "category": "Viajar",
+    "aliases": [
+      "oficina de correos"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏤",
+    "description": "oficina de correos",
+    "category": "Viajar",
+    "aliases": [
+      "oficina_de_correos_europea"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏥",
+    "description": "hospital",
+    "category": "Viajar",
+    "aliases": [
+      "hospital"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏦",
+    "description": "banco",
+    "category": "Viajar",
+    "aliases": [
+      "banco"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏨",
+    "description": "hotel",
+    "category": "Viajar",
+    "aliases": [
+      "hotel"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏩",
+    "description": "Hotel del amor",
+    "category": "Viajar",
+    "aliases": [
+      "Hotel del amor"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏪",
+    "description": "tienda de conveniencia",
+    "category": "Viajar",
+    "aliases": [
+      "tienda de conveniencia"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏫",
+    "description": "escuela",
+    "category": "Viajar",
+    "aliases": [
+      "escuela"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏬",
+    "description": "grandes almacenes",
+    "category": "Viajar",
+    "aliases": [
+      "grandes almacenes"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏭",
+    "description": "fábrica",
+    "category": "Viajar",
+    "aliases": [
+      "fábrica"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏯",
+    "description": "castillo japonés",
+    "category": "Viajar",
+    "aliases": [
+      "castillo_japones"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏰",
+    "description": "castillo",
+    "category": "Viajar",
+    "aliases": [
+      "castillo_europeo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💒",
+    "description": "boda",
+    "category": "Viajar",
+    "aliases": [
+      "boda"
+    ],
+    "tags": [
+      "casamiento"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🗼",
+    "description": "Torre de Tokio",
+    "category": "Viajar",
+    "aliases": [
+      "Torre de Tokio"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🗽",
+    "description": "Estatua de la Libertad",
+    "category": "Viajar",
+    "aliases": [
+      "estatua de la Libertad"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⛪",
+    "description": "iglesia",
+    "category": "Viajar",
+    "aliases": [
+      "iglesia"
+    ],
+    "tags": [],
+    "unicode_version": "5.2",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕌",
+    "description": "mezquita",
+    "category": "Viajar",
+    "aliases": [
+      "mezquita"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🛕",
+    "description": "templo hindú",
+    "category": "Viajar",
+    "aliases": [
+      "templo hindú"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🕍",
+    "description": "sinagoga",
+    "category": "Viajar",
+    "aliases": [
+      "sinagoga"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "⛩️",
+    "description": "Santuario sintoísta",
+    "category": "Viajar",
+    "aliases": [
+      "Santuario sintoísta"
+    ],
+    "tags": [],
+    "unicode_version": "5.2",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🕋",
+    "description": "kaaba",
+    "category": "Viajar",
+    "aliases": [
+      "kaaba"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "⛲",
+    "description": "fuente",
+    "category": "Viajar",
+    "aliases": [
+      "fuente"
+    ],
+    "tags": [],
+    "unicode_version": "5.2",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⛺",
+    "description": "carpa",
+    "category": "Viajar",
+    "aliases": [
+      "carpa"
+    ],
+    "tags": [
+      "cámping"
+    ],
+    "unicode_version": "5.2",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌁",
+    "description": "neblinoso",
+    "category": "Viajar",
+    "aliases": [
+      "neblinoso"
+    ],
+    "tags": [
+      "karl"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌃",
+    "description": "noche con estrellas",
+    "category": "Viajar",
+    "aliases": [
+      "noche_con_estrellas"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏙️",
+    "description": "paisaje urbano",
+    "category": "Viajar",
+    "aliases": [
+      "paisaje urbano"
+    ],
+    "tags": [
+      "horizonte"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌄",
+    "description": "amanecer sobre las montañas",
+    "category": "Viajar",
+    "aliases": [
+      "amanecer_sobre_montañas"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌅",
+    "description": "amanecer",
+    "category": "Viajar",
+    "aliases": [
+      "amanecer"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌆",
+    "description": "paisaje urbano al anochecer",
+    "category": "Viajar",
+    "aliases": [
+      "ciudad_atardecer"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌇",
+    "description": "atardecer",
+    "category": "Viajar",
+    "aliases": [
+      "ciudad_amanecer"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌉",
+    "description": "puente en la noche",
+    "category": "Viajar",
+    "aliases": [
+      "puente_de_noche"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "♨️",
+    "description": "aguas termales",
+    "category": "Viajar",
+    "aliases": [
+      "aguas termales"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎠",
+    "description": "caballo carrusel",
+    "category": "Viajar",
+    "aliases": [
+      "carrusel_caballo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛝",
+    "description": "tobogán del patio de recreo",
+    "category": "Viajar",
+    "aliases": [
+      "tobogán_patio de juegos"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🎡",
+    "description": "rueda de la fortuna",
+    "category": "Viajar",
+    "aliases": [
+      "rueda de la fortuna"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎢",
+    "description": "Montaña rusa",
+    "category": "Viajar",
+    "aliases": [
+      "Montaña rusa"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💈",
+    "description": "poste de barbero",
+    "category": "Viajar",
+    "aliases": [
+      "Barbero"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎪",
+    "description": "tienda de circo",
+    "category": "Viajar",
+    "aliases": [
+      "tienda de circo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚂",
+    "description": "locomotora",
+    "category": "Viajar",
+    "aliases": [
+      "locomotora de vapor"
+    ],
+    "tags": [
+      "tren"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚃",
+    "description": "vagón de ferrocarril",
+    "category": "Viajar",
+    "aliases": [
+      "vagón_de_tren"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚄",
+    "description": "tren de alta velocidad",
+    "category": "Viajar",
+    "aliases": [
+      "lado_del_tren_bala"
+    ],
+    "tags": [
+      "tren"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚅",
+    "description": "tren bala",
+    "category": "Viajar",
+    "aliases": [
+      "tren_bala_frente"
+    ],
+    "tags": [
+      "tren"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚆",
+    "description": "tren",
+    "category": "Viajar",
+    "aliases": [
+      "tren2"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚇",
+    "description": "metro",
+    "category": "Viajar",
+    "aliases": [
+      "metro"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚈",
+    "description": "Tren Ligero",
+    "category": "Viajar",
+    "aliases": [
+      "Tren Ligero"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚉",
+    "description": "estación",
+    "category": "Viajar",
+    "aliases": [
+      "estación"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚊",
+    "description": "tranvía",
+    "category": "Viajar",
+    "aliases": [
+      "tranvía"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚝",
+    "description": "monocarril",
+    "category": "Viajar",
+    "aliases": [
+      "monocarril"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚞",
+    "description": "ferrocarril de montaña",
+    "category": "Viajar",
+    "aliases": [
+      "ferrocarril_montaña"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚋",
+    "description": "vagón de tranvía",
+    "category": "Viajar",
+    "aliases": [
+      "tren"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚌",
+    "description": "autobús",
+    "category": "Viajar",
+    "aliases": [
+      "autobús"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚍",
+    "description": "autobús que se aproxima",
+    "category": "Viajar",
+    "aliases": [
+      "autobús_en sentido contrario"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚎",
+    "description": "trolebús",
+    "category": "Viajar",
+    "aliases": [
+      "trolebús"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚐",
+    "description": "microbús",
+    "category": "Viajar",
+    "aliases": [
+      "microbús"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚑",
+    "description": "ambulancia",
+    "category": "Viajar",
+    "aliases": [
+      "ambulancia"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚒",
+    "description": "camion de bomberos",
+    "category": "Viajar",
+    "aliases": [
+      "camion de bomberos"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚓",
+    "description": "coche de policía",
+    "category": "Viajar",
+    "aliases": [
+      "coche de policía"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚔",
+    "description": "coche de policía que se aproxima",
+    "category": "Viajar",
+    "aliases": [
+      "coche_de_policia_en sentido contrario"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚕",
+    "description": "Taxi",
+    "category": "Viajar",
+    "aliases": [
+      "Taxi"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚖",
+    "description": "taxi que se aproxima",
+    "category": "Viajar",
+    "aliases": [
+      "taxi_en sentido contrario"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚗",
+    "description": "automóvil",
+    "category": "Viajar",
+    "aliases": [
+      "auto",
+      "carro rojo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚘",
+    "description": "automóvil que se aproxima",
+    "category": "Viajar",
+    "aliases": [
+      "automóvil_en sentido contrario"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚙",
+    "description": "vehículo utilitario deportivo",
+    "category": "Viajar",
+    "aliases": [
+      "carro azul"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛻",
+    "description": "camioneta",
+    "category": "Viajar",
+    "aliases": [
+      "camioneta"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🚚",
+    "description": "camión de reparto",
+    "category": "Viajar",
+    "aliases": [
+      "camión"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚛",
+    "description": "camión articulado",
+    "category": "Viajar",
+    "aliases": [
+      "camión articulado"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚜",
+    "description": "tractor",
+    "category": "Viajar",
+    "aliases": [
+      "tractor"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏎️",
+    "description": "coche de carreras",
+    "category": "Viajar",
+    "aliases": [
+      "coche de carreras"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏍️",
+    "description": "motocicleta",
+    "category": "Viajar",
+    "aliases": [
+      "motocicleta"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🛵",
+    "description": "motor de scooter",
+    "category": "Viajar",
+    "aliases": [
+      "motor de scooter"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🦽",
+    "description": "silla de ruedas manual",
+    "category": "Viajar",
+    "aliases": [
+      "silla_de_ruedas manual"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🦼",
+    "description": "silla de ruedas motorizada",
+    "category": "Viajar",
+    "aliases": [
+      "silla_de_ruedas motorizada"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🛺",
+    "description": "auto rickshaw",
+    "category": "Viajar",
+    "aliases": [
+      "auto_rickshaw"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🚲",
+    "description": "bicicleta",
+    "category": "Viajar",
+    "aliases": [
+      "bicicleta"
+    ],
+    "tags": [
+      "bicicleta"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛴",
+    "description": "patinete",
+    "category": "Viajar",
+    "aliases": [
+      "patinete_scooter"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🛹",
+    "description": "patineta",
+    "category": "Viajar",
+    "aliases": [
+      "patineta"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🛼",
+    "description": "patín",
+    "category": "Viajar",
+    "aliases": [
+      "patín"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🚏",
+    "description": "parada de autobús",
+    "category": "Viajar",
+    "aliases": [
+      "parada de autobús"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛣️",
+    "description": "autopista",
+    "category": "Viajar",
+    "aliases": [
+      "autopista"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🛤️",
+    "description": "vía de ferrocarril",
+    "category": "Viajar",
+    "aliases": [
+      "vía de ferrocarril"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🛢️",
+    "description": "tambor de aceite",
+    "category": "Viajar",
+    "aliases": [
+      "tambor de aceite"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "⛽",
+    "description": "bomba de combustible",
+    "category": "Viajar",
+    "aliases": [
+      "bomba de combustible"
+    ],
+    "tags": [],
+    "unicode_version": "5.2",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛞",
+    "description": "rueda",
+    "category": "Viajar",
+    "aliases": [
+      "rueda"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🚨",
+    "description": "luz del coche de policía",
+    "category": "Viajar",
+    "aliases": [
+      "luz_giratoria"
+    ],
+    "tags": [
+      "911",
+      "emergencia"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚥",
+    "description": "semáforo horizontal",
+    "category": "Viajar",
+    "aliases": [
+      "semáforo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚦",
+    "description": "semáforo vertical",
+    "category": "Viajar",
+    "aliases": [
+      "semáforo_vertical"
+    ],
+    "tags": [
+      "semáforo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛑",
+    "description": "señal de stop",
+    "category": "Viajar",
+    "aliases": [
+      "señal de stop"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🚧",
+    "description": "construcción",
+    "category": "Viajar",
+    "aliases": [
+      "construcción"
+    ],
+    "tags": [
+      "limpiar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⚓",
+    "description": "ancla",
+    "category": "Viajar",
+    "aliases": [
+      "ancla"
+    ],
+    "tags": [
+      "barco"
+    ],
+    "unicode_version": "4.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛟",
+    "description": "boya de anillo",
+    "category": "Viajar",
+    "aliases": [
+      "boya_anillo"
+    ],
+    "tags": [
+      "chaleco salvavidas"
+    ],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "⛵",
+    "description": "velero",
+    "category": "Viajar",
+    "aliases": [
+      "bote",
+      "velero"
+    ],
+    "tags": [],
+    "unicode_version": "5.2",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛶",
+    "description": "canoa",
+    "category": "Viajar",
+    "aliases": [
+      "canoa"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🚤",
+    "description": "lancha rápida",
+    "category": "Viajar",
+    "aliases": [
+      "lancha rápida"
+    ],
+    "tags": [
+      "barco"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛳️",
+    "description": "buque de pasajeros",
+    "category": "Viajar",
+    "aliases": [
+      "buque de pasajeros"
+    ],
+    "tags": [
+      "crucero"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "⛴️",
+    "description": "transportar",
+    "category": "Viajar",
+    "aliases": [
+      "transportar"
+    ],
+    "tags": [],
+    "unicode_version": "5.2",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🛥️",
+    "description": "barco de motor",
+    "category": "Viajar",
+    "aliases": [
+      "motora"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🚢",
+    "description": "barco",
+    "category": "Viajar",
+    "aliases": [
+      "barco"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "✈️",
+    "description": "avión",
+    "category": "Viajar",
+    "aliases": [
+      "avión"
+    ],
+    "tags": [
+      "vuelo"
+    ],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛩️",
+    "description": "avión pequeño",
+    "category": "Viajar",
+    "aliases": [
+      "avión_pequeño"
+    ],
+    "tags": [
+      "vuelo"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🛫",
+    "description": "salida del avión",
+    "category": "Viajar",
+    "aliases": [
+      "salida del vuelo"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🛬",
+    "description": "llegada del avión",
+    "category": "Viajar",
+    "aliases": [
+      "llegada_vuelo"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🪂",
+    "description": "paracaídas",
+    "category": "Viajar",
+    "aliases": [
+      "paracaídas"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "💺",
+    "description": "asiento",
+    "category": "Viajar",
+    "aliases": [
+      "asiento"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚁",
+    "description": "helicóptero",
+    "category": "Viajar",
+    "aliases": [
+      "helicóptero"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚟",
+    "description": "ferrocarril colgante",
+    "category": "Viajar",
+    "aliases": [
+      "suspensión_ferrocarril"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚠",
+    "description": "teleférico de montaña",
+    "category": "Viajar",
+    "aliases": [
+      "teleférico_montaña"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🚡",
+    "description": "teleférico",
+    "category": "Viajar",
+    "aliases": [
+      "teleférico"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛰️",
+    "description": "satélite",
+    "category": "Viajar",
+    "aliases": [
+      "Satélite artificial"
+    ],
+    "tags": [
+      "orbita",
+      "espacio"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🚀",
+    "description": "cohete",
+    "category": "Viajar",
+    "aliases": [
+      "cohete"
+    ],
+    "tags": [
+      "barco",
+      "lanzamiento"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛸",
+    "description": "Platillo volador",
+    "category": "Viajar",
+    "aliases": [
+      "Platillo volador"
+    ],
+    "tags": [
+      "OVNI"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🛎️",
+    "description": "campana de botones",
+    "category": "Viajar",
+    "aliases": [
+      "botones_bell"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🧳",
+    "description": "equipaje",
+    "category": "Viajar",
+    "aliases": [
+      "equipaje"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "⌛",
+    "description": "reloj de arena hecho",
+    "category": "Viajar",
+    "aliases": [
+      "reloj de arena"
+    ],
+    "tags": [
+      "tiempo"
+    ],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⏳",
+    "description": "reloj de arena no hecho",
+    "category": "Viajar",
+    "aliases": [
+      "reloj de arena_fluyendo_arena"
+    ],
+    "tags": [
+      "tiempo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⌚",
+    "description": "mirar",
+    "category": "Viajar",
+    "aliases": [
+      "mirar"
+    ],
+    "tags": [
+      "tiempo"
+    ],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⏰",
+    "description": "despertador",
+    "category": "Viajar",
+    "aliases": [
+      "despertador_reloj"
+    ],
+    "tags": [
+      "mañana"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⏱️",
+    "description": "cronógrafo",
+    "category": "Viajar",
+    "aliases": [
+      "cronógrafo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "⏲️",
+    "description": "reloj temporizador",
+    "category": "Viajar",
+    "aliases": [
+      "temporizador_reloj"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🕰️",
+    "description": "reloj de repisa",
+    "category": "Viajar",
+    "aliases": [
+      "repisa_reloj"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🕛",
+    "description": "doce",
+    "category": "Viajar",
+    "aliases": [
+      "reloj12"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕧",
+    "description": "las doce y media",
+    "category": "Viajar",
+    "aliases": [
+      "reloj1230"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕐",
+    "description": "la una en punto",
+    "category": "Viajar",
+    "aliases": [
+      "reloj1"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕜",
+    "description": "una y media",
+    "category": "Viajar",
+    "aliases": [
+      "reloj130"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕑",
+    "description": "dos en punto",
+    "category": "Viajar",
+    "aliases": [
+      "reloj2"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕝",
+    "description": "dos y media",
+    "category": "Viajar",
+    "aliases": [
+      "reloj230"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕒",
+    "description": "tres en punto",
+    "category": "Viajar",
+    "aliases": [
+      "reloj3"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕞",
+    "description": "tres treinta",
+    "category": "Viajar",
+    "aliases": [
+      "reloj330"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕓",
+    "description": "cuatro en punto",
+    "category": "Viajar",
+    "aliases": [
+      "reloj4"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕟",
+    "description": "cuatro y media",
+    "category": "Viajar",
+    "aliases": [
+      "reloj430"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕔",
+    "description": "cinco en punto",
+    "category": "Viajar",
+    "aliases": [
+      "reloj5"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕠",
+    "description": "cinco y media",
+    "category": "Viajar",
+    "aliases": [
+      "reloj530"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕕",
+    "description": "seis en punto",
+    "category": "Viajar",
+    "aliases": [
+      "reloj6"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕡",
+    "description": "seis y media",
+    "category": "Viajar",
+    "aliases": [
+      "reloj630"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕖",
+    "description": "las siete en punto",
+    "category": "Viajar",
+    "aliases": [
+      "reloj7"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕢",
+    "description": "siete y media",
+    "category": "Viajar",
+    "aliases": [
+      "reloj730"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕗",
+    "description": "ocho en punto",
+    "category": "Viajar",
+    "aliases": [
+      "reloj8"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕣",
+    "description": "ocho y media",
+    "category": "Viajar",
+    "aliases": [
+      "reloj830"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕘",
+    "description": "nueve",
+    "category": "Viajar",
+    "aliases": [
+      "reloj9"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕤",
+    "description": "nueve y media",
+    "category": "Viajar",
+    "aliases": [
+      "reloj930"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕙",
+    "description": "diez",
+    "category": "Viajar",
+    "aliases": [
+      "reloj10"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕥",
+    "description": "diez treinta",
+    "category": "Viajar",
+    "aliases": [
+      "reloj1030"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕚",
+    "description": "once en punto",
+    "category": "Viajar",
+    "aliases": [
+      "reloj11"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕦",
+    "description": "1130",
+    "category": "Viajar",
+    "aliases": [
+      "reloj1130"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌑",
+    "description": "Luna nueva",
+    "category": "Viajar",
+    "aliases": [
+      "Luna nueva"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌒",
+    "description": "luna creciente creciente",
+    "category": "Viajar",
+    "aliases": [
+      "luna creciente_creciente"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌓",
+    "description": "primer cuarto de luna",
+    "category": "Viajar",
+    "aliases": [
+      "primer_cuarto_luna"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌔",
+    "description": "luna gibosa creciente",
+    "category": "Viajar",
+    "aliases": [
+      "luna",
+      "luna gibosa encerada"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌕",
+    "description": "Luna llena",
+    "category": "Viajar",
+    "aliases": [
+      "Luna llena"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌖",
+    "description": "luna gibosa menguante",
+    "category": "Viajar",
+    "aliases": [
+      "luna menguante_menguante"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌗",
+    "description": "último cuarto de luna",
+    "category": "Viajar",
+    "aliases": [
+      "último cuarto de luna"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌘",
+    "description": "luna creciente menguante",
+    "category": "Viajar",
+    "aliases": [
+      "luna creciente_menguante"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌙",
+    "description": "Luna creciente",
+    "category": "Viajar",
+    "aliases": [
+      "Luna creciente"
+    ],
+    "tags": [
+      "noche"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌚",
+    "description": "cara de luna nueva",
+    "category": "Viajar",
+    "aliases": [
+      "luna_nueva_con_cara"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌛",
+    "description": "cara del primer cuarto de luna",
+    "category": "Viajar",
+    "aliases": [
+      "primer_cuarto_de_luna_con_cara"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌜",
+    "description": "cara del último cuarto de luna",
+    "category": "Viajar",
+    "aliases": [
+      "último_cuarto_de_luna_con_cara"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌡️",
+    "description": "termómetro",
+    "category": "Viajar",
+    "aliases": [
+      "termómetro"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "☀️",
+    "description": "sol",
+    "category": "Viajar",
+    "aliases": [
+      "soleado"
+    ],
+    "tags": [
+      "clima"
+    ],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌝",
+    "description": "cara de luna llena",
+    "category": "Viajar",
+    "aliases": [
+      "luna_llena_con_cara"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌞",
+    "description": "sol con cara",
+    "category": "Viajar",
+    "aliases": [
+      "sol_con_cara"
+    ],
+    "tags": [
+      "verano"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪐",
+    "description": "planeta anillado",
+    "category": "Viajar",
+    "aliases": [
+      "planeta_anillado"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "⭐",
+    "description": "estrella",
+    "category": "Viajar",
+    "aliases": [
+      "estrella"
+    ],
+    "tags": [],
+    "unicode_version": "5.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌟",
+    "description": "estrella brillante",
+    "category": "Viajar",
+    "aliases": [
+      "estrella2"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌠",
+    "description": "estrella fugaz",
+    "category": "Viajar",
+    "aliases": [
+      "estrellas"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌌",
+    "description": "vía Láctea",
+    "category": "Viajar",
+    "aliases": [
+      "vía Láctea"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "☁️",
+    "description": "nube",
+    "category": "Viajar",
+    "aliases": [
+      "nube"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⛅",
+    "description": "sol detrás de la nube",
+    "category": "Viajar",
+    "aliases": [
+      "parcialmente soleado"
+    ],
+    "tags": [
+      "clima",
+      "nube"
+    ],
+    "unicode_version": "5.2",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⛈️",
+    "description": "nube con relámpagos y lluvia",
+    "category": "Viajar",
+    "aliases": [
+      "nube_con_relámpago_y_lluvia"
+    ],
+    "tags": [],
+    "unicode_version": "5.2",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌤️",
+    "description": "sol detrás de una pequeña nube",
+    "category": "Viajar",
+    "aliases": [
+      "sol_detrás_de_pequeña_nube"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌥️",
+    "description": "sol detrás de una gran nube",
+    "category": "Viajar",
+    "aliases": [
+      "sol_detrás_nube_grande"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌦️",
+    "description": "sol detrás de la nube de lluvia",
+    "category": "Viajar",
+    "aliases": [
+      "sol_detrás_de_lluvia_nube"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌧️",
+    "description": "nube con lluvia",
+    "category": "Viajar",
+    "aliases": [
+      "nube_con_lluvia"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌨️",
+    "description": "nube con nieve",
+    "category": "Viajar",
+    "aliases": [
+      "nube_con_nieve"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌩️",
+    "description": "nube con relámpago",
+    "category": "Viajar",
+    "aliases": [
+      "nube_con_relámpago"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌪️",
+    "description": "tornado",
+    "category": "Viajar",
+    "aliases": [
+      "tornado"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌫️",
+    "description": "niebla",
+    "category": "Viajar",
+    "aliases": [
+      "niebla"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌬️",
+    "description": "cara de viento",
+    "category": "Viajar",
+    "aliases": [
+      "cara del viento"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌀",
+    "description": "ciclón",
+    "category": "Viajar",
+    "aliases": [
+      "ciclón"
+    ],
+    "tags": [
+      "remolino"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌈",
+    "description": "arcoíris",
+    "category": "Viajar",
+    "aliases": [
+      "arcoíris"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌂",
+    "description": "paraguas cerrado",
+    "category": "Viajar",
+    "aliases": [
+      "paraguas_cerrado"
+    ],
+    "tags": [
+      "clima",
+      "lluvia"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "☂️",
+    "description": "paraguas",
+    "category": "Viajar",
+    "aliases": [
+      "paraguas_abierto"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "☔",
+    "description": "paraguas con gotas de lluvia",
+    "category": "Viajar",
+    "aliases": [
+      "paraguas"
+    ],
+    "tags": [
+      "lluvia",
+      "clima"
+    ],
+    "unicode_version": "4.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⛱️",
+    "description": "paraguas en el suelo",
+    "category": "Viajar",
+    "aliases": [
+      "sombrilla_en_el_suelo"
+    ],
+    "tags": [
+      "sombrilla de playa"
+    ],
+    "unicode_version": "5.2",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "⚡",
+    "description": "Alto voltaje",
+    "category": "Viajar",
+    "aliases": [
+      "borrar"
+    ],
+    "tags": [
+      "iluminación",
+      "trueno"
+    ],
+    "unicode_version": "4.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "❄️",
+    "description": "copo de nieve",
+    "category": "Viajar",
+    "aliases": [
+      "copo de nieve"
+    ],
+    "tags": [
+      "invierno",
+      "frío",
+      "clima"
+    ],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "☃️",
+    "description": "muñeco de nieve",
+    "category": "Viajar",
+    "aliases": [
+      "muñeco_de_nieve_con_nieve"
+    ],
+    "tags": [
+      "invierno",
+      "Navidad"
+    ],
+    "unicode_version": "",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "⛄",
+    "description": "muñeco de nieve sin nieve",
+    "category": "Viajar",
+    "aliases": [
+      "muñeco de nieve"
+    ],
+    "tags": [
+      "invierno"
+    ],
+    "unicode_version": "5.2",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "☄️",
+    "description": "cometa",
+    "category": "Viajar",
+    "aliases": [
+      "cometa"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🔥",
+    "description": "fuego",
+    "category": "Viajar",
+    "aliases": [
+      "fuego"
+    ],
+    "tags": [
+      "quemar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💧",
+    "description": "gotita",
+    "category": "Viajar",
+    "aliases": [
+      "gotita"
+    ],
+    "tags": [
+      "agua"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌊",
+    "description": "ola de agua",
+    "category": "Viajar",
+    "aliases": [
+      "océano"
+    ],
+    "tags": [
+      "mar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  }
+]

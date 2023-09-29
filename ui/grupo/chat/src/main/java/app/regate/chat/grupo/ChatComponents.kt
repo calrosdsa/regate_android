@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Reply
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -58,8 +59,9 @@ import kotlinx.datetime.Instant
 import app.regate.common.resources.R
 import app.regate.data.common.ReplyMessageData
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
-import app.regate.data.dto.empresa.grupo.GrupoMessageInstalacion
+import app.regate.data.dto.empresa.grupo.MessageInstalacionPayload
 import app.regate.data.dto.empresa.grupo.GrupoMessageType
+import app.regate.data.dto.empresa.grupo.MessageSalaPayload
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -77,8 +79,11 @@ internal fun Chat (
     setReply:(message:ReplyMessageData?)->Unit,
     formatShortDate:(Instant)->String,
     formatShortTime:(Instant)->String,
+    formatShortDateFromString: (String) -> String,
+    formatShortTimeFromString: (String,Int) -> String,
     formatterRelatimeTime:(date:Instant)->String,
     navigateToInstalacionReserva:(Long,Long,List<CupoInstalacion>)->Unit,
+    navigateToSala: (Int) -> Unit,
     lazyListState:LazyListState,
     modifier: Modifier = Modifier,
     user:User? = null,
@@ -169,11 +174,11 @@ internal fun Chat (
                                             bottom = 5.dp
                                         )
                                 ) {
-                                    Text(
-                                        text = "${item.profile?.nombre ?: ""} ${item.profile?.apellido ?: ""}",
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.primary
-                                    )
+//                                    Text(
+//                                        text = "${item.profile?.nombre ?: ""} ${item.profile?.apellido ?: ""}",
+//                                        style = MaterialTheme.typography.labelSmall,
+//                                        color = MaterialTheme.colorScheme.primary
+//                                    )
 
                                     if (item.message.reply_to != null) {
                                         MessageReply(
@@ -205,6 +210,9 @@ internal fun Chat (
                                             navigateToInstalacionReserva = navigateToInstalacionReserva,
                                             formatShortDate = formatShortDate,
                                             formatShortTime = formatShortTime,
+                                            formatShortTimeFromString = formatShortTimeFromString,
+                                            formatShortDateFromString = formatShortDateFromString,
+                                            navigateToSala = navigateToSala
                                         )
                                     }
                                     item.message.data?.let {data->
@@ -214,6 +222,9 @@ internal fun Chat (
                                         navigateToInstalacionReserva = navigateToInstalacionReserva,
                                         formatShortDate = formatShortDate,
                                         formatShortTime = formatShortTime,
+                                        formatShortTimeFromString = formatShortTimeFromString,
+                                        formatShortDateFromString = formatShortDateFromString,
+                                        navigateToSala = navigateToSala
                                     )
                                     }
 //                                    if(item.message.content.isBlank()) {
@@ -328,7 +339,11 @@ internal fun Chat (
                                         }, getUserProfileGrupo = getUserProfileGrupo,
                                             navigateToInstalacionReserva = navigateToInstalacionReserva,
                                             formatShortDate = formatShortDate,
-                                            formatShortTime = formatShortTime,)
+                                            formatShortTime = formatShortTime,
+                                            formatShortTimeFromString = formatShortTimeFromString,
+                                            formatShortDateFromString = formatShortDateFromString,
+                                            navigateToSala = navigateToSala
+                                        )
                                     }
                                     item.message.data?.let {data->
                                         MessageContent1(
@@ -337,6 +352,9 @@ internal fun Chat (
                                             navigateToInstalacionReserva = navigateToInstalacionReserva,
                                             formatShortDate = formatShortDate,
                                             formatShortTime = formatShortTime,
+                                            formatShortTimeFromString = formatShortTimeFromString,
+                                            formatShortDateFromString = formatShortDateFromString,
+                                            navigateToSala = navigateToSala
                                         )
                                     }
                                     Text(
@@ -382,8 +400,11 @@ internal fun MessageContent1(
     messageType:Int,
     content:String,
     navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
+    navigateToSala:(Int)->Unit,
     formatShortDate: (Instant) -> String,
     formatShortTime: (Instant) -> String,
+    formatShortDateFromString: (String) -> String,
+    formatShortTimeFromString: (String,Int) -> String,
     modifier: Modifier = Modifier
 ){
     when(messageType){
@@ -395,11 +416,10 @@ internal fun MessageContent1(
             )
         }
         GrupoMessageType.INSTALACION.ordinal ->{
-            val instalacion = try{ Json.decodeFromString<GrupoMessageInstalacion>(content) }catch (e:Exception){
-                Log.d("DEBUG_APP",e.localizedMessage?:"")
+            val instalacion = try{ Json.decodeFromString<MessageInstalacionPayload>(content) }catch (e:Exception){
                 null
             }
-            if(instalacion != null){
+                if(instalacion != null){
                 Column(modifier = Modifier
                     .padding(vertical = 5.dp)
                     .clickable {
@@ -428,6 +448,57 @@ internal fun MessageContent1(
                 }
             }
         }
+        GrupoMessageType.SALA.ordinal ->{
+            val sala = try {
+                Json.decodeFromString<MessageSalaPayload>(content)
+            } catch (e: Exception) {
+                null
+            }
+
+            if (sala != null) {
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        navigateToSala(sala.id)
+//                        navigateToInstalacionReserva(instalacion.id.toLong(),instalacion.establecimiento_id.toLong(),instalacion.cupos)
+                    }
+                    .padding(5.dp)
+                ) {
+                    Row(modifier = Modifier.fillMaxWidth()) {
+
+                        Column() {
+
+                            Text(
+                                text = sala.titulo,
+                                style = MaterialTheme.typography.labelLarge
+                            )
+                            Text(
+                                text = "${stringResource(id = R.string.total_price)}: ${sala.precio}",
+                                style = MaterialTheme.typography.labelMedium
+                            )
+                            Text(
+                                text = "${stringResource(id = R.string.precio_per_person)}: ${sala.precio_cupo}",
+                                style = MaterialTheme.typography.labelMedium
+                            )
+                            Text(
+                                text = stringResource(id = R.string.time_game_will_played),
+                                style = MaterialTheme.typography.labelMedium
+                            )
+                            Text(
+                                text = formatShortDateFromString(sala.start) +
+                                        " ${formatShortTimeFromString(sala.start,0)} a ${
+                                            formatShortTimeFromString(sala.end,30)
+                                        }",
+                                style = MaterialTheme.typography.labelMedium
+                            )
+                        }
+                    }
+                    Divider()
+                }
+            }
+
+        }
+
     }
 }
 
@@ -437,8 +508,11 @@ fun MessageReply(
     scrollToItem:()->Unit,
     getUserProfileGrupo: (id:Long)->UserProfileGrupo?,
     navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
+    navigateToSala: (Int) -> Unit,
     formatShortDate: (Instant) -> String,
     formatShortTime: (Instant) -> String,
+    formatShortDateFromString: (String) -> String,
+    formatShortTimeFromString: (String,Int) -> String,
     modifier:Modifier = Modifier
 ){
     val profile = item.reply?.let { getUserProfileGrupo(it.profile_id) }
@@ -467,10 +541,13 @@ fun MessageReply(
             navigateToInstalacionReserva = navigateToInstalacionReserva,
             formatShortDate = formatShortDate,
             formatShortTime = formatShortTime,
+            formatShortDateFromString = formatShortDateFromString,
+            formatShortTimeFromString = formatShortTimeFromString,
+            navigateToSala = navigateToSala
         )
         }
         Text(
-            text = item.message.content,
+            text = item.reply?.content ?:"",
             style = MaterialTheme.typography.bodySmall,
         )
     }

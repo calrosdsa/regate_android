@@ -165,6 +165,9 @@ internal fun Home(
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCJo8cI1DBvDVUd3-EJh175ef2AnBOr38KiQ&usqp=CAU")
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         HomeMediaCarousel(list = listImage, onItemClicked = {})
+
+        if(viewState.data?.recommended != null) {
+
         Spacer(modifier = Modifier.height(20.dp))
         Text(text = stringResource(id = R.string.recommended_places),
             modifier = Modifier.padding(horizontal = 10.dp),style =MaterialTheme.typography.titleLarge)
@@ -177,7 +180,7 @@ internal fun Home(
                         .padding(5.dp))
                 }
             }else {
-                viewState.data?.recommended?.let { establecimientos ->
+                viewState.data.recommended?.let { establecimientos ->
                     items(items = establecimientos) { item ->
                         EstablecimientoCard(
                             item = item, navigateToComplejo = navigateToComplejo,
@@ -189,6 +192,7 @@ internal fun Home(
                     }
                 }
             }
+        }
         }
 
         Row(modifier = Modifier

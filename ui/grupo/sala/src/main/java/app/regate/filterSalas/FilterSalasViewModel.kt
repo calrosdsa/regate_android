@@ -73,7 +73,7 @@ class FilterSalasViewModel(
             val categories = converter.getCategories()
            filterData.tryEmit(filterData.value.copy(
                 isInit = true,
-                categories = categories
+                categories = categories?: emptyList()
             ))
             }catch(e:Exception){
                 Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")

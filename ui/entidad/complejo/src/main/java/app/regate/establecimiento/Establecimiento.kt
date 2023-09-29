@@ -64,9 +64,12 @@ import app.regate.common.compose.components.images.AsyncImage
 import app.regate.common.compose.ui.PosterCardImage
 import app.regate.common.compose.viewModel
 import app.regate.common.resources.R
+import app.regate.data.app.MediaData
 import app.regate.models.Establecimiento
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import moe.tlaster.nestedscrollview.VerticalNestedScrollView
@@ -388,7 +391,10 @@ fun HeaderEstablecimiento(
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }
                     ) {
-                        navigateToPhoto(establecimiento.photo.toString())
+                        val data = MediaData(
+                            images = listOf(establecimiento.photo.toString())
+                        )
+                        navigateToPhoto(Json.encodeToString(data))
                     }
                     .fillMaxWidth()
                     .height(170.dp),

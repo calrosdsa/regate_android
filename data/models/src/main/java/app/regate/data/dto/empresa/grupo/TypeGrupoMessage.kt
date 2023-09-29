@@ -1,22 +1,33 @@
 package app.regate.data.dto.empresa.grupo
 
-import app.regate.data.dto.empresa.establecimiento.CupoInstaDto
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 enum class GrupoMessageType{
     MESSAGE,
-    INSTALACION
+    INSTALACION,
+    SALA
 }
 
 @Serializable
-data class GrupoMessageInstalacion(
+data class MessageInstalacionPayload(
     val id:Int,
     val establecimiento_id:Int,
     val photo:String? = null,
     val total_price:Int = 0,
     val cupos:List<CupoInstalacion> = emptyList(),
     val name:String,
+)
+
+@Serializable
+data class MessageSalaPayload(
+    val id:Int = 0,
+    val titulo:String = "",
+    val cupos:Int = 0,
+    val precio:Int =0,
+    val precio_cupo:Double =0.0,
+    val start:String = "",
+    val end:String = ""
 )
 
 @Serializable

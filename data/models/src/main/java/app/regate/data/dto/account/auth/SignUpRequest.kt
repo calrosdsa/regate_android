@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 data class SignUpRequest(
     val password:String,
     val username:String,
-    val email:String
+    val email:String,
+    val fcm_token:String = "",
 )

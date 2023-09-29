@@ -19,19 +19,11 @@ package app.regate.tasks.works
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.Context
-import android.content.Context.LOCATION_SERVICE
-import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import app.regate.constant.Route
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.data.labels.LabelRepository
 import kotlinx.coroutines.Dispatchers
@@ -43,6 +35,9 @@ import kotlinx.coroutines.withContext
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import java.util.Locale
+import app.regate.common.resources.R
+import kotlin.random.Random
+
 
 @Inject
 class InitSync(
@@ -66,7 +61,6 @@ class InitSync(
             val task2 =  async{labelRepository.getCategories()}
             val task3 = async{labelRepository.getSports()}
             val task4 = async{labelRepository.getRules()}
-
 //            val task4 = async{ establecimientoRepository.getEstablecimientos()}
                 awaitAll(task1,task2,task3,task4)
         }

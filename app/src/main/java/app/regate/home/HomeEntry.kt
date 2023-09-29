@@ -184,14 +184,13 @@ internal fun AppNavigation(
             composeScreens.emailVerification(
                 navigateUp = navController::navigateUp)
         }
-        animatedComposable(route = Route.PHOTO arg "url",
+        animatedComposable(route = Route.PHOTO arg "data",
         arguments = listOf(
             navArgument("url") { type = NavType.StringType }
         )){
-            val url = it.arguments?.getString("url")?:""
+
             composeScreens.photo(
                 navigateUp = navController::navigateUp,
-                url = url,
                 navigateToReport = {navController.navigate(Route.REPORT id it)}
             )
         }
@@ -224,8 +223,7 @@ internal fun AppNavigation(
                 },
                 currentPage = page.toInt(),
                 navigateToPhoto = {
-                    val url =  URLEncoder.encode(it, StandardCharsets.UTF_8.toString())
-                    navController.navigate(Route.PHOTO id url)
+                    navController.navigate(Route.PHOTO id it)
                 },
                 navigateToProfile = { navController.navigate(Route.PROFILE id it)},
                 navigateToReviews = { navController.navigate(Route.REVIEWS id it)},
@@ -297,8 +295,9 @@ internal fun AppNavigation(
                 openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
                 navigateToInstalacion = {navController.navigate(Route.INSTALACION id it)},
                 navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
-                navigateToComplete = {navController.navigate(Route.SALA_COMPLETE id it)}
-            )
+                navigateToComplete = {navController.navigate(Route.SALA_COMPLETE id it)},
+                navigateToSelectGroup = {navController.navigate(Route.MY_GROUPS + "?data=${it}")},
+                )
         }
         animatedComposable(
             route = Route.CREAR_SALA arg "id" arg "grupo_id" arg "page",
@@ -356,7 +355,8 @@ internal fun AppNavigation(
                 navigateToInstalacionReserva = {instalacionId,establecimientoId ->
                     navController.navigate(Route.RESERVAR id instalacionId id establecimientoId)
                 },
-                )
+                navigateToSala = { navController.navigate(Route.SALA id it)}
+            )
         }
         animatedComposable(
             route = Route.MY_GROUPS + "?data={data}",

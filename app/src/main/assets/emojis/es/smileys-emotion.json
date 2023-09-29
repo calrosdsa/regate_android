@@ -1,0 +1,2099 @@
+[
+  {
+    "emoji": "😀",
+    "description": "cara sonriente",
+    "category": "Emoticonos",
+    "aliases": [
+      "sonriendo"
+    ],
+    "tags": [
+      "sonrisa",
+      "feliz"
+    ],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😃",
+    "description": "cara sonriente con ojos grandes",
+    "category": "Emoticonos",
+    "aliases": [
+      "sonriente"
+    ],
+    "tags": [
+      "feliz",
+      "alegría",
+      "ja ja"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😄",
+    "description": "cara sonriente con ojos sonrientes",
+    "category": "Emoticonos",
+    "aliases": [
+      "sonrisa"
+    ],
+    "tags": [
+      "feliz",
+      "alegría",
+      "reír",
+      "complacido"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😁",
+    "description": "cara radiante con ojos sonrientes",
+    "category": "Emoticonos",
+    "aliases": [
+      "sonrisa"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😆",
+    "description": "cara sonriente entrecerrando los ojos",
+    "category": "Emoticonos",
+    "aliases": [
+      "reír",
+      "satisfecho"
+    ],
+    "tags": [
+      "feliz",
+      "ja ja"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😅",
+    "description": "cara sonriente con sudor",
+    "category": "Emoticonos",
+    "aliases": [
+      "sudor_sonrisa"
+    ],
+    "tags": [
+      "caliente"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🤣",
+    "description": "rodando en el piso, riendo",
+    "category": "Emoticonos",
+    "aliases": [
+      "rolf"
+    ],
+    "tags": [
+      "jajaja",
+      "reír"
+    ],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "😂",
+    "description": "cara con lágrimas de alegría",
+    "category": "Emoticonos",
+    "aliases": [
+      "alegría"
+    ],
+    "tags": [
+      "lágrimas"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🙂",
+    "description": "cara ligeramente sonriente",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_ligeramente_sonriente"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🙃",
+    "description": "cara al revés",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_al revés"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🫠",
+    "description": "cara derritiéndose",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_derritiéndose"
+    ],
+    "tags": [
+      "sarcasmo",
+      "miedo"
+    ],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "😉",
+    "description": "cara guiñando un ojo",
+    "category": "Emoticonos",
+    "aliases": [
+      "guiño"
+    ],
+    "tags": [
+      "coquetear"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😊",
+    "description": "cara sonriente con ojos sonrientes",
+    "category": "Emoticonos",
+    "aliases": [
+      "rubor"
+    ],
+    "tags": [
+      "orgulloso"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😇",
+    "description": "cara sonriente con halo",
+    "category": "Emoticonos",
+    "aliases": [
+      "inocente"
+    ],
+    "tags": [
+      "ángel"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥰",
+    "description": "cara sonriente con corazones",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_sonriente_con_tres_corazones"
+    ],
+    "tags": [
+      "amar"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "😍",
+    "description": "cara sonriente con ojos de corazón",
+    "category": "Emoticonos",
+    "aliases": [
+      "ojos del corazón"
+    ],
+    "tags": [
+      "amar",
+      "aplastar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🤩",
+    "description": "estrellado",
+    "category": "Emoticonos",
+    "aliases": [
+      "estrella_golpeada"
+    ],
+    "tags": [
+      "ojos"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "😘",
+    "description": "cara lanzando un beso",
+    "category": "Emoticonos",
+    "aliases": [
+      "beso_corazon"
+    ],
+    "tags": [
+      "coquetear"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😗",
+    "description": "besando la cara",
+    "category": "Emoticonos",
+    "aliases": [
+      "besar"
+    ],
+    "tags": [],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "☺️",
+    "description": "cara sonriente",
+    "category": "Emoticonos",
+    "aliases": [
+      "relajado"
+    ],
+    "tags": [
+      "rubor",
+      "complacido"
+    ],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😚",
+    "description": "besar la cara con los ojos cerrados",
+    "category": "Emoticonos",
+    "aliases": [
+      "besos_ojos_cerrados"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😙",
+    "description": "besando la cara con ojos sonrientes",
+    "category": "Emoticonos",
+    "aliases": [
+      "besos_sonrientes_ojos"
+    ],
+    "tags": [],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥲",
+    "description": "cara sonriente con lágrima",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_sonriente_con_lágrima"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "😋",
+    "description": "cara saboreando la comida",
+    "category": "Emoticonos",
+    "aliases": [
+      "mmm"
+    ],
+    "tags": [
+      "lengua",
+      "lamer"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😛",
+    "description": "cara con lengua",
+    "category": "Emoticonos",
+    "aliases": [
+      "lengua_pegada"
+    ],
+    "tags": [],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😜",
+    "description": "cara guiñando un ojo con la lengua",
+    "category": "Emoticonos",
+    "aliases": [
+      "lengua_pegada_guiñando_el_ojo"
+    ],
+    "tags": [
+      "broma",
+      "tonto"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🤪",
+    "description": "cara loca",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_zany"
+    ],
+    "tags": [
+      "mentecato",
+      "chiflado"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "😝",
+    "description": "entrecerrar los ojos con la lengua",
+    "category": "Emoticonos",
+    "aliases": [
+      "lengua_atrapada_ojos_cerrados"
+    ],
+    "tags": [
+      "broma"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🤑",
+    "description": "cara de boca de dinero",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_boca_dinero"
+    ],
+    "tags": [
+      "rico"
+    ],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🤗",
+    "description": "cara sonriente con las manos abiertas",
+    "category": "Emoticonos",
+    "aliases": [
+      "abrazos"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🤭",
+    "description": "cara con la mano sobre la boca",
+    "category": "Emoticonos",
+    "aliases": [
+      "mano_sobre_boca"
+    ],
+    "tags": [
+      "tranquilo",
+      "ups"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🫢",
+    "description": "cara con los ojos abiertos y la mano sobre la boca",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_con_los_ojos_abiertos_y_la_mano_sobre_la_boca"
+    ],
+    "tags": [
+      "jadear",
+      "choque"
+    ],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🫣",
+    "description": "cara con ojo asomando",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_con_ojo_mirando"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🤫",
+    "description": "cara callada",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_shushing"
+    ],
+    "tags": [
+      "silencio",
+      "tranquilo"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🤔",
+    "description": "cara pensante",
+    "category": "Emoticonos",
+    "aliases": [
+      "pensamiento"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🫡",
+    "description": "cara de saludo",
+    "category": "Emoticonos",
+    "aliases": [
+      "saludando_cara"
+    ],
+    "tags": [
+      "respeto"
+    ],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🤐",
+    "description": "cara con cremallera en la boca",
+    "category": "Emoticonos",
+    "aliases": [
+      "cremallera_boca_cara"
+    ],
+    "tags": [
+      "silencio",
+      "Cállate"
+    ],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🤨",
+    "description": "cara con ceja levantada",
+    "category": "Emoticonos",
+    "aliases": [
+      "ceja levantada"
+    ],
+    "tags": [
+      "sospechoso"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "😐",
+    "description": "cara neutral",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_neutral"
+    ],
+    "tags": [
+      "yo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😑",
+    "description": "cara inexpresiva",
+    "category": "Emoticonos",
+    "aliases": [
+      "inexpresivo"
+    ],
+    "tags": [],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😶",
+    "description": "cara sin boca",
+    "category": "Emoticonos",
+    "aliases": [
+      "sin boca"
+    ],
+    "tags": [
+      "silenciar",
+      "silencio"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🫥",
+    "description": "cara de línea punteada",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_linea_punteada"
+    ],
+    "tags": [
+      "invisible"
+    ],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "😶‍🌫️",
+    "description": "cara en las nubes",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_en_nubes"
+    ],
+    "tags": [],
+    "unicode_version": "13.1",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "😏",
+    "description": "cara sonriente",
+    "category": "Emoticonos",
+    "aliases": [
+      "sonrisa afectada"
+    ],
+    "tags": [
+      "presumido"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😒",
+    "description": "cara no divertida",
+    "category": "Emoticonos",
+    "aliases": [
+      "no divertido"
+    ],
+    "tags": [
+      "yo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🙄",
+    "description": "cara con los ojos en blanco",
+    "category": "Emoticonos",
+    "aliases": [
+      "Rodar los ojos"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "😬",
+    "description": "cara haciendo muecas",
+    "category": "Emoticonos",
+    "aliases": [
+      "haciendo muecas"
+    ],
+    "tags": [],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😮‍💨",
+    "description": "cara exhalando",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_exhalando"
+    ],
+    "tags": [],
+    "unicode_version": "13.1",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🤥",
+    "description": "cara mentirosa",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_mentira"
+    ],
+    "tags": [
+      "mentiroso"
+    ],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🫨",
+    "description": "cara temblorosa",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_temblando"
+    ],
+    "tags": [
+      "choque"
+    ],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "😌",
+    "description": "cara de alivio",
+    "category": "Emoticonos",
+    "aliases": [
+      "aliviado"
+    ],
+    "tags": [
+      "Uf"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😔",
+    "description": "cara pensativa",
+    "category": "Emoticonos",
+    "aliases": [
+      "pensativo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😪",
+    "description": "cara somnolienta",
+    "category": "Emoticonos",
+    "aliases": [
+      "somnoliento"
+    ],
+    "tags": [
+      "cansado"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🤤",
+    "description": "cara babeante",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_babeando"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "😴",
+    "description": "cara dormida",
+    "category": "Emoticonos",
+    "aliases": [
+      "durmiendo"
+    ],
+    "tags": [
+      "zzz"
+    ],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😷",
+    "description": "cara con mascarilla medica",
+    "category": "Emoticonos",
+    "aliases": [
+      "mascarilla"
+    ],
+    "tags": [
+      "enfermo",
+      "enfermo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🤒",
+    "description": "cara con termómetro",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_con_termómetro"
+    ],
+    "tags": [
+      "enfermo"
+    ],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🤕",
+    "description": "cara con venda en la cabeza",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_con_vendaje_para_la_cabeza"
+    ],
+    "tags": [
+      "herir"
+    ],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🤢",
+    "description": "cara con náuseas",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_náusea"
+    ],
+    "tags": [
+      "enfermo",
+      "vomitar",
+      "disgustado"
+    ],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🤮",
+    "description": "vómitos en la cara",
+    "category": "Emoticonos",
+    "aliases": [
+      "vomitando_cara"
+    ],
+    "tags": [
+      "vomitar",
+      "enfermo"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🤧",
+    "description": "cara de estornudo",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_estornudo"
+    ],
+    "tags": [
+      "acho",
+      "enfermo"
+    ],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🥵",
+    "description": "cara caliente",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_caliente"
+    ],
+    "tags": [
+      "calor",
+      "transpiración"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥶",
+    "description": "cara fría",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_fria"
+    ],
+    "tags": [
+      "congelación",
+      "hielo"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥴",
+    "description": "cara mareada",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_aturdida"
+    ],
+    "tags": [
+      "mareado"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "😵",
+    "description": "cara con los ojos tachados",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_mareada"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😵‍💫",
+    "description": "cara con ojos espirales",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_con_ojos_espirales"
+    ],
+    "tags": [],
+    "unicode_version": "13.1",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🤯",
+    "description": "cabeza explosiva",
+    "category": "Emoticonos",
+    "aliases": [
+      "cabeza_explotante"
+    ],
+    "tags": [
+      "mente",
+      "estropeado"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🤠",
+    "description": "cara de sombrero de vaquero",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_sombrero_vaquero"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🥳",
+    "description": "cara de fiesta",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_de_fiesta"
+    ],
+    "tags": [
+      "celebracion",
+      "cumpleaños"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥸",
+    "description": "cara disfrazada",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_disfrazada"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "😎",
+    "description": "cara sonriente con gafas de sol",
+    "category": "Emoticonos",
+    "aliases": [
+      "Gafas de sol"
+    ],
+    "tags": [
+      "Frío"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🤓",
+    "description": "cara de nerd",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_nerd"
+    ],
+    "tags": [
+      "adicto",
+      "anteojos"
+    ],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🧐",
+    "description": "cara con monóculo",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_monóculo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "😕",
+    "description": "cara confundida",
+    "category": "Emoticonos",
+    "aliases": [
+      "confundido"
+    ],
+    "tags": [],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🫤",
+    "description": "cara con boca diagonal",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_con_boca_diagonal"
+    ],
+    "tags": [
+      "confundido"
+    ],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "😟",
+    "description": "cara preocupada",
+    "category": "Emoticonos",
+    "aliases": [
+      "preocupado"
+    ],
+    "tags": [
+      "nervioso"
+    ],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🙁",
+    "description": "cara ligeramente fruncida",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara ligeramente fruncida"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "☹️",
+    "description": "cara con el ceño fruncido",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_con el ceño fruncido"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "😮",
+    "description": "cara con la boca abierta",
+    "category": "Emoticonos",
+    "aliases": [
+      "boca abierta"
+    ],
+    "tags": [
+      "sorpresa",
+      "impresionado",
+      "Guau"
+    ],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😯",
+    "description": "cara silenciosa",
+    "category": "Emoticonos",
+    "aliases": [
+      "callado"
+    ],
+    "tags": [
+      "silencio",
+      "sin habla"
+    ],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😲",
+    "description": "cara de asombro",
+    "category": "Emoticonos",
+    "aliases": [
+      "asombrado"
+    ],
+    "tags": [
+      "asombrado",
+      "jadear"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😳",
+    "description": "Cara sonrojada",
+    "category": "Emoticonos",
+    "aliases": [
+      "sonrojado"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥺",
+    "description": "cara suplicante",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_suplicante"
+    ],
+    "tags": [
+      "cachorro",
+      "ojos"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥹",
+    "description": "cara conteniendo las lágrimas",
+    "category": "Emoticonos",
+    "aliases": [
+      "face_holding_back_lagrimas"
+    ],
+    "tags": [
+      "lágrimas",
+      "gratitud"
+    ],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "😦",
+    "description": "cara con el ceño fruncido y la boca abierta",
+    "category": "Emoticonos",
+    "aliases": [
+      "ceñudo"
+    ],
+    "tags": [],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😧",
+    "description": "cara angustiada",
+    "category": "Emoticonos",
+    "aliases": [
+      "angustiado"
+    ],
+    "tags": [
+      "aturdido"
+    ],
+    "unicode_version": "6.1",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😨",
+    "description": "cara temerosa",
+    "category": "Emoticonos",
+    "aliases": [
+      "temeroso"
+    ],
+    "tags": [
+      "asustado",
+      "conmocionado",
+      "ups"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😰",
+    "description": "cara ansiosa con sudor",
+    "category": "Emoticonos",
+    "aliases": [
+      "sudor frío"
+    ],
+    "tags": [
+      "nervioso"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😥",
+    "description": "cara triste pero aliviada",
+    "category": "Emoticonos",
+    "aliases": [
+      "decepcionado_aliviado"
+    ],
+    "tags": [
+      "Uf",
+      "sudor",
+      "nervioso"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😢",
+    "description": "cara llorando",
+    "category": "Emoticonos",
+    "aliases": [
+      "llorar"
+    ],
+    "tags": [
+      "triste",
+      "lágrima"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😭",
+    "description": "cara de llanto fuerte",
+    "category": "Emoticonos",
+    "aliases": [
+      "sollozo"
+    ],
+    "tags": [
+      "triste",
+      "llorar",
+      "llorando"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😱",
+    "description": "cara gritando de miedo",
+    "category": "Emoticonos",
+    "aliases": [
+      "gritar"
+    ],
+    "tags": [
+      "horror",
+      "conmocionado"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😖",
+    "description": "cara confundida",
+    "category": "Emoticonos",
+    "aliases": [
+      "aturdido"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😣",
+    "description": "cara perseverante",
+    "category": "Emoticonos",
+    "aliases": [
+      "perseverar"
+    ],
+    "tags": [
+      "luchando"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😞",
+    "description": "cara decepcionada",
+    "category": "Emoticonos",
+    "aliases": [
+      "decepcionado"
+    ],
+    "tags": [
+      "triste"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😓",
+    "description": "cara abatida con sudor",
+    "category": "Emoticonos",
+    "aliases": [
+      "sudor"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😩",
+    "description": "cara cansada",
+    "category": "Emoticonos",
+    "aliases": [
+      "cansado"
+    ],
+    "tags": [
+      "cansado"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😫",
+    "description": "Cara cansada",
+    "category": "Emoticonos",
+    "aliases": [
+      "Cara cansada"
+    ],
+    "tags": [
+      "decepcionado",
+      "gimoteo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥱",
+    "description": "cara de bostezo",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_de_bostezo"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "😤",
+    "description": "cara con vapor de la nariz",
+    "category": "Emoticonos",
+    "aliases": [
+      "triunfo"
+    ],
+    "tags": [
+      "presumido"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😡",
+    "description": "cara enfurecida",
+    "category": "Emoticonos",
+    "aliases": [
+      "furia",
+      "abadejo"
+    ],
+    "tags": [
+      "enojado"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😠",
+    "description": "cara enojada",
+    "category": "Emoticonos",
+    "aliases": [
+      "enojado"
+    ],
+    "tags": [
+      "enojado",
+      "enojado"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🤬",
+    "description": "cara con símbolos en la boca",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_maldita"
+    ],
+    "tags": [
+      "falta"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "😈",
+    "description": "cara sonriente con cuernos",
+    "category": "Emoticonos",
+    "aliases": [
+      "sonriente_imp"
+    ],
+    "tags": [
+      "demonio",
+      "demonio",
+      "cuernos"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👿",
+    "description": "cara enojada con cuernos",
+    "category": "Emoticonos",
+    "aliases": [
+      "diablillo"
+    ],
+    "tags": [
+      "enojado",
+      "demonio",
+      "demonio",
+      "cuernos"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💀",
+    "description": "cráneo",
+    "category": "Emoticonos",
+    "aliases": [
+      "cráneo"
+    ],
+    "tags": [
+      "muerto",
+      "peligro",
+      "veneno"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "☠️",
+    "description": "calavera",
+    "category": "Emoticonos",
+    "aliases": [
+      "calavera_y_tibias cruzadas"
+    ],
+    "tags": [
+      "peligro",
+      "pirata"
+    ],
+    "unicode_version": "",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "💩",
+    "description": "montón de caca",
+    "category": "Emoticonos",
+    "aliases": [
+      "pañuelo",
+      "caca",
+      "mierda"
+    ],
+    "tags": [
+      "tonterías"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🤡",
+    "description": "cara de payaso",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_payaso"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "👹",
+    "description": "ogro",
+    "category": "Emoticonos",
+    "aliases": [
+      "ogro_japones"
+    ],
+    "tags": [
+      "monstruo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👺",
+    "description": "duende",
+    "category": "Emoticonos",
+    "aliases": [
+      "duende_japones"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👻",
+    "description": "fantasma",
+    "category": "Emoticonos",
+    "aliases": [
+      "fantasma"
+    ],
+    "tags": [
+      "Víspera de Todos los Santos"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👽",
+    "description": "extraterrestre",
+    "category": "Emoticonos",
+    "aliases": [
+      "extraterrestre"
+    ],
+    "tags": [
+      "OVNI"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👾",
+    "description": "monstruo alienígena",
+    "category": "Emoticonos",
+    "aliases": [
+      "invasor del espacio"
+    ],
+    "tags": [
+      "juego",
+      "retro"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🤖",
+    "description": "robot",
+    "category": "Emoticonos",
+    "aliases": [
+      "robot"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "😺",
+    "description": "gato sonriendo",
+    "category": "Emoticonos",
+    "aliases": [
+      "gato_sonriente"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😸",
+    "description": "gato sonriente con ojos sonrientes",
+    "category": "Emoticonos",
+    "aliases": [
+      "gato_sonrisa"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😹",
+    "description": "gato con lágrimas de alegría",
+    "category": "Emoticonos",
+    "aliases": [
+      "joy_cat"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😻",
+    "description": "gato sonriente con ojos de corazón",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón_ojos_gato"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😼",
+    "description": "gato con sonrisa irónica",
+    "category": "Emoticonos",
+    "aliases": [
+      "gato_sonrisa"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😽",
+    "description": "gato besando",
+    "category": "Emoticonos",
+    "aliases": [
+      "beso_gato"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🙀",
+    "description": "gato cansado",
+    "category": "Emoticonos",
+    "aliases": [
+      "grito_gato"
+    ],
+    "tags": [
+      "horror"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😿",
+    "description": "gato llorando",
+    "category": "Emoticonos",
+    "aliases": [
+      "cara_de_gato_llorando"
+    ],
+    "tags": [
+      "triste",
+      "lágrima"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "😾",
+    "description": "gato haciendo pucheros",
+    "category": "Emoticonos",
+    "aliases": [
+      "gato_haciendo pucheros"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🙈",
+    "description": "mono que no ve el mal",
+    "category": "Emoticonos",
+    "aliases": [
+      "no ver el mal"
+    ],
+    "tags": [
+      "mono",
+      "ciego",
+      "ignorar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🙉",
+    "description": "mono que no escucha el mal",
+    "category": "Emoticonos",
+    "aliases": [
+      "no escuchar el mal"
+    ],
+    "tags": [
+      "mono",
+      "sordo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🙊",
+    "description": "mono que no habla mal",
+    "category": "Emoticonos",
+    "aliases": [
+      "no hables cosas malas"
+    ],
+    "tags": [
+      "mono",
+      "silenciar",
+      "Cállate"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💌",
+    "description": "carta de amor",
+    "category": "Emoticonos",
+    "aliases": [
+      "carta de amor"
+    ],
+    "tags": [
+      "correo electrónico",
+      "sobre"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💘",
+    "description": "corazón con flecha",
+    "category": "Emoticonos",
+    "aliases": [
+      "Cupido"
+    ],
+    "tags": [
+      "amar",
+      "corazón"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💝",
+    "description": "corazón con cinta",
+    "category": "Emoticonos",
+    "aliases": [
+      "regalo_corazon"
+    ],
+    "tags": [
+      "chocolates"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💖",
+    "description": "corazón chispeante",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón_brillante"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💗",
+    "description": "corazón en crecimiento",
+    "category": "Emoticonos",
+    "aliases": [
+      "pulso del corazón"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💓",
+    "description": "corazón palpitante",
+    "category": "Emoticonos",
+    "aliases": [
+      "latido del corazón"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💞",
+    "description": "corazones giratorios",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazones_giratorios"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💕",
+    "description": "dos corazones",
+    "category": "Emoticonos",
+    "aliases": [
+      "dos corazones"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💟",
+    "description": "decoracion de corazon",
+    "category": "Emoticonos",
+    "aliases": [
+      "decoracion_corazon"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "❣️",
+    "description": "exclamación del corazón",
+    "category": "Emoticonos",
+    "aliases": [
+      "exclamación_de_corazón_pesado"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "💔",
+    "description": "corazón roto",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón roto"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "❤️‍🔥",
+    "description": "corazón en el fuego",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón en el fuego"
+    ],
+    "tags": [],
+    "unicode_version": "13.1",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "❤️‍🩹",
+    "description": "reparando el corazón",
+    "category": "Emoticonos",
+    "aliases": [
+      "reparando_corazon"
+    ],
+    "tags": [],
+    "unicode_version": "13.1",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "❤️",
+    "description": "corazón rojo",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón"
+    ],
+    "tags": [
+      "amar"
+    ],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🩷",
+    "description": "corazon rosa",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón_rosa"
+    ],
+    "tags": [],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "🧡",
+    "description": "corazon naranja",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón_naranja"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "💛",
+    "description": "corazon amarillo",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón_amarillo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💚",
+    "description": "corazón verde",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón verde"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💙",
+    "description": "corazón azul",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón azul"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🩵",
+    "description": "corazón azul claro",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón_azul_claro"
+    ],
+    "tags": [],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "💜",
+    "description": "corazón Purpura",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón Purpura"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🤎",
+    "description": "corazon marron",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón_marrón"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🖤",
+    "description": "corazon negro",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazon_negro"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🩶",
+    "description": "corazon gris",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón_gris"
+    ],
+    "tags": [],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "🤍",
+    "description": "corazón blanco",
+    "category": "Emoticonos",
+    "aliases": [
+      "corazón blanco"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "💋",
+    "description": "marca de beso",
+    "category": "Emoticonos",
+    "aliases": [
+      "beso"
+    ],
+    "tags": [
+      "lápiz labial"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💯",
+    "description": "cien puntos",
+    "category": "Emoticonos",
+    "aliases": [
+      "100"
+    ],
+    "tags": [
+      "puntaje",
+      "perfecto"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💢",
+    "description": "símbolo de ira",
+    "category": "Emoticonos",
+    "aliases": [
+      "enojo"
+    ],
+    "tags": [
+      "enojado"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💥",
+    "description": "colisión",
+    "category": "Emoticonos",
+    "aliases": [
+      "auge",
+      "colisión"
+    ],
+    "tags": [
+      "explotar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💫",
+    "description": "mareado",
+    "category": "Emoticonos",
+    "aliases": [
+      "mareado"
+    ],
+    "tags": [
+      "estrella"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💦",
+    "description": "gotas de sudor",
+    "category": "Emoticonos",
+    "aliases": [
+      "gotas de sudor"
+    ],
+    "tags": [
+      "agua",
+      "ejercicio"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💨",
+    "description": "huyendo",
+    "category": "Emoticonos",
+    "aliases": [
+      "estrellarse"
+    ],
+    "tags": [
+      "viento",
+      "explotar",
+      "rápido"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕳️",
+    "description": "agujero",
+    "category": "Emoticonos",
+    "aliases": [
+      "agujero"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "💬",
+    "description": "globo de diálogo",
+    "category": "Emoticonos",
+    "aliases": [
+      "globo_de_discurso"
+    ],
+    "tags": [
+      "comentario"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "👁️‍🗨️",
+    "description": "Ojo en el bocadillo de diálogo",
+    "category": "Emoticonos",
+    "aliases": [
+      "burbuja_del_discurso_del_ojo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🗨️",
+    "description": "bocadillo de diálogo izquierdo",
+    "category": "Emoticonos",
+    "aliases": [
+      "burbuja_de_voz_izquierda"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🗯️",
+    "description": "burbuja de derecha",
+    "category": "Emoticonos",
+    "aliases": [
+      "burbuja_derecha_ira"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "💭",
+    "description": "globo de pensamiento",
+    "category": "Emoticonos",
+    "aliases": [
+      "globo_pensado"
+    ],
+    "tags": [
+      "pensamiento"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💤",
+    "description": "ZZZ",
+    "category": "Emoticonos",
+    "aliases": [
+      "zzz"
+    ],
+    "tags": [
+      "durmiendo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  }
+]

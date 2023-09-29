@@ -56,6 +56,8 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 typealias Grupos= @Composable (
     navController: NavController,
@@ -82,7 +84,11 @@ fun Grupos (
         filterGroups = filterGroups,
         userSalas = userSalas,
         formatShortRelativeTime = formatter::formatShortRelativeTime,
-        openAuthBottomSheet = { navController.navigate(Route.AUTH_DIALOG) }
+        openAuthBottomSheet = { navController.navigate(Route.AUTH_DIALOG) },
+//        navigateToPhoto = {
+////            val url = URLEncoder.encode(it, StandardCharsets.UTF_8.toString())
+//            navController.navigate(Route.PHOTO id it)
+//        },
     )
 }
 
@@ -94,6 +100,7 @@ internal fun Grupos(
     viewModel:UserGroupsViewModel,
     formatShortRelativeTime: (Instant) -> String,
     openAuthBottomSheet:()->Unit,
+//    navigateToPhoto:(String)->Unit,
     filterGroups:@Composable () -> Unit,
     userSalas:@Composable () -> Unit,
     ) {

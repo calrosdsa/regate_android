@@ -230,7 +230,7 @@ internal fun Reservar(
                                 }  }
                             )
                         DropdownMenuItem(
-                            text = { Text(text = "Enviar a un grupo") },
+                            text = { Text(text = stringResource(id = R.string.send_to_a_group)) },
                             onClick = {
                             if(viewState.authState == AppAuthState.LOGGED_IN){
                                 navigateToSelectGroup()
@@ -383,7 +383,7 @@ internal fun Reservar(
 
                     viewState.instalacion?.let {instalacion->
                     Box(modifier = Modifier
-                        .clickable {  }
+                        .clickable { }
                         .height(120.dp)
                         .padding(vertical = 5.dp)
                         .fillMaxWidth()) {

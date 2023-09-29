@@ -1,0 +1,1745 @@
+[
+  {
+    "emoji": "🐵",
+    "description": "cara de mono",
+    "category": "animales",
+    "aliases": [
+      "cara de mono"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐒",
+    "description": "mono",
+    "category": "animales",
+    "aliases": [
+      "mono"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦍",
+    "description": "gorila",
+    "category": "animales",
+    "aliases": [
+      "gorila"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🦧",
+    "description": "orangután",
+    "category": "animales",
+    "aliases": [
+      "orangután"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🐶",
+    "description": "cara de perro",
+    "category": "animales",
+    "aliases": [
+      "perro"
+    ],
+    "tags": [
+      "mascota"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐕",
+    "description": "perro",
+    "category": "animales",
+    "aliases": [
+      "perro2"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦮",
+    "description": "perro guía",
+    "category": "animales",
+    "aliases": [
+      "perro guía"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🐕‍🦺",
+    "description": "perro de servicio",
+    "category": "animales",
+    "aliases": [
+      "perro de servicio"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🐩",
+    "description": "caniche",
+    "category": "animales",
+    "aliases": [
+      "caniche"
+    ],
+    "tags": [
+      "perro"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐺",
+    "description": "lobo",
+    "category": "animales",
+    "aliases": [
+      "lobo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦊",
+    "description": "zorro",
+    "category": "animales",
+    "aliases": [
+      "cara_zorra"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🦝",
+    "description": "mapache",
+    "category": "animales",
+    "aliases": [
+      "mapache"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🐱",
+    "description": "Cara de gato",
+    "category": "animales",
+    "aliases": [
+      "gato"
+    ],
+    "tags": [
+      "mascota"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐈",
+    "description": "gato",
+    "category": "animales",
+    "aliases": [
+      "gato2"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐈‍⬛",
+    "description": "gato negro",
+    "category": "animales",
+    "aliases": [
+      "gato negro"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🦁",
+    "description": "león",
+    "category": "animales",
+    "aliases": [
+      "león"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🐯",
+    "description": "cara de tigre",
+    "category": "animales",
+    "aliases": [
+      "tigre"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐅",
+    "description": "tigre",
+    "category": "animales",
+    "aliases": [
+      "tigre2"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐆",
+    "description": "leopardo",
+    "category": "animales",
+    "aliases": [
+      "leopardo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐴",
+    "description": "cara de caballo",
+    "category": "animales",
+    "aliases": [
+      "caballo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🫎",
+    "description": "alce",
+    "category": "animales",
+    "aliases": [
+      "alce"
+    ],
+    "tags": [
+      "Canadá"
+    ],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "🫏",
+    "description": "burro",
+    "category": "animales",
+    "aliases": [
+      "burro"
+    ],
+    "tags": [
+      "mula"
+    ],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "🐎",
+    "description": "caballo",
+    "category": "animales",
+    "aliases": [
+      "caballo de carreras"
+    ],
+    "tags": [
+      "velocidad"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦄",
+    "description": "unicornio",
+    "category": "animales",
+    "aliases": [
+      "unicornio"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🦓",
+    "description": "cebra",
+    "category": "animales",
+    "aliases": [
+      "cebra"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🦌",
+    "description": "ciervo",
+    "category": "animales",
+    "aliases": [
+      "ciervo"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🦬",
+    "description": "bisonte",
+    "category": "animales",
+    "aliases": [
+      "bisonte"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🐮",
+    "description": "cara de vaca",
+    "category": "animales",
+    "aliases": [
+      "vaca"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐂",
+    "description": "buey",
+    "category": "animales",
+    "aliases": [
+      "buey"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐃",
+    "description": "búfalo de agua",
+    "category": "animales",
+    "aliases": [
+      "búfalo de agua"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐄",
+    "description": "vaca",
+    "category": "animales",
+    "aliases": [
+      "vaca2"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐷",
+    "description": "cara de puerco",
+    "category": "animales",
+    "aliases": [
+      "cerdo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐖",
+    "description": "cerdo",
+    "category": "animales",
+    "aliases": [
+      "cerdo2"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐗",
+    "description": "Jabali",
+    "category": "animales",
+    "aliases": [
+      "Jabali"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐽",
+    "description": "nariz de cerdo",
+    "category": "animales",
+    "aliases": [
+      "nariz de cerdo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐏",
+    "description": "RAM",
+    "category": "animales",
+    "aliases": [
+      "RAM"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐑",
+    "description": "Ewe",
+    "category": "animales",
+    "aliases": [
+      "oveja"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐐",
+    "description": "cabra",
+    "category": "animales",
+    "aliases": [
+      "cabra"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐪",
+    "description": "camello",
+    "category": "animales",
+    "aliases": [
+      "dromedario_camello"
+    ],
+    "tags": [
+      "desierto"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐫",
+    "description": "camello de dos jorobas",
+    "category": "animales",
+    "aliases": [
+      "camello"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦙",
+    "description": "llama",
+    "category": "animales",
+    "aliases": [
+      "llama"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🦒",
+    "description": "jirafa",
+    "category": "animales",
+    "aliases": [
+      "jirafa"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🐘",
+    "description": "elefante",
+    "category": "animales",
+    "aliases": [
+      "elefante"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦣",
+    "description": "mamut",
+    "category": "animales",
+    "aliases": [
+      "mamut"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🦏",
+    "description": "rinoceronte",
+    "category": "animales",
+    "aliases": [
+      "rinoceronte"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🦛",
+    "description": "hipopótamo",
+    "category": "animales",
+    "aliases": [
+      "hipopótamo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🐭",
+    "description": "cara de ratón",
+    "category": "animales",
+    "aliases": [
+      "ratón"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐁",
+    "description": "ratón",
+    "category": "animales",
+    "aliases": [
+      "ratón2"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐀",
+    "description": "rata",
+    "category": "animales",
+    "aliases": [
+      "rata"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐹",
+    "description": "hámster",
+    "category": "animales",
+    "aliases": [
+      "hámster"
+    ],
+    "tags": [
+      "mascota"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐰",
+    "description": "cara de conejo",
+    "category": "animales",
+    "aliases": [
+      "conejo"
+    ],
+    "tags": [
+      "conejito"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐇",
+    "description": "conejo",
+    "category": "animales",
+    "aliases": [
+      "conejo2"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐿️",
+    "description": "ardilla listada",
+    "category": "animales",
+    "aliases": [
+      "ardilla listada"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🦫",
+    "description": "castor",
+    "category": "animales",
+    "aliases": [
+      "castor"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🦔",
+    "description": "erizo",
+    "category": "animales",
+    "aliases": [
+      "erizo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🦇",
+    "description": "murciélago",
+    "category": "animales",
+    "aliases": [
+      "murciélago"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🐻",
+    "description": "oso",
+    "category": "animales",
+    "aliases": [
+      "oso"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐻‍❄️",
+    "description": "oso polar",
+    "category": "animales",
+    "aliases": [
+      "oso polar"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🐨",
+    "description": "coala",
+    "category": "animales",
+    "aliases": [
+      "coala"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐼",
+    "description": "panda",
+    "category": "animales",
+    "aliases": [
+      "cara_panda"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦥",
+    "description": "ranura",
+    "category": "animales",
+    "aliases": [
+      "ranura"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🦦",
+    "description": "nutria",
+    "category": "animales",
+    "aliases": [
+      "nutria"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🦨",
+    "description": "zorrillo",
+    "category": "animales",
+    "aliases": [
+      "zorrillo"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🦘",
+    "description": "canguro",
+    "category": "animales",
+    "aliases": [
+      "canguro"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🦡",
+    "description": "tejón",
+    "category": "animales",
+    "aliases": [
+      "tejón"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🐾",
+    "description": "huellas de garras",
+    "category": "animales",
+    "aliases": [
+      "pies",
+      "huellas de garras"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦃",
+    "description": "pavo",
+    "category": "animales",
+    "aliases": [
+      "pavo"
+    ],
+    "tags": [
+      "acción de gracias"
+    ],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🐔",
+    "description": "pollo",
+    "category": "animales",
+    "aliases": [
+      "pollo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐓",
+    "description": "gallo",
+    "category": "animales",
+    "aliases": [
+      "gallo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐣",
+    "description": "polluelo para incubar",
+    "category": "animales",
+    "aliases": [
+      "pollito_eclosionando"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐤",
+    "description": "pollito",
+    "category": "animales",
+    "aliases": [
+      "pollito"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐥",
+    "description": "pollito mirando hacia el frente",
+    "category": "animales",
+    "aliases": [
+      "polluelo_eclosionado"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐦",
+    "description": "pájaro",
+    "category": "animales",
+    "aliases": [
+      "pájaro"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐧",
+    "description": "pingüino",
+    "category": "animales",
+    "aliases": [
+      "pingüino"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕊️",
+    "description": "paloma",
+    "category": "animales",
+    "aliases": [
+      "paloma"
+    ],
+    "tags": [
+      "paz"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🦅",
+    "description": "águila",
+    "category": "animales",
+    "aliases": [
+      "águila"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🦆",
+    "description": "pato",
+    "category": "animales",
+    "aliases": [
+      "pato"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🦢",
+    "description": "cisne",
+    "category": "animales",
+    "aliases": [
+      "cisne"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🦉",
+    "description": "búho",
+    "category": "animales",
+    "aliases": [
+      "búho"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🦤",
+    "description": "vejestorio",
+    "category": "animales",
+    "aliases": [
+      "vejestorio"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🪶",
+    "description": "pluma",
+    "category": "animales",
+    "aliases": [
+      "pluma"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🦩",
+    "description": "flamenco",
+    "category": "animales",
+    "aliases": [
+      "flamenco"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🦚",
+    "description": "pavo real",
+    "category": "animales",
+    "aliases": [
+      "pavo real"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🦜",
+    "description": "loro",
+    "category": "animales",
+    "aliases": [
+      "loro"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🪽",
+    "description": "ala",
+    "category": "animales",
+    "aliases": [
+      "ala"
+    ],
+    "tags": [
+      "volar"
+    ],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "🐦‍⬛",
+    "description": "pájaro negro",
+    "category": "animales",
+    "aliases": [
+      "mirlo"
+    ],
+    "tags": [],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "🪿",
+    "description": "ganso",
+    "category": "animales",
+    "aliases": [
+      "ganso"
+    ],
+    "tags": [
+      "bocinazo"
+    ],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "🐸",
+    "description": "rana",
+    "category": "animales",
+    "aliases": [
+      "rana"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐊",
+    "description": "cocodrilo",
+    "category": "animales",
+    "aliases": [
+      "cocodrilo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐢",
+    "description": "tortuga",
+    "category": "animales",
+    "aliases": [
+      "tortuga"
+    ],
+    "tags": [
+      "lento"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦎",
+    "description": "lagarto",
+    "category": "animales",
+    "aliases": [
+      "lagarto"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🐍",
+    "description": "serpiente",
+    "category": "animales",
+    "aliases": [
+      "serpiente"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐲",
+    "description": "cara de dragón",
+    "category": "animales",
+    "aliases": [
+      "cara_dragón"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐉",
+    "description": "continuar",
+    "category": "animales",
+    "aliases": [
+      "continuar"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦕",
+    "description": "saurópodo",
+    "category": "animales",
+    "aliases": [
+      "saurópodo"
+    ],
+    "tags": [
+      "dinosaurio"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🦖",
+    "description": "Tirano saurio Rex",
+    "category": "animales",
+    "aliases": [
+      "tirano saurio Rex"
+    ],
+    "tags": [
+      "dinosaurio"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🐳",
+    "description": "ballena chorreando",
+    "category": "animales",
+    "aliases": [
+      "ballena"
+    ],
+    "tags": [
+      "mar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐋",
+    "description": "ballena",
+    "category": "animales",
+    "aliases": [
+      "ballena2"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐬",
+    "description": "delfín",
+    "category": "animales",
+    "aliases": [
+      "delfín",
+      "aleta"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦭",
+    "description": "sello",
+    "category": "animales",
+    "aliases": [
+      "sello"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🐟",
+    "description": "pez",
+    "category": "animales",
+    "aliases": [
+      "pez"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐠",
+    "description": "pez tropical",
+    "category": "animales",
+    "aliases": [
+      "pez tropical"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐡",
+    "description": "pez globo",
+    "category": "animales",
+    "aliases": [
+      "pez globo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦈",
+    "description": "tiburón",
+    "category": "animales",
+    "aliases": [
+      "tiburón"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🐙",
+    "description": "pulpo",
+    "category": "animales",
+    "aliases": [
+      "pulpo"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐚",
+    "description": "concha espiral",
+    "category": "animales",
+    "aliases": [
+      "caparazón"
+    ],
+    "tags": [
+      "mar",
+      "playa"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪸",
+    "description": "coral",
+    "category": "animales",
+    "aliases": [
+      "coral"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🪼",
+    "description": "Medusa",
+    "category": "animales",
+    "aliases": [
+      "Medusa"
+    ],
+    "tags": [],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "🐌",
+    "description": "caracol",
+    "category": "animales",
+    "aliases": [
+      "caracol"
+    ],
+    "tags": [
+      "lento"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦋",
+    "description": "mariposa",
+    "category": "animales",
+    "aliases": [
+      "mariposa"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🐛",
+    "description": "bicho",
+    "category": "animales",
+    "aliases": [
+      "bicho"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐜",
+    "description": "hormiga",
+    "category": "animales",
+    "aliases": [
+      "hormiga"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🐝",
+    "description": "abeja",
+    "category": "animales",
+    "aliases": [
+      "abeja",
+      "abeja"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪲",
+    "description": "escarabajo",
+    "category": "animales",
+    "aliases": [
+      "escarabajo"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🐞",
+    "description": "mariquita",
+    "category": "animales",
+    "aliases": [
+      "dama_escarabajo"
+    ],
+    "tags": [
+      "bicho"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🦗",
+    "description": "Grillo",
+    "category": "animales",
+    "aliases": [
+      "Grillo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🪳",
+    "description": "cucaracha",
+    "category": "animales",
+    "aliases": [
+      "cucaracha"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🕷️",
+    "description": "araña",
+    "category": "animales",
+    "aliases": [
+      "araña"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🕸️",
+    "description": "telaraña",
+    "category": "animales",
+    "aliases": [
+      "telaraña"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🦂",
+    "description": "escorpión",
+    "category": "animales",
+    "aliases": [
+      "escorpión"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🦟",
+    "description": "mosquito",
+    "category": "animales",
+    "aliases": [
+      "mosquito"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🪰",
+    "description": "volar",
+    "category": "animales",
+    "aliases": [
+      "volar"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🪱",
+    "description": "gusano",
+    "category": "animales",
+    "aliases": [
+      "gusano"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🦠",
+    "description": "microbio",
+    "category": "animales",
+    "aliases": [
+      "microbio"
+    ],
+    "tags": [
+      "germen"
+    ],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "💐",
+    "description": "ramo",
+    "category": "animales",
+    "aliases": [
+      "ramo"
+    ],
+    "tags": [
+      "flores"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌸",
+    "description": "flor de cerezo",
+    "category": "animales",
+    "aliases": [
+      "flor de cerezo"
+    ],
+    "tags": [
+      "flor",
+      "primavera"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "💮",
+    "description": "flor blanca",
+    "category": "animales",
+    "aliases": [
+      "flor blanca"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪷",
+    "description": "loto",
+    "category": "animales",
+    "aliases": [
+      "loto"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🏵️",
+    "description": "rosetón",
+    "category": "animales",
+    "aliases": [
+      "rosetón"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌹",
+    "description": "rosa",
+    "category": "animales",
+    "aliases": [
+      "rosa"
+    ],
+    "tags": [
+      "flor"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥀",
+    "description": "flor marchita",
+    "category": "animales",
+    "aliases": [
+      "flor_marchitada"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🌺",
+    "description": "hibisco",
+    "category": "animales",
+    "aliases": [
+      "hibisco"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌻",
+    "description": "girasol",
+    "category": "animales",
+    "aliases": [
+      "girasol"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌼",
+    "description": "florecer",
+    "category": "animales",
+    "aliases": [
+      "florecer"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌷",
+    "description": "tulipán",
+    "category": "animales",
+    "aliases": [
+      "tulipán"
+    ],
+    "tags": [
+      "flor"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪻",
+    "description": "jacinto",
+    "category": "animales",
+    "aliases": [
+      "jacinto"
+    ],
+    "tags": [],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "🌱",
+    "description": "planta de semillero",
+    "category": "animales",
+    "aliases": [
+      "planta de semillero"
+    ],
+    "tags": [
+      "planta"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪴",
+    "description": "planta en maceta",
+    "category": "animales",
+    "aliases": [
+      "planta en maceta"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🌲",
+    "description": "árbol de hoja perenne",
+    "category": "animales",
+    "aliases": [
+      "árbol de hoja perenne"
+    ],
+    "tags": [
+      "madera"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌳",
+    "description": "árbol de hoja caduca",
+    "category": "animales",
+    "aliases": [
+      "árbol_caducifolio"
+    ],
+    "tags": [
+      "madera"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌴",
+    "description": "palmera",
+    "category": "animales",
+    "aliases": [
+      "palmera"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌵",
+    "description": "cactus",
+    "category": "animales",
+    "aliases": [
+      "cactus"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌾",
+    "description": "gavilla de arroz",
+    "category": "animales",
+    "aliases": [
+      "oreja_de_arroz"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌿",
+    "description": "hierba",
+    "category": "animales",
+    "aliases": [
+      "hierba"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "☘️",
+    "description": "trébol",
+    "category": "animales",
+    "aliases": [
+      "trébol"
+    ],
+    "tags": [],
+    "unicode_version": "4.1",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🍀",
+    "description": "trébol de cuatro hojas",
+    "category": "animales",
+    "aliases": [
+      "trébol de cuatro hojas"
+    ],
+    "tags": [
+      "suerte"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍁",
+    "description": "hoja de arce",
+    "category": "animales",
+    "aliases": [
+      "hoja de arce"
+    ],
+    "tags": [
+      "Canadá"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍂",
+    "description": "hoja caida",
+    "category": "animales",
+    "aliases": [
+      "hoja_caida"
+    ],
+    "tags": [
+      "otoño"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍃",
+    "description": "hojas ondeando en el viento",
+    "category": "animales",
+    "aliases": [
+      "hojas"
+    ],
+    "tags": [
+      "hoja"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪹",
+    "description": "nido vacío",
+    "category": "animales",
+    "aliases": [
+      "nido vacío"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🪺",
+    "description": "nido con huevos",
+    "category": "animales",
+    "aliases": [
+      "nido_con_huevos"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🍄",
+    "description": "champiñón",
+    "category": "animales",
+    "aliases": [
+      "champiñón"
+    ],
+    "tags": [
+      "hongo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  }
+]

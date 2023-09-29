@@ -28,6 +28,7 @@ import app.regate.domain.observers.ObserveUser
 import app.regate.domain.observers.ObserveUsersGrupo
 import app.regate.extensions.combine
 import app.regate.models.Message
+import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
 import app.regate.util.getLongUuid
 import io.ktor.client.HttpClient
@@ -65,6 +66,7 @@ class ChatGrupoViewModel(
     private val grupoRepository:GrupoRepository,
     private val usersRepository: UsersRepository,
     private val cupoRepository: CupoRepository,
+    private val preferences:AppPreferences,
 //    private val profileDao: ProfileDao,
     private val messageProfileDao: MessageProfileDao,
     observeUser: ObserveUser,
@@ -237,6 +239,7 @@ class ChatGrupoViewModel(
     fun getData(){
         viewModelScope.launch {
             try {
+
                 grupoRepository.getUsersGroup(grupoId)
 //                grupoRepository.getMessagesGrupo(grupoId)
             }catch(e:SerializationException){
@@ -313,6 +316,13 @@ class ChatGrupoViewModel(
                 //TODO()
             }
         }
+    }
+
+    fun getKeyBoardHeight():Int{
+        return preferences.keyBoardHeight
+    }
+    fun setKeyboardHeight(height:Int){
+        preferences.keyBoardHeight = height
     }
 
     fun resetScroll(){

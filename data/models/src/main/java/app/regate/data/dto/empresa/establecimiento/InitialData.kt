@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class InitialData(
     val establecimientos:List<EstablecimientoDto>,
-    val recommended:List<EstablecimientoDto>,
+    val recommended:List<EstablecimientoDto>? = null,
     val near:List<EstablecimientoDto>? = null,
     val salas:List<SalaDto>
     )

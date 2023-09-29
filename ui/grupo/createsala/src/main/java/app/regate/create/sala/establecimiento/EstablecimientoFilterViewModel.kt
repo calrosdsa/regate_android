@@ -75,7 +75,7 @@ class EstablecimientoFilterViewModel(
           val addressDevice = converter.getAddress()
           filterData.tryEmit(
               filterData.value.copy(
-                  categories = categories,
+                  categories = categories?: emptyList(),
                   lng = addressDevice?.longitud.toString(),
                   lat = addressDevice?.latitud.toString(),
                   isInit = true

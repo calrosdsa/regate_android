@@ -1,0 +1,1007 @@
+[
+  {
+    "emoji": "🎃",
+    "description": "jack-o-linterna",
+    "category": "Actividades",
+    "aliases": [
+      "jack_o_lantern"
+    ],
+    "tags": [
+      "Víspera de Todos los Santos"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎄",
+    "description": "árbol de Navidad",
+    "category": "Actividades",
+    "aliases": [
+      "árbol de Navidad"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎆",
+    "description": "fuegos artificiales",
+    "category": "Actividades",
+    "aliases": [
+      "fuegos artificiales"
+    ],
+    "tags": [
+      "festival",
+      "celebracion"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎇",
+    "description": "bengala",
+    "category": "Actividades",
+    "aliases": [
+      "bengala"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🧨",
+    "description": "petardo",
+    "category": "Actividades",
+    "aliases": [
+      "petardo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "✨",
+    "description": "brilla",
+    "category": "Actividades",
+    "aliases": [
+      "brilla"
+    ],
+    "tags": [
+      "brillante"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎈",
+    "description": "globo",
+    "category": "Actividades",
+    "aliases": [
+      "globo"
+    ],
+    "tags": [
+      "fiesta",
+      "cumpleaños"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎉",
+    "description": "aguafiestas",
+    "category": "Actividades",
+    "aliases": [
+      "tada"
+    ],
+    "tags": [
+      "hurra",
+      "fiesta"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎊",
+    "description": "bola de confeti",
+    "category": "Actividades",
+    "aliases": [
+      "bola_confeti"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎋",
+    "description": "árbol de tanabata",
+    "category": "Actividades",
+    "aliases": [
+      "árbol_tanabata"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎍",
+    "description": "decoración de pino",
+    "category": "Actividades",
+    "aliases": [
+      "bambú"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎎",
+    "description": "muñecas japonesas",
+    "category": "Actividades",
+    "aliases": [
+      "muñecas"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎏",
+    "description": "serpentina de carpa",
+    "category": "Actividades",
+    "aliases": [
+      "banderas"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎐",
+    "description": "carillón de viento",
+    "category": "Actividades",
+    "aliases": [
+      "carillón de viento"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎑",
+    "description": "ceremonia de observación de la luna",
+    "category": "Actividades",
+    "aliases": [
+      "escena_arroz"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🧧",
+    "description": "sobre rojo",
+    "category": "Actividades",
+    "aliases": [
+      "sobre rojo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🎀",
+    "description": "cinta",
+    "category": "Actividades",
+    "aliases": [
+      "cinta"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎁",
+    "description": "regalo envuelto",
+    "category": "Actividades",
+    "aliases": [
+      "regalo"
+    ],
+    "tags": [
+      "presente",
+      "cumpleaños",
+      "Navidad"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎗️",
+    "description": "cinta recordatoria",
+    "category": "Actividades",
+    "aliases": [
+      "cinta_recordatorio"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🎟️",
+    "description": "boletos de admisión",
+    "category": "Actividades",
+    "aliases": [
+      "Entradas"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🎫",
+    "description": "boleto",
+    "category": "Actividades",
+    "aliases": [
+      "boleto"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎖️",
+    "description": "medalla militar",
+    "category": "Actividades",
+    "aliases": [
+      "medalla_militar"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏆",
+    "description": "trofeo",
+    "category": "Actividades",
+    "aliases": [
+      "trofeo"
+    ],
+    "tags": [
+      "otorgar",
+      "concurso",
+      "ganador"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏅",
+    "description": "medalla deportiva",
+    "category": "Actividades",
+    "aliases": [
+      "medalla_deportes"
+    ],
+    "tags": [
+      "oro",
+      "ganador"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🥇",
+    "description": "medalla del 1er lugar",
+    "category": "Actividades",
+    "aliases": [
+      "1er_lugar_medalla"
+    ],
+    "tags": [
+      "oro"
+    ],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🥈",
+    "description": "medalla de 2do lugar",
+    "category": "Actividades",
+    "aliases": [
+      "2do_lugar_medalla"
+    ],
+    "tags": [
+      "plata"
+    ],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🥉",
+    "description": "medalla del 3er lugar",
+    "category": "Actividades",
+    "aliases": [
+      "3er_lugar_medalla"
+    ],
+    "tags": [
+      "bronce"
+    ],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "⚽",
+    "description": "balón de fútbol",
+    "category": "Actividades",
+    "aliases": [
+      "fútbol"
+    ],
+    "tags": [
+      "Deportes"
+    ],
+    "unicode_version": "5.2",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⚾",
+    "description": "béisbol",
+    "category": "Actividades",
+    "aliases": [
+      "béisbol"
+    ],
+    "tags": [
+      "Deportes"
+    ],
+    "unicode_version": "5.2",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥎",
+    "description": "sofbol",
+    "category": "Actividades",
+    "aliases": [
+      "sofbol"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🏀",
+    "description": "baloncesto",
+    "category": "Actividades",
+    "aliases": [
+      "baloncesto"
+    ],
+    "tags": [
+      "Deportes"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏐",
+    "description": "vóleibol",
+    "category": "Actividades",
+    "aliases": [
+      "vóleibol"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏈",
+    "description": "fútbol americano",
+    "category": "Actividades",
+    "aliases": [
+      "fútbol americano"
+    ],
+    "tags": [
+      "Deportes"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏉",
+    "description": "fútbol rugby",
+    "category": "Actividades",
+    "aliases": [
+      "rugby_futbol"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎾",
+    "description": "tenis",
+    "category": "Actividades",
+    "aliases": [
+      "tenis"
+    ],
+    "tags": [
+      "Deportes"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥏",
+    "description": "disco volador",
+    "category": "Actividades",
+    "aliases": [
+      "disco_volador"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🎳",
+    "description": "bolos",
+    "category": "Actividades",
+    "aliases": [
+      "bolos"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🏏",
+    "description": "juego de cricket",
+    "category": "Actividades",
+    "aliases": [
+      "juego_cricket"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏑",
+    "description": "hockey sobre hierba",
+    "category": "Actividades",
+    "aliases": [
+      "hockey sobre hierba"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏒",
+    "description": "hockey sobre hielo",
+    "category": "Actividades",
+    "aliases": [
+      "hockey sobre hielo"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🥍",
+    "description": "lacrosse",
+    "category": "Actividades",
+    "aliases": [
+      "lacrosse"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🏓",
+    "description": "ping pong",
+    "category": "Actividades",
+    "aliases": [
+      "ping pong"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🏸",
+    "description": "bádminton",
+    "category": "Actividades",
+    "aliases": [
+      "bádminton"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🥊",
+    "description": "guante de boxeo",
+    "category": "Actividades",
+    "aliases": [
+      "guante de boxeo"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🥋",
+    "description": "uniforme de artes marciales",
+    "category": "Actividades",
+    "aliases": [
+      "uniforme_de_artes_marciales"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🥅",
+    "description": "portería neta",
+    "category": "Actividades",
+    "aliases": [
+      "meta_net"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "⛳",
+    "description": "bandera en el agujero",
+    "category": "Actividades",
+    "aliases": [
+      "golf"
+    ],
+    "tags": [],
+    "unicode_version": "5.2",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "⛸️",
+    "description": "patinar sobre hielo",
+    "category": "Actividades",
+    "aliases": [
+      "patinar sobre hielo"
+    ],
+    "tags": [
+      "Patinaje"
+    ],
+    "unicode_version": "5.2",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🎣",
+    "description": "caña de pescar",
+    "category": "Actividades",
+    "aliases": [
+      "caña_de_pesca_y_pescado"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🤿",
+    "description": "máscara de buceo",
+    "category": "Actividades",
+    "aliases": [
+      "máscara de buceo"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🎽",
+    "description": "camisa para correr",
+    "category": "Actividades",
+    "aliases": [
+      "corriendo_camisa_con_faja"
+    ],
+    "tags": [
+      "maratón"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎿",
+    "description": "esquís",
+    "category": "Actividades",
+    "aliases": [
+      "esquí"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🛷",
+    "description": "trineo",
+    "category": "Actividades",
+    "aliases": [
+      "trineo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥌",
+    "description": "piedra que se encrespa",
+    "category": "Actividades",
+    "aliases": [
+      "piedra_rizada"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🎯",
+    "description": "diana",
+    "category": "Actividades",
+    "aliases": [
+      "dardo"
+    ],
+    "tags": [
+      "objetivo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪀",
+    "description": "yoyó",
+    "category": "Actividades",
+    "aliases": [
+      "yoyó"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🪁",
+    "description": "cometa",
+    "category": "Actividades",
+    "aliases": [
+      "cometa"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🔫",
+    "description": "pistola de agua",
+    "category": "Actividades",
+    "aliases": [
+      "pistola"
+    ],
+    "tags": [
+      "disparar",
+      "arma"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎱",
+    "description": "piscina 8 bolas",
+    "category": "Actividades",
+    "aliases": [
+      "bola 8"
+    ],
+    "tags": [
+      "piscina",
+      "billar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🔮",
+    "description": "bola de cristal",
+    "category": "Actividades",
+    "aliases": [
+      "bola de cristal"
+    ],
+    "tags": [
+      "fortuna"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🪄",
+    "description": "varita mágica",
+    "category": "Actividades",
+    "aliases": [
+      "varita mágica"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🎮",
+    "description": "videojuego",
+    "category": "Actividades",
+    "aliases": [
+      "videojuego"
+    ],
+    "tags": [
+      "jugar",
+      "controlador",
+      "consola"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🕹️",
+    "description": "palanca de mando",
+    "category": "Actividades",
+    "aliases": [
+      "palanca de mando"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🎰",
+    "description": "maquina de casino",
+    "category": "Actividades",
+    "aliases": [
+      "maquina de casino"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎲",
+    "description": "morir juego",
+    "category": "Actividades",
+    "aliases": [
+      "juego_die"
+    ],
+    "tags": [
+      "dado",
+      "juego"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🧩",
+    "description": "pieza de puzzle",
+    "category": "Actividades",
+    "aliases": [
+      "rompecabezas"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧸",
+    "description": "oso de peluche",
+    "category": "Actividades",
+    "aliases": [
+      "oso de peluche"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🪅",
+    "description": "piñata",
+    "category": "Actividades",
+    "aliases": [
+      "piñata"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🪩",
+    "description": "bola de espejos",
+    "category": "Actividades",
+    "aliases": [
+      "bola de espejos"
+    ],
+    "tags": [
+      "disco",
+      "fiesta"
+    ],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🪆",
+    "description": "muñecas de anidación",
+    "category": "Actividades",
+    "aliases": [
+      "muñecas_anidadas"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "♠️",
+    "description": "traje de pala",
+    "category": "Actividades",
+    "aliases": [
+      "espadas"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "♥️",
+    "description": "traje de corazon",
+    "category": "Actividades",
+    "aliases": [
+      "corazones"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "♦️",
+    "description": "traje de diamante",
+    "category": "Actividades",
+    "aliases": [
+      "diamantes"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "♣️",
+    "description": "traje de club",
+    "category": "Actividades",
+    "aliases": [
+      "clubs"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "♟️",
+    "description": "peón de ajedrez",
+    "category": "Actividades",
+    "aliases": [
+      "peón_ajedrez"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🃏",
+    "description": "bufón",
+    "category": "Actividades",
+    "aliases": [
+      "bromista_negro"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🀄",
+    "description": "dragón rojo mahjong",
+    "category": "Actividades",
+    "aliases": [
+      "dominó chino"
+    ],
+    "tags": [],
+    "unicode_version": "",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎴",
+    "description": "naipes de flores",
+    "category": "Actividades",
+    "aliases": [
+      "flor_jugando_cartas"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎭",
+    "description": "las artes escénicas",
+    "category": "Actividades",
+    "aliases": [
+      "las artes escénicas"
+    ],
+    "tags": [
+      "teatro",
+      "drama"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🖼️",
+    "description": "Foto enmarcada",
+    "category": "Actividades",
+    "aliases": [
+      "Foto enmarcada"
+    ],
+    "tags": [],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🎨",
+    "description": "paleta del artista",
+    "category": "Actividades",
+    "aliases": [
+      "arte"
+    ],
+    "tags": [
+      "diseño",
+      "pintar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🧵",
+    "description": "hilo",
+    "category": "Actividades",
+    "aliases": [
+      "hilo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🪡",
+    "description": "aguja de coser",
+    "category": "Actividades",
+    "aliases": [
+      "aguja de coser"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🧶",
+    "description": "hilo",
+    "category": "Actividades",
+    "aliases": [
+      "hilo"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🪢",
+    "description": "nudo",
+    "category": "Actividades",
+    "aliases": [
+      "nudo"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  }
+]

@@ -44,6 +44,8 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
 
   private final SharedSQLiteStatement __preparedStmtOfUpdateUnreadNotifications;
 
+  private final SharedSQLiteStatement __preparedStmtOfDeleteAll;
+
   private final EntityUpsertionAdapter<Notification> __upsertionAdapterOfNotification;
 
   public RoomNotificationDao_Impl(@NonNull final RoomDatabase __db) {
@@ -110,6 +112,14 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
       @NonNull
       public String createQuery() {
         final String _query = "update notification set read = 1";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "delete from notification";
         return _query;
       }
     };
@@ -254,6 +264,26 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
         } finally {
           __db.endTransaction();
           __preparedStmtOfUpdateUnreadNotifications.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object deleteAll(final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteAll.acquire();
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteAll.release(_stmt);
         }
       }
     }, continuation);

@@ -49,7 +49,7 @@ import app.regate.common.compose.ui.PosterCardImage
 import app.regate.common.compose.ui.SimpleTopBar
 import app.regate.common.compose.viewModel
 import app.regate.data.dto.empresa.grupo.GrupoMessageData
-import app.regate.data.dto.empresa.grupo.GrupoMessageInstalacion
+import app.regate.data.dto.empresa.grupo.MessageInstalacionPayload
 import app.regate.data.dto.empresa.grupo.GrupoMessageType
 import app.regate.models.Grupo
 import kotlinx.serialization.decodeFromString
@@ -58,6 +58,8 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import kotlin.time.Duration.Companion.minutes
 import app.regate.common.resources.R
+import app.regate.data.dto.empresa.grupo.MessageSalaPayload
+
 typealias MyGroups = @Composable (
     navigateUp:()->Unit,
     navigateToChatGrupo:(Long,String)->Unit
@@ -233,12 +235,12 @@ internal fun SharedMessage(
     } catch (e: Exception) {
         null
     }
+    val formatter = LocalAppDateFormatter.current
     messageType?.let { type ->
         when (type.type_data) {
             GrupoMessageType.INSTALACION.ordinal -> {
-                val formatter = LocalAppDateFormatter.current
                 val instalacion = try {
-                    Json.decodeFromString<GrupoMessageInstalacion>(type.data)
+                    Json.decodeFromString<MessageInstalacionPayload>(type.data)
                 } catch (e: Exception) {
                     null
                 }
@@ -292,6 +294,53 @@ internal fun SharedMessage(
 
                 }
             }
+            GrupoMessageType.SALA.ordinal -> {
+                val sala = try {
+                    Json.decodeFromString<MessageSalaPayload>(type.data)
+                } catch (e: Exception) {
+                    null
+                }
+                if (sala != null) {
+                    Column(modifier = Modifier
+                        .padding(5.dp)
+                        .fillMaxWidth()
+                        .clickable {
+//                        navigateToInstalacionReserva(instalacion.id.toLong(),instalacion.establecimiento_id.toLong(),instalacion.cupos)
+                        }) {
+                        Row(modifier = Modifier.fillMaxWidth()) {
+
+                            Column() {
+
+                                Text(
+                                    text = sala.titulo,
+                                    style = MaterialTheme.typography.labelLarge
+                                )
+                                Text(
+                                    text = "${stringResource(id = R.string.total_price)}: ${sala.precio}",
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+                                Text(
+                                    text = "${stringResource(id = R.string.precio_per_person)}: ${sala.precio_cupo}",
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+                                Text(
+                                    text = stringResource(id = R.string.time_game_will_played),
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+                                Text(
+                                    text = formatter.formatShortDate(sala.start) +
+                                            " ${formatter.formatShortTime(sala.start)} a ${
+                                                formatter.formatShortTime(sala.end,30)
+                                            }",
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+                            }
+                        }
+                        Divider()
+                    }
+                }
+            }
+
         }
     }
 }

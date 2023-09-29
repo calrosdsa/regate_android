@@ -33,7 +33,7 @@ class AccountRepository(
     private val myGroupsDao: MyGroupsDao,
     private val favoriteEstablecimientoDao: FavoriteEstablecimientoDao,
     private val notificationDao: NotificationDao,
-    private val reservaDao: ReservaDao
+    private val reservaDao: ReservaDao,
 //    private val establecimientoDao: EstablecimientoDao
 ){
     suspend fun resendEmailVerification(id: Long){
@@ -78,18 +78,30 @@ class AccountRepository(
         ))
     }
     suspend fun  login(d: LoginRequest) {
+        val fcmToken = appPreferences.fcmToken
+        val data = d.copy(fcm_token = fcmToken)
         withContext(dispatchers.computation){
-          accountDataSourceImpl.login(d).also {
-            updateUser(dtoToUser.map(it.user))
-            insertProfile(it.user)
+            try {
+                accountDataSourceImpl.login(data).also {
+                    updateUser(dtoToUser.map(it.user))
+                    insertProfile(it.user)
+                }
+            }catch (e:Exception){
+                //TODO()
         }
         }
     }
     suspend fun signUp(d:SignUpRequest){
+        val fcmToken = appPreferences.fcmToken
+        val data = d.copy(fcm_token = fcmToken)
         withContext(dispatchers.computation){
-            accountDataSourceImpl.signUp(d).also {
+            try{
+            accountDataSourceImpl.signUp(data).also {
                 updateUser(dtoToUser.map(it.user))
                 insertProfile(it.user)
+            }
+            }catch(e:Exception){
+                //TODO()
             }
         }
     }

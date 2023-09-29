@@ -1,0 +1,1538 @@
+[
+  {
+    "emoji": "🍇",
+    "description": "uvas",
+    "category": "Alimento",
+    "aliases": [
+      "uvas"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍈",
+    "description": "melón",
+    "category": "Alimento",
+    "aliases": [
+      "melón"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍉",
+    "description": "sandía",
+    "category": "Alimento",
+    "aliases": [
+      "sandía"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍊",
+    "description": "Mandarina",
+    "category": "Alimento",
+    "aliases": [
+      "Mandarina",
+      "naranja",
+      "mandarín"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍋",
+    "description": "limón",
+    "category": "Alimento",
+    "aliases": [
+      "limón"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍌",
+    "description": "banana",
+    "category": "Alimento",
+    "aliases": [
+      "banana"
+    ],
+    "tags": [
+      "fruta"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍍",
+    "description": "piña",
+    "category": "Alimento",
+    "aliases": [
+      "piña"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥭",
+    "description": "mango",
+    "category": "Alimento",
+    "aliases": [
+      "mango"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🍎",
+    "description": "manzana roja",
+    "category": "Alimento",
+    "aliases": [
+      "manzana"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍏",
+    "description": "manzana verde",
+    "category": "Alimento",
+    "aliases": [
+      "manzana verde"
+    ],
+    "tags": [
+      "fruta"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍐",
+    "description": "pera",
+    "category": "Alimento",
+    "aliases": [
+      "pera"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍑",
+    "description": "durazno",
+    "category": "Alimento",
+    "aliases": [
+      "durazno"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍒",
+    "description": "cerezas",
+    "category": "Alimento",
+    "aliases": [
+      "cerezas"
+    ],
+    "tags": [
+      "fruta"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍓",
+    "description": "fresa",
+    "category": "Alimento",
+    "aliases": [
+      "fresa"
+    ],
+    "tags": [
+      "fruta"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🫐",
+    "description": "arándanos",
+    "category": "Alimento",
+    "aliases": [
+      "arándanos"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🥝",
+    "description": "kiwi",
+    "category": "Alimento",
+    "aliases": [
+      "kiwi_fruta"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🍅",
+    "description": "tomate",
+    "category": "Alimento",
+    "aliases": [
+      "tomate"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🫒",
+    "description": "aceituna",
+    "category": "Alimento",
+    "aliases": [
+      "aceituna"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🥥",
+    "description": "Coco",
+    "category": "Alimento",
+    "aliases": [
+      "Coco"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥑",
+    "description": "palta",
+    "category": "Alimento",
+    "aliases": [
+      "palta"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🍆",
+    "description": "berenjena",
+    "category": "Alimento",
+    "aliases": [
+      "berenjena"
+    ],
+    "tags": [
+      "berenjena"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥔",
+    "description": "papa",
+    "category": "Alimento",
+    "aliases": [
+      "papa"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🥕",
+    "description": "zanahoria",
+    "category": "Alimento",
+    "aliases": [
+      "zanahoria"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🌽",
+    "description": "mazorca de maíz",
+    "category": "Alimento",
+    "aliases": [
+      "maíz"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌶️",
+    "description": "guindilla",
+    "category": "Alimento",
+    "aliases": [
+      "guindilla"
+    ],
+    "tags": [
+      "picante"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🫑",
+    "description": "pimiento morrón",
+    "category": "Alimento",
+    "aliases": [
+      "pimiento_campana"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🥒",
+    "description": "pepino",
+    "category": "Alimento",
+    "aliases": [
+      "pepino"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🥬",
+    "description": "verde frondoso",
+    "category": "Alimento",
+    "aliases": [
+      "verde_hojoso"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥦",
+    "description": "brócoli",
+    "category": "Alimento",
+    "aliases": [
+      "brócoli"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧄",
+    "description": "ajo",
+    "category": "Alimento",
+    "aliases": [
+      "ajo"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🧅",
+    "description": "cebolla",
+    "category": "Alimento",
+    "aliases": [
+      "cebolla"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🥜",
+    "description": "miseria",
+    "category": "Alimento",
+    "aliases": [
+      "miseria"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🫘",
+    "description": "frijoles",
+    "category": "Alimento",
+    "aliases": [
+      "frijoles"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🌰",
+    "description": "castaña",
+    "category": "Alimento",
+    "aliases": [
+      "castaña"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🫚",
+    "description": "raíz de jengibre",
+    "category": "Alimento",
+    "aliases": [
+      "raíz de jengibre"
+    ],
+    "tags": [],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "🫛",
+    "description": "vaina de guisante",
+    "category": "Alimento",
+    "aliases": [
+      "vaina de guisante"
+    ],
+    "tags": [],
+    "unicode_version": "15.0",
+    "ios_version": "16.4"
+  },
+  {
+    "emoji": "🍞",
+    "description": "pan",
+    "category": "Alimento",
+    "aliases": [
+      "pan"
+    ],
+    "tags": [
+      "tostada"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥐",
+    "description": "cuerno",
+    "category": "Alimento",
+    "aliases": [
+      "cuerno"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🥖",
+    "description": "pan baguette",
+    "category": "Alimento",
+    "aliases": [
+      "pan_baguette"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🫓",
+    "description": "pan plano",
+    "category": "Alimento",
+    "aliases": [
+      "pan plano"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🥨",
+    "description": "galleta salada",
+    "category": "Alimento",
+    "aliases": [
+      "galleta salada"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥯",
+    "description": "rosquilla",
+    "category": "Alimento",
+    "aliases": [
+      "rosquilla"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥞",
+    "description": "panqueques",
+    "category": "Alimento",
+    "aliases": [
+      "panqueques"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🧇",
+    "description": "gofre",
+    "category": "Alimento",
+    "aliases": [
+      "gofre"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🧀",
+    "description": "cuña de queso",
+    "category": "Alimento",
+    "aliases": [
+      "queso"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🍖",
+    "description": "carne con hueso",
+    "category": "Alimento",
+    "aliases": [
+      "carne_con_hueso"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍗",
+    "description": "pierna de ave",
+    "category": "Alimento",
+    "aliases": [
+      "pata_de_aves"
+    ],
+    "tags": [
+      "carne",
+      "pollo"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥩",
+    "description": "corte de carne",
+    "category": "Alimento",
+    "aliases": [
+      "corte_de_carne"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥓",
+    "description": "tocino",
+    "category": "Alimento",
+    "aliases": [
+      "tocino"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🍔",
+    "description": "hamburguesa",
+    "category": "Alimento",
+    "aliases": [
+      "hamburguesa"
+    ],
+    "tags": [
+      "hamburguesa"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍟",
+    "description": "papas fritas",
+    "category": "Alimento",
+    "aliases": [
+      "papas fritas"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍕",
+    "description": "pizza",
+    "category": "Alimento",
+    "aliases": [
+      "pizza"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🌭",
+    "description": "Hot dog",
+    "category": "Alimento",
+    "aliases": [
+      "Hot dog"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🥪",
+    "description": "sándwich",
+    "category": "Alimento",
+    "aliases": [
+      "sándwich"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🌮",
+    "description": "tacos",
+    "category": "Alimento",
+    "aliases": [
+      "tacos"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🌯",
+    "description": "burrito",
+    "category": "Alimento",
+    "aliases": [
+      "burrito"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🫔",
+    "description": "tamal",
+    "category": "Alimento",
+    "aliases": [
+      "tamal"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🥙",
+    "description": "pan plano relleno",
+    "category": "Alimento",
+    "aliases": [
+      "pan plano relleno"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🧆",
+    "description": "falafel",
+    "category": "Alimento",
+    "aliases": [
+      "falafel"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🥚",
+    "description": "huevo",
+    "category": "Alimento",
+    "aliases": [
+      "huevo"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🍳",
+    "description": "cocinando",
+    "category": "Alimento",
+    "aliases": [
+      "huevo frito"
+    ],
+    "tags": [
+      "desayuno"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥘",
+    "description": "recipiente poco profundo de comida",
+    "category": "Alimento",
+    "aliases": [
+      "recipiente_poco_profundo_de_comida"
+    ],
+    "tags": [
+      "paella",
+      "curry"
+    ],
+    "unicode_version": "",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🍲",
+    "description": "olla de comida",
+    "category": "Alimento",
+    "aliases": [
+      "guiso"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🫕",
+    "description": "fondue",
+    "category": "Alimento",
+    "aliases": [
+      "fondue"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🥣",
+    "description": "cuenco con cuchara",
+    "category": "Alimento",
+    "aliases": [
+      "cuenco_con_cuchara"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥗",
+    "description": "ensalada verde",
+    "category": "Alimento",
+    "aliases": [
+      "ensalada verde"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🍿",
+    "description": "Palomitas",
+    "category": "Alimento",
+    "aliases": [
+      "Palomitas"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🧈",
+    "description": "manteca",
+    "category": "Alimento",
+    "aliases": [
+      "manteca"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🧂",
+    "description": "sal",
+    "category": "Alimento",
+    "aliases": [
+      "sal"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥫",
+    "description": "comida enlatada",
+    "category": "Alimento",
+    "aliases": [
+      "comida enlatada"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🍱",
+    "description": "caja bento",
+    "category": "Alimento",
+    "aliases": [
+      "bento"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍘",
+    "description": "galleta de arroz",
+    "category": "Alimento",
+    "aliases": [
+      "galleta de arroz"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍙",
+    "description": "bola de arroz",
+    "category": "Alimento",
+    "aliases": [
+      "bola de arroz"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍚",
+    "description": "arroz cocido",
+    "category": "Alimento",
+    "aliases": [
+      "arroz"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍛",
+    "description": "arroz al curry",
+    "category": "Alimento",
+    "aliases": [
+      "curry"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍜",
+    "description": "tazón humeante",
+    "category": "Alimento",
+    "aliases": [
+      "ramen"
+    ],
+    "tags": [
+      "fideos"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍝",
+    "description": "espaguetis",
+    "category": "Alimento",
+    "aliases": [
+      "espaguetis"
+    ],
+    "tags": [
+      "pasta"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍠",
+    "description": "batata asada",
+    "category": "Alimento",
+    "aliases": [
+      "batata"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍢",
+    "description": "oden",
+    "category": "Alimento",
+    "aliases": [
+      "oden"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍣",
+    "description": "Sushi",
+    "category": "Alimento",
+    "aliases": [
+      "Sushi"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍤",
+    "description": "camarón frito",
+    "category": "Alimento",
+    "aliases": [
+      "camarón frito"
+    ],
+    "tags": [
+      "tempura"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍥",
+    "description": "pastel de pescado con remolino",
+    "category": "Alimento",
+    "aliases": [
+      "pastel de pescado"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥮",
+    "description": "Pastel de luna",
+    "category": "Alimento",
+    "aliases": [
+      "Pastel de luna"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🍡",
+    "description": "dango",
+    "category": "Alimento",
+    "aliases": [
+      "dango"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥟",
+    "description": "bola de masa hervida",
+    "category": "Alimento",
+    "aliases": [
+      "bola de masa hervida"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥠",
+    "description": "galleta de la fortuna",
+    "category": "Alimento",
+    "aliases": [
+      "galleta de la fortuna"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥡",
+    "description": "caja de comida para llevar",
+    "category": "Alimento",
+    "aliases": [
+      "caja de comida para llevar"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🦀",
+    "description": "cangrejo",
+    "category": "Alimento",
+    "aliases": [
+      "cangrejo"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🦞",
+    "description": "langosta",
+    "category": "Alimento",
+    "aliases": [
+      "langosta"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🦐",
+    "description": "camarón",
+    "category": "Alimento",
+    "aliases": [
+      "camarón"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🦑",
+    "description": "calamar",
+    "category": "Alimento",
+    "aliases": [
+      "calamar"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🦪",
+    "description": "ostra",
+    "category": "Alimento",
+    "aliases": [
+      "ostra"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🍦",
+    "description": "helado suave",
+    "category": "Alimento",
+    "aliases": [
+      "helado"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍧",
+    "description": "Hielo picado",
+    "category": "Alimento",
+    "aliases": [
+      "Hielo picado"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍨",
+    "description": "helado",
+    "category": "Alimento",
+    "aliases": [
+      "helado"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍩",
+    "description": "rosquilla",
+    "category": "Alimento",
+    "aliases": [
+      "rosquilla"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍪",
+    "description": "Galleta",
+    "category": "Alimento",
+    "aliases": [
+      "Galleta"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🎂",
+    "description": "pastel de cumpleaños",
+    "category": "Alimento",
+    "aliases": [
+      "cumpleaños"
+    ],
+    "tags": [
+      "fiesta"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍰",
+    "description": "torta de frutas",
+    "category": "Alimento",
+    "aliases": [
+      "pastel"
+    ],
+    "tags": [
+      "postre"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🧁",
+    "description": "magdalena",
+    "category": "Alimento",
+    "aliases": [
+      "magdalena"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🥧",
+    "description": "tarta",
+    "category": "Alimento",
+    "aliases": [
+      "tarta"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🍫",
+    "description": "barra de chocolate",
+    "category": "Alimento",
+    "aliases": [
+      "barra de chocolate"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍬",
+    "description": "dulce",
+    "category": "Alimento",
+    "aliases": [
+      "dulce"
+    ],
+    "tags": [
+      "dulce"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍭",
+    "description": "chupete",
+    "category": "Alimento",
+    "aliases": [
+      "chupete"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍮",
+    "description": "natilla",
+    "category": "Alimento",
+    "aliases": [
+      "natilla"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍯",
+    "description": "tarro de miel",
+    "category": "Alimento",
+    "aliases": [
+      "tarro de miel"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍼",
+    "description": "biberón",
+    "category": "Alimento",
+    "aliases": [
+      "biberón"
+    ],
+    "tags": [
+      "leche"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥛",
+    "description": "vaso de leche",
+    "category": "Alimento",
+    "aliases": [
+      "vaso_leche"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "☕",
+    "description": "bebida caliente",
+    "category": "Alimento",
+    "aliases": [
+      "café"
+    ],
+    "tags": [
+      "cafetería",
+      "Café exprés"
+    ],
+    "unicode_version": "4.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🫖",
+    "description": "tetera",
+    "category": "Alimento",
+    "aliases": [
+      "tetera"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🍵",
+    "description": "taza de té sin asa",
+    "category": "Alimento",
+    "aliases": [
+      "té"
+    ],
+    "tags": [
+      "verde",
+      "desayuno"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍶",
+    "description": "beneficio",
+    "category": "Alimento",
+    "aliases": [
+      "beneficio"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍾",
+    "description": "botella con corcho reventado",
+    "category": "Alimento",
+    "aliases": [
+      "champán"
+    ],
+    "tags": [
+      "botella",
+      "burbujeante",
+      "celebracion"
+    ],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🍷",
+    "description": "Copa de vino",
+    "category": "Alimento",
+    "aliases": [
+      "Copa de vino"
+    ],
+    "tags": [],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍸",
+    "description": "copa de coctel",
+    "category": "Alimento",
+    "aliases": [
+      "cóctel"
+    ],
+    "tags": [
+      "beber"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍹",
+    "description": "bebida tropical",
+    "category": "Alimento",
+    "aliases": [
+      "bebida_tropical"
+    ],
+    "tags": [
+      "verano",
+      "vacaciones"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍺",
+    "description": "jarro de cerveza",
+    "category": "Alimento",
+    "aliases": [
+      "cerveza"
+    ],
+    "tags": [
+      "beber"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🍻",
+    "description": "tintineo de jarras de cerveza",
+    "category": "Alimento",
+    "aliases": [
+      "cervezas"
+    ],
+    "tags": [
+      "bebidas"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥂",
+    "description": "tintineo de vasos",
+    "category": "Alimento",
+    "aliases": [
+      "tintineo_gafas"
+    ],
+    "tags": [
+      "salud",
+      "tostada"
+    ],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🥃",
+    "description": "vaso de vidrio",
+    "category": "Alimento",
+    "aliases": [
+      "vaso_vaso"
+    ],
+    "tags": [
+      "whisky"
+    ],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🫗",
+    "description": "vertiendo líquido",
+    "category": "Alimento",
+    "aliases": [
+      "vertiendo_liquido"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🥤",
+    "description": "taza con pajita",
+    "category": "Alimento",
+    "aliases": [
+      "taza_con_pajita"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🧋",
+    "description": "Té de burbujas",
+    "category": "Alimento",
+    "aliases": [
+      "Té de burbujas"
+    ],
+    "tags": [],
+    "unicode_version": "13.0",
+    "ios_version": "14.0"
+  },
+  {
+    "emoji": "🧃",
+    "description": "caja de bebidas",
+    "category": "Alimento",
+    "aliases": [
+      "caja_de_bebidas"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🧉",
+    "description": "compañero",
+    "category": "Alimento",
+    "aliases": [
+      "compañero"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🧊",
+    "description": "hielo",
+    "category": "Alimento",
+    "aliases": [
+      "cubo de hielo"
+    ],
+    "tags": [],
+    "unicode_version": "12.0",
+    "ios_version": "13.0"
+  },
+  {
+    "emoji": "🥢",
+    "description": "palillos",
+    "category": "Alimento",
+    "aliases": [
+      "palillos"
+    ],
+    "tags": [],
+    "unicode_version": "11.0",
+    "ios_version": "12.1"
+  },
+  {
+    "emoji": "🍽️",
+    "description": "tenedor y cuchillo con plato",
+    "category": "Alimento",
+    "aliases": [
+      "plato_con_cubiertos"
+    ],
+    "tags": [
+      "comida",
+      "cena"
+    ],
+    "unicode_version": "7.0",
+    "ios_version": "9.1"
+  },
+  {
+    "emoji": "🍴",
+    "description": "tenedor y cuchillo",
+    "category": "Alimento",
+    "aliases": [
+      "tenedor y cuchillo"
+    ],
+    "tags": [
+      "cuchillería"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🥄",
+    "description": "cuchara",
+    "category": "Alimento",
+    "aliases": [
+      "cuchara"
+    ],
+    "tags": [],
+    "unicode_version": "9.0",
+    "ios_version": "10.2"
+  },
+  {
+    "emoji": "🔪",
+    "description": "cuchillo de cocina",
+    "category": "Alimento",
+    "aliases": [
+      "hocho",
+      "cuchillo"
+    ],
+    "tags": [
+      "cortar",
+      "cortar"
+    ],
+    "unicode_version": "6.0",
+    "ios_version": "6.0"
+  },
+  {
+    "emoji": "🫙",
+    "description": "frasco",
+    "category": "Alimento",
+    "aliases": [
+      "frasco"
+    ],
+    "tags": [],
+    "unicode_version": "14.0",
+    "ios_version": "15.4"
+  },
+  {
+    "emoji": "🏺",
+    "description": "ánfora",
+    "category": "Alimento",
+    "aliases": [
+      "ánfora"
+    ],
+    "tags": [],
+    "unicode_version": "8.0",
+    "ios_version": "9.1"
+  }
+]

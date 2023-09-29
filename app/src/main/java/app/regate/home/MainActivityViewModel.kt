@@ -35,7 +35,7 @@ class MainActivityViewModel(
     fun logRegToken() {
 
         // [START log_reg_token]
-        Firebase.messaging.getToken().addOnCompleteListener { task ->
+        Firebase.messaging.token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.d("DEBUG_", "Fetching FCM registration token failed", task.exception)
                 return@addOnCompleteListener

@@ -167,5 +167,16 @@
     <string name="resend_email_verification">An email will be sent to the address (%1$s) with the verification code.</string>
     <string name="you_may_request_a_new_code">You may request a new code in %1$d</string>
     <string name="available_courts">Available courts</string>
+    <string name="emileys_emotion">SMILEYS AND EMOTIONS</string>
+    <string name="people">PEOPLE</string>
+    <string name="animals_and_nature">ANIMALS AND NATURE</string>
+    <string name="travel_and_places">TRAVEL AND PLACES</string>
+    <string name="activities_and_event">ACTIVITIES AND EVENTS</string>
+    <string name="objects">OBJETOS</string>
+    <string name="symbols">SYMBOLS</string>
+    <string name="flags">FLAGS</string>
+    <string name="food_and_drink">FOOD AND DRINK</string>
+    <string name="send_to_a_group">Send to a group</string>
+    <string name="precio_per_person">Price per person</string>
 
 </resources>

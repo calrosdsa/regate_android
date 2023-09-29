@@ -106,6 +106,7 @@ class GrupoViewModel(
             try {
                 loadingState.addLoader()
                 val res = grupoRepository.getGrupo(grupoId)
+                checkIsAdmin()
                 salas.tryEmit(res)
                 loadingState.removeLoader()
                 Log.d("DEBUG_APP", res.toString())

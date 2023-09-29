@@ -1,0 +1,3001 @@
+[
+    {
+      "emoji": "🏁",
+      "description": "bandera a cuadros",
+      "category": "Banderas",
+      "aliases": [
+        "bandera a cuadros"
+      ],
+      "tags": [
+        "hito",
+        "finalizar"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🚩",
+      "description": "bandera triangular",
+      "category": "Banderas",
+      "aliases": [
+        "bandera_triangular_en_post"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🎌",
+      "description": "banderas cruzadas",
+      "category": "Banderas",
+      "aliases": [
+        "banderas_cruzadas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🏴",
+      "description": "Bandera Negra",
+      "category": "Banderas",
+      "aliases": [
+        "Bandera Negra"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "🏳️",
+      "description": "bandera blanca",
+      "category": "Banderas",
+      "aliases": [
+        "bandera blanca"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "🏳️‍🌈",
+      "description": "bandera del arcoiris",
+      "category": "Banderas",
+      "aliases": [
+        "bandera_arcoiris"
+      ],
+      "tags": [
+        "orgullo"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "10.0"
+    },
+    {
+      "emoji": "🏳️‍⚧️",
+      "description": "bandera transgénero",
+      "category": "Banderas",
+      "aliases": [
+        "bandera_transgénero"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0"
+    },
+    {
+      "emoji": "🏴‍☠️",
+      "description": "bandera pirata",
+      "category": "Banderas",
+      "aliases": [
+        "bandera pirata"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🇦🇨",
+      "description": "bandera: Isla Ascensión",
+      "category": "Banderas",
+      "aliases": [
+        "isla Ascencion"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🇦🇩",
+      "description": "bandera: Andorra",
+      "category": "Banderas",
+      "aliases": [
+        "andorra"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇪",
+      "description": "bandera: Emiratos Árabes Unidos",
+      "category": "Banderas",
+      "aliases": [
+        "Emiratos Árabes Unidos"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇫",
+      "description": "bandera: Afganistán",
+      "category": "Banderas",
+      "aliases": [
+        "Afganistán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇬",
+      "description": "bandera: Antigua",
+      "category": "Banderas",
+      "aliases": [
+        "antigua_barbuda"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇮",
+      "description": "bandera: Anguila",
+      "category": "Banderas",
+      "aliases": [
+        "anguila"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇱",
+      "description": "bandera: Albania",
+      "category": "Banderas",
+      "aliases": [
+        "Albania"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇲",
+      "description": "bandera: Armenia",
+      "category": "Banderas",
+      "aliases": [
+        "Armenia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇴",
+      "description": "bandera: Angola",
+      "category": "Banderas",
+      "aliases": [
+        "angola"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇶",
+      "description": "bandera: Antártida",
+      "category": "Banderas",
+      "aliases": [
+        "Antártida"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇦🇷",
+      "description": "bandera: Argentina",
+      "category": "Banderas",
+      "aliases": [
+        "argentina"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇸",
+      "description": "bandera: Samoa Americana",
+      "category": "Banderas",
+      "aliases": [
+        "Samoa Americana"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇹",
+      "description": "bandera: Austria",
+      "category": "Banderas",
+      "aliases": [
+        "Austria"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇺",
+      "description": "bandera: Australia",
+      "category": "Banderas",
+      "aliases": [
+        "Australia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇼",
+      "description": "bandera: Aruba",
+      "category": "Banderas",
+      "aliases": [
+        "aruba"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇦🇽",
+      "description": "bandera: Islas Åland",
+      "category": "Banderas",
+      "aliases": [
+        "Islas Aland"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇦🇿",
+      "description": "bandera: Azerbaiyán",
+      "category": "Banderas",
+      "aliases": [
+        "azerbaiyán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇦",
+      "description": "bandera: Bosnia",
+      "category": "Banderas",
+      "aliases": [
+        "bosnia_herzegovina"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇧",
+      "description": "bandera: Barbados",
+      "category": "Banderas",
+      "aliases": [
+        "barbados"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇩",
+      "description": "bandera: Bangladesh",
+      "category": "Banderas",
+      "aliases": [
+        "bangladesh"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇪",
+      "description": "bandera: Bélgica",
+      "category": "Banderas",
+      "aliases": [
+        "Bélgica"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇫",
+      "description": "bandera: Burkina Faso",
+      "category": "Banderas",
+      "aliases": [
+        "Burkina Faso"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇬",
+      "description": "bandera: bulgaria",
+      "category": "Banderas",
+      "aliases": [
+        "Bulgaria"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇭",
+      "description": "bandera: Bahréin",
+      "category": "Banderas",
+      "aliases": [
+        "bahréin"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇮",
+      "description": "bandera: Burundi",
+      "category": "Banderas",
+      "aliases": [
+        "burundi"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇯",
+      "description": "bandera: Benín",
+      "category": "Banderas",
+      "aliases": [
+        "benín"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇱",
+      "description": "bandera: San Bartolomé",
+      "category": "Banderas",
+      "aliases": [
+        "st_barthelemy"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇧🇲",
+      "description": "bandera: Bermudas",
+      "category": "Banderas",
+      "aliases": [
+        "islas Bermudas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇳",
+      "description": "bandera: Brunéi",
+      "category": "Banderas",
+      "aliases": [
+        "Brunéi"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇴",
+      "description": "bandera: bolivia",
+      "category": "Banderas",
+      "aliases": [
+        "Bolivia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇶",
+      "description": "bandera: Caribe Neerlandés",
+      "category": "Banderas",
+      "aliases": [
+        "caribe_paises bajos"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇧🇷",
+      "description": "bandera: brasil",
+      "category": "Banderas",
+      "aliases": [
+        "Brasil"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇸",
+      "description": "bandera: bahamas",
+      "category": "Banderas",
+      "aliases": [
+        "Bahamas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇹",
+      "description": "bandera: Bután",
+      "category": "Banderas",
+      "aliases": [
+        "Bután"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇻",
+      "description": "bandera: Isla Bouvet",
+      "category": "Banderas",
+      "aliases": [
+        "isla_bouvet"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🇧🇼",
+      "description": "bandera: Botsuana",
+      "category": "Banderas",
+      "aliases": [
+        "botsuana"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇾",
+      "description": "bandera: Bielorrusia",
+      "category": "Banderas",
+      "aliases": [
+        "bielorrusia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇧🇿",
+      "description": "bandera: Belice",
+      "category": "Banderas",
+      "aliases": [
+        "belice"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇦",
+      "description": "bandera: Canadá",
+      "category": "Banderas",
+      "aliases": [
+        "Canadá"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇨",
+      "description": "bandera: Islas Cocos (Keeling)",
+      "category": "Banderas",
+      "aliases": [
+        "islas_cocos"
+      ],
+      "tags": [
+        "aquillarse"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇨🇩",
+      "description": "bandera: Congo - Kinshasa",
+      "category": "Banderas",
+      "aliases": [
+        "congo_kinshasa"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇫",
+      "description": "bandera: República Centroafricana",
+      "category": "Banderas",
+      "aliases": [
+        "República Centroafricana"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇬",
+      "description": "bandera: Congo - Brazzaville",
+      "category": "Banderas",
+      "aliases": [
+        "congo_brazzaville"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇭",
+      "description": "bandera: Suiza",
+      "category": "Banderas",
+      "aliases": [
+        "Suiza"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇮",
+      "description": "bandera: Costa de Marfil",
+      "category": "Banderas",
+      "aliases": [
+        "costa_divoire"
+      ],
+      "tags": [
+        "Marfil"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇰",
+      "description": "bandera: Islas Cook",
+      "category": "Banderas",
+      "aliases": [
+        "Islas Cook"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇱",
+      "description": "bandera: Chile",
+      "category": "Banderas",
+      "aliases": [
+        "Chile"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇲",
+      "description": "bandera: Camerún",
+      "category": "Banderas",
+      "aliases": [
+        "Camerún"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇳",
+      "description": "bandera: China",
+      "category": "Banderas",
+      "aliases": [
+        "cn"
+      ],
+      "tags": [
+        "porcelana"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🇨🇴",
+      "description": "bandera: colombia",
+      "category": "Banderas",
+      "aliases": [
+        "Colombia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇵",
+      "description": "bandera: Isla Clipperton",
+      "category": "Banderas",
+      "aliases": [
+        "isla_clipperton"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🇨🇷",
+      "description": "bandera: Costa Rica",
+      "category": "Banderas",
+      "aliases": [
+        "Costa Rica"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇺",
+      "description": "bandera: cuba",
+      "category": "Banderas",
+      "aliases": [
+        "Cuba"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇻",
+      "description": "bandera: Cabo Verde",
+      "category": "Banderas",
+      "aliases": [
+        "Cabo Verde"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇼",
+      "description": "bandera: Curazao",
+      "category": "Banderas",
+      "aliases": [
+        "curazao"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇽",
+      "description": "bandera: Isla de Navidad",
+      "category": "Banderas",
+      "aliases": [
+        "Isla de Navidad"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇨🇾",
+      "description": "bandera: Chipre",
+      "category": "Banderas",
+      "aliases": [
+        "Chipre"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇨🇿",
+      "description": "bandera: chequia",
+      "category": "Banderas",
+      "aliases": [
+        "República Checa"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇩🇪",
+      "description": "bandera: Alemania",
+      "category": "Banderas",
+      "aliases": [
+        "Delaware"
+      ],
+      "tags": [
+        "bandera",
+        "Alemania"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🇩🇬",
+      "description": "bandera: Diego García",
+      "category": "Banderas",
+      "aliases": [
+        "diego_garcia"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🇩🇯",
+      "description": "bandera: Yibuti",
+      "category": "Banderas",
+      "aliases": [
+        "yibuti"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇩🇰",
+      "description": "bandera: Dinamarca",
+      "category": "Banderas",
+      "aliases": [
+        "Dinamarca"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇩🇲",
+      "description": "bandera: dominica",
+      "category": "Banderas",
+      "aliases": [
+        "dominicana"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇩🇴",
+      "description": "bandera: República Dominicana",
+      "category": "Banderas",
+      "aliases": [
+        "República Dominicana"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇩🇿",
+      "description": "bandera: Argelia",
+      "category": "Banderas",
+      "aliases": [
+        "argelia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇪🇦",
+      "description": "bandera: Ceuta",
+      "category": "Banderas",
+      "aliases": [
+        "ceuta_melilla"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🇪🇨",
+      "description": "bandera: Ecuador",
+      "category": "Banderas",
+      "aliases": [
+        "Ecuador"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇪🇪",
+      "description": "bandera: Estonia",
+      "category": "Banderas",
+      "aliases": [
+        "Estonia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇪🇬",
+      "description": "bandera: Egipto",
+      "category": "Banderas",
+      "aliases": [
+        "Egipto"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇪🇭",
+      "description": "bandera: Sáhara Occidental",
+      "category": "Banderas",
+      "aliases": [
+        "Sahara Occidental"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇪🇷",
+      "description": "bandera: Eritrea",
+      "category": "Banderas",
+      "aliases": [
+        "eritrea"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇪🇸",
+      "description": "bandera: españa",
+      "category": "Banderas",
+      "aliases": [
+        "es"
+      ],
+      "tags": [
+        "España"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🇪🇹",
+      "description": "bandera: Etiopía",
+      "category": "Banderas",
+      "aliases": [
+        "Etiopía"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇪🇺",
+      "description": "bandera: Unión Europea",
+      "category": "Banderas",
+      "aliases": [
+        "UE",
+        "unión Europea"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇫🇮",
+      "description": "bandera: Finlandia",
+      "category": "Banderas",
+      "aliases": [
+        "Finlandia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇫🇯",
+      "description": "bandera: Fiyi",
+      "category": "Banderas",
+      "aliases": [
+        "fiyi"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇫🇰",
+      "description": "bandera: Islas Malvinas",
+      "category": "Banderas",
+      "aliases": [
+        "Islas Malvinas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇫🇲",
+      "description": "bandera: Micronesia",
+      "category": "Banderas",
+      "aliases": [
+        "micronesia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇫🇴",
+      "description": "bandera: Islas Feroe",
+      "category": "Banderas",
+      "aliases": [
+        "Islas Faroe"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇫🇷",
+      "description": "bandera: francia",
+      "category": "Banderas",
+      "aliases": [
+        "fr"
+      ],
+      "tags": [
+        "Francia",
+        "francés"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🇬🇦",
+      "description": "bandera: Gabón",
+      "category": "Banderas",
+      "aliases": [
+        "Gabón"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇧",
+      "description": "bandera: Reino Unido",
+      "category": "Banderas",
+      "aliases": [
+        "gb",
+        "Reino Unido"
+      ],
+      "tags": [
+        "bandera",
+        "británico"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🇬🇩",
+      "description": "bandera: granada",
+      "category": "Banderas",
+      "aliases": [
+        "Granada"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇪",
+      "description": "bandera: georgia",
+      "category": "Banderas",
+      "aliases": [
+        "Georgia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇫",
+      "description": "bandera: Guayana Francesa",
+      "category": "Banderas",
+      "aliases": [
+        "guayana francesa"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇬",
+      "description": "bandera: Guernesey",
+      "category": "Banderas",
+      "aliases": [
+        "guernesey"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇬🇭",
+      "description": "bandera: Ghana",
+      "category": "Banderas",
+      "aliases": [
+        "Ghana"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇮",
+      "description": "bandera: gibraltar",
+      "category": "Banderas",
+      "aliases": [
+        "Gibraltar"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇱",
+      "description": "bandera: Groenlandia",
+      "category": "Banderas",
+      "aliases": [
+        "Groenlandia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇬🇲",
+      "description": "bandera: Gambia",
+      "category": "Banderas",
+      "aliases": [
+        "Gambia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇳",
+      "description": "bandera: Guinea",
+      "category": "Banderas",
+      "aliases": [
+        "Guinea"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇵",
+      "description": "bandera: Guadalupe",
+      "category": "Banderas",
+      "aliases": [
+        "guadalupe"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇬🇶",
+      "description": "bandera: Guinea Ecuatorial",
+      "category": "Banderas",
+      "aliases": [
+        "Guinea Ecuatorial"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇷",
+      "description": "bandera: Grecia",
+      "category": "Banderas",
+      "aliases": [
+        "Grecia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇸",
+      "description": "bandera: Georgia del Sur",
+      "category": "Banderas",
+      "aliases": [
+        "georgia_del_sur_islas_sandwich_del_sur"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇬🇹",
+      "description": "bandera: guatemala",
+      "category": "Banderas",
+      "aliases": [
+        "Guatemala"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇺",
+      "description": "bandera: Guam",
+      "category": "Banderas",
+      "aliases": [
+        "Guam"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇼",
+      "description": "bandera: Guinea-Bisáu",
+      "category": "Banderas",
+      "aliases": [
+        "guinea_bissau"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇬🇾",
+      "description": "bandera: Guyana",
+      "category": "Banderas",
+      "aliases": [
+        "Guayana"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇭🇰",
+      "description": "bandera: RAE de Hong Kong (China)",
+      "category": "Banderas",
+      "aliases": [
+        "Hong Kong"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇭🇲",
+      "description": "bandera: oído",
+      "category": "Banderas",
+      "aliases": [
+        "islas_escuchadas_mcdonald"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🇭🇳",
+      "description": "bandera: Honduras",
+      "category": "Banderas",
+      "aliases": [
+        "Honduras"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇭🇷",
+      "description": "bandera: Croacia",
+      "category": "Banderas",
+      "aliases": [
+        "Croacia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇭🇹",
+      "description": "bandera: Haití",
+      "category": "Banderas",
+      "aliases": [
+        "Haití"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇭🇺",
+      "description": "bandera: Hungría",
+      "category": "Banderas",
+      "aliases": [
+        "Hungría"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇮🇨",
+      "description": "bandera: Islas Canarias",
+      "category": "Banderas",
+      "aliases": [
+        "Islas Canarias"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇮🇩",
+      "description": "bandera: Indonesia",
+      "category": "Banderas",
+      "aliases": [
+        "Indonesia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇮🇪",
+      "description": "bandera: Irlanda",
+      "category": "Banderas",
+      "aliases": [
+        "Irlanda"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇮🇱",
+      "description": "bandera: Israel",
+      "category": "Banderas",
+      "aliases": [
+        "Israel"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇮🇲",
+      "description": "bandera: Isla de Man",
+      "category": "Banderas",
+      "aliases": [
+        "Isla del hombre"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇮🇳",
+      "description": "bandera: India",
+      "category": "Banderas",
+      "aliases": [
+        "India"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇮🇴",
+      "description": "bandera: Territorio Británico del Océano Índico",
+      "category": "Banderas",
+      "aliases": [
+        "Territorio Británico del Océano Índico"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇮🇶",
+      "description": "bandera: Irak",
+      "category": "Banderas",
+      "aliases": [
+        "Irak"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇮🇷",
+      "description": "bandera: Irán",
+      "category": "Banderas",
+      "aliases": [
+        "Irán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇮🇸",
+      "description": "bandera: Islandia",
+      "category": "Banderas",
+      "aliases": [
+        "Islandia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇮🇹",
+      "description": "bandera: Italia",
+      "category": "Banderas",
+      "aliases": [
+        "él"
+      ],
+      "tags": [
+        "Italia"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🇯🇪",
+      "description": "bandera: jersey",
+      "category": "Banderas",
+      "aliases": [
+        "jersey"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇯🇲",
+      "description": "bandera: Jamaica",
+      "category": "Banderas",
+      "aliases": [
+        "Jamaica"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇯🇴",
+      "description": "bandera: Jordania",
+      "category": "Banderas",
+      "aliases": [
+        "Jordán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇯🇵",
+      "description": "bandera: Japón",
+      "category": "Banderas",
+      "aliases": [
+        "jp"
+      ],
+      "tags": [
+        "Japón"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🇰🇪",
+      "description": "bandera: Kenia",
+      "category": "Banderas",
+      "aliases": [
+        "Kenia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇰🇬",
+      "description": "bandera: Kirguistán",
+      "category": "Banderas",
+      "aliases": [
+        "Kirguistán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇰🇭",
+      "description": "bandera: Camboya",
+      "category": "Banderas",
+      "aliases": [
+        "Camboya"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇰🇮",
+      "description": "bandera: Kiribati",
+      "category": "Banderas",
+      "aliases": [
+        "Kiribati"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇰🇲",
+      "description": "bandera: Comoras",
+      "category": "Banderas",
+      "aliases": [
+        "comoras"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇰🇳",
+      "description": "bandera: San Cristóbal",
+      "category": "Banderas",
+      "aliases": [
+        "st_kitts_nevis"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇰🇵",
+      "description": "bandera: Corea del Norte",
+      "category": "Banderas",
+      "aliases": [
+        "Corea del Norte"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇰🇷",
+      "description": "bandera: Corea del Sur",
+      "category": "Banderas",
+      "aliases": [
+        "kr"
+      ],
+      "tags": [
+        "Corea"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🇰🇼",
+      "description": "bandera: Kuwait",
+      "category": "Banderas",
+      "aliases": [
+        "Kuwait"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇰🇾",
+      "description": "bandera: Islas Caimán",
+      "category": "Banderas",
+      "aliases": [
+        "Islas Caimán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇰🇿",
+      "description": "bandera: Kazajstán",
+      "category": "Banderas",
+      "aliases": [
+        "Kazajstán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇱🇦",
+      "description": "bandera: Laos",
+      "category": "Banderas",
+      "aliases": [
+        "Laos"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇱🇧",
+      "description": "bandera: Líbano",
+      "category": "Banderas",
+      "aliases": [
+        "Líbano"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇱🇨",
+      "description": "bandera: Santa Lucía",
+      "category": "Banderas",
+      "aliases": [
+        "Santa Lucía"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇱🇮",
+      "description": "bandera: Liechtenstein",
+      "category": "Banderas",
+      "aliases": [
+        "liechtenstein"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇱🇰",
+      "description": "bandera: Sri Lanka",
+      "category": "Banderas",
+      "aliases": [
+        "sri_lanka"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇱🇷",
+      "description": "bandera: liberia",
+      "category": "Banderas",
+      "aliases": [
+        "Liberia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇱🇸",
+      "description": "bandera: Lesoto",
+      "category": "Banderas",
+      "aliases": [
+        "Lesoto"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇱🇹",
+      "description": "bandera: Lituania",
+      "category": "Banderas",
+      "aliases": [
+        "Lituania"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇱🇺",
+      "description": "bandera: Luxemburgo",
+      "category": "Banderas",
+      "aliases": [
+        "Luxemburgo"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇱🇻",
+      "description": "bandera: Letonia",
+      "category": "Banderas",
+      "aliases": [
+        "letonia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇱🇾",
+      "description": "bandera: Libia",
+      "category": "Banderas",
+      "aliases": [
+        "Libia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇦",
+      "description": "bandera: Marruecos",
+      "category": "Banderas",
+      "aliases": [
+        "Marruecos"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇨",
+      "description": "bandera: Mónaco",
+      "category": "Banderas",
+      "aliases": [
+        "Mónaco"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇲🇩",
+      "description": "bandera: Moldavia",
+      "category": "Banderas",
+      "aliases": [
+        "moldavia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇪",
+      "description": "bandera: Montenegro",
+      "category": "Banderas",
+      "aliases": [
+        "montenegro"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇫",
+      "description": "bandera: San Martín",
+      "category": "Banderas",
+      "aliases": [
+        "st_martin"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🇲🇬",
+      "description": "bandera: madagascar",
+      "category": "Banderas",
+      "aliases": [
+        "Madagascar"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇭",
+      "description": "bandera: Islas Marshall",
+      "category": "Banderas",
+      "aliases": [
+        "Islas Marshall"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇲🇰",
+      "description": "bandera: Macedonia del Norte",
+      "category": "Banderas",
+      "aliases": [
+        "macedonia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇱",
+      "description": "bandera: Malí",
+      "category": "Banderas",
+      "aliases": [
+        "malí"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇲",
+      "description": "bandera: Myanmar (Birmania)",
+      "category": "Banderas",
+      "aliases": [
+        "Myanmar"
+      ],
+      "tags": [
+        "birmania"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇳",
+      "description": "bandera: Mongolia",
+      "category": "Banderas",
+      "aliases": [
+        "Mongolia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇴",
+      "description": "bandera: RAE de Macao (China)",
+      "category": "Banderas",
+      "aliases": [
+        "macao"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇵",
+      "description": "bandera: Islas Marianas del Norte",
+      "category": "Banderas",
+      "aliases": [
+        "Islas Marianas del Norte"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇶",
+      "description": "bandera: Martinica",
+      "category": "Banderas",
+      "aliases": [
+        "Martinica"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇲🇷",
+      "description": "bandera: Mauritania",
+      "category": "Banderas",
+      "aliases": [
+        "Mauritania"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇸",
+      "description": "bandera: Montserrat",
+      "category": "Banderas",
+      "aliases": [
+        "montserrat"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇹",
+      "description": "bandera: malta",
+      "category": "Banderas",
+      "aliases": [
+        "Malta"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇺",
+      "description": "bandera: Mauricio",
+      "category": "Banderas",
+      "aliases": [
+        "mauricio"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇲🇻",
+      "description": "bandera: Maldivas",
+      "category": "Banderas",
+      "aliases": [
+        "Maldivas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇼",
+      "description": "bandera: Malaui",
+      "category": "Banderas",
+      "aliases": [
+        "malaui"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇽",
+      "description": "bandera: México",
+      "category": "Banderas",
+      "aliases": [
+        "México"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇾",
+      "description": "bandera: Malasia",
+      "category": "Banderas",
+      "aliases": [
+        "Malasia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇲🇿",
+      "description": "bandera: mozambique",
+      "category": "Banderas",
+      "aliases": [
+        "Mozambique"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇳🇦",
+      "description": "bandera: namibia",
+      "category": "Banderas",
+      "aliases": [
+        "Namibia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇳🇨",
+      "description": "bandera: Nueva Caledonia",
+      "category": "Banderas",
+      "aliases": [
+        "Nueva Caledonia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇳🇪",
+      "description": "bandera: Níger",
+      "category": "Banderas",
+      "aliases": [
+        "Níger"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇳🇫",
+      "description": "bandera: Isla Norfolk",
+      "category": "Banderas",
+      "aliases": [
+        "Isla Norfolk"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇳🇬",
+      "description": "bandera: Nigeria",
+      "category": "Banderas",
+      "aliases": [
+        "Nigeria"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇳🇮",
+      "description": "bandera: Nicaragua",
+      "category": "Banderas",
+      "aliases": [
+        "Nicaragua"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇳🇱",
+      "description": "bandera: Países Bajos",
+      "category": "Banderas",
+      "aliases": [
+        "Países Bajos"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇳🇴",
+      "description": "bandera: Noruega",
+      "category": "Banderas",
+      "aliases": [
+        "Noruega"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇳🇵",
+      "description": "bandera: Nepal",
+      "category": "Banderas",
+      "aliases": [
+        "Nepal"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇳🇷",
+      "description": "bandera: Nauru",
+      "category": "Banderas",
+      "aliases": [
+        "naurú"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇳🇺",
+      "description": "bandera: niue",
+      "category": "Banderas",
+      "aliases": [
+        "niue"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇳🇿",
+      "description": "bandera: Nueva Zelanda",
+      "category": "Banderas",
+      "aliases": [
+        "Nueva Zelanda"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇴🇲",
+      "description": "bandera: Omán",
+      "category": "Banderas",
+      "aliases": [
+        "Omán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇵🇦",
+      "description": "bandera: Panamá",
+      "category": "Banderas",
+      "aliases": [
+        "Panamá"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇵🇪",
+      "description": "bandera: Perú",
+      "category": "Banderas",
+      "aliases": [
+        "Perú"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇵🇫",
+      "description": "bandera: Polinesia Francesa",
+      "category": "Banderas",
+      "aliases": [
+        "Polinesia francés"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇵🇬",
+      "description": "bandera: Papúa Nueva Guinea",
+      "category": "Banderas",
+      "aliases": [
+        "Papúa Nueva Guinea"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇵🇭",
+      "description": "bandera: Filipinas",
+      "category": "Banderas",
+      "aliases": [
+        "filipinas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇵🇰",
+      "description": "bandera: Pakistán",
+      "category": "Banderas",
+      "aliases": [
+        "Pakistán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇵🇱",
+      "description": "bandera: Polonia",
+      "category": "Banderas",
+      "aliases": [
+        "Polonia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇵🇲",
+      "description": "bandera: San Pedro",
+      "category": "Banderas",
+      "aliases": [
+        "st_pierre_miquelon"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇵🇳",
+      "description": "bandera: Islas Pitcairn",
+      "category": "Banderas",
+      "aliases": [
+        "islas_pitcairn"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇵🇷",
+      "description": "bandera: puerto rico",
+      "category": "Banderas",
+      "aliases": [
+        "Puerto Rico"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇵🇸",
+      "description": "bandera: Territorios Palestinos",
+      "category": "Banderas",
+      "aliases": [
+        "territorios palestinos"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇵🇹",
+      "description": "bandera: portugal",
+      "category": "Banderas",
+      "aliases": [
+        "Portugal"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇵🇼",
+      "description": "bandera: Palaos",
+      "category": "Banderas",
+      "aliases": [
+        "palaos"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇵🇾",
+      "description": "bandera: paraguay",
+      "category": "Banderas",
+      "aliases": [
+        "paraguay"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇶🇦",
+      "description": "bandera: Katar",
+      "category": "Banderas",
+      "aliases": [
+        "Katar"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇷🇪",
+      "description": "bandera: Reunión",
+      "category": "Banderas",
+      "aliases": [
+        "reunión"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇷🇴",
+      "description": "bandera: Rumania",
+      "category": "Banderas",
+      "aliases": [
+        "Rumania"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇷🇸",
+      "description": "bandera: Serbia",
+      "category": "Banderas",
+      "aliases": [
+        "Serbia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇷🇺",
+      "description": "bandera: Rusia",
+      "category": "Banderas",
+      "aliases": [
+        "ru"
+      ],
+      "tags": [
+        "Rusia"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🇷🇼",
+      "description": "bandera: Ruanda",
+      "category": "Banderas",
+      "aliases": [
+        "Ruanda"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇦",
+      "description": "bandera: Arabia Saudita",
+      "category": "Banderas",
+      "aliases": [
+        "Arabia Saudita"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇧",
+      "description": "bandera: Islas Salomón",
+      "category": "Banderas",
+      "aliases": [
+        "Islas Salomón"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇨",
+      "description": "bandera: Seychelles",
+      "category": "Banderas",
+      "aliases": [
+        "seychelles"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇩",
+      "description": "bandera: Sudán",
+      "category": "Banderas",
+      "aliases": [
+        "Sudán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇪",
+      "description": "bandera: Suecia",
+      "category": "Banderas",
+      "aliases": [
+        "Suecia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇬",
+      "description": "bandera: Singapur",
+      "category": "Banderas",
+      "aliases": [
+        "Singapur"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇭",
+      "description": "bandera: Santa Elena",
+      "category": "Banderas",
+      "aliases": [
+        "st_helena"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇸🇮",
+      "description": "bandera: Eslovenia",
+      "category": "Banderas",
+      "aliases": [
+        "Eslovenia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇯",
+      "description": "bandera: Islas Svalbard",
+      "category": "Banderas",
+      "aliases": [
+        "svalbard_jan_mayen"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🇸🇰",
+      "description": "bandera: Eslovaquia",
+      "category": "Banderas",
+      "aliases": [
+        "Eslovaquia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇱",
+      "description": "bandera: Sierra Leona",
+      "category": "Banderas",
+      "aliases": [
+        "Sierra Leona"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇲",
+      "description": "bandera: San Marino",
+      "category": "Banderas",
+      "aliases": [
+        "San Marino"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇳",
+      "description": "bandera: Senegal",
+      "category": "Banderas",
+      "aliases": [
+        "Senegal"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇴",
+      "description": "bandera: Somalia",
+      "category": "Banderas",
+      "aliases": [
+        "Somalia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇷",
+      "description": "bandera: Surinam",
+      "category": "Banderas",
+      "aliases": [
+        "surinam"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇸",
+      "description": "bandera: Sudán del Sur",
+      "category": "Banderas",
+      "aliases": [
+        "Sudán del Sur"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇹",
+      "description": "bandera: Santo Tomé",
+      "category": "Banderas",
+      "aliases": [
+        "santo_tome_principe"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇻",
+      "description": "bandera: el salvador",
+      "category": "Banderas",
+      "aliases": [
+        "El Salvador"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇽",
+      "description": "bandera: Sint Maarten",
+      "category": "Banderas",
+      "aliases": [
+        "sint_maarten"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇾",
+      "description": "bandera: Siria",
+      "category": "Banderas",
+      "aliases": [
+        "Siria"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇸🇿",
+      "description": "bandera: Esuatini",
+      "category": "Banderas",
+      "aliases": [
+        "Suazilandia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇹🇦",
+      "description": "bandera: Tristán da Cunha",
+      "category": "Banderas",
+      "aliases": [
+        "tristan_da_cunha"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🇹🇨",
+      "description": "bandera: turcos",
+      "category": "Banderas",
+      "aliases": [
+        "islas_turcas_caicos"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇹🇩",
+      "description": "bandera: chad",
+      "category": "Banderas",
+      "aliases": [
+        "Chad"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇹🇫",
+      "description": "bandera: Territorios Australes Franceses",
+      "category": "Banderas",
+      "aliases": [
+        "Territorios Franceses del Sur"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇹🇬",
+      "description": "bandera: Togo",
+      "category": "Banderas",
+      "aliases": [
+        "ir"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇹🇭",
+      "description": "bandera: Tailandia",
+      "category": "Banderas",
+      "aliases": [
+        "Tailandia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇹🇯",
+      "description": "bandera: Tayikistán",
+      "category": "Banderas",
+      "aliases": [
+        "tayikistán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇹🇰",
+      "description": "bandera: Tokelau",
+      "category": "Banderas",
+      "aliases": [
+        "tokelau"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇹🇱",
+      "description": "bandera: Timor Oriental",
+      "category": "Banderas",
+      "aliases": [
+        "timor_leste"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇹🇲",
+      "description": "bandera: Turkmenistán",
+      "category": "Banderas",
+      "aliases": [
+        "Turkmenistán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇹🇳",
+      "description": "bandera: Túnez",
+      "category": "Banderas",
+      "aliases": [
+        "Túnez"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇹🇴",
+      "description": "bandera: Tonga",
+      "category": "Banderas",
+      "aliases": [
+        "tonga"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇹🇷",
+      "description": "bandera: Turquía",
+      "category": "Banderas",
+      "aliases": [
+        "tr"
+      ],
+      "tags": [
+        "pavo"
+      ],
+      "unicode_version": "8.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "🇹🇹",
+      "description": "bandera: trinidad",
+      "category": "Banderas",
+      "aliases": [
+        "Trinidad y Tobago"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇹🇻",
+      "description": "bandera: Tuvalu",
+      "category": "Banderas",
+      "aliases": [
+        "tuvalu"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇹🇼",
+      "description": "bandera: Taiwán",
+      "category": "Banderas",
+      "aliases": [
+        "Taiwán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇹🇿",
+      "description": "bandera: Tanzania",
+      "category": "Banderas",
+      "aliases": [
+        "Tanzania"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇺🇦",
+      "description": "bandera: Ucrania",
+      "category": "Banderas",
+      "aliases": [
+        "Ucrania"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇺🇬",
+      "description": "bandera: Uganda",
+      "category": "Banderas",
+      "aliases": [
+        "Uganda"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇺🇲",
+      "description": "bandera: Islas periféricas de EE. UU.",
+      "category": "Banderas",
+      "aliases": [
+        "islas_periféricas_estadounidenses"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🇺🇳",
+      "description": "bandera: Naciones Unidas",
+      "category": "Banderas",
+      "aliases": [
+        "Naciones Unidas"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🇺🇸",
+      "description": "bandera: Estados Unidos",
+      "category": "Banderas",
+      "aliases": [
+        "a nosotros"
+      ],
+      "tags": [
+        "bandera",
+        "unido",
+        "America"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🇺🇾",
+      "description": "bandera: uruguay",
+      "category": "Banderas",
+      "aliases": [
+        "Uruguay"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇺🇿",
+      "description": "bandera: Uzbekistán",
+      "category": "Banderas",
+      "aliases": [
+        "uzbekistán"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇻🇦",
+      "description": "bandera: Ciudad del Vaticano",
+      "category": "Banderas",
+      "aliases": [
+        "ciudad del Vaticano"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇻🇨",
+      "description": "bandera: San Vicente",
+      "category": "Banderas",
+      "aliases": [
+        "san_vincent_granadinas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇻🇪",
+      "description": "bandera: venezuela",
+      "category": "Banderas",
+      "aliases": [
+        "Venezuela"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇻🇬",
+      "description": "bandera: Islas Vírgenes Británicas",
+      "category": "Banderas",
+      "aliases": [
+        "islas_vírgenes_británicas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇻🇮",
+      "description": "bandera: Islas Vírgenes de EE.UU.",
+      "category": "Banderas",
+      "aliases": [
+        "Islas Vírgenes de EE.UU"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇻🇳",
+      "description": "bandera: Vietnam",
+      "category": "Banderas",
+      "aliases": [
+        "Vietnam"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇻🇺",
+      "description": "bandera: Vanuatu",
+      "category": "Banderas",
+      "aliases": [
+        "vanuatu"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇼🇫",
+      "description": "Bandera: Wallis",
+      "category": "Banderas",
+      "aliases": [
+        "wallis_futuna"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇼🇸",
+      "description": "bandera: Samoa",
+      "category": "Banderas",
+      "aliases": [
+        "samoa"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇽🇰",
+      "description": "bandera: kosovo",
+      "category": "Banderas",
+      "aliases": [
+        "Kosovo"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇾🇪",
+      "description": "bandera: Yemen",
+      "category": "Banderas",
+      "aliases": [
+        "Yemen"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇾🇹",
+      "description": "bandera: Mayotte",
+      "category": "Banderas",
+      "aliases": [
+        "mayonesa"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "9.0"
+    },
+    {
+      "emoji": "🇿🇦",
+      "description": "bandera: Sudáfrica",
+      "category": "Banderas",
+      "aliases": [
+        "Sudáfrica"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇿🇲",
+      "description": "bandera: Zambia",
+      "category": "Banderas",
+      "aliases": [
+        "Zambia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🇿🇼",
+      "description": "bandera: Zimbabue",
+      "category": "Banderas",
+      "aliases": [
+        "Zimbabue"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "🏴",
+      "description": "bandera: inglaterra",
+      "category": "Banderas",
+      "aliases": [
+        "Inglaterra"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🏴",
+      "description": "bandera: Escocia",
+      "category": "Banderas",
+      "aliases": [
+        "Escocia"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🏴",
+      "description": "bandera: Gales",
+      "category": "Banderas",
+      "aliases": [
+        "Gales"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    }
+  ]

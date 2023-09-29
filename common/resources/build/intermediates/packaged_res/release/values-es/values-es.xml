@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_regate">Sobre Regate</string>
+    <string name="activities_and_event">ACTIVIDADES Y EVENTOS</string>
     <string name="add_a_message">Añade un mensaje</string>
     <string name="add_a_review">Agrega una reseña</string>
     <string name="amount">Amount: %1$s</string>
+    <string name="animals_and_nature">ANIMALES Y NATURALEZA</string>
+    <string name="available_courts">Canchas disponibles</string>
     <string name="balance_coins">Saldo de monedas</string>
     <string name="book_a_court">Reservar una cancha</string>
     <string name="bookings">Reservas</string>
@@ -24,16 +27,20 @@
     <string name="description">Descripción</string>
     <string name="discount">Los beneficios y descuento se lanzan regularmente</string>
     <string name="do_you_want_receive_notifications">¿Quieres recibir notificaciones?</string>
+    <string name="dont_receive_code">¿No recibiste el código?</string>
     <string name="dynamic_color">Dynamic colors</string>
     <string name="edit">Editar</string>
     <string name="email_verification">Verificacion de email</string>
     <string name="email_verification_help_text">Antes de continuar, necesitamos verificar su correo electrónico. Por favor ingrese el código que fue enviado a su correo electrónico (<b>%1$s</b>)</string>
+    <string name="emileys_emotion">EMOCIONES Y EMOCIONES</string>
     <string name="exit">Salir</string>
     <string name="expiration_date">Expiration date:  %1$s</string>
     <string name="explore_exceptional_destinations">Explora destinos excepcionales</string>
     <string name="family_name">Apellido</string>
     <string name="favorites">Mis favoritos</string>
     <string name="filters">Filtros</string>
+    <string name="flags">BANDERAS</string>
+    <string name="food_and_drink">COMIDA Y BEBIDA</string>
     <string name="full_payment">Pago Completo</string>
     <string name="get_started">Empezar</string>
     <string name="grant_permission">Conceder permiso</string>
@@ -64,9 +71,11 @@
     <string name="notification_sala">Notificaciones sala</string>
     <string name="notifications">Notifications</string>
     <string name="nudes">Desnudez o contenido sexual</string>
+    <string name="objects">OBJECTS</string>
     <string name="other">Otro</string>
     <string name="password_dont_match">Las contraseñas no coinciden</string>
     <string name="password_length">La contraseña debe tener más de 8 caracteres.</string>
+    <string name="people">PERSONAS</string>
     <string name="permission_required">Permiso requerido.</string>
     <string name="post">Publicar</string>
     <string name="price_range">Rango de precios</string>
@@ -81,6 +90,7 @@
     <string name="remove_user">Remover este  usuario del grupo</string>
     <string name="remove_user_admin">Revocar el estatus de administrador</string>
     <string name="report">Reportar</string>
+    <string name="resend_email_verification">Se enviará un correo electrónico a la dirección (%1$s) con el código de verificación.</string>
     <string name="reservation_date">Fecha de la Reserva</string>
     <string name="review">Reseña</string>
     <string name="reviews">Reseñas</string>
@@ -104,6 +114,7 @@
     <string name="show_reviews">Mostrar las %1$d reseñas</string>
     <string name="spam_scam">Spam/Scam</string>
     <string name="successfully_published">Publicado exitosamente</string>
+    <string name="symbols">SÍMBOLOS</string>
     <string name="terms_of_services">Condiciones de Servicio</string>
     <string name="theme">Theme</string>
     <string name="there_are_not_available_schudules">No hay horarios disponibles</string>
@@ -113,6 +124,7 @@
     <string name="total_paid">Total pagado</string>
     <string name="total_price">Precio total</string>
     <string name="total_remaining">Total restante</string>
+    <string name="travel_and_places">VIAJES Y LUGARES</string>
     <string name="unexpected_error">Lo sentimos, se ha producido un error inesperado.</string>
     <string name="user_since">Usuario desde %1$s</string>
     <string name="verify">Verify</string>
@@ -122,5 +134,6 @@
     <string name="what_would_you_like_to_play">¿Qué te gustaría jugar?</string>
     <string name="where_will_it_be_played">Donde estarás jugando</string>
     <string name="you">Tú</string>
+    <string name="you_may_request_a_new_code">Podrás solicitar un nuevo código en %1$d</string>
     <string name="your_payment_has_been_confirmed">Se han confirmado su pago</string>
 </resources>

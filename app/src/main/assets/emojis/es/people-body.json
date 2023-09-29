@@ -1,0 +1,4596 @@
+[
+    {
+      "emoji": "👋",
+      "description": "mano que saluda",
+      "category": "Gente",
+      "aliases": [
+        "ola"
+      ],
+      "tags": [
+        "adiós"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤚",
+      "description": "dorso de la mano levantado",
+      "category": "Gente",
+      "aliases": [
+        "dorso_de_la_mano_levantado"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🖐️",
+      "description": "mano con los dedos extendidos",
+      "category": "Gente",
+      "aliases": [
+        "mano_levantada_con_los_dedos_abiertos"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "✋",
+      "description": "mano levantada",
+      "category": "Gente",
+      "aliases": [
+        "mano",
+        "mano_elevada"
+      ],
+      "tags": [
+        "Cinco altos",
+        "detener"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🖖",
+      "description": "saludo vulcano",
+      "category": "Gente",
+      "aliases": [
+        "salud_vulcana"
+      ],
+      "tags": [
+        "prosperar",
+        "Spock"
+      ],
+      "unicode_version": "7.0",
+      "ios_version": "8.3",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🫱",
+      "description": "mano derecha",
+      "category": "Gente",
+      "aliases": [
+        "hacia la derecha"
+      ],
+      "tags": [],
+      "unicode_version": "14.0",
+      "ios_version": "15.4",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🫲",
+      "description": "mano izquierda",
+      "category": "Gente",
+      "aliases": [
+        "hacia la izquierda"
+      ],
+      "tags": [],
+      "unicode_version": "14.0",
+      "ios_version": "15.4",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🫳",
+      "description": "mano palma hacia abajo",
+      "category": "Gente",
+      "aliases": [
+        "palma_abajo_mano"
+      ],
+      "tags": [],
+      "unicode_version": "14.0",
+      "ios_version": "15.4",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🫴",
+      "description": "mano palma arriba",
+      "category": "Gente",
+      "aliases": [
+        "palma_arriba_mano"
+      ],
+      "tags": [],
+      "unicode_version": "14.0",
+      "ios_version": "15.4",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🫷",
+      "description": "mano empujando hacia la izquierda",
+      "category": "Gente",
+      "aliases": [
+        "hacia la izquierda_empujando_mano"
+      ],
+      "tags": [],
+      "unicode_version": "15.0",
+      "ios_version": "16.4",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🫸",
+      "description": "mano empujando hacia la derecha",
+      "category": "Gente",
+      "aliases": [
+        "mano_derecha_empujando"
+      ],
+      "tags": [],
+      "unicode_version": "15.0",
+      "ios_version": "16.4",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👌",
+      "description": "OK mano",
+      "category": "Gente",
+      "aliases": [
+        "ok_mano"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤌",
+      "description": "dedos pellizcados",
+      "category": "Gente",
+      "aliases": [
+        "dedos_pellizcados"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤏",
+      "description": "mano pellizcando",
+      "category": "Gente",
+      "aliases": [
+        "pellizcando_mano"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "✌️",
+      "description": "mano de la victoria",
+      "category": "Gente",
+      "aliases": [
+        "v"
+      ],
+      "tags": [
+        "victoria",
+        "paz"
+      ],
+      "unicode_version": "",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤞",
+      "description": "dedos cruzados",
+      "category": "Gente",
+      "aliases": [
+        "dedos cruzados"
+      ],
+      "tags": [
+        "suerte",
+        "esperanzado"
+      ],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🫰",
+      "description": "mano con el dedo índice y el pulgar cruzados",
+      "category": "Gente",
+      "aliases": [
+        "mano_con_dedo_índice_y_pulgar_cruzados"
+      ],
+      "tags": [],
+      "unicode_version": "14.0",
+      "ios_version": "15.4",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤟",
+      "description": "gesto de te amo",
+      "category": "Gente",
+      "aliases": [
+        "te_amo_gesto"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤘",
+      "description": "signo de los cuernos",
+      "category": "Gente",
+      "aliases": [
+        "metal"
+      ],
+      "tags": [],
+      "unicode_version": "8.0",
+      "ios_version": "9.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤙",
+      "description": "llamame mano",
+      "category": "Gente",
+      "aliases": [
+        "llámame_mano"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👈",
+      "description": "índice de revés apuntando hacia la izquierda",
+      "category": "Gente",
+      "aliases": [
+        "punto_izquierda"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👉",
+      "description": "índice de revés apuntando hacia la derecha",
+      "category": "Gente",
+      "aliases": [
+        "punto_derecho"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👆",
+      "description": "índice de revés apuntando hacia arriba",
+      "category": "Gente",
+      "aliases": [
+        "punto_arriba_2"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🖕",
+      "description": "dedo medio",
+      "category": "Gente",
+      "aliases": [
+        "dedo medio",
+        "fu"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👇",
+      "description": "índice de revés apuntando hacia abajo",
+      "category": "Gente",
+      "aliases": [
+        "punto_abajo"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "☝️",
+      "description": "índice apuntando hacia arriba",
+      "category": "Gente",
+      "aliases": [
+        "Hacer hincapié"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🫵",
+      "description": "índice apuntando al espectador",
+      "category": "Gente",
+      "aliases": [
+        "index_señalando_al_visor"
+      ],
+      "tags": [],
+      "unicode_version": "14.0",
+      "ios_version": "15.4",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👍",
+      "description": "Pulgares hacia arriba",
+      "category": "Gente",
+      "aliases": [
+        "1",
+        "Pulgares hacia arriba"
+      ],
+      "tags": [
+        "aprobar",
+        "OK"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👎",
+      "description": "pulgares abajo",
+      "category": "Gente",
+      "aliases": [
+        "-1",
+        "pulgares abajo"
+      ],
+      "tags": [
+        "desaprobar",
+        "enterrar"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "✊",
+      "description": "puño levantado",
+      "category": "Gente",
+      "aliases": [
+        "puño levantado",
+        "puño"
+      ],
+      "tags": [
+        "fuerza"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👊",
+      "description": "puño que se aproxima",
+      "category": "Gente",
+      "aliases": [
+        "puño_oncoming",
+        "puñetazo en la cara",
+        "puñetazo"
+      ],
+      "tags": [
+        "ataque"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤛",
+      "description": "puño hacia la izquierda",
+      "category": "Gente",
+      "aliases": [
+        "puño_izquierdo"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤜",
+      "description": "puño hacia la derecha",
+      "category": "Gente",
+      "aliases": [
+        "puño_derecho"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👏",
+      "description": "aplaudir",
+      "category": "Gente",
+      "aliases": [
+        "aplaudir"
+      ],
+      "tags": [
+        "elogio",
+        "aplausos"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙌",
+      "description": "levantando las manos",
+      "category": "Gente",
+      "aliases": [
+        "manos_alzadas"
+      ],
+      "tags": [
+        "hurra"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🫶",
+      "description": "manos del corazon",
+      "category": "Gente",
+      "aliases": [
+        "manos_corazon"
+      ],
+      "tags": [
+        "amar"
+      ],
+      "unicode_version": "14.0",
+      "ios_version": "15.4",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👐",
+      "description": "manos abiertas",
+      "category": "Gente",
+      "aliases": [
+        "manos_abiertas"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤲",
+      "description": "palmas juntas",
+      "category": "Gente",
+      "aliases": [
+        "palmas_arriba_juntas"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤝",
+      "description": "apretón de manos",
+      "category": "Gente",
+      "aliases": [
+        "apretón de manos"
+      ],
+      "tags": [
+        "trato"
+      ],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙏",
+      "description": "manos juntas",
+      "category": "Gente",
+      "aliases": [
+        "orar"
+      ],
+      "tags": [
+        "por favor",
+        "esperanza",
+        "desear"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "✍️",
+      "description": "mano escribiendo",
+      "category": "Gente",
+      "aliases": [
+        "escritura_mano"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "9.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💅",
+      "description": "esmalte de uñas",
+      "category": "Gente",
+      "aliases": [
+        "cuidado de uñas"
+      ],
+      "tags": [
+        "belleza",
+        "manicura"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤳",
+      "description": "autofoto",
+      "category": "Gente",
+      "aliases": [
+        "autofoto"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💪",
+      "description": "bíceps flexionado",
+      "category": "Gente",
+      "aliases": [
+        "músculo"
+      ],
+      "tags": [
+        "doblar",
+        "bíceps",
+        "fuerte",
+        "ejercicio"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🦾",
+      "description": "brazo mecanico",
+      "category": "Gente",
+      "aliases": [
+        "brazo_mecanico"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "🦿",
+      "description": "pierna mecanica",
+      "category": "Gente",
+      "aliases": [
+        "pierna_mecánica"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0"
+    },
+    {
+      "emoji": "🦵",
+      "description": "pierna",
+      "category": "Gente",
+      "aliases": [
+        "pierna"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🦶",
+      "description": "pie",
+      "category": "Gente",
+      "aliases": [
+        "pie"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👂",
+      "description": "oreja",
+      "category": "Gente",
+      "aliases": [
+        "oreja"
+      ],
+      "tags": [
+        "escuchar",
+        "sonido",
+        "escuchar"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🦻",
+      "description": "oído con audífono",
+      "category": "Gente",
+      "aliases": [
+        "oído_con_audífono"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👃",
+      "description": "nariz",
+      "category": "Gente",
+      "aliases": [
+        "nariz"
+      ],
+      "tags": [
+        "oler"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧠",
+      "description": "cerebro",
+      "category": "Gente",
+      "aliases": [
+        "cerebro"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🫀",
+      "description": "corazón anatómico",
+      "category": "Gente",
+      "aliases": [
+        "corazon_anatomico"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0"
+    },
+    {
+      "emoji": "🫁",
+      "description": "pulmones",
+      "category": "Gente",
+      "aliases": [
+        "pulmones"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0"
+    },
+    {
+      "emoji": "🦷",
+      "description": "diente",
+      "category": "Gente",
+      "aliases": [
+        "diente"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🦴",
+      "description": "hueso",
+      "category": "Gente",
+      "aliases": [
+        "hueso"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "👀",
+      "description": "ojos",
+      "category": "Gente",
+      "aliases": [
+        "ojos"
+      ],
+      "tags": [
+        "mirar",
+        "ver",
+        "mirar"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "👁️",
+      "description": "ojo",
+      "category": "Gente",
+      "aliases": [
+        "ojo"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "👅",
+      "description": "lengua",
+      "category": "Gente",
+      "aliases": [
+        "lengua"
+      ],
+      "tags": [
+        "gusto"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "👄",
+      "description": "boca",
+      "category": "Gente",
+      "aliases": [
+        "labios"
+      ],
+      "tags": [
+        "beso"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🫦",
+      "description": "mordiendo el labio",
+      "category": "Gente",
+      "aliases": [
+        "mordiendo_labio"
+      ],
+      "tags": [],
+      "unicode_version": "14.0",
+      "ios_version": "15.4"
+    },
+    {
+      "emoji": "👶",
+      "description": "bebé",
+      "category": "Gente",
+      "aliases": [
+        "bebé"
+      ],
+      "tags": [
+        "niño",
+        "recién nacido"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧒",
+      "description": "niño",
+      "category": "Gente",
+      "aliases": [
+        "niño"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👦",
+      "description": "chico",
+      "category": "Gente",
+      "aliases": [
+        "chico"
+      ],
+      "tags": [
+        "niño"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👧",
+      "description": "chica",
+      "category": "Gente",
+      "aliases": [
+        "chica"
+      ],
+      "tags": [
+        "niño"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑",
+      "description": "persona",
+      "category": "Gente",
+      "aliases": [
+        "adulto"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👱",
+      "description": "persona: pelo rubio",
+      "category": "Gente",
+      "aliases": [
+        "persona_de_pelo_rubio"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨",
+      "description": "hombre",
+      "category": "Gente",
+      "aliases": [
+        "hombre"
+      ],
+      "tags": [
+        "Bigote",
+        "padre",
+        "papá"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧔",
+      "description": "persona: barba",
+      "category": "Gente",
+      "aliases": [
+        "persona_barbuda"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧔‍♂️",
+      "description": "hombre: barba",
+      "category": "Gente",
+      "aliases": [
+        "hombre_barba"
+      ],
+      "tags": [],
+      "unicode_version": "13.1",
+      "ios_version": "14.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧔‍♀️",
+      "description": "mujer: barba",
+      "category": "Gente",
+      "aliases": [
+        "mujer_barba"
+      ],
+      "tags": [],
+      "unicode_version": "13.1",
+      "ios_version": "14.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🦰",
+      "description": "hombre: pelo rojo",
+      "category": "Gente",
+      "aliases": [
+        "hombre_pelirrojo"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🦱",
+      "description": "hombre: pelo rizado",
+      "category": "Gente",
+      "aliases": [
+        "hombre_de_pelo_rizado"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🦳",
+      "description": "hombre: pelo blanco",
+      "category": "Gente",
+      "aliases": [
+        "hombre_de_pelo_blanco"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🦲",
+      "description": "hombre: calvo",
+      "category": "Gente",
+      "aliases": [
+        "hombre calvo"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩",
+      "description": "mujer",
+      "category": "Gente",
+      "aliases": [
+        "mujer"
+      ],
+      "tags": [
+        "chicas"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🦰",
+      "description": "mujer: pelo rojo",
+      "category": "Gente",
+      "aliases": [
+        "mujer_pelirroja"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🦰",
+      "description": "persona: pelo rojo",
+      "category": "Gente",
+      "aliases": [
+        "persona_pelo_rojo"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🦱",
+      "description": "mujer: pelo rizado",
+      "category": "Gente",
+      "aliases": [
+        "mujer_de_pelo_rizado"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🦱",
+      "description": "persona: pelo rizado",
+      "category": "Gente",
+      "aliases": [
+        "persona_pelo_rizado"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🦳",
+      "description": "mujer: pelo blanco",
+      "category": "Gente",
+      "aliases": [
+        "mujer_de_pelo_blanco"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🦳",
+      "description": "persona: pelo blanco",
+      "category": "Gente",
+      "aliases": [
+        "persona_pelo_blanco"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🦲",
+      "description": "mujer: calva",
+      "category": "Gente",
+      "aliases": [
+        "mujer_calva"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🦲",
+      "description": "persona: calvo",
+      "category": "Gente",
+      "aliases": [
+        "persona_calvo"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👱‍♀️",
+      "description": "mujer: pelo rubio",
+      "category": "Gente",
+      "aliases": [
+        "mujer_de_pelo_rubio",
+        "mujer rubia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👱‍♂️",
+      "description": "hombre: pelo rubio",
+      "category": "Gente",
+      "aliases": [
+        "hombre_de_pelo_rubio"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧓",
+      "description": "persona mayor",
+      "category": "Gente",
+      "aliases": [
+        "adulto_mayor"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👴",
+      "description": "anciano",
+      "category": "Gente",
+      "aliases": [
+        "hombre mayor"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👵",
+      "description": "anciana",
+      "category": "Gente",
+      "aliases": [
+        "mujer_mayor"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙍",
+      "description": "persona frunciendo el ceño",
+      "category": "Gente",
+      "aliases": [
+        "persona con el ceño fruncido"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙍‍♂️",
+      "description": "hombre frunciendo el ceño",
+      "category": "Gente",
+      "aliases": [
+        "hombre con el ceño fruncido"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙍‍♀️",
+      "description": "mujer frunciendo el ceño",
+      "category": "Gente",
+      "aliases": [
+        "mujer con el ceño fruncido"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙎",
+      "description": "persona haciendo pucheros",
+      "category": "Gente",
+      "aliases": [
+        "cara_de_pucheros"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙎‍♂️",
+      "description": "hombre haciendo pucheros",
+      "category": "Gente",
+      "aliases": [
+        "hombre_haciendo pucheros"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙎‍♀️",
+      "description": "mujer haciendo pucheros",
+      "category": "Gente",
+      "aliases": [
+        "mujer_haciendo pucheros"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙅",
+      "description": "persona haciendo un gesto NO",
+      "category": "Gente",
+      "aliases": [
+        "no es bueno"
+      ],
+      "tags": [
+        "detener",
+        "detener",
+        "denegado"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙅‍♂️",
+      "description": "hombre haciendo un gesto NO",
+      "category": "Gente",
+      "aliases": [
+        "ningún_buen_hombre",
+        "ng_man"
+      ],
+      "tags": [
+        "detener",
+        "detener",
+        "denegado"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙅‍♀️",
+      "description": "mujer haciendo un gesto NO",
+      "category": "Gente",
+      "aliases": [
+        "ninguna_buena_mujer",
+        "ng_mujer"
+      ],
+      "tags": [
+        "detener",
+        "detener",
+        "denegado"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙆",
+      "description": "persona haciendo un gesto de ok",
+      "category": "Gente",
+      "aliases": [
+        "ok_persona"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙆‍♂️",
+      "description": "hombre gesticulando ok",
+      "category": "Gente",
+      "aliases": [
+        "OK hombre"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙆‍♀️",
+      "description": "mujer gesticulando ok",
+      "category": "Gente",
+      "aliases": [
+        "ok_mujer"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💁",
+      "description": "persona inclinando la mano",
+      "category": "Gente",
+      "aliases": [
+        "persona_mano_tipping",
+        "persona_del_escritorio_de_información"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💁‍♂️",
+      "description": "hombre inclinando la mano",
+      "category": "Gente",
+      "aliases": [
+        "hombre_tipping_hand_man",
+        "hombre_sassy"
+      ],
+      "tags": [
+        "información"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💁‍♀️",
+      "description": "mujer inclinando la mano",
+      "category": "Gente",
+      "aliases": [
+        "mujer_mano_tipping",
+        "mujer_sassy"
+      ],
+      "tags": [
+        "información"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙋",
+      "description": "persona levantando la mano",
+      "category": "Gente",
+      "aliases": [
+        "levantando_mano"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙋‍♂️",
+      "description": "hombre levantando la mano",
+      "category": "Gente",
+      "aliases": [
+        "levantando_mano_hombre"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙋‍♀️",
+      "description": "mujer levantando la mano",
+      "category": "Gente",
+      "aliases": [
+        "levantando_mano_mujer"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧏",
+      "description": "persona sorda",
+      "category": "Gente",
+      "aliases": [
+        "persona sorda"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧏‍♂️",
+      "description": "hombre sordo",
+      "category": "Gente",
+      "aliases": [
+        "hombre_sordo"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧏‍♀️",
+      "description": "mujer sorda",
+      "category": "Gente",
+      "aliases": [
+        "mujer sorda"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙇",
+      "description": "persona haciendo una reverencia",
+      "category": "Gente",
+      "aliases": [
+        "arco"
+      ],
+      "tags": [
+        "respeto",
+        "gracias"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙇‍♂️",
+      "description": "hombre inclinándose",
+      "category": "Gente",
+      "aliases": [
+        "hombre_inclinándose"
+      ],
+      "tags": [
+        "respeto",
+        "gracias"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🙇‍♀️",
+      "description": "mujer haciendo reverencias",
+      "category": "Gente",
+      "aliases": [
+        "mujer_inclinándose"
+      ],
+      "tags": [
+        "respeto",
+        "gracias"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤦",
+      "description": "persona dando palmadas en la cara",
+      "category": "Gente",
+      "aliases": [
+        "palma de la cara"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤦‍♂️",
+      "description": "hombre facepalming",
+      "category": "Gente",
+      "aliases": [
+        "hombre_facepalming"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤦‍♀️",
+      "description": "mujer facepalming",
+      "category": "Gente",
+      "aliases": [
+        "mujer_facepalming"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤷",
+      "description": "persona encogiéndose de hombros",
+      "category": "Gente",
+      "aliases": [
+        "encogimiento de hombros"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤷‍♂️",
+      "description": "hombre encogiéndose de hombros",
+      "category": "Gente",
+      "aliases": [
+        "hombre_encogiéndose de hombros"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤷‍♀️",
+      "description": "mujer encogiéndose de hombros",
+      "category": "Gente",
+      "aliases": [
+        "mujer_encogiéndose de hombros"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍⚕️",
+      "description": "trabajador de la salud",
+      "category": "Gente",
+      "aliases": [
+        "trabajador de la salud"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍⚕️",
+      "description": "hombre trabajador de la salud",
+      "category": "Gente",
+      "aliases": [
+        "hombre_trabajador_de_salud"
+      ],
+      "tags": [
+        "doctor",
+        "enfermero"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍⚕️",
+      "description": "trabajadora de salud",
+      "category": "Gente",
+      "aliases": [
+        "mujer_trabajadora_de_salud"
+      ],
+      "tags": [
+        "doctor",
+        "enfermero"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🎓",
+      "description": "alumno",
+      "category": "Gente",
+      "aliases": [
+        "alumno"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🎓",
+      "description": "hombre estudiante",
+      "category": "Gente",
+      "aliases": [
+        "hombre_estudiante"
+      ],
+      "tags": [
+        "graduación"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🎓",
+      "description": "mujer estudiante",
+      "category": "Gente",
+      "aliases": [
+        "mujer_estudiante"
+      ],
+      "tags": [
+        "graduación"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🏫",
+      "description": "maestro",
+      "category": "Gente",
+      "aliases": [
+        "maestro"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🏫",
+      "description": "hombre maestro",
+      "category": "Gente",
+      "aliases": [
+        "hombre_profesor"
+      ],
+      "tags": [
+        "escuela",
+        "profesor"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🏫",
+      "description": "profesora",
+      "category": "Gente",
+      "aliases": [
+        "profesora"
+      ],
+      "tags": [
+        "escuela",
+        "profesor"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍⚖️",
+      "description": "juez",
+      "category": "Gente",
+      "aliases": [
+        "juez"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍⚖️",
+      "description": "hombre juez",
+      "category": "Gente",
+      "aliases": [
+        "hombre_juez"
+      ],
+      "tags": [
+        "justicia"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍⚖️",
+      "description": "mujer juez",
+      "category": "Gente",
+      "aliases": [
+        "mujer_juez"
+      ],
+      "tags": [
+        "justicia"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🌾",
+      "description": "agricultor",
+      "category": "Gente",
+      "aliases": [
+        "agricultor"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🌾",
+      "description": "hombre granjero",
+      "category": "Gente",
+      "aliases": [
+        "hombre_granjero"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🌾",
+      "description": "mujer agricultora",
+      "category": "Gente",
+      "aliases": [
+        "mujer_granjera"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🍳",
+      "description": "cocinar",
+      "category": "Gente",
+      "aliases": [
+        "cocinar"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🍳",
+      "description": "hombre cocinero",
+      "category": "Gente",
+      "aliases": [
+        "hombre_cocinero"
+      ],
+      "tags": [
+        "cocinero"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🍳",
+      "description": "mujer cocinera",
+      "category": "Gente",
+      "aliases": [
+        "mujer_cocinera"
+      ],
+      "tags": [
+        "cocinero"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🔧",
+      "description": "mecánico",
+      "category": "Gente",
+      "aliases": [
+        "mecánico"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🔧",
+      "description": "hombre mecánico",
+      "category": "Gente",
+      "aliases": [
+        "hombre_mecanico"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🔧",
+      "description": "mujer mecanica",
+      "category": "Gente",
+      "aliases": [
+        "mujer_mecanica"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🏭",
+      "description": "trabajador de fábrica",
+      "category": "Gente",
+      "aliases": [
+        "trabajador de fábrica"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🏭",
+      "description": "hombre trabajador de fábrica",
+      "category": "Gente",
+      "aliases": [
+        "hombre_factory_worker"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🏭",
+      "description": "mujer trabajadora de fábrica",
+      "category": "Gente",
+      "aliases": [
+        "mujer_trabajadora_de_fabrica"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍💼",
+      "description": "empleado de oficina",
+      "category": "Gente",
+      "aliases": [
+        "empleado de oficina"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍💼",
+      "description": "hombre, oficinista",
+      "category": "Gente",
+      "aliases": [
+        "hombre_trabajador_de_oficina"
+      ],
+      "tags": [
+        "negocio"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍💼",
+      "description": "mujer, oficinista",
+      "category": "Gente",
+      "aliases": [
+        "mujer_trabajadora_de_oficina"
+      ],
+      "tags": [
+        "negocio"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🔬",
+      "description": "científico",
+      "category": "Gente",
+      "aliases": [
+        "científico"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🔬",
+      "description": "hombre científico",
+      "category": "Gente",
+      "aliases": [
+        "hombre_científico"
+      ],
+      "tags": [
+        "investigación"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🔬",
+      "description": "mujer científica",
+      "category": "Gente",
+      "aliases": [
+        "mujer_cientifica"
+      ],
+      "tags": [
+        "investigación"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍💻",
+      "description": "tecnólogo",
+      "category": "Gente",
+      "aliases": [
+        "tecnólogo"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍💻",
+      "description": "hombre tecnólogo",
+      "category": "Gente",
+      "aliases": [
+        "hombre_tecnólogo"
+      ],
+      "tags": [
+        "descifrador"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍💻",
+      "description": "mujer tecnóloga",
+      "category": "Gente",
+      "aliases": [
+        "mujer_tecnóloga"
+      ],
+      "tags": [
+        "descifrador"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🎤",
+      "description": "cantante",
+      "category": "Gente",
+      "aliases": [
+        "cantante"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🎤",
+      "description": "hombre cantante",
+      "category": "Gente",
+      "aliases": [
+        "hombre_singer"
+      ],
+      "tags": [
+        "estrella de rock"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🎤",
+      "description": "mujer cantante",
+      "category": "Gente",
+      "aliases": [
+        "mujer_cantante"
+      ],
+      "tags": [
+        "estrella de rock"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🎨",
+      "description": "artista",
+      "category": "Gente",
+      "aliases": [
+        "artista"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🎨",
+      "description": "hombre artista",
+      "category": "Gente",
+      "aliases": [
+        "hombre_artista"
+      ],
+      "tags": [
+        "pintor"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🎨",
+      "description": "mujer artista",
+      "category": "Gente",
+      "aliases": [
+        "mujer_artista"
+      ],
+      "tags": [
+        "pintor"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍✈️",
+      "description": "piloto",
+      "category": "Gente",
+      "aliases": [
+        "piloto"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍✈️",
+      "description": "hombre piloto",
+      "category": "Gente",
+      "aliases": [
+        "hombre_piloto"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍✈️",
+      "description": "mujer piloto",
+      "category": "Gente",
+      "aliases": [
+        "mujer_piloto"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🚀",
+      "description": "astronauta",
+      "category": "Gente",
+      "aliases": [
+        "astronauta"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🚀",
+      "description": "hombre astronauta",
+      "category": "Gente",
+      "aliases": [
+        "hombre_astronauta"
+      ],
+      "tags": [
+        "espacio"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🚀",
+      "description": "mujer astronauta",
+      "category": "Gente",
+      "aliases": [
+        "mujer_astronauta"
+      ],
+      "tags": [
+        "espacio"
+      ],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🚒",
+      "description": "bombero",
+      "category": "Gente",
+      "aliases": [
+        "bombero"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🚒",
+      "description": "hombre bombero",
+      "category": "Gente",
+      "aliases": [
+        "hombre_bombero"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🚒",
+      "description": "mujer bombero",
+      "category": "Gente",
+      "aliases": [
+        "mujer_bombero"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👮",
+      "description": "Oficial de policía",
+      "category": "Gente",
+      "aliases": [
+        "Oficial de policía",
+        "policía"
+      ],
+      "tags": [
+        "ley"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👮‍♂️",
+      "description": "hombre policía",
+      "category": "Gente",
+      "aliases": [
+        "policía"
+      ],
+      "tags": [
+        "ley",
+        "policía"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👮‍♀️",
+      "description": "mujer policía",
+      "category": "Gente",
+      "aliases": [
+        "mujer policía"
+      ],
+      "tags": [
+        "ley",
+        "policía"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🕵️",
+      "description": "detective",
+      "category": "Gente",
+      "aliases": [
+        "detective"
+      ],
+      "tags": [
+        "detective"
+      ],
+      "unicode_version": "7.0",
+      "ios_version": "9.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🕵️‍♂️",
+      "description": "hombre detective",
+      "category": "Gente",
+      "aliases": [
+        "detective_masculino"
+      ],
+      "tags": [
+        "detective"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🕵️‍♀️",
+      "description": "mujer detective",
+      "category": "Gente",
+      "aliases": [
+        "detective_mujer"
+      ],
+      "tags": [
+        "detective"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💂",
+      "description": "guardia",
+      "category": "Gente",
+      "aliases": [
+        "guardia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💂‍♂️",
+      "description": "hombre guardia",
+      "category": "Gente",
+      "aliases": [
+        "defensor"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💂‍♀️",
+      "description": "mujer guardia",
+      "category": "Gente",
+      "aliases": [
+        "guardia"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🥷",
+      "description": "ninjas",
+      "category": "Gente",
+      "aliases": [
+        "ninjas"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👷",
+      "description": "Obrero",
+      "category": "Gente",
+      "aliases": [
+        "Obrero"
+      ],
+      "tags": [
+        "casco"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👷‍♂️",
+      "description": "hombre, trabajador de la construcción",
+      "category": "Gente",
+      "aliases": [
+        "hombre_trabajador_construccion"
+      ],
+      "tags": [
+        "casco"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👷‍♀️",
+      "description": "mujer trabajadora de la construcción",
+      "category": "Gente",
+      "aliases": [
+        "mujer_trabajadora_de_construccion"
+      ],
+      "tags": [
+        "casco"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🫅",
+      "description": "persona con corona",
+      "category": "Gente",
+      "aliases": [
+        "persona_con_corona"
+      ],
+      "tags": [],
+      "unicode_version": "14.0",
+      "ios_version": "15.4",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤴",
+      "description": "Príncipe",
+      "category": "Gente",
+      "aliases": [
+        "Príncipe"
+      ],
+      "tags": [
+        "corona",
+        "real"
+      ],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👸",
+      "description": "princesa",
+      "category": "Gente",
+      "aliases": [
+        "princesa"
+      ],
+      "tags": [
+        "corona",
+        "real"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👳",
+      "description": "persona con turbante",
+      "category": "Gente",
+      "aliases": [
+        "persona_con_turbante"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👳‍♂️",
+      "description": "hombre vestido con turbante",
+      "category": "Gente",
+      "aliases": [
+        "hombre_con_turbante"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👳‍♀️",
+      "description": "mujer con turbante",
+      "category": "Gente",
+      "aliases": [
+        "mujer_con_turbante"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👲",
+      "description": "persona con casquete",
+      "category": "Gente",
+      "aliases": [
+        "hombre_con_gua_pi_mao"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧕",
+      "description": "mujer con pañuelo en la cabeza",
+      "category": "Gente",
+      "aliases": [
+        "mujer_con_pañuelo"
+      ],
+      "tags": [
+        "hiyab"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤵",
+      "description": "persona en esmoquin",
+      "category": "Gente",
+      "aliases": [
+        "persona_en_esmoquin"
+      ],
+      "tags": [
+        "acicalar",
+        "casamiento",
+        "boda"
+      ],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤵‍♂️",
+      "description": "hombre en esmoquin",
+      "category": "Gente",
+      "aliases": [
+        "hombre_en_esmoquin"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤵‍♀️",
+      "description": "mujer en esmoquin",
+      "category": "Gente",
+      "aliases": [
+        "mujer_en_esmoquin"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👰",
+      "description": "persona con velo",
+      "category": "Gente",
+      "aliases": [
+        "persona_con_velo"
+      ],
+      "tags": [
+        "casamiento",
+        "boda"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👰‍♂️",
+      "description": "hombre con velo",
+      "category": "Gente",
+      "aliases": [
+        "hombre_con_velo"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👰‍♀️",
+      "description": "mujer con velo",
+      "category": "Gente",
+      "aliases": [
+        "mujer_con_velo",
+        "novia_con_velo"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤰",
+      "description": "mujer embarazada",
+      "category": "Gente",
+      "aliases": [
+        "mujer embarazada"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🫃",
+      "description": "Hombre embarazado",
+      "category": "Gente",
+      "aliases": [
+        "Hombre embarazado"
+      ],
+      "tags": [],
+      "unicode_version": "14.0",
+      "ios_version": "15.4",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🫄",
+      "description": "persona embarazada",
+      "category": "Gente",
+      "aliases": [
+        "persona_embarazada"
+      ],
+      "tags": [],
+      "unicode_version": "14.0",
+      "ios_version": "15.4",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤱",
+      "description": "amamantamiento",
+      "category": "Gente",
+      "aliases": [
+        "amamantamiento"
+      ],
+      "tags": [
+        "enfermería"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🍼",
+      "description": "mujer alimentando bebe",
+      "category": "Gente",
+      "aliases": [
+        "mujer_alimentando_bebe"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🍼",
+      "description": "hombre alimentando bebe",
+      "category": "Gente",
+      "aliases": [
+        "hombre_alimentando_bebe"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🍼",
+      "description": "persona alimentando al bebe",
+      "category": "Gente",
+      "aliases": [
+        "persona_alimentando_bebe"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👼",
+      "description": "Ángel bebé",
+      "category": "Gente",
+      "aliases": [
+        "ángel"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🎅",
+      "description": "Papá Noel",
+      "category": "Gente",
+      "aliases": [
+        "Papa Noel"
+      ],
+      "tags": [
+        "Navidad"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤶",
+      "description": "señora claus",
+      "category": "Gente",
+      "aliases": [
+        "señora_claus"
+      ],
+      "tags": [
+        "Papa Noel"
+      ],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🎄",
+      "description": "claus mx",
+      "category": "Gente",
+      "aliases": [
+        "mx_claus"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🦸",
+      "description": "superhéroe",
+      "category": "Gente",
+      "aliases": [
+        "superhéroe"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🦸‍♂️",
+      "description": "hombre superhéroe",
+      "category": "Gente",
+      "aliases": [
+        "superhéroe_hombre"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🦸‍♀️",
+      "description": "mujer superheroe",
+      "category": "Gente",
+      "aliases": [
+        "superhero_mujer"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🦹",
+      "description": "supervillano",
+      "category": "Gente",
+      "aliases": [
+        "supervillano"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🦹‍♂️",
+      "description": "hombre supervillano",
+      "category": "Gente",
+      "aliases": [
+        "hombre_supervillano"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🦹‍♀️",
+      "description": "mujer supervillana",
+      "category": "Gente",
+      "aliases": [
+        "mujer_supervillana"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧙",
+      "description": "mago",
+      "category": "Gente",
+      "aliases": [
+        "mago"
+      ],
+      "tags": [
+        "mago"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧙‍♂️",
+      "description": "hombre mago",
+      "category": "Gente",
+      "aliases": [
+        "hombre_mago"
+      ],
+      "tags": [
+        "mago"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧙‍♀️",
+      "description": "mujer maga",
+      "category": "Gente",
+      "aliases": [
+        "mujer_maga"
+      ],
+      "tags": [
+        "mago"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧚",
+      "description": "hada",
+      "category": "Gente",
+      "aliases": [
+        "hada"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧚‍♂️",
+      "description": "hombre hada",
+      "category": "Gente",
+      "aliases": [
+        "hombre_hada"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧚‍♀️",
+      "description": "mujer hada",
+      "category": "Gente",
+      "aliases": [
+        "mujer_hada"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧛",
+      "description": "vampiro",
+      "category": "Gente",
+      "aliases": [
+        "vampiro"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧛‍♂️",
+      "description": "hombre vampiro",
+      "category": "Gente",
+      "aliases": [
+        "hombre_vampiro"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧛‍♀️",
+      "description": "mujer vampiro",
+      "category": "Gente",
+      "aliases": [
+        "mujer_vampiro"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧜",
+      "description": "sirena",
+      "category": "Gente",
+      "aliases": [
+        "sirena"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧜‍♂️",
+      "description": "tritón",
+      "category": "Gente",
+      "aliases": [
+        "tritón"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧜‍♀️",
+      "description": "sirena",
+      "category": "Gente",
+      "aliases": [
+        "sirena"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧝",
+      "description": "duende",
+      "category": "Gente",
+      "aliases": [
+        "duende"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧝‍♂️",
+      "description": "hombre elfo",
+      "category": "Gente",
+      "aliases": [
+        "elfo_hombre"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧝‍♀️",
+      "description": "mujer elfa",
+      "category": "Gente",
+      "aliases": [
+        "mujer elfa"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧞",
+      "description": "genio",
+      "category": "Gente",
+      "aliases": [
+        "genio"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🧞‍♂️",
+      "description": "hombre genio",
+      "category": "Gente",
+      "aliases": [
+        "genio_man"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🧞‍♀️",
+      "description": "mujer genio",
+      "category": "Gente",
+      "aliases": [
+        "genio_mujer"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🧟",
+      "description": "zombi",
+      "category": "Gente",
+      "aliases": [
+        "zombi"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🧟‍♂️",
+      "description": "hombre zombi",
+      "category": "Gente",
+      "aliases": [
+        "hombre_zombi"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🧟‍♀️",
+      "description": "mujer zombi",
+      "category": "Gente",
+      "aliases": [
+        "mujer_zombi"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🧌",
+      "description": "Troll",
+      "category": "Gente",
+      "aliases": [
+        "Troll"
+      ],
+      "tags": [],
+      "unicode_version": "14.0",
+      "ios_version": "15.4"
+    },
+    {
+      "emoji": "💆",
+      "description": "persona recibiendo masaje",
+      "category": "Gente",
+      "aliases": [
+        "masaje"
+      ],
+      "tags": [
+        "spa"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💆‍♂️",
+      "description": "hombre recibiendo masaje",
+      "category": "Gente",
+      "aliases": [
+        "masaje_hombre"
+      ],
+      "tags": [
+        "spa"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💆‍♀️",
+      "description": "mujer recibiendo masaje",
+      "category": "Gente",
+      "aliases": [
+        "masaje_mujer"
+      ],
+      "tags": [
+        "spa"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💇",
+      "description": "persona cortándose el pelo",
+      "category": "Gente",
+      "aliases": [
+        "Corte de pelo"
+      ],
+      "tags": [
+        "belleza"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💇‍♂️",
+      "description": "hombre cortándose el pelo",
+      "category": "Gente",
+      "aliases": [
+        "corte_pelo_hombre"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💇‍♀️",
+      "description": "mujer cortándose el pelo",
+      "category": "Gente",
+      "aliases": [
+        "corte_pelo_mujer"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🚶",
+      "description": "persona caminando",
+      "category": "Gente",
+      "aliases": [
+        "caminando"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🚶‍♂️",
+      "description": "hombre caminando",
+      "category": "Gente",
+      "aliases": [
+        "hombre caminando"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🚶‍♀️",
+      "description": "mujer caminando",
+      "category": "Gente",
+      "aliases": [
+        "mujer_caminando"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧍",
+      "description": "persona de pie",
+      "category": "Gente",
+      "aliases": [
+        "persona_de pie"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧍‍♂️",
+      "description": "hombre de pie",
+      "category": "Gente",
+      "aliases": [
+        "hombre_de pie"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧍‍♀️",
+      "description": "mujer de pie",
+      "category": "Gente",
+      "aliases": [
+        "mujer_de pie"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧎",
+      "description": "persona arrodillada",
+      "category": "Gente",
+      "aliases": [
+        "persona_arrodillada"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧎‍♂️",
+      "description": "hombre arrodillado",
+      "category": "Gente",
+      "aliases": [
+        "hombre_arrodillado"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧎‍♀️",
+      "description": "mujer arrodillada",
+      "category": "Gente",
+      "aliases": [
+        "mujer_arrodillada"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🦯",
+      "description": "persona con bastón blanco",
+      "category": "Gente",
+      "aliases": [
+        "persona_con_baston_sondeo"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🦯",
+      "description": "hombre con bastón blanco",
+      "category": "Gente",
+      "aliases": [
+        "hombre_con_baston_sondeo"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🦯",
+      "description": "mujer con bastón blanco",
+      "category": "Gente",
+      "aliases": [
+        "mujer_con_baston_sondeo"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🦼",
+      "description": "persona en silla de ruedas motorizada",
+      "category": "Gente",
+      "aliases": [
+        "persona_en_silla_de_ruedas motorizada"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🦼",
+      "description": "hombre en silla de ruedas motorizada",
+      "category": "Gente",
+      "aliases": [
+        "hombre_en_silla_de_ruedas_motorizada"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🦼",
+      "description": "mujer en silla de ruedas motorizada",
+      "category": "Gente",
+      "aliases": [
+        "mujer_en_silla_de_ruedas_motorizada"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🦽",
+      "description": "persona en silla de ruedas manual",
+      "category": "Gente",
+      "aliases": [
+        "persona_en_silla_de_ruedas_manual"
+      ],
+      "tags": [],
+      "unicode_version": "12.1",
+      "ios_version": "13.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍🦽",
+      "description": "hombre en silla de ruedas manual",
+      "category": "Gente",
+      "aliases": [
+        "hombre_en_silla_de_ruedas_manual"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍🦽",
+      "description": "mujer en silla de ruedas manual",
+      "category": "Gente",
+      "aliases": [
+        "mujer_en_silla_de_ruedas_manual"
+      ],
+      "tags": [],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏃",
+      "description": "persona corriendo",
+      "category": "Gente",
+      "aliases": [
+        "corredor",
+        "correr"
+      ],
+      "tags": [
+        "ejercicio",
+        "ejercicio",
+        "maratón"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏃‍♂️",
+      "description": "hombre corriendo",
+      "category": "Gente",
+      "aliases": [
+        "hombre corriendo"
+      ],
+      "tags": [
+        "ejercicio",
+        "ejercicio",
+        "maratón"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏃‍♀️",
+      "description": "mujer corriendo",
+      "category": "Gente",
+      "aliases": [
+        "mujer_corriendo"
+      ],
+      "tags": [
+        "ejercicio",
+        "ejercicio",
+        "maratón"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💃",
+      "description": "mujer bailando",
+      "category": "Gente",
+      "aliases": [
+        "mujer_bailando",
+        "bailarín"
+      ],
+      "tags": [
+        "vestido"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🕺",
+      "description": "hombre bailando",
+      "category": "Gente",
+      "aliases": [
+        "hombre_bailando"
+      ],
+      "tags": [
+        "bailarín"
+      ],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🕴️",
+      "description": "persona en traje levitando",
+      "category": "Gente",
+      "aliases": [
+        "traje_de_negocios_levitando"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👯",
+      "description": "personas con orejas de conejo",
+      "category": "Gente",
+      "aliases": [
+        "bailarines"
+      ],
+      "tags": [
+        "conejito"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "👯‍♂️",
+      "description": "hombres con orejas de conejo",
+      "category": "Gente",
+      "aliases": [
+        "hombres_bailando"
+      ],
+      "tags": [
+        "conejito"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "10.0"
+    },
+    {
+      "emoji": "👯‍♀️",
+      "description": "mujeres con orejas de conejo",
+      "category": "Gente",
+      "aliases": [
+        "mujeres_bailando"
+      ],
+      "tags": [
+        "conejito"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🧖",
+      "description": "persona en cuarto de vapor",
+      "category": "Gente",
+      "aliases": [
+        "persona_sauna"
+      ],
+      "tags": [
+        "lleno de vapor"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧖‍♂️",
+      "description": "hombre en sala de vapor",
+      "category": "Gente",
+      "aliases": [
+        "hombre_sauna"
+      ],
+      "tags": [
+        "lleno de vapor"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧖‍♀️",
+      "description": "mujer en cuarto de vapor",
+      "category": "Gente",
+      "aliases": [
+        "sauna_mujer"
+      ],
+      "tags": [
+        "lleno de vapor"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧗",
+      "description": "persona escalando",
+      "category": "Gente",
+      "aliases": [
+        "escalada"
+      ],
+      "tags": [
+        "búlder"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧗‍♂️",
+      "description": "hombre escalando",
+      "category": "Gente",
+      "aliases": [
+        "hombre_escalando"
+      ],
+      "tags": [
+        "búlder"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧗‍♀️",
+      "description": "mujer escalando",
+      "category": "Gente",
+      "aliases": [
+        "mujer_escalada"
+      ],
+      "tags": [
+        "búlder"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤺",
+      "description": "persona cercando",
+      "category": "Gente",
+      "aliases": [
+        "persona_esgrima"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2"
+    },
+    {
+      "emoji": "🏇",
+      "description": "las carreras de caballos",
+      "category": "Gente",
+      "aliases": [
+        "las carreras de caballos"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "⛷️",
+      "description": "esquiador",
+      "category": "Gente",
+      "aliases": [
+        "esquiador"
+      ],
+      "tags": [],
+      "unicode_version": "5.2",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "🏂",
+      "description": "snowboarder",
+      "category": "Gente",
+      "aliases": [
+        "snowboarder"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏌️",
+      "description": "persona jugando golf",
+      "category": "Gente",
+      "aliases": [
+        "golf"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏌️‍♂️",
+      "description": "hombre jugando al golf",
+      "category": "Gente",
+      "aliases": [
+        "hombre_golf"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏌️‍♀️",
+      "description": "mujer jugando al golf",
+      "category": "Gente",
+      "aliases": [
+        "mujer_golf"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏄",
+      "description": "persona navegando",
+      "category": "Gente",
+      "aliases": [
+        "tablista"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏄‍♂️",
+      "description": "hombre surfeando",
+      "category": "Gente",
+      "aliases": [
+        "surfista_hombre"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏄‍♀️",
+      "description": "mujer surfeando",
+      "category": "Gente",
+      "aliases": [
+        "surfeando_mujer"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🚣",
+      "description": "persona remando en bote",
+      "category": "Gente",
+      "aliases": [
+        "bote de remos"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🚣‍♂️",
+      "description": "hombre, bote de remos",
+      "category": "Gente",
+      "aliases": [
+        "hombre_remo"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🚣‍♀️",
+      "description": "mujer, bote de remos",
+      "category": "Gente",
+      "aliases": [
+        "mujer_remo"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏊",
+      "description": "persona nadando",
+      "category": "Gente",
+      "aliases": [
+        "nadador"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏊‍♂️",
+      "description": "hombre nadando",
+      "category": "Gente",
+      "aliases": [
+        "hombre nadando"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏊‍♀️",
+      "description": "mujer nadando",
+      "category": "Gente",
+      "aliases": [
+        "nadando_mujer"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "⛹️",
+      "description": "persona botando la pelota",
+      "category": "Gente",
+      "aliases": [
+        "persona_pelota_rebotando"
+      ],
+      "tags": [
+        "baloncesto"
+      ],
+      "unicode_version": "5.2",
+      "ios_version": "9.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "⛹️‍♂️",
+      "description": "hombre rebotando la pelota",
+      "category": "Gente",
+      "aliases": [
+        "hombre_pelota_rebotando",
+        "baloncesto_hombre"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "⛹️‍♀️",
+      "description": "mujer botando pelota",
+      "category": "Gente",
+      "aliases": [
+        "mujer_rebotando_pelota",
+        "baloncesto_mujer"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏋️",
+      "description": "persona levantando pesas",
+      "category": "Gente",
+      "aliases": [
+        "levantamiento de pesas"
+      ],
+      "tags": [
+        "gimnasia",
+        "ejercicio"
+      ],
+      "unicode_version": "7.0",
+      "ios_version": "9.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏋️‍♂️",
+      "description": "hombre levantando pesas",
+      "category": "Gente",
+      "aliases": [
+        "levantamiento_de_peso_hombre"
+      ],
+      "tags": [
+        "gimnasia",
+        "ejercicio"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🏋️‍♀️",
+      "description": "mujer levantando pesas",
+      "category": "Gente",
+      "aliases": [
+        "levantamiento_de_peso_mujer"
+      ],
+      "tags": [
+        "gimnasia",
+        "ejercicio"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🚴",
+      "description": "persona en bicicleta",
+      "category": "Gente",
+      "aliases": [
+        "ciclista"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🚴‍♂️",
+      "description": "hombre en bicicleta",
+      "category": "Gente",
+      "aliases": [
+        "hombre_bicicleta"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🚴‍♀️",
+      "description": "mujer en bicicleta",
+      "category": "Gente",
+      "aliases": [
+        "mujer_ciclista"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🚵",
+      "description": "persona en bicicleta de montaña",
+      "category": "Gente",
+      "aliases": [
+        "ciclista_de_montaña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🚵‍♂️",
+      "description": "hombre en bicicleta de montaña",
+      "category": "Gente",
+      "aliases": [
+        "hombre_bicicleta_de_montaña"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🚵‍♀️",
+      "description": "mujer en bicicleta de montaña",
+      "category": "Gente",
+      "aliases": [
+        "mujer_bicicleta_de_montaña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤸",
+      "description": "persona dando volteretas",
+      "category": "Gente",
+      "aliases": [
+        "dando vueltas"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤸‍♂️",
+      "description": "hombre dando volteretas",
+      "category": "Gente",
+      "aliases": [
+        "hombre_carreta"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤸‍♀️",
+      "description": "mujer dando volteretas",
+      "category": "Gente",
+      "aliases": [
+        "mujer_carreta"
+      ],
+      "tags": [],
+      "unicode_version": "",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤼",
+      "description": "gente luchando",
+      "category": "Gente",
+      "aliases": [
+        "lucha"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "🤼‍♂️",
+      "description": "hombres luchando",
+      "category": "Gente",
+      "aliases": [
+        "lucha_hombres"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2"
+    },
+    {
+      "emoji": "🤼‍♀️",
+      "description": "mujeres luchando",
+      "category": "Gente",
+      "aliases": [
+        "mujeres_luchando"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2"
+    },
+    {
+      "emoji": "🤽",
+      "description": "persona jugando waterpolo",
+      "category": "Gente",
+      "aliases": [
+        "Polo acuático"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤽‍♂️",
+      "description": "hombre jugando waterpolo",
+      "category": "Gente",
+      "aliases": [
+        "hombre_jugando_polo_agua"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤽‍♀️",
+      "description": "mujer jugando waterpolo",
+      "category": "Gente",
+      "aliases": [
+        "mujer_jugando_waterpolo"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤾",
+      "description": "persona jugando balonmano",
+      "category": "Gente",
+      "aliases": [
+        "persona_balonmano"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤾‍♂️",
+      "description": "hombre jugando balonmano",
+      "category": "Gente",
+      "aliases": [
+        "hombre_jugando_balonmano"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤾‍♀️",
+      "description": "mujer jugando balonmano",
+      "category": "Gente",
+      "aliases": [
+        "mujer_jugando_balonmano"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤹",
+      "description": "persona haciendo malabarismos",
+      "category": "Gente",
+      "aliases": [
+        "persona_malabares"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤹‍♂️",
+      "description": "hombre haciendo malabares",
+      "category": "Gente",
+      "aliases": [
+        "hombre_malabares"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🤹‍♀️",
+      "description": "mujer haciendo malabares",
+      "category": "Gente",
+      "aliases": [
+        "mujer_malabares"
+      ],
+      "tags": [],
+      "unicode_version": "9.0",
+      "ios_version": "10.2",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧘",
+      "description": "persona en posición de loto",
+      "category": "Gente",
+      "aliases": [
+        "posición_loto"
+      ],
+      "tags": [
+        "meditación"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧘‍♂️",
+      "description": "hombre en posición de loto",
+      "category": "Gente",
+      "aliases": [
+        "posición_loto_hombre"
+      ],
+      "tags": [
+        "meditación"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧘‍♀️",
+      "description": "mujer en posición de loto",
+      "category": "Gente",
+      "aliases": [
+        "posición_loto_mujer"
+      ],
+      "tags": [
+        "meditación"
+      ],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🛀",
+      "description": "persona tomando un baño",
+      "category": "Gente",
+      "aliases": [
+        "baño"
+      ],
+      "tags": [
+        "ducha"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🛌",
+      "description": "persona en la cama",
+      "category": "Gente",
+      "aliases": [
+        "Cama de dormir"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "🧑‍🤝‍🧑",
+      "description": "personas cogidas de la mano",
+      "category": "Gente",
+      "aliases": [
+        "personas_tomadas_de_manos"
+      ],
+      "tags": [
+        "pareja",
+        "fecha"
+      ],
+      "unicode_version": "12.0",
+      "ios_version": "13.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👭",
+      "description": "mujeres tomadas de la mano",
+      "category": "Gente",
+      "aliases": [
+        "dos_mujeres_tomadas_de_manos"
+      ],
+      "tags": [
+        "pareja",
+        "fecha"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👫",
+      "description": "mujer y hombre tomados de la mano",
+      "category": "Gente",
+      "aliases": [
+        "pareja"
+      ],
+      "tags": [
+        "fecha"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👬",
+      "description": "hombres tomados de la mano",
+      "category": "Gente",
+      "aliases": [
+        "dos_hombres_tomados_de_manos"
+      ],
+      "tags": [
+        "pareja",
+        "fecha"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💏",
+      "description": "beso",
+      "category": "Gente",
+      "aliases": [
+        "beso de pareja"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍❤️‍💋‍👨",
+      "description": "beso: mujer, hombre",
+      "category": "Gente",
+      "aliases": [
+        "pareja_beso_hombre_mujer"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍❤️‍💋‍👨",
+      "description": "beso: hombre, hombre",
+      "category": "Gente",
+      "aliases": [
+        "pareja_beso_hombre_hombre"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍❤️‍💋‍👩",
+      "description": "beso: mujer, mujer",
+      "category": "Gente",
+      "aliases": [
+        "pareja_beso_mujer_mujer"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3",
+      "skin_tones": true
+    },
+    {
+      "emoji": "💑",
+      "description": "pareja con corazon",
+      "category": "Gente",
+      "aliases": [
+        "pareja_con_corazon"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "6.0",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍❤️‍👨",
+      "description": "pareja con corazón: mujer, hombre",
+      "category": "Gente",
+      "aliases": [
+        "pareja_con_corazon_mujer_hombre"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👨‍❤️‍👨",
+      "description": "pareja con corazón: hombre, hombre",
+      "category": "Gente",
+      "aliases": [
+        "pareja_con_corazon_hombre_hombre"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👩‍❤️‍👩",
+      "description": "pareja con corazón: mujer, mujer",
+      "category": "Gente",
+      "aliases": [
+        "pareja_con_corazon_mujer_mujer"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3",
+      "skin_tones": true
+    },
+    {
+      "emoji": "👪",
+      "description": "familia",
+      "category": "Gente",
+      "aliases": [
+        "familia"
+      ],
+      "tags": [
+        "hogar",
+        "padres",
+        "niño"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "👨‍👩‍👦",
+      "description": "familia: hombre, mujer, niño",
+      "category": "Gente",
+      "aliases": [
+        "familia_hombre_mujer_niño"
+      ],
+      "tags": [],
+      "unicode_version": "11.0",
+      "ios_version": "12.1"
+    },
+    {
+      "emoji": "👨‍👩‍👧",
+      "description": "familia: hombre, mujer, niña",
+      "category": "Gente",
+      "aliases": [
+        "familia_hombre_mujer_niña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👨‍👩‍👧‍👦",
+      "description": "familia: hombre, mujer, niña, niño",
+      "category": "Gente",
+      "aliases": [
+        "familia_hombre_mujer_niña_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👨‍👩‍👦‍👦",
+      "description": "familia: hombre, mujer, niño, niño",
+      "category": "Gente",
+      "aliases": [
+        "familia_hombre_mujer_niño_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👨‍👩‍👧‍👧",
+      "description": "familia: hombre, mujer, niña, niña",
+      "category": "Gente",
+      "aliases": [
+        "familia_hombre_mujer_niña_niña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👨‍👨‍👦",
+      "description": "familia: hombre, hombre, niño",
+      "category": "Gente",
+      "aliases": [
+        "hombre_familia_hombre_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👨‍👨‍👧",
+      "description": "familia: hombre, hombre, niña",
+      "category": "Gente",
+      "aliases": [
+        "hombre_familia_hombre_niña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👨‍👨‍👧‍👦",
+      "description": "familia: hombre, hombre, niña, niño",
+      "category": "Gente",
+      "aliases": [
+        "familia_hombre_hombre_niña_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👨‍👨‍👦‍👦",
+      "description": "familia: hombre, hombre, niño, niño",
+      "category": "Gente",
+      "aliases": [
+        "hombre_de_familia_hombre_niño_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👨‍👨‍👧‍👧",
+      "description": "familia: hombre, hombre, niña, niña",
+      "category": "Gente",
+      "aliases": [
+        "familia_hombre_hombre_niña_niña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👩‍👩‍👦",
+      "description": "familia: mujer, mujer, niño",
+      "category": "Gente",
+      "aliases": [
+        "familia_mujer_mujer_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👩‍👩‍👧",
+      "description": "familia: mujer, mujer, niña",
+      "category": "Gente",
+      "aliases": [
+        "familia_mujer_mujer_niña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👩‍👩‍👧‍👦",
+      "description": "familia: mujer, mujer, niña, niño",
+      "category": "Gente",
+      "aliases": [
+        "familia_mujer_mujer_niña_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👩‍👩‍👦‍👦",
+      "description": "familia: mujer, mujer, niño, niño",
+      "category": "Gente",
+      "aliases": [
+        "familia_mujer_mujer_niño_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👩‍👩‍👧‍👧",
+      "description": "familia: mujer, mujer, niña, niña",
+      "category": "Gente",
+      "aliases": [
+        "familia_mujer_mujer_niña_niña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "8.3"
+    },
+    {
+      "emoji": "👨‍👦",
+      "description": "familia: hombre, niño",
+      "category": "Gente",
+      "aliases": [
+        "hombre_familia_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0"
+    },
+    {
+      "emoji": "👨‍👦‍👦",
+      "description": "familia: hombre, niño, niño",
+      "category": "Gente",
+      "aliases": [
+        "hombre_de_familia_niño_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0"
+    },
+    {
+      "emoji": "👨‍👧",
+      "description": "familia: hombre, niña",
+      "category": "Gente",
+      "aliases": [
+        "familia_hombre_niña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0"
+    },
+    {
+      "emoji": "👨‍👧‍👦",
+      "description": "familia: hombre, niña, niño",
+      "category": "Gente",
+      "aliases": [
+        "familia_hombre_niña_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0"
+    },
+    {
+      "emoji": "👨‍👧‍👧",
+      "description": "familia: hombre, niña, niña",
+      "category": "Gente",
+      "aliases": [
+        "familia_hombre_niña_niña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0"
+    },
+    {
+      "emoji": "👩‍👦",
+      "description": "familia: mujer, niño",
+      "category": "Gente",
+      "aliases": [
+        "familia_mujer_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0"
+    },
+    {
+      "emoji": "👩‍👦‍👦",
+      "description": "familia: mujer, niño, niño",
+      "category": "Gente",
+      "aliases": [
+        "familia_mujer_niño_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0"
+    },
+    {
+      "emoji": "👩‍👧",
+      "description": "familia: mujer, niña",
+      "category": "Gente",
+      "aliases": [
+        "familia_mujer_niña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0"
+    },
+    {
+      "emoji": "👩‍👧‍👦",
+      "description": "familia: mujer, niña, niño",
+      "category": "Gente",
+      "aliases": [
+        "familia_mujer_niña_niño"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0"
+    },
+    {
+      "emoji": "👩‍👧‍👧",
+      "description": "familia: mujer, niña, niña",
+      "category": "Gente",
+      "aliases": [
+        "familia_mujer_niña_niña"
+      ],
+      "tags": [],
+      "unicode_version": "6.0",
+      "ios_version": "10.0"
+    },
+    {
+      "emoji": "🗣️",
+      "description": "cabeza parlante",
+      "category": "Gente",
+      "aliases": [
+        "cabeza_hablante"
+      ],
+      "tags": [],
+      "unicode_version": "7.0",
+      "ios_version": "9.1"
+    },
+    {
+      "emoji": "👤",
+      "description": "busto en silueta",
+      "category": "Gente",
+      "aliases": [
+        "busto_en_silueta"
+      ],
+      "tags": [
+        "usuario"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "👥",
+      "description": "bustos en silueta",
+      "category": "Gente",
+      "aliases": [
+        "bustos_en_silueta"
+      ],
+      "tags": [
+        "usuarios",
+        "grupo",
+        "equipo"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    },
+    {
+      "emoji": "🫂",
+      "description": "gente abrazándose",
+      "category": "Gente",
+      "aliases": [
+        "gente_abrazos"
+      ],
+      "tags": [],
+      "unicode_version": "13.0",
+      "ios_version": "14.0"
+    },
+    {
+      "emoji": "👣",
+      "description": "huellas",
+      "category": "Gente",
+      "aliases": [
+        "huellas"
+      ],
+      "tags": [
+        "pies",
+        "pistas"
+      ],
+      "unicode_version": "6.0",
+      "ios_version": "6.0"
+    }
+  ]

@@ -1,7 +1,10 @@
 package app.regate.common.compose.components.input
 
 
+import android.graphics.Rect
+import android.view.ViewTreeObserver
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
@@ -9,6 +12,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +30,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.EmojiEmotions
+import androidx.compose.material.icons.outlined.Keyboard
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -33,6 +40,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,10 +52,12 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import app.regate.common.compose.LocalAppDateFormatter
 import app.regate.common.compose.ui.PosterCardImage
@@ -52,8 +65,9 @@ import app.regate.common.resources.R
 import app.regate.data.auth.AppAuthState
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
-import app.regate.data.dto.empresa.grupo.GrupoMessageInstalacion
+import app.regate.data.dto.empresa.grupo.MessageInstalacionPayload
 import app.regate.data.dto.empresa.grupo.GrupoMessageType
+import app.regate.data.dto.empresa.grupo.MessageSalaPayload
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.time.Duration.Companion.minutes
@@ -64,13 +78,16 @@ fun ChatInput(
     replyMessage:ReplyMessageData?,
     clearFocus:()->Unit,
     clearReplyMessage:() ->Unit,
-    message:String,
-    updateMessage:(String)->Unit,
+    message:TextFieldValue,
+    updateMessage:(TextFieldValue)->Unit,
     focusRequester: FocusRequester,
     authState:AppAuthState?,
     openAuthBottomSheet:()->Unit,
     sendMessage:(MessageData)->Unit,
     modifier:Modifier = Modifier,
+    isBottomLayoutOpen:Boolean = false,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    openBottomLayout:()->Unit = {},
 ){
 
     Row(
@@ -86,10 +103,7 @@ fun ChatInput(
             border = BorderStroke(1.dp, Color.LightGray)
         ) {
             Column {
-//                if(sharedMessage.isNotBlank()){
-//                    SharedMessage(data = sharedMessage,
-//                    clearSharedMessage = clearSharedMessage)
-//                }
+
                 AnimatedVisibility(visible = replyMessage != null,
                     enter = scaleIn(),
                     exit = scaleOut()
@@ -134,6 +148,7 @@ fun ChatInput(
                 }
                 BasicTextField(
                     value = message,
+                    interactionSource = interactionSource,
                     onValueChange = {
                         updateMessage(it)
                     },
@@ -147,9 +162,25 @@ fun ChatInput(
                         Surface(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(10.dp)) {
+                                .height(42.dp)
+                                .padding(0.dp)
+
+                        ) {
 //                            ProvideTextStyle(value = ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                             IconButton(onClick = { openBottomLayout() }) {
+                                 Crossfade(targetState = isBottomLayoutOpen) { bool->
+                                  if(!bool){
+                                 Icon(imageVector = Icons.Outlined.EmojiEmotions,
+                                     contentDescription = "emoji")
+                                 }else{
+                                      Icon(imageVector = Icons.Outlined.Keyboard,
+                                          contentDescription = "emoji")
+                                  }
+                                  }
+                             }
                             innerTextField()
+                            }
 //                            }
                         }
 //                            Icon(imageVector = Icons.Outlined.EmojiEmotions, contentDescription = "emoji")
@@ -158,14 +189,14 @@ fun ChatInput(
                     keyboardActions = KeyboardActions(
                         onDone = {
                             if (authState == AppAuthState.LOGGED_IN) {
-                                if (message.isNotEmpty()) {
+                                if (message.text.isNotEmpty()) {
                                     if (replyMessage != null) {
-                                        sendMessage(MessageData(content = message, reply_to = replyMessage.id))
-                                        updateMessage("")
+                                        sendMessage(MessageData(content = message.text, reply_to = replyMessage.id))
+                                        updateMessage(TextFieldValue())
                                         clearReplyMessage()
                                     } else {
-                                        sendMessage(MessageData(content = message))
-                                        updateMessage("")
+                                        sendMessage(MessageData(content = message.text))
+                                        updateMessage(TextFieldValue())
                                     }
                                 }
                             } else {
@@ -183,14 +214,14 @@ fun ChatInput(
         }
         IconButton(onClick = {
             if (authState == AppAuthState.LOGGED_IN) {
-                    if (message.isNotEmpty()) {
+                    if (message.text.isNotEmpty()) {
                         if (replyMessage != null) {
-                            sendMessage(MessageData(content = message, reply_to = replyMessage.id))
-                            updateMessage("")
+                            sendMessage(MessageData(content = message.text, reply_to = replyMessage.id))
+                            updateMessage(TextFieldValue())
                             clearReplyMessage()
                         } else {
-                            sendMessage(MessageData(content = message))
-                            updateMessage("")
+                            sendMessage(MessageData(content = message.text))
+                            updateMessage(TextFieldValue())
                         }
                     }
             } else {
@@ -211,6 +242,7 @@ internal fun MessageContent2(
     messageType:Int,
 //    clearSharedMessage:()->Unit
 ) {
+    val formatter = LocalAppDateFormatter.current
         when(messageType){
             GrupoMessageType.MESSAGE.ordinal ->{
                 Text(
@@ -219,8 +251,7 @@ internal fun MessageContent2(
                 )
             }
             GrupoMessageType.INSTALACION.ordinal ->{
-                val formatter = LocalAppDateFormatter.current
-                val instalacion = try{ Json.decodeFromString<GrupoMessageInstalacion>(data) }catch (e:Exception){ null }
+                val instalacion = try{ Json.decodeFromString<MessageInstalacionPayload>(data) }catch (e:Exception){ null }
                 if(instalacion != null){
                     Column(modifier = Modifier
                         .padding(5.dp)
@@ -264,6 +295,54 @@ internal fun MessageContent2(
                     }
                 }
             }
+
+            GrupoMessageType.SALA.ordinal -> {
+                val sala = try {
+                    Json.decodeFromString<MessageSalaPayload>(data)
+                } catch (e: Exception) {
+                    null
+                }
+                if (sala != null) {
+                    Column(modifier = Modifier
+                        .padding(5.dp)
+                        .fillMaxWidth()
+                        .clickable {
+//                        navigateToInstalacionReserva(instalacion.id.toLong(),instalacion.establecimiento_id.toLong(),instalacion.cupos)
+                        }) {
+                        Row(modifier = Modifier.fillMaxWidth()) {
+
+                            Column() {
+
+                                Text(
+                                    text = sala.titulo,
+                                    style = MaterialTheme.typography.labelLarge
+                                )
+                                Text(
+                                    text = "${stringResource(id = R.string.total_price)}: ${sala.precio}",
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+                                Text(
+                                    text = "${stringResource(id = R.string.precio_per_person)}: ${sala.precio_cupo}",
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+                                Text(
+                                    text = stringResource(id = R.string.time_game_will_played),
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+                                Text(
+                                    text = formatter.formatShortDate(sala.start) +
+                                            " ${formatter.formatShortTime(sala.start)} a ${
+                                                formatter.formatShortTime(sala.end,30)
+                                            }",
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+                            }
+                        }
+                        Divider()
+                    }
+                }
+            }
+
     }
 }
 
@@ -329,4 +408,35 @@ fun MessengerIcon(
             Brush.verticalGradient(colors = colors),
         )
     }
+}
+
+
+enum class Keyboard {
+    Opened, Closed
+}
+
+@Composable
+fun keyboardAsState(): State<Keyboard> {
+    val keyboardState = remember { mutableStateOf(Keyboard.Closed) }
+    val view = LocalView.current
+    DisposableEffect(view) {
+        val onGlobalListener = ViewTreeObserver.OnGlobalLayoutListener {
+            val rect = Rect()
+            view.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = view.rootView.height
+            val keypadHeight = screenHeight - rect.bottom
+            keyboardState.value = if (keypadHeight > screenHeight * 0.15) {
+                Keyboard.Opened
+            } else {
+                Keyboard.Closed
+            }
+        }
+        view.viewTreeObserver.addOnGlobalLayoutListener(onGlobalListener)
+
+        onDispose {
+            view.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalListener)
+        }
+    }
+
+    return keyboardState
 }

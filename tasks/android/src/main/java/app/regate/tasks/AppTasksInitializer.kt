@@ -26,5 +26,6 @@ class AppTasksInitializer(
     override fun init() {
 //        appTasks.value.setupNightSyncs()
         appTasks.value.initSync()
+        appTasks.value.syncMessages()
     }
 }
