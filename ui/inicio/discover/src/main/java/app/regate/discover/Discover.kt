@@ -79,6 +79,9 @@ import app.regate.common.resources.R
 import app.regate.constant.id
 import app.regate.discover.timepicker.TimeFormat
 import app.regate.discover.timepicker.WheelTimePicker
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -113,8 +116,10 @@ internal fun Discover(
         derivedStateOf {  lazyPagingItems.itemCount == 0 }
     }
     val treshhold = 7.days
-    val endDate = (Clock.System.now() + treshhold).toEpochMilliseconds()
-    val startDate = (Clock.System.now() - (1.days)).toEpochMilliseconds()
+    val now =Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).toInstant(
+        TimeZone.UTC)
+    val endDate = (now + treshhold).toEpochMilliseconds()
+    val startDate = (now - (1.days)).toEpochMilliseconds()
     val showDialog = remember { mutableStateOf(false) }
     val showTimeDialog = remember { mutableStateOf(false) }
     val showDialogIntervalo = remember {
@@ -136,7 +141,7 @@ internal fun Discover(
 //        viewModel.getDataFilter()
     })
     val dateState = rememberDatePickerState(
-        initialSelectedDateMillis = Clock.System.now().toEpochMilliseconds()
+        initialSelectedDateMillis = now.toEpochMilliseconds()
     )
     LaunchedEffect(key1 = dateState.selectedDateMillis, block = {
         if(viewModel.isDateAvailable()){

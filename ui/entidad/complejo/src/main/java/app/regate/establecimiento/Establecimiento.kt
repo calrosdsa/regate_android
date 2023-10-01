@@ -66,6 +66,7 @@ import app.regate.common.compose.ui.PosterCardImage
 import app.regate.common.compose.viewModel
 import app.regate.common.resources.R
 import app.regate.data.app.MediaData
+import app.regate.data.common.encodeMediaData
 import app.regate.models.Establecimiento
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -394,12 +395,12 @@ fun HeaderEstablecimiento(
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }
                     ) {
-                        val url = URLEncoder.encode(establecimiento.photo.toString(), StandardCharsets.UTF_8.toString())
-                        val data = MediaData(
-                            images = listOf(url)
-                        )
-                        val payload = Json.encodeToString(data)
-                        Log.d("DEBUG_APP_PAYLOAD",payload)
+//                        val url = URLEncoder.encode(establecimiento.photo.toString(), StandardCharsets.UTF_8.toString())
+//                        val data = MediaData(
+//                            images = listOf(url)
+//                        )
+                        val payload = Json.encodeToString(encodeMediaData(listOf(establecimiento.photo.toString())))
+//                        Log.d("DEBUG_APP_PAYLOAD",payload)
                         navigateToPhoto(payload)
                     }
                     .fillMaxWidth()

@@ -61,7 +61,7 @@ object Route {
     const val REVIEWS = "review"
     const val CREATE_REVIEW = "create_review"
 
-
+    const val SEARCH = "search"
 }
 
 

@@ -1,12 +1,10 @@
 package app.regate.data.establecimiento
 
-import app.regate.api.ApiResult
 import app.regate.data.dto.empresa.establecimiento.CupoEstablecimiento
 import app.regate.data.dto.empresa.establecimiento.CuposEstablecimientoRequest
-import app.regate.data.mappers.EstablecimientoDtoToEstablecimiento
-import app.regate.api.handleApi
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.ResponseMessage
+import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
@@ -14,7 +12,6 @@ import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.data.dto.empresa.establecimiento.PaginationEstablecimientoResponse
-import app.regate.models.Establecimiento
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -69,6 +66,18 @@ class EstablecimientoDataSourceImpl(
         val token = authStore.get()?.accessToken
         return client.get("/v1/review/establecimiento/profile/${establecimientoId}/") {
             header("Authorization","Bearer $token")
+        }.body()
+    }
+
+    override suspend fun searcEstablecimientos(d: SearchFilterRequest, page: Int, size: Int):PaginationEstablecimientoResponse {
+        d.latitud
+        return client.post("/v1/establecimientos/search/?page=${page}&size=${size}"){
+            contentType(ContentType.Application.Json)
+            setBody("{\n" +
+                    "\t\"query\":\"${d.query}\",\n" +
+                    "\t\"latitud\":\"${d.latitud}\",\n" +
+                    "\t\"longitud\":\"${d.longitud}\"\n" +
+                    "}")
         }.body()
     }
 

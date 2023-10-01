@@ -178,5 +178,7 @@
     <string name="food_and_drink">FOOD AND DRINK</string>
     <string name="send_to_a_group">Send to a group</string>
     <string name="precio_per_person">Price per person</string>
+    <string name="search">Search</string>
+    <string name="back">Back</string>
 
 </resources>

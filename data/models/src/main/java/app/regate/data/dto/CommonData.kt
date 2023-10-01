@@ -1,5 +1,7 @@
 package app.regate.data.dto
 
+import kotlinx.serialization.Serializable
+
 data class FileData(
     val name:String,
     val type:String,
@@ -25,3 +27,4 @@ data class FileData(
         return result
     }
 }
+

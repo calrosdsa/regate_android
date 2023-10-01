@@ -47,6 +47,7 @@ include(
     ":core:preferences",
     ":ui:auth",
     ":ui:welcome",
+    ":ui:search",
 //    ":ui:map",
     ":ui:inicio:home",
     ":ui:inicio:discover",
@@ -108,7 +109,6 @@ include(
     ":data:repository:coin",
     ":data:repository:system",
     ":data:repository:conversation",
-
 
     ":tasks:android",
     ":tasks:api",

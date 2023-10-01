@@ -45,6 +45,7 @@ string add_a_review
 string amount
 string animals_and_nature
 string available_courts
+string back
 string balance_coins
 string book_a_court
 string bookings
@@ -154,6 +155,7 @@ string sala_help_text2
 string save
 string save_image
 string saved_correctly
+string search
 string search_nearby_places
 string see
 string select_group_text

@@ -1,0 +1,2 @@
+app.regate.search
+string post

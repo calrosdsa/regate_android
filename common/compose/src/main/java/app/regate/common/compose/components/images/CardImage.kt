@@ -2,6 +2,7 @@ package app.regate.common.compose.components.images
 
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -21,7 +22,8 @@ fun CardImage (
     src:String? = null,
     contentDescription:String = "",
     shape:Shape = MaterialTheme.shapes.medium,
-    contentScale:ContentScale = ContentScale.Crop
+    contentScale:ContentScale = ContentScale.Crop,
+    onClick:()->Unit = {}
 ){
     if(!src.isNullOrBlank()){
         Card(modifier = modifier,
@@ -30,7 +32,8 @@ fun CardImage (
                 model = src,
                 contentDescription = contentDescription,
                 requestBuilder = { crossfade(true) },
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
+                    .clickable { onClick() },
                 contentScale = contentScale,
             )
         }

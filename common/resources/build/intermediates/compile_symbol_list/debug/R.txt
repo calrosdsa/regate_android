@@ -44,6 +44,7 @@ int string add_a_review 0x0
 int string amount 0x0
 int string animals_and_nature 0x0
 int string available_courts 0x0
+int string back 0x0
 int string balance_coins 0x0
 int string book_a_court 0x0
 int string bookings 0x0
@@ -153,6 +154,7 @@ int string sala_help_text2 0x0
 int string save 0x0
 int string save_image 0x0
 int string saved_correctly 0x0
+int string search 0x0
 int string search_nearby_places 0x0
 int string see 0x0
 int string select_group_text 0x0

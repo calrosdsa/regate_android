@@ -17,6 +17,7 @@
     <string name="amount">Amount:  %1$s</string>
     <string name="animals_and_nature">ANIMALS AND NATURE</string>
     <string name="available_courts">Available courts</string>
+    <string name="back">Back</string>
     <string name="balance_coins">Coins Balance</string>
     <string name="book_a_court">Book a court</string>
     <string name="bookings">Bookings</string>
@@ -129,6 +130,7 @@
     <string name="save">Save</string>
     <string name="save_image">Save Image</string>
     <string name="saved_correctly">Saved successfully</string>
+    <string name="search">Search</string>
     <string name="search_nearby_places">Search nearby places</string>
     <string name="see">See</string>
     <string name="select_group_text">In which group would you like to create this room?</string>

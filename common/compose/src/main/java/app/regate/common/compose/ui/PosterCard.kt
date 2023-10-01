@@ -18,6 +18,7 @@ package app.regate.common.compose.ui
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -63,14 +64,16 @@ fun PosterCardImage (
     modifier: Modifier = Modifier,
     shape:Shape = CardDefaults.shape,
     isUser:Boolean = false,
-    contentScale:ContentScale = ContentScale.Crop
+    contentScale:ContentScale = ContentScale.Crop,
+    onClick:()->Unit = {},
 ) {
     CardImage(
         src = model,
         shape = shape,
         modifier = modifier,
         contentScale = contentScale,
-        isUser = isUser
+        isUser = isUser,
+        onClick = onClick
     )
 //    Card(modifier = modifier,
 //    shape = shape) {

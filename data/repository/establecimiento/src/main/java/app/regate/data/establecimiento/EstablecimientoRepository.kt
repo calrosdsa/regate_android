@@ -2,6 +2,7 @@ package app.regate.data.establecimiento
 
 import app.regate.data.daos.EstablecimientoDao
 import app.regate.data.daos.FavoriteEstablecimientoDao
+import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.establecimiento.CupoEstablecimiento
 import app.regate.data.dto.empresa.establecimiento.CuposEstablecimientoRequest
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
@@ -30,6 +31,9 @@ class EstablecimientoRepository(
     private val settingsDtoToSetting: SettingDtoToSetting,
     private val dispatchers: AppCoroutineDispatchers,
 ){
+    suspend fun searcEstablecimientos(d: SearchFilterRequest, page:Int, size: Int):PaginationEstablecimientoResponse{
+        return establecimientoDataSourceImpl.searcEstablecimientos(d,page,size)
+    }
     suspend fun getReviewUser(establecimientoId:Long):EstablecimientoReview{
         return establecimientoDataSourceImpl.getReviewUser(establecimientoId)
     }

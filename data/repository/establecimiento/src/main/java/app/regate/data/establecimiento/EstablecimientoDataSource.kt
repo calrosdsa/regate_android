@@ -1,5 +1,6 @@
 package app.regate.data.establecimiento
 
+import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.establecimiento.CupoEstablecimiento
 import app.regate.data.dto.empresa.establecimiento.CuposEstablecimientoRequest
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
@@ -24,5 +25,6 @@ interface EstablecimientoDataSource {
     suspend fun getEstablecimientoReview(id: Long, page: Int, size: Int): EstablecimientoReviews
     suspend fun createEstablecimientoReview(d: EstablecimientoReview): EstablecimientoReview
     suspend fun getReviewUser(establecimientoId:Long):EstablecimientoReview
+    suspend fun searcEstablecimientos(d:SearchFilterRequest, page:Int, size: Int):PaginationEstablecimientoResponse
 }
 

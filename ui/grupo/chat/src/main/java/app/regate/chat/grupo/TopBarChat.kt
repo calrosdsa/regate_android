@@ -69,7 +69,12 @@ fun TopBarChat (
             }
             PosterCardImage(
                 model = grupo?.photo, modifier = Modifier.size(40.dp),
-                shape = CircleShape
+                shape = CircleShape,
+                onClick = {
+                    if (grupo != null) {
+                        navigateToGroup(grupo.id)
+                    }
+                }
             )
             Spacer(modifier = Modifier.width(5.dp))
             Column(modifier = Modifier.clickable {

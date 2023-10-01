@@ -140,6 +140,7 @@ internal fun AppNavigation(
                 },
                 navigateToCreateSala = {navController.navigate(Route.CREAR_SALA id it id 0 id 1)},
                 navigateToSelectGroup = {navController.navigate(Route.MY_GROUPS + "?data=${it}")},
+                navController = navController
             )
         }
 
@@ -401,7 +402,8 @@ internal fun AppNavigation(
                 editGroup = {navController.navigate(Route.CREATE_GROUP + "?id=${it}" )},
                 navigateToProfile = { navController.navigate(Route.PROFILE id it)},
                 navigateToSalas = { navController.navigate(Route.GRUPO_SALAS id it)},
-                navigateToReport = {navController.navigate(Route.REPORT id it)}
+                navigateToReport = {navController.navigate(Route.REPORT id it)},
+                navController = navController
                 )
         }
 
@@ -421,7 +423,8 @@ internal fun AppNavigation(
             composeScreens.profile(
                 navigateUp = navController::navigateUp,
                 navigateToEditProfile = {navController.navigate(Route.EDIT_PROFILE id it)},
-                navigateToReport = {navController.navigate(Route.REPORT id it)}
+                navigateToReport = {navController.navigate(Route.REPORT id it)},
+                navController = navController
             )
         }
         animatedComposable(
@@ -558,6 +561,17 @@ internal fun AppNavigation(
         ) {
             composeScreens.pay(
                 navigateUp = navController::navigateUp,
+//                navigateToReserva = { navController.navigate(Route.RESERVAR id it) }
+            )
+        }
+
+        animatedComposable(
+            route = Route.SEARCH,
+        ) {
+            composeScreens.search(
+                navigateUp = navController::navigateUp,
+                openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
+                navigateToProfile = { navController.navigate(Route.PROFILE id it)},
 //                navigateToReserva = { navController.navigate(Route.RESERVAR id it) }
             )
         }

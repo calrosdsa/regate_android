@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.NavController
 import app.regate.common.compose.LocalAppDateFormatter
 import app.regate.common.compose.ui.PosterCardImage
 import app.regate.common.compose.ui.SimpleTopBar
@@ -45,11 +46,17 @@ import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
+import app.regate.constant.Route
+import app.regate.constant.id
+import app.regate.data.common.encodeMediaData
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 typealias Profile = @Composable (
     navigateUp:()->Unit,
     navigateToEditProfile:(Long)->Unit,
     navigateToReport:(String)->Unit,
+    navController:NavController
 ) -> Unit
 
 @Inject
@@ -59,12 +66,14 @@ fun Profile(
     @Assisted navigateUp: () -> Unit,
     @Assisted navigateToEditProfile: (Long) -> Unit,
     @Assisted navigateToReport: (String) -> Unit,
+    @Assisted navController: NavController,
 ) {
     Profile(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
         navigateToEditProfile = navigateToEditProfile,
-        navigateToReport = navigateToReport
+        navigateToReport = navigateToReport,
+        navigateToPhoto = {navController.navigate(Route.PHOTO id it)}
     )
 }
 
@@ -73,7 +82,8 @@ internal fun Profile(
     viewModel:ProfileViewModel,
     navigateUp: () -> Unit,
     navigateToEditProfile: (Long) -> Unit,
-    navigateToReport:(String)->Unit
+    navigateToReport:(String)->Unit,
+    navigateToPhoto:(String)->Unit,
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -86,7 +96,8 @@ internal fun Profile(
             viewModel.navigateToReport{
                 navigateToReport(it)
             }
-        }
+        },
+        navigateToPhoto = navigateToPhoto
     )
 }
 
@@ -97,7 +108,8 @@ internal fun Profile(
     navigateUp: () -> Unit,
     formatterDate:(Instant)->String,
     navigateToEditProfile: (Long) -> Unit,
-    navigateToReport:()->Unit
+    navigateToReport:()->Unit,
+    navigateToPhoto: (String) -> Unit
 ) {
     val scrollState = rememberScrollState()
 
@@ -139,7 +151,13 @@ internal fun Profile(
                         model = profile.profile_photo,
                         modifier = Modifier.size(60.dp),
                         isUser = true,
-                        shape = CircleShape
+                        shape = CircleShape,
+                        onClick = {
+                            profile.profile_photo?.let{
+                                val payload = Json.encodeToString(encodeMediaData(listOf(it)))
+                                navigateToPhoto(payload)
+                            }
+                        }
                     )
 
                     Spacer(modifier = Modifier.width(10.dp))

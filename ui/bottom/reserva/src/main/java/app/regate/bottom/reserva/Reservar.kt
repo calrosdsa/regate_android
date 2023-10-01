@@ -56,6 +56,7 @@ import app.regate.models.Cupo
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavController
 import app.regate.common.compose.LocalAppDateFormatter
 import app.regate.common.compose.LocalAppUtil
 import app.regate.common.compose.ui.PosterCardImage
@@ -64,6 +65,8 @@ import app.regate.common.compose.ui.SimpleTopBar
 import app.regate.data.dto.empresa.establecimiento.PaidTypeEnum
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
+import app.regate.constant.Route
+import app.regate.constant.id
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
@@ -78,6 +81,7 @@ typealias Reservar = @Composable (
     navigateToConversation:(Long,Long)->Unit,
     navigateToCreateSala:(Long)->Unit,
     navigateToSelectGroup:(String)->Unit,
+    navController:NavController
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
 
@@ -91,6 +95,7 @@ fun Reservar(
     @Assisted navigateToConversation: (Long,Long) -> Unit,
     @Assisted navigateToCreateSala: (Long) -> Unit,
     @Assisted navigateToSelectGroup: (String) -> Unit,
+    @Assisted navController: NavController
 //    @Assisted navigateToReserva:()->Unit,
     ){
     Reservar(
@@ -101,6 +106,7 @@ fun Reservar(
         navigateToConversation = navigateToConversation,
         navigateToCreateSala = navigateToCreateSala,
         navigateToSelectGroup = navigateToSelectGroup,
+        navigateToInstalacion = {navController.navigate(Route.INSTALACION id  it)}
 //        navigateToReserva = navigateToReserva
     )
 }
@@ -115,6 +121,7 @@ internal fun Reservar(
     navigateToConversation: (Long,Long) -> Unit,
     navigateToCreateSala: (Long) -> Unit,
     navigateToSelectGroup: (String) -> Unit,
+    navigateToInstalacion:(Long)->Unit,
 //    navigateToReserva: () -> Unit,
 ){
     val state by viewModel.state.collectAsState()
@@ -141,6 +148,7 @@ internal fun Reservar(
         navigateToSelectGroup = {
             viewModel.navigateSelect(navigateToSelectGroup)
         },
+        navigateToInstalacion = navigateToInstalacion
     )
 }
 
@@ -159,6 +167,7 @@ internal fun Reservar(
     openMap:(lng:String?,lat:String?,label:String?)->Unit,
     navigateToCreateSala: (Long) -> Unit,
     navigateToSelectGroup: () -> Unit,
+    navigateToInstalacion:(Long)->Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val dismissSnackbarState = rememberDismissState(
@@ -383,11 +392,15 @@ internal fun Reservar(
 
                     viewState.instalacion?.let {instalacion->
                     Box(modifier = Modifier
-                        .clickable { }
-                        .height(120.dp)
+                        .clickable {
+                            navigateToInstalacion(viewState.instalacion.id)
+                        }
+                        .height(130.dp)
                         .padding(vertical = 5.dp)
                         .fillMaxWidth()) {
-                        PosterCardImageDark(model = viewState.instalacion.portada)
+                        PosterCardImageDark(
+                            model = viewState.instalacion.portada,
+                        )
                         Text(
                             text = viewState.instalacion.name, modifier = Modifier
                                 .align(Alignment.BottomStart)

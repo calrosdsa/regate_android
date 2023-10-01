@@ -152,6 +152,7 @@ dependencies {
     implementation(projects.ui.account.inbox)
     implementation(projects.ui.account.favoritos)
     implementation(projects.ui.media)
+    implementation(projects.ui.search)
 
     implementation(projects.ui.inicio.home)
     implementation(projects.ui.inicio.servicios)

@@ -49,6 +49,7 @@ fun InstalacionCard (
                 modifier = Modifier
                     .fillMaxSize(),
                 contentScale = ContentScale.Crop,
+                onClick = {navigate(instalacion.id)}
             )
             Surface(
                 shape = RoundedCornerShape(topEnd = 10.dp),     

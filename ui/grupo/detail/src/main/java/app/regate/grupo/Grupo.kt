@@ -53,6 +53,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.NavController
 import app.regate.common.compose.LocalAppDateFormatter
 import app.regate.common.compose.components.dialog.DialogConfirmation
 import app.regate.common.compose.components.item.SalaItem
@@ -64,6 +65,11 @@ import app.regate.common.compose.util.spacerLazyList
 import app.regate.common.compose.viewModel
 import app.regate.data.auth.AppAuthState
 import app.regate.common.resources.R
+import app.regate.constant.Route
+import app.regate.constant.id
+import app.regate.data.common.encodeMediaData
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -76,8 +82,9 @@ typealias Grupo = @Composable (
     navigateToSala:(id:Long)->Unit,
     navigateToProfile:(id:Long)->Unit,
     navigateToSalas:(id:Long)->Unit,
-    navigateToReport:(String)->Unit
-        ) -> Unit
+    navigateToReport:(String)->Unit,
+    navController: NavController,
+    ) -> Unit
 
 @Inject
 @Composable
@@ -90,7 +97,8 @@ fun Grupo(
     @Assisted navigateToSala: (id: Long) -> Unit,
     @Assisted navigateToProfile: (id: Long) -> Unit,
     @Assisted navigateToSalas:(id:Long)->Unit,
-    @Assisted navigateToReport: (String) -> Unit
+    @Assisted navigateToReport: (String) -> Unit,
+    @Assisted navController: NavController,
 ){
     Grupo(
         viewModel = viewModel(factory = viewModelFactory),
@@ -103,6 +111,7 @@ fun Grupo(
         navigateToProfile = navigateToProfile,
         navigateToSalas = navigateToSalas,
         navigateToReport = navigateToReport,
+        navigateToPhoto = {navController.navigate(Route.PHOTO id it)}
     )
 }
 
@@ -117,7 +126,8 @@ internal fun Grupo(
     navigateToSala: (id: Long) -> Unit,
     navigateToProfile: (id: Long) -> Unit,
     navigateToSalas:(id:Long) -> Unit,
-    navigateToReport: (String) -> Unit
+    navigateToReport: (String) -> Unit,
+    navigateToPhoto:(String)->Unit,
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -145,7 +155,8 @@ internal fun Grupo(
         navigateToSalas = navigateToSalas,
         navigateToReport = {viewModel.navigateToReport {
             navigateToReport(it)
-        }}
+        }},
+        navigateToPhoto = navigateToPhoto
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -178,6 +189,7 @@ internal fun Grupo(
     navigateToProfile: (id: Long) -> Unit,
     navigateToSalas:(Long)->Unit,
     navigateToReport: () -> Unit,
+    navigateToPhoto: (String) -> Unit
     ) {
     val isLogged by remember(viewState.authState) {
         derivedStateOf {
@@ -354,7 +366,13 @@ internal fun Grupo(
                                 modifier = Modifier
                                     .size(100.dp)
                                     .align(Alignment.Center),
-                                shape = CircleShape
+                                shape = CircleShape,
+                                onClick= {
+                                    grupo.photo?.let{
+                                        val payload = Json.encodeToString(encodeMediaData(listOf(it)))
+                                        navigateToPhoto(payload)
+                                    }
+                                }
                             )
                         }
                     }

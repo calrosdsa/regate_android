@@ -143,6 +143,8 @@
     <string name="food_and_drink">COMIDA Y BEBIDA</string>
     <string name="send_to_a_group">Enviar a un grupo</string>
     <string name="precio_per_person">Precio por persona</string>
+    <string name="search">Buscar</string>
+    <string name="back">Volver</string>
 
 
 </resources>
