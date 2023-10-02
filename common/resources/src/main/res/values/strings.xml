@@ -168,7 +168,7 @@
     <string name="you_may_request_a_new_code">You may request a new code in %1$d</string>
     <string name="available_courts">Available courts</string>
     <string name="emileys_emotion">SMILEYS AND EMOTIONS</string>
-    <string name="people">PEOPLE</string>
+    <string name="people">People</string>
     <string name="animals_and_nature">ANIMALS AND NATURE</string>
     <string name="travel_and_places">TRAVEL AND PLACES</string>
     <string name="activities_and_event">ACTIVITIES AND EVENTS</string>
@@ -180,5 +180,8 @@
     <string name="precio_per_person">Price per person</string>
     <string name="search">Search</string>
     <string name="back">Back</string>
+    <string name="recent">Recent</string>
+    <string name="see_all">See all</string>
+    <string name="all">All</string>
 
 </resources>

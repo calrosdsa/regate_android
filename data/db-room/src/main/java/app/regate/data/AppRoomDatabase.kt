@@ -34,8 +34,10 @@ import app.regate.data.daos.RoomMyGroupsDao
 import app.regate.data.daos.RoomNotificationDao
 import app.regate.data.daos.RoomProfileDao
 import app.regate.data.daos.RoomReservaDao
+import app.regate.data.daos.RoomSearchHistoryDao
 import app.regate.data.daos.RoomUserDao
 import app.regate.data.daos.RoomUserGrupoDao
+import app.regate.data.daos.SearchHistoryDao
 import app.regate.data.db.AppDatabase
 import app.regate.data.db.AppTypeConverters
 import app.regate.data.db.DateTimeTypeConverters
@@ -52,6 +54,7 @@ import app.regate.models.MyGroups
 import app.regate.models.Notification
 import app.regate.models.Profile
 import app.regate.models.Reserva
+import app.regate.models.SearchHistory
 import app.regate.models.Setting
 import app.regate.models.User
 import app.regate.models.UserGrupo
@@ -74,6 +77,7 @@ import app.regate.models.UserGrupo
         Reserva::class,
         Notification::class,
         MessageSala::class,
+        SearchHistory::class,
 //        SalaEntity::class,
        ],
 //    views = [
@@ -116,6 +120,7 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
     abstract override fun reservaDao(): RoomReservaDao
     abstract override fun notificationDao(): RoomNotificationDao
     abstract override fun messageSalaDao(): RoomMessageSalaDao
+    abstract override fun searchHistoryDao(): RoomSearchHistoryDao
 //    abstract override fun salaEntityDao(): RoomSalaEntityDao
 
     companion object {

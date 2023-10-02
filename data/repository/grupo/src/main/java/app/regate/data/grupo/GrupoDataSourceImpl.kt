@@ -2,6 +2,7 @@ package app.regate.data.grupo
 
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.ResponseMessage
+import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
@@ -105,6 +106,17 @@ class GrupoDataSourceImpl(
             contentType(ContentType.Application.Json)
             setBody(d)
         }
+    }
+
+    override suspend fun searchGrupos(
+        d: SearchFilterRequest,
+        page: Int,
+        size: Int
+    ): PaginationGroupsResponse {
+        return client.post("/v1/grupo/search/?page=${page}&size=${size}"){
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
     }
 
     override suspend fun getMessagesGrupo(id: Long,page:Int): PaginationGroupMessages {

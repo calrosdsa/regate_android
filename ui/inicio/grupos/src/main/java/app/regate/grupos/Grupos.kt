@@ -144,48 +144,48 @@ internal fun Grupos(
 
 
 
-@Composable
-fun GrupoItem(
-    grupo:Grupo,
-    navigateToChatGrupo: (id: Long) -> Unit,
-    formatShortRelativeTime:(Instant)->String,
-    modifier:Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { navigateToChatGrupo(grupo.id) }
-            .padding(10.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        PosterCardImage(
-            model = grupo.photo, modifier = Modifier
-                .size(70.dp), shape = CircleShape
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Column() {
-            Row(modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
-                Text(text = grupo.name ,style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.fillMaxWidth(0.65f), overflow = TextOverflow.Ellipsis)
-                if(grupo.last_message_created != null){
-                    Text(text = formatShortRelativeTime(grupo.last_message_created!!),
-                        style = MaterialTheme.typography.labelSmall, maxLines = 1,
-                    overflow = TextOverflow.Ellipsis)
-                }
-            }
-
-            if(grupo.last_message.isNotBlank()){
-                Spacer(modifier = Modifier.height(5.dp))
-                Text(text = grupo.last_message,style = MaterialTheme.typography.labelMedium.copy(
-                    fontWeight = FontWeight.Normal
-                ), overflow = TextOverflow.Ellipsis, maxLines = 1)
-            }
-        }
-
-    }
-}
-
+//@Composable
+//fun GrupoItem(
+//    grupo:Grupo,
+//    navigateToChatGrupo: (id: Long) -> Unit,
+//    formatShortRelativeTime:(Instant)->String,
+//    modifier:Modifier = Modifier
+//) {
+//    Row(
+//        modifier = modifier
+//            .fillMaxWidth()
+//            .clickable { navigateToChatGrupo(grupo.id) }
+//            .padding(10.dp),
+//        verticalAlignment = Alignment.CenterVertically
+//    ) {
+//        PosterCardImage(
+//            model = grupo.photo, modifier = Modifier
+//                .size(70.dp), shape = CircleShape
+//        )
+//        Spacer(modifier = Modifier.width(10.dp))
+//        Column() {
+//            Row(modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
+//                Text(text = grupo.name ,style = MaterialTheme.typography.labelLarge,
+//                    modifier = Modifier.fillMaxWidth(0.65f), overflow = TextOverflow.Ellipsis)
+//                if(grupo.last_message_created != null){
+//                    Text(text = formatShortRelativeTime(grupo.last_message_created!!),
+//                        style = MaterialTheme.typography.labelSmall, maxLines = 1,
+//                    overflow = TextOverflow.Ellipsis)
+//                }
+//            }
+//
+//            if(grupo.last_message.isNotBlank()){
+//                Spacer(modifier = Modifier.height(5.dp))
+//                Text(text = grupo.last_message,style = MaterialTheme.typography.labelMedium.copy(
+//                    fontWeight = FontWeight.Normal
+//                ), overflow = TextOverflow.Ellipsis, maxLines = 1)
+//            }
+//        }
+//
+//    }
+//}
+//
 
 
 

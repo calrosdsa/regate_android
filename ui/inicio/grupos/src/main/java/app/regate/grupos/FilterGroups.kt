@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import app.regate.common.compose.components.item.GrupoItem
 import app.regate.common.compose.ui.PosterCardImage
 import app.regate.common.compose.util.itemsCustom
 import app.regate.common.compose.viewModel
@@ -90,34 +91,39 @@ internal fun FilterGroups(
     LazyColumn(modifier = Modifier.padding(paddingValues)){
         itemsCustom(
             items = lazyPagingItems,
-        ){result->
+        ) { result ->
             if (result != null) {
-                GrupoItemDto(grupo = result, navigateToChatGrupo = navigateToGroup)
+                GrupoItem(
+                    id = result.id,
+                    photo = result.photo,
+                    navigate = navigateToGroup,
+                    name = result.name
+                )
             }
         }
     }
     }
 }
 
-@Composable
-fun GrupoItemDto(
-    grupo: GrupoDto,
-    navigateToChatGrupo: (id: Long) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { navigateToChatGrupo(grupo.id) }
-            .padding(10.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        PosterCardImage(
-            model = grupo.photo, modifier = Modifier
-                .size(70.dp), shape = CircleShape
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Text(text = grupo.name, style = MaterialTheme.typography.titleMedium)
-    }
-}
+//@Composable
+//fun GrupoItemDto(
+//    grupo: GrupoDto,
+//    navigateToChatGrupo: (id: Long) -> Unit,
+//    modifier: Modifier = Modifier
+//) {
+//    Row(
+//        modifier = modifier
+//            .fillMaxWidth()
+//            .clickable { navigateToChatGrupo(grupo.id) }
+//            .padding(10.dp),
+//        verticalAlignment = Alignment.CenterVertically
+//    ) {
+//        PosterCardImage(
+//            model = grupo.photo, modifier = Modifier
+//                .size(70.dp), shape = CircleShape
+//        )
+//        Spacer(modifier = Modifier.width(10.dp))
+//        Text(text = grupo.name, style = MaterialTheme.typography.titleMedium)
+//    }
+//}
 

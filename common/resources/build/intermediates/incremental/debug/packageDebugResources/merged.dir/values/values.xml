@@ -14,6 +14,7 @@
     <string name="activities_and_event">ACTIVITIES AND EVENTS</string>
     <string name="add_a_message">Add a message</string>
     <string name="add_a_review">Add a review</string>
+    <string name="all">All</string>
     <string name="amount">Amount:  %1$s</string>
     <string name="animals_and_nature">ANIMALS AND NATURE</string>
     <string name="available_courts">Available courts</string>
@@ -101,7 +102,7 @@
     <string name="other">Other</string>
     <string name="password_dont_match">Passwords don\'t match</string>
     <string name="password_length">The password must be longer than 8 characters.</string>
-    <string name="people">PEOPLE</string>
+    <string name="people">People</string>
     <string name="permission_required">Permission required.</string>
     <string name="post">Post</string>
     <string name="precio_per_person">Price per person</string>
@@ -113,6 +114,7 @@
     <string name="purchase">Purchase</string>
     <string name="qr_code_payment">QR code payment</string>
     <string name="rate_this_place">Rate this place</string>
+    <string name="recent">Recent</string>
     <string name="recommended_places">Recommended places</string>
     <string name="remove_user">Remove this user from the group</string>
     <string name="remove_user_admin">Revoke administrator status</string>
@@ -133,6 +135,7 @@
     <string name="search">Search</string>
     <string name="search_nearby_places">Search nearby places</string>
     <string name="see">See</string>
+    <string name="see_all">See all</string>
     <string name="select_group_text">In which group would you like to create this room?</string>
     <string name="send">Send</string>
     <string name="send_to_a_group">Send to a group</string>

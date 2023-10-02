@@ -1,6 +1,7 @@
 package app.regate.search
 
 import android.util.Log
+import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,34 +9,56 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.room.Query
 import app.regate.api.UiMessageManager
+import app.regate.data.daos.SearchHistoryDao
 import app.regate.data.dto.SearchFilterRequest
+import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
+import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.establecimiento.EstablecimientoRepository
+import app.regate.data.grupo.GrupoRepository
+import app.regate.data.labels.SearchRepository
+import app.regate.data.sala.SalaRepository
+import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.ObserveAuthState
+import app.regate.domain.observers.ObserveRecentSearchHistory
 import app.regate.domain.pagination.PaginationSearchEstablecimientos
+import app.regate.extensions.combine
+import app.regate.models.Profile
+import app.regate.models.SearchHistory
 import app.regate.util.ObservableLoadingCounter
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import java.util.Locale
 
 @Inject
 class SearchViewModel(
     @Assisted savedStateHandle: SavedStateHandle,
     observeAuthState: ObserveAuthState,
     private val establecimientoRepository: EstablecimientoRepository,
+    private val grupoRepository: GrupoRepository,
+    private val profileRepository: UsersRepository,
+    private val salaRepository: SalaRepository,
+    private val searchRepository:SearchRepository,
+//    private val searchRepository: SearchRepository,
+    observeRecentSearchHistory: ObserveRecentSearchHistory,
 ) : ViewModel() {
     private val establecimientoId = savedStateHandle.get<Long>("id")?: 0
     private val  loaderCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
+    private val grupos = MutableStateFlow<List<GrupoDto>>(emptyList())
+    private val profiles = MutableStateFlow<List<ProfileDto>>(emptyList())
     private val filterData = MutableStateFlow(FILTER_DATA)
     val pagedList: Flow<PagingData<EstablecimientoDto>> = Pager(PAGING_CONFIG){
-        PaginationSearchEstablecimientos(loadingState = loaderCounter){page->
+        PaginationSearchEstablecimientos(loadingState = loaderCounter,init =filterData.value.query.isNotBlank() ){page->
             Log.d("DEBUG_APP_",filterData.value.toString())
             establecimientoRepository.searcEstablecimientos(filterData.value,page,15)
         }
@@ -43,12 +66,21 @@ class SearchViewModel(
     val state:StateFlow<SearchState> = combine(
         loaderCounter.observable,
         uiMessageManager.message,
-        observeAuthState.flow
-    ){loading,message,authState->
+        observeAuthState.flow,
+        observeRecentSearchHistory.flow,
+        grupos,
+        profiles,
+        filterData
+    ){loading,message,authState,history,grupos,profiles,
+        filterData->
         SearchState(
             loading = loading,
             message = message,
-            authState = authState
+            authState = authState,
+            history = history,
+            grupos = grupos,
+            profiles = profiles,
+            filterData = filterData
         )
     }.stateIn(
         scope= viewModelScope,
@@ -56,8 +88,10 @@ class SearchViewModel(
         started = SharingStarted.WhileSubscribed()
     )
 
+
     init {
         observeAuthState(Unit)
+        observeRecentSearchHistory(Unit)
     }
 
     companion object {
@@ -68,6 +102,43 @@ class SearchViewModel(
         )
         val FILTER_DATA = SearchFilterRequest()
 
+    }
+
+    fun search(query:String){
+        viewModelScope.launch {
+            try{
+                addQueryToHistory(query)
+                loaderCounter.addLoader()
+                val formatQuery = query.lowercase().trim().replace(" ",":* | ") + ":*"
+                val d = filterData.value.copy(
+                    query = formatQuery
+                )
+                filterData.emit(d)
+                delay(1000)
+                Log.d("DEBUG_APP_SEARCH",d.query)
+                val gruposData = grupoRepository.searchGrupos(d)
+                Log.d("DEBUG_APP_SEARCH",gruposData.toString())
+                val profilesData = profileRepository.searchProfiles(d)
+                Log.d("DEBUG_APP_SEARCH",profilesData.toString())
+                delay(1000)
+                grupos.emit(gruposData.results)
+                profiles.emit(profilesData.results)
+                loaderCounter.removeLoader()
+            }catch (e:Exception){
+                loaderCounter.removeLoader()
+                Log.d("DEBUG_APP",e.localizedMessage?:"")
+            }
+        }
+    }
+
+    private fun addQueryToHistory(query: String){
+        viewModelScope.launch {
+            try{
+                searchRepository.addSearchQueryToHistory(query)
+            }catch (e:Exception){
+                //TODO()
+            }
+        }
     }
 
     fun getEstablecimientoId(): Long {

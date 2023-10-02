@@ -133,7 +133,7 @@
     <string name="you_may_request_a_new_code">Podrás solicitar un nuevo código en %1$d</string>
     <string name="available_courts">Canchas disponibles</string>
     <string name="emileys_emotion">EMOCIONES Y EMOCIONES</string>
-    <string name="people">PERSONAS</string>
+    <string name="people">Personas</string>
     <string name="animals_and_nature">ANIMALES Y NATURALEZA</string>
     <string name="travel_and_places">VIAJES Y LUGARES</string>
     <string name="activities_and_event">ACTIVIDADES Y EVENTOS</string>
@@ -145,6 +145,9 @@
     <string name="precio_per_person">Precio por persona</string>
     <string name="search">Buscar</string>
     <string name="back">Volver</string>
+    <string name="recent">Reciente</string>
+    <string name="see_all">Ver todo</string>
+    <string name="all">Todo</string>
 
 
 </resources>

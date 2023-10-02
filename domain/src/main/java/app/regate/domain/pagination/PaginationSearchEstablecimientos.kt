@@ -14,6 +14,7 @@ import kotlinx.coroutines.delay
 
 class PaginationSearchEstablecimientos(
     private val loadingState:ObservableLoadingCounter,
+    private val init:Boolean,
     private val getEstablecimientos:suspend (page:Int)->PaginationEstablecimientoResponse,
 ) : PagingSource<Int, EstablecimientoDto>() {
     override fun getRefreshKey(state: PagingState<Int, EstablecimientoDto>): Int? {
@@ -24,6 +25,8 @@ class PaginationSearchEstablecimientos(
     }
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, EstablecimientoDto> {
         return try{
+            if(init){
+
             loadingState.addLoader()
             val page = params.key?:1
                 val res = getEstablecimientos(page)
@@ -33,6 +36,9 @@ class PaginationSearchEstablecimientos(
                     prevKey = null,
                     nextKey = if (res.page == 0) null else res.page
                 )
+            }else {
+                LoadResult.Invalid()
+            }
         }catch(e:Exception){
             loadingState.removeLoader()
             LoadResult.Error(e)

@@ -62,6 +62,7 @@ import app.regate.filterSalas.FilterSalas
 import app.regate.sala.complete.SalaComplete
 import app.regate.sala.grupo.GrupoSalas
 import app.regate.search.Search
+import app.regate.search.history.HistorySearch
 import app.regate.system.notification.Notifications
 import app.regate.system.report.Report
 import app.regate.usergroups.mygroups.MyGroups
@@ -129,5 +130,6 @@ class ComposeScreens(
     val reviews: Reviews,
     val createReview: CreateReview,
 
-    val search:Search
+    val search:Search,
+    val historySearch:HistorySearch,
     )

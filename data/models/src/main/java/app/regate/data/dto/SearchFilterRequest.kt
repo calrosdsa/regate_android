@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SearchFilterRequest(
-    val query:String = "complejo:* | deportivo11:*",
+    val query:String = "",
     val latitud:String = "0",
     val longitud:String = "0",
 )

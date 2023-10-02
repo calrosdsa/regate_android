@@ -43,6 +43,7 @@ string about_regate
 string activities_and_event
 string add_a_message
 string add_a_review
+string all
 string amount
 string animals_and_nature
 string available_courts
@@ -140,6 +141,7 @@ string publico
 string purchase
 string qr_code_payment
 string rate_this_place
+string recent
 string recommended_places
 string remove_user
 string remove_user_admin
@@ -159,6 +161,7 @@ string saved_correctly
 string search
 string search_nearby_places
 string see
+string see_all
 string select_group_text
 string send
 string send_to_a_group

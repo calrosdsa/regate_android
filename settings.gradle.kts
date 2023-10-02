@@ -109,6 +109,7 @@ include(
     ":data:repository:coin",
     ":data:repository:system",
     ":data:repository:conversation",
+    ":data:repository:search",
 
     ":tasks:android",
     ":tasks:api",

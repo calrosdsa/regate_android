@@ -566,13 +566,28 @@ internal fun AppNavigation(
         }
 
         animatedComposable(
-            route = Route.SEARCH,
-        ) {
+            route = Route.SEARCH + "?query={query}",
+            arguments = listOf(navArgument("query") {
+                defaultValue = ""
+                type = NavType.StringType
+            }),
+        ) {navBackStackEntry->
+            val query = navBackStackEntry.arguments?.getString("query")?:""
             composeScreens.search(
                 navigateUp = navController::navigateUp,
-                openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
+                navigateToGroup = {navController.navigate(Route.GRUPO id it)},
                 navigateToProfile = { navController.navigate(Route.PROFILE id it)},
-//                navigateToReserva = { navController.navigate(Route.RESERVAR id it) }
+                navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
+                navigateToHistorySearch = {navController.navigate(Route.HISTORY_SEARCH) },
+                queryArg = query
+            )
+        }
+        animatedComposable(
+            route = Route.HISTORY_SEARCH,
+        ) {
+            composeScreens.historySearch(
+                navigateUp = navController::navigateUp,
+                navigateToSearch = { navController.navigate(Route.SEARCH + "?query=${it}")}
             )
         }
 

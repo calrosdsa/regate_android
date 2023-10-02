@@ -1,5 +1,6 @@
 package app.regate.data.dto.account.user
 
+import app.regate.data.dto.empresa.grupo.GrupoDto
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
@@ -14,4 +15,10 @@ data class ProfileDto(
     val user_id: Long = 0,
 )
 
+
+@Serializable
+data class PaginationProfilesResponse(
+    val results:List<ProfileDto>,
+    val page:Int
+)
 

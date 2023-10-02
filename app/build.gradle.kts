@@ -136,6 +136,7 @@ dependencies {
     implementation(projects.data.repository.labels)
     implementation(projects.data.repository.grupo)
     implementation(projects.data.repository.coin)
+    implementation(projects.data.repository.search)
     implementation(projects.data.repository.system)
 
     implementation(projects.data.dbRoom)

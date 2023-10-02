@@ -35,6 +35,7 @@
             <option value="$PROJECT_DIR$/data/repository/labels" />
             <option value="$PROJECT_DIR$/data/repository/reserva" />
             <option value="$PROJECT_DIR$/data/repository/sala" />
+            <option value="$PROJECT_DIR$/data/repository/search" />
             <option value="$PROJECT_DIR$/data/repository/system" />
             <option value="$PROJECT_DIR$/data/repository/users" />
             <option value="$PROJECT_DIR$/domain" />

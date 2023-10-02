@@ -13,6 +13,7 @@ import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.NotificationDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.ReservaDao
+import app.regate.data.daos.SearchHistoryDao
 import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
 
@@ -32,4 +33,5 @@ interface AppDatabase {
     fun reservaDao():ReservaDao
     fun notificationDao():NotificationDao
     fun messageSalaDao():MessageSalaDao
+    fun searchHistoryDao():SearchHistoryDao
 }

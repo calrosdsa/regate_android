@@ -29,6 +29,7 @@ dependencies {
     implementation(projects.common.resources)
     implementation(projects.common.compose)
     implementation(projects.domain)
+    implementation(projects.data.db)
 
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
