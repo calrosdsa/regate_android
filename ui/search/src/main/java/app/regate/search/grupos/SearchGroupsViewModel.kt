@@ -1,6 +1,6 @@
 package app.regate.search.grupos
 
-import androidx.lifecycle.SavedStateHandle
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -8,44 +8,50 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import app.regate.api.UiMessageManager
-import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
-import app.regate.data.establecimiento.EstablecimientoRepository
+import app.regate.data.dto.empresa.grupo.GrupoDto
+import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.pagination.PaginationReviews
+import app.regate.domain.observers.search.ObserveLastSearchHistory
+import app.regate.domain.pagination.search.PaginationSearchGrupos
+import app.regate.search.SearchViewModel
+import app.regate.search.salas.SearchSalasState
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import me.tatarka.inject.annotations.Assisted
+import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 
 @Inject
 class SearchGroupsViewModel(
-    @Assisted savedStateHandle: SavedStateHandle,
     observeAuthState: ObserveAuthState,
-    private val establecimientoRepository: EstablecimientoRepository,
+    observeLastSearchHistory: ObserveLastSearchHistory,
+    private val grupoRepository: GrupoRepository,
 ) : ViewModel() {
-
-    private val establecimientoId = savedStateHandle.get<Long>("id")?: 0
     private val  loaderCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
-    val pagedList: Flow<PagingData<EstablecimientoReview>> = Pager(PAGING_CONFIG){
-        PaginationReviews(isInit =true){page->
-           establecimientoRepository.getEstablecimientoReviews(establecimientoId,page,20)
+    private val filterData = MutableStateFlow(SearchViewModel.FILTER_DATA)
+    val pagedList: Flow<PagingData<GrupoDto>> = Pager(PAGING_CONFIG){
+        PaginationSearchGrupos(init =filterData.value.query.isNotBlank()){page->
+           grupoRepository.searchGrupos(filterData.value,page,20)
 //            salaRepository.filterSalas()
         }
     }.flow.cachedIn(viewModelScope)
-    val state:StateFlow<SearchGruposState> = combine(
+    val state:StateFlow<SearchSalasState> = combine(
         loaderCounter.observable,
         uiMessageManager.message,
-        observeAuthState.flow
-    ){loading,message,authState->
-        SearchGruposState(
+        observeAuthState.flow,
+        filterData,
+    ){loading,message,authState,filterData->
+        SearchSalasState(
             loading = loading,
             message = message,
-            authState = authState
+            authState = authState,
+            filterData = filterData
         )
     }.stateIn(
         scope= viewModelScope,
@@ -55,6 +61,16 @@ class SearchGroupsViewModel(
 
     init {
         observeAuthState(Unit)
+        observeLastSearchHistory(Unit)
+
+        viewModelScope.launch {
+        observeLastSearchHistory.flow.collectLatest { result->
+            val formatQuery = result.query.lowercase().trim().replace(" ",":* | ") + ":*"
+            filterData.emit(filterData.value.copy(
+                query = formatQuery
+            ))
+        }
+        }
     }
 
     companion object {
@@ -65,7 +81,5 @@ class SearchGroupsViewModel(
         )
     }
 
-    fun getEstablecimientoId(): Long {
-        return establecimientoId
-    }
+
 }

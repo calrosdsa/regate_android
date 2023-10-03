@@ -4,6 +4,7 @@ import app.regate.data.daos.MessageSalaDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
 import app.regate.data.dto.ResponseMessage
+import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
@@ -38,9 +39,10 @@ class SalaRepository(
     private val dispatchers:AppCoroutineDispatchers,
     private val salaDtoToSalaEntity: SalaDtoToSalaEntity
 ){
-//    suspend fun insertSalas(){
-//        salaEntityDao.upsert(SalaEntity(id=10))
-//    }
+
+    suspend fun searchSalas(d:SearchFilterRequest,page: Int,size:Int):PaginationSalaResponse{
+        return salaDataSourceImpl.searchSalas(d,page,size)
+    }
     suspend fun insertUsersSala(salaId: Long){
         withContext(dispatchers.computation){
             try {

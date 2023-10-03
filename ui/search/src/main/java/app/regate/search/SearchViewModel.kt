@@ -1,7 +1,6 @@
 package app.regate.search
 
 import android.util.Log
-import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,9 +8,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.room.Query
 import app.regate.api.UiMessageManager
-import app.regate.data.daos.SearchHistoryDao
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
@@ -22,11 +19,9 @@ import app.regate.data.labels.SearchRepository
 import app.regate.data.sala.SalaRepository
 import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.observers.ObserveRecentSearchHistory
-import app.regate.domain.pagination.PaginationSearchEstablecimientos
+import app.regate.domain.observers.search.ObserveRecentSearchHistory
+import app.regate.domain.pagination.search.PaginationSearchEstablecimientos
 import app.regate.extensions.combine
-import app.regate.models.Profile
-import app.regate.models.SearchHistory
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -37,7 +32,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import java.util.Locale
 
 @Inject
 class SearchViewModel(

@@ -577,9 +577,18 @@ internal fun AppNavigation(
                 navigateUp = navController::navigateUp,
                 navigateToGroup = {navController.navigate(Route.GRUPO id it)},
                 navigateToProfile = { navController.navigate(Route.PROFILE id it)},
-                navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
+                navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0) },
                 navigateToHistorySearch = {navController.navigate(Route.HISTORY_SEARCH) },
-                queryArg = query
+                queryArg = query,
+                searchGrupos = { composeScreens.searchGrupos(
+                    navigateToGroup = { navController.navigate(Route.GRUPO id it)},
+                    )},
+                searchProfiles = { composeScreens.searchProfiles(
+                    navigateToProfile = { navController.navigate(Route.PROFILE id it)},
+                )},
+                searchSalas = { composeScreens.searchSalas(
+                    navigateToSala= { navController.navigate(Route.SALA id it)},
+                )}
             )
         }
         animatedComposable(

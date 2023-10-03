@@ -2,6 +2,7 @@ package app.regate.data.sala
 
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.ResponseMessage
+import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
@@ -49,6 +50,17 @@ class SalaDataSourceImpl(
 
     override suspend fun getUsersSala(salaId: Long): List<UserSala> {
         return client.get("/v1/sala/users/${salaId}/").body()
+    }
+
+    override suspend fun searchSalas(
+        d: SearchFilterRequest,
+        page: Int,
+        size: Int
+    ): PaginationSalaResponse {
+        return client.post("/v1/salas/search/?page=${page}&size=${size}"){
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
     }
 
     override suspend fun getCompleteSalaHistory(salaId: Long): SalaCompleteDetail {

@@ -118,6 +118,7 @@ string near_me
 string new_offers
 string new_room_created
 string no_result_found
+string no_results_for_saerch
 string notification_billing
 string notification_billing_channel
 string notification_sala

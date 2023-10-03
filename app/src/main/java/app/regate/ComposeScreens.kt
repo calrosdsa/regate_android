@@ -62,7 +62,10 @@ import app.regate.filterSalas.FilterSalas
 import app.regate.sala.complete.SalaComplete
 import app.regate.sala.grupo.GrupoSalas
 import app.regate.search.Search
+import app.regate.search.grupos.SearchGrupos
 import app.regate.search.history.HistorySearch
+import app.regate.search.profiles.SearchProfiles
+import app.regate.search.salas.SearchSalas
 import app.regate.system.notification.Notifications
 import app.regate.system.report.Report
 import app.regate.usergroups.mygroups.MyGroups
@@ -132,4 +135,7 @@ class ComposeScreens(
 
     val search:Search,
     val historySearch:HistorySearch,
+    val searchGrupos:SearchGrupos,
+    val searchProfiles:SearchProfiles,
+    val searchSalas:SearchSalas,
     )

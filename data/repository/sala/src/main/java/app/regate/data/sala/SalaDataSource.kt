@@ -1,6 +1,7 @@
 package app.regate.data.sala
 
 import app.regate.data.dto.ResponseMessage
+import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
@@ -30,5 +31,7 @@ interface SalaDataSource {
    suspend fun createSala(d: SalaRequestDto):ResponseMessage
    suspend fun exitSala(id:Int)
    suspend fun getUsersSala(salaId: Long):List<UserSala>
+
+   suspend fun searchSalas(d:SearchFilterRequest,page:Int,size:Int):PaginationSalaResponse
 }
 

@@ -20,4 +20,8 @@ abstract class RoomSearchHistoryDao : SearchHistoryDao,RoomEntityDao<SearchHisto
     @Transaction
     @Query("select * from search_history order by created_at desc  limit :size offset (:size * :page) ")
     abstract override suspend fun getHistorySearch(page: Int,size:Int): List<SearchHistory>
+
+    @Transaction
+    @Query("select * from search_history order by created_at desc limit 1")
+    abstract override fun observeLastSearchHistory(): Flow<SearchHistory>
 }

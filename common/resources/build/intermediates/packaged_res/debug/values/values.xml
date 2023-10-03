@@ -92,6 +92,7 @@
     <string name="new_offers">New Offers Here!</string>
     <string name="new_room_created">A new room has been created.</string>
     <string name="no_result_found">No results found. Try changing the date or time.</string>
+    <string name="no_results_for_saerch">We couldn\'t find any results that match your search</string>
     <string name="notification_billing">Deposit and payment notifications</string>
     <string name="notification_billing_channel" translatable="false">billing_channel_id</string>
     <string name="notification_sala">Room Notifications</string>

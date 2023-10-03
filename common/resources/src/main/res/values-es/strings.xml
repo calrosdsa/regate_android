@@ -148,6 +148,6 @@
     <string name="recent">Reciente</string>
     <string name="see_all">Ver todo</string>
     <string name="all">Todo</string>
-
+    <string name="no_results_for_saerch">No pudimos encontrar ningún resultado que coincida con su búsqueda.</string>
 
 </resources>

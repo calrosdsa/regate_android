@@ -117,6 +117,7 @@ int string near_me 0x0
 int string new_offers 0x0
 int string new_room_created 0x0
 int string no_result_found 0x0
+int string no_results_for_saerch 0x0
 int string notification_billing 0x0
 int string notification_billing_channel 0x0
 int string notification_sala 0x0

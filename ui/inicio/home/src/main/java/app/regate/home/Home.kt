@@ -123,7 +123,10 @@ internal fun Home(
                 },
                 actions = {
                     IconButton(onClick = {
-                        navController.navigate(Route.SEARCH)
+                        navController.navigate(Route.SEARCH){
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }) {
                         Icon(imageVector = Icons.Default.Search,
                             contentDescription = stringResource(id = R.string.search))

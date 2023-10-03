@@ -30,4 +30,7 @@ class SearchRepository(
     suspend fun getHistorySearch(page:Int, size:Int = 20):List<SearchHistory>{
         return searchHistoryDao.getHistorySearch(page,size)
     }
+    fun observeLastSearchHistory():Flow<SearchHistory>{
+        return searchHistoryDao.observeLastSearchHistory()
+    }
 }

@@ -10,4 +10,5 @@ interface SearchHistoryDao:EntityDao<SearchHistory> {
     fun observePaginationRecentHistory(page:Int,size:Int):PagingSource<Int,SearchHistory>
 
     suspend fun getHistorySearch(page: Int,size:Int):List<SearchHistory>
+    fun observeLastSearchHistory():Flow<SearchHistory>
 }

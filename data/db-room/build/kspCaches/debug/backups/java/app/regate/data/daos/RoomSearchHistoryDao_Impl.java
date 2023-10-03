@@ -366,6 +366,56 @@ public final class RoomSearchHistoryDao_Impl extends RoomSearchHistoryDao {
     }, continuation);
   }
 
+  @Override
+  public Flow<SearchHistory> observeLastSearchHistory() {
+    final String _sql = "select * from search_history order by created_at desc limit 1";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"search_history"}, new Callable<SearchHistory>() {
+      @Override
+      @NonNull
+      public SearchHistory call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfQuery = CursorUtil.getColumnIndexOrThrow(_cursor, "query");
+            final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
+            final SearchHistory _result;
+            if (_cursor.moveToFirst()) {
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final String _tmpQuery;
+              _tmpQuery = _cursor.getString(_cursorIndexOfQuery);
+              final Instant _tmpCreated_at;
+              final String _tmp;
+              if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+                _tmp = null;
+              } else {
+                _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+              }
+              _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+              _result = new SearchHistory(_tmpId,_tmpQuery,_tmpCreated_at);
+            } else {
+              _result = null;
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
   @NonNull
   public static List<Class<?>> getRequiredConverters() {
     return Collections.emptyList();

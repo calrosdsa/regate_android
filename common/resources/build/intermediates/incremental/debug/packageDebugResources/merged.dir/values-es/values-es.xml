@@ -69,6 +69,7 @@
     <string name="new_offers">¡Nuevas ofertas aquí!</string>
     <string name="new_room_created">Se ha creado una sala nueva.</string>
     <string name="no_result_found">No se encontraron resultados prueba cambiando la fecha o la hora.</string>
+    <string name="no_results_for_saerch">No pudimos encontrar ningún resultado que coincida con su búsqueda.</string>
     <string name="notification_billing">Notificaciones de depósito y pago</string>
     <string name="notification_sala">Notificaciones sala</string>
     <string name="notifications">Notifications</string>

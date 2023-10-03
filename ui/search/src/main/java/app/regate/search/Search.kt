@@ -68,6 +68,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -78,6 +79,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.LoadState
@@ -108,7 +110,10 @@ typealias Search = @Composable (
     navigateToEstablecimiento:(Long)->Unit,
     navigateToHistorySearch:()->Unit,
     queryArg:String,
-) -> Unit
+    searchGrupos: @Composable () ->Unit,
+    searchProfiles: @Composable () ->Unit,
+    searchSalas: @Composable () ->Unit,
+    ) -> Unit
 
 
 @Inject
@@ -120,7 +125,10 @@ fun Search(
     @Assisted navigateToGroup: (Long) -> Unit,
     @Assisted navigateToEstablecimiento: (Long) -> Unit,
     @Assisted navigateToHistorySearch: () -> Unit,
-    @Assisted queryArg: String
+    @Assisted queryArg: String,
+    @Assisted searchGrupos: @Composable () -> Unit,
+    @Assisted searchProfiles: @Composable () -> Unit,
+    @Assisted searchSalas: @Composable () -> Unit,
 ){
     Search(
         viewModel = viewModel(factory = viewModelFactory),
@@ -129,7 +137,10 @@ fun Search(
         navigateToEstablecimiento = navigateToEstablecimiento,
         navigateToHistorySearch = navigateToHistorySearch,
         navigateToGroup = navigateToGroup,
-        queryArg = queryArg
+        queryArg = queryArg,
+        searchGrupos = searchGrupos,
+        searchProfiles = searchProfiles,
+        searchSalas = searchSalas
         )
 
 }
@@ -143,7 +154,10 @@ internal fun Search(
     navigateToHistorySearch: () -> Unit,
     navigateToGroup: (Long) -> Unit,
     queryArg:String,
-) {
+    searchGrupos: @Composable () -> Unit,
+    searchProfiles: @Composable () -> Unit,
+    searchSalas: @Composable () -> Unit,
+    ) {
     val state by viewModel.state.collectAsState()
     Search(
         viewState = state, navigateUp = navigateUp, navigateToProfile = navigateToProfile,
@@ -152,7 +166,10 @@ internal fun Search(
         navigateToHistorySearch = navigateToHistorySearch,
         navigateToEstablecimiento = navigateToEstablecimiento,
         navigateToGroup = navigateToGroup,
-        queryArg = queryArg
+        queryArg = queryArg,
+        searchGrupos = searchGrupos,
+        searchProfiles= searchProfiles,
+        searchSalas = searchSalas
         )
 }
 @OptIn(
@@ -168,13 +185,17 @@ internal fun Search(
     search:(String)->Unit,
     navigateToHistorySearch: () -> Unit,
     navigateToGroup: (Long) -> Unit,
-    navigateToEstablecimiento: (Long) -> Unit
-    ){
-    var query by remember {
+    navigateToEstablecimiento: (Long) -> Unit,
+    searchGrupos: @Composable () -> Unit,
+    searchProfiles: @Composable () -> Unit,
+    searchSalas: @Composable () -> Unit,
+
+){
+    var query by rememberSaveable {
         mutableStateOf("")
     }
 
-    var shouldShowResults by remember {
+    var shouldShowResults by rememberSaveable {
         mutableStateOf(false)
     }
     val interactionSource = remember { MutableInteractionSource() }
@@ -277,7 +298,7 @@ internal fun Search(
                 .fillMaxSize()
         ) {
             if(shouldShowResults){
-                Column() {
+                Column(modifier = Modifier.fillMaxSize()) {
                     Indicators(navToTab = {
                        coroutineScope.launch {
                            pagerState.scrollToPage(it)
@@ -296,6 +317,22 @@ internal fun Search(
                 0 -> LazyColumn(
                     contentPadding = PaddingValues(6.dp),
                     content = {
+                    if(viewState.profiles.isEmpty() && viewState.grupos.isEmpty()
+                        && lazyPagingItems.itemCount == 0){
+                        item {
+                            Box(modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = 40.dp)){
+                        Text(text = stringResource(id = R.string.no_results_for_saerch),
+                            style =MaterialTheme.typography.titleMedium,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .fillMaxWidth(0.8f),
+                            textAlign = TextAlign.Center
+                        )
+                            }
+                        }
+                    }
                     if(viewState.profiles.isNotEmpty()){
                     item {
                         Text(text = stringResource(id = R.string.people),
@@ -357,6 +394,9 @@ internal fun Search(
                     }
 
                 })
+                1 -> searchProfiles()
+                2 -> searchGrupos()
+                3 -> searchSalas()
             } }
                     }}
 
