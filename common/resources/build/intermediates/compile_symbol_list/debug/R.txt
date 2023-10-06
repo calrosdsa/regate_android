@@ -44,6 +44,7 @@ int string add_a_review 0x0
 int string all 0x0
 int string amount 0x0
 int string animals_and_nature 0x0
+int string app_name 0x0
 int string available_courts 0x0
 int string back 0x0
 int string balance_coins 0x0
@@ -58,6 +59,7 @@ int string chat_message_channel_name 0x0
 int string chat_notification_id 0x0
 int string chat_notification_name 0x0
 int string choose_a_schedule 0x0
+int string choose_from_gallery 0x0
 int string choose_the_time_and_place 0x0
 int string choose_where_create_room 0x0
 int string clear_all 0x0
@@ -173,6 +175,7 @@ int string show_reviews 0x0
 int string spam_scam 0x0
 int string successfully_published 0x0
 int string symbols 0x0
+int string take_a_picture 0x0
 int string terms_of_services 0x0
 int string theme 0x0
 int string there_are_not_available_schudules 0x0

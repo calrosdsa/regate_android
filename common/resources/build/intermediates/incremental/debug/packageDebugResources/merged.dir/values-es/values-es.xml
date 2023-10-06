@@ -7,6 +7,7 @@
     <string name="all">Todo</string>
     <string name="amount">Amount: %1$s</string>
     <string name="animals_and_nature">ANIMALES Y NATURALEZA</string>
+    <string name="app_name">Regate</string>
     <string name="available_courts">Canchas disponibles</string>
     <string name="back">Volver</string>
     <string name="balance_coins">Saldo de monedas</string>
@@ -15,6 +16,7 @@
     <string name="chat_group_channel_name">Notificaciones de Grupo</string>
     <string name="chat_message_channel_name">Notificación de Mensaje</string>
     <string name="choose_a_schedule">Elige un horario</string>
+    <string name="choose_from_gallery">Elegir de la galería</string>
     <string name="choose_the_time_and_place">Elije la hora y el lugar</string>
     <string name="choose_where_create_room">Elige dónde crear la sala</string>
     <string name="clear_all">Resetear</string>
@@ -123,6 +125,7 @@
     <string name="spam_scam">Spam/Scam</string>
     <string name="successfully_published">Publicado exitosamente</string>
     <string name="symbols">SÍMBOLOS</string>
+    <string name="take_a_picture">Toma una foto</string>
     <string name="terms_of_services">Condiciones de Servicio</string>
     <string name="theme">Theme</string>
     <string name="there_are_not_available_schudules">No hay horarios disponibles</string>

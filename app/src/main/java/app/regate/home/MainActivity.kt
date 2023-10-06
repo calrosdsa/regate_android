@@ -79,7 +79,7 @@ class MainActivity : ComponentActivity() {
             createNotificationGroup()
             createNotificationGroupChatChannel()
         }
-
+    
         component = MainActivityComponent::class.create(this)
         viewModel
 
@@ -92,6 +92,7 @@ class MainActivity : ComponentActivity() {
                 LocalAppDateFormatter provides component.appDateFormatter,
                 LocalAppUtil provides component.appUtil
             ) {
+
                 RegateTheme(
                     useDarkColors = preferences.shouldUseDarkColors(),
                     useDynamicColors = preferences.shouldUseDynamicColors()
@@ -121,6 +122,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
 
     private var launcher=  registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()){ result->
         if (result.resultCode == Activity.RESULT_OK) {

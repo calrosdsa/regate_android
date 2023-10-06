@@ -107,7 +107,8 @@ fun UploadImageBitmap(
                 Image(
                     bitmap = btm.asImageBitmap(),
                     contentDescription = null,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
                 )
             }
 

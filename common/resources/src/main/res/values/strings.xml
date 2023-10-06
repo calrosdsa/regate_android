@@ -184,5 +184,8 @@
     <string name="see_all">See all</string>
     <string name="all">All</string>
     <string name="no_results_for_saerch">We couldn\'t find any results that match your search</string>
+    <string name="choose_from_gallery">Choose from gallery</string>
+    <string name="take_a_picture">Take a picture</string>
+    <string name="app_name">Regate</string>
 
 </resources>

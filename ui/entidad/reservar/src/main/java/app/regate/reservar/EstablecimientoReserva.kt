@@ -270,6 +270,7 @@ internal fun EstablecimientoReserva(
                                 .width(1.dp)
                         )
                     }
+
                     item {
 
                         Surface(
@@ -388,6 +389,7 @@ internal fun InstalacionAvailable(
                     contentDescription = instalacion.portada,
                     modifier = Modifier
                         .fillMaxSize(),
+                    onClick = { navigate(instalacion.instalacion_id) }
                 )
                 PriceLabel(precio = instalacion.precio.toString(),
                     modifier = Modifier

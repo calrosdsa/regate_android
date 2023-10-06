@@ -31,12 +31,19 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.data.auth)
 
+
+
+    implementation("androidx.camera:camera-camera2:1.0.1")
+    implementation("androidx.camera:camera-lifecycle:1.0.1")
+    implementation("androidx.camera:camera-view:1.0.0-alpha27")
+
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
 
     implementation(libs.androidx.navigation.compose)
 
+    implementation(libs.coil.compose)
     implementation(libs.compose.foundation.foundation)
     implementation(libs.compose.foundation.layout)
 //    implementation(libs.compose.material.material)

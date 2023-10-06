@@ -47,7 +47,9 @@ class AppPreferencesImpl(
     private val preferenceKeyChangedFlow = MutableSharedFlow<String>(extraBufferCapacity = 1)
 
     private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-        preferenceKeyChangedFlow.tryEmit(key)
+        if (key != null) {
+            preferenceKeyChangedFlow.tryEmit(key)
+        }
     }
     companion object {
         const val KEY_KEYBOARD_HEIGHT = "keyboard_height"

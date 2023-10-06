@@ -15,7 +15,6 @@ plugins {
 
 android {
     namespace = "app.regate.media"
-//    compileSdk = 33
     buildFeatures {
         compose = true
     }
@@ -29,6 +28,7 @@ dependencies {
     implementation(projects.common.resources)
     implementation(projects.common.compose)
     implementation(projects.domain)
+    implementation("net.engawapg.lib:zoomable:1.4.3")
 
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

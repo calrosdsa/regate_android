@@ -104,7 +104,7 @@ internal fun CreateSala(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun CreateSala(
     viewState: CreateSalaState,

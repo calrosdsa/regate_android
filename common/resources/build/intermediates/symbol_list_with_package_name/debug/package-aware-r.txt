@@ -45,6 +45,7 @@ string add_a_review
 string all
 string amount
 string animals_and_nature
+string app_name
 string available_courts
 string back
 string balance_coins
@@ -59,6 +60,7 @@ string chat_message_channel_name
 string chat_notification_id
 string chat_notification_name
 string choose_a_schedule
+string choose_from_gallery
 string choose_the_time_and_place
 string choose_where_create_room
 string clear_all
@@ -174,6 +176,7 @@ string show_reviews
 string spam_scam
 string successfully_published
 string symbols
+string take_a_picture
 string terms_of_services
 string theme
 string there_are_not_available_schudules
