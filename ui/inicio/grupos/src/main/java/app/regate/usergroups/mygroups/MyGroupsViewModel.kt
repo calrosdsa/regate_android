@@ -11,7 +11,7 @@ import app.regate.data.dto.empresa.grupo.GrupoMessageData
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveUser
-import app.regate.domain.observers.ObserveUserGroups
+import app.regate.domain.observers.grupo.ObserveUserGroups
 import app.regate.models.Grupo
 import app.regate.util.ObservableLoadingCounter
 import app.regate.util.getLongUuid

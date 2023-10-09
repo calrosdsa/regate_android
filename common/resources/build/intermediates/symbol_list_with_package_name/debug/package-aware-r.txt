@@ -51,8 +51,10 @@ string back
 string balance_coins
 string book_a_court
 string bookings
+string cancel_request
 string channel_group_description
 string channel_message_description
+string chat_group
 string chat_group_channel_id
 string chat_group_channel_name
 string chat_message_channel_id
@@ -65,12 +67,14 @@ string choose_the_time_and_place
 string choose_where_create_room
 string clear_all
 string complete
+string confirm
 string consume
 string continuar
 string contributed_amount
 string count_selected
 string create_group
 string create_sala
+string decline
 string deposits
 string description
 string discount
@@ -115,6 +119,7 @@ string looking_for_a_place
 string map
 string mapbox_access_token
 string meke_user_admin
+string members
 string name
 string near_me
 string new_offers
@@ -131,6 +136,8 @@ string objects
 string other
 string password_dont_match
 string password_length
+string pending_request
+string pending_requests
 string people
 string permission_required
 string post
@@ -148,6 +155,8 @@ string recommended_places
 string remove_user
 string remove_user_admin
 string report
+string request_accepted
+string request_removed
 string resend_email_verification
 string reservation_date
 string review
@@ -191,6 +200,7 @@ string unexpected_error
 string user_since
 string verify
 string version
+string visit
 string what_is_your_location
 string what_kind_of_game_do_you_prefere
 string what_would_you_like_to_play

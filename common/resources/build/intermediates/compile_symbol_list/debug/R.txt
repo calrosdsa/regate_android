@@ -50,8 +50,10 @@ int string back 0x0
 int string balance_coins 0x0
 int string book_a_court 0x0
 int string bookings 0x0
+int string cancel_request 0x0
 int string channel_group_description 0x0
 int string channel_message_description 0x0
+int string chat_group 0x0
 int string chat_group_channel_id 0x0
 int string chat_group_channel_name 0x0
 int string chat_message_channel_id 0x0
@@ -64,12 +66,14 @@ int string choose_the_time_and_place 0x0
 int string choose_where_create_room 0x0
 int string clear_all 0x0
 int string complete 0x0
+int string confirm 0x0
 int string consume 0x0
 int string continuar 0x0
 int string contributed_amount 0x0
 int string count_selected 0x0
 int string create_group 0x0
 int string create_sala 0x0
+int string decline 0x0
 int string deposits 0x0
 int string description 0x0
 int string discount 0x0
@@ -114,6 +118,7 @@ int string looking_for_a_place 0x0
 int string map 0x0
 int string mapbox_access_token 0x0
 int string meke_user_admin 0x0
+int string members 0x0
 int string name 0x0
 int string near_me 0x0
 int string new_offers 0x0
@@ -130,6 +135,8 @@ int string objects 0x0
 int string other 0x0
 int string password_dont_match 0x0
 int string password_length 0x0
+int string pending_request 0x0
+int string pending_requests 0x0
 int string people 0x0
 int string permission_required 0x0
 int string post 0x0
@@ -147,6 +154,8 @@ int string recommended_places 0x0
 int string remove_user 0x0
 int string remove_user_admin 0x0
 int string report 0x0
+int string request_accepted 0x0
+int string request_removed 0x0
 int string resend_email_verification 0x0
 int string reservation_date 0x0
 int string review 0x0
@@ -190,6 +199,7 @@ int string unexpected_error 0x0
 int string user_since 0x0
 int string verify 0x0
 int string version 0x0
+int string visit 0x0
 int string what_is_your_location 0x0
 int string what_kind_of_game_do_you_prefere 0x0
 int string what_would_you_like_to_play 0x0

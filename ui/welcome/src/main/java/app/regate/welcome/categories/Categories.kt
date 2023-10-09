@@ -25,7 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.components.images.AsyncImage
+import app.regate.common.composes.component.images.AsyncImage
 import app.regate.common.resources.R
 import app.regate.models.Labels
 

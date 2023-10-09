@@ -1,39 +1,28 @@
 package app.regate.grupos
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.compose.components.item.GrupoItem
-import app.regate.common.compose.ui.PosterCardImage
-import app.regate.common.compose.util.itemsCustom
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.component.item.GrupoItem
+import app.regate.common.composes.util.itemsCustom
+import app.regate.common.composes.viewModel
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
 typealias FilterGroups= @Composable (
     navigateToGroup:(id:Long)->Unit,
+    navigateToInfoGrupo:(id:Long) ->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 
 ) -> Unit
@@ -43,12 +32,14 @@ typealias FilterGroups= @Composable (
 fun FilterGroups (
     viewModelFactory:()-> GruposViewModel,
     @Assisted navigateToGroup: (id: Long) -> Unit,
+    @Assisted navigateToInfoGrupo: (id: Long) -> Unit,
 //    @Assisted navigateToReserva: (id:Long) -> Unit,
 //    viewModelFactory:()->ReservasViewModel
 ){
     FilterGroups(
         viewModel = viewModel(factory = viewModelFactory),
-        navigateToGroup = navigateToGroup
+        navigateToGroup = navigateToGroup,
+        navigateToInfoGrupo = navigateToInfoGrupo
     )
 }
 
@@ -56,7 +47,8 @@ fun FilterGroups (
 @Composable
 internal fun FilterGroups (
     viewModel: GruposViewModel,
-    navigateToGroup: (id: Long) -> Unit
+    navigateToGroup: (id: Long) -> Unit,
+    navigateToInfoGrupo: (id: Long) -> Unit
 ){
     val state by viewModel.state.collectAsState()
 
@@ -64,7 +56,9 @@ internal fun FilterGroups (
         viewState = state,
         navigateToGroup = navigateToGroup,
         lazyPagingItems = viewModel.pagingList.collectAsLazyPagingItems(),
-        clearMessage = viewModel::clearMessage
+        clearMessage = viewModel::clearMessage,
+        joinToGroup = viewModel::joinToGroup,
+        navigateToInfoGrupo = navigateToInfoGrupo
     )
 }
 
@@ -73,7 +67,9 @@ internal fun FilterGroups(
     viewState:GruposState,
     navigateToGroup:(id:Long)->Unit,
     lazyPagingItems: LazyPagingItems<GrupoDto>,
-    clearMessage:(id:Long)->Unit
+    clearMessage:(id:Long)->Unit,
+    joinToGroup: (Long,Int)->Unit,
+    navigateToInfoGrupo: (id: Long) -> Unit
 //    modifier: Modifier = Modifier
 ){
     val snackbarHostState = remember { SnackbarHostState() }
@@ -93,12 +89,29 @@ internal fun FilterGroups(
             items = lazyPagingItems,
         ) { result ->
             if (result != null) {
+                val grupoU = viewState.userGroups.find { it.group_id == result.id }
+
+                if(grupoU != null){
+                    GrupoItem(
+                        navigate = navigateToGroup,
+                        grupo = result.copy(
+                            grupo_request_estado = grupoU.request_estado.ordinal
+                        ),
+                        joinToGroup = {it1,it2->
+                            joinToGroup(it1,it2)
+                        },
+                        navigateToInfoGrupo = navigateToInfoGrupo
+                    )
+                }else{
                 GrupoItem(
-                    id = result.id,
-                    photo = result.photo,
-                    navigate = navigateToGroup,
-                    name = result.name
+                    navigate = navigateToInfoGrupo,
+                    grupo = result,
+                    joinToGroup = {it1,it2->
+                        joinToGroup(it1,it2)
+                    }
                 )
+                }
+
             }
         }
     }

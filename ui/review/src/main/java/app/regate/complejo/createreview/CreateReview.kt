@@ -34,11 +34,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.compose.components.dialog.DialogConfirmation
-import app.regate.common.compose.components.dialog.LoaderDialog
-import app.regate.common.compose.components.input.InputForm
-import app.regate.common.compose.ui.SimpleTopBar
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.component.dialog.DialogConfirmation
+import app.regate.common.composes.component.dialog.LoaderDialog
+import app.regate.common.composes.component.input.InputForm
+import app.regate.common.composes.ui.SimpleTopBar
+import app.regate.common.composes.viewModel
 import com.gowtham.ratingbar.RatingBar
 import com.gowtham.ratingbar.RatingBarStyle
 import me.tatarka.inject.annotations.Assisted

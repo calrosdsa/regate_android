@@ -18,10 +18,10 @@ import app.regate.data.dto.empresa.salas.SalaEvent
 import app.regate.data.sala.SalaRepository
 import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.observers.ObserveGrupo
+import app.regate.domain.observers.grupo.ObserveGrupo
 import app.regate.domain.observers.pagination.ObservePagerMessagesSala
 import app.regate.domain.observers.ObserveUser
-import app.regate.domain.observers.ObserveUsersGrupo
+import app.regate.domain.observers.grupo.ObserveUsersGrupo
 import app.regate.extensions.combine
 import app.regate.models.MessageSala
 import app.regate.util.ObservableLoadingCounter

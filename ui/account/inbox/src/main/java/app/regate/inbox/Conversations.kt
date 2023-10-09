@@ -27,10 +27,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.LocalAppDateFormatter
-import app.regate.common.compose.ui.PosterCardImage
-import app.regate.common.compose.ui.SimpleTopBar
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.ui.PosterCardImage
+import app.regate.common.composes.ui.SimpleTopBar
+import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.data.dto.empresa.conversation.Conversation
 import kotlinx.datetime.Instant

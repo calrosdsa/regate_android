@@ -45,11 +45,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.components.dialog.LoaderDialog
-import app.regate.common.compose.components.input.CustomOutlinedTextInput
-import app.regate.common.compose.ui.SimpleTopBar
+import app.regate.common.composes.component.dialog.LoaderDialog
+import app.regate.common.composes.component.input.CustomOutlinedTextInput
+import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.resources.R
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.viewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 

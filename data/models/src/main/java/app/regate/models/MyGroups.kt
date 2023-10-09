@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
 
 @Entity(
     tableName = "my_groups",
@@ -11,5 +12,6 @@ import androidx.room.PrimaryKey
 data class MyGroups(
     @PrimaryKey(autoGenerate = true)
     override val id: Long = 0,
-    val group_id:Long
+    val group_id:Long =0,
+    val request_estado:GrupoRequestEstado = GrupoRequestEstado.JOINED
 ):AppEntity

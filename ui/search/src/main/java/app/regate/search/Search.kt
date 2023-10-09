@@ -1,8 +1,6 @@
 package app.regate.search
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -27,40 +25,21 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Cancel
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.LockClock
-import androidx.compose.material.icons.outlined.PunchClock
-import androidx.compose.material.icons.outlined.Watch
 import androidx.compose.material.icons.outlined.WatchLater
-import androidx.compose.material.icons.outlined.WatchOff
-import androidx.compose.material.icons.outlined.WaterfallChart
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Divider
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import app.regate.common.resources.R
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ScrollableTabRow
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -74,7 +53,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -85,18 +63,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.compose.components.item.EstablecimientoItem
-import app.regate.common.compose.components.item.GrupoItem
-import app.regate.common.compose.components.item.ProfileItem
-import app.regate.common.compose.components.item.ReviewItem
-import app.regate.common.compose.ui.Loader
-import app.regate.common.compose.ui.SimpleTopBar
-import app.regate.common.compose.util.itemsCustom
-import app.regate.common.compose.util.spacerLazyList
-import app.regate.common.compose.viewModel
-import app.regate.data.auth.AppAuthState
+import app.regate.common.composes.component.item.EstablecimientoItem
+import app.regate.common.composes.component.item.GrupoItem
+import app.regate.common.composes.component.item.ProfileItem
+import app.regate.common.composes.ui.Loader
+import app.regate.common.composes.util.itemsCustom
+import app.regate.common.composes.util.spacerLazyList
+import app.regate.common.composes.viewModel
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
-import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
 import app.regate.models.SearchHistory
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
@@ -169,7 +143,8 @@ internal fun Search(
         queryArg = queryArg,
         searchGrupos = searchGrupos,
         searchProfiles= searchProfiles,
-        searchSalas = searchSalas
+        searchSalas = searchSalas,
+//        joinToGroup = viewModel::joinToGroup
         )
 }
 @OptIn(
@@ -186,6 +161,7 @@ internal fun Search(
     navigateToHistorySearch: () -> Unit,
     navigateToGroup: (Long) -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
+//    joinToGroup:(Long)->Unit,
     searchGrupos: @Composable () -> Unit,
     searchProfiles: @Composable () -> Unit,
     searchSalas: @Composable () -> Unit,
@@ -364,10 +340,9 @@ internal fun Search(
                             items = viewState.grupos,
                         ) { result ->
                             GrupoItem(
-                                id = result.id,
-                                photo = result.photo,
                                 navigate = navigateToGroup,
-                                name = result.name,
+                                grupo = result,
+                                joinToGroup = {_,_-> run {} }
                             )
                         }
                     }

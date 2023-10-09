@@ -8,7 +8,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
+import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
@@ -23,6 +25,8 @@ import app.regate.domain.observers.search.ObserveRecentSearchHistory
 import app.regate.domain.pagination.search.PaginationSearchEstablecimientos
 import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
+import io.ktor.client.call.body
+import io.ktor.client.plugins.ResponseException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,7 +50,7 @@ class SearchViewModel(
     observeRecentSearchHistory: ObserveRecentSearchHistory,
 ) : ViewModel() {
     private val establecimientoId = savedStateHandle.get<Long>("id")?: 0
-    private val  loaderCounter = ObservableLoadingCounter()
+    private val loaderCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val grupos = MutableStateFlow<List<GrupoDto>>(emptyList())
     private val profiles = MutableStateFlow<List<ProfileDto>>(emptyList())
@@ -131,6 +135,23 @@ class SearchViewModel(
                 searchRepository.addSearchQueryToHistory(query)
             }catch (e:Exception){
                 //TODO()
+            }
+        }
+    }
+
+    fun joinToGroup(groupId:Long){
+        viewModelScope.launch {
+            try{
+                loaderCounter.addLoader()
+                grupoRepository.joinGrupo(groupId)
+//                getGrupo()
+                loaderCounter.removeLoader()
+//                uiMessageManager.emitMessage(UiMessage(message = res.message))
+//                Log.d("DEBUG_APP_ERROR",res.message)
+            }catch(e: ResponseException){
+                loaderCounter.removeLoader()
+                uiMessageManager.emitMessage(UiMessage(message = e.response.body<ResponseMessage>().message))
+                Log.d("DEBUG_APP_ERROR",e.response.body()?:"error")
             }
         }
     }

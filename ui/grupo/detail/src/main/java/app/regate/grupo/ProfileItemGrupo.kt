@@ -24,7 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.components.images.ProfileImage
+import app.regate.common.composes.component.images.ProfileImage
 import app.regate.common.resources.R
 
 @Composable

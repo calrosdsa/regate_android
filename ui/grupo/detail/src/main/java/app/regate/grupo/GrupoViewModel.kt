@@ -13,14 +13,13 @@ import app.regate.data.dto.system.ReportData
 import app.regate.data.dto.system.ReportType
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.observers.ObserveGrupo
+import app.regate.domain.observers.grupo.ObserveGrupo
 import app.regate.domain.observers.ObserveUser
-import app.regate.domain.observers.ObserveUsersGrupo
+import app.regate.domain.observers.grupo.ObserveUsersGrupo
 import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -105,7 +104,7 @@ class GrupoViewModel(
         viewModelScope.launch {
             try {
                 loadingState.addLoader()
-                val res = grupoRepository.getGrupo(grupoId)
+                val res = grupoRepository.getGrupoDetail(grupoId)
                 checkIsAdmin()
                 salas.tryEmit(res)
                 loadingState.removeLoader()
@@ -123,10 +122,10 @@ class GrupoViewModel(
         viewModelScope.launch {
             try{
                 loadingState.addLoader()
-                val res = grupoRepository.joinGrupo(grupoId)
+                 grupoRepository.joinGrupo(grupoId)
                 getGrupo()
                 loadingState.removeLoader()
-                uiMessageManager.emitMessage(UiMessage(message = res.message))
+//                uiMessageManager.emitMessage(UiMessage(message = res.message))
 //                Log.d("DEBUG_APP_ERROR",res.message)
             }catch(e:ResponseException){
                 loadingState.removeLoader()
@@ -148,7 +147,7 @@ class GrupoViewModel(
     fun removeUserFromGroup(){
         viewModelScope.launch {
             try{
-            selectedUser.value?.let { grupoRepository.removeUserFromGroup(it.user_group_id) }
+            selectedUser.value?.let { grupoRepository.removeUserFromGroup(it.user_group_id)}
             }catch (e:Exception){
                 Log.d("DEBUG_APP_WS",e.localizedMessage?:"")
             }
@@ -181,6 +180,7 @@ class GrupoViewModel(
             val targetUser = state.value.usersProfileGrupo
                 .first { it.id == state.value.user?.profile_id }
                 grupoRepository.removeUserFromGroup(targetUser.user_group_id)
+                grupoRepository.deleteGroupUserLocal(groupId = grupoId)
             navigateUp()
             }catch (e:Exception){
                 //TODO()

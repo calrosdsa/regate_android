@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.ui.PosterCardImage
+import app.regate.common.composes.ui.PosterCardImage
 import app.regate.compoundmodels.GrupoWithMessage
 import kotlinx.datetime.Instant
 

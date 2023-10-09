@@ -13,6 +13,8 @@
     <string name="balance_coins">Saldo de monedas</string>
     <string name="book_a_court">Reservar una cancha</string>
     <string name="bookings">Reservas</string>
+    <string name="cancel_request">cancelar petición</string>
+    <string name="chat_group">Chat del grupo</string>
     <string name="chat_group_channel_name">Notificaciones de Grupo</string>
     <string name="chat_message_channel_name">Notificación de Mensaje</string>
     <string name="choose_a_schedule">Elige un horario</string>
@@ -21,12 +23,14 @@
     <string name="choose_where_create_room">Elige dónde crear la sala</string>
     <string name="clear_all">Resetear</string>
     <string name="complete">Completar</string>
+    <string name="confirm">Confirmar</string>
     <string name="consume">Consumo</string>
     <string name="continuar">Continuar</string>
     <string name="contributed_amount">Monto aportado %1$s</string>
     <string name="count_selected">%1$d seleccionado</string>
     <string name="create_group">Crear grupo</string>
     <string name="create_sala">Crear sala</string>
+    <string name="decline">Declinar</string>
     <string name="deposits">Depósitos</string>
     <string name="description">Descripción</string>
     <string name="discount">Los beneficios y descuento se lanzan regularmente</string>
@@ -66,6 +70,7 @@
     <string name="looking_for_a_place">¿Buscando por un sitio?</string>
     <string name="map">Mapa</string>
     <string name="meke_user_admin">Nombrar a este usuario como administrador</string>
+    <string name="members">%1$d miembros</string>
     <string name="name">Nombre</string>
     <string name="near_me">Cerca de mi</string>
     <string name="new_offers">¡Nuevas ofertas aquí!</string>
@@ -80,6 +85,8 @@
     <string name="other">Otro</string>
     <string name="password_dont_match">Las contraseñas no coinciden</string>
     <string name="password_length">La contraseña debe tener más de 8 caracteres.</string>
+    <string name="pending_request">Solicitud pendiente</string>
+    <string name="pending_requests">Solicitudes pendientes</string>
     <string name="people">Personas</string>
     <string name="permission_required">Permiso requerido.</string>
     <string name="post">Publicar</string>
@@ -97,6 +104,8 @@
     <string name="remove_user">Remover este  usuario del grupo</string>
     <string name="remove_user_admin">Revocar el estatus de administrador</string>
     <string name="report">Reportar</string>
+    <string name="request_accepted">Solicitud aceptada</string>
+    <string name="request_removed">request_removed</string>
     <string name="resend_email_verification">Se enviará un correo electrónico a la dirección (%1$s) con el código de verificación.</string>
     <string name="reservation_date">Fecha de la Reserva</string>
     <string name="review">Reseña</string>
@@ -140,6 +149,7 @@
     <string name="user_since">Usuario desde %1$s</string>
     <string name="verify">Verify</string>
     <string name="version">Version %1$s</string>
+    <string name="visit">Visitar</string>
     <string name="what_is_your_location">What is your location</string>
     <string name="what_kind_of_game_do_you_prefere">¿Qué tipo de juego prefieres?</string>
     <string name="what_would_you_like_to_play">¿Qué te gustaría jugar?</string>

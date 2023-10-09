@@ -5,14 +5,12 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.dto.FileData
 import app.regate.data.dto.empresa.grupo.GroupRequest
-import app.regate.data.dto.empresa.grupo.GroupVisibility
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.observers.ObserveGrupo
+import app.regate.domain.observers.grupo.ObserveGrupo
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException

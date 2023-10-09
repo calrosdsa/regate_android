@@ -46,6 +46,8 @@ object Route {
     const val FILTER = "filter"
 
     const val GRUPO = "grupo"
+    const val INFO_GRUPO = "info-grupo"
+    const val PENDING_REQUESTS = "pending-requests"
     const val CREATE_GROUP = "create_group"
     const val GRUPO_SALAS = "grupo_salas"
 

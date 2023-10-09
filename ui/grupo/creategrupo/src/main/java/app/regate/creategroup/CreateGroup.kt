@@ -25,10 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.compose.components.dialog.DialogConfirmation
-import app.regate.common.compose.components.dialog.LoaderDialog
-import app.regate.common.compose.ui.CommonTopBar
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.component.dialog.DialogConfirmation
+import app.regate.common.composes.component.dialog.LoaderDialog
+import app.regate.common.composes.ui.CommonTopBar
+import app.regate.common.composes.viewModel
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject

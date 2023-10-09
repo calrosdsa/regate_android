@@ -1,6 +1,5 @@
 package app.regate.establecimiento
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
@@ -60,12 +59,11 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.compose.LocalAppUtil
-import app.regate.common.compose.components.images.AsyncImage
-import app.regate.common.compose.ui.PosterCardImage
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.LocalAppUtil
+import app.regate.common.composes.component.images.AsyncImage
+import app.regate.common.composes.ui.PosterCardImage
+import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
-import app.regate.data.app.MediaData
 import app.regate.data.common.encodeMediaData
 import app.regate.models.Establecimiento
 import kotlinx.coroutines.delay
@@ -76,8 +74,6 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import moe.tlaster.nestedscrollview.VerticalNestedScrollView
 import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 
 typealias Establecimiento = @Composable (

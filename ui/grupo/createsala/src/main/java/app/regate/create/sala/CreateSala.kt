@@ -10,7 +10,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -28,11 +27,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.compose.LocalAppDateFormatter
-import app.regate.common.compose.components.dialog.DialogConfirmation
-import app.regate.common.compose.components.dialog.LoaderDialog
-import app.regate.common.compose.ui.CommonTopBar
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.component.dialog.DialogConfirmation
+import app.regate.common.composes.component.dialog.LoaderDialog
+import app.regate.common.composes.ui.CommonTopBar
+import app.regate.common.composes.viewModel
 import app.regate.create.sala.page.Page1
 import app.regate.create.sala.page.Page2
 import app.regate.create.sala.page.SelectGroup

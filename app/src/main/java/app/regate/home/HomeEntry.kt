@@ -408,6 +408,28 @@ internal fun AppNavigation(
         }
 
         animatedComposable(
+            route = Route.INFO_GRUPO arg "id",
+            arguments = listOf(
+                navArgument("id") { type = NavType.LongType },
+            )
+        ) {
+            composeScreens.infoGrupo(
+                navigateUp = navController::navigateUp,
+                navigateToPhoto = { navController.navigate(Route.PHOTO id it) },
+            )
+        }
+        animatedComposable(
+            route = Route.PENDING_REQUESTS arg "id",
+            arguments = listOf(
+                navArgument("id") { type = NavType.LongType },
+            )
+        ) {
+            composeScreens.pendingRequests(
+                navigateUp = navController::navigateUp,
+            )
+        }
+
+        animatedComposable(
             route = Route.SETTING
         ){
             composeScreens.settings(
@@ -651,7 +673,8 @@ private fun NavGraphBuilder.AddMainNav(
             composeScreens.grupos(navController = navController,filterGroups={
                 composeScreens.filterGroups(
                     navigateToGroup = {navController.navigate(Route.GRUPO id it)},
-                )},
+                    navigateToInfoGrupo = {navController.navigate(Route.INFO_GRUPO id it)},
+                    )},
                 userSalas = { composeScreens.userSalas(
                     navigateToSala = { it1,it2->
                         navController.navigate(Route.CHAT_SALA id it1 id it2)},

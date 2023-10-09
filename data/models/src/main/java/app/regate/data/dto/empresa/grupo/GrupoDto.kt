@@ -7,17 +7,34 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GrupoDto(
-    val id: Long,
+    val id: Long = 0,
     val descripcion: String? = null,
     val created_at: Instant? = null,
-    val name: String,
+    val name: String = "Grupo",
     val photo: String? = null,
-    val visibility:Int = 0,
+    val visibility:Int = GrupoVisibility.PUBLIC.ordinal,
     val profile_id:Long = 0,
     val last_message:String = "",
-    val last_message_created: Instant = Clock.System.now(),
+    val last_message_created: Instant? = null,
     val messages_count:Int = 0,
+    val members:Int = 0,
+    val isMyGroup:Boolean = false,
+    val grupo_request_estado: Int = GrupoRequestEstado.NONE.ordinal
 )
+
+enum class GrupoVisibility {
+    PUBLIC,
+    PRIVATE
+}
+
+enum class GrupoRequestEstado {
+    NONE,
+    JOINED,
+    PENDING;
+    companion object {
+        fun fromInt(value: Int) = GrupoRequestEstado.values().first { it.ordinal == value }
+    }
+}
 
 @Serializable
 data class PaginationGroupsResponse(

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "f489660cd203101b4d282ce80c16832d",
+    "identityHash": "b81f4906bfc4246e03c6d5dc3cab2492",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -679,7 +679,7 @@
       },
       {
         "tableName": "my_groups",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `group_id` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `group_id` INTEGER NOT NULL, `request_estado` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -690,6 +690,12 @@
           {
             "fieldPath": "group_id",
             "columnName": "group_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "request_estado",
+            "columnName": "request_estado",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -1007,7 +1013,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f489660cd203101b4d282ce80c16832d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b81f4906bfc4246e03c6d5dc3cab2492')"
     ]
   }
 }

@@ -13,10 +13,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.compose.LocalAppDateFormatter
-import app.regate.common.compose.ui.Loader
-import app.regate.common.compose.util.itemsCustom
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.ui.Loader
+import app.regate.common.composes.util.itemsCustom
+import app.regate.common.composes.viewModel
 import app.regate.data.dto.account.billing.DepositDto
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R

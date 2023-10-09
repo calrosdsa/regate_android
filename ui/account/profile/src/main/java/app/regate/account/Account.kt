@@ -43,9 +43,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import app.regate.common.compose.components.images.ProfileImage
-import app.regate.common.compose.ui.BottomBar
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.component.images.ProfileImage
+import app.regate.common.composes.ui.BottomBar
+import app.regate.common.composes.viewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R

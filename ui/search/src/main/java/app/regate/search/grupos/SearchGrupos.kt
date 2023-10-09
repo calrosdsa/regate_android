@@ -24,10 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.compose.components.item.GrupoItem
-import app.regate.common.compose.ui.Loader
-import app.regate.common.compose.util.itemsCustom
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.component.item.GrupoItem
+import app.regate.common.composes.ui.Loader
+import app.regate.common.composes.util.itemsCustom
+import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.search.salas.SearchSalasState
@@ -119,10 +119,9 @@ internal fun SearchGrupos(
                     ) { item ->
                         if (item != null) {
                             GrupoItem(
-                                id = item.id,
-                                photo = item.photo,
-                                name = item.name,
-                                navigate = navigateToGroup
+                                navigate = navigateToGroup,
+                                grupo = item,
+                                joinToGroup = {_,_-> run {} }
                             )
                         }
                     }

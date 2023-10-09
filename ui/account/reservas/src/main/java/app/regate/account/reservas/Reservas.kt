@@ -17,10 +17,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.LocalAppDateFormatter
-import app.regate.common.compose.components.text.DateTextWithIcon
-import app.regate.common.compose.ui.SimpleTopBar
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.component.text.DateTextWithIcon
+import app.regate.common.composes.ui.SimpleTopBar
+import app.regate.common.composes.viewModel
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject

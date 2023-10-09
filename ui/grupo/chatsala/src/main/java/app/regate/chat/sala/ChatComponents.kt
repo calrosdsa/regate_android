@@ -42,11 +42,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
-import app.regate.common.compose.components.images.ProfileImage
-import app.regate.common.compose.components.input.MessengerIcon
-import app.regate.common.compose.components.input.MessengerIcon2
-import app.regate.common.compose.util.Layout
-import app.regate.common.compose.util.itemsCustom
+import app.regate.common.composes.component.images.ProfileImage
+import app.regate.common.composes.component.input.MessengerIcon
+import app.regate.common.composes.component.input.MessengerIcon2
+import app.regate.common.composes.util.Layout
+import app.regate.common.composes.util.itemsCustom
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.models.User
 import kotlinx.coroutines.launch

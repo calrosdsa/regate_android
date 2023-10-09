@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.components.input.InputForm
+import app.regate.common.composes.component.input.InputForm
 import app.regate.compoundmodels.InstalacionCupos
 import kotlinx.datetime.Instant
 

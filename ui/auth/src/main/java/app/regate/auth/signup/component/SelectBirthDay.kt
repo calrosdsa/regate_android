@@ -26,8 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.LocalAppDateFormatter
-import app.regate.common.compose.components.dialog.DatePickerDialogComponent
+import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.component.dialog.DatePickerDialogComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

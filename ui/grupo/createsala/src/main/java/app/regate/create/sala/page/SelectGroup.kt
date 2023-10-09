@@ -22,8 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.ui.Loader
-import app.regate.common.compose.ui.PosterCardImage
+import app.regate.common.composes.ui.Loader
+import app.regate.common.composes.ui.PosterCardImage
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.common.resources.R
 

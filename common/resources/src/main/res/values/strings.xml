@@ -187,5 +187,15 @@
     <string name="choose_from_gallery">Choose from gallery</string>
     <string name="take_a_picture">Take a picture</string>
     <string name="app_name">Regate</string>
+    <string name="members">%1$d members</string>
+    <string name="visit">Visit</string>
+    <string name="pending_request">Pending request</string>
+    <string name="cancel_request">Cancel request</string>
+    <string name="pending_requests">Pending requests</string>
+    <string name="confirm">Confirm</string>
+    <string name="decline">Decline</string>
+    <string name="request_removed">Request removed</string>
+    <string name="request_accepted">Request accepted</string>
+    <string name="chat_group">Chat group</string>
 
 </resources>

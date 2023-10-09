@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.components.images.AsyncImage
+import app.regate.common.composes.component.images.AsyncImage
 import app.regate.compoundmodels.InstalacionCategoryCount
 
 @Composable

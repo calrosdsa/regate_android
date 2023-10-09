@@ -51,8 +51,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import app.regate.common.compose.components.input.CustomOutlinedTextInput
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.component.input.CustomOutlinedTextInput
+import app.regate.common.composes.viewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task

@@ -40,8 +40,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.components.input.InputForm
-import app.regate.common.compose.ui.UploadImageBitmap
+import app.regate.common.composes.component.input.InputForm
+import app.regate.common.composes.ui.UploadImageBitmap
 import app.regate.common.resources.R
 import app.regate.data.dto.empresa.grupo.GroupVisibility
 

@@ -12,6 +12,8 @@ import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
 import app.regate.data.dto.empresa.grupo.PaginationGroupMessages
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
+import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
+import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.UserGrupoDto
 import app.regate.models.Message
 import io.ktor.client.HttpClient
@@ -119,11 +121,51 @@ class GrupoDataSourceImpl(
         }.body()
     }
 
+    override suspend fun getPendingRequest(
+        groupId: Long,
+        page: Int,
+    ): PaginationPendingRequestUser {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/grupo/pending-requests/${groupId}/?page=${page}"){
+            header("Authorization","Bearer $token")
+        }.body()
+    }
+
+    override suspend fun declinePendingRequest(d: PendingRequest) {
+        val token = authStore.get()?.accessToken
+        client.post("/v1/grupo/decline/pending-request/"){
+            header("Authorization","Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }
+    }
+
+    override suspend fun addPendingRequest(d: PendingRequest) {
+        val token = authStore.get()?.accessToken
+        client.post("/v1/grupo/add/pending-request/"){
+            header("Authorization","Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }
+    }
+
+    override suspend fun confirmPendingRequest(d: PendingRequest) {
+        val token = authStore.get()?.accessToken
+        client.post("/v1/grupo/confirm/pending-request/"){
+            header("Authorization","Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }
+    }
+
     override suspend fun getMessagesGrupo(id: Long,page:Int): PaginationGroupMessages {
         return client.get("/v1/grupo/messages/${id}/?page=${page}").body()
     }
 
-    override suspend fun getGrupo(id: Long):GrupoResponse {
+    override suspend fun getGrupoDetail(id: Long):GrupoResponse {
+        return client.get("/v1/grupo/detail/${id}/").body()
+    }
+    override suspend fun getGrupo(id: Long):GrupoDto {
         return client.get("/v1/grupo/${id}/").body()
     }
 

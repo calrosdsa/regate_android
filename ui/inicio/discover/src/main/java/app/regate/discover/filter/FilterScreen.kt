@@ -51,11 +51,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.components.CustomButton
-import app.regate.common.compose.components.dialog.LocationPermissionTextProvider
-import app.regate.common.compose.components.dialog.PermissionDialog
-import app.regate.common.compose.util.Layout
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.component.CustomButton
+import app.regate.common.composes.component.dialog.LocationPermissionTextProvider
+import app.regate.common.composes.component.dialog.PermissionDialog
+import app.regate.common.composes.util.Layout
+import app.regate.common.composes.viewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R as R

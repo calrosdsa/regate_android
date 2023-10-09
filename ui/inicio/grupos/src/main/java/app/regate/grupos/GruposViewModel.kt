@@ -7,19 +7,18 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
-import app.regate.data.dto.empresa.grupo.FilterGrupoData
+import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.grupo.GrupoDto
+import app.regate.data.dto.empresa.grupo.GrupoVisibility
 import app.regate.data.grupo.GrupoRepository
-import app.regate.domain.interactors.UpdateFilterGrupos
-import app.regate.domain.observers.ObserveGrupos
+import app.regate.domain.observers.grupo.ObserveMyGroups
 import app.regate.domain.pagination.PaginationGroups
 import app.regate.util.ObservableLoadingCounter
-import app.regate.util.collectStatus
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -30,6 +29,7 @@ import me.tatarka.inject.annotations.Inject
 @Inject
 class GruposViewModel(
     private val grupoRepository: GrupoRepository,
+    observeMyGroups: ObserveMyGroups
 //    private val updateFilterGrupos: UpdateFilterGrupos
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
@@ -41,11 +41,13 @@ class GruposViewModel(
     val state:StateFlow<GruposState> = combine(
 //        grupos,
         loadingCounter.observable,
-        uiMessageManager.message
-    ){loading,message->
+        uiMessageManager.message,
+        observeMyGroups.flow
+    ){loading,message,userGroups->
         GruposState(
             loading = loading,
             message = message,
+            userGroups = userGroups
 //            grupos = grupos
         )
     }.stateIn(
@@ -55,6 +57,7 @@ class GruposViewModel(
     )
 
     init{
+        observeMyGroups(Unit)
 //        Log.d("DEBUG_APP_222","INIT 222")
 //        observeGrupos(Unit)
 //        getFilterGrupos()
@@ -72,4 +75,22 @@ class GruposViewModel(
             uiMessageManager.clearMessage(id)
         }
     }
+
+    fun joinToGroup(groupId:Long,visibility: Int){
+        viewModelScope.launch {
+            try{
+                loadingCounter.addLoader()
+//                val visibilidad = if(visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
+                grupoRepository.joinGrupo(groupId,visibility)
+//                getGrupo()
+                loadingCounter.removeLoader()
+//                Log.d("DEBUG_APP_ERROR",res.message)
+            }catch(e:ResponseException){
+                loadingCounter.removeLoader()
+                uiMessageManager.emitMessage(UiMessage(message = e.response.body<ResponseMessage>().message))
+                Log.d("DEBUG_APP_ERROR",e.response.body()?:"error $visibility")
+            }
+        }
     }
+
+}

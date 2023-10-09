@@ -2,6 +2,7 @@ package app.regate.data.daos;
 
 import android.database.Cursor;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityDeletionOrUpdateAdapter;
 import androidx.room.EntityInsertionAdapter;
@@ -13,11 +14,14 @@ import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.compoundmodels.GrupoWithMessage;
+import app.regate.data.db.AppTypeConverters;
 import app.regate.data.db.DateTimeTypeConverters;
+import app.regate.data.dto.empresa.grupo.GrupoRequestEstado;
 import app.regate.models.Grupo;
 import app.regate.models.MyGroups;
 import java.lang.Class;
 import java.lang.Exception;
+import java.lang.IllegalStateException;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.Object;
@@ -28,13 +32,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
-import javax.annotation.processing.Generated;
 import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 import kotlinx.coroutines.flow.Flow;
 import kotlinx.datetime.Instant;
 
-@Generated("androidx.room.RoomProcessor")
 @SuppressWarnings({"unchecked", "deprecation"})
 public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
   private final RoomDatabase __db;
@@ -44,6 +46,8 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
   private final EntityDeletionOrUpdateAdapter<MyGroups> __updateAdapterOfMyGroups;
 
   private final SharedSQLiteStatement __preparedStmtOfDeleteAll;
+
+  private final SharedSQLiteStatement __preparedStmtOfDeleteByGroupId;
 
   private final EntityUpsertionAdapter<MyGroups> __upsertionAdapterOfMyGroups;
 
@@ -66,7 +70,7 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `my_groups` SET `id` = ?,`group_id` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `my_groups` SET `id` = ?,`group_id` = ?,`request_estado` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -74,7 +78,9 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
           @NonNull final MyGroups entity) {
         statement.bindLong(1, entity.getId());
         statement.bindLong(2, entity.getGroup_id());
-        statement.bindLong(3, entity.getId());
+        final int _tmp = AppTypeConverters.INSTANCE.fromGrupoRequestEstado(entity.getRequest_estado());
+        statement.bindLong(3, _tmp);
+        statement.bindLong(4, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
@@ -85,11 +91,19 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
         return _query;
       }
     };
+    this.__preparedStmtOfDeleteByGroupId = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "delete from my_groups where group_id = ?";
+        return _query;
+      }
+    };
     this.__upsertionAdapterOfMyGroups = new EntityUpsertionAdapter<MyGroups>(new EntityInsertionAdapter<MyGroups>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `my_groups` (`id`,`group_id`) VALUES (nullif(?, 0),?)";
+        return "INSERT INTO `my_groups` (`id`,`group_id`,`request_estado`) VALUES (nullif(?, 0),?,?)";
       }
 
       @Override
@@ -97,12 +111,14 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
           @NonNull final MyGroups entity) {
         statement.bindLong(1, entity.getId());
         statement.bindLong(2, entity.getGroup_id());
+        final int _tmp = AppTypeConverters.INSTANCE.fromGrupoRequestEstado(entity.getRequest_estado());
+        statement.bindLong(3, _tmp);
       }
     }, new EntityDeletionOrUpdateAdapter<MyGroups>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `my_groups` SET `id` = ?,`group_id` = ? WHERE `id` = ?";
+        return "UPDATE `my_groups` SET `id` = ?,`group_id` = ?,`request_estado` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -110,7 +126,9 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
           @NonNull final MyGroups entity) {
         statement.bindLong(1, entity.getId());
         statement.bindLong(2, entity.getGroup_id());
-        statement.bindLong(3, entity.getId());
+        final int _tmp = AppTypeConverters.INSTANCE.fromGrupoRequestEstado(entity.getRequest_estado());
+        statement.bindLong(3, _tmp);
+        statement.bindLong(4, entity.getId());
       }
     });
   }
@@ -154,17 +172,45 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
   }
 
   @Override
-  public void deleteAll() {
-    __db.assertNotSuspendingTransaction();
-    final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteAll.acquire();
-    __db.beginTransaction();
-    try {
-      _stmt.executeUpdateDelete();
-      __db.setTransactionSuccessful();
-    } finally {
-      __db.endTransaction();
-      __preparedStmtOfDeleteAll.release(_stmt);
-    }
+  public Object deleteAll(final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteAll.acquire();
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteAll.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object deleteByGroupId(final long id, final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteByGroupId.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, id);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteByGroupId.release(_stmt);
+        }
+      }
+    }, continuation);
   }
 
   @Override
@@ -223,12 +269,15 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
   }
 
   @Override
-  public Flow<List<GrupoWithMessage>> observeUserGroupsWithMessage() {
+  public Flow<List<GrupoWithMessage>> observeUserGroupsWithMessage(final int requestEstado) {
     final String _sql = "\n"
             + "        select g.*,(select count(*) from messages as m where g.id = m.grupo_id ) as local_count_messages\n"
             + "        from my_groups as ug inner join grupos as g on g.id = ug.group_id\n"
+            + "        where request_estado = ?\n"
             + "        ";
-    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, requestEstado);
     return CoroutinesRoom.createFlow(__db, true, new String[] {"messages", "my_groups",
         "grupos"}, new Callable<List<GrupoWithMessage>>() {
       @Override
@@ -384,6 +433,114 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
               _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
               _item = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
               _result.add(_item);
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public Flow<List<MyGroups>> observeMyGroups() {
+    final String _sql = "select * from my_groups";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"my_groups"}, new Callable<List<MyGroups>>() {
+      @Override
+      @NonNull
+      public List<MyGroups> call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfGroupId = CursorUtil.getColumnIndexOrThrow(_cursor, "group_id");
+            final int _cursorIndexOfRequestEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "request_estado");
+            final List<MyGroups> _result = new ArrayList<MyGroups>(_cursor.getCount());
+            while (_cursor.moveToNext()) {
+              final MyGroups _item;
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final long _tmpGroup_id;
+              _tmpGroup_id = _cursor.getLong(_cursorIndexOfGroupId);
+              final GrupoRequestEstado _tmpRequest_estado;
+              final int _tmp;
+              _tmp = _cursor.getInt(_cursorIndexOfRequestEstado);
+              final Integer _tmp_1;
+              _tmp_1 = _tmp;
+              final GrupoRequestEstado _tmp_2 = AppTypeConverters.INSTANCE.toGrupoRequestEstado(_tmp_1);
+              if (_tmp_2 == null) {
+                throw new IllegalStateException("Expected non-null app.regate.data.dto.empresa.grupo.GrupoRequestEstado, but it was null.");
+              } else {
+                _tmpRequest_estado = _tmp_2;
+              }
+              _item = new MyGroups(_tmpId,_tmpGroup_id,_tmpRequest_estado);
+              _result.add(_item);
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public Flow<MyGroups> observeMyGroupById(final long grupoId) {
+    final String _sql = "select * from my_groups where group_id = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, grupoId);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"my_groups"}, new Callable<MyGroups>() {
+      @Override
+      @Nullable
+      public MyGroups call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfGroupId = CursorUtil.getColumnIndexOrThrow(_cursor, "group_id");
+            final int _cursorIndexOfRequestEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "request_estado");
+            final MyGroups _result;
+            if (_cursor.moveToFirst()) {
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final long _tmpGroup_id;
+              _tmpGroup_id = _cursor.getLong(_cursorIndexOfGroupId);
+              final GrupoRequestEstado _tmpRequest_estado;
+              final int _tmp;
+              _tmp = _cursor.getInt(_cursorIndexOfRequestEstado);
+              final Integer _tmp_1;
+              _tmp_1 = _tmp;
+              final GrupoRequestEstado _tmp_2 = AppTypeConverters.INSTANCE.toGrupoRequestEstado(_tmp_1);
+              if (_tmp_2 == null) {
+                throw new IllegalStateException("Expected non-null app.regate.data.dto.empresa.grupo.GrupoRequestEstado, but it was null.");
+              } else {
+                _tmpRequest_estado = _tmp_2;
+              }
+              _result = new MyGroups(_tmpId,_tmpGroup_id,_tmpRequest_estado);
+            } else {
+              _result = null;
             }
             __db.setTransactionSuccessful();
             return _result;

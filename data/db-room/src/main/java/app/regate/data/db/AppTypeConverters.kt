@@ -19,6 +19,7 @@ package app.regate.data.db
 import androidx.room.TypeConverter
 import app.regate.data.dto.empresa.establecimiento.HorarioInterval
 import app.regate.data.dto.empresa.establecimiento.PaidType
+import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
 import app.regate.extensions.unsafeLazy
 import app.regate.models.LabelType
 import app.regate.models.TypeEntity
@@ -30,6 +31,7 @@ import kotlinx.serialization.json.Json
 object AppTypeConverters {
    private val imageTypeValues by unsafeLazy { LabelType.values() }
    private val typeEntityValues by unsafeLazy { TypeEntity.values() }
+   private val grupoRequestEstado by unsafeLazy { GrupoRequestEstado.values() }
 
     @TypeConverter
     @JvmStatic
@@ -65,6 +67,13 @@ object AppTypeConverters {
     @TypeConverter
     @JvmStatic
     fun toTypeEntity(value:Int?) = typeEntityValues.firstOrNull{ it.ordinal == value }
+     @TypeConverter
+     @JvmStatic
+     fun fromGrupoRequestEstado(value:GrupoRequestEstado) = value.ordinal
+
+    @TypeConverter
+    @JvmStatic
+    fun toGrupoRequestEstado(value:Int?) = grupoRequestEstado.firstOrNull{ it.ordinal == value }
 
     @TypeConverter
     @JvmStatic

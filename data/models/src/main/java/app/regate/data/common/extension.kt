@@ -15,7 +15,7 @@ inline fun <reified T>getDataEntityFromJson(value: String): T?{
     }
 }
 
-fun encodeMediaData(urls:List<String>):MediaData{
+fun encodeMediaData (urls:List<String>):MediaData{
     val mutableList = mutableListOf<String>()
     for(url in urls){
         val encodeUrl = URLEncoder.encode(url, StandardCharsets.UTF_8.toString())

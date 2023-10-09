@@ -11,9 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -27,10 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
-import app.regate.common.compose.LocalAppDateFormatter
-import app.regate.common.compose.components.item.SalaItem
-import app.regate.common.compose.components.skeleton.SalaItemSkeleton
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.component.item.SalaItem
+import app.regate.common.composes.component.skeleton.SalaItemSkeleton
+import app.regate.common.composes.viewModel
 import me.tatarka.inject.annotations.Assisted
 
 import me.tatarka.inject.annotations.Inject

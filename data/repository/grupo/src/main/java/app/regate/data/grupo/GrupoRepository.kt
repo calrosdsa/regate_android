@@ -7,14 +7,17 @@ import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
-import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
+import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
+import app.regate.data.dto.empresa.grupo.GrupoVisibility
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
+import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
+import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.mappers.DtoToGrupo
 import app.regate.data.mappers.DtoToUserGrupo
@@ -63,8 +66,12 @@ class GrupoRepository(
     }
     suspend fun myGroups(){
         withContext(dispatchers.computation){
-            val grupos = grupoDataSourceImpl.myGroups().map { dtoToGrupo.map(it) }
-            val myGroups = grupos.map{ MyGroups(group_id = it.id)}
+            val response = grupoDataSourceImpl.myGroups()
+            val grupos = response.map { dtoToGrupo.map(it) }
+            val myGroups = response.map{ MyGroups(
+                group_id = it.id,
+                request_estado = GrupoRequestEstado.fromInt(it.grupo_request_estado
+                ))}
             myGroupsDao.deleteAll()
             myGroupsDao.upsertAll(myGroups)
             grupoDao.upsertAll(grupos)
@@ -80,6 +87,10 @@ class GrupoRepository(
             }
         }
     }
+    suspend fun deleteGroupUserLocal(groupId:Long){
+        myGroupsDao.deleteByGroupId(groupId)
+    }
+
     suspend fun changeStatusUser(id:Long,status:Boolean) {
         withContext(dispatchers.computation) {
             try {
@@ -113,16 +124,34 @@ class GrupoRepository(
             myGroupsDao.upsert(MyGroups(group_id = it.id))
         }
     }
-    suspend fun joinGrupo(grupoId:Long): ResponseMessage {
+    suspend fun joinGrupo(grupoId:Long,visibility:Int=2,){
         val user  = userDao.getUser(0)
+        val requestEstado= if(visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
+
+        if(visibility == GrupoVisibility.PUBLIC.ordinal){
         val dataR = AddUserGrupoRequest(
             grupo_id = grupoId,
             profile_id = user.profile_id
         )
-        return grupoDataSourceImpl.joinGrupo(dataR)
+        grupoDataSourceImpl.joinGrupo(dataR).also {
+            myGroupsDao.upsert(
+                MyGroups(
+                    group_id = grupoId,
+                    request_estado = GrupoRequestEstado.fromInt(requestEstado)
+            )
+            )
+        }
+        }else{
+            val d = PendingRequest(
+                grupo_id = grupoId,
+                profile_id = user.profile_id
+            )
+            addPendingRequest(d)
+//            grupoDataSourceImpl.addPendingRequest(d)
+        }
     }
-    suspend fun getGrupo(id:Long):List<SalaDto>{
-        return  grupoDataSourceImpl.getGrupo(id).also { result->
+    suspend fun getGrupoDetail(id:Long):List<SalaDto>{
+        return  grupoDataSourceImpl.getGrupoDetail(id).also { result->
             userGrupoDao.deleteUsersGroup(id)
             grupoDao.upsert(dtoToGrupo.map(result.grupo))
             val profiles = result.profiles.map { profileMapper.map(it) }
@@ -130,6 +159,9 @@ class GrupoRepository(
             profileDao.upsertAll(profiles)
             userGrupoDao.upsertAll(usersGrupo)
         }.salas
+    }
+    suspend fun getGrupo(id:Long):GrupoDto{
+        return grupoDataSourceImpl.getGrupo(id)
     }
     suspend fun filterGrupos(d:FilterGrupoData,page: Int):PaginationGroupsResponse{
         return grupoDataSourceImpl.filterGrupos(d,page)
@@ -182,6 +214,26 @@ class GrupoRepository(
          }catch (e:Exception){
              0
          }
-
+    }
+    suspend fun getPendingRequests(groupId:Long,page:Int):PaginationPendingRequestUser{
+        return grupoDataSourceImpl.getPendingRequest(groupId,page)
+    }
+    suspend fun declinePendingRequest(d: PendingRequest){
+        grupoDataSourceImpl.declinePendingRequest(d).also {
+            myGroupsDao.deleteByGroupId(d.grupo_id)
+        }
+    }
+    suspend fun addPendingRequest(d: PendingRequest){
+        grupoDataSourceImpl.addPendingRequest(d).also {
+            myGroupsDao.upsert(
+                MyGroups(
+                    group_id = d.grupo_id,
+                    request_estado = GrupoRequestEstado.PENDING
+                )
+            )
+        }
+    }
+    suspend fun confirmPendingRequest(d:PendingRequest){
+        grupoDataSourceImpl.confirmPendingRequest(d)
     }
 }

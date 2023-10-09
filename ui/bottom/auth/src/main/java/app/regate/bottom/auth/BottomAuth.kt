@@ -42,8 +42,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.util.Layout
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.util.Layout
+import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount

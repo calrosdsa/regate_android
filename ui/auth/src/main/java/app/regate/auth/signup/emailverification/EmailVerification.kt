@@ -27,11 +27,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.components.dialog.DialogConfirmation
-import app.regate.common.compose.components.dialog.LoaderDialog
-import app.regate.common.compose.components.input.OtpTextField
-import app.regate.common.compose.ui.SimpleTopBar
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.component.dialog.DialogConfirmation
+import app.regate.common.composes.component.dialog.LoaderDialog
+import app.regate.common.composes.component.input.OtpTextField
+import app.regate.common.composes.ui.SimpleTopBar
+import app.regate.common.composes.viewModel
 import kotlinx.coroutines.delay
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject

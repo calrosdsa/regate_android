@@ -43,9 +43,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import app.regate.common.compose.components.input.AmenityItem
-import app.regate.common.compose.components.item.ReviewItem
-import app.regate.common.compose.ui.PosterCardImage
+import app.regate.common.composes.component.input.AmenityItem
+import app.regate.common.composes.component.item.ReviewItem
+import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.resources.R
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.establecimiento.component.Detail

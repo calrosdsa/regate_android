@@ -35,10 +35,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.compose.LocalAppDateFormatter
-import app.regate.common.compose.components.input.ChatInput
-import app.regate.common.compose.ui.PosterCardImage
-import app.regate.common.compose.viewModel
+import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.component.input.ChatInput
+import app.regate.common.composes.ui.PosterCardImage
+import app.regate.common.composes.viewModel
 import app.regate.inbox.ConversationsState
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
