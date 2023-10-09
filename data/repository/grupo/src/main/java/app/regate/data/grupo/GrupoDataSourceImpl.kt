@@ -14,6 +14,7 @@ import app.regate.data.dto.empresa.grupo.PaginationGroupMessages
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
 import app.regate.data.dto.empresa.grupo.PendingRequest
+import app.regate.data.dto.empresa.grupo.PendingRequestCount
 import app.regate.data.dto.empresa.grupo.UserGrupoDto
 import app.regate.models.Message
 import io.ktor.client.HttpClient
@@ -156,6 +157,13 @@ class GrupoDataSourceImpl(
             contentType(ContentType.Application.Json)
             setBody(d)
         }
+    }
+
+    override suspend fun getPendingRequestCount(groupId: Long):PendingRequestCount {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/grupo/count/pending-requests/${groupId}/"){
+            header("Authorization","Bearer $token")
+        }.body()
     }
 
     override suspend fun getMessagesGrupo(id: Long,page:Int): PaginationGroupMessages {

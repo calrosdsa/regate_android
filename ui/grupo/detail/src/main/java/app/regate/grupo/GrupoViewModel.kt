@@ -8,6 +8,7 @@ import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.data.dto.ResponseMessage
+import app.regate.data.dto.empresa.grupo.PendingRequestCount
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.system.ReportData
 import app.regate.data.dto.system.ReportType
@@ -198,6 +199,16 @@ class GrupoViewModel(
             navigate(report)
         }catch (e:Exception){
             //TODO()
+        }
+    }
+    suspend fun getPendingRequestCount():Int {
+        return try{
+         val res = grupoRepository.getPendingRequestCount(grupoId)
+            Log.d("DEBUG_APP_COUNT",res.toString())
+            return res.count
+        }catch(e:Exception){
+            Log.d("DEBUG_APP_ERR_COUNT",e.localizedMessage?:"")
+            10
         }
     }
     fun refresh(){

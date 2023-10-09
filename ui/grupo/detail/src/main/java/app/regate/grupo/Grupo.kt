@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -32,6 +33,8 @@ import androidx.compose.material.icons.filled.PendingActions
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
@@ -63,6 +66,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -87,6 +91,7 @@ import app.regate.constant.Route
 import app.regate.constant.id
 import app.regate.data.common.encodeMediaData
 import app.regate.data.dto.empresa.grupo.GrupoDto
+import app.regate.data.dto.empresa.grupo.GrupoVisibility
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -182,7 +187,8 @@ internal fun Grupo(
         }},
         navigateToPhoto = navigateToPhoto,
         navigateToPendingRequests = navigateToPendingRequests,
-        navigateToChatGroup = navigateToChatGroup
+        navigateToChatGroup = navigateToChatGroup,
+        getPendingRequestCount = viewModel::getPendingRequestCount
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -193,7 +199,7 @@ internal fun Grupo(
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 internal fun Grupo(
     viewState: GrupoState,
@@ -217,7 +223,8 @@ internal fun Grupo(
     navigateToReport: () -> Unit,
     navigateToPhoto: (String) -> Unit,
     navigateToPendingRequests: (Long) -> Unit,
-    navigateToChatGroup: (Long) -> Unit
+    navigateToChatGroup: (Long) -> Unit,
+    getPendingRequestCount:suspend ()->Int,
     ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
@@ -256,12 +263,21 @@ internal fun Grupo(
             viewState.currentUser?.is_admin
         }
     }
+    var pendingRequestCount by remember {
+        mutableStateOf(0)
+    }
     viewState.message?.let { message ->
         LaunchedEffect(message) {
             snackbarHostState.showSnackbar(message.message)
             clearMessage(message.id)
         }
     }
+    LaunchedEffect(key1 = isCurrentUserisAdmin, block = {
+        if(isCurrentUserisAdmin == true){
+            val count = getPendingRequestCount()
+            pendingRequestCount = count
+        }
+    })
     if (dialogUserMenu) {
         Dialog(onDismissRequest = { dialogUserMenu = false }) {
             Column(
@@ -326,7 +342,9 @@ internal fun Grupo(
                                 navigateToReport = navigateToReport,
                                 navigateToPendingRequests = { navigateToPendingRequests(viewState.grupo.id) },
                                 navigateToChatGroup = navigateToChatGroup,
-                                grupo = grupo
+                                grupo = grupo,
+                                pendingRequestCount = pendingRequestCount,
+                                members = viewState.usersProfileGrupo.size
                             )
                         }
                     }
@@ -345,15 +363,21 @@ internal fun Grupo(
                                     contentDescription = "back_arrow"
                                 )
                             }
-
-                            IconButton(onClick = {
-                                    coroutineScope.launch { drawerState.open() }
-                                }) {
+                            IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
+                            BadgedBox(badge = {
+                                if(pendingRequestCount > 0){
+                                Badge{
+                                    Text(text = pendingRequestCount.toString())
+                                }
+                                }
+                            }) {
                                     Icon(
                                         imageVector = Icons.Default.Menu,
-                                        contentDescription = "dots_more"
+                                        contentDescription = "dots_more",
                                     )
-                                }
+                            }
+                            }
+
                         }
                     }
                 },
@@ -550,12 +574,15 @@ internal fun Grupo(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun GrupoMenu(
     grupo: app.regate.models.Grupo,
     isCurrentUserisAdmin:Boolean?,
     isCurrentUserSuperAdmin:Boolean,
+    pendingRequestCount:Int,
     currentUser: UserProfileGrupo?,
+    members:Int,
     createSala: () -> Unit,
     editGroup: () -> Unit,
     leaveGroup: () -> Unit,
@@ -564,12 +591,17 @@ internal fun GrupoMenu(
     navigateToChatGroup: (Long) -> Unit
 ){
     Column() {
-        Column(modifier = Modifier.padding(10.dp)) {
+        Box(){
         PosterCardImage(model = grupo.photo,
-        shape = CircleShape,modifier = Modifier.size(80.dp))
-        Spacer(modifier = Modifier.height(10.dp))
+        shape = RoundedCornerShape(0.dp),modifier = Modifier
+                .fillMaxWidth()
+                .height(150.dp))
+        Column(modifier = Modifier.padding(10.dp).align(Alignment.BottomStart)) {
         Text(text = grupo.name,style = MaterialTheme.typography.titleLarge,
-        fontWeight = FontWeight.SemiBold)
+        fontWeight = FontWeight.SemiBold, color = Color.White)
+        Text(text = stringResource(id = R.string.members,members),style=MaterialTheme.typography.labelMedium,
+        color = Color.White)
+        }
         }
     if (isCurrentUserisAdmin == true) {
         DropdownMenuItem(
@@ -585,7 +617,15 @@ internal fun GrupoMenu(
             text = { Text(text = stringResource(id = R.string.pending_requests)) },
             onClick = {navigateToPendingRequests() },
             leadingIcon = {
+                BadgedBox(badge ={
+                    if(pendingRequestCount > 0 ){
+                        Badge{
+                           Text(text = pendingRequestCount.toString())
+                        }
+                    }
+                }) {
                 Icon(imageVector = Icons.Filled.PendingActions, contentDescription = null)
+                }
             }
         )
     }

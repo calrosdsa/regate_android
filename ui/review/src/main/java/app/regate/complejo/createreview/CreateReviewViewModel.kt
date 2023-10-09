@@ -12,12 +12,15 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
+import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.pagination.PaginationReviews
 import app.regate.util.ObservableLoadingCounter
+import io.ktor.client.call.body
+import io.ktor.client.plugins.ResponseException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -83,13 +86,17 @@ class CreateReviewViewModel(
                     establecimiento_id = establecimientoId
                 )
                 val res = establecimientoRepository.createEstablecimientoReview(data)
-                delay(1000)
+//                delay(1000)
                 loaderCounter.removeLoader()
                 uiMessageManager.emitMessage(UiMessage(
                     message = context.getString(R.string.successfully_published)
                 ))
                 Log.d("DEBUG_APP",res.toString())
-            }catch (e:Exception){
+            }catch(e:ResponseException){
+              Log.d("DEBUG_APP_ERROR",e.response.body<ResponseMessage>().message)
+                loaderCounter.removeLoader()
+                uiMessageManager.emitMessage(UiMessage(message = e.response.body<ResponseMessage>().message))
+            } catch (e:Exception){
                 loaderCounter.removeLoader()
                 uiMessageManager.emitMessage(UiMessage(
                     message = context.getString(R.string.unexpected_error)

@@ -24,3 +24,8 @@ data class PaginationPendingRequestUser(
     val page:Int,
     val results:List<PendingRequestUser> = emptyList()
 )
+
+@Serializable
+data class PendingRequestCount(
+    val count:Int = 0
+)

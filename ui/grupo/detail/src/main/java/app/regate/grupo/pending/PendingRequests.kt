@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -33,6 +34,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.component.images.ProfileImage
 import app.regate.common.composes.ui.CommonTopBar
+import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
@@ -71,6 +73,7 @@ internal fun PendingRequests(
     ) 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun PendingRequests(
     viewState: PendingRequestsState,
@@ -81,9 +84,10 @@ internal fun PendingRequests(
 ){
     Scaffold(
         topBar = {
-            CommonTopBar(
-                onBack = navigateUp
-            ) 
+            SimpleTopBar(
+                navigateUp =navigateUp,
+                title = stringResource(id = R.string.pending_requests)
+            )
         }
     ) {paddingValues ->  
         Box(modifier = Modifier.padding(paddingValues)){
