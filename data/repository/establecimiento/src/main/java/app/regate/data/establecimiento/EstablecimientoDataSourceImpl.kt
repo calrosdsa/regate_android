@@ -12,6 +12,7 @@ import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.data.dto.empresa.establecimiento.PaginationEstablecimientoResponse
+import app.regate.data.dto.empresa.establecimiento.PhotoDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -92,6 +93,10 @@ class EstablecimientoDataSourceImpl(
             contentType(ContentType.Application.Json)
             setBody(d)
         }.body()
+    }
+
+    override suspend fun getEstablecimentoPhotos(id: Long): List<PhotoDto> {
+        return client.get("/v1/establecimientos/photos/${id}/").body()
     }
 
     override suspend fun getRecommendedEstablecimientos(d:InitialDataFilter,page:Int): PaginationEstablecimientoResponse {

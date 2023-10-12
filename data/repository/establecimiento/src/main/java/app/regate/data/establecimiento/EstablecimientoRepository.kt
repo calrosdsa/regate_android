@@ -12,6 +12,7 @@ import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.data.dto.empresa.establecimiento.PaginationEstablecimientoResponse
+import app.regate.data.dto.empresa.establecimiento.PhotoDto
 import app.regate.data.mappers.EstablecimientoDtoToEstablecimiento
 import app.regate.data.mappers.SettingDtoToSetting
 import app.regate.inject.ApplicationScope
@@ -31,6 +32,9 @@ class EstablecimientoRepository(
     private val settingsDtoToSetting: SettingDtoToSetting,
     private val dispatchers: AppCoroutineDispatchers,
 ){
+    suspend fun getEstablecimientoPhotos(id:Long):List<PhotoDto>{
+        return establecimientoDataSourceImpl.getEstablecimentoPhotos(id)
+    }
     suspend fun searcEstablecimientos(d: SearchFilterRequest, page:Int, size: Int):PaginationEstablecimientoResponse{
         return establecimientoDataSourceImpl.searcEstablecimientos(d,page,size)
     }

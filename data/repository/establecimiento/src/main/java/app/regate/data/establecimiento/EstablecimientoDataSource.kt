@@ -10,9 +10,11 @@ import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.data.dto.empresa.establecimiento.PaginationEstablecimientoResponse
+import app.regate.data.dto.empresa.establecimiento.PhotoDto
 
 interface EstablecimientoDataSource {
     suspend fun getEstablecimientos(d:InitialDataFilter):InitialData
+    suspend fun getEstablecimentoPhotos(id:Long):List<PhotoDto>
     suspend fun getRecommendedEstablecimientos(d:InitialDataFilter,page:Int):PaginationEstablecimientoResponse
     suspend fun getNearEstablecimientos(lng:String,lat:String):List<EstablecimientoDto>
 

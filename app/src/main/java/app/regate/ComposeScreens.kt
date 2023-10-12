@@ -58,6 +58,7 @@ import app.regate.chat.sala.ChatSala
 import app.regate.create.sala.CreateSala
 import app.regate.complejo.createreview.CreateReview
 import app.regate.complejo.reviews.Reviews
+import app.regate.entidad.photos.EstablecimientoPhotos
 import app.regate.filterSalas.FilterSalas
 import app.regate.grupo.info.InfoGrupo
 import app.regate.grupo.pending.PendingRequests
@@ -104,6 +105,7 @@ class ComposeScreens(
 
     val actividadesEstablecimiento: ActividadesEstablecimiento,
     val establecimientoReserva:EstablecimientoReserva,
+    val establecimientoPhotos:EstablecimientoPhotos,
     val establecimientoSalas: Salas,
     val sala: Sala,
     val salaComplete: SalaComplete,

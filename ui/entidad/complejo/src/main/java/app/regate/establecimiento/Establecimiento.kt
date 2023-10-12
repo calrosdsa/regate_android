@@ -59,11 +59,14 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppUtil
 import app.regate.common.composes.component.images.AsyncImage
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
+import app.regate.constant.Route
+import app.regate.constant.id
 import app.regate.data.common.encodeMediaData
 import app.regate.models.Establecimiento
 import kotlinx.coroutines.delay
@@ -77,15 +80,12 @@ import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
 
 
 typealias Establecimiento = @Composable (
-    navigateUp:()->Unit,
     actividades:@Composable () -> Unit,
     reservar:@Composable (category:Long) -> Unit,
     salas:@Composable () -> Unit,
+    establecimientoPhotos:@Composable () -> Unit,
     currentPage:Int,
-    navigateToPhoto:(String)->Unit,
-    navigateToProfile:(Long)->Unit,
-    navigateToReviews:(Long)->Unit,
-    navigateToCreateReview:(Long)->Unit,
+    navController:NavController,
 //    openAuthBottomSheet:()->Unit,
     ) -> Unit
 
@@ -93,31 +93,31 @@ typealias Establecimiento = @Composable (
 @Composable
 fun Establecimiento(
     viewModelFactory: (SavedStateHandle) -> EstablecimientoViewModel,
-    @Assisted navigateUp: () -> Unit,
     @Assisted actividades: @Composable () -> Unit,
     @Assisted reservar: @Composable (category: Long) -> Unit,
     @Assisted salas: @Composable () -> Unit,
+    @Assisted establecimientoPhotos: @Composable () -> Unit,
     @Assisted currentPage: Int,
-    @Assisted navigateToPhoto: (String) -> Unit,
-    @Assisted navigateToProfile: (Long) -> Unit,
-    @Assisted navigateToReviews: (Long) -> Unit,
-    @Assisted navigateToCreateReview: (Long) -> Unit,
+    @Assisted navController:NavController,
 //    @Assisted openAuthBottomSheet: () -> Unit,
 ) {
 
 
     Establecimiento(
         viewModel = viewModel(factory = viewModelFactory),
-        navigateUp = navigateUp,
 //        navigateToInstalacion =  navigateToInstalacion,
         actividades = actividades,
         reservar = reservar,
         salas = salas,
+        establecimientoPhotos =establecimientoPhotos,
         currentPage = currentPage,
-        navigateToPhoto = navigateToPhoto,
-        navigateToProfile = navigateToProfile,
-        navigateToReviews = navigateToReviews,
-        navigateToCreateReview = navigateToCreateReview,
+        navigateToPhoto = {
+            navController.navigate(Route.PHOTO id it)
+        },
+        navigateUp = { navController.navigateUp() },
+        navigateToProfile = { navController.navigate(Route.PROFILE id it)},
+        navigateToReviews = { navController.navigate(Route.REVIEWS id it)},
+        navigateToCreateReview = { navController.navigate(Route.CREATE_REVIEW id it)},
     )
 }
 
@@ -131,6 +131,7 @@ internal fun Establecimiento(
     actividades:@Composable () -> Unit,
     reservar:@Composable (category:Long) -> Unit,
     salas:@Composable () -> Unit,
+    establecimientoPhotos:@Composable () -> Unit,
     currentPage: Int,
     navigateToPhoto: (String) -> Unit,
     navigateToProfile: (Long) -> Unit,
@@ -356,8 +357,9 @@ internal fun Establecimiento(
                         }
 
                         1 -> reservar(category.value)
-                        2 -> salas()
-                        3 -> actividades()
+                        2 -> establecimientoPhotos()
+                        3 -> salas()
+                        4 -> actividades()
 
                     }
                 }
@@ -432,15 +434,21 @@ fun Indicators(
                 // Animate to the selected page when clicked
                 navToTab(1)
             },
-//            modifier = Modifier.width(widthTab)
-//            modifier = Modifier.size(20.dp)
         )
         Tab(
-            text = { Text(text = "Salas", style = MaterialTheme.typography.labelMedium) },
+            text = { Text(text = "Fotosr",style = MaterialTheme.typography.labelMedium) },
             selected = currentTab ==2,
             onClick = {
                 // Animate to the selected page when clicked
                 navToTab(2)
+            },
+        )
+        Tab(
+            text = { Text(text = "Salas", style = MaterialTheme.typography.labelMedium) },
+            selected = currentTab ==3,
+            onClick = {
+                // Animate to the selected page when clicked
+                navToTab(3)
             },
 //            modifier = Modifier.width(widthTab)
         )

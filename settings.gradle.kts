@@ -59,6 +59,7 @@ include(
     ":ui:entidad:instalacion",
     ":ui:entidad:reservar",
     ":ui:entidad:salas",
+    ":ui:entidad:photos",
     ":ui:entidad:actividades",
 
     ":ui:bottom:reserva",

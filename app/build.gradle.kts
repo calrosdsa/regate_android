@@ -166,6 +166,7 @@ dependencies {
     implementation(projects.ui.entidad.reservar)
     implementation(projects.ui.entidad.salas)
     implementation(projects.ui.entidad.actividades)
+    implementation(projects.ui.entidad.photos)
 
     implementation(projects.ui.settings)
     implementation(projects.ui.grupo.chat)

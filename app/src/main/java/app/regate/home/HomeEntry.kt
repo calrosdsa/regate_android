@@ -205,7 +205,6 @@ internal fun AppNavigation(
         ) { it ->
             val page = it.arguments?.getLong("page")?:0
             composeScreens.establecimiento(
-                navigateUp = { navController.navigateUp() },
 //                navigateToInstalacion = { navController.navigate(Route.INSTALACION id it) },
                 actividades = {},
                 reservar = {category->
@@ -222,13 +221,9 @@ internal fun AppNavigation(
                         crearSala = { navController.navigate(Route.CREAR_SALA id it id 0 id 0) }
                     )
                 },
+                establecimientoPhotos = { composeScreens.establecimientoPhotos()},
                 currentPage = page.toInt(),
-                navigateToPhoto = {
-                    navController.navigate(Route.PHOTO id it)
-                },
-                navigateToProfile = { navController.navigate(Route.PROFILE id it)},
-                navigateToReviews = { navController.navigate(Route.REVIEWS id it)},
-                navigateToCreateReview = { navController.navigate(Route.CREATE_REVIEW id it)},
+                navController = navController
 //                openAuthBottomSheet = { navController.navigate(Route.AUTH_DIALOG) },
                 )
         }
