@@ -22,11 +22,15 @@ class PhotoViewModel(
 ) :ViewModel(){
     private val data = savedStateHandle.get<String>("data")
     private val images = MutableStateFlow<List<String>>(emptyList())
+    private val selectedIndex = MutableStateFlow<Int?>(null)
+
     val state:StateFlow<PhotoState> = combine(
-        images
-    ){images->
+        images,
+        selectedIndex
+    ){images,selectedIndex->
         PhotoState(
-            images = images[0]
+            images = images,
+            selectedIndex = selectedIndex
         )
     }.stateIn(
         scope = viewModelScope,
@@ -44,7 +48,9 @@ class PhotoViewModel(
         viewModelScope.launch {
         try{
             val data = Json.decodeFromString<MediaData>(data)
+            Log.d("DEBUG_APP_IMA",data.toString())
             images.tryEmit(data.images)
+            selectedIndex.emit(data.selectedIndex)
         }catch (err:Exception){
             //TODO()
         }

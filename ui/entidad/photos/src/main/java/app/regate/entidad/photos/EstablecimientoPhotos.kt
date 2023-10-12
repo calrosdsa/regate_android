@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
@@ -46,22 +47,28 @@ import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.viewModel
+import app.regate.data.common.encodeMediaData
 import app.regate.data.dto.empresa.establecimiento.CupoInstaDto
 import kotlinx.datetime.Instant
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
 
 typealias EstablecimientoPhotos = @Composable (
+    navigateToPhoto:(String)->Unit
 ) -> Unit
 
 @Inject
 @Composable
 fun EstablecimientoPhotos(
     viewModelFactory:(SavedStateHandle)-> EstablecimientoPhotosViewModel,
+    @Assisted navigateToPhoto: (String) -> Unit
     ){
     EstablecimientoPhotos(
         viewModel = viewModel(factory = viewModelFactory),
+        navigateToPhoto = navigateToPhoto,
     )
 }
 
@@ -69,12 +76,14 @@ fun EstablecimientoPhotos(
 @Composable
 internal fun EstablecimientoPhotos(
     viewModel: EstablecimientoPhotosViewModel,
+    navigateToPhoto: (String) -> Unit
 
     ){
     val state by viewModel.state.collectAsState()
 //    val formatter = LocalAppDateFormatter.current
     EstablecimientoPhotos(
         viewState = state,
+        navigateToPhoto = navigateToPhoto
 //        formatDate = { formatter.formatShortDateTime(it) },
     )
 }
@@ -85,6 +94,7 @@ internal fun EstablecimientoPhotos(
 @Composable
 internal fun EstablecimientoPhotos(
     viewState: EstablecimientoPhotoState,
+    navigateToPhoto: (String) -> Unit
 //    formatDate:(date:Instant) -> String,
 
 ) {
@@ -99,12 +109,16 @@ internal fun EstablecimientoPhotos(
         contentPadding = PaddingValues(all = 5.dp),
                 modifier = Modifier.padding(paddingValues)
     ) {
-        items(
+        itemsIndexed(
             items = viewState.photos
-        ) { photo ->
+        ) { index, photo ->
             PosterCardImage(model = photo.url,
             modifier= Modifier.fillMaxSize().height(130.dp),
-            shape = RoundedCornerShape(0.dp)
+            shape = RoundedCornerShape(0.dp),
+                onClick = {
+                    val payload = Json.encodeToString(encodeMediaData(viewState.photos.map { it.url },index))
+                    navigateToPhoto(payload)
+                }
             )
         }
     }

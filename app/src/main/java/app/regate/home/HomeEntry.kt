@@ -221,7 +221,9 @@ internal fun AppNavigation(
                         crearSala = { navController.navigate(Route.CREAR_SALA id it id 0 id 0) }
                     )
                 },
-                establecimientoPhotos = { composeScreens.establecimientoPhotos()},
+                establecimientoPhotos = { composeScreens.establecimientoPhotos(
+                    navigateToPhoto = { navController.navigate(Route.PHOTO id it)}
+                )},
                 currentPage = page.toInt(),
                 navController = navController
 //                openAuthBottomSheet = { navController.navigate(Route.AUTH_DIALOG) },
@@ -414,6 +416,13 @@ internal fun AppNavigation(
             )
         }
         animatedComposable(
+            route = Route.PENDING_REQUESTS,
+        ) {
+            composeScreens.userGrupoRequests(
+                navigateUp = navController::navigateUp,
+            )
+        }
+        animatedComposable(
             route = Route.PENDING_REQUESTS arg "id",
             arguments = listOf(
                 navArgument("id") { type = NavType.LongType },
@@ -423,6 +432,7 @@ internal fun AppNavigation(
                 navigateUp = navController::navigateUp,
             )
         }
+
 
         animatedComposable(
             route = Route.SETTING

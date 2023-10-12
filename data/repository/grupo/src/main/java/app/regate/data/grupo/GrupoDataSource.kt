@@ -30,7 +30,9 @@ interface GrupoDataSource {
    suspend fun getGroupsWhereUserIsAdmin():List<GrupoDto>
    suspend fun sendShareMessage(d:List<GrupoMessageDto>)
    suspend fun searchGrupos(d: SearchFilterRequest, page:Int, size: Int): PaginationGroupsResponse
-   suspend fun getPendingRequest(groupId:Long, page:Int): PaginationPendingRequestUser
+   //REQUESTS
+   suspend fun getUserRequest(page:Int): PaginationPendingRequestUser
+   suspend fun getPendingRequests(groupId:Long, page:Int,estado:Int): PaginationPendingRequestUser
    suspend fun declinePendingRequest(d:PendingRequest)
    suspend fun addPendingRequest(d:PendingRequest)
    suspend fun confirmPendingRequest(d:PendingRequest)

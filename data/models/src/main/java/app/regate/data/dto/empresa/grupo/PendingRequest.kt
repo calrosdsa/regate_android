@@ -16,7 +16,8 @@ data class PendingRequestUser(
     val nombre:String = "",
     val apellido:String? = null,
     val profile_photo:String? = null,
-    val created_at:Instant =  Clock.System.now()
+    val created_at:Instant =  Clock.System.now(),
+    val grupo_id: Int = 0
 )
 
 @Serializable
@@ -29,3 +30,11 @@ data class PaginationPendingRequestUser(
 data class PendingRequestCount(
     val count:Int = 0
 )
+
+enum class GrupoPendingRequestEstado {
+    NONE,
+    PENDING,
+    ACCEPTED,
+    DECLINED,
+
+}

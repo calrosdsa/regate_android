@@ -1,5 +1,7 @@
 package app.regate.media.photo
 
+import android.util.Log
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -10,6 +12,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Flag
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,6 +22,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -76,14 +81,28 @@ internal fun Photo(
         navigateToReport = navigateToReport)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 internal fun Photo(
     viewState:PhotoState,
     navigateUp:()->Unit,
     navigateToReport:(String)->Unit
 ) {
+    val pagerState = rememberPagerState()
     val zoomState = rememberZoomState()
+    val showImages = remember {
+        mutableStateOf(false)
+    }
+    LaunchedEffect(key1 = zoomState.scale, block = {
+        Log.d("DEBUG_APP_",zoomState.scale.toString())
+    })
+    LaunchedEffect(key1 = viewState.selectedIndex, block = {
+        Log.d("DEBUG_APP_",viewState.selectedIndex.toString())
+        if(viewState.selectedIndex != null){
+        pagerState.scrollToPage(viewState.selectedIndex)
+            showImages.value = true
+        }
+    })
     Scaffold(
         topBar = {
 //            IconButton(onClick = { navigateUp() }) {
@@ -110,12 +129,20 @@ internal fun Photo(
             .fillMaxSize()
         ){
             if(viewState.images.isNotEmpty()){
+            HorizontalPager(
+                state=pagerState,
+                userScrollEnabled = zoomState.scale ==1.toFloat(),
+                pageCount = viewState.images.size) {page->
+                if(showImages.value){
+
                 AsyncImage(
-                    model = viewState.images[0],
+                    model = viewState.images[page],
                     contentDescription =null,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                         .zoomable(
                             zoomState = zoomState,
+                            enableOneFingerZoom = true,
                             onDoubleTap = { position ->
                                 val targetScale = when {
                                     zoomState.scale < 2f -> 2f
@@ -127,8 +154,9 @@ internal fun Photo(
                         ),
                     contentScale = ContentScale.Fit,
                 )
+                }
             }
-
+            }
 //            ZoomableComposable()
         }
     }

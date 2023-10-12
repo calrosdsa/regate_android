@@ -197,5 +197,7 @@
     <string name="request_removed">Request removed</string>
     <string name="request_accepted">Request accepted</string>
     <string name="chat_group">Chat group</string>
+    <string name="requests">Requests</string>
+    <string name="invitations">Invitations</string>
 
 </resources>

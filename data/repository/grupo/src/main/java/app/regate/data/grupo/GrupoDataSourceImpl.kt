@@ -121,13 +121,42 @@ class GrupoDataSourceImpl(
             setBody(d)
         }.body()
     }
+    override suspend fun getMessagesGrupo(id: Long,page:Int): PaginationGroupMessages {
+        return client.get("/v1/grupo/messages/${id}/?page=${page}").body()
+    }
 
-    override suspend fun getPendingRequest(
-        groupId: Long,
+    override suspend fun getGrupoDetail(id: Long):GrupoResponse {
+        return client.get("/v1/grupo/detail/${id}/").body()
+    }
+    override suspend fun getGrupo(id: Long):GrupoDto {
+        return client.get("/v1/grupo/${id}/").body()
+    }
+
+    override suspend fun joinGrupo(d: AddUserGrupoRequest):ResponseMessage {
+        val token = authStore.get()?.accessToken
+        return client.post("/v1/grupo/add-user/"){
+            header("Authorization","Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
+    }
+
+    //REQUESTS
+    override suspend fun getUserRequest(
         page: Int,
     ): PaginationPendingRequestUser {
         val token = authStore.get()?.accessToken
-        return client.get("/v1/grupo/pending-requests/${groupId}/?page=${page}"){
+        return client.get("/v1/grupo/requests/?page=${page}"){
+            header("Authorization","Bearer $token")
+        }.body()
+    }
+    override suspend fun getPendingRequests(
+        groupId: Long,
+        page: Int,
+        estado:Int,
+    ): PaginationPendingRequestUser {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/grupo/pending-requests/${groupId}/?page=${page}&estado=${estado}"){
             header("Authorization","Bearer $token")
         }.body()
     }
@@ -163,26 +192,6 @@ class GrupoDataSourceImpl(
         val token = authStore.get()?.accessToken
         return client.get("/v1/grupo/count/pending-requests/${groupId}/"){
             header("Authorization","Bearer $token")
-        }.body()
-    }
-
-    override suspend fun getMessagesGrupo(id: Long,page:Int): PaginationGroupMessages {
-        return client.get("/v1/grupo/messages/${id}/?page=${page}").body()
-    }
-
-    override suspend fun getGrupoDetail(id: Long):GrupoResponse {
-        return client.get("/v1/grupo/detail/${id}/").body()
-    }
-    override suspend fun getGrupo(id: Long):GrupoDto {
-        return client.get("/v1/grupo/${id}/").body()
-    }
-
-    override suspend fun joinGrupo(d: AddUserGrupoRequest):ResponseMessage{
-        val token = authStore.get()?.accessToken
-        return client.post("/v1/grupo/add-user/"){
-            header("Authorization","Bearer $token")
-            contentType(ContentType.Application.Json)
-            setBody(d)
         }.body()
     }
 }

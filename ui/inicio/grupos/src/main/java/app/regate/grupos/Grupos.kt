@@ -72,6 +72,7 @@ fun Grupos (
         userSalas = userSalas,
         formatShortRelativeTime = formatter::formatShortRelativeTime,
         openAuthBottomSheet = { navController.navigate(Route.AUTH_DIALOG) },
+        navigateToUserGrupoRequests = { navController.navigate(Route.USER_PENDING_REQUESTS)}
 //        navigateToPhoto = {
 ////            val url = URLEncoder.encode(it, StandardCharsets.UTF_8.toString())
 //            navController.navigate(Route.PHOTO id it)
@@ -87,6 +88,7 @@ internal fun Grupos(
     viewModel:UserGroupsViewModel,
     formatShortRelativeTime: (Instant) -> String,
     openAuthBottomSheet:()->Unit,
+    navigateToUserGrupoRequests:()->Unit,
 //    navigateToPhoto:(String)->Unit,
     filterGroups:@Composable () -> Unit,
     userSalas:@Composable () -> Unit,
@@ -108,7 +110,8 @@ internal fun Grupos(
                createGroup = { navController.navigate(Route.CREATE_GROUP)},
                 navigateToCreateSala = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id 0)},
                 openAuthBottomSheet = openAuthBottomSheet,
-                appAuthState = viewState.authState
+                appAuthState = viewState.authState,
+                navigateToUserGrupoRequests = navigateToUserGrupoRequests
             )
 
     }
@@ -184,6 +187,7 @@ internal fun Indicators(
     appAuthState:AppAuthState,
     navigateToCreateSala:()->Unit,
     openAuthBottomSheet: () -> Unit,
+    navigateToUserGrupoRequests: () -> Unit,
     modifier:Modifier = Modifier
 ){
     var expanded by remember { mutableStateOf(false) }
@@ -252,6 +256,26 @@ internal fun Indicators(
                         }
                     )
                     }
+
+
+                    DropdownMenuItem(
+                        text = { Text(text = stringResource(id = R.string.requests)) },
+                        onClick = {
+                            if (appAuthState == AppAuthState.LOGGED_IN) {
+                                navigateToUserGrupoRequests()
+                            } else {
+                                openAuthBottomSheet()
+                            }
+                        }
+                    )
+
+                    DropdownMenuItem(
+                        text = { Text(text = stringResource(id = R.string.invitations)) },
+                        onClick = {
+
+                        }
+                    )
+                    }
                 }
             }
 //                AnimatedVisibility(visible = currentTab == 1) {
@@ -261,5 +285,4 @@ internal fun Indicators(
 //                }
         }
         }
-    }
 }

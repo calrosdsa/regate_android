@@ -162,5 +162,7 @@
     <string name="request_removed">request_removed</string>
     <string name="request_accepted">Solicitud aceptada</string>
     <string name="chat_group">Chat del grupo</string>
+    <string name="requests">Solicitudes</string>
+    <string name="invitations">Invitaciones</string>
 
 </resources>

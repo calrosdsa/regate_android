@@ -62,6 +62,7 @@ import app.regate.entidad.photos.EstablecimientoPhotos
 import app.regate.filterSalas.FilterSalas
 import app.regate.grupo.info.InfoGrupo
 import app.regate.grupo.pending.PendingRequests
+import app.regate.grupos.user_requests.UserGrupoRequests
 import app.regate.sala.complete.SalaComplete
 import app.regate.sala.grupo.GrupoSalas
 import app.regate.search.Search
@@ -127,6 +128,7 @@ class ComposeScreens(
     val photo:Photo,
 
     val grupo:Grupo,
+    val userGrupoRequests:UserGrupoRequests,
     val infoGrupo:InfoGrupo,
     val pendingRequests:PendingRequests,
     val grupoSalas:GrupoSalas,
