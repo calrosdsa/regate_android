@@ -18,6 +18,7 @@ import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
 import app.regate.data.dto.empresa.grupo.GrupoVisibility
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
+import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.PendingRequestCount
 import app.regate.data.dto.empresa.salas.SalaDto
@@ -221,11 +222,16 @@ class GrupoRepository(
     suspend fun getPendingRequests(groupId:Long,page:Int,estado:GrupoPendingRequestEstado = GrupoPendingRequestEstado.PENDING):PaginationPendingRequestUser{
         return grupoDataSourceImpl.getPendingRequests(groupId,page,estado.ordinal)
     }
-    suspend fun getUserRequest(page:Int):PaginationPendingRequestUser{
+    suspend fun getUserRequest(page:Int):PaginationUserGrupoRequest{
         return grupoDataSourceImpl.getUserRequest(page)
     }
     suspend fun declinePendingRequest(d: PendingRequest){
         grupoDataSourceImpl.declinePendingRequest(d).also {
+            myGroupsDao.deleteByGroupId(d.grupo_id)
+        }
+    }
+    suspend fun cancelPendingRequest(d: PendingRequest){
+        grupoDataSourceImpl.cancelPendingRequest(d).also {
             myGroupsDao.deleteByGroupId(d.grupo_id)
         }
     }

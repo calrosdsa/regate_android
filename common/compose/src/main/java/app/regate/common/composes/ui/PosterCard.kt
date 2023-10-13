@@ -58,7 +58,7 @@ fun PosterCardImageDark (
 
 
 @Composable
-fun PosterCardImage (
+fun  PosterCardImage (
     model:String?,
     modifier: Modifier = Modifier,
     shape:Shape = CardDefaults.shape,

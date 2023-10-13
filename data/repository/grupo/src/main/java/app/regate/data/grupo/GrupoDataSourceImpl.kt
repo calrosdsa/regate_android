@@ -13,6 +13,7 @@ import app.regate.data.dto.empresa.grupo.GrupoResponse
 import app.regate.data.dto.empresa.grupo.PaginationGroupMessages
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
+import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.PendingRequestCount
 import app.regate.data.dto.empresa.grupo.UserGrupoDto
@@ -144,9 +145,9 @@ class GrupoDataSourceImpl(
     //REQUESTS
     override suspend fun getUserRequest(
         page: Int,
-    ): PaginationPendingRequestUser {
+    ): PaginationUserGrupoRequest {
         val token = authStore.get()?.accessToken
-        return client.get("/v1/grupo/requests/?page=${page}"){
+        return client.get("/v1/grupo/requests/user/?page=${page}"){
             header("Authorization","Bearer $token")
         }.body()
     }
@@ -160,7 +161,14 @@ class GrupoDataSourceImpl(
             header("Authorization","Bearer $token")
         }.body()
     }
-
+    override suspend fun cancelPendingRequest(d: PendingRequest) {
+        val token = authStore.get()?.accessToken
+        client.post("/v1/grupo/cancel/pending-request/"){
+            header("Authorization","Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }
+    }
     override suspend fun declinePendingRequest(d: PendingRequest) {
         val token = authStore.get()?.accessToken
         client.post("/v1/grupo/decline/pending-request/"){

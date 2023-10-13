@@ -186,16 +186,17 @@ fun EstablecimientoInfo(
         )
         PosterCardImage(model = addressPhoto,
             modifier = Modifier
-                .clickable {
-                    openMap(
-                        establecimiento?.longitud,
-                        establecimiento?.latidud,
-                        establecimiento?.name
-                    )
-                }
                 .fillMaxWidth()
                 .height(200.dp)
-                .padding(10.dp))
+                .padding(10.dp),
+            onClick = {
+                openMap(
+                    establecimiento?.longitud,
+                    establecimiento?.latidud,
+                    establecimiento?.name
+                )
+            }
+        )
         }
 
         state.reviews?.let { data ->

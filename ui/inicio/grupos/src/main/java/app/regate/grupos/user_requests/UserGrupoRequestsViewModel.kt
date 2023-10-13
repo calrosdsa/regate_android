@@ -1,7 +1,6 @@
 package app.regate.grupos.user_requests
 
 import android.util.Log
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -9,14 +8,12 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import app.regate.data.dto.empresa.grupo.PendingRequest
-import app.regate.data.dto.empresa.grupo.PendingRequestUser
+import app.regate.data.dto.empresa.grupo.UserGrupoRequestDto
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveUser
-import app.regate.domain.pagination.PaginationPendingRequests
+import app.regate.domain.pagination.grupo.PaginationUserGrupoRequests
 import app.regate.util.ObservableLoadingCounter
-import io.ktor.client.plugins.ResponseException
-import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -24,7 +21,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
 @Inject
@@ -35,8 +31,8 @@ class UserGrupoRequestsViewModel(
     private val grupoRepository: GrupoRepository
 ):ViewModel() {
 //    private val grupoId = savedStateHandle.get<Long>("id")?:0
-    val pagedList: Flow<PagingData<PendingRequestUser>> = Pager(PAGING_CONFIG){
-        PaginationPendingRequests{page->
+    val pagedList: Flow<PagingData<UserGrupoRequestDto>> = Pager(PAGING_CONFIG){
+        PaginationUserGrupoRequests{page->
             grupoRepository.getUserRequest(page)
         }
     }.flow.cachedIn(viewModelScope)
@@ -67,16 +63,15 @@ class UserGrupoRequestsViewModel(
         observeUser(Unit)
     }
 
-    fun declineRequest(profileId:Int,groupId:Int){
+    fun cancelRequest(profileId:Int, groupId:Int){
         viewModelScope.launch {
             try{
-
                     val data =  PendingRequest(
                         grupo_id = groupId.toLong(),
                         profile_id = profileId.toLong()
                     )
-                grupoRepository.declinePendingRequest(data)
-              val ids = declineRequestIds.value.plus(profileId)
+                grupoRepository.cancelPendingRequest(data)
+              val ids = declineRequestIds.value.plus(groupId)
                declineRequestIds.emit(ids)
             }catch (e:Exception){
                 Log.d("DEBUG_APP_RES", e.localizedMessage?:"")

@@ -108,6 +108,7 @@ string illegal_activity
 string inappropriate_material
 string inbox
 string inbox_to_establecimiento
+string invitations
 string join_a_group
 string language
 string later
@@ -157,7 +158,9 @@ string remove_user
 string remove_user_admin
 string report
 string request_accepted
+string request_declined
 string request_removed
+string requests
 string resend_email_verification
 string reservation_date
 string review

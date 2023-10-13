@@ -1,7 +1,6 @@
 package app.regate.grupo.pending
 
 import android.util.Log
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,16 +8,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import app.regate.data.dto.SearchFilterRequest
-import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
-import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
 import app.regate.data.dto.empresa.grupo.PendingRequest
-import app.regate.data.dto.empresa.grupo.PendingRequestUser
+import app.regate.data.dto.empresa.grupo.PendingRequestUserDto
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveUser
-import app.regate.domain.pagination.PaginationPendingRequests
-import app.regate.domain.pagination.search.PaginationSearchEstablecimientos
+import app.regate.domain.pagination.grupo.PaginationPendingRequests
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.statement.bodyAsText
@@ -40,7 +35,7 @@ class PendingRequestsViewModel(
     private val grupoRepository: GrupoRepository
 ):ViewModel() {
     private val grupoId = savedStateHandle.get<Long>("id")?:0
-    val pagedList: Flow<PagingData<PendingRequestUser>> = Pager(PAGING_CONFIG){
+    val pagedList: Flow<PagingData<PendingRequestUserDto>> = Pager(PAGING_CONFIG){
         PaginationPendingRequests{page->
             try{
             grupoRepository.getPendingRequests(1,page)

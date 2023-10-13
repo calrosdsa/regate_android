@@ -159,10 +159,11 @@
     <string name="pending_requests">Solicitudes pendientes</string>
     <string name="confirm">Confirmar</string>
     <string name="decline">Declinar</string>
-    <string name="request_removed">request_removed</string>
+    <string name="request_removed">Solicitud cancelada</string>
     <string name="request_accepted">Solicitud aceptada</string>
     <string name="chat_group">Chat del grupo</string>
     <string name="requests">Solicitudes</string>
     <string name="invitations">Invitaciones</string>
+    <string name="request_declined">Solicitud rechazada</string>
 
 </resources>

@@ -107,11 +107,24 @@ fun SalaItemUser(
             Text(text = "Se jugara:${formatDate(sala.horas.first())} de ${formatShortTime(sala.horas.first(),0)} a ${
                 formatShortTime(sala.horas.last(), 30)
             }",style = MaterialTheme.typography.labelMedium)
+
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(text = "${sala.users}/${sala.cupos}",style = MaterialTheme.typography.labelSmall)
                 Spacer(modifier = Modifier.width(5.dp))
                 Icon(imageVector = Icons.Default.Group, contentDescription = sala.titulo,modifier = Modifier.size(15.dp))
             }
+
+            when(sala.estado){
+                SalaEstado.UNAVAILABLE.ordinal -> Text(text = "Sala no disponible",color = Color.Red,
+                    style = MaterialTheme.typography.labelMedium)
+                SalaEstado.RESERVED.ordinal -> Text(text = "Sala reservada",color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.labelMedium)
+            }
+                
+            }
+
         }
     }
 }

@@ -418,15 +418,16 @@ internal fun Reservar(
 
                     PosterCardImage(model = viewState.establecimiento?.address_photo,
                         modifier = Modifier
-                            .clickable {
-                                openMap(
-                                    viewState.establecimiento?.longitud,
-                                    viewState.establecimiento?.latidud,
-                                    viewState.establecimiento?.name,
-                                )
-                            }
                             .fillMaxWidth()
-                            .height(200.dp))
+                            .height(200.dp),
+                        onClick = {
+                            openMap(
+                                viewState.establecimiento?.longitud,
+                                viewState.establecimiento?.latidud,
+                                viewState.establecimiento?.name,
+                            )
+                        }
+                    )
 
                     Text(
                         text = viewState.establecimiento?.address ?: "",

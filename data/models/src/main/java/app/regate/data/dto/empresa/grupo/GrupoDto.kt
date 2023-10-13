@@ -36,6 +36,16 @@ enum class GrupoRequestEstado {
     }
 }
 
+enum class UserGrupoRequesEstado {
+    NONE,
+    PENDING,
+    ACCEPTED,
+    DECLINED;
+    companion object {
+        fun fromInt(value: Int) = UserGrupoRequesEstado.values().first { it.ordinal == value }
+    }
+}
+
 @Serializable
 data class PaginationGroupsResponse(
     val results:List<GrupoDto>,

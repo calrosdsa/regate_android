@@ -11,10 +11,9 @@ import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.data.dto.empresa.grupo.GrupoVisibility
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.grupo.ObserveMyGroups
-import app.regate.domain.pagination.PaginationGroups
+import app.regate.domain.pagination.grupo.PaginationGroups
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException

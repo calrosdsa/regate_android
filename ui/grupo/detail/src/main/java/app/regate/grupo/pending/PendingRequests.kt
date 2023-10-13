@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -33,12 +32,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.component.images.ProfileImage
-import app.regate.common.composes.ui.CommonTopBar
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
-import app.regate.data.dto.empresa.grupo.PendingRequestUser
+import app.regate.data.dto.empresa.grupo.PendingRequestUserDto
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -77,7 +75,7 @@ internal fun PendingRequests(
 @Composable
 internal fun PendingRequests(
     viewState: PendingRequestsState,
-    lazyPagingItems:LazyPagingItems<PendingRequestUser>,
+    lazyPagingItems:LazyPagingItems<PendingRequestUserDto>,
     navigateUp: () -> Unit,
     declineRequest:(Int)->Unit,
     confirmPendingRequest:(Int)->Unit
@@ -113,7 +111,7 @@ internal fun PendingRequests(
 
 @Composable
 internal fun PendingRequestUserItem(
-    item:PendingRequestUser,
+    item:PendingRequestUserDto,
     isDeclined:Boolean,
     isAccepted:Boolean,
     confirmPendingRequest: (Int) -> Unit,

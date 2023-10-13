@@ -182,14 +182,15 @@ internal fun Establecimiento(
             ) {
                 PosterCardImage(model = stringResource(id = R.string.location_static_url),
                     modifier = Modifier
-                        .clickable {
-                            val lat = state.establecimiento?.latidud
-                            val lng = state.establecimiento?.longitud
-                            appUtil.openMap(lng, lat, state.establecimiento?.name)
-                        }
                         .fillMaxWidth()
                         .height(200.dp)
-                        .padding(10.dp))
+                        .padding(10.dp),
+                    onClick = {
+                        val lat = state.establecimiento?.latidud
+                        val lng = state.establecimiento?.longitud
+                        appUtil.openMap(lng, lat, state.establecimiento?.name)
+                    }
+                )
                 Text(
                     text = state.establecimiento?.address ?: "",
                     style = MaterialTheme.typography.titleSmall

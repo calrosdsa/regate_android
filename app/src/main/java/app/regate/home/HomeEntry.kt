@@ -416,7 +416,7 @@ internal fun AppNavigation(
             )
         }
         animatedComposable(
-            route = Route.PENDING_REQUESTS,
+            route = Route.USER_PENDING_REQUESTS,
         ) {
             composeScreens.userGrupoRequests(
                 navigateUp = navController::navigateUp,

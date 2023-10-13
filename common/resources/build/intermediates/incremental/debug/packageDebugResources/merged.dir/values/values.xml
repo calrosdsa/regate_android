@@ -79,6 +79,7 @@
     <string name="inappropriate_material">Other inappropriate material</string>
     <string name="inbox">Inbox</string>
     <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
+    <string name="invitations">Invitations</string>
     <string name="join_a_group">Join a group</string>
     <string name="language">Language</string>
     <string name="later">Later</string>
@@ -130,7 +131,9 @@
     <string name="remove_user_admin">Revoke administrator status</string>
     <string name="report">Report</string>
     <string name="request_accepted">Request accepted</string>
+    <string name="request_declined">Request declined</string>
     <string name="request_removed">Request removed</string>
+    <string name="requests">Requests</string>
     <string name="resend_email_verification">An email will be sent to the address (%1$s) with the verification code.</string>
     <string name="reservation_date">Reservation date</string>
     <string name="review">Review</string>

@@ -60,6 +60,7 @@
     <string name="inappropriate_material">Otro material inapropiado</string>
     <string name="inbox">Inbox</string>
     <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
+    <string name="invitations">Invitaciones</string>
     <string name="join_a_group">Únete a un grupo</string>
     <string name="language">Idioma</string>
     <string name="later">Luego</string>
@@ -105,7 +106,9 @@
     <string name="remove_user_admin">Revocar el estatus de administrador</string>
     <string name="report">Reportar</string>
     <string name="request_accepted">Solicitud aceptada</string>
-    <string name="request_removed">request_removed</string>
+    <string name="request_declined">Solicitud rechazada</string>
+    <string name="request_removed">Solicitud cancelada</string>
+    <string name="requests">Solicitudes</string>
     <string name="resend_email_verification">Se enviará un correo electrónico a la dirección (%1$s) con el código de verificación.</string>
     <string name="reservation_date">Fecha de la Reserva</string>
     <string name="review">Reseña</string>

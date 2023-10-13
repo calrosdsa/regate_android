@@ -106,6 +106,7 @@ int string illegal_activity 0x0
 int string inappropriate_material 0x0
 int string inbox 0x0
 int string inbox_to_establecimiento 0x0
+int string invitations 0x0
 int string join_a_group 0x0
 int string language 0x0
 int string later 0x0
@@ -155,7 +156,9 @@ int string remove_user 0x0
 int string remove_user_admin 0x0
 int string report 0x0
 int string request_accepted 0x0
+int string request_declined 0x0
 int string request_removed 0x0
+int string requests 0x0
 int string resend_email_verification 0x0
 int string reservation_date 0x0
 int string review 0x0

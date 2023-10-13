@@ -134,12 +134,12 @@ class HandleNotifications {
 
     suspend fun sendNotificationSalaHasBeenReserved(context: Context, payload: MessagePayload){
         try{
-            val title = context.getString(R.string.room_has_been_reserved)
+//            val title = context.getString(R.string.room_has_been_reserved)
             val db = AppRoomDatabase.getInstance(context)
             db.notificationDao().upsert(
                 Notification(
                     content = payload.message,
-                    title = title,
+                    title = payload.title,
                     typeEntity = TypeEntity.SALA,
                     entityId = payload.id
                 )
@@ -156,7 +156,7 @@ class HandleNotifications {
             val pendingIntent = taskBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
             val CHANNEL_ID = context.getString(R.string.notification_sala_channel)
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setContentTitle(title)
+                .setContentTitle(payload.title)
                 .setContentText(payload.message)
                 .setSmallIcon(R.drawable.logo_app)
                 .setContentIntent(pendingIntent)

@@ -199,5 +199,6 @@
     <string name="chat_group">Chat group</string>
     <string name="requests">Requests</string>
     <string name="invitations">Invitations</string>
+    <string name="request_declined">Request declined</string>
 
 </resources>
