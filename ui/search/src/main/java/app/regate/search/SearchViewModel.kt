@@ -20,7 +20,9 @@ import app.regate.data.grupo.GrupoRepository
 import app.regate.data.labels.SearchRepository
 import app.regate.data.sala.SalaRepository
 import app.regate.data.users.UsersRepository
+import app.regate.domain.observers.ObserveAddressDevice
 import app.regate.domain.observers.ObserveAuthState
+import app.regate.domain.observers.grupo.ObserveMyGroups
 import app.regate.domain.observers.search.ObserveRecentSearchHistory
 import app.regate.domain.pagination.search.PaginationSearchEstablecimientos
 import app.regate.extensions.combine
@@ -32,6 +34,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
@@ -41,36 +44,39 @@ import me.tatarka.inject.annotations.Inject
 class SearchViewModel(
     @Assisted savedStateHandle: SavedStateHandle,
     observeAuthState: ObserveAuthState,
+    observeMyGroups:ObserveMyGroups,
     private val establecimientoRepository: EstablecimientoRepository,
     private val grupoRepository: GrupoRepository,
     private val profileRepository: UsersRepository,
-    private val salaRepository: SalaRepository,
     private val searchRepository:SearchRepository,
 //    private val searchRepository: SearchRepository,
     observeRecentSearchHistory: ObserveRecentSearchHistory,
+    observeAddressDevice: ObserveAddressDevice,
 ) : ViewModel() {
     private val establecimientoId = savedStateHandle.get<Long>("id")?: 0
-    private val loaderCounter = ObservableLoadingCounter()
+    private val loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val grupos = MutableStateFlow<List<GrupoDto>>(emptyList())
     private val profiles = MutableStateFlow<List<ProfileDto>>(emptyList())
     private val filterData = MutableStateFlow(FILTER_DATA)
     val pagedList: Flow<PagingData<EstablecimientoDto>> = Pager(PAGING_CONFIG){
-        PaginationSearchEstablecimientos(loadingState = loaderCounter,init =filterData.value.query.isNotBlank() ){page->
+        PaginationSearchEstablecimientos(loadingState = loadingCounter,init =filterData.value.query.isNotBlank() ){page->
             Log.d("DEBUG_APP_",filterData.value.toString())
             establecimientoRepository.searcEstablecimientos(filterData.value,page,15)
         }
     }.flow.cachedIn(viewModelScope)
     val state:StateFlow<SearchState> = combine(
-        loaderCounter.observable,
+        loadingCounter.observable,
         uiMessageManager.message,
         observeAuthState.flow,
         observeRecentSearchHistory.flow,
         grupos,
         profiles,
-        filterData
-    ){loading,message,authState,history,grupos,profiles,
-        filterData->
+        observeMyGroups.flow,
+        filterData,
+        observeAddressDevice.flow,
+    ){loading,message,authState,history,grupos,profiles,userGroups,
+        filterData,addressDevice->
         SearchState(
             loading = loading,
             message = message,
@@ -78,7 +84,10 @@ class SearchViewModel(
             history = history,
             grupos = grupos,
             profiles = profiles,
-            filterData = filterData
+            filterData = filterData,
+            userGroups = userGroups,
+            addressDevice = addressDevice
+
         )
     }.stateIn(
         scope= viewModelScope,
@@ -90,6 +99,13 @@ class SearchViewModel(
     init {
         observeAuthState(Unit)
         observeRecentSearchHistory(Unit)
+        observeMyGroups(Unit)
+        observeAddressDevice(Unit)
+        viewModelScope.launch {
+            observeAddressDevice.flow.collectLatest {address->
+                Log.d("DEBUG_APP_DISTANCE",address.toString())
+            }
+        }
     }
 
     companion object {
@@ -106,24 +122,27 @@ class SearchViewModel(
         viewModelScope.launch {
             try{
                 addQueryToHistory(query)
-                loaderCounter.addLoader()
+                loadingCounter.addLoader()
                 val formatQuery = query.lowercase().trim().replace(" ",":* | ") + ":*"
+                val addressDevice = state.value.addressDevice
                 val d = filterData.value.copy(
-                    query = formatQuery
+                    query = formatQuery,
+                    longitud = addressDevice?.longitud?:0.0,
+                    latitud = addressDevice?.latitud?:0.0,
                 )
                 filterData.emit(d)
-                delay(1000)
+//                delay(1000)
                 Log.d("DEBUG_APP_SEARCH",d.query)
                 val gruposData = grupoRepository.searchGrupos(d)
                 Log.d("DEBUG_APP_SEARCH",gruposData.toString())
                 val profilesData = profileRepository.searchProfiles(d)
                 Log.d("DEBUG_APP_SEARCH",profilesData.toString())
-                delay(1000)
+//                delay(1000)
                 grupos.emit(gruposData.results)
                 profiles.emit(profilesData.results)
-                loaderCounter.removeLoader()
+                loadingCounter.removeLoader()
             }catch (e:Exception){
-                loaderCounter.removeLoader()
+                loadingCounter.removeLoader()
                 Log.d("DEBUG_APP",e.localizedMessage?:"")
             }
         }
@@ -139,19 +158,19 @@ class SearchViewModel(
         }
     }
 
-    fun joinToGroup(groupId:Long){
+    fun joinToGroup(groupId:Long,visibility: Int){
         viewModelScope.launch {
             try{
-                loaderCounter.addLoader()
-                grupoRepository.joinGrupo(groupId)
+                loadingCounter.addLoader()
+//                val visibilidad = if(visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
+                grupoRepository.joinGrupo(groupId,visibility)
 //                getGrupo()
-                loaderCounter.removeLoader()
-//                uiMessageManager.emitMessage(UiMessage(message = res.message))
+                loadingCounter.removeLoader()
 //                Log.d("DEBUG_APP_ERROR",res.message)
             }catch(e: ResponseException){
-                loaderCounter.removeLoader()
+                loadingCounter.removeLoader()
                 uiMessageManager.emitMessage(UiMessage(message = e.response.body<ResponseMessage>().message))
-                Log.d("DEBUG_APP_ERROR",e.response.body()?:"error")
+                Log.d("DEBUG_APP_ERROR",e.response.body()?:"error $visibility")
             }
         }
     }

@@ -58,6 +58,7 @@
     <string name="email_verification">Email Verification</string>
     <string name="email_verification_help_text">Before proceeding we need to verify your email. Please enter the code that was sent to your email (<b>%1$s</b>)</string>
     <string name="emileys_emotion">SMILEYS AND EMOTIONS</string>
+    <string name="establecimientos">Establecimientos</string>
     <string name="exit">Exit</string>
     <string name="expiration_date">Expiration date:  %1$s</string>
     <string name="explore_exceptional_destinations">Explore exceptional destinations</string>

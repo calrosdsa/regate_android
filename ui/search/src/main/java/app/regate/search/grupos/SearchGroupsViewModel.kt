@@ -7,15 +7,19 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
+import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
+import app.regate.domain.observers.grupo.ObserveMyGroups
 import app.regate.domain.observers.search.ObserveLastSearchHistory
 import app.regate.domain.pagination.search.PaginationSearchGrupos
 import app.regate.search.SearchViewModel
-import app.regate.search.salas.SearchSalasState
 import app.regate.util.ObservableLoadingCounter
+import io.ktor.client.call.body
+import io.ktor.client.plugins.ResponseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,9 +34,10 @@ import me.tatarka.inject.annotations.Inject
 class SearchGroupsViewModel(
     observeAuthState: ObserveAuthState,
     observeLastSearchHistory: ObserveLastSearchHistory,
+    observeMyGroups: ObserveMyGroups,
     private val grupoRepository: GrupoRepository,
 ) : ViewModel() {
-    private val  loaderCounter = ObservableLoadingCounter()
+    private val  loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val filterData = MutableStateFlow(SearchViewModel.FILTER_DATA)
     val pagedList: Flow<PagingData<GrupoDto>> = Pager(PAGING_CONFIG){
@@ -41,17 +46,19 @@ class SearchGroupsViewModel(
 //            salaRepository.filterSalas()
         }
     }.flow.cachedIn(viewModelScope)
-    val state:StateFlow<SearchSalasState> = combine(
-        loaderCounter.observable,
+    val state:StateFlow<SearchGruposState> = combine(
+        loadingCounter.observable,
         uiMessageManager.message,
         observeAuthState.flow,
+        observeMyGroups.flow,
         filterData,
-    ){loading,message,authState,filterData->
-        SearchSalasState(
+    ){loading,message,authState,userGroups,filterData->
+        SearchGruposState(
             loading = loading,
             message = message,
             authState = authState,
-            filterData = filterData
+            filterData = filterData,
+            userGroups = userGroups
         )
     }.stateIn(
         scope= viewModelScope,
@@ -60,6 +67,7 @@ class SearchGroupsViewModel(
     )
 
     init {
+        observeMyGroups(Unit)
         observeAuthState(Unit)
         observeLastSearchHistory(Unit)
 
@@ -81,5 +89,22 @@ class SearchGroupsViewModel(
         )
     }
 
+
+    fun joinToGroup(groupId:Long,visibility: Int){
+        viewModelScope.launch {
+            try{
+                loadingCounter.addLoader()
+//                val visibilidad = if(visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
+                grupoRepository.joinGrupo(groupId,visibility)
+//                getGrupo()
+                loadingCounter.removeLoader()
+//                Log.d("DEBUG_APP_ERROR",res.message)
+            }catch(e: ResponseException){
+                loadingCounter.removeLoader()
+                uiMessageManager.emitMessage(UiMessage(message = e.response.body<ResponseMessage>().message))
+                Log.d("DEBUG_APP_ERROR",e.response.body()?:"error $visibility")
+            }
+        }
+    }
 
 }

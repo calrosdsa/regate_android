@@ -20,7 +20,6 @@ class PaginationSearchEstablecimientos(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, EstablecimientoDto> {
         return try{
             if(init){
-
             loadingState.addLoader()
             val page = params.key?:1
                 val res = getEstablecimientos(page)

@@ -208,5 +208,6 @@
     <string name="room_not_available">Room not available</string>
     <string name="room_chat">Room chat</string>
     <string name="amount_contributed">Amount contributed</string>
+    <string name="establecimientos">Establecimientos</string>
 
 </resources>

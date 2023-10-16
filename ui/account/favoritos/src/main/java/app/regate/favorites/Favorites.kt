@@ -8,16 +8,20 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import app.regate.common.composes.component.item.EstablecimientoItem
+import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import app.regate.common.resources.R
 
 typealias Favorites = @Composable (
     navigateUp:()->Unit,
@@ -56,6 +60,7 @@ internal fun Favorites(
     ) 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun Favorites(
     viewState:FavoritesState,
@@ -64,9 +69,8 @@ internal fun Favorites(
 ){
     Scaffold(
         topBar = {
-            IconButton(onClick = { navigateUp() }) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-            }
+          SimpleTopBar(navigateUp = navigateUp,
+          title = stringResource(id = R.string.favorites))
         }
     ) {paddingValues ->  
         Box(modifier = Modifier.padding(paddingValues)){

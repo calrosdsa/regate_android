@@ -16,11 +16,14 @@ class UpdateEstablecimientoDetail(
 
     override suspend fun doWork(params: Params) {
         withContext(dispatchers.computation){
-            establecimientoRepository.updateEstablecimientoDetail(params.id).also {
+            establecimientoRepository.updateEstablecimientoDetail(params.id,params.dayWeek).also {
             instalacionRepository.getInstalaciones(params.id)
             }
         }
     }
 
-    data class Params(val id: Long)
+    data class Params(
+        val id: Long,
+        val dayWeek:Int
+        )
 }

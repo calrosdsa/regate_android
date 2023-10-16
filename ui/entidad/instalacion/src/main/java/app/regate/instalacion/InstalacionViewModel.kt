@@ -6,23 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
-import app.regate.data.dto.empresa.establecimiento.CupoInstaDto
 import app.regate.data.dto.empresa.establecimiento.CuposRequest
-import app.regate.data.instalacion.CupoRepository
 import app.regate.data.instalacion.InstalacionRepository
-import app.regate.data.mappers.DtoToCupo
 import app.regate.domain.interactors.UpdateInstalacion
-import app.regate.domain.observers.ObserveInstalacion
+import app.regate.domain.observers.instalacion.ObserveInstalacion
 import app.regate.util.ObservableLoadingCounter
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 

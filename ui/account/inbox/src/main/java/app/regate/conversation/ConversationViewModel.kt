@@ -14,7 +14,7 @@ import app.regate.data.coin.ConversationRepository
 import app.regate.data.common.MessageData
 import app.regate.data.dto.empresa.conversation.ConversationMessage
 import app.regate.domain.interactors.UpdateEstablecimiento
-import app.regate.domain.observers.ObserveEstablecimientoDetail
+import app.regate.domain.observers.establecimiento.ObserveEstablecimientoDetail
 import app.regate.domain.observers.pagination.ObservePagerMessagesInbox
 import app.regate.domain.observers.ObserveUser
 import app.regate.inbox.ConversationsState

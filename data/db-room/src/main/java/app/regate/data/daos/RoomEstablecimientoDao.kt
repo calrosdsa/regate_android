@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import app.regate.models.AttentionSchedule
 import app.regate.models.Establecimiento
 import app.regate.models.LabelType
 import app.regate.models.Labels
@@ -37,8 +38,18 @@ abstract class RoomEstablecimientoDao : EstablecimientoDao, RoomEntityDao<Establ
     @Query("SELECT * FROM settings WHERE establecimiento_id = :id")
     abstract override fun observeEstablecimientoSetting(id:Long):Flow<Setting>
 
+    @Transaction
+    @Query("SELECT * FROM attention_schedule where establecimiento_id = :id and day_week = :dayWeek ")
+    abstract override fun observeAttentionScheduleTime(id: Long,dayWeek: Int): Flow<AttentionSchedule>
+    @Transaction
+    @Query("SELECT * FROM attention_schedule where establecimiento_id = :id order by day_week")
+    abstract override fun observeAttentionScheduleWeek(id: Long): Flow<List<AttentionSchedule>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract override suspend fun insertSettingEstablecimiento(entity: Setting)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract override suspend fun insertAttentionScheduleTime(entity: AttentionSchedule)
 
     @Query("DELETE FROM establecimientos where id = :id")
     abstract override suspend fun delete(id: Long)

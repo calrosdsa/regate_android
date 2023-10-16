@@ -4,14 +4,9 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
-import app.regate.data.dto.empresa.establecimiento.CuposRequest
 import app.regate.data.dto.empresa.establecimiento.PhotoDto
 import app.regate.data.establecimiento.EstablecimientoRepository
-import app.regate.data.instalacion.InstalacionRepository
-import app.regate.domain.interactors.UpdateInstalacion
-import app.regate.domain.observers.ObserveInstalacion
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

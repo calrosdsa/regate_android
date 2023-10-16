@@ -3,7 +3,7 @@ package app.regate.data.establecimiento
 import app.regate.data.daos.EstablecimientoDao
 import app.regate.data.db.DatabaseTransactionRunner
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
-import app.regate.data.mappers.EstablecimientoDtoToEstablecimiento
+import app.regate.data.mappers.establecimiento.EstablecimientoDtoToEstablecimiento
 import app.regate.inject.ApplicationScope
 import app.regate.models.Establecimiento
 import me.tatarka.inject.annotations.Inject
@@ -19,7 +19,7 @@ class EstablecimientoStore(
     establecimientoDao: EstablecimientoDao,
     establecimientoDataSourceImpl: EstablecimientoDataSourceImpl,
     transactionRunner: DatabaseTransactionRunner,
-    establecimientoMapper:EstablecimientoDtoToEstablecimiento
+    establecimientoMapper: EstablecimientoDtoToEstablecimiento
 ):Store<Long,Establecimiento> by StoreBuilder.from(
     fetcher = Fetcher.of {id:Long->
         establecimientoDataSourceImpl.getEstablecimiento(id)

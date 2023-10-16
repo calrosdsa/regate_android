@@ -37,6 +37,7 @@ import me.tatarka.inject.annotations.Inject
 typealias SearchGrupos = @Composable (
 //    navigateToCreateSala: (id: Long) -> Unit,
     navigateToGroup:(Long)->Unit,
+    navigateToInfoGrupo:(Long)->Unit
 ) -> Unit
 
 
@@ -44,11 +45,13 @@ typealias SearchGrupos = @Composable (
 @Composable
 fun SearchGrupos(
     viewModelFactory:()-> SearchGroupsViewModel,
-    @Assisted navigateToGroup: (Long) -> Unit
-){
+    @Assisted navigateToGroup: (Long) -> Unit,
+    @Assisted navigateToInfoGrupo: (Long) -> Unit,
+    ){
     SearchGrupos(
         viewModel = viewModel(factory = viewModelFactory),
-        navigateToGroup = navigateToGroup
+        navigateToGroup = navigateToGroup,
+        navigateToInfoGrupo = navigateToInfoGrupo
     )
 
 }
@@ -56,22 +59,27 @@ fun SearchGrupos(
 @Composable
 internal fun SearchGrupos(
     viewModel: SearchGroupsViewModel,
-    navigateToGroup: (Long) -> Unit
+    navigateToGroup: (Long) -> Unit,
+    navigateToInfoGrupo: (Long) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
     SearchGrupos(
         viewState = state,
         lazyPagingItems = viewModel.pagedList.collectAsLazyPagingItems(),
-        navigateToGroup = navigateToGroup
+        navigateToGroup = navigateToGroup,
+        joinToGroup = viewModel::joinToGroup,
+        navigateToInfoGrupo = navigateToInfoGrupo
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SearchGrupos(
-    viewState: SearchSalasState,
+    viewState: SearchGruposState,
     lazyPagingItems: LazyPagingItems<GrupoDto>,
-    navigateToGroup: (Long) -> Unit
+    navigateToGroup: (Long) -> Unit,
+    joinToGroup:(Long,Int)->Unit,
+    navigateToInfoGrupo: (Long) -> Unit,
 ) {
     LaunchedEffect(key1 = viewState.filterData, block = {
         if(viewState.filterData.query.isNotBlank()){
@@ -116,13 +124,31 @@ internal fun SearchGrupos(
                     }
                     itemsCustom(
                         items = lazyPagingItems
-                    ) { item ->
-                        if (item != null) {
-                            GrupoItem(
-                                navigate = navigateToGroup,
-                                grupo = item,
-                                joinToGroup = {_,_-> run {} }
-                            )
+                    ) { result ->
+                        if (result != null) {
+                            val grupoU = viewState.userGroups.find { it.group_id == result.id }
+                            if(grupoU != null){
+                                GrupoItem(
+                                    navigate = navigateToGroup,
+                                    grupo = result.copy(
+                                        grupo_request_estado = grupoU.request_estado.ordinal
+                                    ),
+                                    joinToGroup = {it1,it2->
+                                        joinToGroup(it1,it2)
+                                    },
+                                    navigateToInfoGrupo = navigateToInfoGrupo
+                                )
+                            }else{
+                                GrupoItem(
+                                    navigate = navigateToInfoGrupo,
+                                    grupo = result,
+                                    joinToGroup = {it1,it2->
+                                        joinToGroup(it1,it2)
+                                    }
+                                )
+                            }
+
+
                         }
                     }
 
@@ -131,6 +157,7 @@ internal fun SearchGrupos(
                             Loader()
                         }
                     }
+
                 })
 
 

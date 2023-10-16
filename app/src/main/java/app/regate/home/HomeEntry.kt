@@ -601,14 +601,11 @@ internal fun AppNavigation(
         ) {navBackStackEntry->
             val query = navBackStackEntry.arguments?.getString("query")?:""
             composeScreens.search(
-                navigateUp = navController::navigateUp,
-                navigateToGroup = {navController.navigate(Route.GRUPO id it)},
-                navigateToProfile = { navController.navigate(Route.PROFILE id it)},
-                navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0) },
-                navigateToHistorySearch = {navController.navigate(Route.HISTORY_SEARCH) },
+                navController = navController,
                 queryArg = query,
                 searchGrupos = { composeScreens.searchGrupos(
                     navigateToGroup = { navController.navigate(Route.GRUPO id it)},
+                    navigateToInfoGrupo = {navController.navigate(Route.INFO_GRUPO id it)},
                     )},
                 searchProfiles = { composeScreens.searchProfiles(
                     navigateToProfile = { navController.navigate(Route.PROFILE id it)},

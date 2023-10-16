@@ -43,6 +43,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -60,16 +61,20 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.component.item.EstablecimientoItem
+import app.regate.common.composes.component.item.EstablecimientoItemWithLocation
 import app.regate.common.composes.component.item.GrupoItem
 import app.regate.common.composes.component.item.ProfileItem
 import app.regate.common.composes.ui.Loader
 import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.util.spacerLazyList
 import app.regate.common.composes.viewModel
+import app.regate.constant.Route
+import app.regate.constant.id
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.models.SearchHistory
 import kotlinx.coroutines.launch
@@ -77,12 +82,7 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
 typealias Search = @Composable (
-    navigateUp:()->Unit,
-//    navigateToCreateSala: (id: Long) -> Unit,
-    navigateToProfile:(Long)->Unit,
-    navigateToGroup:(Long)->Unit,
-    navigateToEstablecimiento:(Long)->Unit,
-    navigateToHistorySearch:()->Unit,
+    navController: NavController,
     queryArg:String,
     searchGrupos: @Composable () ->Unit,
     searchProfiles: @Composable () ->Unit,
@@ -94,11 +94,7 @@ typealias Search = @Composable (
 @Composable
 fun Search(
     viewModelFactory:(SavedStateHandle)-> SearchViewModel,
-    @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToProfile: (Long) -> Unit,
-    @Assisted navigateToGroup: (Long) -> Unit,
-    @Assisted navigateToEstablecimiento: (Long) -> Unit,
-    @Assisted navigateToHistorySearch: () -> Unit,
+    @Assisted navController: NavController,
     @Assisted queryArg: String,
     @Assisted searchGrupos: @Composable () -> Unit,
     @Assisted searchProfiles: @Composable () -> Unit,
@@ -106,11 +102,12 @@ fun Search(
 ){
     Search(
         viewModel = viewModel(factory = viewModelFactory),
-        navigateUp = navigateUp,
-        navigateToProfile = navigateToProfile,
-        navigateToEstablecimiento = navigateToEstablecimiento,
-        navigateToHistorySearch = navigateToHistorySearch,
-        navigateToGroup = navigateToGroup,
+        navigateUp = navController::navigateUp,
+        navigateToGroup = {navController.navigate(Route.GRUPO id it)},
+        navigateToProfile = { navController.navigate(Route.PROFILE id it)},
+        navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0) },
+        navigateToHistorySearch = {navController.navigate(Route.HISTORY_SEARCH) },
+        navigateToInfoGrupo= { navController.navigate(Route.INFO_GRUPO id it)},
         queryArg = queryArg,
         searchGrupos = searchGrupos,
         searchProfiles = searchProfiles,
@@ -127,6 +124,7 @@ internal fun Search(
     navigateToEstablecimiento: (Long) -> Unit,
     navigateToHistorySearch: () -> Unit,
     navigateToGroup: (Long) -> Unit,
+    navigateToInfoGrupo: (Long) -> Unit,
     queryArg:String,
     searchGrupos: @Composable () -> Unit,
     searchProfiles: @Composable () -> Unit,
@@ -140,10 +138,12 @@ internal fun Search(
         navigateToHistorySearch = navigateToHistorySearch,
         navigateToEstablecimiento = navigateToEstablecimiento,
         navigateToGroup = navigateToGroup,
+        navigateToInfoGrupo = navigateToInfoGrupo,
         queryArg = queryArg,
         searchGrupos = searchGrupos,
         searchProfiles= searchProfiles,
         searchSalas = searchSalas,
+        joinToGroup = viewModel::joinToGroup
 //        joinToGroup = viewModel::joinToGroup
         )
 }
@@ -161,16 +161,20 @@ internal fun Search(
     navigateToHistorySearch: () -> Unit,
     navigateToGroup: (Long) -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
-//    joinToGroup:(Long)->Unit,
+    navigateToInfoGrupo:(Long)->Unit,
+    joinToGroup:(Long,Int)->Unit,
     searchGrupos: @Composable () -> Unit,
     searchProfiles: @Composable () -> Unit,
     searchSalas: @Composable () -> Unit,
-
-){
+) {
     var query by rememberSaveable {
         mutableStateOf("")
     }
-
+    val isAddressDevice by remember(viewState.addressDevice) {
+        derivedStateOf {
+            viewState.addressDevice != null
+        }
+    }
     var shouldShowResults by rememberSaveable {
         mutableStateOf(false)
     }
@@ -182,51 +186,54 @@ internal fun Search(
     val pagerState = rememberPagerState()
 
 
-    fun onSearch(searchQuery:String){
+    fun onSearch(searchQuery: String) {
         search(searchQuery)
         focusManager.clearFocus(true)
         shouldShowResults = true
     }
     LaunchedEffect(key1 = Unit, block = {
-        if(queryArg.isNotBlank()){
+        if (queryArg.isNotBlank()) {
             query = queryArg
             onSearch(queryArg)
         }
     })
 
     LaunchedEffect(key1 = isFocused, block = {
-        if(isFocused){
+        if (isFocused) {
             shouldShowResults = false
         }
     })
 
     LaunchedEffect(key1 = viewState.filterData, block = {
-        if(viewState.filterData.query.isNotBlank()){
+        if (viewState.filterData.query.isNotBlank()) {
             lazyPagingItems.refresh()
         }
     })
 
     Scaffold(
         topBar = {
-            Row(modifier = Modifier.padding(5.dp),
-            verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.padding(5.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 IconButton(onClick = { navigateUp() }) {
-                    Icon(imageVector = Icons.Default.ArrowBack,
-                        contentDescription = stringResource(id = R.string.back))
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = stringResource(id = R.string.back)
+                    )
                 }
-
                 BasicTextField(value = query,
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Search
                     ),
                     keyboardActions = KeyboardActions(
                         onSearch = {
-                           onSearch(query)
+                            onSearch(query)
                         }
                     ),
                     modifier = Modifier.focusRequester(focusRequester),
                     maxLines = 1,
-                    onValueChange ={query = it},
+                    onValueChange = { query = it },
                     textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
                     interactionSource = interactionSource,
                     decorationBox = { innerTextField ->
@@ -238,33 +245,39 @@ internal fun Search(
                             shape = CircleShape,
                             color = MaterialTheme.colorScheme.inverseOnSurface
                         ) {
-                            Row(verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(5.dp)) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.padding(5.dp)
+                            ) {
                                 Spacer(modifier = Modifier.width(5.dp))
-                                Box(modifier = Modifier.fillMaxWidth(0.9f)){
-                                    if(query.isBlank()){
-                                        Text(text = stringResource(id = R.string.search),
-                                        style = MaterialTheme.typography.labelLarge,
-                                        color = MaterialTheme.colorScheme.inverseSurface)
+                                Box(modifier = Modifier.fillMaxWidth(0.9f)) {
+                                    if (query.isBlank()) {
+                                        Text(
+                                            text = stringResource(id = R.string.search),
+                                            style = MaterialTheme.typography.labelLarge,
+                                            color = MaterialTheme.colorScheme.inverseSurface
+                                        )
                                     }
-                                innerTextField()
+                                    innerTextField()
                                 }
                                 Crossfade(targetState = !query.isBlank()) {
-                                    if(it){
+                                    if (it) {
                                         IconButton(onClick = {
                                             query = ""
                                             shouldShowResults = false
                                             focusRequester.requestFocus()
                                         }) {
-                                            Icon(imageVector = Icons.Outlined.Close,
-                                                contentDescription = null)
+                                            Icon(
+                                                imageVector = Icons.Outlined.Close,
+                                                contentDescription = null
+                                            )
                                         }
                                     }
                                 }
                             }
-                            }
                         }
-                    )
+                    }
+                )
             }
         },
     ) { paddingValues ->
@@ -273,152 +286,191 @@ internal fun Search(
                 .padding(paddingValues)
                 .fillMaxSize()
         ) {
-            if(shouldShowResults){
+            if (shouldShowResults) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Indicators(navToTab = {
-                       coroutineScope.launch {
-                           pagerState.scrollToPage(it)
-                       }
+                        coroutineScope.launch {
+                            pagerState.scrollToPage(it)
+                        }
                     }, currentTab = pagerState.currentPage)
 
-            if(viewState.loading){
-                Box(modifier = Modifier.fillMaxSize()){
-                Loader(modifier = Modifier.align(Alignment.TopCenter))
-                }
-            }else{
-                HorizontalPager(pageCount = 4,state= pagerState,
-                    ) {page->
+                    if (viewState.loading) {
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            Loader(modifier = Modifier.align(Alignment.TopCenter))
+                        }
+                    } else {
+                        HorizontalPager(
+                            pageCount = 4, state = pagerState,
+                        ) { page ->
 
-                    when (page) {
-                0 -> LazyColumn(
-                    contentPadding = PaddingValues(6.dp),
-                    content = {
-                    if(viewState.profiles.isEmpty() && viewState.grupos.isEmpty()
-                        && lazyPagingItems.itemCount == 0){
-                        item {
-                            Box(modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = 40.dp)){
-                        Text(text = stringResource(id = R.string.no_results_for_saerch),
-                            style =MaterialTheme.typography.titleMedium,
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .fillMaxWidth(0.8f),
-                            textAlign = TextAlign.Center
-                        )
+                            when (page) {
+                                0 -> LazyColumn(
+                                    contentPadding = PaddingValues(6.dp),
+                                    content = {
+                                        if (viewState.profiles.isEmpty() && viewState.grupos.isEmpty()
+                                            && lazyPagingItems.itemCount == 0
+                                        ) {
+                                            item {
+                                                Box(
+                                                    modifier = Modifier
+                                                        .fillMaxSize()
+                                                        .padding(top = 40.dp)
+                                                ) {
+                                                    Text(
+                                                        text = stringResource(id = R.string.no_results_for_saerch),
+                                                        style = MaterialTheme.typography.titleMedium,
+                                                        modifier = Modifier
+                                                            .align(Alignment.Center)
+                                                            .fillMaxWidth(0.8f),
+                                                        textAlign = TextAlign.Center
+                                                    )
+                                                }
+                                            }
+                                        }
+                                        if (viewState.profiles.isNotEmpty()) {
+                                            item {
+                                                Text(
+                                                    text = stringResource(id = R.string.people),
+                                                    style = MaterialTheme.typography.titleMedium
+                                                )
+                                            }
+                                            spacerLazyList()
+                                            items(
+                                                items = viewState.profiles,
+                                            ) { profile ->
+                                                ProfileItem(
+                                                    id = profile.profile_id,
+                                                    photo = profile.profile_photo,
+                                                    nombre = profile.nombre,
+                                                    apellido = profile.apellido,
+                                                    navigateToProfile = navigateToProfile
+                                                )
+                                            }
+                                        }
+
+                                        if (viewState.grupos.isNotEmpty()) {
+                                            item {
+                                                Text(
+                                                    text = stringResource(id = R.string.groups),
+                                                    style = MaterialTheme.typography.titleMedium
+                                                )
+                                            }
+                                            spacerLazyList()
+                                            items(
+                                                items = viewState.grupos,
+                                            ) { result ->
+                                                val grupoU =
+                                                    viewState.userGroups.find { it.group_id == result.id }
+
+                                                if (grupoU != null) {
+                                                    GrupoItem(
+                                                        navigate = navigateToGroup,
+                                                        grupo = result.copy(
+                                                            grupo_request_estado = grupoU.request_estado.ordinal
+                                                        ),
+                                                        joinToGroup = { it1, it2 ->
+                                                            joinToGroup(it1, it2)
+                                                        },
+                                                        navigateToInfoGrupo = navigateToInfoGrupo
+                                                    )
+                                                } else {
+                                                    GrupoItem(
+                                                        navigate = navigateToInfoGrupo,
+                                                        grupo = result,
+                                                        joinToGroup = { it1, it2 ->
+                                                            joinToGroup(it1, it2)
+                                                        }
+                                                    )
+                                                }
+
+                                            }
+                                        }
+
+                                        if (lazyPagingItems.itemCount > 0) {
+                                            item {
+                                                Text(
+                                                    text = stringResource(id = R.string.establecimientos),
+                                                    style = MaterialTheme.typography.titleMedium
+                                                )
+                                            }
+                                            spacerLazyList()
+                                            itemsCustom(
+                                                items = lazyPagingItems
+                                            ) { item ->
+                                                if (item != null) {
+                                                    EstablecimientoItemWithLocation(
+                                                        name = item.name,
+                                                        photo = item.photo,
+                                                        navigate = {
+                                                            navigateToEstablecimiento(item.id.toLong())
+                                                        },
+                                                        isAddressDevice = isAddressDevice,
+                                                        distance = item.distance,
+                                                    )
+                                                }
+                                            }
+                                        }
+
+                                        item {
+                                            if (lazyPagingItems.loadState.append == LoadState.Loading) {
+                                                Loader()
+                                            }
+                                        }
+
+                                    })
+
+                                1 -> searchProfiles()
+                                2 -> searchGrupos()
+                                3 -> searchSalas()
                             }
                         }
                     }
-                    if(viewState.profiles.isNotEmpty()){
-                    item {
-                        Text(text = stringResource(id = R.string.people),
-                            style =MaterialTheme.typography.titleMedium
-                        )
-                    }
-                        spacerLazyList()
-                        items(
-                            items = viewState.profiles,
-                        ) { profile ->
-                            ProfileItem(
-                                id = profile.profile_id,
-                                photo = profile.profile_photo,
-                                nombre =profile.nombre,
-                                apellido = profile.apellido,
-                                navigateToProfile = navigateToProfile
-                            )
-                        }
-                    }
+                }
 
-                    if(viewState.grupos.isNotEmpty()){
+
+            } else {
+                LazyColumn(
+                    contentPadding = PaddingValues(6.dp),
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    content = {
                         item {
-                            Text(text = stringResource(id = R.string.groups),
-                                style =MaterialTheme.typography.titleMedium
-                            )
+                            Divider(modifier = Modifier.padding(vertical = 5.dp))
                         }
-                        spacerLazyList()
-                        items(
-                            items = viewState.grupos,
-                        ) { result ->
-                            GrupoItem(
-                                navigate = navigateToGroup,
-                                grupo = result,
-                                joinToGroup = {_,_-> run {} }
-                            )
-                        }
-                    }
-
-                    if(lazyPagingItems.itemCount > 0){
-
-                    itemsCustom(
-                        items = lazyPagingItems
-                    ) { item ->
-                        if (item != null) {
-                            EstablecimientoItem(name = item.name,
-                                photo = item.photo,
-                                navigate = {navigateToEstablecimiento(item.id.toLong())
-                                }
-                            )
-                        }
-                    }
-                    }
-
-                    item{
-                        if(lazyPagingItems.loadState.append == LoadState.Loading){
-                            Loader()
-                        }
-                    }
-
-                })
-                1 -> searchProfiles()
-                2 -> searchGrupos()
-                3 -> searchSalas()
-            } }
-                    }}
-
-
-
-            }else{
-            LazyColumn(
-                contentPadding = PaddingValues(6.dp),
-                modifier = Modifier
-                    .fillMaxSize(),
-                content = {
-                    item{
-                        Divider(modifier = Modifier.padding(vertical = 5.dp))
-                    }
-                        item{
-                            Row(modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 5.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically) {
-                                Text(text = stringResource(id = R.string.recent),
-                                    style =MaterialTheme.typography.titleLarge
+                        item {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 5.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.recent),
+                                    style = MaterialTheme.typography.titleLarge
                                 )
                                 TextButton(onClick = { navigateToHistorySearch() }) {
-                                Text(text = stringResource(id = R.string.see_all),
-                                color = MaterialTheme.colorScheme.primary)
+                                    Text(
+                                        text = stringResource(id = R.string.see_all),
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
                                 }
                             }
                         }
-                    items(
-                        items = viewState.history
-                    ) { item ->
+                        items(
+                            items = viewState.history
+                        ) { item ->
 
-                           HistorySearchItem(
-                               item = item,
-                               onClick = {
-                                   onSearch(item.query)
-                                   query = item.query
-                               }
-                           )
-
-                    }
-
-                })
+                            HistorySearchItem(
+                                item = item,
+                                onClick = {
+                                    onSearch(item.query)
+                                    query = item.query
+                                }
+                            )
+                        }
+                    })
             }
-
-
         }
     }
 }

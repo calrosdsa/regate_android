@@ -85,6 +85,7 @@ int string edit 0x0
 int string email_verification 0x0
 int string email_verification_help_text 0x0
 int string emileys_emotion 0x0
+int string establecimientos 0x0
 int string exit 0x0
 int string expiration_date 0x0
 int string explore_exceptional_destinations 0x0

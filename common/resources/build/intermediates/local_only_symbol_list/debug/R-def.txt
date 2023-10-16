@@ -87,6 +87,7 @@ string edit
 string email_verification
 string email_verification_help_text
 string emileys_emotion
+string establecimientos
 string exit
 string expiration_date
 string explore_exceptional_destinations

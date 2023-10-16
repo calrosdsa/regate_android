@@ -18,5 +18,6 @@ data class EstablecimientoDto(
     val photo: String? = null,
     val address_photo: String? = null,
     val amenities:List<Long> = emptyList(),
-    val rules:List<Long> = emptyList()
+    val rules:List<Long> = emptyList(),
+    val distance:Double? =null
 )

@@ -6,6 +6,7 @@ import app.regate.compoundmodels.InstalacionCategoryCount
 import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.dto.empresa.salas.SalaDto
+import app.regate.models.AttentionSchedule
 import app.regate.models.Establecimiento
 import app.regate.models.Instalacion
 import app.regate.models.Labels
@@ -20,13 +21,22 @@ data class EstablecimientoState(
     val amenities:List<Labels> = emptyList(),
     val isFavorite:Boolean = false,
     val reviews:EstablecimientoReviews? = null,
-    val authState:AppAuthState = AppAuthState.LOGGED_OUT
+    val authState:AppAuthState = AppAuthState.LOGGED_OUT,
+    val attentionSchedule:AttentionSchedule? = null,
 ){
     companion object{
         val Empty = EstablecimientoState()
     }
 }
-
+@Immutable
+data class SecondState(
+    val loading:Boolean=false,
+    val attentionScheduleWeek:List<AttentionSchedule> = emptyList()
+){
+    companion object{
+        val Empty = SecondState()
+    }
+}
 
 data class Amenity(
     val title:String

@@ -344,56 +344,62 @@ public final class RoomUserDao_Impl extends RoomUserDao {
   public Flow<UserProfile> observeUserAndProfile() {
     final String _sql = "SELECT * FROM USERS  limit 1 ";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
-    return CoroutinesRoom.createFlow(__db, false, new String[] {"profiles",
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"profiles",
         "USERS"}, new Callable<UserProfile>() {
       @Override
       @NonNull
       public UserProfile call() throws Exception {
-        final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+        __db.beginTransaction();
         try {
-          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfUserId = CursorUtil.getColumnIndexOrThrow(_cursor, "user_id");
-          final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
-          final int _cursorIndexOfEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "estado");
-          final int _cursorIndexOfUsername = CursorUtil.getColumnIndexOrThrow(_cursor, "username");
-          final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
-          final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
-          while (_cursor.moveToNext()) {
-            final long _tmpKey;
-            _tmpKey = _cursor.getLong(_cursorIndexOfProfileId);
-            _collectionProfile.put(_tmpKey, null);
+          final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfUserId = CursorUtil.getColumnIndexOrThrow(_cursor, "user_id");
+            final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
+            final int _cursorIndexOfEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "estado");
+            final int _cursorIndexOfUsername = CursorUtil.getColumnIndexOrThrow(_cursor, "username");
+            final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+            final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
+            while (_cursor.moveToNext()) {
+              final long _tmpKey;
+              _tmpKey = _cursor.getLong(_cursorIndexOfProfileId);
+              _collectionProfile.put(_tmpKey, null);
+            }
+            _cursor.moveToPosition(-1);
+            __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
+            final UserProfile _result;
+            if (_cursor.moveToFirst()) {
+              final User _tmpUser;
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final long _tmpUser_id;
+              _tmpUser_id = _cursor.getLong(_cursorIndexOfUserId);
+              final String _tmpEmail;
+              _tmpEmail = _cursor.getString(_cursorIndexOfEmail);
+              final int _tmpEstado;
+              _tmpEstado = _cursor.getInt(_cursorIndexOfEstado);
+              final String _tmpUsername;
+              _tmpUsername = _cursor.getString(_cursorIndexOfUsername);
+              final long _tmpProfile_id;
+              _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
+              _tmpUser = new User(_tmpId,_tmpUser_id,_tmpEmail,_tmpEstado,_tmpUsername,_tmpProfile_id);
+              final Profile _tmpProfile;
+              final long _tmpKey_1;
+              _tmpKey_1 = _cursor.getLong(_cursorIndexOfProfileId);
+              _tmpProfile = _collectionProfile.get(_tmpKey_1);
+              _result = new UserProfile();
+              _result.user = _tmpUser;
+              _result.setProfile(_tmpProfile);
+            } else {
+              _result = null;
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
           }
-          _cursor.moveToPosition(-1);
-          __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
-          final UserProfile _result;
-          if (_cursor.moveToFirst()) {
-            final User _tmpUser;
-            final long _tmpId;
-            _tmpId = _cursor.getLong(_cursorIndexOfId);
-            final long _tmpUser_id;
-            _tmpUser_id = _cursor.getLong(_cursorIndexOfUserId);
-            final String _tmpEmail;
-            _tmpEmail = _cursor.getString(_cursorIndexOfEmail);
-            final int _tmpEstado;
-            _tmpEstado = _cursor.getInt(_cursorIndexOfEstado);
-            final String _tmpUsername;
-            _tmpUsername = _cursor.getString(_cursorIndexOfUsername);
-            final long _tmpProfile_id;
-            _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-            _tmpUser = new User(_tmpId,_tmpUser_id,_tmpEmail,_tmpEstado,_tmpUsername,_tmpProfile_id);
-            final Profile _tmpProfile;
-            final long _tmpKey_1;
-            _tmpKey_1 = _cursor.getLong(_cursorIndexOfProfileId);
-            _tmpProfile = _collectionProfile.get(_tmpKey_1);
-            _result = new UserProfile();
-            _result.user = _tmpUser;
-            _result.setProfile(_tmpProfile);
-          } else {
-            _result = null;
-          }
-          return _result;
         } finally {
-          _cursor.close();
+          __db.endTransaction();
         }
       }
 

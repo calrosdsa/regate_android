@@ -21,6 +21,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
 import android.content.Context
+import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import app.regate.constant.Route
@@ -57,16 +58,47 @@ class InitSync(
     override suspend fun doWork(): Result {
         try{
             withContext(Dispatchers.IO) {
-            val task1 = async{ labelRepository.getAmenities()}
-            val task2 =  async{labelRepository.getCategories()}
-            val task3 = async{labelRepository.getSports()}
-            val task4 = async{labelRepository.getRules()}
-            val task5 = async{labelRepository.getEmojis()}
+            val task1 = async{
+                try{
+                labelRepository.getAmenities()
+                }catch (e:Exception){
+                    //TODO()
+                }
+            }
+            val task2 =  async{
+                try {
+                labelRepository.getCategories()
+                }catch (e:Exception){
+                    //TODO()
+                }
+            }
+            val task3 = async{
+                try{
+                labelRepository.getSports()
+                }catch (e:Exception){
+                    //TODO()
+                }
+            }
+            val task4 = async{
+                try{
+                labelRepository.getRules()
+                }catch(e:Exception){
+                    //TODO()
+                }
+            }
+            val task5 = async{
+                try{
+                labelRepository.getEmojis()
+                }catch(e:Exception){
+                    //TODO()
+                }
+            }
 //            val task4 = async{ establecimientoRepository.getEstablecimientos()}
                 awaitAll(task1,task2,task3,task4,task5)
         }
 
         }catch (e:Exception){
+            Log.d("DEBUG_APP_SYNC",e.localizedMessage?:"")
             return Result.failure()
         }
         return Result.success()

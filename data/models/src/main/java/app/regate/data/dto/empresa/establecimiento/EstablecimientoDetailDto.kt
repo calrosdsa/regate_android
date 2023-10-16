@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 data class EstablecimientoDetailDto(
     val establecimiento:EstablecimientoDto,
     val setting_establecimiento: SettingEstablecimientoDto,
+    val attention_schedule:AttentionScheduleDto? = null,
 )

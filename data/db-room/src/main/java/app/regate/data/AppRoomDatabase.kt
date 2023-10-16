@@ -21,8 +21,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import app.regate.data.app.EmojiDto
-import app.regate.data.daos.EmojiDao
 import app.regate.data.daos.RoomCupoDao
 import app.regate.data.daos.RoomEmojiDao
 import app.regate.data.daos.RoomEstablecimientoDao
@@ -43,6 +41,7 @@ import app.regate.data.daos.RoomUserGrupoDao
 import app.regate.data.db.AppDatabase
 import app.regate.data.db.AppTypeConverters
 import app.regate.data.db.DateTimeTypeConverters
+import app.regate.models.AttentionSchedule
 import app.regate.models.Cupo
 import app.regate.models.Emoji
 import app.regate.models.Establecimiento
@@ -82,6 +81,7 @@ import app.regate.models.UserGrupo
         MessageSala::class,
         SearchHistory::class,
         Emoji::class,
+        AttentionSchedule::class,
 //        SalaEntity::class,
        ],
 //    views = [

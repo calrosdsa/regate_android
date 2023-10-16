@@ -79,6 +79,7 @@ import app.regate.common.resources.R
 import app.regate.constant.id
 import app.regate.discover.timepicker.TimeFormat
 import app.regate.discover.timepicker.WheelTimePicker
+import app.regate.util.roundOffDecimal
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
@@ -359,12 +360,11 @@ fun InstalacionResult(
                     Text(
                         text = instalacion.name,
                         style = MaterialTheme.typography.titleMedium,
-                        color = Color.White
-
+                        color = Color.White,
+                        maxLines = 1
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     if(isAddressDevice){
-
                     instalacion.distance?.div(1000)?.let {
                         roundOffDecimal(it)?.let { distance ->
                             Row(
@@ -385,8 +385,6 @@ fun InstalacionResult(
                         }
                     }
                     }
-
-
                 }
             }
 //            Column {
@@ -421,15 +419,6 @@ fun InstalacionResult(
     }
 }
 
-fun roundOffDecimal(number: Double): Double? {
-    return try{
-        val df = DecimalFormat("#.##", DecimalFormatSymbols(Locale.ENGLISH))
-        df.roundingMode = RoundingMode.CEILING
-        df.format(number).toDouble()
-    }catch (e:Exception){
-         null
-    }
-}
 
 
 @Composable

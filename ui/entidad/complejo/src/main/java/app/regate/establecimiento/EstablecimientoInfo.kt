@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -23,9 +24,11 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.WatchLater
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -50,6 +53,9 @@ import app.regate.common.resources.R
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.establecimiento.component.Detail
 import app.regate.establecimiento.component.InstalacionCategoryItem
+import app.regate.models.AttentionSchedule
+import app.regate.util.getDayName
+import kotlinx.datetime.DayOfWeek
 
 @OptIn(ExperimentalLayoutApi::class)
 @SuppressLint("QueryPermissionsNeeded")
@@ -63,6 +69,7 @@ fun EstablecimientoInfo(
     navigateToReviews: (Long) -> Unit,
 //    openAuthBottomSheet:()->Unit,
     openMap:(String?,String?,String?)->Unit,
+    openAttentionScheduleWeek:()->Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -121,10 +128,17 @@ fun EstablecimientoInfo(
             }
         }
         Divider(modifier = Modifier.padding(5.dp))
+        Text(text = "Horario de atencion",style = MaterialTheme.typography.titleSmall)
+        state.attentionSchedule?.let {
+            AttentionScheduleItem(
+                item = it,
+                modifier = Modifier.clickable { openAttentionScheduleWeek() }
+            )
+        }
         establecimiento?.address?.let {
             Detail(
                 it = it,
-                label = "Ubicacion",
+                label = "Ubicación",
                 icon = Icons.Default.Place,
                 intent = {
                     openLocationSheet()
@@ -245,9 +259,55 @@ fun EstablecimientoInfo(
         }
 
         Spacer(modifier = Modifier.height(20.dp))
-
     }
 }
+@Composable
+internal fun AttentionScheduleItem(
+    item:AttentionSchedule,
+    modifier: Modifier = Modifier
+    ){
+    Row(modifier = modifier
+        .padding(horizontal = 3.dp)
+        .padding(bottom = 3.dp)
+        .fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically) {
+        Column(modifier = Modifier.fillMaxWidth(0.8f)) {
+            Row {
+             Text(
+                 text = getDayName(item.day_week) + "  ",
+                 style = MaterialTheme.typography.labelMedium,
+                 color = MaterialTheme.colorScheme.primary
+             )
+            if(item.open){
+            Text(text = "Abierto las 24 horas",style = MaterialTheme.typography.labelMedium,
+                maxLines = 2)
+            }
+            if(item.closed){
+                Text(text = "Cerrado",style = MaterialTheme.typography.labelMedium,
+                    maxLines = 2)
+            }
+
+
+            if(!item.open && !item.closed){
+            Column() {
+            if(item.schedule_interval.isNotEmpty()){
+                item.schedule_interval.map{time->
+                    Text(text = "${time.start_time} - ${time.end_time}",style = MaterialTheme.typography.labelMedium,
+                        maxLines = 2)
+                }
+            }
+            }
+            }
+
+            }
+
+        }
+        IconButton(onClick = {}) {
+            Icon(imageVector = Icons.Default.WatchLater, contentDescription = null)
+        }
+    }
+}
+
 
 @Composable
 internal fun ReviewBlock(
@@ -272,11 +332,11 @@ internal fun ReviewBlock(
     data.results.map {
         ReviewItem(review = it,navigateToProfile = navigateToProfile)
     }
-        Divider()
+//        Divider()
         Row(
             modifier = Modifier
                 .clickable {
-                   createReview()
+                    createReview()
                 }
                 .fillMaxWidth()
                 .padding(10.dp),
@@ -293,8 +353,8 @@ internal fun ReviewBlock(
                 }
             }
         }
-        Divider()
         if(data.count >= 5) {
+        Divider()
 
                 OutlinedButton(
                     onClick = { navigateToReviews() },
@@ -311,5 +371,4 @@ internal fun ReviewBlock(
             }
     }
 }
-
 

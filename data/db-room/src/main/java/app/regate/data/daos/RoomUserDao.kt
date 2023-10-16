@@ -16,6 +16,7 @@ abstract class RoomUserDao:UserDao, RoomEntityDao<User> {
     @Query("SELECT * FROM USERS WHERE id = :id ")
     abstract override suspend fun getUser(id: Long): User
 
+    @Transaction
     @Query("SELECT * FROM USERS  limit 1 ")
     abstract override fun observeUserAndProfile(): Flow<UserProfile>
 

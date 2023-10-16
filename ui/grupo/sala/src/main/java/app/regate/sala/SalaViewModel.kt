@@ -10,7 +10,7 @@ import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.sala.SalaRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.observers.ObserveInstalacion
+import app.regate.domain.observers.instalacion.ObserveInstalacion
 import app.regate.domain.observers.ObserveUser
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body

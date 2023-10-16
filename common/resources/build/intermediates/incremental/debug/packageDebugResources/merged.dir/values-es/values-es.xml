@@ -42,6 +42,7 @@
     <string name="email_verification">Verificacion de email</string>
     <string name="email_verification_help_text">Antes de continuar, necesitamos verificar su correo electrónico. Por favor ingrese el código que fue enviado a su correo electrónico (<b>%1$s</b>)</string>
     <string name="emileys_emotion">EMOCIONES Y EMOCIONES</string>
+    <string name="establecimientos">Establecimientos</string>
     <string name="exit">Salir</string>
     <string name="expiration_date">Expiration date:  %1$s</string>
     <string name="explore_exceptional_destinations">Explora destinos excepcionales</string>
@@ -64,7 +65,7 @@
     <string name="inbox">Inbox</string>
     <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
     <string name="invitations">Invitaciones</string>
-    <string name="join_a_group">Únete a un grupo</string>
+    <string name="join_a_group">Unirse al grupo</string>
     <string name="language">Idioma</string>
     <string name="later">Luego</string>
     <string name="leave_group">Salir del grupo</string>

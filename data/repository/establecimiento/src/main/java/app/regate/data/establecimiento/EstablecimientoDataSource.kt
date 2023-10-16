@@ -1,6 +1,7 @@
 package app.regate.data.establecimiento
 
 import app.regate.data.dto.SearchFilterRequest
+import app.regate.data.dto.empresa.establecimiento.AttentionScheduleDto
 import app.regate.data.dto.empresa.establecimiento.CupoEstablecimiento
 import app.regate.data.dto.empresa.establecimiento.CuposEstablecimientoRequest
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
@@ -11,14 +12,14 @@ import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.data.dto.empresa.establecimiento.PaginationEstablecimientoResponse
 import app.regate.data.dto.empresa.establecimiento.PhotoDto
+import kotlinx.datetime.DayOfWeek
 
 interface EstablecimientoDataSource {
     suspend fun getEstablecimientos(d:InitialDataFilter):InitialData
     suspend fun getEstablecimentoPhotos(id:Long):List<PhotoDto>
     suspend fun getRecommendedEstablecimientos(d:InitialDataFilter,page:Int):PaginationEstablecimientoResponse
     suspend fun getNearEstablecimientos(lng:String,lat:String):List<EstablecimientoDto>
-
-    suspend fun getEstablecimientoDetail(id:Long): EstablecimientoDetailDto
+    suspend fun getEstablecimientoDetail(id:Long,dayWeek:Int): EstablecimientoDetailDto
     suspend fun getEstablecimiento(id:Long):EstablecimientoDto
     suspend fun getEstablecimientoCupos(d:CuposEstablecimientoRequest):List<CupoEstablecimiento>
     suspend fun getEstablecimientoFavoritos():List<EstablecimientoDto>
@@ -28,5 +29,6 @@ interface EstablecimientoDataSource {
     suspend fun createEstablecimientoReview(d: EstablecimientoReview): EstablecimientoReview
     suspend fun getReviewUser(establecimientoId:Long):EstablecimientoReview
     suspend fun searcEstablecimientos(d:SearchFilterRequest, page:Int, size: Int):PaginationEstablecimientoResponse
+    suspend fun getAttentionScheduleWeek(establecimientoId: Long):List<AttentionScheduleDto>
 }
 

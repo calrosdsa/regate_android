@@ -121,8 +121,10 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `message_sala` (`id` INTEGER NOT NULL, `sala_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `search_history` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `query` TEXT NOT NULL, `created_at` TEXT)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `emoji` (`id` INTEGER NOT NULL, `emoji` TEXT NOT NULL, `description` TEXT NOT NULL, `category` TEXT NOT NULL, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `attention_schedule` (`id` INTEGER NOT NULL, `day_week` INTEGER NOT NULL, `establecimiento_id` INTEGER NOT NULL, `open` INTEGER NOT NULL, `closed` INTEGER NOT NULL, `schedule_interval` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`establecimiento_id`) REFERENCES `establecimientos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_attention_schedule_establecimiento_id` ON `attention_schedule` (`establecimiento_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '201611829137fc22fb4125b074b21389')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c9eada720650abdc75ee3f70f09d3592')");
       }
 
       @Override
@@ -145,6 +147,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("DROP TABLE IF EXISTS `message_sala`");
         db.execSQL("DROP TABLE IF EXISTS `search_history`");
         db.execSQL("DROP TABLE IF EXISTS `emoji`");
+        db.execSQL("DROP TABLE IF EXISTS `attention_schedule`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -495,9 +498,27 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoEmoji + "\n"
                   + " Found:\n" + _existingEmoji);
         }
+        final HashMap<String, TableInfo.Column> _columnsAttentionSchedule = new HashMap<String, TableInfo.Column>(6);
+        _columnsAttentionSchedule.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsAttentionSchedule.put("day_week", new TableInfo.Column("day_week", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsAttentionSchedule.put("establecimiento_id", new TableInfo.Column("establecimiento_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsAttentionSchedule.put("open", new TableInfo.Column("open", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsAttentionSchedule.put("closed", new TableInfo.Column("closed", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsAttentionSchedule.put("schedule_interval", new TableInfo.Column("schedule_interval", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysAttentionSchedule = new HashSet<TableInfo.ForeignKey>(1);
+        _foreignKeysAttentionSchedule.add(new TableInfo.ForeignKey("establecimientos", "CASCADE", "CASCADE", Arrays.asList("establecimiento_id"), Arrays.asList("id")));
+        final HashSet<TableInfo.Index> _indicesAttentionSchedule = new HashSet<TableInfo.Index>(1);
+        _indicesAttentionSchedule.add(new TableInfo.Index("index_attention_schedule_establecimiento_id", false, Arrays.asList("establecimiento_id"), Arrays.asList("ASC")));
+        final TableInfo _infoAttentionSchedule = new TableInfo("attention_schedule", _columnsAttentionSchedule, _foreignKeysAttentionSchedule, _indicesAttentionSchedule);
+        final TableInfo _existingAttentionSchedule = TableInfo.read(db, "attention_schedule");
+        if (!_infoAttentionSchedule.equals(_existingAttentionSchedule)) {
+          return new RoomOpenHelper.ValidationResult(false, "attention_schedule(app.regate.models.AttentionSchedule).\n"
+                  + " Expected:\n" + _infoAttentionSchedule + "\n"
+                  + " Found:\n" + _existingAttentionSchedule);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "201611829137fc22fb4125b074b21389", "bd3a00d9b1c6e81368850421128d7ad6");
+    }, "c9eada720650abdc75ee3f70f09d3592", "1935436865e22237db395c821d789f50");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -508,7 +529,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas","notification","message_sala","search_history","emoji");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas","notification","message_sala","search_history","emoji","attention_schedule");
   }
 
   @Override
@@ -542,6 +563,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
       _db.execSQL("DELETE FROM `message_sala`");
       _db.execSQL("DELETE FROM `search_history`");
       _db.execSQL("DELETE FROM `emoji`");
+      _db.execSQL("DELETE FROM `attention_schedule`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();

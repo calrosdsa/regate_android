@@ -104,7 +104,7 @@ internal fun Grupos(
     topBar = {
             Indicators(navToTab = {
                coroutineScope.launch {
-                   pagerState.animateScrollToPage(it)
+                   pagerState.scrollToPage(it)
                }
             } , currentTab = pagerState.currentPage,
                createGroup = { navController.navigate(Route.CREATE_GROUP)},

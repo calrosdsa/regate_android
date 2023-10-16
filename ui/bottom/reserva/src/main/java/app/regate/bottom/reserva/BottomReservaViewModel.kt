@@ -17,9 +17,9 @@ import app.regate.data.instalacion.InstalacionRepository
 import app.regate.data.reserva.ReservaRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveCupos
-import app.regate.domain.observers.ObserveEstablecimientoDetail
-import app.regate.domain.observers.ObserveInstalacion
-import app.regate.domain.observers.ObserveSettingEstablecimiento
+import app.regate.domain.observers.establecimiento.ObserveEstablecimientoDetail
+import app.regate.domain.observers.instalacion.ObserveInstalacion
+import app.regate.domain.observers.establecimiento.ObserveSettingEstablecimiento
 import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body

@@ -1,10 +1,12 @@
 package app.regate.data.establecimiento
 
+import app.regate.constant.HostAdmin
 import app.regate.data.dto.empresa.establecimiento.CupoEstablecimiento
 import app.regate.data.dto.empresa.establecimiento.CuposEstablecimientoRequest
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.SearchFilterRequest
+import app.regate.data.dto.empresa.establecimiento.AttentionScheduleDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
@@ -20,6 +22,7 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
+import io.ktor.client.request.url
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import me.tatarka.inject.annotations.Inject
@@ -74,11 +77,13 @@ class EstablecimientoDataSourceImpl(
         d.latitud
         return client.post("/v1/establecimientos/search/?page=${page}&size=${size}"){
             contentType(ContentType.Application.Json)
-            setBody("{\n" +
-                    "\t\"query\":\"${d.query}\",\n" +
-                    "\t\"latitud\":\"${d.latitud}\",\n" +
-                    "\t\"longitud\":\"${d.longitud}\"\n" +
-                    "}")
+            setBody(d)
+//            contentType(ContentType.Application.Json)
+//            setBody("{\n" +
+//                    "\t\"query\":\"${d.query}\",\n" +
+//                    "\t\"latitud\":\"${d.latitud}\",\n" +
+//                    "\t\"longitud\":\"${d.longitud}\"\n" +
+//                    "}")
         }.body()
     }
 
@@ -113,11 +118,17 @@ class EstablecimientoDataSourceImpl(
         return client.get("/v1/establecimientos/near/?lng=$lng&lat=$lat").body()
     }
 
-    override suspend fun getEstablecimientoDetail(id: Long): EstablecimientoDetailDto {
-        return client.get("/v1/establecimiento-detail/${id}/").body()
+    override suspend fun getEstablecimientoDetail(id: Long,dayWeek:Int): EstablecimientoDetailDto {
+        return client.get("/v1/establecimiento-detail/${id}/?dayWeek=${dayWeek}").body()
     }
 
     override suspend fun getEstablecimiento(id: Long): EstablecimientoDto {
         return client.get("/v1/establecimiento/${id}/").body()
+    }
+
+    override suspend fun getAttentionScheduleWeek(establecimientoId: Long): List<AttentionScheduleDto>{
+        return client.get{
+            url("${HostAdmin.url}/v1/admin/settings/attention-schedule/week/${establecimientoId}/")
+        }.body()
     }
 }

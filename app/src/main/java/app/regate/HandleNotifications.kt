@@ -32,16 +32,16 @@ class HandleNotifications {
  suspend fun sendNotificationSalaCreation(context: Context, payload: SalaPayload){
     try{
         val title = context.getString(R.string.new_room_created)
-        val db = AppRoomDatabase.getInstance(context)
-        db.notificationDao().upsert(
-            Notification(
-                title = title,
-                content = payload.titulo,
-                typeEntity = TypeEntity.SALA,
-                entityId = payload.id
-            )
-        )
-        AppRoomDatabase.destroyInstance()
+//        val db = AppRoomDatabase.getInstance(context)
+//        db.notificationDao().upsert(
+//            Notification(
+//                title = title,
+//                content = payload.titulo,
+//                typeEntity = TypeEntity.SALA,
+//                entityId = payload.id
+//            )
+//        )
+//        AppRoomDatabase.destroyInstance()
         val taskDetailIntent = Intent(
             Intent.ACTION_VIEW,
             "https://example.com/sala_id=${payload.id}".toUri(),
@@ -71,7 +71,7 @@ class HandleNotifications {
             notify(payload.id.toInt(), notification)
         }
     }catch(e:Exception){
-        AppRoomDatabase.destroyInstance()
+//        AppRoomDatabase.destroyInstance()
         Log.d(TAG,e.localizedMessage?:"")
     }
    }

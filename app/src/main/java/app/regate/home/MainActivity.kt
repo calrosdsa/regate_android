@@ -83,6 +83,7 @@ class MainActivity : ComponentActivity() {
         val establecimientoId = intent.getStringExtra("establecimientoId")
 //        val mapIntent = Intent(this, MapActivity::class.java)
         val startScreen = if(preferences.categories.isBlank()) Route.WELCOME_PAGE else Route.MAIN
+//    if(preferences.categories.isBlank()) Route.WELCOME_PAGE else
 //        intent.flags = FLAG_ACTIVITY_SINGLE_TOP
         setContent {
             CompositionLocalProvider(

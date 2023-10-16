@@ -140,8 +140,10 @@ internal fun Establecimiento(
     ) {
     val appUtil = LocalAppUtil.current
     val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Hidden)
+    val sheetStateAttentionSchedule = rememberStandardBottomSheetState(initialValue = SheetValue.Hidden)
     val category = remember { mutableStateOf(0L) }
     val state by viewModel.state.collectAsState()
+    val secondState by viewModel.secondState.collectAsState()
     val pagerState = rememberPagerState(initialPage = currentPage)
     val coroutineScope = rememberCoroutineScope()
     val nestedScrollViewState = rememberNestedScrollViewState()
@@ -171,13 +173,24 @@ internal fun Establecimiento(
         navigateUp()
     }
 
-
-
+    if (sheetStateAttentionSchedule.isVisible) {
+        ModalBottomSheet(onDismissRequest = { coroutineScope.launch { sheetStateAttentionSchedule.hide() } }) {
+            Column(
+                modifier = Modifier
+                    .padding(10.dp)
+            ) {
+                Text(text = "Horarios de atención",style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(bottom = 10.dp))
+                secondState.attentionScheduleWeek.map {schedule->
+                AttentionScheduleItem(item = schedule)
+                }
+            }
+        }
+    }
     if (sheetState.isVisible) {
         ModalBottomSheet(onDismissRequest = { coroutineScope.launch { sheetState.hide() } }) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
                     .padding(10.dp)
             ) {
                 PosterCardImage(model = stringResource(id = R.string.location_static_url),
@@ -329,7 +342,7 @@ internal fun Establecimiento(
 
                 Indicators(navToTab = {
                     coroutineScope.launch {
-                        pagerState.animateScrollToPage(it)
+                        pagerState.scrollToPage(it)
                     }
                 }, currentTab = pagerState.currentPage)
                 HorizontalPager(
@@ -354,6 +367,10 @@ internal fun Establecimiento(
                                 navigateToProfile = navigateToProfile,
                                 navigateToReviews = navigateToReviews,
                                 createReview = navigateToCreateReview,
+                                openAttentionScheduleWeek = { coroutineScope.launch {
+                                    viewModel.updateScheduleWeek()
+                                    sheetStateAttentionSchedule.show()
+                                } }
                             )
                         }
 
@@ -398,7 +415,8 @@ fun HeaderEstablecimiento(
 //                        val data = MediaData(
 //                            images = listOf(url)
 //                        )
-                        val payload = Json.encodeToString(encodeMediaData(listOf(establecimiento.photo.toString())))
+                        val payload =
+                            Json.encodeToString(encodeMediaData(listOf(establecimiento.photo.toString())))
 //                        Log.d("DEBUG_APP_PAYLOAD",payload)
                         navigateToPhoto(payload)
                     }

@@ -52,7 +52,20 @@ fun GrupoItem(
     ) {
         PosterCardImage(
             model = grupo.photo, modifier = Modifier
-                .size(70.dp), shape = CircleShape
+                .size(70.dp), shape = CircleShape,
+            onClick = {
+                when(grupo.grupo_request_estado){
+                    GrupoRequestEstado.NONE.ordinal -> {
+                        navigateToInfoGrupo(grupo.id)
+                    }
+                    GrupoRequestEstado.PENDING.ordinal ->{
+                        navigateToInfoGrupo(grupo.id)
+                    }
+                    else -> {
+                        navigate(grupo.id)
+                    }
+                }
+            }
         )
         Spacer(modifier = Modifier.width(10.dp))
 

@@ -17,6 +17,7 @@
 package app.regate.data.db
 
 import androidx.room.TypeConverter
+import app.regate.data.dto.empresa.establecimiento.AttentionScheduleTimeDto
 import app.regate.data.dto.empresa.establecimiento.HorarioInterval
 import app.regate.data.dto.empresa.establecimiento.PaidType
 import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
@@ -81,4 +82,10 @@ object AppTypeConverters {
     @TypeConverter
     @JvmStatic
     fun toHorasSala(value:String):List<String> = Json.decodeFromString(value)
+    @TypeConverter
+    @JvmStatic
+    fun fromAttentionScheduleTime(value:List<AttentionScheduleTimeDto>) = Json.encodeToString(value)
+    @TypeConverter
+    @JvmStatic
+    fun toAttentionScheduleTime(value:String):List<AttentionScheduleTimeDto> = Json.decodeFromString(value)
 }

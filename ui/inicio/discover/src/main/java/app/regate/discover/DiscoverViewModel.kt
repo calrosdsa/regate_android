@@ -17,6 +17,7 @@ import app.regate.data.dto.empresa.instalacion.InstalacionDto
 import app.regate.data.dto.notifications.SalaConflictPayload
 import app.regate.data.instalacion.CupoRepository
 import app.regate.data.instalacion.InstalacionRepository
+import app.regate.domain.observers.ObserveAddressDevice
 import app.regate.domain.observers.labels.ObserveLabelType
 import app.regate.domain.pagination.PaginationInstalacionFilter
 import app.regate.extensions.combine
@@ -54,6 +55,7 @@ class DiscoverViewModel(
     private val appPreferences: AppPreferences,
     private val instalacionRepository: InstalacionRepository,
     observeLabelType: ObserveLabelType,
+    observeAddressDevice: ObserveAddressDevice,
     private val cupoRepository: CupoRepository,
     private val appDateFormatter: AppDateFormatter
 ): ViewModel() {
@@ -73,7 +75,7 @@ class DiscoverViewModel(
         observeLabelType.flow,
         loadingState.observable,
         uiMessageManager.message,
-        addressDevice,
+        observeAddressDevice.flow,
         filterData,
 //        instalacionResult,
         selectedCategory
@@ -95,6 +97,7 @@ class DiscoverViewModel(
 
     init{
         observeLabelType(ObserveLabelType.Params(LabelType.CATEGORIES))
+        observeAddressDevice(Unit)
         viewModelScope.launch {
             appPreferences.observeAddress().flowOn(Dispatchers.IO).collectLatest{
                 try{

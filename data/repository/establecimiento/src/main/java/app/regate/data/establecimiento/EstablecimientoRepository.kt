@@ -13,9 +13,11 @@ import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
 import app.regate.data.dto.empresa.establecimiento.PaginationEstablecimientoResponse
 import app.regate.data.dto.empresa.establecimiento.PhotoDto
-import app.regate.data.mappers.EstablecimientoDtoToEstablecimiento
-import app.regate.data.mappers.SettingDtoToSetting
+import app.regate.data.mappers.establecimiento.DtoToAttentionSchedule
+import app.regate.data.mappers.establecimiento.EstablecimientoDtoToEstablecimiento
+import app.regate.data.mappers.establecimiento.SettingDtoToSetting
 import app.regate.inject.ApplicationScope
+import app.regate.models.AttentionSchedule
 import app.regate.models.FavoriteEstablecimiento
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.flow.Flow
@@ -29,6 +31,7 @@ class EstablecimientoRepository(
     private val establecimientoDao: EstablecimientoDao,
     private val favoriteEstablecimientoDao: FavoriteEstablecimientoDao,
     private val establecimientoMapper: EstablecimientoDtoToEstablecimiento,
+    private val scheduleMapper:DtoToAttentionSchedule,
     private val settingsDtoToSetting: SettingDtoToSetting,
     private val dispatchers: AppCoroutineDispatchers,
 ){
@@ -96,8 +99,8 @@ class EstablecimientoRepository(
         return res
     }
 
-    suspend fun  getEstablecimientoDetail(id:Long): EstablecimientoDetailDto {
-        return establecimientoDataSourceImpl.getEstablecimientoDetail(id)
+    suspend fun  getEstablecimientoDetail(id:Long,dayWeek: Int): EstablecimientoDetailDto {
+        return establecimientoDataSourceImpl.getEstablecimientoDetail(id,dayWeek)
     }
     suspend fun  getEstablecimiento(id:Long): EstablecimientoDto {
         return establecimientoDataSourceImpl.getEstablecimiento(id)
@@ -114,15 +117,35 @@ class EstablecimientoRepository(
         }
     }
 
-    suspend fun updateEstablecimientoDetail(id:Long){
+    suspend fun updateEstablecimientoDetail(id:Long,dayWeek:Int){
         withContext(dispatchers.computation){
         try{
-            val res = getEstablecimientoDetail(id)
+            val res = getEstablecimientoDetail(id,dayWeek)
             establecimientoDao.upsert(establecimientoMapper.map(res.establecimiento))
             establecimientoDao.insertSettingEstablecimiento(settingsDtoToSetting.map(res.setting_establecimiento))
+            res.attention_schedule?.let {schedule->
+            establecimientoDao.insertAttentionScheduleTime(
+                scheduleMapper.map(schedule)
+            )
+            }
         }catch (e:Exception){
             //TODO()
         }
+        }
+    }
+
+    suspend fun updateAttentionScheduleWeek(establecimientoId: Long){
+        withContext(dispatchers.computation){
+            try{
+                val res = establecimientoDataSourceImpl.getAttentionScheduleWeek(establecimientoId)
+                res.map {schedule->
+                    establecimientoDao.insertAttentionScheduleTime(
+                        scheduleMapper.map(schedule)
+                    )
+                }
+            }catch (e:Exception){
+                throw  e
+            }
         }
     }
 }
