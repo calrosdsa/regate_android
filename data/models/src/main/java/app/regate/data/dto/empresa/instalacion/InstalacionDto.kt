@@ -8,7 +8,7 @@ data class InstalacionDto(
     val uuid:String = "",
     val name: String,
     val description: String? = null,
-    val precio_hora: Int? = null,
+    val precio_hora: Double? = null,
     val establecimiento_id: Long,
     val category_id: Int?=null,
     val category_name: String? = null,

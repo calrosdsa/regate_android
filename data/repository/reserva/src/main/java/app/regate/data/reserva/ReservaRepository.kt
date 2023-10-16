@@ -35,7 +35,7 @@ class ReservaRepository(
                             instalacion_name = it.instalacion_name,
                             establecimiento_id = it.establecimiento_id,
                             user_id =it.profile_id,
-                            paid = it.paid,
+                            pagado = it.paid,
                             total_price = it.total_price,
                             start_date = it.start_date,
                             end_date = it.end_date,

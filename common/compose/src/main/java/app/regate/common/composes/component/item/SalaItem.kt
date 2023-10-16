@@ -19,9 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.salas.SalaEstado
+import app.regate.common.resources.R
 
 @Composable
 fun SalaItem (
@@ -70,9 +72,11 @@ fun SalaItem (
                     )
                 }
                 when(sala.estado){
-                    SalaEstado.UNAVAILABLE.ordinal -> Text(text = "Sala no disponible",color = Color.Red,
+                    SalaEstado.UNAVAILABLE.ordinal -> Text(text =
+                    stringResource(id = R.string.room_not_available),color = Color.Red,
                         style = MaterialTheme.typography.labelMedium)
-                    SalaEstado.RESERVED.ordinal -> Text(text = "Sala reservada",color = MaterialTheme.colorScheme.primary,
+                    SalaEstado.RESERVED.ordinal -> Text(text =
+                    stringResource(id = R.string.reserved_room),color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.labelMedium)
                 }
 //                Text(text = )

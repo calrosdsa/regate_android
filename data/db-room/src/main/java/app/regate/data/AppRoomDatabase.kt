@@ -21,7 +21,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import app.regate.data.app.EmojiDto
+import app.regate.data.daos.EmojiDao
 import app.regate.data.daos.RoomCupoDao
+import app.regate.data.daos.RoomEmojiDao
 import app.regate.data.daos.RoomEstablecimientoDao
 import app.regate.data.daos.RoomFavoriteEstablecimientoDao
 import app.regate.data.daos.RoomGrupoDao
@@ -37,11 +40,11 @@ import app.regate.data.daos.RoomReservaDao
 import app.regate.data.daos.RoomSearchHistoryDao
 import app.regate.data.daos.RoomUserDao
 import app.regate.data.daos.RoomUserGrupoDao
-import app.regate.data.daos.SearchHistoryDao
 import app.regate.data.db.AppDatabase
 import app.regate.data.db.AppTypeConverters
 import app.regate.data.db.DateTimeTypeConverters
 import app.regate.models.Cupo
+import app.regate.models.Emoji
 import app.regate.models.Establecimiento
 import app.regate.models.FavoriteEstablecimiento
 import app.regate.models.Grupo
@@ -78,6 +81,7 @@ import app.regate.models.UserGrupo
         Notification::class,
         MessageSala::class,
         SearchHistory::class,
+        Emoji::class,
 //        SalaEntity::class,
        ],
 //    views = [
@@ -121,6 +125,7 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
     abstract override fun notificationDao(): RoomNotificationDao
     abstract override fun messageSalaDao(): RoomMessageSalaDao
     abstract override fun searchHistoryDao(): RoomSearchHistoryDao
+    abstract override fun emojiDao(): RoomEmojiDao
 //    abstract override fun salaEntityDao(): RoomSalaEntityDao
 
     companion object {

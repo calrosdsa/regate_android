@@ -6,6 +6,7 @@
     <string name="add_a_review">Agrega una reseña</string>
     <string name="all">Todo</string>
     <string name="amount">Amount: %1$s</string>
+    <string name="amount_contributed">Monto aportado</string>
     <string name="animals_and_nature">ANIMALES Y NATURALEZA</string>
     <string name="app_name">Regate</string>
     <string name="available_courts">Canchas disponibles</string>
@@ -53,8 +54,10 @@
     <string name="get_started">Empezar</string>
     <string name="grant_permission">Conceder permiso</string>
     <string name="group_description">Descripción del grupo</string>
+    <string name="group_privacy">Privacidad del grupo</string>
     <string name="group_visibility">Visibilidad del Grupo</string>
     <string name="groups">Grupos</string>
+    <string name="hidden">Oculto</string>
     <string name="history">Historial</string>
     <string name="illegal_activity">Actividad ilegal</string>
     <string name="inappropriate_material">Otro material inapropiado</string>
@@ -111,9 +114,12 @@
     <string name="requests">Solicitudes</string>
     <string name="resend_email_verification">Se enviará un correo electrónico a la dirección (%1$s) con el código de verificación.</string>
     <string name="reservation_date">Fecha de la Reserva</string>
+    <string name="reserved_room">Sala reservada</string>
     <string name="review">Reseña</string>
     <string name="reviews">Reseñas</string>
+    <string name="room_chat">Chat de la sala</string>
     <string name="room_has_been_reserved">La reserva ha sido confirmada</string>
+    <string name="room_not_available">Sala no disponible</string>
     <string name="rooms">Salas</string>
     <string name="rules_of_the_place">Reglas del lugar</string>
     <string name="sala_help_text">En una sala se determina la hora, el lugar y los detalles de juego, incluyendo la capacidad máxima de personas y el precio por cupo.</string>
@@ -152,6 +158,8 @@
     <string name="user_since">Usuario desde %1$s</string>
     <string name="verify">Verify</string>
     <string name="version">Version %1$s</string>
+    <string name="visible">Visible</string>
+    <string name="visible_info_group">Anyone can find this group</string>
     <string name="visit">Visitar</string>
     <string name="what_is_your_location">What is your location</string>
     <string name="what_kind_of_game_do_you_prefere">¿Qué tipo de juego prefieres?</string>

@@ -3,6 +3,6 @@
 3    package="app.regate.core.preferences" >
 4
 5    <uses-sdk android:minSdkVersion="23" />
-5-->C:\Users\PC\Desktop\projects\regate_android\core\preferences\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest7490684781003172939.xml
+5-->C:\Users\PC\Desktop\projects\regate_android\core\preferences\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12605254998614854329.xml
 6
 7</manifest>

@@ -88,7 +88,7 @@ fun ChatInput(
     isBottomLayoutOpen:Boolean = false,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     openBottomLayout:()->Unit = {},
-){
+    ){
 
     Row(
         modifier = modifier

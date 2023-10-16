@@ -9,6 +9,7 @@ class DtoToGrupo:Mapper<GrupoDto,Grupo> {
     override suspend fun map(from: GrupoDto): Grupo {
         return Grupo(
             id = from.id,
+            uuid = from.uuid,
             created_at = from.created_at,
             description = from.descripcion,
             name = from.name,
@@ -17,7 +18,8 @@ class DtoToGrupo:Mapper<GrupoDto,Grupo> {
             visibility = from.visibility,
             last_message = from.last_message,
             last_message_created = from.last_message_created,
-            messages_count = from.messages_count
+            messages_count = from.messages_count,
+            is_visible = from.is_visible
         )
     }
 }

@@ -18,6 +18,6 @@
 18    package="app.regate.entidad.salas" >
 19
 20    <uses-sdk android:minSdkVersion="23" />
-20-->D:\Regate\regate_android\ui\entidad\salas\src\main\AndroidManifest.xml
+20-->C:\Users\PC\Desktop\projects\regate_android\ui\entidad\salas\src\main\AndroidManifest.xml
 21
 22</manifest>

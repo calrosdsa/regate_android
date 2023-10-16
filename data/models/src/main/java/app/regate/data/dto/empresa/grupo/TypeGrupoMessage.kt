@@ -24,7 +24,7 @@ data class MessageSalaPayload(
     val id:Int = 0,
     val titulo:String = "",
     val cupos:Int = 0,
-    val precio:Int =0,
+    val precio:Double =0.0,
     val precio_cupo:Double =0.0,
     val start:String = "",
     val end:String = ""

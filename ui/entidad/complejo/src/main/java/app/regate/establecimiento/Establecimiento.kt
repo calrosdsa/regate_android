@@ -437,7 +437,7 @@ fun Indicators(
             },
         )
         Tab(
-            text = { Text(text = "Fotosr",style = MaterialTheme.typography.labelMedium) },
+            text = { Text(text = "Fotos",style = MaterialTheme.typography.labelMedium) },
             selected = currentTab ==2,
             onClick = {
                 // Animate to the selected page when clicked

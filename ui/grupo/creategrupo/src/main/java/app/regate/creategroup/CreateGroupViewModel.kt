@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
 import app.regate.data.dto.FileData
 import app.regate.data.dto.empresa.grupo.GroupRequest
+import app.regate.data.dto.empresa.grupo.GrupoVisibility
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.grupo.ObserveGrupo
@@ -62,18 +63,21 @@ class CreateGroupViewModel(
     }
 
     @SuppressLint("SuspiciousIndentation")
-    fun createGroup(name: String, description: String, visibility: Int,
+    fun createGroup(name: String, description: String, visibility: GrupoVisibility,isVisible:Boolean,
     openBottonAuth:()->Unit,removeLoader:()->Unit,navigateUp:()->Unit) {
         viewModelScope.launch {
             try{
-                 grupoRepository.createGrupo(GroupRequest(
-                   name = name,
-                   description = description,
-                   visibility = visibility,
-                   fileData = file.value,
-                    id = groupId,
-                    photo_url = state.value.group?.photo
-                ))
+                    val data = GroupRequest(
+                        name = name,
+                        description = description,
+                        visibility = visibility.ordinal,
+                        fileData = file.value,
+                        id = groupId,
+                        photo_url = state.value.group?.photo,
+                        uuid = state.value.group?.uuid ?:"",
+                        is_visible = isVisible
+                    )
+                 grupoRepository.createGrupo(data)
                 navigateUp()
 //                uiMessageManager.emitMessage(UiMessage(message = "El grupo se ha creado exitosamente."))
                 removeLoader()

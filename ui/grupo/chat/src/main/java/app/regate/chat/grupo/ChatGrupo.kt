@@ -61,7 +61,7 @@ import app.regate.common.composes.util.refreshErrorOrNull
 import app.regate.common.composes.viewModel
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
-import app.regate.data.app.Emoji
+import app.regate.data.app.EmojiDto
 import app.regate.data.app.EmojisState
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
@@ -78,7 +78,7 @@ import me.tatarka.inject.annotations.Inject
 typealias ChatGrupo  = @Composable (
     navigateUp:()->Unit,
     openAuthBottomSheet:()->Unit,
-    navigateToCreateSala:(id:Long)->Unit,
+//    navigateToCreateSala:(id:Long)->Unit,
     navigateToGroup:(id:Long)->Unit,
     navigateToInstalacionReserva:(Long,Long)->Unit,
     navigateToSala:(Long)->Unit
@@ -90,7 +90,7 @@ fun ChatGrupo(
     viewModelFactory:(SavedStateHandle)-> ChatGrupoViewModel,
     @Assisted navigateUp: () -> Unit,
     @Assisted  openAuthBottomSheet:()->Unit,
-    @Assisted navigateToCreateSala: (id: Long) -> Unit,
+//    @Assisted navigateToCreateSala: (id: Long) -> Unit,
     @Assisted navigateToGroup: (id: Long) -> Unit,
     @Assisted navigateToInstalacionReserva:(Long,Long)->Unit,
     @Assisted navigateToSala: (Long) -> Unit
@@ -99,7 +99,7 @@ fun ChatGrupo(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
         openAuthBottomSheet = openAuthBottomSheet,
-        navigateToCreateSala = navigateToCreateSala,
+//        navigateToCreateSala = navigateToCreateSala,
         navigateToGroup = navigateToGroup,
         navigateToInstalacionReserva = navigateToInstalacionReserva,
         navigateToSala = navigateToSala
@@ -111,7 +111,7 @@ internal fun ChatGrupo(
     viewModel: ChatGrupoViewModel,
     navigateUp: () -> Unit,
     openAuthBottomSheet: () -> Unit,
-    navigateToCreateSala: (id: Long) -> Unit,
+//    navigateToCreateSala: (id: Long) -> Unit,
     navigateToGroup: (id: Long) -> Unit,
     navigateToInstalacionReserva: (Long, Long) -> Unit,
     navigateToSala: (Long) -> Unit
@@ -127,7 +127,7 @@ internal fun ChatGrupo(
         openAuthBottomSheet = openAuthBottomSheet,
         formatterRelativeTime = formatter::formatShortRelativeTime,
         clearMessage = viewModel::clearMessage,
-        navigateToCreateSala = navigateToCreateSala,
+//        navigateToCreateSala = navigateToCreateSala,
         navigateToGroup = navigateToGroup,
         getUserProfileGrupo = viewModel::getUserGrupo,
         formatShortDate = {
@@ -144,7 +144,7 @@ internal fun ChatGrupo(
         resetScroll = viewModel::resetScroll,
         getKeyboardHeight = viewModel::getKeyBoardHeight,
         setKeyboardHeight = viewModel::setKeyboardHeight,
-        navigateToSala = navigateToSala
+        navigateToSala = navigateToSala,
 //        formatShortTime = {formatter.formatShortTime(it.toInstant())},
 //        formatDate = {formatter.formatWithSkeleton(it.toInstant().toEpochMilliseconds(),formatter.monthDaySkeleton)}
     )
@@ -162,7 +162,7 @@ internal fun ChatGrupo(
     openAuthBottomSheet: () -> Unit,
     formatterRelativeTime:(date:Instant)->String,
     clearMessage:(id:Long)->Unit,
-    navigateToCreateSala: (id: Long) -> Unit,
+//    navigateToCreateSala: (id: Long) -> Unit,
     navigateToGroup: (id: Long) -> Unit,
     getUserProfileGrupo:(id:Long)->UserProfileGrupo?,
     formatShortDate:(Instant)->String,
@@ -208,93 +208,10 @@ internal fun ChatGrupo(
         mutableStateOf(false)
     }
 
-    val emojis = remember {
-        mutableStateOf(EmojisState())
-    }
-    LaunchedEffect(key1 = Unit, block = {
-//        focusRequester.requestFocus()
-//        keyboardController?.hide()
-        try {
-            val decoder = Json {
-                ignoreUnknownKeys = true
-            }
-            val emoticonosString: String =
-                context.assets.open("emojis/${Locale.current.language}/smileys-emotion.json")
-                    .bufferedReader().use {
-                        it.readText()
-                    }
-            val emoticonos = decoder.decodeFromString<List<Emoji>>(emoticonosString)
-            val peopleString: String =
-                context.assets.open("emojis/${Locale.current.language}/people-body.json")
-                    .bufferedReader().use {
-                        it.readText()
-                    }
-            val people = decoder.decodeFromString<List<Emoji>>(peopleString)
-            val animalsAndNatureString: String =
-                context.assets.open("emojis/${Locale.current.language}/animals-nature.json")
-                    .bufferedReader().use {
-                        it.readText()
-                    }
-            val animalsAndNature = decoder.decodeFromString<List<Emoji>>(animalsAndNatureString)
-            val activitiesString: String =
-                context.assets.open("emojis/${Locale.current.language}/activities.json")
-                    .bufferedReader().use {
-                        it.readText()
-                    }
-            val activities = decoder.decodeFromString<List<Emoji>>(activitiesString)
-            val objectsString: String =
-                context.assets.open("emojis/${Locale.current.language}/objects.json")
-                    .bufferedReader().use {
-                        it.readText()
-                    }
-            val objects = decoder.decodeFromString<List<Emoji>>(objectsString)
-            val flagsString: String =
-                context.assets.open("emojis/${Locale.current.language}/flags.json")
-                    .bufferedReader().use {
-                        it.readText()
-                    }
-            val flags = decoder.decodeFromString<List<Emoji>>(flagsString)
-            val symbolsString: String =
-                context.assets.open("emojis/${Locale.current.language}/symbols.json")
-                    .bufferedReader().use {
-                        it.readText()
-                    }
-            val symbols = decoder.decodeFromString<List<Emoji>>(symbolsString)
-            val travelAndPlacesString: String =
-                context.assets.open("emojis/${Locale.current.language}/travel-places.json")
-                    .bufferedReader().use {
-                        it.readText()
-                    }
-            val travelAndPlaces = decoder.decodeFromString<List<Emoji>>(travelAndPlacesString)
-
-            val foodAndDringString: String =
-                context.assets.open("emojis/${Locale.current.language}/food-drink.json")
-                    .bufferedReader().use {
-                        it.readText()
-                    }
-            val foodAndDrink = decoder.decodeFromString<List<Emoji>>(foodAndDringString)
-            emojis.value = EmojisState(
-                emoticonos = emoticonos,
-                people = people,
-                animals_nature = animalsAndNature,
-                activities = activities,
-                objects = objects,
-                flags = flags,
-                symbols = symbols,
-                travel_places = travelAndPlaces,
-                food_drink = foodAndDrink
-            )
-            Log.d("DEBUG_APP", emoticonos[0].emoji)
-        } catch (e: Exception) {
-            Log.d("DEBUG_APP", e.localizedMessage ?: "")
-        }
-    })
-
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
     LaunchedEffect(key1 = isFocused) {
         if (isFocused) {
-
             bottomImePadding = getKeyboardHeight()
             keyboardController?.hide()
             keyboardController?.show()
@@ -367,7 +284,7 @@ internal fun ChatGrupo(
             TopBarChat(
                 navigateUp = navigateUp,
                 grupo = viewState.grupo,
-                navigateTocreateSala = navigateToCreateSala,
+//                navigateTocreateSala = navigateToCreateSala,
                 navigateToGroup = navigateToGroup,
                 users = viewState.usersGrupo
             )
@@ -419,12 +336,13 @@ internal fun ChatGrupo(
                     openBottomLayout = {
                         if (openBottomLayout) {
                             keyboardController?.show()
+                            focusRequester.requestFocus()
                         } else {
                             coroutineScope.launch {
                                 launch { keyboardController?.hide() }
                                 launch {
                                     delay(200)
-                                    bottomImePadding = 800
+                                    bottomImePadding = getKeyboardHeight()
                                 }
                             }
                         }
@@ -441,9 +359,10 @@ internal fun ChatGrupo(
                 ) {
                     if (openBottomLayout) {
                         EmojiLayout(
-                            emojis = emojis.value,
+                            emojis = viewState.emojiData,
                             updateMessage = { message.value = it },
-                            message = message.value
+                            message = message.value,
+                            coroutineScope=coroutineScope,
                         )
                     }
                 }
@@ -472,7 +391,7 @@ internal fun ChatGrupo(
                 formatShortTime = formatShortTime,
                 formatShortTimeFromString = formatShortTimeFromString,
                 formatShortDateFromString = formatShortDateFromString,
-                navigateToSala = {navigateToSala(it.toLong())}
+                navigateToSala = {navigateToSala(it.toLong())},
             )
 
 

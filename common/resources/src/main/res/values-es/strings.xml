@@ -165,5 +165,12 @@
     <string name="requests">Solicitudes</string>
     <string name="invitations">Invitaciones</string>
     <string name="request_declined">Solicitud rechazada</string>
-
+    <string name="group_privacy">Privacidad del grupo</string>
+    <string name="visible">Visible</string>
+    <string name="visible_info_group">Anyone can find this group</string>
+    <string name="hidden">Oculto</string>
+    <string name="reserved_room">Sala reservada</string>
+    <string name="room_not_available">Sala no disponible</string>
+    <string name="room_chat">Chat de la sala</string>
+    <string name="amount_contributed">Monto aportado</string>
 </resources>

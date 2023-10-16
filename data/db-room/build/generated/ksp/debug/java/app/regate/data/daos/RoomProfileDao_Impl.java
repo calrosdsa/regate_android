@@ -61,121 +61,124 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `profiles` SET `id` = ?,`user_id` = ?,`email` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ?,`created_at` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `profiles` SET `id` = ?,`uuid` = ?,`user_id` = ?,`email` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ?,`created_at` = ? WHERE `id` = ?";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Profile entity) {
         statement.bindLong(1, entity.getId());
+        statement.bindString(2, entity.getUuid());
         if (entity.getUser_id() == null) {
-          statement.bindNull(2);
-        } else {
-          statement.bindLong(2, entity.getUser_id());
-        }
-        if (entity.getEmail() == null) {
           statement.bindNull(3);
         } else {
-          statement.bindString(3, entity.getEmail());
+          statement.bindLong(3, entity.getUser_id());
         }
-        if (entity.getProfile_photo() == null) {
+        if (entity.getEmail() == null) {
           statement.bindNull(4);
         } else {
-          statement.bindString(4, entity.getProfile_photo());
+          statement.bindString(4, entity.getEmail());
         }
-        statement.bindString(5, entity.getNombre());
-        if (entity.getApellido() == null) {
-          statement.bindNull(6);
+        if (entity.getProfile_photo() == null) {
+          statement.bindNull(5);
         } else {
-          statement.bindString(6, entity.getApellido());
+          statement.bindString(5, entity.getProfile_photo());
+        }
+        statement.bindString(6, entity.getNombre());
+        if (entity.getApellido() == null) {
+          statement.bindNull(7);
+        } else {
+          statement.bindString(7, entity.getApellido());
         }
         final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
         if (_tmp == null) {
-          statement.bindNull(7);
+          statement.bindNull(8);
         } else {
-          statement.bindString(7, _tmp);
+          statement.bindString(8, _tmp);
         }
-        statement.bindLong(8, entity.getId());
+        statement.bindLong(9, entity.getId());
       }
     };
     this.__upsertionAdapterOfProfile = new EntityUpsertionAdapter<Profile>(new EntityInsertionAdapter<Profile>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `profiles` (`id`,`user_id`,`email`,`profile_photo`,`nombre`,`apellido`,`created_at`) VALUES (?,?,?,?,?,?,?)";
+        return "INSERT INTO `profiles` (`id`,`uuid`,`user_id`,`email`,`profile_photo`,`nombre`,`apellido`,`created_at`) VALUES (?,?,?,?,?,?,?,?)";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Profile entity) {
         statement.bindLong(1, entity.getId());
+        statement.bindString(2, entity.getUuid());
         if (entity.getUser_id() == null) {
-          statement.bindNull(2);
-        } else {
-          statement.bindLong(2, entity.getUser_id());
-        }
-        if (entity.getEmail() == null) {
           statement.bindNull(3);
         } else {
-          statement.bindString(3, entity.getEmail());
+          statement.bindLong(3, entity.getUser_id());
         }
-        if (entity.getProfile_photo() == null) {
+        if (entity.getEmail() == null) {
           statement.bindNull(4);
         } else {
-          statement.bindString(4, entity.getProfile_photo());
+          statement.bindString(4, entity.getEmail());
         }
-        statement.bindString(5, entity.getNombre());
-        if (entity.getApellido() == null) {
-          statement.bindNull(6);
+        if (entity.getProfile_photo() == null) {
+          statement.bindNull(5);
         } else {
-          statement.bindString(6, entity.getApellido());
+          statement.bindString(5, entity.getProfile_photo());
+        }
+        statement.bindString(6, entity.getNombre());
+        if (entity.getApellido() == null) {
+          statement.bindNull(7);
+        } else {
+          statement.bindString(7, entity.getApellido());
         }
         final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
         if (_tmp == null) {
-          statement.bindNull(7);
+          statement.bindNull(8);
         } else {
-          statement.bindString(7, _tmp);
+          statement.bindString(8, _tmp);
         }
       }
     }, new EntityDeletionOrUpdateAdapter<Profile>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `profiles` SET `id` = ?,`user_id` = ?,`email` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ?,`created_at` = ? WHERE `id` = ?";
+        return "UPDATE `profiles` SET `id` = ?,`uuid` = ?,`user_id` = ?,`email` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ?,`created_at` = ? WHERE `id` = ?";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Profile entity) {
         statement.bindLong(1, entity.getId());
+        statement.bindString(2, entity.getUuid());
         if (entity.getUser_id() == null) {
-          statement.bindNull(2);
-        } else {
-          statement.bindLong(2, entity.getUser_id());
-        }
-        if (entity.getEmail() == null) {
           statement.bindNull(3);
         } else {
-          statement.bindString(3, entity.getEmail());
+          statement.bindLong(3, entity.getUser_id());
         }
-        if (entity.getProfile_photo() == null) {
+        if (entity.getEmail() == null) {
           statement.bindNull(4);
         } else {
-          statement.bindString(4, entity.getProfile_photo());
+          statement.bindString(4, entity.getEmail());
         }
-        statement.bindString(5, entity.getNombre());
-        if (entity.getApellido() == null) {
-          statement.bindNull(6);
+        if (entity.getProfile_photo() == null) {
+          statement.bindNull(5);
         } else {
-          statement.bindString(6, entity.getApellido());
+          statement.bindString(5, entity.getProfile_photo());
+        }
+        statement.bindString(6, entity.getNombre());
+        if (entity.getApellido() == null) {
+          statement.bindNull(7);
+        } else {
+          statement.bindString(7, entity.getApellido());
         }
         final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
         if (_tmp == null) {
-          statement.bindNull(7);
+          statement.bindNull(8);
         } else {
-          statement.bindString(7, _tmp);
+          statement.bindString(8, _tmp);
         }
-        statement.bindLong(8, entity.getId());
+        statement.bindLong(9, entity.getId());
       }
     });
   }
@@ -288,6 +291,7 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
           final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
           try {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfUuid = CursorUtil.getColumnIndexOrThrow(_cursor, "uuid");
             final int _cursorIndexOfUserId = CursorUtil.getColumnIndexOrThrow(_cursor, "user_id");
             final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
             final int _cursorIndexOfProfilePhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_photo");
@@ -298,6 +302,8 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
             if (_cursor.moveToFirst()) {
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final String _tmpUuid;
+              _tmpUuid = _cursor.getString(_cursorIndexOfUuid);
               final Long _tmpUser_id;
               if (_cursor.isNull(_cursorIndexOfUserId)) {
                 _tmpUser_id = null;
@@ -332,7 +338,7 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
                 _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
               }
               _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
-              _result = new Profile(_tmpId,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCreated_at);
+              _result = new Profile(_tmpId,_tmpUuid,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCreated_at);
             } else {
               _result = null;
             }
@@ -377,6 +383,7 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
           final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
           try {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfUuid = CursorUtil.getColumnIndexOrThrow(_cursor, "uuid");
             final int _cursorIndexOfUserId = CursorUtil.getColumnIndexOrThrow(_cursor, "user_id");
             final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
             final int _cursorIndexOfProfilePhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_photo");
@@ -388,6 +395,8 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
               final Profile _item_1;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final String _tmpUuid;
+              _tmpUuid = _cursor.getString(_cursorIndexOfUuid);
               final Long _tmpUser_id;
               if (_cursor.isNull(_cursorIndexOfUserId)) {
                 _tmpUser_id = null;
@@ -422,7 +431,7 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
                 _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
               }
               _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
-              _item_1 = new Profile(_tmpId,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCreated_at);
+              _item_1 = new Profile(_tmpId,_tmpUuid,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCreated_at);
               _result.add(_item_1);
             }
             __db.setTransactionSuccessful();

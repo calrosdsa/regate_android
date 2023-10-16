@@ -8,11 +8,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GrupoDto(
     val id: Long = 0,
+    val uuid:String = "",
     val descripcion: String? = null,
     val created_at: Instant? = null,
     val name: String = "Grupo",
     val photo: String? = null,
     val visibility:Int = GrupoVisibility.PUBLIC.ordinal,
+    val is_visible:Boolean = false,
     val profile_id:Long = 0,
     val last_message:String = "",
     val last_message_created: Instant? = null,
@@ -24,7 +26,10 @@ data class GrupoDto(
 
 enum class GrupoVisibility {
     PUBLIC,
-    PRIVATE
+    PRIVATE;
+    companion object {
+        fun fromInt(value: Int) = GrupoVisibility.values().first { it.ordinal == value }
+    }
 }
 
 enum class GrupoRequestEstado {

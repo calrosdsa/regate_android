@@ -15,7 +15,7 @@ data class SalaEntity(
     val descripcion: String ="",
     val establecimiento_id: Long = 0,
     val instalacion_id: Long = 0,
-    val precio: Int = 0,
+    val precio: Double = 0.0,
     val paid:Double = 0.0,
     val titulo: String = "",
     val precio_cupo:Double = 0.0,

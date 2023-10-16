@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
+import app.regate.data.coin.ConversationRepository
 import app.regate.domain.interactors.UpdateEstablecimiento
 import app.regate.domain.interactors.UpdateInstalacion
 import app.regate.domain.observers.ObserveAuthState
@@ -24,6 +25,7 @@ class ReservaViewModel(
     observeReservaDetail: ObserveReservaDetail,
     private val updateEstablecimiento: UpdateEstablecimiento,
     private val updateInstalacion: UpdateInstalacion,
+    private val conversationRepository: ConversationRepository
 ):ViewModel() {
     private val reservaId = savedStateHandle.get<Long>("id") ?: 0
     private val instalacionId = savedStateHandle.get<Long>("instalacion_id") ?: 0
@@ -61,6 +63,18 @@ class ReservaViewModel(
                 updateInstalacion.executeSync(UpdateInstalacion.Params(id = instalacionId))
             }catch (e:Exception){
                 Log.d("DEBUG_APP",e.localizedMessage?:"")
+            }
+        }
+    }
+
+    fun navigateToConversationE(navigate:(Long,Long)->Unit){
+        viewModelScope.launch {
+            try{
+                val res = conversationRepository.getConversationId(establecimientoId)
+                navigate(res.id,establecimientoId)
+            }catch (e:Exception){
+                Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")
+                //TODO()
             }
         }
     }

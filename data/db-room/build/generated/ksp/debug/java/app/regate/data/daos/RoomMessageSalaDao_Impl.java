@@ -653,7 +653,7 @@ public final class RoomMessageSalaDao_Impl extends RoomMessageSalaDao {
       return;
     }
     final StringBuilder _stringBuilder = StringUtil.newStringBuilder();
-    _stringBuilder.append("SELECT `id`,`user_id`,`email`,`profile_photo`,`nombre`,`apellido`,`created_at` FROM `profiles` WHERE `id` IN (");
+    _stringBuilder.append("SELECT `id`,`uuid`,`user_id`,`email`,`profile_photo`,`nombre`,`apellido`,`created_at` FROM `profiles` WHERE `id` IN (");
     final int _inputSize = _map.size();
     StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
     _stringBuilder.append(")");
@@ -673,12 +673,13 @@ public final class RoomMessageSalaDao_Impl extends RoomMessageSalaDao {
         return;
       }
       final int _cursorIndexOfId = 0;
-      final int _cursorIndexOfUserId = 1;
-      final int _cursorIndexOfEmail = 2;
-      final int _cursorIndexOfProfilePhoto = 3;
-      final int _cursorIndexOfNombre = 4;
-      final int _cursorIndexOfApellido = 5;
-      final int _cursorIndexOfCreatedAt = 6;
+      final int _cursorIndexOfUuid = 1;
+      final int _cursorIndexOfUserId = 2;
+      final int _cursorIndexOfEmail = 3;
+      final int _cursorIndexOfProfilePhoto = 4;
+      final int _cursorIndexOfNombre = 5;
+      final int _cursorIndexOfApellido = 6;
+      final int _cursorIndexOfCreatedAt = 7;
       while (_cursor.moveToNext()) {
         final long _tmpKey;
         _tmpKey = _cursor.getLong(_itemKeyIndex);
@@ -686,6 +687,8 @@ public final class RoomMessageSalaDao_Impl extends RoomMessageSalaDao {
           final Profile _item_1;
           final long _tmpId;
           _tmpId = _cursor.getLong(_cursorIndexOfId);
+          final String _tmpUuid;
+          _tmpUuid = _cursor.getString(_cursorIndexOfUuid);
           final Long _tmpUser_id;
           if (_cursor.isNull(_cursorIndexOfUserId)) {
             _tmpUser_id = null;
@@ -720,7 +723,7 @@ public final class RoomMessageSalaDao_Impl extends RoomMessageSalaDao {
             _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
           }
           _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
-          _item_1 = new Profile(_tmpId,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCreated_at);
+          _item_1 = new Profile(_tmpId,_tmpUuid,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCreated_at);
           _map.put(_tmpKey, _item_1);
         }
       }

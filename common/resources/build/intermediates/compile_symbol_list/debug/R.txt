@@ -43,6 +43,7 @@ int string add_a_message 0x0
 int string add_a_review 0x0
 int string all 0x0
 int string amount 0x0
+int string amount_contributed 0x0
 int string animals_and_nature 0x0
 int string app_name 0x0
 int string available_courts 0x0
@@ -99,8 +100,10 @@ int string gcp_id 0x0
 int string get_started 0x0
 int string grant_permission 0x0
 int string group_description 0x0
+int string group_privacy 0x0
 int string group_visibility 0x0
 int string groups 0x0
+int string hidden 0x0
 int string history 0x0
 int string illegal_activity 0x0
 int string inappropriate_material 0x0
@@ -161,9 +164,12 @@ int string request_removed 0x0
 int string requests 0x0
 int string resend_email_verification 0x0
 int string reservation_date 0x0
+int string reserved_room 0x0
 int string review 0x0
 int string reviews 0x0
+int string room_chat 0x0
 int string room_has_been_reserved 0x0
+int string room_not_available 0x0
 int string rooms 0x0
 int string rules_of_the_place 0x0
 int string sala_help_text 0x0
@@ -202,6 +208,8 @@ int string unexpected_error 0x0
 int string user_since 0x0
 int string verify 0x0
 int string version 0x0
+int string visible 0x0
+int string visible_info_group 0x0
 int string visit 0x0
 int string what_is_your_location 0x0
 int string what_kind_of_game_do_you_prefere 0x0

@@ -1,5 +1,6 @@
 package app.regate.data.labels
 
+import app.regate.data.app.EmojiDto
 import app.regate.data.dto.empresa.labels.LabelDto
 
 interface LabelsDataSource {
@@ -7,5 +8,7 @@ interface LabelsDataSource {
    suspend fun getCategories():List<LabelDto>
    suspend fun getSports():List<LabelDto>
    suspend fun getRules():List<LabelDto>
+   suspend fun getEmojis():List<EmojiDto>
+
 }
 

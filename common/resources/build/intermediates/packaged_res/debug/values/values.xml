@@ -16,6 +16,7 @@
     <string name="add_a_review">Add a review</string>
     <string name="all">All</string>
     <string name="amount">Amount:  %1$s</string>
+    <string name="amount_contributed">Amount contributed</string>
     <string name="animals_and_nature">ANIMALS AND NATURE</string>
     <string name="app_name">Regate</string>
     <string name="available_courts">Available courts</string>
@@ -72,8 +73,10 @@
     <string name="get_started">Get Started</string>
     <string name="grant_permission">Grant permission</string>
     <string name="group_description">Group description</string>
+    <string name="group_privacy">Group privacy</string>
     <string name="group_visibility">Group Visibility</string>
     <string name="groups">Groups</string>
+    <string name="hidden">Hidden</string>
     <string name="history">History</string>
     <string name="illegal_activity">Illegal activity</string>
     <string name="inappropriate_material">Other inappropriate material</string>
@@ -136,9 +139,12 @@
     <string name="requests">Requests</string>
     <string name="resend_email_verification">An email will be sent to the address (%1$s) with the verification code.</string>
     <string name="reservation_date">Reservation date</string>
+    <string name="reserved_room">Reserved room</string>
     <string name="review">Review</string>
     <string name="reviews">Reviews</string>
+    <string name="room_chat">Room chat</string>
     <string name="room_has_been_reserved">The reservation has been confirmed</string>
+    <string name="room_not_available">Room not available</string>
     <string name="rooms">Rooms</string>
     <string name="rules_of_the_place">Rules of the place</string>
     <string name="sala_help_text">In a room, the time, location, and game details are determined, including
@@ -178,6 +184,8 @@
     <string name="user_since">User since %1$s</string>
     <string name="verify">Verify</string>
     <string name="version">Version %1$s</string>
+    <string name="visible">Visible</string>
+    <string name="visible_info_group">Anyone can find this group</string>
     <string name="visit">Visit</string>
     <string name="what_is_your_location">What is your location</string>
     <string name="what_kind_of_game_do_you_prefere">What kind of game do you prefer?</string>

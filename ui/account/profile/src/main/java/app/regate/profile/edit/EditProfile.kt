@@ -290,7 +290,7 @@ internal fun EditProfile(
                 modifier= Modifier.padding(5.dp))
         }
 
-        if (showBottomSheet) {
+        if (showBottomSheet)      {
             ModalBottomSheet(
                 onDismissRequest = {
                     showBottomSheet = false

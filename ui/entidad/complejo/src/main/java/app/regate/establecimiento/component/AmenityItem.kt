@@ -80,9 +80,10 @@ fun Detail(
         .clickable { intent() }
         .fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically) {
-    Column {
+    Column(modifier = Modifier.fillMaxWidth(0.8f)) {
         Text(text = label,style = MaterialTheme.typography.titleSmall)
-        Text(text = it,style = MaterialTheme.typography.labelMedium)
+        Text(text = it,style = MaterialTheme.typography.labelMedium,
+        maxLines = 2)
     }
         IconButton(onClick = { intent() }) {
             Icon(imageVector = icon, contentDescription = label)

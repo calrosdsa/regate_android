@@ -35,7 +35,19 @@ fun GrupoItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { navigate(grupo.id) }
+            .clickable {
+                when(grupo.grupo_request_estado){
+                    GrupoRequestEstado.NONE.ordinal -> {
+                        navigateToInfoGrupo(grupo.id)
+                    }
+                    GrupoRequestEstado.PENDING.ordinal ->{
+                        navigateToInfoGrupo(grupo.id)
+                    }
+                    else -> {
+                        navigate(grupo.id)
+                    }
+                }
+            }
             .padding(10.dp),
     ) {
         PosterCardImage(

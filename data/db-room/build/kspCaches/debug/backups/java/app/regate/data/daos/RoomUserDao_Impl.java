@@ -3,6 +3,7 @@ package app.regate.data.daos;
 import android.database.Cursor;
 import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
+import androidx.collection.LongSparseArray;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityDeletionOrUpdateAdapter;
 import androidx.room.EntityInsertionAdapter;
@@ -12,7 +13,12 @@ import androidx.room.RoomSQLiteQuery;
 import androidx.room.SharedSQLiteStatement;
 import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
+import androidx.room.util.RelationUtil;
+import androidx.room.util.StringUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
+import app.regate.compoundmodels.UserProfile;
+import app.regate.data.db.DateTimeTypeConverters;
+import app.regate.models.Profile;
 import app.regate.models.User;
 import java.lang.Class;
 import java.lang.Exception;
@@ -21,6 +27,7 @@ import java.lang.Long;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.SuppressWarnings;
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +35,7 @@ import java.util.concurrent.Callable;
 import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 import kotlinx.coroutines.flow.Flow;
+import kotlinx.datetime.Instant;
 
 @SuppressWarnings({"unchecked", "deprecation"})
 public final class RoomUserDao_Impl extends RoomUserDao {
@@ -60,7 +68,7 @@ public final class RoomUserDao_Impl extends RoomUserDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `users` SET `id` = ?,`user_id` = ?,`email` = ?,`estado` = ?,`username` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ?,`profile_id` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `users` SET `id` = ?,`user_id` = ?,`email` = ?,`estado` = ?,`username` = ?,`profile_id` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -71,19 +79,8 @@ public final class RoomUserDao_Impl extends RoomUserDao {
         statement.bindString(3, entity.getEmail());
         statement.bindLong(4, entity.getEstado());
         statement.bindString(5, entity.getUsername());
-        if (entity.getProfile_photo() == null) {
-          statement.bindNull(6);
-        } else {
-          statement.bindString(6, entity.getProfile_photo());
-        }
-        statement.bindString(7, entity.getNombre());
-        if (entity.getApellido() == null) {
-          statement.bindNull(8);
-        } else {
-          statement.bindString(8, entity.getApellido());
-        }
-        statement.bindLong(9, entity.getProfile_id());
-        statement.bindLong(10, entity.getId());
+        statement.bindLong(6, entity.getProfile_id());
+        statement.bindLong(7, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteUser = new SharedSQLiteStatement(__db) {
@@ -98,7 +95,7 @@ public final class RoomUserDao_Impl extends RoomUserDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `users` (`id`,`user_id`,`email`,`estado`,`username`,`profile_photo`,`nombre`,`apellido`,`profile_id`) VALUES (?,?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `users` (`id`,`user_id`,`email`,`estado`,`username`,`profile_id`) VALUES (?,?,?,?,?,?)";
       }
 
       @Override
@@ -109,24 +106,13 @@ public final class RoomUserDao_Impl extends RoomUserDao {
         statement.bindString(3, entity.getEmail());
         statement.bindLong(4, entity.getEstado());
         statement.bindString(5, entity.getUsername());
-        if (entity.getProfile_photo() == null) {
-          statement.bindNull(6);
-        } else {
-          statement.bindString(6, entity.getProfile_photo());
-        }
-        statement.bindString(7, entity.getNombre());
-        if (entity.getApellido() == null) {
-          statement.bindNull(8);
-        } else {
-          statement.bindString(8, entity.getApellido());
-        }
-        statement.bindLong(9, entity.getProfile_id());
+        statement.bindLong(6, entity.getProfile_id());
       }
     }, new EntityDeletionOrUpdateAdapter<User>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `users` SET `id` = ?,`user_id` = ?,`email` = ?,`estado` = ?,`username` = ?,`profile_photo` = ?,`nombre` = ?,`apellido` = ?,`profile_id` = ? WHERE `id` = ?";
+        return "UPDATE `users` SET `id` = ?,`user_id` = ?,`email` = ?,`estado` = ?,`username` = ?,`profile_id` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -137,19 +123,8 @@ public final class RoomUserDao_Impl extends RoomUserDao {
         statement.bindString(3, entity.getEmail());
         statement.bindLong(4, entity.getEstado());
         statement.bindString(5, entity.getUsername());
-        if (entity.getProfile_photo() == null) {
-          statement.bindNull(6);
-        } else {
-          statement.bindString(6, entity.getProfile_photo());
-        }
-        statement.bindString(7, entity.getNombre());
-        if (entity.getApellido() == null) {
-          statement.bindNull(8);
-        } else {
-          statement.bindString(8, entity.getApellido());
-        }
-        statement.bindLong(9, entity.getProfile_id());
-        statement.bindLong(10, entity.getId());
+        statement.bindLong(6, entity.getProfile_id());
+        statement.bindLong(7, entity.getId());
       }
     });
   }
@@ -283,9 +258,6 @@ public final class RoomUserDao_Impl extends RoomUserDao {
             final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
             final int _cursorIndexOfEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "estado");
             final int _cursorIndexOfUsername = CursorUtil.getColumnIndexOrThrow(_cursor, "username");
-            final int _cursorIndexOfProfilePhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_photo");
-            final int _cursorIndexOfNombre = CursorUtil.getColumnIndexOrThrow(_cursor, "nombre");
-            final int _cursorIndexOfApellido = CursorUtil.getColumnIndexOrThrow(_cursor, "apellido");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final User _result;
             if (_cursor.moveToFirst()) {
@@ -299,23 +271,9 @@ public final class RoomUserDao_Impl extends RoomUserDao {
               _tmpEstado = _cursor.getInt(_cursorIndexOfEstado);
               final String _tmpUsername;
               _tmpUsername = _cursor.getString(_cursorIndexOfUsername);
-              final String _tmpProfile_photo;
-              if (_cursor.isNull(_cursorIndexOfProfilePhoto)) {
-                _tmpProfile_photo = null;
-              } else {
-                _tmpProfile_photo = _cursor.getString(_cursorIndexOfProfilePhoto);
-              }
-              final String _tmpNombre;
-              _tmpNombre = _cursor.getString(_cursorIndexOfNombre);
-              final String _tmpApellido;
-              if (_cursor.isNull(_cursorIndexOfApellido)) {
-                _tmpApellido = null;
-              } else {
-                _tmpApellido = _cursor.getString(_cursorIndexOfApellido);
-              }
               final long _tmpProfile_id;
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-              _result = new User(_tmpId,_tmpUser_id,_tmpEmail,_tmpEstado,_tmpUsername,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpProfile_id);
+              _result = new User(_tmpId,_tmpUser_id,_tmpEmail,_tmpEstado,_tmpUsername,_tmpProfile_id);
             } else {
               _result = null;
             }
@@ -354,9 +312,6 @@ public final class RoomUserDao_Impl extends RoomUserDao {
           final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
           final int _cursorIndexOfEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "estado");
           final int _cursorIndexOfUsername = CursorUtil.getColumnIndexOrThrow(_cursor, "username");
-          final int _cursorIndexOfProfilePhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_photo");
-          final int _cursorIndexOfNombre = CursorUtil.getColumnIndexOrThrow(_cursor, "nombre");
-          final int _cursorIndexOfApellido = CursorUtil.getColumnIndexOrThrow(_cursor, "apellido");
           final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
           final User _result;
           if (_cursor.moveToFirst()) {
@@ -370,23 +325,9 @@ public final class RoomUserDao_Impl extends RoomUserDao {
             _tmpEstado = _cursor.getInt(_cursorIndexOfEstado);
             final String _tmpUsername;
             _tmpUsername = _cursor.getString(_cursorIndexOfUsername);
-            final String _tmpProfile_photo;
-            if (_cursor.isNull(_cursorIndexOfProfilePhoto)) {
-              _tmpProfile_photo = null;
-            } else {
-              _tmpProfile_photo = _cursor.getString(_cursorIndexOfProfilePhoto);
-            }
-            final String _tmpNombre;
-            _tmpNombre = _cursor.getString(_cursorIndexOfNombre);
-            final String _tmpApellido;
-            if (_cursor.isNull(_cursorIndexOfApellido)) {
-              _tmpApellido = null;
-            } else {
-              _tmpApellido = _cursor.getString(_cursorIndexOfApellido);
-            }
             final long _tmpProfile_id;
             _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-            _result = new User(_tmpId,_tmpUser_id,_tmpEmail,_tmpEstado,_tmpUsername,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpProfile_id);
+            _result = new User(_tmpId,_tmpUser_id,_tmpEmail,_tmpEstado,_tmpUsername,_tmpProfile_id);
           } else {
             _result = null;
           }
@@ -399,8 +340,164 @@ public final class RoomUserDao_Impl extends RoomUserDao {
     }, continuation);
   }
 
+  @Override
+  public Flow<UserProfile> observeUserAndProfile() {
+    final String _sql = "SELECT * FROM USERS  limit 1 ";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return CoroutinesRoom.createFlow(__db, false, new String[] {"profiles",
+        "USERS"}, new Callable<UserProfile>() {
+      @Override
+      @NonNull
+      public UserProfile call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfUserId = CursorUtil.getColumnIndexOrThrow(_cursor, "user_id");
+          final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
+          final int _cursorIndexOfEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "estado");
+          final int _cursorIndexOfUsername = CursorUtil.getColumnIndexOrThrow(_cursor, "username");
+          final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+          final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
+          while (_cursor.moveToNext()) {
+            final long _tmpKey;
+            _tmpKey = _cursor.getLong(_cursorIndexOfProfileId);
+            _collectionProfile.put(_tmpKey, null);
+          }
+          _cursor.moveToPosition(-1);
+          __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
+          final UserProfile _result;
+          if (_cursor.moveToFirst()) {
+            final User _tmpUser;
+            final long _tmpId;
+            _tmpId = _cursor.getLong(_cursorIndexOfId);
+            final long _tmpUser_id;
+            _tmpUser_id = _cursor.getLong(_cursorIndexOfUserId);
+            final String _tmpEmail;
+            _tmpEmail = _cursor.getString(_cursorIndexOfEmail);
+            final int _tmpEstado;
+            _tmpEstado = _cursor.getInt(_cursorIndexOfEstado);
+            final String _tmpUsername;
+            _tmpUsername = _cursor.getString(_cursorIndexOfUsername);
+            final long _tmpProfile_id;
+            _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
+            _tmpUser = new User(_tmpId,_tmpUser_id,_tmpEmail,_tmpEstado,_tmpUsername,_tmpProfile_id);
+            final Profile _tmpProfile;
+            final long _tmpKey_1;
+            _tmpKey_1 = _cursor.getLong(_cursorIndexOfProfileId);
+            _tmpProfile = _collectionProfile.get(_tmpKey_1);
+            _result = new UserProfile();
+            _result.user = _tmpUser;
+            _result.setProfile(_tmpProfile);
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
   @NonNull
   public static List<Class<?>> getRequiredConverters() {
     return Collections.emptyList();
+  }
+
+  private void __fetchRelationshipprofilesAsappRegateModelsProfile(
+      @NonNull final LongSparseArray<Profile> _map) {
+    if (_map.isEmpty()) {
+      return;
+    }
+    if (_map.size() > RoomDatabase.MAX_BIND_PARAMETER_CNT) {
+      RelationUtil.recursiveFetchLongSparseArray(_map, false, (map) -> {
+        __fetchRelationshipprofilesAsappRegateModelsProfile(map);
+        return Unit.INSTANCE;
+      });
+      return;
+    }
+    final StringBuilder _stringBuilder = StringUtil.newStringBuilder();
+    _stringBuilder.append("SELECT `id`,`uuid`,`user_id`,`email`,`profile_photo`,`nombre`,`apellido`,`created_at` FROM `profiles` WHERE `id` IN (");
+    final int _inputSize = _map.size();
+    StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
+    _stringBuilder.append(")");
+    final String _sql = _stringBuilder.toString();
+    final int _argCount = 0 + _inputSize;
+    final RoomSQLiteQuery _stmt = RoomSQLiteQuery.acquire(_sql, _argCount);
+    int _argIndex = 1;
+    for (int i = 0; i < _map.size(); i++) {
+      final long _item = _map.keyAt(i);
+      _stmt.bindLong(_argIndex, _item);
+      _argIndex++;
+    }
+    final Cursor _cursor = DBUtil.query(__db, _stmt, false, null);
+    try {
+      final int _itemKeyIndex = CursorUtil.getColumnIndex(_cursor, "id");
+      if (_itemKeyIndex == -1) {
+        return;
+      }
+      final int _cursorIndexOfId = 0;
+      final int _cursorIndexOfUuid = 1;
+      final int _cursorIndexOfUserId = 2;
+      final int _cursorIndexOfEmail = 3;
+      final int _cursorIndexOfProfilePhoto = 4;
+      final int _cursorIndexOfNombre = 5;
+      final int _cursorIndexOfApellido = 6;
+      final int _cursorIndexOfCreatedAt = 7;
+      while (_cursor.moveToNext()) {
+        final long _tmpKey;
+        _tmpKey = _cursor.getLong(_itemKeyIndex);
+        if (_map.containsKey(_tmpKey)) {
+          final Profile _item_1;
+          final long _tmpId;
+          _tmpId = _cursor.getLong(_cursorIndexOfId);
+          final String _tmpUuid;
+          _tmpUuid = _cursor.getString(_cursorIndexOfUuid);
+          final Long _tmpUser_id;
+          if (_cursor.isNull(_cursorIndexOfUserId)) {
+            _tmpUser_id = null;
+          } else {
+            _tmpUser_id = _cursor.getLong(_cursorIndexOfUserId);
+          }
+          final String _tmpEmail;
+          if (_cursor.isNull(_cursorIndexOfEmail)) {
+            _tmpEmail = null;
+          } else {
+            _tmpEmail = _cursor.getString(_cursorIndexOfEmail);
+          }
+          final String _tmpProfile_photo;
+          if (_cursor.isNull(_cursorIndexOfProfilePhoto)) {
+            _tmpProfile_photo = null;
+          } else {
+            _tmpProfile_photo = _cursor.getString(_cursorIndexOfProfilePhoto);
+          }
+          final String _tmpNombre;
+          _tmpNombre = _cursor.getString(_cursorIndexOfNombre);
+          final String _tmpApellido;
+          if (_cursor.isNull(_cursorIndexOfApellido)) {
+            _tmpApellido = null;
+          } else {
+            _tmpApellido = _cursor.getString(_cursorIndexOfApellido);
+          }
+          final Instant _tmpCreated_at;
+          final String _tmp;
+          if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+            _tmp = null;
+          } else {
+            _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+          }
+          _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+          _item_1 = new Profile(_tmpId,_tmpUuid,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCreated_at);
+          _map.put(_tmpKey, _item_1);
+        }
+      }
+    } finally {
+      _cursor.close();
+    }
   }
 }

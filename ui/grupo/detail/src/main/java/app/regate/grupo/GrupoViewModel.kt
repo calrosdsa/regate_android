@@ -203,8 +203,8 @@ class GrupoViewModel(
     }
     suspend fun getPendingRequestCount():Int {
         return try{
-         val res = grupoRepository.getPendingRequestCount(grupoId)
-            Log.d("DEBUG_APP_COUNT",res.toString())
+            val res = grupoRepository.getPendingRequestCount(grupoId)
+//            Log.d("DEBUG_APP_COUNT",res.toString())
             return res.count
         }catch(e:Exception){
             Log.d("DEBUG_APP_ERR_COUNT",e.localizedMessage?:"")

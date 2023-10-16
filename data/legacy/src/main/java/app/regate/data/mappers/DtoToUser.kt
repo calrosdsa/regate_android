@@ -10,9 +10,6 @@ class DtoToUser:Mapper<UserDto,User> {
         user_id = from.user_id,
         email = from.email,
         username = from.username,
-        nombre = from.nombre,
-        apellido = from.apellido,
-        profile_photo = from.profile_photo,
         estado = from.estado,
 //        coins = from.coins,
         profile_id = from.profile_id

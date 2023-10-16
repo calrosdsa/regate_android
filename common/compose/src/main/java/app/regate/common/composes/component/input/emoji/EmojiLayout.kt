@@ -12,9 +12,28 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DeleteSweep
+import androidx.compose.material.icons.filled.EmojiEmotions
+import androidx.compose.material.icons.filled.EmojiEvents
+import androidx.compose.material.icons.filled.EmojiFlags
+import androidx.compose.material.icons.filled.EmojiFoodBeverage
+import androidx.compose.material.icons.filled.EmojiNature
+import androidx.compose.material.icons.filled.EmojiObjects
+import androidx.compose.material.icons.filled.EmojiPeople
+import androidx.compose.material.icons.filled.EmojiSymbols
+import androidx.compose.material.icons.filled.EmojiTransportation
+import androidx.compose.material.icons.filled.People
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
@@ -24,156 +43,164 @@ import androidx.compose.ui.text.input.getTextBeforeSelection
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.regate.data.app.EmojiCategory
 import app.regate.data.app.EmojisState
+import app.regate.models.Emoji
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun EmojiLayout(
-    emojis:EmojisState,
+    emojis:List<List<Emoji>>,
     message:TextFieldValue,
-    updateMessage:(TextFieldValue)->Unit,
+    coroutineScope: CoroutineScope,
     modifier:Modifier = Modifier,
+    updateMessage:(TextFieldValue)->Unit,
 ) {
+    val pagerState = rememberPagerState()
+    Scaffold(modifier = Modifier.fillMaxSize(),
+    bottomBar = {
+        TabRow(selectedTabIndex = pagerState.currentPage) {
+            Tab(selected = pagerState.currentPage == 0, onClick = {
+               coroutineScope.launch {
+                   launch { pagerState.scrollToPage(0) }
+               }
+            },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.EmojiEmotions,
+                        contentDescription = null
+                    )
+                })
+            Tab(selected = pagerState.currentPage == 1, onClick = {
+                coroutineScope.launch {
+                    launch { pagerState.scrollToPage(1) }
+                }
+            },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.EmojiPeople,
+                        contentDescription = null
+                    )
+                })
+            Tab(selected = pagerState.currentPage == 2, onClick = {
+                coroutineScope.launch {
+                    launch { pagerState.scrollToPage(2) }
+                }
+            },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.EmojiNature,
+                        contentDescription = null
+                    )
+                })
+            Tab(selected = pagerState.currentPage == 3, onClick = {
+                coroutineScope.launch {
+                    launch { pagerState.scrollToPage(3) }
+                }
+            },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.EmojiFoodBeverage,
+                        contentDescription = null
+                    )
+                })
+            Tab(selected = pagerState.currentPage == 4, onClick = {
+                coroutineScope.launch {
+                    launch { pagerState.scrollToPage(4) }
+                }
+            },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.EmojiTransportation,
+                        contentDescription = null
+                    )
+                })
+            Tab(selected = pagerState.currentPage == 5, onClick = {
+                coroutineScope.launch {
+                    launch { pagerState.scrollToPage(5) }
+                }
+            },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.EmojiEvents,
+                        contentDescription = null
+                    )
+                })
+            Tab(selected = pagerState.currentPage == 6, onClick = {
+                coroutineScope.launch {
+                    launch { pagerState.scrollToPage(6) }
+                }
+            },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.EmojiObjects,
+                        contentDescription = null
+                    )
+                })
+            Tab(selected = pagerState.currentPage == 7, onClick = {
+                coroutineScope.launch {
+                    launch { pagerState.scrollToPage(7) }
+                }
+            },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.EmojiSymbols,
+                        contentDescription = null
+                    )
+                })
+            Tab(selected = pagerState.currentPage == 8, onClick = {  coroutineScope.launch {
+                launch { pagerState.scrollToPage(8) }
+            } },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.EmojiFlags,
+                        contentDescription = null,
+                    )
+                })
+            Tab(selected = pagerState.currentPage == 9, onClick = {
+            },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.DeleteSweep,
+                        contentDescription = null
+                    )
+                })
+        }
+    }) {paddingValues->
+        if(emojis.isNotEmpty()){
 
-    Box(modifier = Modifier.fillMaxSize()) {
+        HorizontalPager(pageCount = emojis.size,
+        state=pagerState) {page->
+
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 40.dp),
-            modifier = modifier,
+            columns = GridCells.Fixed(7),
+            modifier = modifier.padding(paddingValues),
             contentPadding = PaddingValues(horizontal = 6.dp, vertical = 5.dp),
         ) {
-            item(span = {
-                GridItemSpan(maxLineSpan)
-            }) {
-                EmojiHeader(text = stringResource(id = R.string.emileys_emotion))
-            }
+//            item(span = {
+//                GridItemSpan(maxLineSpan)
+//            }) {
+//                EmojiHeader(text = stringResource(id = R.string.emileys_emotion))
+//            }
             items(
-                items = emojis.emoticonos,
-                key = { it.emoji }
+                items = emojis[page],
+                key = { it.id }
             ) { emoji ->
-                EmojiItem(emoji = emoji.emoji,onClick = { updateMessage(it)},
-                textFieldValue = message)
+                EmojiItem(
+                    emoji = emoji.emoji, onClick = { updateMessage(it) },
+                    textFieldValue = message
+                )
             }
-
-            item(span = {
-                GridItemSpan(maxLineSpan)
-            }) {
-                EmojiHeader(text = stringResource(id = R.string.people))
-            }
-            items(
-                items = emojis.people,
-                key = { it.emoji }
-            ) { emoji ->
-                EmojiItem(emoji = emoji.emoji,onClick = { updateMessage(it)},
-                textFieldValue = message)
-            }
-
-            item(span = {
-                GridItemSpan(maxLineSpan)
-            }) {
-                EmojiHeader(text = stringResource(id = R.string.animals_and_nature))
-            }
-            items(
-                items = emojis.animals_nature,
-                key = { it.emoji }
-            ) { emoji ->
-                EmojiItem(emoji = emoji.emoji,onClick = { updateMessage(it)},
-                textFieldValue = message)
-            }
-
-            item(span = {
-                GridItemSpan(maxLineSpan)
-            }) {
-                EmojiHeader(text = stringResource(id = R.string.food_and_drink))
-            }
-            items(
-                items = emojis.food_drink,
-                key = { it.emoji }
-            ) { emoji ->
-                EmojiItem(emoji = emoji.emoji,onClick = { updateMessage(it)},
-                textFieldValue = message)
-            }
-
-            item(span = {
-                GridItemSpan(maxLineSpan)
-            }) {
-                EmojiHeader(text = stringResource(id = R.string.travel_and_places))
-            }
-            items(
-                items = emojis.travel_places,
-                key = { it.emoji }
-            ) { emoji ->
-                EmojiItem(emoji = emoji.emoji,onClick = { updateMessage(it)},
-                textFieldValue = message)
-            }
-
-            item(span = {
-                GridItemSpan(maxLineSpan)
-            }) {
-                EmojiHeader(text = stringResource(id = R.string.activities_and_event))
-            }
-            items(
-                items = emojis.activities,
-                key = { it.emoji }
-            ) { emoji ->
-                EmojiItem(emoji = emoji.emoji,onClick = { updateMessage(it)},
-                textFieldValue = message)
-            }
-
-            item(span = {
-                GridItemSpan(maxLineSpan)
-            }) {
-                EmojiHeader(text = stringResource(id = R.string.objects))
-            }
-            items(
-                items = emojis.objects,
-                key = { it.emoji }
-            ) { emoji ->
-                EmojiItem(emoji = emoji.emoji,onClick = { updateMessage(it)},
-                textFieldValue = message)
-            }
-
-            item(span = {
-                GridItemSpan(maxLineSpan)
-            }) {
-                EmojiHeader(text = stringResource(id = R.string.symbols))
-            }
-            items(
-                items = emojis.symbols,
-                key = { it.emoji }
-            ) { emoji ->
-                EmojiItem(emoji = emoji.emoji,onClick = { updateMessage(it)},
-                textFieldValue = message)
-            }
-
-            item(span = {
-                GridItemSpan(maxLineSpan)
-            }) {
-                EmojiHeader(text = stringResource(id = R.string.flags))
-            }
-            items(
-                items = emojis.flags,
-                key = { it.emoji }
-            ) { emoji ->
-                EmojiItem(emoji = emoji.emoji,onClick = { updateMessage(it)},
-                textFieldValue = message)
-            }
-
         }
-
-//    Column(modifier = modifier
-//        .padding(5.dp)
-//        .verticalScroll(rememberScrollState())){
-//        FlowRow() {
-//       emojis.value.emoticonos.map {emoji: Emoji ->
-//        Text(text = emoji.emoji, fontSize = 30.sp)
-//       }
-//        }
-//    }
+        }
+        }
     }
 }
 
 @Composable
-internal fun EmojiItem(
+internal fun    EmojiItem(
     emoji:String,
     textFieldValue: TextFieldValue,
     onClick: (TextFieldValue) -> Unit

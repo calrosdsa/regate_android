@@ -15,9 +15,9 @@
 15  ~ limitations under the License.
 16-->
 17<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-18    package="app.regate.instalacion" >
+18    package="app.regate.entidad.photos" >
 19
 20    <uses-sdk android:minSdkVersion="23" />
-20-->C:\Users\PC\Desktop\projects\regate_android\ui\entidad\instalacion\src\main\AndroidManifest.xml
+20-->C:\Users\PC\Desktop\projects\regate_android\ui\entidad\photos\src\main\AndroidManifest.xml
 21
 22</manifest>

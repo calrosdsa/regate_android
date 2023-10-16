@@ -81,7 +81,9 @@ internal fun Reserva(
         viewState = state,
         navigateUp = navigateUp,
         navigateToEstablecimiento = navigateToEstablecimiento,
-        navigateToConversation = navigateToConversation,
+        navigateToConversation = {
+            viewModel.navigateToConversationE(navigateToConversation)
+        },
         formatShortTime = {formatter.formatShortTime(it)},
         formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
         openMap = appUtil::openMap
@@ -97,7 +99,7 @@ internal fun Reserva(
     formatDate:(date: Instant)->String,
     navigateUp: () -> Unit,
     navigateToEstablecimiento:(Long)->Unit,
-    navigateToConversation: (Long,Long) -> Unit
+    navigateToConversation: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -146,7 +148,7 @@ internal fun Reserva(
                             overflow = TextOverflow.Ellipsis
                         )
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                            .clickable { data.establecimiento?.id?.let { navigateToConversation(it,0) } }) {
+                            .clickable { data.establecimiento?.id?.let { navigateToConversation() } }) {
                             Icon(
                                 imageVector = Icons.Default.Chat,
                                 contentDescription = null,
@@ -187,7 +189,7 @@ internal fun Reserva(
                             style = MaterialTheme.typography.labelLarge
                         )
                         Text(
-                            text = "${data.reserva.paid} BOB",
+                            text = data.reserva.pagado.toString() + " BOB",
                             style = MaterialTheme.typography.titleSmall
                         )
                     }
@@ -227,14 +229,12 @@ internal fun Reserva(
                 PosterCardImage(model = data.establecimiento?.address_photo,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(200.dp)
-                        .clickable {
-                            openMap(
-                                data.establecimiento?.longitud,
-                                data.establecimiento?.latidud,
-                                data.establecimiento?.name,
-                            )
-                        }
+                        .height(200.dp),
+                    onClick = { openMap(
+                        data.establecimiento?.longitud,
+                        data.establecimiento?.latidud,
+                        data.establecimiento?.name,
+                    )}
                 )
 
                 Text(

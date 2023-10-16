@@ -41,6 +41,8 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.emoji)
 
+    implementation(libs.coil.coil)
+
 
     implementation(libs.play.services.location)
 }

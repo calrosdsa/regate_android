@@ -71,7 +71,7 @@ class GrupoRepository(
         withContext(dispatchers.computation){
             val response = grupoDataSourceImpl.myGroups()
             val grupos = response.map { dtoToGrupo.map(it) }
-            val myGroups = response.map{ MyGroups(
+            val myGroups = response.map { MyGroups(
                 group_id = it.id,
                 request_estado = GrupoRequestEstado.fromInt(it.grupo_request_estado
                 ))}

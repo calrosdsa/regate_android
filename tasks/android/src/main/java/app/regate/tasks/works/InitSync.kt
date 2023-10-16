@@ -61,8 +61,9 @@ class InitSync(
             val task2 =  async{labelRepository.getCategories()}
             val task3 = async{labelRepository.getSports()}
             val task4 = async{labelRepository.getRules()}
+            val task5 = async{labelRepository.getEmojis()}
 //            val task4 = async{ establecimientoRepository.getEstablecimientos()}
-                awaitAll(task1,task2,task3,task4)
+                awaitAll(task1,task2,task3,task4,task5)
         }
 
         }catch (e:Exception){

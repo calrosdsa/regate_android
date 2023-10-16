@@ -8,10 +8,8 @@ data class GroupRequest(
     val visibility:Int = 0,
     val fileData:FileData? = null,
     val id:Long,
-    val photo_url:String? = null
+    val photo_url:String? = null,
+    val uuid:String = "",
+    val is_visible:Boolean = false,
 )
 
-enum class GroupVisibility {
-    PUBLIC,
-    PRIVATE,
-}

@@ -1,5 +1,6 @@
 package app.regate.data.labels
 
+import app.regate.data.app.EmojiDto
 import app.regate.data.dto.empresa.labels.LabelDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -25,6 +26,9 @@ class LabelDataSourceImpl(
 
     override suspend fun getRules(): List<LabelDto> {
         return client.get("v1/label/rules/").body()
+    }
+    override suspend fun getEmojis(): List<EmojiDto> {
+        return client.get("v1/label/emojis/").body()
     }
 
 }

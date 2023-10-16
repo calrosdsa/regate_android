@@ -44,6 +44,7 @@ string add_a_message
 string add_a_review
 string all
 string amount
+string amount_contributed
 string animals_and_nature
 string app_name
 string available_courts
@@ -100,8 +101,10 @@ string gcp_id
 string get_started
 string grant_permission
 string group_description
+string group_privacy
 string group_visibility
 string groups
+string hidden
 string history
 string illegal_activity
 string inappropriate_material
@@ -162,9 +165,12 @@ string request_removed
 string requests
 string resend_email_verification
 string reservation_date
+string reserved_room
 string review
 string reviews
+string room_chat
 string room_has_been_reserved
+string room_not_available
 string rooms
 string rules_of_the_place
 string sala_help_text
@@ -203,6 +209,8 @@ string unexpected_error
 string user_since
 string verify
 string version
+string visible
+string visible_info_group
 string visit
 string what_is_your_location
 string what_kind_of_game_do_you_prefere

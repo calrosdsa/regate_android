@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
-import app.regate.domain.observers.ObserveLabelType
+import app.regate.domain.observers.labels.ObserveLabelType
 import app.regate.models.LabelType
 import app.regate.settings.AppPreferences
 import app.regate.util.AppLocation

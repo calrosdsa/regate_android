@@ -1,2 +1,2 @@
-app.regate.review
+app.regate.search
 string post

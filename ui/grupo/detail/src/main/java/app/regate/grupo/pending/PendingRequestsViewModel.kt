@@ -37,12 +37,7 @@ class PendingRequestsViewModel(
     private val grupoId = savedStateHandle.get<Long>("id")?:0
     val pagedList: Flow<PagingData<PendingRequestUserDto>> = Pager(PAGING_CONFIG){
         PaginationPendingRequests{page->
-            try{
-            grupoRepository.getPendingRequests(1,page)
-            }catch(e:Exception){
-                Log.d("DEBUG_APP",e.localizedMessage?:"")
-                grupoRepository.getPendingRequests(1,page)
-            }
+            grupoRepository.getPendingRequests(grupoId,page)
         }
     }.flow.cachedIn(viewModelScope)
     private val confirmRequestIds = MutableStateFlow<List<Int>>(mutableListOf())

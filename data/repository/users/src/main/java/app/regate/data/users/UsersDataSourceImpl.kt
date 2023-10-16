@@ -34,18 +34,16 @@ class UsersDataSourceImpl(
             url = "/v1/users/profile/edit/",
             formData = formData {
                 append("id",d.profile_id)
+                append("uuid",d.uuid)
                 append("nombre", d.nombre)
                 append("apellido", d.apellido?:"")
-               if(file != null){
-                   file.byteArray?.let {
+                append("photo_url",d.profile_photo?:"")
+                   file?.byteArray?.let {
                        append("photo", it, Headers.build {
                            append(HttpHeaders.ContentType,file.type)
                            append(HttpHeaders.ContentDisposition,"filename=${file.name}")
                        })
                    }
-                }else{
-                    append("photo_url",d.profile_photo?:"")
-               }
             },
         ){
             header("Authorization","Bearer $token")

@@ -344,7 +344,8 @@ internal fun Grupo(
                                 navigateToChatGroup = navigateToChatGroup,
                                 grupo = grupo,
                                 pendingRequestCount = pendingRequestCount,
-                                members = viewState.usersProfileGrupo.size
+                                members = viewState.usersProfileGrupo.size,
+                                navigateToPhoto = navigateToPhoto,
                             )
                         }
                     }
@@ -405,7 +406,7 @@ internal fun Grupo(
                     .padding(10.dp)
             ) { paddingValues ->
 
-                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                     Box(
                         modifier = Modifier
                             .pullRefresh(state = refreshState)
@@ -588,14 +589,20 @@ internal fun GrupoMenu(
     leaveGroup: () -> Unit,
     navigateToReport: () -> Unit,
     navigateToPendingRequests: () -> Unit,
-    navigateToChatGroup: (Long) -> Unit
+    navigateToChatGroup: (Long) -> Unit,
+    navigateToPhoto: (String) -> Unit
 ){
     Column() {
         Box(){
         PosterCardImage(model = grupo.photo,
         shape = RoundedCornerShape(0.dp),modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp))
+                .height(150.dp),
+            onClick = {
+                val payload = Json.encodeToString(encodeMediaData(listOf(grupo.photo.toString())))
+                navigateToPhoto(payload)
+            }
+        )
         Column(modifier = Modifier.padding(10.dp).align(Alignment.BottomStart)) {
         Text(text = grupo.name,style = MaterialTheme.typography.titleLarge,
         fontWeight = FontWeight.SemiBold, color = Color.White)

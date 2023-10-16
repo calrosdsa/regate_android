@@ -379,10 +379,12 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
           final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
           try {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfUuid = CursorUtil.getColumnIndexOrThrow(_cursor, "uuid");
             final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
             final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
             final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
+            final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
             final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
@@ -393,6 +395,8 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
               final Grupo _item;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final String _tmpUuid;
+              _tmpUuid = _cursor.getString(_cursorIndexOfUuid);
               final String _tmpName;
               _tmpName = _cursor.getString(_cursorIndexOfName);
               final String _tmpDescription;
@@ -415,6 +419,10 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
               } else {
                 _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
               }
+              final boolean _tmpIs_visible;
+              final int _tmp_1;
+              _tmp_1 = _cursor.getInt(_cursorIndexOfIsVisible);
+              _tmpIs_visible = _tmp_1 != 0;
               final long _tmpProfile_id;
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final int _tmpVisibility;
@@ -422,16 +430,16 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
               final String _tmpLast_message;
               _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
               final Instant _tmpLast_message_created;
-              final String _tmp_1;
+              final String _tmp_2;
               if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
-                _tmp_1 = null;
+                _tmp_2 = null;
               } else {
-                _tmp_1 = _cursor.getString(_cursorIndexOfLastMessageCreated);
+                _tmp_2 = _cursor.getString(_cursorIndexOfLastMessageCreated);
               }
-              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_1);
+              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_2);
               final int _tmpMessages_count;
               _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
-              _item = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
+              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();

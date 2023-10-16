@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ProfileDto(
+    val uuid:String ="",
     val created_at: Instant?=null,
     val email: String = "",
     val nombre: String,

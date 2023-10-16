@@ -1,21 +1,17 @@
 package app.regate.establecimiento
 
-import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.savedstate.SavedStateRegistry
 import app.regate.api.UiMessageManager
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.establecimiento.EstablecimientoRepository
-import app.regate.domain.interactors.UpdateEstablecimiento
 import app.regate.domain.interactors.UpdateEstablecimientoDetail
-import app.regate.domain.interactors.UpdateInstalaciones
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveEstablecimientoDetail
 import app.regate.domain.observers.ObserveInstalacionCategoryCount
-import app.regate.domain.observers.ObserveLabelByIds
+import app.regate.domain.observers.labels.ObserveLabelByIds
 import app.regate.extensions.combine
 import app.regate.models.LabelType
 import app.regate.util.ObservableLoadingCounter
@@ -26,9 +22,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -39,7 +32,7 @@ class EstablecimientoViewModel(
     observeInstalacionCategoryCount: ObserveInstalacionCategoryCount,
     observeEstablecimientoDetail: ObserveEstablecimientoDetail,
     observeAmenities: ObserveLabelByIds,
-    observeRules:ObserveLabelByIds,
+    observeRules: ObserveLabelByIds,
     observeAuthState: ObserveAuthState,
     private val updateEstablecimiento: UpdateEstablecimientoDetail,
 //    private val updateInstalaciones:UpdateInstalaciones,

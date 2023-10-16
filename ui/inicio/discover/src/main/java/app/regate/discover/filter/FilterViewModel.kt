@@ -13,7 +13,7 @@ import app.regate.api.UiMessageManager
 import app.regate.data.common.getDataEntityFromJson
 import app.regate.data.dto.empresa.instalacion.FilterInstalacionData
 import app.regate.domain.Converter
-import app.regate.domain.observers.ObserveLabelType
+import app.regate.domain.observers.labels.ObserveLabelType
 import app.regate.models.LabelType
 import app.regate.settings.AppPreferences
 import app.regate.util.AppLocation

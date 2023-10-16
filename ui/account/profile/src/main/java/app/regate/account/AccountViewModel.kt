@@ -12,8 +12,10 @@ import app.regate.data.dto.empresa.coin.UserBalance
 import app.regate.data.system.SystemRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveNotifications
+import app.regate.domain.observers.ObserveProfile
 import app.regate.domain.observers.ObserveUnreadNotificationCount
 import app.regate.domain.observers.ObserveUser
+import app.regate.domain.observers.ObserveUserProfile
 import app.regate.extensions.combine
 import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
@@ -30,7 +32,7 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 class AccountViewModel(
-    observeUser: ObserveUser,
+    observeUser: ObserveUserProfile,
     private val authRepository: AuthRepository,
     private val accountRepository: AccountRepository,
     private val appPreferences: AppPreferences,
@@ -73,7 +75,6 @@ class AccountViewModel(
         observeAuthState(Unit)
         viewModelScope.launch {
         appPreferences.observeAddress().collect{
-            Log.d("DEBUG_APP","address $it")
             try{
                 val address: AddressDevice = Json.decodeFromString(it)
                 addressDevice.emit(address)

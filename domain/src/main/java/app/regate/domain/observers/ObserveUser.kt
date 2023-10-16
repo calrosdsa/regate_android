@@ -1,5 +1,6 @@
 package app.regate.domain.observers
 
+import app.regate.compoundmodels.UserProfile
 import app.regate.data.daos.UserDao
 import app.regate.domain.SubjectInteractor
 import app.regate.models.User

@@ -76,6 +76,7 @@ import kotlin.time.Duration.Companion.minutes
 internal fun Chat (
     lazyPagingItems: LazyPagingItems<MessageProfile>,
     colors: List<Color>,
+    lazyListState:LazyListState,
     setReply:(message:ReplyMessageData?)->Unit,
     formatShortDate:(Instant)->String,
     formatShortTime:(Instant)->String,
@@ -84,7 +85,6 @@ internal fun Chat (
     formatterRelatimeTime:(date:Instant)->String,
     navigateToInstalacionReserva:(Long,Long,List<CupoInstalacion>)->Unit,
     navigateToSala: (Int) -> Unit,
-    lazyListState:LazyListState,
     modifier: Modifier = Modifier,
     user:User? = null,
     getUserProfileGrupo: (id:Long)->UserProfileGrupo?,
@@ -427,7 +427,11 @@ internal fun MessageContent1(
                 }) {
                     PosterCardImage(model = instalacion.photo,modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp))
+                        .height(100.dp),
+                        onClick = {
+                            navigateToInstalacionReserva(instalacion.id.toLong(),instalacion.establecimiento_id.toLong(),instalacion.cupos)
+                        }
+                    )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(text = instalacion.name,style = MaterialTheme.typography.labelLarge)
                     Text(text = "${stringResource(id = R.string.total_price)}: ${instalacion.total_price}",

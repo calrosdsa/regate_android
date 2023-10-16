@@ -70,6 +70,7 @@ class GrupoDataSourceImpl(
                 append("descripcion", d.description)
                 append("name", d.name)
                 append("visibility",d.visibility)
+                append("is_visible",d.is_visible.toString())
                 append("photo_url",d.photo_url?:"")
                 d.fileData?.byteArray?.let {
                 append("photo",it, Headers.build {

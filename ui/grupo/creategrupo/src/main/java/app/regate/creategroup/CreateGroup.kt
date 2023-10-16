@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
@@ -33,6 +35,7 @@ import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
+import app.regate.data.dto.empresa.grupo.GrupoVisibility
 
 typealias CreateGroup = @Composable (
     navigateUp:()->Unit,
@@ -73,8 +76,8 @@ internal fun CreateGroup(
     CreateGroup(
         viewState = viewState,
         navigateUp = navigateUp,
-        createGroup = {name,description,visibility,removeLoader ->
-            viewModel.createGroup(name,description,visibility,openAuthBottomSheet,removeLoader,navigateUp)
+        createGroup = {name,description,visibility,isVisible,removeLoader ->
+            viewModel.createGroup(name,description,visibility,isVisible,openAuthBottomSheet,removeLoader,navigateUp)
         },
         clearMessage = viewModel::clearMessage,
         uploadImage = viewModel::uploadImage,
@@ -86,7 +89,7 @@ internal fun CreateGroup(
 internal fun CreateGroup(
     viewState: CreateGroupState,
     navigateUp: () -> Unit,
-    createGroup:(String,String,Int,()->Unit)->Unit,
+    createGroup:(String,String,GrupoVisibility,Boolean,()->Unit)->Unit,
     clearMessage:(id:Long)->Unit,
     uploadImage:(String,String,ByteArray)->Unit,
 //    onChangeAsunto:(v:String)->Unit,
@@ -95,7 +98,13 @@ internal fun CreateGroup(
 ) {
     var name by remember(viewState.group){ mutableStateOf(viewState.group?.name?:"") }
     var description by remember(viewState.group){ mutableStateOf(viewState.group?.description?:"") }
-    var visibility by remember(viewState.group){ mutableStateOf(viewState.group?.visibility?:0) }
+    var visibility by remember(viewState.group){ mutableStateOf(viewState.group?.visibility?.let {
+        GrupoVisibility.fromInt(
+            it
+        )
+    }
+        ?:GrupoVisibility.PUBLIC) }
+    var isVisible by remember(viewState.group){ mutableStateOf(viewState.group?.is_visible?:false) }
     val pagerState = rememberPagerState(initialPage = 0)
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -124,7 +133,7 @@ internal fun CreateGroup(
         dismiss = { showConfirmationDialog.value = false },
         confirm = {
             loading.value = true
-            createGroup(name,description,visibility) { loading.value = false }
+            createGroup(name,description,visibility,isVisible) { loading.value = false }
             showConfirmationDialog.value = false
         })
 
@@ -170,15 +179,19 @@ internal fun CreateGroup(
     ) { paddingValues ->
         MainPage(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(paddingValues)
                 .padding(horizontal = 10.dp),
             asunto = name,
             description = description,
             visibility = visibility,
             onChangeVisibility = {visibility = it},
+            onChangeIsVisible = {isVisible = it},
             onChangeDescription = {description = it},
             onChangeAsunto = { name=it},
             uploadImage = uploadImage,
+            isVisible = isVisible,
+            photo = viewState.group?.photo
 //            group = viewState.group
         )
     }

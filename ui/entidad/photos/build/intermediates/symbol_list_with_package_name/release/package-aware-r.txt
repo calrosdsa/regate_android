@@ -1,1 +1,1 @@
-app.regate.instalacion
+app.regate.entidad.photos

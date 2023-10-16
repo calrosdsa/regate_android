@@ -11,7 +11,7 @@ data class SalaDto(
     val cupos: Int,
     val descripcion: String,
     val titulo: String,
-    val precio: Int,
+    val precio: Double,
     val paid:Double,
     val horas:List<String>,
     val created_at: String,

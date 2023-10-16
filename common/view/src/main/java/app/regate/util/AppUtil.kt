@@ -1,12 +1,18 @@
 package app.regate.util
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.ChecksSdkIntAtLeast
 import app.regate.inject.ActivityScope
+import coil.ImageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import me.tatarka.inject.annotations.Inject
 
 @ActivityScope
@@ -15,6 +21,16 @@ class AppUtil(
     private val activity: Activity
 ) {
 
+    suspend fun convertUrlImgToBitamp(context:Context,photo:String):Bitmap{
+        val loader = ImageLoader(context)
+        val request = ImageRequest.Builder(context)
+            .data(photo)
+            .allowHardware(false) // Disable hardware bitmaps.
+            .build()
+
+        val result = (loader.execute(request) as SuccessResult).drawable
+        return (result as BitmapDrawable).bitmap
+    }
     fun openMap(lng:String?,lat:String?,label:String?){
         try{
             val intent = Intent(

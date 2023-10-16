@@ -1,5 +1,6 @@
 package app.regate.chat.grupo
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -12,14 +13,15 @@ import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.constant.Host
+import app.regate.data.app.EmojiCategory
 import app.regate.data.common.MessageData
-import app.regate.data.daos.MessageProfileDao
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import app.regate.data.dto.empresa.grupo.GrupoEvent
 import app.regate.data.dto.empresa.grupo.GrupoMessageData
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.grupo.GrupoRepository
 import app.regate.data.instalacion.CupoRepository
+import app.regate.data.labels.LabelRepository
 import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.grupo.ObserveGrupo
@@ -27,6 +29,7 @@ import app.regate.domain.observers.pagination.ObservePagerMessages
 import app.regate.domain.observers.ObserveUser
 import app.regate.domain.observers.grupo.ObserveUsersGrupo
 import app.regate.extensions.combine
+import app.regate.models.Emoji
 import app.regate.models.Message
 import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
@@ -39,7 +42,9 @@ import io.ktor.util.InternalAPI
 import io.ktor.websocket.Frame
 import io.ktor.websocket.readText
 import io.ktor.websocket.send
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -68,7 +73,7 @@ class ChatGrupoViewModel(
     private val cupoRepository: CupoRepository,
     private val preferences:AppPreferences,
 //    private val profileDao: ProfileDao,
-    private val messageProfileDao: MessageProfileDao,
+    private val labelRepository: LabelRepository,
     observeUser: ObserveUser,
     observeAuthState: ObserveAuthState,
     observeGrupo: ObserveGrupo,
@@ -83,6 +88,7 @@ class ChatGrupoViewModel(
     private val uiMessageManager = UiMessageManager()
     private val messageChat = MutableStateFlow<Message?>(null)
     private val scrollToBottom = MutableStateFlow<Boolean?>(null)
+    private val emojiData = MutableStateFlow<List<List<Emoji>>>(emptyList())
     val pagedList: Flow<PagingData<MessageProfile>> =
         pagingInteractor.flow.cachedIn(viewModelScope)
     val state:StateFlow<ChatGrupoState> = combine(
@@ -93,8 +99,9 @@ class ChatGrupoViewModel(
         observeAuthState.flow,
         observeGrupo.flow,
         observeUsersGrupo.flow,
-        scrollToBottom
-    ){loading,message,messageChat,user,authState,grupo,usersGrupo,scrollToBottom->
+        scrollToBottom,
+        emojiData
+    ){loading,message,messageChat,user,authState,grupo,usersGrupo,scrollToBottom,emojiData->
         ChatGrupoState(
             loading = loading,
             message = message,
@@ -103,8 +110,8 @@ class ChatGrupoViewModel(
             authState = authState,
             grupo = grupo,
             usersGrupo = usersGrupo,
-            scrollToBottom = scrollToBottom
-
+            scrollToBottom = scrollToBottom,
+            emojiData = emojiData
         )
     }.stateIn(
         scope = viewModelScope,
@@ -139,6 +146,23 @@ class ChatGrupoViewModel(
                 }
 
             }
+        }
+
+        getEmojiData()
+
+    }
+    fun getEmojiData(){
+        viewModelScope.launch {
+            val emoticonos = async { labelRepository.getEmojiByCategory(EmojiCategory.Emoticonos) }
+            val people = async { labelRepository.getEmojiByCategory(EmojiCategory.Gente) }
+            val animales = async { labelRepository.getEmojiByCategory(EmojiCategory.Animales) }
+            val alimentos = async { labelRepository.getEmojiByCategory(EmojiCategory.Alimentos) }
+            val viajar = async { labelRepository.getEmojiByCategory(EmojiCategory.Viajar) }
+            val actividades = async { labelRepository.getEmojiByCategory(EmojiCategory.Actividades) }
+            val objetos = async { labelRepository.getEmojiByCategory(EmojiCategory.Objetos) }
+            val simbolos = async { labelRepository.getEmojiByCategory(EmojiCategory.Simbolos) }
+            val banderas = async { labelRepository.getEmojiByCategory(EmojiCategory.Banderas) }
+            emojiData.emit(awaitAll(emoticonos,people,animales,alimentos,viajar,actividades,objetos,simbolos,banderas))
         }
     }
     suspend fun startWs(){
@@ -210,9 +234,10 @@ class ChatGrupoViewModel(
 //            prefetchDistance = 1
         )
     }
+    @SuppressLint("SuspiciousIndentation")
     suspend fun DefaultClientWebSocketSession.outputMessage(){
         messageChat.filterNotNull().collectLatest {data->
-            if (data.content != "") {
+            if (data.content == "" && data.data == null) return@collectLatest
                 state.value.user?.let {
                     Log.d("DEBUG_APP",it.toString())
                     val message = GrupoMessageDto(
@@ -232,7 +257,7 @@ class ChatGrupoViewModel(
                         Json.encodeToString(event)
                     )
                 }
-            }
+
         }
     }
 

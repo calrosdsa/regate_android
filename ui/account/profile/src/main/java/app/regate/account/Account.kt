@@ -155,13 +155,13 @@ internal fun Account(
         ) {
             viewState.user?.let { user ->
         Surface(color = MaterialTheme.colorScheme.inverseOnSurface,
-        shape = MaterialTheme.shapes.medium, onClick = { navigateToProfile(viewState.user.profile_id)}) {
+        shape = MaterialTheme.shapes.medium, onClick = { navigateToProfile(viewState.user.user.profile_id)}) {
         Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()) {
             ProfileImage(
-                profileImage = user.profile_photo,
-                contentDescription = user.nombre, modifier = Modifier
+                profileImage = user.profile?.profile_photo,
+                contentDescription = user.profile?.nombre, modifier = Modifier
                     .size(60.dp)
                     .clip(CircleShape)
             )
@@ -169,12 +169,12 @@ internal fun Account(
             Column() {
 
             Text(
-                text = "${user.nombre} ${user.apellido ?: ""}",
+                text = "${user.profile?.nombre} ${user.profile?.apellido ?: ""}",
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 1
             )
             Text(
-                text = user.email, style = MaterialTheme.typography.labelMedium,
+                text = user.user.email, style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.inverseSurface
             )
             }
@@ -292,7 +292,7 @@ internal fun Account(
         }
 
                 Column(modifier = Modifier.align(Alignment.BottomCenter)) {
-                    if((viewState.user?.estado ?: 0) == UserEstado.DISABLED.ordinal){
+                    if((viewState.user?.user?.estado ?: 0) == UserEstado.DISABLED.ordinal){
                     OutlinedButton(onClick = { navigateToVerificationEmail()},modifier = Modifier.fillMaxWidth()) {
                         Text(text = stringResource(id = R.string.email_verification),style  = MaterialTheme.typography.labelLarge,
                             textAlign = TextAlign.Center)

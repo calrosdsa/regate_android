@@ -44,13 +44,13 @@ import app.regate.models.Grupo
 fun TopBarChat (
     navigateUp:()->Unit,
     grupo:Grupo?,
-    navigateTocreateSala:(id:Long)->Unit,
+//    navigateTocreateSala:(id:Long)->Unit,
     navigateToGroup:(id:Long)->Unit,
     users:List<UserProfileGrupo>,
     modifier:Modifier = Modifier
 ) {
-    var expanded by remember { mutableStateOf(false) }
-    val context = LocalContext.current
+//    var expanded by remember { mutableStateOf(false) }
+//    val context = LocalContext.current
 
     Surface(color = MaterialTheme.colorScheme.primary,
     contentColor = MaterialTheme.colorScheme.onPrimary) {
@@ -90,43 +90,43 @@ fun TopBarChat (
                 )
             }
         }
-        Row() {
-            IconButton(onClick = {
-                val sendIntent = Intent()
-                sendIntent.action = Intent.ACTION_SEND
-                sendIntent.putExtra(
-                    Intent.EXTRA_TEXT,
-                    "Hey check out my app at: http://teclu-portal.s3.sa-east-1.amazonaws.com/servicenter"
-                )
-                sendIntent.type = "text/plain"
-                context.startActivity(sendIntent)
-            }) {
-                Icon(imageVector = Icons.Default.Share, contentDescription = "share")
-            }
-            Box(modifier = Modifier) {
-                IconButton(onClick = { expanded = !expanded }) {
-                    Icon(imageVector = Icons.Default.MoreVert, contentDescription = "dots_chat")
-                }
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false },
-                ) {
-                    DropdownMenuItem(
-                        text = { Text(text = stringResource(id = R.string.create_sala)) },
-                        onClick = {
-                            if (grupo != null) {
-                                navigateTocreateSala(grupo.id)
-                            }
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Save") },
-                        onClick = {  }
-                    )
-                }
-            }
-
-        }
+//        Row() {
+//            IconButton(onClick = {
+//                val sendIntent = Intent()
+//                sendIntent.action = Intent.ACTION_SEND
+//                sendIntent.putExtra(
+//                    Intent.EXTRA_TEXT,
+//                    "Hey check out my app at: http://teclu-portal.s3.sa-east-1.amazonaws.com/servicenter"
+//                )
+//                sendIntent.type = "text/plain"
+//                context.startActivity(sendIntent)
+//            }) {
+//                Icon(imageVector = Icons.Default.Share, contentDescription = "share")
+//            }
+//            Box(modifier = Modifier) {
+//                IconButton(onClick = { expanded = !expanded }) {
+//                    Icon(imageVector = Icons.Default.MoreVert, contentDescription = "dots_chat")
+//                }
+//                DropdownMenu(
+//                    expanded = expanded,
+//                    onDismissRequest = { expanded = false },
+//                ) {
+//                    DropdownMenuItem(
+//                        text = { Text(text = stringResource(id = R.string.create_sala)) },
+//                        onClick = {
+//                            if (grupo != null) {
+//                                navigateTocreateSala(grupo.id)
+//                            }
+//                        }
+//                    )
+//                    DropdownMenuItem(
+//                        text = { Text("Save") },
+//                        onClick = {  }
+//                    )
+//                }
+//            }
+//
+//        }
     }
     }
 }

@@ -15,9 +15,9 @@
 15  ~ limitations under the License.
 16-->
 17<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-18    package="app.regate.review" >
+18    package="app.regate.search" >
 19
 20    <uses-sdk android:minSdkVersion="23" />
-20-->C:\Users\PC\Desktop\projects\regate_android\ui\review\src\main\AndroidManifest.xml
+20-->C:\Users\PC\Desktop\projects\regate_android\ui\search\src\main\AndroidManifest.xml
 21
 22</manifest>

@@ -20,6 +20,7 @@ import kotlinx.datetime.Instant
 data class Profile(
     @PrimaryKey
     override val id: Long = 0,
+    val uuid:String = "",
     val user_id: Long? = null,
     val email: String? = null,
     val profile_photo:String?=null,

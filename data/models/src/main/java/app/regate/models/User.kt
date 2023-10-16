@@ -13,8 +13,8 @@ data class User(
     val email: String,
     val estado: Int,
     val username: String,
-    val profile_photo:String?=null,
-    val nombre:String,
-    val apellido:String? = null,
+//    val profile_photo:String?=null,
+//    val nombre:String,
+//    val apellido:String? = null,
     val profile_id:Long
 ):AppEntity
