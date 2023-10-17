@@ -54,7 +54,7 @@ import app.regate.models.Emoji
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EmojiLayout(
     emojis:List<List<Emoji>>,
@@ -164,15 +164,15 @@ fun EmojiLayout(
                         contentDescription = null,
                     )
                 })
-            Tab(selected = pagerState.currentPage == 9, onClick = {
-                updateMessage(deleteText(message))
-            },
-                icon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.delete_icon),
-                        contentDescription = null
-                    )
-                })
+//            Tab(selected = pagerState.currentPage == 9, onClick = {
+//                updateMessage(deleteText(message))
+//            },
+//                icon = {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.delete_icon),
+//                        contentDescription = null
+//                    )
+//                })
         }
     }) {paddingValues->
         if(emojis.isNotEmpty()){
@@ -228,17 +228,17 @@ internal fun EmojiHeader(
         modifier = Modifier.padding(vertical = 5.dp))
 }
 
-private fun deleteText(textFieldValue:TextFieldValue):TextFieldValue {
-    val maxChars = textFieldValue.text.length
-    val textBeforeSelection = textFieldValue.getTextBeforeSelection(maxChars)
-    val textAfterSelection = textFieldValue.getTextAfterSelection(maxChars)
-    val newText = "${textBeforeSelection.dropLast(1)}$textAfterSelection"
-    val newCursorPosition = textBeforeSelection.length -1
-    return TextFieldValue(
-        text = newText,
-        selection = TextRange(newCursorPosition)
-    )
-}
+//private fun deleteText(textFieldValue:TextFieldValue):TextFieldValue {
+//    val maxChars = textFieldValue.text.length
+//    val textBeforeSelection = textFieldValue.getTextBeforeSelection(maxChars)
+//    val textAfterSelection = textFieldValue.getTextAfterSelection(maxChars)
+//    val newText = "${textBeforeSelection.dropLast(2)}$textAfterSelection"
+//    val newCursorPosition = textBeforeSelection.length -1
+//    return TextFieldValue(
+//        text = newText,
+//        selection = TextRange(newCursorPosition)
+//    )
+//}
 private fun insertText(textFieldValue: TextFieldValue, insertText: String): TextFieldValue {
     val maxChars = textFieldValue.text.length
     val textBeforeSelection = textFieldValue.getTextBeforeSelection(maxChars)

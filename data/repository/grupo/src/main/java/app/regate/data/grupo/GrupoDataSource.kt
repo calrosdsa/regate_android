@@ -19,11 +19,11 @@ import app.regate.data.dto.empresa.grupo.UserGrupoDto
 interface GrupoDataSource {
    suspend fun myGroups():List<GrupoDto>
    suspend fun myGroupsRequest():List<GrupoDto>
-
    suspend fun syncMessages(d:List<GrupoMessageDto>):List<GrupoMessageDto>
    suspend fun filterGrupos(d:FilterGrupoData,page:Int):PaginationGroupsResponse
    suspend fun getGrupoDetail(id:Long):GrupoResponse
    suspend fun getGrupo(id:Long):GrupoDto
+   suspend fun getGrupoByUuid(uuid:String):GrupoDto
    suspend fun getMessagesGrupo(id:Long,page:Int):PaginationGroupMessages
    suspend fun joinGrupo(d:AddUserGrupoRequest): ResponseMessage
    suspend fun getUsersGrupo(id:Long):List<UserGrupoDto>

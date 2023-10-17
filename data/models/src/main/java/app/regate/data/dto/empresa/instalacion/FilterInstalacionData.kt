@@ -6,13 +6,15 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class FilterInstalacionData(
     val max_price:Int? = null,
-    val currentDate:Long = Clock.System.now().toEpochMilliseconds(),
+    val currentDate:Long = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).toInstant(
+        TimeZone.UTC).toEpochMilliseconds(),
 //    val currentTime:LocalTime = Clock.System.now().toLocalDateTime(TimeZone.UTC).time,
 //    val currentTime:LocalTime = LocalTime.parse("21:00"),
     val currentTime:LocalTime = getMostNearTime(),

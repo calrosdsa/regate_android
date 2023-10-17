@@ -39,6 +39,8 @@ class LabelRepository(
         labelDao.upsertAll(res)
     }
     suspend fun getEmojis(){
+        val count = emojiDao.getEmojiCount()
+        if(count == 0) return
         val res = labelDataSourceImpl.getEmojis().map{
             Emoji(
                 id = it.id,

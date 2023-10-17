@@ -174,4 +174,6 @@
     <string name="room_chat">Chat de la sala</string>
     <string name="amount_contributed">Monto aportado</string>
     <string name="establecimientos">Establecimientos</string>
+    <string name="see_more_options">Ver más opciones</string>
+    <string name="see_sala">Ver sala</string>
 </resources>

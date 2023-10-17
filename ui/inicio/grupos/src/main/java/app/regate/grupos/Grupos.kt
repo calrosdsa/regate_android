@@ -1,5 +1,6 @@
 package app.regate.grupos
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -21,11 +22,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +53,7 @@ typealias Grupos= @Composable (
     navController: NavController,
     filterGroups:@Composable () -> Unit,
     userSalas:@Composable () -> Unit,
-
+    uuid:String,
 //    navigateToReserva:(id:Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
@@ -62,6 +65,7 @@ fun Grupos (
     @Assisted navController: NavController,
     @Assisted filterGroups:@Composable () -> Unit,
     @Assisted userSalas:@Composable () -> Unit,
+    @Assisted uuid:String,
 //    @Assisted navigateToReserva: (id:Long) -> Unit,
 //    viewModelFactory:()->ReservasViewModel
 ){
@@ -72,7 +76,9 @@ fun Grupos (
         userSalas = userSalas,
         formatShortRelativeTime = formatter::formatShortRelativeTime,
         openAuthBottomSheet = { navController.navigate(Route.AUTH_DIALOG) },
-        navigateToUserGrupoRequests = { navController.navigate(Route.USER_PENDING_REQUESTS)}
+        navigateToUserGrupoRequests = { navController.navigate(Route.USER_PENDING_REQUESTS)},
+        navigateToInvitationGrupo = { navController.navigate(Route.INVITATION_GRUPO + "?uuid=${it}")},
+        uuid = uuid
 //        navigateToPhoto = {
 ////            val url = URLEncoder.encode(it, StandardCharsets.UTF_8.toString())
 //            navController.navigate(Route.PHOTO id it)
@@ -86,9 +92,11 @@ fun Grupos (
 internal fun Grupos(
     navController: NavController,
     viewModel:UserGroupsViewModel,
+    uuid:String,
     formatShortRelativeTime: (Instant) -> String,
     openAuthBottomSheet:()->Unit,
     navigateToUserGrupoRequests:()->Unit,
+    navigateToInvitationGrupo:(String)->Unit,
 //    navigateToPhoto:(String)->Unit,
     filterGroups:@Composable () -> Unit,
     userSalas:@Composable () -> Unit,
@@ -97,6 +105,15 @@ internal fun Grupos(
     val viewState by viewModel.state.collectAsState()
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
+    val openBottomSheet = rememberSaveable {
+        mutableStateOf(uuid.isNotBlank())
+    }
+    LaunchedEffect(key1 = Unit, block = {
+        if(openBottomSheet.value){
+            navigateToInvitationGrupo(uuid)
+            openBottomSheet.value = false
+        }
+    })
     Scaffold(
         bottomBar = {
             BottomBar(navController = navController)

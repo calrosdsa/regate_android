@@ -1,6 +1,5 @@
 package app.regate.grupo.info
 
-import android.graphics.drawable.shapes.Shape
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,16 +35,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
-import androidx.paging.LoadState
 import app.regate.common.composes.ui.CommonTopBar
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.data.auth.AppAuthState
 import app.regate.data.common.encodeMediaData
-import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
 import app.regate.data.dto.empresa.grupo.GrupoVisibility
+import app.regate.grupo.invitation.InvitationGrupoState
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
@@ -55,21 +53,24 @@ typealias InfoGrupo = @Composable (
     navigateUp:()->Unit,
     navigateToPhoto:(String)->Unit,
     openAuthBottomSheet:()->Unit,
+    navigateToGroup:(Long)->Unit
     ) -> Unit
 
 @Inject
 @Composable
 fun InfoGrupo(
-    viewModelFactory:(SavedStateHandle)->InfoGrupoViewModel,
+    viewModelFactory:(SavedStateHandle)-> InfoGrupoViewModel,
     @Assisted navigateUp: () -> Unit,
     @Assisted navigateToPhoto: (String) -> Unit,
     @Assisted openAuthBottomSheet:()->Unit,
+    @Assisted navigateToGroup: (Long) -> Unit,
     ){
     InfoGrupo(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
         navigateToPhoto = navigateToPhoto,
-        openAuthBottomSheet = openAuthBottomSheet
+        openAuthBottomSheet = openAuthBottomSheet,
+        navigateToGroup = navigateToGroup
     )
 }
 
@@ -78,7 +79,8 @@ internal fun InfoGrupo(
     viewModel: InfoGrupoViewModel,
     navigateUp: () -> Unit,
     navigateToPhoto: (String) -> Unit,
-    openAuthBottomSheet: () -> Unit
+    openAuthBottomSheet: () -> Unit,
+    navigateToGroup: (Long) -> Unit,
 ){
     val state by viewModel.state.collectAsState()
     InfoGrupo(
@@ -89,19 +91,21 @@ internal fun InfoGrupo(
         cancelRequest = viewModel::cancelRequest,
         joinToGroup = viewModel::joinToGroup,
         openAuthBottomSheet = openAuthBottomSheet,
+        navigateToGroup = navigateToGroup,
     )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun InfoGrupo(
-    viewState:InfoGrupoState,
+    viewState: InvitationGrupoState,
     navigateUp: () -> Unit,
     refresh:()->Unit,
     navigateToPhoto: (String) -> Unit,
     cancelRequest:()->Unit,
     joinToGroup:(Int)->Unit,
-    openAuthBottomSheet: () -> Unit
+    openAuthBottomSheet: () -> Unit,
+    navigateToGroup: (Long) -> Unit,
 ) {
     val pullRefreshState = rememberPullRefreshState(
         refreshing = viewState.loading,
@@ -175,7 +179,7 @@ internal fun InfoGrupo(
                                     joinToGroup(grupo.visibility)
                                 } else {
                                     when (viewState.myGroup.request_estado) {
-                                        GrupoRequestEstado.JOINED -> joinToGroup(grupo.visibility)
+                                        GrupoRequestEstado.JOINED -> navigateToGroup(viewState.grupo.id)
                                         GrupoRequestEstado.PENDING -> cancelRequest()
                                         GrupoRequestEstado.NONE -> {}
                                     }

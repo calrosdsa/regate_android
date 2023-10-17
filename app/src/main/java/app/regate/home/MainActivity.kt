@@ -11,6 +11,7 @@ import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentSender
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -72,6 +73,10 @@ class MainActivity : ComponentActivity() {
 //    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        val action :String? = intent.action
+        val dataUri:Uri? = intent.data
+        val grupoId = dataUri?.getQueryParameter("grupoId")
+        Log.d("DEBUG_APP_QUERY",grupoId.toString())
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationGroup()
             createNotificationGroupChatChannel()
@@ -90,7 +95,6 @@ class MainActivity : ComponentActivity() {
                 LocalAppDateFormatter provides component.appDateFormatter,
                 LocalAppUtil provides component.appUtil
             ) {
-
                 RegateTheme(
                     useDarkColors = preferences.shouldUseDarkColors(),
                     useDynamicColors = preferences.shouldUseDynamicColors()

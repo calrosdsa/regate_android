@@ -209,5 +209,7 @@
     <string name="room_chat">Room chat</string>
     <string name="amount_contributed">Amount contributed</string>
     <string name="establecimientos">Establecimientos</string>
+    <string name="see_more_options">See more options</string>
+    <string name="see_sala">See sala</string>
 
 </resources>

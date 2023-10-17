@@ -42,12 +42,15 @@ import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toJavaLocalTime
+import kotlinx.datetime.toKotlinLocalDateTime
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Inject
 class DiscoverViewModel(
@@ -119,6 +122,7 @@ class DiscoverViewModel(
             appPreferences.observeFilter().flowOn(Dispatchers.IO).collectLatest{
                 try{
                     getDataEntityFromJson<FilterInstalacionData>(it)?.let {filter->
+                        Log.d("DEBUG_APP_FILTER",filter.toString())
                         getInstalaciones(filter)
                 }
                 }catch(e:Exception){
@@ -161,6 +165,7 @@ class DiscoverViewModel(
     }
 
     fun getInstalaciones(filter:FilterInstalacionData) {
+        Log.d("DEBUG_APP_INS","instalacion -get")
         viewModelScope.launch {
             val listTime = getArrayofTime(
                filter.currentTime.toJavaLocalTime(),
@@ -171,7 +176,6 @@ class DiscoverViewModel(
                 "${Instant.fromEpochMilliseconds(filter.currentDate).toLocalDateTime(TimeZone.UTC).date} $it"
             }
             try {
-
                 val data = filter.copy(
                     time = listTime,
                     date = listDate,
@@ -233,13 +237,15 @@ class DiscoverViewModel(
         }
     }
 
-    fun getDataFilter(){
+    fun getDataFilter():Long?{
         try{
             if(dataFilter.isNotBlank()){
-                Log.d("DEBUG_APP", dataFilter)
                 val filterPayload = Json.decodeFromString<SalaConflictPayload>(dataFilter)
+                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                val datetime = LocalDateTime.parse(filterPayload.horas[0],formatter).toKotlinLocalDateTime().toInstant(TimeZone.currentSystemDefault()).toEpochMilliseconds()
+                Log.d("DEBUG_APP", datetime.toString())
                 appPreferences.filter =  Json.encodeToString(filterData.value.copy(
-                    currentDate = filterPayload.created_at.toEpochMilliseconds(),
+                    currentDate = datetime,
                     day_week = Instant.fromEpochMilliseconds(filterPayload.created_at.toEpochMilliseconds())
                         .toLocalDateTime(
                             TimeZone.UTC
@@ -248,11 +254,14 @@ class DiscoverViewModel(
                     interval = (30 * filterPayload.horas.size).toLong()
                 ))
                 dataFilter = ""
+                return datetime
             }else{
                 Log.d("DEBUG_APP", "is null")
+                return null
             }
         }catch (e:Exception){
             Log.d("DEBUG_APP_ERR",e.localizedMessage?:"")
+            return null
         }
     }
 

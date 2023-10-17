@@ -61,6 +61,7 @@ import app.regate.complejo.reviews.Reviews
 import app.regate.entidad.photos.EstablecimientoPhotos
 import app.regate.filterSalas.FilterSalas
 import app.regate.grupo.info.InfoGrupo
+import app.regate.grupo.invitation.InvitationGrupo
 import app.regate.grupo.pending.PendingRequests
 import app.regate.grupos.user_requests.UserGrupoRequests
 import app.regate.sala.complete.SalaComplete
@@ -130,6 +131,7 @@ class ComposeScreens(
     val grupo:Grupo,
     val userGrupoRequests:UserGrupoRequests,
     val infoGrupo:InfoGrupo,
+    val invitationGrupo: InvitationGrupo,
     val pendingRequests:PendingRequests,
     val grupoSalas:GrupoSalas,
     val userSalas:UserSalas,

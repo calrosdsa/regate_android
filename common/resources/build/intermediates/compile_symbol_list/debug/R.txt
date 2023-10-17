@@ -183,6 +183,8 @@ int string search 0x0
 int string search_nearby_places 0x0
 int string see 0x0
 int string see_all 0x0
+int string see_more_options 0x0
+int string see_sala 0x0
 int string select_group_text 0x0
 int string send 0x0
 int string send_to_a_group 0x0

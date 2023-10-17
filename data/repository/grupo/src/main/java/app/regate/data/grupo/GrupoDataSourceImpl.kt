@@ -139,7 +139,9 @@ class GrupoDataSourceImpl(
     override suspend fun getGrupo(id: Long):GrupoDto {
         return client.get("/v1/grupo/${id}/").body()
     }
-
+    override suspend fun getGrupoByUuid(uuid: String):GrupoDto {
+        return client.get("/v1/grupo-uuid/${uuid}/").body()
+    }
     override suspend fun joinGrupo(d: AddUserGrupoRequest):ResponseMessage {
         val token = authStore.get()?.accessToken
         return client.post("/v1/grupo/add-user/"){

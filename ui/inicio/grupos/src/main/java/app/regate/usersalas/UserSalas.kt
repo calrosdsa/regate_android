@@ -81,11 +81,9 @@ internal fun UserSalas(
     LaunchedEffect(key1 = true, block = {
         viewState.loading
     })
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { paddingValues ->
         Box(modifier = Modifier
             .padding(paddingValues)

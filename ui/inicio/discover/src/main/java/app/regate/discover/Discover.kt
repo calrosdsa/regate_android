@@ -142,11 +142,14 @@ internal fun Discover(
 //        viewModel.getDataFilter()
     })
     val dateState = rememberDatePickerState(
-        initialSelectedDateMillis = now.toEpochMilliseconds()
+        initialSelectedDateMillis = viewState.filter.currentDate
     )
     LaunchedEffect(key1 = dateState.selectedDateMillis, block = {
         if(viewModel.isDateAvailable()){
-            viewModel.getDataFilter()
+            val dateEpoch = viewModel.getDataFilter()
+            dateEpoch?.let {date->
+            dateState.setSelection(date)
+            }
         }else{
             dateState.selectedDateMillis?.let { viewModel.setCurrentDate(it) }
         }

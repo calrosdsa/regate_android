@@ -13,4 +13,7 @@ abstract class RoomEmojiDao:EmojiDao,RoomEntityDao<Emoji> {
     @Transaction
     @Query("select * from emoji where category = :category")
     abstract override suspend fun getEmojisByCategory(category: String): List<Emoji>
+
+    @Query("select count(*) from emoji")
+    abstract override suspend fun getEmojiCount(): Int
 }

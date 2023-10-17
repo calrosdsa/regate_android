@@ -62,7 +62,7 @@ internal fun Consume(
                 ConsumeItem(item = item,
                 navigate = {
                     when(item.type_entity){
-                        TypeEntity.INSTALACION.ordinal -> navigateToReserva(item.id_entity)
+                        TypeEntity.RESERVA.ordinal -> navigateToReserva(item.id_entity)
                         TypeEntity.SALA.ordinal -> navigateToSala(item.id_entity)
                         else -> {}
                     }

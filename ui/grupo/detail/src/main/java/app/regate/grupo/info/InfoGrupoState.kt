@@ -3,6 +3,7 @@ package app.regate.grupo.info
 import androidx.compose.runtime.Immutable
 import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.grupo.GrupoDto
+import app.regate.grupo.invitation.InvitationGrupoState
 import app.regate.models.MyGroups
 import app.regate.models.User
 
@@ -15,6 +16,6 @@ data class InfoGrupoState(
     val authState: AppAuthState = AppAuthState.LOGGED_OUT
 ){
     companion object{
-        val Empty = InfoGrupoState()
+        val Empty = InvitationGrupoState()
     }
 }

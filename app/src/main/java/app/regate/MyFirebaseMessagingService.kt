@@ -4,49 +4,28 @@ package app.regate
 
 //import com.google.firebase.example.messaging.R
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ActivityManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.util.Log
-import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.Person
-import androidx.core.app.TaskStackBuilder
-import androidx.core.graphics.drawable.IconCompat
-import androidx.core.net.toUri
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import app.regate.common.resources.R
 import app.regate.data.AppRoomDatabase
 import app.regate.data.dto.notifications.MessageGroupPayload
 import app.regate.data.dto.notifications.MessagePayload
 import app.regate.data.dto.notifications.SalaConflictPayload
 import app.regate.data.dto.notifications.SalaPayload
 import app.regate.data.dto.notifications.TypeNotification
-import app.regate.extensions.unsafeLazy
-import app.regate.home.MainActivity
-import app.regate.inject.ApplicationComponent
-import app.regate.inject.DbComponent
-import app.regate.models.Grupo
-import coil.ImageLoader
-import coil.request.ImageRequest
-import coil.request.SuccessResult
-import coil.transform.CircleCropTransformation
+import app.regate.notifications.HandleNotificationAccount
+import app.regate.notifications.HandleNotificationGrupo
+import app.regate.notifications.HandleNotificationSala
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -56,7 +35,9 @@ import kotlinx.serialization.json.Json
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.IO + job)
-    private val handler = HandleNotifications()
+    private val salaHandler = HandleNotificationSala()
+    private val accountHandler = HandleNotificationAccount()
+    private val grupoHandler = HandleNotificationGrupo()
 //    val component:DbComponent = DbComponent::class.create(this)
 
     //    @RequiresApi(Build.VERSION_CODES.P)
@@ -78,7 +59,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val grupo = db.grupoDao().getGrupo(messages[0].grupo_id)
                 Log.d(TAG,"Success $messages")
                 scope.launch {
-                sendNotificationGroupMessage(messages,grupo,applicationContext)
+                  grupoHandler.sendNotificationGroupMessage(messages,grupo,applicationContext)
                 }
             AppRoomDatabase.destroyInstance()
             }catch(e:Exception){
@@ -90,7 +71,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
                 val newSala = Json.decodeFromString<SalaPayload>(data["payload"].toString())
                     scope.launch {
-                        handler.sendNotificationSalaCreation(applicationContext,newSala)
+                        salaHandler.sendNotificationSalaCreation(applicationContext,newSala)
                     }
                 }catch (e:Exception){
                     Log.d(TAG,e.localizedMessage?:"")
@@ -100,7 +81,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 try{
                     val payload = Json.decodeFromString<SalaConflictPayload>(data["payload"].toString())
                     scope.launch {
-                    handler.sendNotificationSalaConflict(applicationContext,payload,data["payload"].toString())
+                    salaHandler.sendNotificationSalaConflict(applicationContext,payload,data["payload"].toString())
                     }
                 }catch (e:Exception){
                     Log.d(TAG,e.localizedMessage?:"")
@@ -110,7 +91,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 try {
                     val payload = Json.decodeFromString<MessagePayload>(data["payload"].toString())
                     scope.launch {
-                        handler.sendNotificationSalaHasBeenReserved(applicationContext, payload)
+                        salaHandler.sendNotificationSalaHasBeenReserved(applicationContext, payload)
                     }
                 } catch (e: Exception) {
                     Log.d(TAG, e.localizedMessage ?: "")
@@ -120,7 +101,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 try{
                     val payload = Json.decodeFromString<MessagePayload>(data["payload"].toString())
 //                    scope.launch {
-                        handler.sendNotificationBilling(applicationContext,payload)
+                        accountHandler.sendNotificationBilling(applicationContext,payload)
 //                    }
                 }catch (e:Exception){
                     Log.d(TAG,e.localizedMessage?:"")
@@ -142,82 +123,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
 
-    @SuppressLint("RestrictedApi")
-    private suspend fun sendNotificationGroupMessage(
-        messages:List<MessageGroupPayload>,grupo:Grupo,context:Context) {
-        try {
-//            val dasd = messages.elementAt(2)
-            val m1 = messages[2]
-            val m2 = messages[1]
-            val m3 = messages[0]
-            val taskDetailIntent = Intent(
-                Intent.ACTION_VIEW,
-                "https://example.com/chat-grupo/grupo_id=${grupo.id}".toUri(),
-                this,
-                MainActivity::class.java
-            )
-            val taskBuilder = TaskStackBuilder.create(this)
-            taskBuilder.addNextIntentWithParentStack(taskDetailIntent)
-            val pendingIntent = taskBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
 
-            val persons = mutableListOf<Person>()
-            messages.map {
-                val person = Person.Builder()
-                    .setIcon(IconCompat.createWithBitmap(getBitmap(it.profile_photo?:"")))
-                    .setName("${it.profile_name} ${it.profile_apellido?:""}" )
-                    .build()
-                persons.add(person)
-            }
-//            Log.d(TAG,bit.toString())
-            val CHANNEL_ID = context.getString(R.string.chat_group_channel_id)
-            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setStyle(
-                    NotificationCompat.MessagingStyle("Me")
-                        .setConversationTitle(grupo.name)
-                        .setGroupConversation(true)
-                        .addMessage(m1.content, m1.created_at.epochSeconds, persons[2])
-                        .addMessage(m2.content, m2.created_at.epochSeconds, persons[1])
-                        .addMessage(m3.content, m3.created_at.epochSeconds, persons[0])
-                )
-                .setSmallIcon(R.drawable.logo_app)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .build()
 
-            with(NotificationManagerCompat.from(this)) {
-                if (ActivityCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.POST_NOTIFICATIONS
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    return
-                }
-                Log.d(TAG,"SENDIN NOTIFICATION")
-                notify(grupo.id.toInt(), notification)
-            }
 
-        }catch(e:Exception){
-            Log.d(TAG,e.localizedMessage?:"")
-        }
-    }
-
-    @SuppressLint("SuspiciousIndentation")
-    private suspend fun getBitmap(url:String):Bitmap{
-        val bitmap = CoroutineScope(Dispatchers.IO).async {
-
-        val loader = ImageLoader(applicationContext)
-        val request = ImageRequest.Builder(applicationContext)
-            .data(url.ifBlank { "https://cdn-icons-png.flaticon.com/128/847/847969.png" })
-            .allowHardware(false) // Disable hardware bitmaps.
-            .transformations(CircleCropTransformation())
-            .build()
-
-        val result = (loader.execute(request) as SuccessResult).drawable
-        val bitmap = (result as BitmapDrawable).bitmap
-            return@async bitmap
-        }
-        return bitmap.await()
-    }
 
 
     private fun needsToBeScheduled() = true

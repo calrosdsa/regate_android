@@ -185,6 +185,8 @@ string search
 string search_nearby_places
 string see
 string see_all
+string see_more_options
+string see_sala
 string select_group_text
 string send
 string send_to_a_group

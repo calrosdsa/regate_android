@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface EmojiDao:EntityDao<Emoji> {
     suspend fun getEmojisByCategory(category:String):List<Emoji>
+    suspend fun getEmojiCount():Int
 }

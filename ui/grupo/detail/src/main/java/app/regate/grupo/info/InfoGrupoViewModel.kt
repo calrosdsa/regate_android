@@ -4,16 +4,13 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.regate.api.UiMessage
-import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.data.dto.empresa.grupo.GrupoVisibility
 import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveUser
 import app.regate.domain.observers.grupo.ObserveMyGroupById
-import app.regate.domain.observers.grupo.ObserveMyGroups
+import app.regate.grupo.invitation.InvitationGrupoState
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
@@ -23,7 +20,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -40,14 +36,14 @@ class InfoGrupoViewModel(
     private val grupoId  = savedStateHandle.get<Long>("id")?:0
     private val loadingCounter = ObservableLoadingCounter()
     private val grupo = MutableStateFlow<GrupoDto?>(null)
-    val state:StateFlow<InfoGrupoState> = combine(
+    val state:StateFlow<InvitationGrupoState> = combine(
         loadingCounter.observable,
         grupo,
         observeMyGroupById.flow,
         observeUser.flow,
         observeAuthState.flow
     ){loading,grupo,myGroup,user,authState->
-        InfoGrupoState(
+        InvitationGrupoState(
             loading = loading,
             grupo = grupo,
             myGroup = myGroup,
@@ -57,7 +53,7 @@ class InfoGrupoViewModel(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
-        initialValue = InfoGrupoState.Empty
+        initialValue = InvitationGrupoState.Empty
     )
     init {
         getData()
