@@ -15,6 +15,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoDelete
+import androidx.compose.material.icons.filled.BorderClear
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.material.icons.filled.EmojiEvents
@@ -25,6 +27,8 @@ import androidx.compose.material.icons.filled.EmojiObjects
 import androidx.compose.material.icons.filled.EmojiPeople
 import androidx.compose.material.icons.filled.EmojiSymbols
 import androidx.compose.material.icons.filled.EmojiTransportation
+import androidx.compose.material.icons.filled.FormatClear
+import androidx.compose.material.icons.filled.LayersClear
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
@@ -160,10 +165,11 @@ fun EmojiLayout(
                     )
                 })
             Tab(selected = pagerState.currentPage == 9, onClick = {
+                updateMessage(deleteText(message))
             },
                 icon = {
                     Icon(
-                        imageVector = Icons.Default.DeleteSweep,
+                        painter = painterResource(id = R.drawable.delete_icon),
                         contentDescription = null
                     )
                 })
@@ -200,7 +206,7 @@ fun EmojiLayout(
 }
 
 @Composable
-internal fun    EmojiItem(
+internal fun EmojiItem(
     emoji:String,
     textFieldValue: TextFieldValue,
     onClick: (TextFieldValue) -> Unit
@@ -222,7 +228,17 @@ internal fun EmojiHeader(
         modifier = Modifier.padding(vertical = 5.dp))
 }
 
-
+private fun deleteText(textFieldValue:TextFieldValue):TextFieldValue {
+    val maxChars = textFieldValue.text.length
+    val textBeforeSelection = textFieldValue.getTextBeforeSelection(maxChars)
+    val textAfterSelection = textFieldValue.getTextAfterSelection(maxChars)
+    val newText = "${textBeforeSelection.dropLast(1)}$textAfterSelection"
+    val newCursorPosition = textBeforeSelection.length -1
+    return TextFieldValue(
+        text = newText,
+        selection = TextRange(newCursorPosition)
+    )
+}
 private fun insertText(textFieldValue: TextFieldValue, insertText: String): TextFieldValue {
     val maxChars = textFieldValue.text.length
     val textBeforeSelection = textFieldValue.getTextBeforeSelection(maxChars)

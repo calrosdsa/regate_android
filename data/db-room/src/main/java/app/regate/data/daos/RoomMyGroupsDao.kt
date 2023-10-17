@@ -33,9 +33,10 @@ abstract class RoomMyGroupsDao:RoomEntityDao<MyGroups>,MyGroupsDao {
     @Transaction
     @Query("select * from my_groups where group_id = :grupoId")
     abstract override fun observeMyGroupById(grupoId:Long): Flow<MyGroups?>
+    @Query("delete from  my_groups where request_estado = :estado")
+    abstract override suspend fun deleteMyGroups(estado:Int)
     @Query("delete from my_groups")
     abstract override suspend fun deleteAll()
-
     @Query("delete from my_groups where group_id = :id")
     abstract override suspend fun deleteByGroupId(id: Long)
 }

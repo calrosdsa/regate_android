@@ -41,6 +41,7 @@ import app.regate.common.composes.ui.CommonTopBar
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
+import app.regate.data.auth.AppAuthState
 import app.regate.data.common.encodeMediaData
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
@@ -52,20 +53,23 @@ import me.tatarka.inject.annotations.Inject
 
 typealias InfoGrupo = @Composable (
     navigateUp:()->Unit,
-    navigateToPhoto:(String)->Unit
-        ) -> Unit
+    navigateToPhoto:(String)->Unit,
+    openAuthBottomSheet:()->Unit,
+    ) -> Unit
 
 @Inject
 @Composable
 fun InfoGrupo(
     viewModelFactory:(SavedStateHandle)->InfoGrupoViewModel,
     @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToPhoto: (String) -> Unit
-){
+    @Assisted navigateToPhoto: (String) -> Unit,
+    @Assisted openAuthBottomSheet:()->Unit,
+    ){
     InfoGrupo(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
-        navigateToPhoto = navigateToPhoto
+        navigateToPhoto = navigateToPhoto,
+        openAuthBottomSheet = openAuthBottomSheet
     )
 }
 
@@ -73,7 +77,8 @@ fun InfoGrupo(
 internal fun InfoGrupo(
     viewModel: InfoGrupoViewModel,
     navigateUp: () -> Unit,
-    navigateToPhoto: (String) -> Unit
+    navigateToPhoto: (String) -> Unit,
+    openAuthBottomSheet: () -> Unit
 ){
     val state by viewModel.state.collectAsState()
     InfoGrupo(
@@ -82,8 +87,8 @@ internal fun InfoGrupo(
         refresh = viewModel::getData,
         navigateToPhoto = navigateToPhoto,
         cancelRequest = viewModel::cancelRequest,
-        joinToGroup = viewModel::joinToGroup
-
+        joinToGroup = viewModel::joinToGroup,
+        openAuthBottomSheet = openAuthBottomSheet,
     )
 }
 
@@ -95,7 +100,8 @@ internal fun InfoGrupo(
     refresh:()->Unit,
     navigateToPhoto: (String) -> Unit,
     cancelRequest:()->Unit,
-    joinToGroup:(Int)->Unit
+    joinToGroup:(Int)->Unit,
+    openAuthBottomSheet: () -> Unit
 ) {
     val pullRefreshState = rememberPullRefreshState(
         refreshing = viewState.loading,
@@ -163,14 +169,19 @@ internal fun InfoGrupo(
 
                     Button(
                         onClick = {
-                            if(viewState.myGroup == null){
-                                joinToGroup(grupo.visibility)
-                            }else{
-                           when(viewState.myGroup.request_estado){
-                               GrupoRequestEstado.JOINED->joinToGroup(grupo.visibility)
-                               GrupoRequestEstado.PENDING-> cancelRequest()
-                               GrupoRequestEstado.NONE->{}
-                           }
+                            if (viewState.authState == AppAuthState.LOGGED_IN) {
+
+                                if (viewState.myGroup == null) {
+                                    joinToGroup(grupo.visibility)
+                                } else {
+                                    when (viewState.myGroup.request_estado) {
+                                        GrupoRequestEstado.JOINED -> joinToGroup(grupo.visibility)
+                                        GrupoRequestEstado.PENDING -> cancelRequest()
+                                        GrupoRequestEstado.NONE -> {}
+                                    }
+                                }
+                            } else {
+                                openAuthBottomSheet()
                             }
                         },
                         shape = MaterialTheme.shapes.small,

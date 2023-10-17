@@ -235,7 +235,8 @@ internal fun Sala(
                                     )
                                 }
                             },
-                            salaTitle = viewState.data?.sala?.titulo?:""
+                            salaTitle = viewState.data?.sala?.titulo?:"",
+                            navigateToComplete = { viewState.data?.sala?.let { navigateToComplete(it.id) } }
                         )
 
                     }
@@ -460,6 +461,7 @@ internal fun SalaMenu(
     leaveGroup: () -> Unit,
     shareSalaWithGroup: () -> Unit,
     navigateToChat:()->Unit,
+    navigateToComplete: () -> Unit,
     imIntheRoom:Boolean,
     ){
     Column() {
@@ -484,7 +486,7 @@ internal fun SalaMenu(
         )
             DropdownMenuItem(
                 text = { Text(text = stringResource(id = R.string.amount_contributed)) },
-                onClick = { navigateToChat() },
+                onClick = { navigateToComplete() },
                 leadingIcon = {
                     Icon(imageVector = Icons.Filled.AttachMoney, contentDescription = null)
                 }

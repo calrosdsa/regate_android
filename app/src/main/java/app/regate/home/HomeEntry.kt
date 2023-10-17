@@ -413,7 +413,8 @@ internal fun AppNavigation(
             composeScreens.infoGrupo(
                 navigateUp = navController::navigateUp,
                 navigateToPhoto = { navController.navigate(Route.PHOTO id it) },
-            )
+                openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
+                )
         }
         animatedComposable(
             route = Route.USER_PENDING_REQUESTS,
@@ -676,6 +677,7 @@ private fun NavGraphBuilder.AddMainNav(
                 composeScreens.filterGroups(
                     navigateToGroup = {navController.navigate(Route.GRUPO id it)},
                     navigateToInfoGrupo = {navController.navigate(Route.INFO_GRUPO id it)},
+                    openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)}
                     )},
                 userSalas = { composeScreens.userSalas(
                     navigateToSala = { it1,it2->

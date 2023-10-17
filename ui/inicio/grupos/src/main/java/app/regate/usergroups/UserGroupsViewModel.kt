@@ -52,6 +52,7 @@ class UserGroupsViewModel(
         viewModelScope.launch {
             try{
             grupoRepository.myGroups()
+            grupoRepository.myGroupsRequest()
             }catch(e:Exception){
                 Log.d("DEBUG_APP_!21",e.localizedMessage?:"")
             }

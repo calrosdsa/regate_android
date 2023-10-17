@@ -28,6 +28,7 @@ import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
 import io.ktor.client.plugins.websocket.webSocket
+import io.ktor.client.plugins.websocket.webSocketSession
 import io.ktor.http.HttpMethod
 import io.ktor.websocket.Frame
 import io.ktor.websocket.readText
@@ -137,6 +138,20 @@ class ChatSalaViewModel(
             }catch(e:Exception){
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
             }
+        }
+    }
+    suspend fun startWs(){
+        try {
+            val cl = client.webSocketSession(
+                method = HttpMethod.Get, host = Host.host,
+//                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
+                port = Host.port, path = "/v1/ws/chat-sala?id=${salaId}"
+            )
+            cl.apply { launch { outputMessage() } }
+
+
+        }catch (e:Exception){
+            //
         }
     }
     companion object {

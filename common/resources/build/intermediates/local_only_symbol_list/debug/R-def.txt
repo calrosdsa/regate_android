@@ -13,6 +13,7 @@ color tv_test_yellow
 drawable check
 drawable coin
 drawable default_image
+drawable delete_icon
 drawable doble_check
 drawable enabled_location
 drawable ic_launcher_background

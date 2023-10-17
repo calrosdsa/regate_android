@@ -16,6 +16,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.component.item.GrupoItem
 import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.viewModel
+import app.regate.constant.Route
+import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -23,6 +25,7 @@ import me.tatarka.inject.annotations.Inject
 typealias FilterGroups= @Composable (
     navigateToGroup:(id:Long)->Unit,
     navigateToInfoGrupo:(id:Long) ->Unit,
+    openAuthBottomSheet:()->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 
 ) -> Unit
@@ -33,13 +36,15 @@ fun FilterGroups (
     viewModelFactory:()-> GruposViewModel,
     @Assisted navigateToGroup: (id: Long) -> Unit,
     @Assisted navigateToInfoGrupo: (id: Long) -> Unit,
+    @Assisted openAuthBottomSheet: () -> Unit,
 //    @Assisted navigateToReserva: (id:Long) -> Unit,
 //    viewModelFactory:()->ReservasViewModel
 ){
     FilterGroups(
         viewModel = viewModel(factory = viewModelFactory),
         navigateToGroup = navigateToGroup,
-        navigateToInfoGrupo = navigateToInfoGrupo
+        navigateToInfoGrupo = navigateToInfoGrupo,
+        openAuthBottomSheet = openAuthBottomSheet,
     )
 }
 
@@ -48,7 +53,9 @@ fun FilterGroups (
 internal fun FilterGroups (
     viewModel: GruposViewModel,
     navigateToGroup: (id: Long) -> Unit,
-    navigateToInfoGrupo: (id: Long) -> Unit
+    navigateToInfoGrupo: (id: Long) -> Unit,
+    openAuthBottomSheet: () -> Unit
+
 ){
     val state by viewModel.state.collectAsState()
 
@@ -58,7 +65,8 @@ internal fun FilterGroups (
         lazyPagingItems = viewModel.pagingList.collectAsLazyPagingItems(),
         clearMessage = viewModel::clearMessage,
         joinToGroup = viewModel::joinToGroup,
-        navigateToInfoGrupo = navigateToInfoGrupo
+        navigateToInfoGrupo = navigateToInfoGrupo,
+        openAuthBottomSheet = openAuthBottomSheet
     )
 }
 
@@ -69,7 +77,8 @@ internal fun FilterGroups(
     lazyPagingItems: LazyPagingItems<GrupoDto>,
     clearMessage:(id:Long)->Unit,
     joinToGroup: (Long,Int)->Unit,
-    navigateToInfoGrupo: (id: Long) -> Unit
+    navigateToInfoGrupo: (id: Long) -> Unit,
+    openAuthBottomSheet: () -> Unit
 //    modifier: Modifier = Modifier
 ){
     val snackbarHostState = remember { SnackbarHostState() }
@@ -98,16 +107,25 @@ internal fun FilterGroups(
                             grupo_request_estado = grupoU.request_estado.ordinal
                         ),
                         joinToGroup = {it1,it2->
-                            joinToGroup(it1,it2)
+                            if(viewState.authState == AppAuthState.LOGGED_IN) {
+                                joinToGroup(it1, it2)
+                            }else{
+                                openAuthBottomSheet()
+                            }
                         },
                         navigateToInfoGrupo = navigateToInfoGrupo
                     )
                 }else{
                 GrupoItem(
                     navigate = navigateToInfoGrupo,
+                    navigateToInfoGrupo = navigateToInfoGrupo,
                     grupo = result,
                     joinToGroup = {it1,it2->
+                        if(viewState.authState == AppAuthState.LOGGED_IN){
                         joinToGroup(it1,it2)
+                        }else{
+                            openAuthBottomSheet()
+                        }
                     }
                 )
                 }

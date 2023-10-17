@@ -44,6 +44,12 @@ class GrupoDataSourceImpl(
             header("Authorization","Bearer $token")
         }.body()
     }
+    override suspend fun myGroupsRequest(): List<GrupoDto> {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/grupo/user-groups-request/"){
+            header("Authorization","Bearer $token")
+        }.body()
+    }
     override  suspend fun syncMessages(d:List<GrupoMessageDto>):List<GrupoMessageDto>{
         return client.post("/v1/grupo/message/sync-message/"){
             contentType(ContentType.Application.Json)

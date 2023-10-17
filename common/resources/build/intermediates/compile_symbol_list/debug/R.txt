@@ -11,6 +11,7 @@ int color tv_test_yellow 0x0
 int drawable check 0x0
 int drawable coin 0x0
 int drawable default_image 0x0
+int drawable delete_icon 0x0
 int drawable doble_check 0x0
 int drawable enabled_location 0x0
 int drawable ic_launcher_background 0x0

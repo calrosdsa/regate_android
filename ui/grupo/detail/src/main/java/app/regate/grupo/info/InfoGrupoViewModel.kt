@@ -80,7 +80,6 @@ class InfoGrupoViewModel(
                 loadingCounter.addLoader()
                 val res = grupoRepository.getGrupo(grupoId)
                 Log.d("DEBUG_APP_RES",res.toString())
-                delay(1000)
                 grupo.emit(res)
                 loadingCounter.removeLoader()
             } catch (e: Exception) {

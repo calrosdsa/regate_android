@@ -12,6 +12,7 @@ import app.regate.api.UiMessageManager
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.grupo.GrupoRepository
+import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.grupo.ObserveMyGroups
 import app.regate.domain.pagination.grupo.PaginationGroups
 import app.regate.util.ObservableLoadingCounter
@@ -28,7 +29,8 @@ import me.tatarka.inject.annotations.Inject
 @Inject
 class GruposViewModel(
     private val grupoRepository: GrupoRepository,
-    observeMyGroups: ObserveMyGroups
+    observeMyGroups: ObserveMyGroups,
+    observeAuthState: ObserveAuthState
 //    private val updateFilterGrupos: UpdateFilterGrupos
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
@@ -41,12 +43,14 @@ class GruposViewModel(
 //        grupos,
         loadingCounter.observable,
         uiMessageManager.message,
-        observeMyGroups.flow
-    ){loading,message,userGroups->
+        observeMyGroups.flow,
+        observeAuthState.flow
+    ){loading,message,userGroups,authState->
         GruposState(
             loading = loading,
             message = message,
-            userGroups = userGroups
+            userGroups = userGroups,
+            authState = authState
 //            grupos = grupos
         )
     }.stateIn(
@@ -57,6 +61,7 @@ class GruposViewModel(
 
     init{
         observeMyGroups(Unit)
+        observeAuthState(Unit)
 //        Log.d("DEBUG_APP_222","INIT 222")
 //        observeGrupos(Unit)
 //        getFilterGrupos()

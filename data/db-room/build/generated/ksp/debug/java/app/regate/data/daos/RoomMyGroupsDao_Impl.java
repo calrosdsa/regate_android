@@ -45,6 +45,8 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
 
   private final EntityDeletionOrUpdateAdapter<MyGroups> __updateAdapterOfMyGroups;
 
+  private final SharedSQLiteStatement __preparedStmtOfDeleteMyGroups;
+
   private final SharedSQLiteStatement __preparedStmtOfDeleteAll;
 
   private final SharedSQLiteStatement __preparedStmtOfDeleteByGroupId;
@@ -81,6 +83,14 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
         final int _tmp = AppTypeConverters.INSTANCE.fromGrupoRequestEstado(entity.getRequest_estado());
         statement.bindLong(3, _tmp);
         statement.bindLong(4, entity.getId());
+      }
+    };
+    this.__preparedStmtOfDeleteMyGroups = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "delete from  my_groups where request_estado = ?";
+        return _query;
       }
     };
     this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
@@ -166,6 +176,28 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
           return Unit.INSTANCE;
         } finally {
           __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object deleteMyGroups(final int estado, final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteMyGroups.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, estado);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteMyGroups.release(_stmt);
         }
       }
     }, continuation);

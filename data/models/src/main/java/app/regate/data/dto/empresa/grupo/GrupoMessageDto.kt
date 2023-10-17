@@ -47,7 +47,12 @@ data class GrupoEvent(
     val message: GrupoMessageDto,
     val sala:Sala? = null
 )
-
+object GrupoEventType {
+    val GrupoEventSala = "sala"
+    val GrupoEventMessage = "message"
+    val GrupoEventIgnore = "ignore"
+    val GrupoEvnetUser = "user"
+}
 
 
 

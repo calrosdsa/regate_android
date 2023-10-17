@@ -75,9 +75,23 @@ class GrupoRepository(
                 group_id = it.id,
                 request_estado = GrupoRequestEstado.fromInt(it.grupo_request_estado
                 ))}
-            myGroupsDao.deleteAll()
+            myGroupsDao.deleteMyGroups(GrupoRequestEstado.JOINED.ordinal)
             myGroupsDao.upsertAll(myGroups)
             grupoDao.upsertAll(grupos)
+        }
+    }
+
+    suspend fun myGroupsRequest(){
+        withContext(dispatchers.computation){
+            val response = grupoDataSourceImpl.myGroupsRequest()
+//            val grupos = response.map { dtoToGrupo.map(it) }
+            val myGroups = response.map { MyGroups(
+                group_id = it.id,
+                request_estado = GrupoRequestEstado.fromInt(it.grupo_request_estado
+                ))}
+            myGroupsDao.deleteMyGroups(GrupoRequestEstado.PENDING.ordinal)
+            myGroupsDao.upsertAll(myGroups)
+//            grupoDao.upsertAll(grupos)
         }
     }
     suspend fun removeUserFromGroup(id:Long) {
@@ -128,9 +142,9 @@ class GrupoRepository(
         }
     }
     suspend fun joinGrupo(grupoId:Long,visibility:Int=2,){
+        try{
         val user  = userDao.getUser(0)
         val requestEstado= if(visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
-
         if(visibility == GrupoVisibility.PUBLIC.ordinal){
         val dataR = AddUserGrupoRequest(
             grupo_id = grupoId,
@@ -151,6 +165,9 @@ class GrupoRepository(
             )
             addPendingRequest(d)
 //            grupoDataSourceImpl.addPendingRequest(d)
+        }
+        }catch (e:Exception){
+            //TODO()
         }
     }
     suspend fun getGrupoDetail(id:Long):List<SalaDto>{

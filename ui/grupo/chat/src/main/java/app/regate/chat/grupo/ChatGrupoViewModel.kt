@@ -17,6 +17,7 @@ import app.regate.data.app.EmojiCategory
 import app.regate.data.common.MessageData
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import app.regate.data.dto.empresa.grupo.GrupoEvent
+import app.regate.data.dto.empresa.grupo.GrupoEventType
 import app.regate.data.dto.empresa.grupo.GrupoMessageData
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.grupo.GrupoRepository
@@ -185,10 +186,10 @@ class ChatGrupoViewModel(
                 val othersMessage = cl.incoming.receive() as? Frame.Text
                 if (othersMessage != null) {
                     val event = Json.decodeFromString<GrupoEvent>(othersMessage.readText())
-                    if (event.type == "message") {
+                        if (event.type == GrupoEventType.GrupoEventMessage || event.type == GrupoEventType.GrupoEventIgnore) {
                         grupoRepository.saveMessage(event.message)
                     }
-                    if (event.type == "user") {
+                    if (event.type == GrupoEventType.GrupoEvnetUser) {
                         val id = event.message.profile_id
                         try {
                             val res = usersRepository.getProfile(id)
@@ -201,10 +202,8 @@ class ChatGrupoViewModel(
                             )
                         }
                     }
-                    if (event.type == "sala") {
-//                               val id = event.message.profile_id
+                    if (event.type == GrupoEventType.GrupoEventSala) {
                         try {
-//                                   val res = usersRepository.getProfile(id)
                             uiMessageManager.emitMessage(UiMessage(message = "Se ha creado una nueva sala ${event.sala?.nombre}"))
                         } catch (e: Exception) {
                             uiMessageManager.emitMessage(
@@ -214,12 +213,10 @@ class ChatGrupoViewModel(
                             )
                         }
                     }
-//                           val messageProfile = receiveDeserialized<MessageResponse>()
                     Log.d("DEBUG_APP", othersMessage.readText())
                 }
             }
             cl.start(emptyList())
-//        client.close()
         }catch (e:Exception){
             delay(1000)
             Log.d("DEBUG_ARR",e.localizedMessage?:"")
@@ -247,6 +244,7 @@ class ChatGrupoViewModel(
                         type_message = data.type_message,
                         reply_to = data.reply_to,
                         data = data.data,
+                        created_at = data.created_at,
                         id = data.id,
                     )
                     val event =  GrupoEvent(

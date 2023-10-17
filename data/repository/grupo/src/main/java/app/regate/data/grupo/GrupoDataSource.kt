@@ -18,6 +18,8 @@ import app.regate.data.dto.empresa.grupo.UserGrupoDto
 
 interface GrupoDataSource {
    suspend fun myGroups():List<GrupoDto>
+   suspend fun myGroupsRequest():List<GrupoDto>
+
    suspend fun syncMessages(d:List<GrupoMessageDto>):List<GrupoMessageDto>
    suspend fun filterGrupos(d:FilterGrupoData,page:Int):PaginationGroupsResponse
    suspend fun getGrupoDetail(id:Long):GrupoResponse
