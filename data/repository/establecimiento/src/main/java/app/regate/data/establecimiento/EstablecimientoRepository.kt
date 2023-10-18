@@ -125,7 +125,7 @@ class EstablecimientoRepository(
             establecimientoDao.insertSettingEstablecimiento(settingsDtoToSetting.map(res.setting_establecimiento))
             res.attention_schedule?.let {schedule->
             establecimientoDao.insertAttentionScheduleTime(
-                scheduleMapper.map(schedule)
+                scheduleMapper.map(schedule.copy(establecimiento_id = res.establecimiento.id))
             )
             }
         }catch (e:Exception){

@@ -1,7 +1,10 @@
 package app.regate.chat.grupo
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -39,10 +42,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.intl.Locale
 import androidx.core.view.ViewCompat
@@ -51,6 +56,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.LocalAppUtil
 import app.regate.common.composes.component.input.ChatInput
 import app.regate.common.composes.component.input.Keyboard
 import app.regate.common.composes.component.input.emoji.EmojiLayout
@@ -175,6 +181,8 @@ internal fun ChatGrupo(
     navigateToSala: (Long) -> Unit,
     resetScroll:()->Unit,
 ) {
+    val appUtil = LocalAppUtil.current
+    val clipboardManager = LocalClipboardManager.current
     val colors = listOf(
         MaterialTheme.colorScheme.inverseOnSurface,
         MaterialTheme.colorScheme.inverseOnSurface
@@ -392,6 +400,22 @@ internal fun ChatGrupo(
                 formatShortTimeFromString = formatShortTimeFromString,
                 formatShortDateFromString = formatShortDateFromString,
                 navigateToSala = {navigateToSala(it.toLong())},
+                copyMessage = {text:String,isLink:Boolean->
+                    clipboardManager.setText(AnnotatedString(text))
+                    if(isLink){
+                        Toast.makeText(context,"Enlace copiado",Toast.LENGTH_SHORT).show()
+                    }
+                              },
+                openLink = {url->
+                    try{
+                       appUtil.openInBrowser(context,url)
+                    }catch(e:Exception){
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar("No se pudo abrir el enlace.")
+                        }
+                        Log.d("DEBUG_APP",e.localizedMessage?:"")
+                    }
+                    }
             )
 
 

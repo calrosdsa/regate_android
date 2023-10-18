@@ -37,25 +37,29 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
 typealias EmailVerification = @Composable (
-    navigateUp:()->Unit
+    navigateUp:()->Unit,
+    navigateToHomeScreen:()->Unit
         )->Unit
 
 @Inject
 @Composable
 fun EmailVerification(
     viewModelFactory:()->EmailVerificationViewModel,
-    @Assisted navigateUp: () -> Unit
+    @Assisted navigateUp: () -> Unit,
+    @Assisted navigateToHomeScreen: () -> Unit,
 ){
     EmailVerification(
         viewModel = viewModel(factory = viewModelFactory),
-        navigateUp = navigateUp
+        navigateUp = navigateUp,
+        navigateToHomeScreen = navigateToHomeScreen
     )
 }
 
 @Composable
 fun EmailVerification(
     viewModel:EmailVerificationViewModel,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
+    navigateToHomeScreen: () -> Unit,
 ){
     val state by viewModel.state.collectAsState()
     EmailVerification(
@@ -63,7 +67,8 @@ fun EmailVerification(
         navigateUp = navigateUp,
         clearMessage = viewModel::clearMessage,
         verifyEmail = viewModel::verifyEmail,
-        resendEmail = viewModel::resendEmail
+        resendEmail = viewModel::resendEmail,
+        navigateToHomeScreen = navigateToHomeScreen
     )
 }
 
@@ -74,7 +79,8 @@ internal fun EmailVerification(
     navigateUp: () -> Unit,
     clearMessage:(Long)->Unit,
     resendEmail:()->Unit,
-    verifyEmail:(String,()->Unit,Context)->Unit
+    verifyEmail:(String,()->Unit,Context)->Unit,
+    navigateToHomeScreen: () -> Unit
 ){
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
@@ -142,7 +148,7 @@ internal fun EmailVerification(
             Spacer(modifier = Modifier.height(20.dp))
             Button(onClick = {
                 focusManager.clearFocus(true)
-                verifyEmail(otpValue,navigateUp,context)
+                verifyEmail(otpValue,navigateToHomeScreen,context)
                              },
             enabled = enableButton) {
                 Text(text = stringResource(id = R.string.verify))

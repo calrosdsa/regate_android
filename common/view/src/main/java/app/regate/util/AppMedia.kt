@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
@@ -15,6 +16,9 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import app.regate.common.resources.R
 import app.regate.inject.ApplicationScope
+import coil.ImageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import me.tatarka.inject.annotations.Inject
 import java.io.File
 import java.io.FileOutputStream
@@ -25,7 +29,23 @@ import java.util.Locale
 @ApplicationScope
 @Inject
 class AppMedia {
-    fun saveImage(bitmap: Bitmap, context: Context, folderName: String) {
+
+    suspend fun saveImageFromUrl(context: Context,url:String){
+        try{
+            val loader = ImageLoader(context)
+            val request = ImageRequest.Builder(context)
+                .data(url)
+                .allowHardware(false) // Disable hardware bitmaps.
+                .build()
+
+            val result = (loader.execute(request) as SuccessResult).drawable
+            val bitmap = (result as BitmapDrawable).bitmap
+            saveImage(bitmap,context)
+        }catch (e:Exception){
+            //TODO
+        }
+    }
+    fun saveImage(bitmap: Bitmap, context: Context,folderName:String = "Regate") {
         if (Build.VERSION.SDK_INT >= 29) {
             val values = contentValues()
             values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/$folderName")
@@ -34,7 +54,6 @@ class AppMedia {
             val uri: Uri? = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
             if (uri != null) {
                 try{
-
                     saveImageToStream(bitmap, context.contentResolver.openOutputStream(uri))
                     values.put(MediaStore.Images.Media.IS_PENDING, false)
                     context.contentResolver.update(uri, values, null, null)
@@ -45,7 +64,6 @@ class AppMedia {
             }
         } else {
             try{
-
                 val directory = File(Environment.getExternalStorageDirectory().toString() + File.separator + folderName)
                 // getExternalStorageDirectory is deprecated in API 29
 

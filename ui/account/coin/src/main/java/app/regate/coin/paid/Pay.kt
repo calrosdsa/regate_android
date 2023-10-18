@@ -35,6 +35,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
+import app.regate.common.composes.LocalAppMedia
 import app.regate.common.composes.ui.Loader
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.ui.Skeleton
@@ -64,14 +65,10 @@ internal fun Pay(
     navigateUp:()->Unit,
 ) {
     val state by viewModel.state.collectAsState()
-    val context = LocalContext.current
 
     Pay(
         viewState = state,
         navigateUp = navigateUp,
-        saveImage = {
-            viewModel.saveImage(it,context,"Regate")
-        },
         clearMessage = viewModel::clearMessage
     )
 
@@ -82,9 +79,10 @@ internal fun Pay(
 internal fun Pay(
     viewState:PayState,
     navigateUp: () -> Unit,
-    saveImage:(Bitmap)->Unit,
     clearMessage:(Long)->Unit
 ) {
+    val appMedia = LocalAppMedia.current
+    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
 
     viewState.message?.let { message ->
@@ -137,7 +135,7 @@ internal fun Pay(
                         }
                     }
                     Spacer(modifier = Modifier.height(10.dp))
-                    Button(onClick = { viewState.qr?.let { saveImage(it) } }) {
+                    Button(onClick = { viewState.qr?.let { appMedia.saveImage(it,context) } }) {
                         Text(text = stringResource(id = R.string.save_image))
                     }
 

@@ -3,7 +3,6 @@ package app.regate.data.grupo
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.SearchFilterRequest
-import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
@@ -18,7 +17,6 @@ import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.PendingRequestCount
 import app.regate.data.dto.empresa.grupo.UserGrupoDto
 import app.regate.data.dto.empresa.grupo.setting.GrupoInvitationLinkDto
-import app.regate.models.Message
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.forms.formData
@@ -140,9 +138,6 @@ class GrupoDataSourceImpl(
     override suspend fun getGrupo(id: Long):GrupoDto {
         return client.get("/v1/grupo/${id}/").body()
     }
-    override suspend fun getGrupoByUuid(uuid: String):GrupoDto {
-        return client.get("/v1/grupo-uuid/${uuid}/").body()
-    }
     override suspend fun joinGrupo(d: AddUserGrupoRequest):ResponseMessage {
         val token = authStore.get()?.accessToken
         return client.post("/v1/grupo/add-user/"){
@@ -214,6 +209,9 @@ class GrupoDataSourceImpl(
     }
 
     //SETTING
+    override suspend fun getGrupoByIdLink(idLink: String):GrupoDto {
+        return client.get("/v1/grupo-idlink/${idLink}/").body()
+    }
     override suspend fun getOrInsertInvitationLink(id: Long): GrupoInvitationLinkDto {
         val token = authStore.get()?.accessToken
         return client.get("/v1/grupo/setting/add/invitation-link/${id}/"){

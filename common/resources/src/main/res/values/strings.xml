@@ -216,5 +216,8 @@
     <string name="share_link">Share link</string>
     <string name="copy_link">Copy link</string>
     <string name="reset_link">Reset link</string>
+    <string name="view_group">View group</string>
+    <string name="share_image_link">Share image link</string>
+    <string name="open_in_browser">Open in browser</string>
 
 </resources>

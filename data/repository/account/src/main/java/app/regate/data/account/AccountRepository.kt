@@ -101,7 +101,7 @@ class AccountRepository(
                 insertProfile(it.user)
             }
             }catch(e:Exception){
-                //TODO()
+                throw  e
             }
         }
     }

@@ -14,7 +14,7 @@
     <string name="balance_coins">Saldo de monedas</string>
     <string name="book_a_court">Reservar una cancha</string>
     <string name="bookings">Reservas</string>
-    <string name="cancel_request">cancelar petición</string>
+    <string name="cancel_request">Cancelar petición</string>
     <string name="chat_group">Chat del grupo</string>
     <string name="chat_group_channel_name">Notificaciones de Grupo</string>
     <string name="chat_message_channel_name">Notificación de Mensaje</string>
@@ -90,6 +90,7 @@
     <string name="notifications">Notifications</string>
     <string name="nudes">Desnudez o contenido sexual</string>
     <string name="objects">OBJECTS</string>
+    <string name="open_in_browser">Abrir en el navegador</string>
     <string name="other">Otro</string>
     <string name="password_dont_match">Las contraseñas no coinciden</string>
     <string name="password_length">La contraseña debe tener más de 8 caracteres.</string>
@@ -143,6 +144,7 @@
     <string name="send_to_a_group">Enviar a un grupo</string>
     <string name="services">Servicios</string>
     <string name="settings">Configuraciones</string>
+    <string name="share_image_link">Compartir enlace de la imagen</string>
     <string name="share_link">Compartir enlace</string>
     <string name="show_less">Ver menos</string>
     <string name="show_more">Ver más</string>
@@ -166,6 +168,7 @@
     <string name="user_since">Usuario desde %1$s</string>
     <string name="verify">Verify</string>
     <string name="version">Version %1$s</string>
+    <string name="view_group">View group</string>
     <string name="visible">Visible</string>
     <string name="visible_info_group">Anyone can find this group</string>
     <string name="visit">Visitar</string>

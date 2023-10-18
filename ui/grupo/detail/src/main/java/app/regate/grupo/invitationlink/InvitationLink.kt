@@ -52,6 +52,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
+import app.regate.common.composes.LocalAppUtil
 import app.regate.common.composes.component.dialog.DialogConfirmation
 import app.regate.common.composes.component.dialog.LoaderDialog
 import app.regate.common.composes.ui.Loader
@@ -124,6 +125,7 @@ internal fun InvitationLink(
     val snackbarHostState = remember {
         SnackbarHostState()
     }
+    val appUtil = LocalAppUtil.current
     viewState.message?.let {uiMessage ->
         LaunchedEffect(key1 = Unit, block = {
             snackbarHostState.showSnackbar(uiMessage.message)
@@ -132,14 +134,8 @@ internal fun InvitationLink(
     }
     fun shareIntent() {
         if (viewState.authState == AppAuthState.LOGGED_IN) {
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
-                type = "text/plain"
-            }
-
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            context.startActivity(shareIntent)
+            val data = "${AppUrl}/${Route.GRUPOS}/${viewState.invitationLink?.id_link}"
+            appUtil.shareTextIntent(context,data)
         } else {
             openAuthBottomSheet()
         }
@@ -180,12 +176,14 @@ internal fun InvitationLink(
             ) {
                     FloatingActionButton(
                         onClick = { shareIntent() },
-                        shape = CircleShape
+                        shape = CircleShape,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                        containerColor = MaterialTheme.colorScheme.primary
                     ) {
                         Icon(imageVector = Icons.Filled.Link, contentDescription = null)
                     }
                     Spacer(modifier = Modifier.width(10.dp))
-                    Text(text = "${AppUrl}/${Route.GRUPO}/${invitationLink.id_link}")
+                    Text(text = "${AppUrl}/${Route.GRUPOS}/${invitationLink.id_link}")
                 }
             Spacer(modifier = Modifier.height(15.dp))
 
@@ -196,7 +194,7 @@ internal fun InvitationLink(
             )
             ShareRow(text = stringResource(id = R.string.copy_link),
                 icon = Icons.Default.ContentCopy,
-                action = { clipboardManager.setText(AnnotatedString(("${AppUrl}/${Route.GRUPO}/${invitationLink.id_link}"))) })
+                action = { clipboardManager.setText(AnnotatedString(("${AppUrl}/${Route.GRUPOS}/${invitationLink.id_link}"))) })
 
                     ShareRow(
                         text = stringResource(id = R.string.reset_link),

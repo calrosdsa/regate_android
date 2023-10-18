@@ -13,7 +13,6 @@ import app.regate.domain.observers.grupo.ObserveMyGroupById
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -70,7 +69,7 @@ class InvitationGrupoViewModel(
         viewModelScope.launch {
             try {
                 loadingCounter.addLoader()
-                val res = grupoRepository.getGrupoByUuid(uuid)
+                val res = grupoRepository.getGrupoByIdLink(uuid)
                 observeMyGroupById(ObserveMyGroupById.Params(res.id))
                 Log.d("DEBUG_APP_RES",res.toString())
                 grupo.emit(res)

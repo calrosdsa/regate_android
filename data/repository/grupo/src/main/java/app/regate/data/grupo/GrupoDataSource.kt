@@ -24,7 +24,6 @@ interface GrupoDataSource {
    suspend fun filterGrupos(d:FilterGrupoData,page:Int):PaginationGroupsResponse
    suspend fun getGrupoDetail(id:Long):GrupoResponse
    suspend fun getGrupo(id:Long):GrupoDto
-   suspend fun getGrupoByUuid(uuid:String):GrupoDto
    suspend fun getMessagesGrupo(id:Long,page:Int):PaginationGroupMessages
    suspend fun joinGrupo(d:AddUserGrupoRequest): ResponseMessage
    suspend fun getUsersGrupo(id:Long):List<UserGrupoDto>
@@ -47,6 +46,8 @@ interface GrupoDataSource {
 
 
    //Setting
+   suspend fun getGrupoByIdLink(idLink:String):GrupoDto
+
    suspend fun getOrInsertInvitationLink(id:Long):GrupoInvitationLinkDto
    suspend fun resetInvitationLink(id:Long):GrupoInvitationLinkDto
 

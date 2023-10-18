@@ -66,6 +66,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.component.CustomButton
 import app.regate.common.composes.component.card.InstalacionCard
@@ -77,6 +78,8 @@ import app.regate.common.composes.util.spacerLazyList
 import app.regate.common.composes.viewModel
 import app.regate.data.auth.AppAuthState
 import app.regate.common.resources.R
+import app.regate.constant.Route
+import app.regate.constant.id
 import app.regate.data.dto.empresa.salas.SalaEstado
 import app.regate.data.mappers.toInstalacion
 import kotlinx.coroutines.launch
@@ -91,6 +94,7 @@ typealias Sala = @Composable (
     navigateToEstablecimiento:(Long)->Unit,
     navigateToComplete:(Long) -> Unit,
     navigateToSelectGroup:(String)->Unit,
+    navController:NavController,
     ) -> Unit
 
 @Inject
@@ -103,7 +107,8 @@ fun Sala(
     @Assisted navigateToInstalacion: (Long) -> Unit,
     @Assisted navigateToEstablecimiento: (Long) -> Unit,
     @Assisted navigateToComplete:(Long) -> Unit,
-    @Assisted navigateToSelectGroup: (String) -> Unit
+    @Assisted navigateToSelectGroup: (String) -> Unit,
+    @Assisted navController: NavController
 ) {
 
     Sala(
@@ -114,8 +119,10 @@ fun Sala(
         navigateToEstablecimiento = navigateToEstablecimiento,
         navigateToInstalacion = navigateToInstalacion,
         navigateToComplete = navigateToComplete,
-        navigateToSelectGroup = navigateToSelectGroup
-    )
+        navigateToSelectGroup = navigateToSelectGroup,
+//        navigateToGroup = { navController.navigate(Route.GRUPO id it) },
+        navigateToInfoGrupo = {navController.navigate(Route.INFO_GRUPO id it)},
+        )
 }
 
 @Composable
@@ -127,7 +134,9 @@ internal fun Sala(
     navigateToEstablecimiento: (Long) -> Unit,
     navigateToInstalacion: (Long) -> Unit,
     navigateToComplete: (Long) -> Unit,
-    navigateToSelectGroup: (String) -> Unit
+    navigateToSelectGroup: (String) -> Unit,
+//    navigateToGroup:(Long)->Unit,
+    navigateToInfoGrupo:(Long)->Unit
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -151,7 +160,9 @@ internal fun Sala(
         navigateToComplete = navigateToComplete,
         shareSalaWithGroup = {
             viewModel.navigateSelect(navigateToSelectGroup)
-        }
+        },
+//        navigateToGroup = navigateToGroup,
+        navigateToInfoGrupo = navigateToInfoGrupo,
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -180,6 +191,8 @@ internal fun Sala(
 //    exitSala:()->Unit,
     navigateToComplete: (Long) -> Unit,
     shareSalaWithGroup:()->Unit,
+//    navigateToGroup:(Long)->Unit,
+    navigateToInfoGrupo: (Long) -> Unit
 ) {
     val participantes = remember(viewState.data?.profiles) {
         derivedStateOf {
@@ -236,8 +249,10 @@ internal fun Sala(
                                 }
                             },
                             salaTitle = viewState.data?.sala?.titulo?:"",
-                            navigateToComplete = { viewState.data?.sala?.let { navigateToComplete(it.id) } }
-                        )
+                            navigateToComplete = { viewState.data?.sala?.let { navigateToComplete(it.id) } },
+                            navigateToInfoGrupo = { viewState.data?.sala?.let { navigateToInfoGrupo(it.grupo_id)}}
+//                            navigateToGroup = { viewState.data?.sala?.let { navigateToGroup(it.grupo_id)}},
+                            )
 
                     }
                 }
@@ -455,54 +470,7 @@ internal fun Sala(
     }
 }
 
-@Composable
-internal fun SalaMenu(
-    salaTitle:String,
-    leaveGroup: () -> Unit,
-    shareSalaWithGroup: () -> Unit,
-    navigateToChat:()->Unit,
-    navigateToComplete: () -> Unit,
-    imIntheRoom:Boolean,
-    ){
-    Column() {
-        Text(text = salaTitle, style = MaterialTheme.typography.titleLarge,
-        modifier = Modifier.padding(10.dp))
-        DropdownMenuItem(
-                text = { Text(text = stringResource(id = R.string.send_to_a_group)) },
-                onClick = { shareSalaWithGroup() },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Send, contentDescription = null)
-                }
-        )
-        if(imIntheRoom){
 
-
-        DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.room_chat)) },
-            onClick = { navigateToChat() },
-            leadingIcon = {
-                Icon(imageVector = Icons.Filled.Chat, contentDescription = null)
-            }
-        )
-            DropdownMenuItem(
-                text = { Text(text = stringResource(id = R.string.amount_contributed)) },
-                onClick = { navigateToComplete() },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Filled.AttachMoney, contentDescription = null)
-                }
-            )
-
-        DropdownMenuItem(
-            text = { Text(stringResource(id = R.string.leave_group)) },
-            onClick = { leaveGroup() },
-            leadingIcon = {
-                Icon(imageVector = Icons.Filled.Logout, contentDescription = null)
-            }
-        )
-        }
-
-        }
-}
 
 @Composable
 fun SalaTopBar(

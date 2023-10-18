@@ -89,9 +89,7 @@ class PayViewModel(
     }
 
 
-    fun saveImage(bitmap: Bitmap, context: Context, folderName: String) {
-        appMedia.saveImage(bitmap,context,folderName)
-    }
+
 
 
 

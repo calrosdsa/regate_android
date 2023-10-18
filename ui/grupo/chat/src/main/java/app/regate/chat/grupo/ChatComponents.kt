@@ -1,13 +1,24 @@
 package app.regate.chat.grupo
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.text.SpannableString
+import android.text.TextPaint
+import android.text.style.ClickableSpan
 import android.util.Log
+import android.view.View
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +30,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Reply
@@ -41,9 +53,13 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.paging.compose.LazyPagingItems
 import app.regate.common.composes.component.images.ProfileImage
 import app.regate.common.composes.component.input.MessengerIcon
@@ -69,14 +85,17 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
+import java.util.regex.Pattern
 import kotlin.time.Duration.Companion.minutes
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun Chat (
     lazyPagingItems: LazyPagingItems<MessageProfile>,
     colors: List<Color>,
     lazyListState:LazyListState,
+    copyMessage:(m:String,isLink:Boolean)->Unit,
     setReply:(message:ReplyMessageData?)->Unit,
     formatShortDate:(Instant)->String,
     formatShortTime:(Instant)->String,
@@ -84,6 +103,7 @@ internal fun Chat (
     formatShortTimeFromString: (String,Int) -> String,
     formatterRelatimeTime:(date:Instant)->String,
     navigateToInstalacionReserva:(Long,Long,List<CupoInstalacion>)->Unit,
+    openLink:(String)->Unit,
     navigateToSala: (Int) -> Unit,
     modifier: Modifier = Modifier,
     user:User? = null,
@@ -156,6 +176,8 @@ internal fun Chat (
                                     .background(if (selectedMessage.value == item.message.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
                             ) {
                                 Spacer(modifier = Modifier.fillMaxWidth(0.25f))
+
+
                                 Column(
                                     modifier = Modifier
                                         .clip(
@@ -165,6 +187,11 @@ internal fun Chat (
                                                 bottomEnd = 15.dp
                                             )
                                         )
+                                        .combinedClickable(
+                                            onLongClick = {
+                                                copyMessage(item.message.content,false)
+                                            }
+                                        ) {  }
                                         .fillMaxWidth(0.95f)
                                         .background(MaterialTheme.colorScheme.inverseOnSurface)
                                         .padding(
@@ -174,12 +201,6 @@ internal fun Chat (
                                             bottom = 5.dp
                                         )
                                 ) {
-//                                    Text(
-//                                        text = "${item.profile?.nombre ?: ""} ${item.profile?.apellido ?: ""}",
-//                                        style = MaterialTheme.typography.labelSmall,
-//                                        color = MaterialTheme.colorScheme.primary
-//                                    )
-
                                     if (item.message.reply_to != null) {
                                         MessageReply(
                                             item = item,
@@ -227,11 +248,16 @@ internal fun Chat (
                                         navigateToSala = navigateToSala
                                     )
                                     }
+                                    Message(
+                                        message = item.message.content,
+                                        openLink = openLink,
+                                        copyMessage = copyMessage
+                                    )
 //                                    if(item.message.content.isBlank()) {
-                                        Text(
-                                            text = item.message.content,
-                                            style = MaterialTheme.typography.bodySmall,
-                                        )
+//                                        Text(
+//                                            text = item.message.content,
+//                                            style = MaterialTheme.typography.bodySmall,
+//                                        )
 //                                    }
                                     Row(
                                         modifier = Modifier.fillMaxWidth(),
@@ -259,7 +285,7 @@ internal fun Chat (
                                         }
                                     }
                                 }
-                                MessengerIcon(colors)
+//                                MessengerIcon(colors)
                             }
                         }
 
@@ -302,6 +328,9 @@ internal fun Chat (
                                 MessengerIcon2(colors)
                                 Column(
                                     modifier = Modifier
+                                        .clickable {
+                                            copyMessage(item.message.content,false)
+                                        }
                                         .clip(
                                             RoundedCornerShape(
                                                 topEnd = 15.dp,
@@ -357,9 +386,14 @@ internal fun Chat (
                                             navigateToSala = navigateToSala
                                         )
                                     }
-                                    Text(
-                                        text = item.message.content,
-                                        style = MaterialTheme.typography.bodySmall,
+//                                    Text(
+//                                        text = item.message.content,
+//                                        style = MaterialTheme.typography.bodySmall,
+//                                    )
+                                    Message(
+                                        message = item.message.content,
+                                        openLink = openLink,
+                                        copyMessage = copyMessage
                                     )
                                     Text(
                                         text = formatterRelatimeTime(item.message.created_at),
@@ -395,165 +429,50 @@ internal fun Chat (
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
 @Composable
-internal fun MessageContent1(
-    messageType:Int,
-    content:String,
-    navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
-    navigateToSala:(Int)->Unit,
-    formatShortDate: (Instant) -> String,
-    formatShortTime: (Instant) -> String,
-    formatShortDateFromString: (String) -> String,
-    formatShortTimeFromString: (String,Int) -> String,
-    modifier: Modifier = Modifier
+internal fun Message(
+    message:String,
+    openLink:(String)->Unit,
+    copyMessage: (m: String, isLink: Boolean) -> Unit,
 ){
-    when(messageType){
-        GrupoMessageType.MESSAGE.ordinal ->{
-            Text(
-                text = content,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = modifier
-            )
-        }
-        GrupoMessageType.INSTALACION.ordinal ->{
-            val instalacion = try{ Json.decodeFromString<MessageInstalacionPayload>(content) }catch (e:Exception){
-                null
-            }
-                if(instalacion != null){
-                Column(modifier = Modifier
-                    .padding(vertical = 5.dp)
-                    .clickable {
-                    navigateToInstalacionReserva(instalacion.id.toLong(),instalacion.establecimiento_id.toLong(),instalacion.cupos)
-                }) {
-                    PosterCardImage(model = instalacion.photo,modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp),
-                        onClick = {
-                            navigateToInstalacionReserva(instalacion.id.toLong(),instalacion.establecimiento_id.toLong(),instalacion.cupos)
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Text(text = instalacion.name,style = MaterialTheme.typography.labelLarge)
-                    Text(text = "${stringResource(id = R.string.total_price)}: ${instalacion.total_price}",
-                        style = MaterialTheme.typography.labelMedium)
-                    Text(
-                        text = stringResource(id = R.string.time_game_will_played),
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                    Text(
-                        text = formatShortDate(instalacion.cupos.first().time) +
-                                " ${formatShortTime(instalacion.cupos.first().time)} a ${
-                                    formatShortTime(
-                                        instalacion.cupos.last().time.plus(30.minutes)
-                                    )
-                                }",
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                }
-            }
-        }
-        GrupoMessageType.SALA.ordinal ->{
-            val sala = try {
-                Json.decodeFromString<MessageSalaPayload>(content)
-            } catch (e: Exception) {
-                null
-            }
-
-            if (sala != null) {
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        navigateToSala(sala.id)
-//                        navigateToInstalacionReserva(instalacion.id.toLong(),instalacion.establecimiento_id.toLong(),instalacion.cupos)
-                    }
-                    .padding(5.dp)
+    val list = message.split(" ").toList()
+//    val annotatedString = buildAnnotatedString {
+    FlowRow() {
+        list.map {word->
+            val matcher = urlPattern.matcher(word)
+            if(matcher.find()){
+                Text(text = "$word ",style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,modifier = Modifier.combinedClickable(
+                        onLongClick = { copyMessage(word,true) }
                 ) {
-                    Row(modifier = Modifier.fillMaxWidth()) {
-
-                        Column() {
-
-                            Text(
-                                text = sala.titulo,
-                                style = MaterialTheme.typography.labelLarge
-                            )
-                            Text(
-                                text = "${stringResource(id = R.string.total_price)}: ${sala.precio}",
-                                style = MaterialTheme.typography.labelMedium
-                            )
-                            Text(
-                                text = "${stringResource(id = R.string.precio_per_person)}: ${sala.precio_cupo}",
-                                style = MaterialTheme.typography.labelMedium
-                            )
-                            Text(
-                                text = stringResource(id = R.string.time_game_will_played),
-                                style = MaterialTheme.typography.labelMedium
-                            )
-                            Text(
-                                text = formatShortDateFromString(sala.start) +
-                                        " ${formatShortTimeFromString(sala.start,0)} a ${
-                                            formatShortTimeFromString(sala.end,30)
-                                        }",
-                                style = MaterialTheme.typography.labelMedium
-                            )
-                        }
-                    }
-                    Divider()
-                }
+                    openLink(word)
+                    })
+//                pushStringAnnotation(tag = "URL", annotation = word)
+//                withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+//                    append("$word ")
+//                }
+//                pop()
+            }else{
+//                append("$word ")
+                Text(text = "$word ",style = MaterialTheme.typography.bodyMedium)
             }
-
         }
-
-    }
-}
-
-@Composable
-fun MessageReply(
-    item:MessageProfile,
-    scrollToItem:()->Unit,
-    getUserProfileGrupo: (id:Long)->UserProfileGrupo?,
-    navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
-    navigateToSala: (Int) -> Unit,
-    formatShortDate: (Instant) -> String,
-    formatShortTime: (Instant) -> String,
-    formatShortDateFromString: (String) -> String,
-    formatShortTimeFromString: (String,Int) -> String,
-    modifier:Modifier = Modifier
-){
-    val profile = item.reply?.let { getUserProfileGrupo(it.profile_id) }
-    Surface(
-        border = BorderStroke(1.dp, Color.LightGray),
-        shape = MaterialTheme.shapes.medium,
-        onClick = {
-            scrollToItem()
-
-        }
-    ) {
-
-    Column(modifier = modifier
-        .fillMaxWidth()
-        .padding(10.dp)
-    ) {
-        Text(
-            text = "${profile?.nombre?:""} ${profile?.apellido ?: ""}",
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.primary
-        )
-        item.reply?.data?.let { data->
-        MessageContent1(
-            content = data,
-            messageType = item.reply?.type_message?:0,
-            navigateToInstalacionReserva = navigateToInstalacionReserva,
-            formatShortDate = formatShortDate,
-            formatShortTime = formatShortTime,
-            formatShortDateFromString = formatShortDateFromString,
-            formatShortTimeFromString = formatShortTimeFromString,
-            navigateToSala = navigateToSala
-        )
-        }
-        Text(
-            text = item.reply?.content ?:"",
-            style = MaterialTheme.typography.bodySmall,
-        )
     }
     }
-}
+//    ClickableText(text = annotatedString, style = MaterialTheme.typography.bodyMedium, onClick = { offset ->
+//        annotatedString.getStringAnnotations(tag = "URL", start = offset, end = offset).firstOrNull()?.let {
+//            openLink(it.item)
+//        }
+//    },
+//    )
+
+
+
+private val urlPattern: Pattern = Pattern.compile(
+    "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"
+            + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
+            + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
+    Pattern.CASE_INSENSITIVE or Pattern.MULTILINE or Pattern.DOTALL
+)
+

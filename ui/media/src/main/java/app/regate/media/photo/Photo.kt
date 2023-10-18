@@ -1,5 +1,6 @@
 package app.regate.media.photo
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -16,34 +17,44 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Flag
+import androidx.compose.material.icons.outlined.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.SavedStateHandle
+import app.regate.common.composes.LocalAppMedia
+import app.regate.common.composes.LocalAppUtil
 import app.regate.common.composes.component.images.AsyncImage
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
+import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.system.ReportData
 import app.regate.data.dto.system.ReportType
+import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import net.engawapg.lib.zoomable.rememberZoomState
@@ -78,7 +89,8 @@ internal fun Photo(
     val state by viewModel.state.collectAsState()
     Photo(viewState = state,
         navigateUp = navigateUp,
-        navigateToReport = navigateToReport)
+        navigateToReport = navigateToReport,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -86,11 +98,18 @@ internal fun Photo(
 internal fun Photo(
     viewState:PhotoState,
     navigateUp:()->Unit,
-    navigateToReport:(String)->Unit
+    navigateToReport:(String)->Unit,
 ) {
+    val appUtil = LocalAppUtil.current
+    val appMedia = LocalAppMedia.current
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
     val zoomState = rememberZoomState()
     val showImages = remember {
+        mutableStateOf(false)
+    }
+    var expanded by remember {
         mutableStateOf(false)
     }
     LaunchedEffect(key1 = zoomState.scale, block = {
@@ -110,15 +129,57 @@ internal fun Photo(
 //            }
             SimpleTopBar(navigateUp = navigateUp,
             actions = {
+                Box(){
+
                 IconButton(onClick = {
-                    viewState.images
-                    val report = ReportData(
-                        report_type = ReportType.ESTABLECIMIENTO.ordinal,
-                        entity_id = 1,
-                    )
-                    navigateToReport(Json.encodeToString(report)) }) {
-                    Icon(imageVector = Icons.Outlined.Flag,
+                    expanded = !expanded
+                }) {
+                    Icon(imageVector = Icons.Outlined.MoreVert,
                         contentDescription = stringResource(id = R.string.report))
+                }
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(text = stringResource(id = R.string.share_image_link)) },
+                            onClick = {
+                                appUtil.shareTextIntent(context,viewState.images[pagerState.currentPage])
+                                expanded = false
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(text = stringResource(id = R.string.open_in_browser)) },
+                            onClick = {
+                                try{
+                                    appUtil.openInBrowser(context,viewState.images[pagerState.currentPage])
+                                    expanded = false
+                                }catch(e:Exception){
+                                    //TODO()
+                                }
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(text = stringResource(id = R.string.save_image)) },
+                            onClick = {
+                                coroutineScope.launch {
+                                    appMedia.saveImageFromUrl(context,viewState.images[pagerState.currentPage])
+                                    expanded = false
+                                }
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(text = stringResource(id = R.string.report)) },
+                            onClick = {
+                                viewState.images
+                                val report = ReportData(
+                                    report_type = ReportType.ESTABLECIMIENTO.ordinal,
+                                    entity_id = 1,
+                                )
+                                navigateToReport(Json.encodeToString(report))
+                            }
+                        )
+                    }
                 }
             })
         }

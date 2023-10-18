@@ -43,7 +43,6 @@ fun BottomBar(
                         navController.navigate(selected) {
                             launchSingleTop = true
                             restoreState = true
-
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
                             }
@@ -68,7 +67,7 @@ fun NavController.currentScreenAsState(): State<String> {
                 destination.hierarchy.any { it.route == Route.DISCOVER + "?data={data}" } -> {
                     selectedItem.value = Route.DISCOVER
                 }
-                destination.hierarchy.any { it.route == Route.GRUPOS} -> {
+                destination.hierarchy.any { it.route == Route.GRUPOS + "?uuid={uuid}"} -> {
                     selectedItem.value = Route.GRUPOS
                 }
                 destination.hierarchy.any { it.route == Route.ACCOUNT} -> {

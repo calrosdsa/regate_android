@@ -155,7 +155,7 @@
     <string name="members">%1$d miembros</string>
     <string name="visit">Visitar</string>
     <string name="pending_request">Solicitud pendiente</string>
-    <string name="cancel_request">cancelar petición</string>
+    <string name="cancel_request">Cancelar petición</string>
     <string name="pending_requests">Solicitudes pendientes</string>
     <string name="confirm">Confirmar</string>
     <string name="decline">Declinar</string>
@@ -181,4 +181,7 @@
     <string name="share_link">Compartir enlace</string>
     <string name="copy_link">Copiar enlace</string>
     <string name="reset_link">Restablecer enlace</string>
+    <string name="view_group">View group</string>
+    <string name="share_image_link">Compartir enlace de la imagen</string>
+    <string name="open_in_browser">Abrir en el navegador</string>
 </resources>

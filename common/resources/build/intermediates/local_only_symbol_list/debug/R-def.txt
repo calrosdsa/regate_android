@@ -143,6 +143,7 @@ string notification_sala_channel
 string notifications
 string nudes
 string objects
+string open_in_browser
 string other
 string password_dont_match
 string password_length
@@ -196,6 +197,7 @@ string send
 string send_to_a_group
 string services
 string settings
+string share_image_link
 string share_link
 string show_less
 string show_more
@@ -219,6 +221,7 @@ string unexpected_error
 string user_since
 string verify
 string version
+string view_group
 string visible
 string visible_info_group
 string visit

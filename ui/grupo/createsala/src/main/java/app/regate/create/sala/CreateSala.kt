@@ -11,8 +11,10 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,6 +47,7 @@ typealias CreateSala = @Composable (
     reservarInstalacion: @Composable () -> Unit,
     navigateToCreateGroup:()->Unit,
     navigateToGroup:(Long)->Unit,
+    navigateToRecargaScreen:()->Unit
 //    navigateToChat:(id:Long)->Unit,
 //    openAuthBottomSheet:()->Unit
         ) -> Unit
@@ -56,7 +59,8 @@ fun CreateSala(
     @Assisted navigateUp: () -> Unit,
     @Assisted reservarInstalacion:@Composable () -> Unit,
     @Assisted navigateToCreateGroup: () -> Unit,
-    @Assisted navigateToGroup: (Long) -> Unit
+    @Assisted navigateToGroup: (Long) -> Unit,
+    @Assisted navigateToRecargaScreen: () -> Unit,
 //    @Assisted navigateToChat: (id:Long) -> Unit,
 //    @Assisted openAuthBottomSheet: () -> Unit
 ){
@@ -65,7 +69,8 @@ fun CreateSala(
         navigateUp = navigateUp,
         reservarInstalacion = reservarInstalacion,
         navigateToCreateGroup = navigateToCreateGroup,
-        navigateToGroup = navigateToGroup
+        navigateToGroup = navigateToGroup,
+        navigateToRecargaScreen = navigateToRecargaScreen
 //        navigateToChat= navigateToChat,
 //        openAuthBottomSheet = openAuthBottomSheet
     )
@@ -77,7 +82,8 @@ internal fun CreateSala(
     navigateUp: () -> Unit,
     reservarInstalacion:@Composable () -> Unit,
     navigateToCreateGroup: () -> Unit,
-    navigateToGroup: (Long) -> Unit
+    navigateToGroup: (Long) -> Unit,
+    navigateToRecargaScreen: () -> Unit
 //    navigateToChat: (id:Long) -> Unit,
 //    openAuthBottomSheet: () -> Unit
 ){
@@ -99,7 +105,8 @@ internal fun CreateSala(
         selectGroup = viewModel::updateSelectedGroup,
         enableButton = viewModel::enableButton,
         navigateToCreateGroup = navigateToCreateGroup,
-        page = viewModel.getPage()
+        page = viewModel.getPage(),
+        navigateToRecargaScreen = navigateToRecargaScreen
     )
 }
 
@@ -119,6 +126,7 @@ internal fun CreateSala(
     enableButton:(Boolean)->Unit,
     navigateToCreateGroup: () -> Unit,
     page:Int,
+    navigateToRecargaScreen: () -> Unit,
 //    onChangeAsunto:(v:String)->Unit,
 //    onChangeDescription:(v:String)->Unit,
 //    onChangeCupos:(v:String)->Unit,
@@ -132,7 +140,17 @@ internal fun CreateSala(
 
     viewState.message?.let { message ->
         LaunchedEffect(message) {
-            snackbarHostState.showSnackbar(message.message)
+            if(message.message == "no dispones del monto necesario para crear la sala"){
+            val snackbarResult = snackbarHostState.showSnackbar(message.message,actionLabel = "Recargar",
+                 duration = SnackbarDuration.Short)
+                when (snackbarResult) {
+                    SnackbarResult.ActionPerformed -> navigateToRecargaScreen()
+                    else ->{}
+                }
+            }else{
+                snackbarHostState.showSnackbar(message.message)
+            }
+
             // Notify the view model that the message has been dismissed
             clearMessage(message.id)
         }

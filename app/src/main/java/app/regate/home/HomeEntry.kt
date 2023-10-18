@@ -12,13 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 //import androidx.navigation.compose.composable
-import com.google.accompanist.navigation.animation.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
@@ -27,27 +23,23 @@ import app.regate.constant.AppUrl
 import app.regate.constant.Route
 import app.regate.constant.arg
 import app.regate.constant.id
-import app.regate.home.navigation.AccountRoutes
-import app.regate.home.navigation.AddMainNav
-import app.regate.home.navigation.AuthRoutes
-import app.regate.home.navigation.EstablecimientoRoutes
-import app.regate.home.navigation.GrupoRoutes
-import app.regate.home.navigation.SalaRoutes
+import app.regate.home.nav.AccountRoutes
+import app.regate.home.nav.AddMainNav
+import app.regate.home.nav.AuthRoutes
+import app.regate.home.nav.EstablecimientoRoutes
+import app.regate.home.nav.GrupoRoutes
+import app.regate.home.nav.SalaRoutes
 import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.navigation
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
-import com.google.accompanist.navigation.material.bottomSheet
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 const val uri = AppUrl
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun HomeEntry (
+fun HomeEntry(
     composeScreens: ComposeScreens,
     establecimientoId:String?,
     startScreen:String,

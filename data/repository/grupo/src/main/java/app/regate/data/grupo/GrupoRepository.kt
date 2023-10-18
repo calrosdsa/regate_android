@@ -184,9 +184,6 @@ class GrupoRepository(
     suspend fun getGrupo(id:Long):GrupoDto{
         return grupoDataSourceImpl.getGrupo(id)
     }
-    suspend fun getGrupoByUuid(uuid:String):GrupoDto{
-        return grupoDataSourceImpl.getGrupoByUuid(uuid)
-    }
     suspend fun filterGrupos(d:FilterGrupoData,page: Int):PaginationGroupsResponse{
         return grupoDataSourceImpl.filterGrupos(d,page)
     }
@@ -274,6 +271,9 @@ class GrupoRepository(
     }
 
     //SETTING
+    suspend fun getGrupoByIdLink(idLink:String):GrupoDto{
+        return grupoDataSourceImpl.getGrupoByIdLink(idLink)
+    }
     suspend fun getOrInsertInvitationLink(id:Long):GrupoInvitationLinkDto{
         return grupoDataSourceImpl.getOrInsertInvitationLink(id)
     }

@@ -141,6 +141,7 @@ int string notification_sala_channel 0x0
 int string notifications 0x0
 int string nudes 0x0
 int string objects 0x0
+int string open_in_browser 0x0
 int string other 0x0
 int string password_dont_match 0x0
 int string password_length 0x0
@@ -194,6 +195,7 @@ int string send 0x0
 int string send_to_a_group 0x0
 int string services 0x0
 int string settings 0x0
+int string share_image_link 0x0
 int string share_link 0x0
 int string show_less 0x0
 int string show_more 0x0
@@ -217,6 +219,7 @@ int string unexpected_error 0x0
 int string user_since 0x0
 int string verify 0x0
 int string version 0x0
+int string view_group 0x0
 int string visible 0x0
 int string visible_info_group 0x0
 int string visit 0x0

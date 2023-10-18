@@ -1,10 +1,14 @@
 package app.regate.media.photo
 
+import android.R.attr.src
+import android.content.Context
+import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.data.app.MediaData
+import app.regate.util.AppMedia
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,10 +19,14 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
+
 
 @Inject
 class PhotoViewModel(
-    @Assisted savedStateHandle: SavedStateHandle
+    @Assisted savedStateHandle: SavedStateHandle,
 ) :ViewModel(){
     private val data = savedStateHandle.get<String>("data")
     private val images = MutableStateFlow<List<String>>(emptyList())

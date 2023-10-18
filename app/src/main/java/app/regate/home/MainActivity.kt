@@ -31,6 +31,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.viewModelFactory
 import app.regate.ComposeScreens
 import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.LocalAppMedia
 import app.regate.common.composes.LocalAppUtil
 import app.regate.common.composes.theme.RegateTheme
 import app.regate.common.composes.util.shouldUseDarkColors
@@ -93,7 +94,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             CompositionLocalProvider(
                 LocalAppDateFormatter provides component.appDateFormatter,
-                LocalAppUtil provides component.appUtil
+                LocalAppUtil provides component.appUtil,
+                LocalAppMedia provides component.appMedia
             ) {
                 RegateTheme(
                     useDarkColors = preferences.shouldUseDarkColors(),

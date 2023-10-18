@@ -9,6 +9,8 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.ChecksSdkIntAtLeast
+import app.regate.constant.AppUrl
+import app.regate.constant.Route
 import app.regate.inject.ActivityScope
 import coil.ImageLoader
 import coil.request.ImageRequest
@@ -20,7 +22,28 @@ import me.tatarka.inject.annotations.Inject
 class AppUtil(
     private val activity: Activity
 ) {
+    fun openInBrowser(context: Context,url:String){
+        try{
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            context.startActivity(browserIntent)
+        }catch (e:Exception){
+            throw e
+        }
+    }
+    fun shareTextIntent(context: Context,data:String){
+        try{
 
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, data)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        context.startActivity(shareIntent)
+        }catch(e:Exception){
+            //TODO()
+        }
+    }
     suspend fun convertUrlImgToBitamp(context:Context,photo:String):Bitmap{
         val loader = ImageLoader(context)
         val request = ImageRequest.Builder(context)

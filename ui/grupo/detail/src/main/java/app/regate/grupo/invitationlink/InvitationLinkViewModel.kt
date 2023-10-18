@@ -94,7 +94,7 @@ class InvitationLinkViewModel(
             try {
                 loadingCounter.addLoader()
                 val res = grupoRepository.resetInvitationLink(id)
-                delay(2000)
+//                delay(2000)
                 Log.d("DEBUG_APP_RES",res.toString())
                 invitationLink.emit(res)
                 loadingCounter.removeLoader()
