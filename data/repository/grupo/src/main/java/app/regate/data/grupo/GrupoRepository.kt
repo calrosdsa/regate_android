@@ -21,6 +21,7 @@ import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
 import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.PendingRequestCount
+import app.regate.data.dto.empresa.grupo.setting.GrupoInvitationLinkDto
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.mappers.DtoToGrupo
 import app.regate.data.mappers.DtoToUserGrupo
@@ -270,5 +271,13 @@ class GrupoRepository(
     }
     suspend fun getPendingRequestCount(grupoId:Long):PendingRequestCount{
         return grupoDataSourceImpl.getPendingRequestCount(grupoId)
+    }
+
+    //SETTING
+    suspend fun getOrInsertInvitationLink(id:Long):GrupoInvitationLinkDto{
+        return grupoDataSourceImpl.getOrInsertInvitationLink(id)
+    }
+    suspend fun resetInvitationLink(id:Long):GrupoInvitationLinkDto{
+        return grupoDataSourceImpl.resetInvitationLink(id)
     }
 }

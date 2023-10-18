@@ -72,6 +72,7 @@ int string confirm 0x0
 int string consume 0x0
 int string continuar 0x0
 int string contributed_amount 0x0
+int string copy_link 0x0
 int string count_selected 0x0
 int string create_group 0x0
 int string create_sala 0x0
@@ -111,6 +112,8 @@ int string illegal_activity 0x0
 int string inappropriate_material 0x0
 int string inbox 0x0
 int string inbox_to_establecimiento 0x0
+int string invitation_link 0x0
+int string invitation_link_info 0x0
 int string invitations 0x0
 int string join_a_group 0x0
 int string language 0x0
@@ -167,6 +170,7 @@ int string requests 0x0
 int string resend_email_verification 0x0
 int string reservation_date 0x0
 int string reserved_room 0x0
+int string reset_link 0x0
 int string review 0x0
 int string reviews 0x0
 int string room_chat 0x0
@@ -190,6 +194,7 @@ int string send 0x0
 int string send_to_a_group 0x0
 int string services 0x0
 int string settings 0x0
+int string share_link 0x0
 int string show_less 0x0
 int string show_more 0x0
 int string show_results 0x0

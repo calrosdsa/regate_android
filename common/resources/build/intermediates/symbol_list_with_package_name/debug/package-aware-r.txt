@@ -73,6 +73,7 @@ string confirm
 string consume
 string continuar
 string contributed_amount
+string copy_link
 string count_selected
 string create_group
 string create_sala
@@ -112,6 +113,8 @@ string illegal_activity
 string inappropriate_material
 string inbox
 string inbox_to_establecimiento
+string invitation_link
+string invitation_link_info
 string invitations
 string join_a_group
 string language
@@ -168,6 +171,7 @@ string requests
 string resend_email_verification
 string reservation_date
 string reserved_room
+string reset_link
 string review
 string reviews
 string room_chat
@@ -191,6 +195,7 @@ string send
 string send_to_a_group
 string services
 string settings
+string share_link
 string show_less
 string show_more
 string show_results

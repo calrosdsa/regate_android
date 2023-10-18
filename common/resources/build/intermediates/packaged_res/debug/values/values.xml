@@ -44,6 +44,7 @@
     <string name="consume">Consume</string>
     <string name="continuar">Continue</string>
     <string name="contributed_amount">Contributed amount %1$s</string>
+    <string name="copy_link">Copy link</string>
     <string name="count_selected">%1$d selected</string>
     <string name="create_group">Create group</string>
     <string name="create_sala">Create sala</string>
@@ -83,6 +84,8 @@
     <string name="inappropriate_material">Other inappropriate material</string>
     <string name="inbox">Inbox</string>
     <string name="inbox_to_establecimiento">Hablar con el establecimiento</string>
+    <string name="invitation_link">Invitation link</string>
+    <string name="invitation_link_info">People who access this link will be able to join the group without needing approval from an administrator.</string>
     <string name="invitations">Invitations</string>
     <string name="join_a_group">Join a group</string>
     <string name="language">Language</string>
@@ -141,6 +144,7 @@
     <string name="resend_email_verification">An email will be sent to the address (%1$s) with the verification code.</string>
     <string name="reservation_date">Reservation date</string>
     <string name="reserved_room">Reserved room</string>
+    <string name="reset_link">Reset link</string>
     <string name="review">Review</string>
     <string name="reviews">Reviews</string>
     <string name="room_chat">Room chat</string>
@@ -165,6 +169,7 @@
     <string name="send_to_a_group">Send to a group</string>
     <string name="services">Servicios</string>
     <string name="settings">Settings</string>
+    <string name="share_link">Share link</string>
     <string name="show_less">Show less</string>
     <string name="show_more">Show more</string>
     <string name="show_results">Show results</string>

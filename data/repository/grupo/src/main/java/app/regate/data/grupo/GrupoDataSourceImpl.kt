@@ -17,6 +17,7 @@ import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.PendingRequestCount
 import app.regate.data.dto.empresa.grupo.UserGrupoDto
+import app.regate.data.dto.empresa.grupo.setting.GrupoInvitationLinkDto
 import app.regate.models.Message
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -208,6 +209,20 @@ class GrupoDataSourceImpl(
     override suspend fun getPendingRequestCount(groupId: Long):PendingRequestCount {
         val token = authStore.get()?.accessToken
         return client.get("/v1/grupo/count/pending-requests/${groupId}/"){
+            header("Authorization","Bearer $token")
+        }.body()
+    }
+
+    //SETTING
+    override suspend fun getOrInsertInvitationLink(id: Long): GrupoInvitationLinkDto {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/grupo/setting/add/invitation-link/${id}/"){
+            header("Authorization","Bearer $token")
+        }.body()
+    }
+    override suspend fun resetInvitationLink(id: Long): GrupoInvitationLinkDto {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/grupo/setting/reset/invitation-link/${id}/"){
             header("Authorization","Bearer $token")
         }.body()
     }

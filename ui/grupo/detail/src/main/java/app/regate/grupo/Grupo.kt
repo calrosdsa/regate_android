@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Flag
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Pending
@@ -138,7 +139,8 @@ fun Grupo(
         navigateToReport = navigateToReport,
         navigateToPhoto = {navController.navigate(Route.PHOTO id it)},
         navigateToPendingRequests = {navController.navigate(Route.PENDING_REQUESTS id it)},
-        navigateToChatGroup = { navController.navigate(Route.CHAT_GRUPO + "?id=${it}")}
+        navigateToChatGroup = { navController.navigate(Route.CHAT_GRUPO + "?id=${it}")},
+        navigateToInvitationLink = {navController.navigate(Route.GRUPO_INVITATION_LINK id it)}
     )
 }
 
@@ -157,6 +159,7 @@ internal fun Grupo(
     navigateToPhoto:(String)->Unit,
     navigateToPendingRequests:(Long)->Unit,
     navigateToChatGroup:(Long)->Unit,
+    navigateToInvitationLink: (Long) -> Unit,
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -188,7 +191,8 @@ internal fun Grupo(
         navigateToPhoto = navigateToPhoto,
         navigateToPendingRequests = navigateToPendingRequests,
         navigateToChatGroup = navigateToChatGroup,
-        getPendingRequestCount = viewModel::getPendingRequestCount
+        getPendingRequestCount = viewModel::getPendingRequestCount,
+        navigateToInvitationLink = navigateToInvitationLink
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -225,6 +229,7 @@ internal fun Grupo(
     navigateToPendingRequests: (Long) -> Unit,
     navigateToChatGroup: (Long) -> Unit,
     getPendingRequestCount:suspend ()->Int,
+    navigateToInvitationLink:(Long)->Unit,
     ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
@@ -346,6 +351,7 @@ internal fun Grupo(
                                 pendingRequestCount = pendingRequestCount,
                                 members = viewState.usersProfileGrupo.size,
                                 navigateToPhoto = navigateToPhoto,
+                                navigateToInvitationLink = navigateToInvitationLink
                             )
                         }
                     }
@@ -590,7 +596,8 @@ internal fun GrupoMenu(
     navigateToReport: () -> Unit,
     navigateToPendingRequests: () -> Unit,
     navigateToChatGroup: (Long) -> Unit,
-    navigateToPhoto: (String) -> Unit
+    navigateToPhoto: (String) -> Unit,
+    navigateToInvitationLink:(Long)->Unit,
 ){
     Column() {
         Box(){
@@ -619,6 +626,15 @@ internal fun GrupoMenu(
             }
         )
     }
+        if (isCurrentUserisAdmin == true) {
+            DropdownMenuItem(
+                text = { Text(text = stringResource(id = R.string.invitation_link)) },
+                onClick = { navigateToInvitationLink(grupo.id)},
+                leadingIcon = {
+                    Icon(imageVector = Icons.Filled.Link, contentDescription = null)
+                }
+            )
+        }
     if (isCurrentUserisAdmin == true) {
         DropdownMenuItem(
             text = { Text(text = stringResource(id = R.string.pending_requests)) },

@@ -176,4 +176,9 @@
     <string name="establecimientos">Establecimientos</string>
     <string name="see_more_options">Ver más opciones</string>
     <string name="see_sala">Ver sala</string>
+    <string name="invitation_link">Enlace de invitación</string>
+    <string name="invitation_link_info">Las personas que accedan a este enlace podrán unirse al grupo sin necesidad de ser aprobadas por un administrador.</string>
+    <string name="share_link">Compartir enlace</string>
+    <string name="copy_link">Copiar enlace</string>
+    <string name="reset_link">Restablecer enlace</string>
 </resources>

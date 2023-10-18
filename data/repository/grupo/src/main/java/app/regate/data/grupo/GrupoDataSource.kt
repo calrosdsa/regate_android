@@ -15,6 +15,7 @@ import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.PendingRequestCount
 import app.regate.data.dto.empresa.grupo.UserGrupoDto
+import app.regate.data.dto.empresa.grupo.setting.GrupoInvitationLinkDto
 
 interface GrupoDataSource {
    suspend fun myGroups():List<GrupoDto>
@@ -33,6 +34,8 @@ interface GrupoDataSource {
    suspend fun getGroupsWhereUserIsAdmin():List<GrupoDto>
    suspend fun sendShareMessage(d:List<GrupoMessageDto>)
    suspend fun searchGrupos(d: SearchFilterRequest, page:Int, size: Int): PaginationGroupsResponse
+
+
    //REQUESTS
    suspend fun getUserRequest(page:Int): PaginationUserGrupoRequest
    suspend fun getPendingRequests(groupId:Long, page:Int,estado:Int): PaginationPendingRequestUser
@@ -42,6 +45,10 @@ interface GrupoDataSource {
    suspend fun confirmPendingRequest(d:PendingRequest)
    suspend fun getPendingRequestCount(groupId: Long):PendingRequestCount
 
+
+   //Setting
+   suspend fun getOrInsertInvitationLink(id:Long):GrupoInvitationLinkDto
+   suspend fun resetInvitationLink(id:Long):GrupoInvitationLinkDto
 
 //   suspend fun userGroups()
 //   suspend fun createGrupo(d: SalaRequestDto):ResponseMessage
