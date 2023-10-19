@@ -13,8 +13,10 @@ import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.data.db.AppTypeConverters;
+import app.regate.data.dto.empresa.establecimiento.AttentionScheduleTimeDto;
 import app.regate.data.dto.empresa.establecimiento.HorarioInterval;
 import app.regate.data.dto.empresa.establecimiento.PaidType;
+import app.regate.models.AttentionSchedule;
 import app.regate.models.Establecimiento;
 import app.regate.models.Setting;
 import java.lang.Boolean;
@@ -39,6 +41,8 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
   private final RoomDatabase __db;
 
   private final EntityInsertionAdapter<Setting> __insertionAdapterOfSetting;
+
+  private final EntityInsertionAdapter<AttentionSchedule> __insertionAdapterOfAttentionSchedule;
 
   private final EntityDeletionOrUpdateAdapter<Establecimiento> __deletionAdapterOfEstablecimiento;
 
@@ -82,6 +86,27 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
         }
         final String _tmp_1 = AppTypeConverters.INSTANCE.fromListHorario(entity.getHorario_interval());
         statement.bindString(5, _tmp_1);
+      }
+    };
+    this.__insertionAdapterOfAttentionSchedule = new EntityInsertionAdapter<AttentionSchedule>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR REPLACE INTO `attention_schedule` (`id`,`day_week`,`establecimiento_id`,`open`,`closed`,`schedule_interval`) VALUES (?,?,?,?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final AttentionSchedule entity) {
+        statement.bindLong(1, entity.getId());
+        statement.bindLong(2, entity.getDay_week());
+        statement.bindLong(3, entity.getEstablecimiento_id());
+        final int _tmp = entity.getOpen() ? 1 : 0;
+        statement.bindLong(4, _tmp);
+        final int _tmp_1 = entity.getClosed() ? 1 : 0;
+        statement.bindLong(5, _tmp_1);
+        final String _tmp_2 = AppTypeConverters.INSTANCE.fromAttentionScheduleTime(entity.getSchedule_interval());
+        statement.bindString(6, _tmp_2);
       }
     };
     this.__deletionAdapterOfEstablecimiento = new EntityDeletionOrUpdateAdapter<Establecimiento>(__db) {
@@ -348,6 +373,25 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
         __db.beginTransaction();
         try {
           __insertionAdapterOfSetting.insert(entity);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAttentionScheduleTime(final AttentionSchedule entity,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfAttentionSchedule.insert(entity);
           __db.setTransactionSuccessful();
           return Unit.INSTANCE;
         } finally {
@@ -939,6 +983,130 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
               _result = new Setting(_tmpUuid,_tmpPaid_type,_tmpEstablecimiento_id,_tmpPayment_for_reservation,_tmpHorario_interval);
             } else {
               _result = null;
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public Flow<AttentionSchedule> observeAttentionScheduleTime(final long id, final int dayWeek) {
+    final String _sql = "SELECT * FROM attention_schedule where establecimiento_id = ? and day_week = ? ";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, id);
+    _argIndex = 2;
+    _statement.bindLong(_argIndex, dayWeek);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"attention_schedule"}, new Callable<AttentionSchedule>() {
+      @Override
+      @NonNull
+      public AttentionSchedule call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfDayWeek = CursorUtil.getColumnIndexOrThrow(_cursor, "day_week");
+            final int _cursorIndexOfEstablecimientoId = CursorUtil.getColumnIndexOrThrow(_cursor, "establecimiento_id");
+            final int _cursorIndexOfOpen = CursorUtil.getColumnIndexOrThrow(_cursor, "open");
+            final int _cursorIndexOfClosed = CursorUtil.getColumnIndexOrThrow(_cursor, "closed");
+            final int _cursorIndexOfScheduleInterval = CursorUtil.getColumnIndexOrThrow(_cursor, "schedule_interval");
+            final AttentionSchedule _result;
+            if (_cursor.moveToFirst()) {
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final int _tmpDay_week;
+              _tmpDay_week = _cursor.getInt(_cursorIndexOfDayWeek);
+              final long _tmpEstablecimiento_id;
+              _tmpEstablecimiento_id = _cursor.getLong(_cursorIndexOfEstablecimientoId);
+              final boolean _tmpOpen;
+              final int _tmp;
+              _tmp = _cursor.getInt(_cursorIndexOfOpen);
+              _tmpOpen = _tmp != 0;
+              final boolean _tmpClosed;
+              final int _tmp_1;
+              _tmp_1 = _cursor.getInt(_cursorIndexOfClosed);
+              _tmpClosed = _tmp_1 != 0;
+              final List<AttentionScheduleTimeDto> _tmpSchedule_interval;
+              final String _tmp_2;
+              _tmp_2 = _cursor.getString(_cursorIndexOfScheduleInterval);
+              _tmpSchedule_interval = AppTypeConverters.INSTANCE.toAttentionScheduleTime(_tmp_2);
+              _result = new AttentionSchedule(_tmpId,_tmpDay_week,_tmpEstablecimiento_id,_tmpOpen,_tmpClosed,_tmpSchedule_interval);
+            } else {
+              _result = null;
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public Flow<List<AttentionSchedule>> observeAttentionScheduleWeek(final long id) {
+    final String _sql = "SELECT * FROM attention_schedule where establecimiento_id = ? order by day_week";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, id);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"attention_schedule"}, new Callable<List<AttentionSchedule>>() {
+      @Override
+      @NonNull
+      public List<AttentionSchedule> call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfDayWeek = CursorUtil.getColumnIndexOrThrow(_cursor, "day_week");
+            final int _cursorIndexOfEstablecimientoId = CursorUtil.getColumnIndexOrThrow(_cursor, "establecimiento_id");
+            final int _cursorIndexOfOpen = CursorUtil.getColumnIndexOrThrow(_cursor, "open");
+            final int _cursorIndexOfClosed = CursorUtil.getColumnIndexOrThrow(_cursor, "closed");
+            final int _cursorIndexOfScheduleInterval = CursorUtil.getColumnIndexOrThrow(_cursor, "schedule_interval");
+            final List<AttentionSchedule> _result = new ArrayList<AttentionSchedule>(_cursor.getCount());
+            while (_cursor.moveToNext()) {
+              final AttentionSchedule _item;
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final int _tmpDay_week;
+              _tmpDay_week = _cursor.getInt(_cursorIndexOfDayWeek);
+              final long _tmpEstablecimiento_id;
+              _tmpEstablecimiento_id = _cursor.getLong(_cursorIndexOfEstablecimientoId);
+              final boolean _tmpOpen;
+              final int _tmp;
+              _tmp = _cursor.getInt(_cursorIndexOfOpen);
+              _tmpOpen = _tmp != 0;
+              final boolean _tmpClosed;
+              final int _tmp_1;
+              _tmp_1 = _cursor.getInt(_cursorIndexOfClosed);
+              _tmpClosed = _tmp_1 != 0;
+              final List<AttentionScheduleTimeDto> _tmpSchedule_interval;
+              final String _tmp_2;
+              _tmp_2 = _cursor.getString(_cursorIndexOfScheduleInterval);
+              _tmpSchedule_interval = AppTypeConverters.INSTANCE.toAttentionScheduleTime(_tmp_2);
+              _item = new AttentionSchedule(_tmpId,_tmpDay_week,_tmpEstablecimiento_id,_tmpOpen,_tmpClosed,_tmpSchedule_interval);
+              _result.add(_item);
             }
             __db.setTransactionSuccessful();
             return _result;

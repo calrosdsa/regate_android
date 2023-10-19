@@ -1,6 +1,7 @@
 package app.regate.data.daos;
 
 import android.database.Cursor;
+import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityDeletionOrUpdateAdapter;
@@ -26,7 +27,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import kotlin.Unit;
 import kotlin.coroutines.Continuation;
-import kotlinx.coroutines.flow.Flow;
 
 @SuppressWarnings({"unchecked", "deprecation"})
 public final class RoomEmojiDao_Impl extends RoomEmojiDao {
@@ -197,12 +197,14 @@ public final class RoomEmojiDao_Impl extends RoomEmojiDao {
   }
 
   @Override
-  public Flow<List<Emoji>> observeEmojisByCategory(final String category) {
+  public Object getEmojisByCategory(final String category,
+      final Continuation<? super List<Emoji>> continuation) {
     final String _sql = "select * from emoji where category = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindString(_argIndex, category);
-    return CoroutinesRoom.createFlow(__db, true, new String[] {"emoji"}, new Callable<List<Emoji>>() {
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, true, _cancellationSignal, new Callable<List<Emoji>>() {
       @Override
       @NonNull
       public List<Emoji> call() throws Exception {
@@ -232,17 +234,41 @@ public final class RoomEmojiDao_Impl extends RoomEmojiDao {
             return _result;
           } finally {
             _cursor.close();
+            _statement.release();
           }
         } finally {
           __db.endTransaction();
         }
       }
+    }, continuation);
+  }
 
+  @Override
+  public Object getEmojiCount(final Continuation<? super Integer> continuation) {
+    final String _sql = "select count(*) from emoji";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Integer>() {
       @Override
-      protected void finalize() {
-        _statement.release();
+      @NonNull
+      public Integer call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final Integer _result;
+          if (_cursor.moveToFirst()) {
+            final int _tmp;
+            _tmp = _cursor.getInt(0);
+            _result = _tmp;
+          } else {
+            _result = 0;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
       }
-    });
+    }, continuation);
   }
 
   @NonNull

@@ -45,8 +45,8 @@ import app.regate.data.daos.RoomUserDao;
 import app.regate.data.daos.RoomUserDao_Impl;
 import app.regate.data.daos.RoomUserGrupoDao;
 import app.regate.data.daos.RoomUserGrupoDao_Impl;
-import app.regate.data.daos.RoomUserSalaDao;
-import app.regate.data.daos.RoomUserSalaDao_Impl;
+import app.regate.data.daos.RoomUserRoomDao;
+import app.regate.data.daos.RoomUserRoomDao_Impl;
 import java.lang.Class;
 import java.lang.Override;
 import java.lang.String;
@@ -79,7 +79,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
 
   private volatile RoomUserGrupoDao _roomUserGrupoDao;
 
-  private volatile RoomUserSalaDao _roomUserSalaDao;
+  private volatile RoomUserRoomDao _roomUserRoomDao;
 
   private volatile RoomMyGroupsDao _roomMyGroupsDao;
 
@@ -127,9 +127,9 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `emoji` (`id` INTEGER NOT NULL, `emoji` TEXT NOT NULL, `description` TEXT NOT NULL, `category` TEXT NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `attention_schedule` (`id` INTEGER NOT NULL, `day_week` INTEGER NOT NULL, `establecimiento_id` INTEGER NOT NULL, `open` INTEGER NOT NULL, `closed` INTEGER NOT NULL, `schedule_interval` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`establecimiento_id`) REFERENCES `establecimientos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_attention_schedule_establecimiento_id` ON `attention_schedule` (`establecimiento_id`)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `user_sala` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `sala_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `user_room` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `entity_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fc591c565b25b2c348970974f88fa0f5')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cd5e287b96aeea608ab6259442a91e2e')");
       }
 
       @Override
@@ -153,7 +153,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("DROP TABLE IF EXISTS `search_history`");
         db.execSQL("DROP TABLE IF EXISTS `emoji`");
         db.execSQL("DROP TABLE IF EXISTS `attention_schedule`");
-        db.execSQL("DROP TABLE IF EXISTS `user_sala`");
+        db.execSQL("DROP TABLE IF EXISTS `user_room`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -522,23 +522,23 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoAttentionSchedule + "\n"
                   + " Found:\n" + _existingAttentionSchedule);
         }
-        final HashMap<String, TableInfo.Column> _columnsUserSala = new HashMap<String, TableInfo.Column>(4);
-        _columnsUserSala.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsUserSala.put("profile_id", new TableInfo.Column("profile_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsUserSala.put("sala_id", new TableInfo.Column("sala_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsUserSala.put("is_admin", new TableInfo.Column("is_admin", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        final HashSet<TableInfo.ForeignKey> _foreignKeysUserSala = new HashSet<TableInfo.ForeignKey>(0);
-        final HashSet<TableInfo.Index> _indicesUserSala = new HashSet<TableInfo.Index>(0);
-        final TableInfo _infoUserSala = new TableInfo("user_sala", _columnsUserSala, _foreignKeysUserSala, _indicesUserSala);
-        final TableInfo _existingUserSala = TableInfo.read(db, "user_sala");
-        if (!_infoUserSala.equals(_existingUserSala)) {
-          return new RoomOpenHelper.ValidationResult(false, "user_sala(app.regate.models.UserSala).\n"
-                  + " Expected:\n" + _infoUserSala + "\n"
-                  + " Found:\n" + _existingUserSala);
+        final HashMap<String, TableInfo.Column> _columnsUserRoom = new HashMap<String, TableInfo.Column>(4);
+        _columnsUserRoom.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsUserRoom.put("profile_id", new TableInfo.Column("profile_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsUserRoom.put("entity_id", new TableInfo.Column("entity_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsUserRoom.put("is_admin", new TableInfo.Column("is_admin", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysUserRoom = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesUserRoom = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoUserRoom = new TableInfo("user_room", _columnsUserRoom, _foreignKeysUserRoom, _indicesUserRoom);
+        final TableInfo _existingUserRoom = TableInfo.read(db, "user_room");
+        if (!_infoUserRoom.equals(_existingUserRoom)) {
+          return new RoomOpenHelper.ValidationResult(false, "user_room(app.regate.models.UserRoom).\n"
+                  + " Expected:\n" + _infoUserRoom + "\n"
+                  + " Found:\n" + _existingUserRoom);
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "fc591c565b25b2c348970974f88fa0f5", "bc996628e6c1b73e38fea57ff985b688");
+    }, "cd5e287b96aeea608ab6259442a91e2e", "cbbae1deb1c4b266f7a1610fd6a2ca3b");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -549,7 +549,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas","notification","message_sala","search_history","emoji","attention_schedule","user_sala");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas","notification","message_sala","search_history","emoji","attention_schedule","user_room");
   }
 
   @Override
@@ -584,7 +584,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
       _db.execSQL("DELETE FROM `search_history`");
       _db.execSQL("DELETE FROM `emoji`");
       _db.execSQL("DELETE FROM `attention_schedule`");
-      _db.execSQL("DELETE FROM `user_sala`");
+      _db.execSQL("DELETE FROM `user_room`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -611,7 +611,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
     _typeConvertersMap.put(RoomLabelDao.class, RoomLabelDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomGrupoDao.class, RoomGrupoDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomUserGrupoDao.class, RoomUserGrupoDao_Impl.getRequiredConverters());
-    _typeConvertersMap.put(RoomUserSalaDao.class, RoomUserSalaDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(RoomUserRoomDao.class, RoomUserRoomDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomMyGroupsDao.class, RoomMyGroupsDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomFavoriteEstablecimientoDao.class, RoomFavoriteEstablecimientoDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomMessageInboxDao.class, RoomMessageInboxDao_Impl.getRequiredConverters());
@@ -765,15 +765,15 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
   }
 
   @Override
-  public RoomUserSalaDao userSalaDao() {
-    if (_roomUserSalaDao != null) {
-      return _roomUserSalaDao;
+  public RoomUserRoomDao userRoomDao() {
+    if (_roomUserRoomDao != null) {
+      return _roomUserRoomDao;
     } else {
       synchronized(this) {
-        if(_roomUserSalaDao == null) {
-          _roomUserSalaDao = new RoomUserSalaDao_Impl(this);
+        if(_roomUserRoomDao == null) {
+          _roomUserRoomDao = new RoomUserRoomDao_Impl(this);
         }
-        return _roomUserSalaDao;
+        return _roomUserRoomDao;
       }
     }
   }

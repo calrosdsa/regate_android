@@ -1,20 +1,18 @@
 package app.regate.domain.observers
 
-import app.regate.compoundmodels.UserProfileSala
-import app.regate.data.daos.UserSalaDao
-import app.regate.data.instalacion.CupoRepository
+import app.regate.compoundmodels.UserProfileRoom
+import app.regate.data.daos.UserRoomDao
 import app.regate.domain.SubjectInteractor
-import app.regate.models.Cupo
 import kotlinx.coroutines.flow.Flow
 import me.tatarka.inject.annotations.Inject
 
 @Inject
 class ObserveUsersSala(
-    private val userSalaDao: UserSalaDao
-) :SubjectInteractor<ObserveUsersSala.Params,List<UserProfileSala>>(){
+    private val userRoomDao: UserRoomDao
+) :SubjectInteractor<ObserveUsersSala.Params,List<UserProfileRoom>>(){
 
-    override fun createObservable(params: Params): Flow<List<UserProfileSala>> {
-        return userSalaDao.observeUsersSala(params.id)
+    override fun createObservable(params: Params): Flow<List<UserProfileRoom>> {
+        return userRoomDao.observeUsersRoom(params.id)
     }
 
     data class Params(

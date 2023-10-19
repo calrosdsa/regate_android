@@ -4,7 +4,7 @@ import me.tatarka.inject.annotations.Provides
 
 interface SalaBinds {
     @Provides
-    fun provideInstalacionDataSource(
+    fun provideSalaDataSource(
         bind: SalaDataSourceImpl
     ): SalaDataSource = bind
 }

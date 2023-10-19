@@ -4,7 +4,7 @@ import me.tatarka.inject.annotations.Provides
 
 interface SystemBinds {
     @Provides
-    fun provideLabelDataSource(
+    fun provideSystemDataSource(
         bind: SystemDataSourceImpl
     ): SystemDataSource = bind
 }

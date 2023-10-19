@@ -62,41 +62,44 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `grupos` SET `id` = ?,`name` = ?,`description` = ?,`created_at` = ?,`photo` = ?,`profile_id` = ?,`visibility` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `grupos` SET `id` = ?,`uuid` = ?,`name` = ?,`description` = ?,`created_at` = ?,`photo` = ?,`is_visible` = ?,`profile_id` = ?,`visibility` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ? WHERE `id` = ?";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Grupo entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindString(2, entity.getName());
+        statement.bindString(2, entity.getUuid());
+        statement.bindString(3, entity.getName());
         if (entity.getDescription() == null) {
-          statement.bindNull(3);
+          statement.bindNull(4);
         } else {
-          statement.bindString(3, entity.getDescription());
+          statement.bindString(4, entity.getDescription());
         }
         final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
         if (_tmp == null) {
-          statement.bindNull(4);
-        } else {
-          statement.bindString(4, _tmp);
-        }
-        if (entity.getPhoto() == null) {
           statement.bindNull(5);
         } else {
-          statement.bindString(5, entity.getPhoto());
+          statement.bindString(5, _tmp);
         }
-        statement.bindLong(6, entity.getProfile_id());
-        statement.bindLong(7, entity.getVisibility());
-        statement.bindString(8, entity.getLast_message());
-        final String _tmp_1 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getLast_message_created());
-        if (_tmp_1 == null) {
-          statement.bindNull(9);
+        if (entity.getPhoto() == null) {
+          statement.bindNull(6);
         } else {
-          statement.bindString(9, _tmp_1);
+          statement.bindString(6, entity.getPhoto());
         }
-        statement.bindLong(10, entity.getMessages_count());
-        statement.bindLong(11, entity.getId());
+        final int _tmp_1 = entity.is_visible() ? 1 : 0;
+        statement.bindLong(7, _tmp_1);
+        statement.bindLong(8, entity.getProfile_id());
+        statement.bindLong(9, entity.getVisibility());
+        statement.bindString(10, entity.getLast_message());
+        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getLast_message_created());
+        if (_tmp_2 == null) {
+          statement.bindNull(11);
+        } else {
+          statement.bindString(11, _tmp_2);
+        }
+        statement.bindLong(12, entity.getMessages_count());
+        statement.bindLong(13, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
@@ -111,80 +114,86 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `grupos` (`id`,`name`,`description`,`created_at`,`photo`,`profile_id`,`visibility`,`last_message`,`last_message_created`,`messages_count`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `grupos` (`id`,`uuid`,`name`,`description`,`created_at`,`photo`,`is_visible`,`profile_id`,`visibility`,`last_message`,`last_message_created`,`messages_count`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Grupo entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindString(2, entity.getName());
+        statement.bindString(2, entity.getUuid());
+        statement.bindString(3, entity.getName());
         if (entity.getDescription() == null) {
-          statement.bindNull(3);
+          statement.bindNull(4);
         } else {
-          statement.bindString(3, entity.getDescription());
+          statement.bindString(4, entity.getDescription());
         }
         final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
         if (_tmp == null) {
-          statement.bindNull(4);
-        } else {
-          statement.bindString(4, _tmp);
-        }
-        if (entity.getPhoto() == null) {
           statement.bindNull(5);
         } else {
-          statement.bindString(5, entity.getPhoto());
+          statement.bindString(5, _tmp);
         }
-        statement.bindLong(6, entity.getProfile_id());
-        statement.bindLong(7, entity.getVisibility());
-        statement.bindString(8, entity.getLast_message());
-        final String _tmp_1 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getLast_message_created());
-        if (_tmp_1 == null) {
-          statement.bindNull(9);
+        if (entity.getPhoto() == null) {
+          statement.bindNull(6);
         } else {
-          statement.bindString(9, _tmp_1);
+          statement.bindString(6, entity.getPhoto());
         }
-        statement.bindLong(10, entity.getMessages_count());
+        final int _tmp_1 = entity.is_visible() ? 1 : 0;
+        statement.bindLong(7, _tmp_1);
+        statement.bindLong(8, entity.getProfile_id());
+        statement.bindLong(9, entity.getVisibility());
+        statement.bindString(10, entity.getLast_message());
+        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getLast_message_created());
+        if (_tmp_2 == null) {
+          statement.bindNull(11);
+        } else {
+          statement.bindString(11, _tmp_2);
+        }
+        statement.bindLong(12, entity.getMessages_count());
       }
     }, new EntityDeletionOrUpdateAdapter<Grupo>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `grupos` SET `id` = ?,`name` = ?,`description` = ?,`created_at` = ?,`photo` = ?,`profile_id` = ?,`visibility` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ? WHERE `id` = ?";
+        return "UPDATE `grupos` SET `id` = ?,`uuid` = ?,`name` = ?,`description` = ?,`created_at` = ?,`photo` = ?,`is_visible` = ?,`profile_id` = ?,`visibility` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ? WHERE `id` = ?";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Grupo entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindString(2, entity.getName());
+        statement.bindString(2, entity.getUuid());
+        statement.bindString(3, entity.getName());
         if (entity.getDescription() == null) {
-          statement.bindNull(3);
+          statement.bindNull(4);
         } else {
-          statement.bindString(3, entity.getDescription());
+          statement.bindString(4, entity.getDescription());
         }
         final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
         if (_tmp == null) {
-          statement.bindNull(4);
-        } else {
-          statement.bindString(4, _tmp);
-        }
-        if (entity.getPhoto() == null) {
           statement.bindNull(5);
         } else {
-          statement.bindString(5, entity.getPhoto());
+          statement.bindString(5, _tmp);
         }
-        statement.bindLong(6, entity.getProfile_id());
-        statement.bindLong(7, entity.getVisibility());
-        statement.bindString(8, entity.getLast_message());
-        final String _tmp_1 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getLast_message_created());
-        if (_tmp_1 == null) {
-          statement.bindNull(9);
+        if (entity.getPhoto() == null) {
+          statement.bindNull(6);
         } else {
-          statement.bindString(9, _tmp_1);
+          statement.bindString(6, entity.getPhoto());
         }
-        statement.bindLong(10, entity.getMessages_count());
-        statement.bindLong(11, entity.getId());
+        final int _tmp_1 = entity.is_visible() ? 1 : 0;
+        statement.bindLong(7, _tmp_1);
+        statement.bindLong(8, entity.getProfile_id());
+        statement.bindLong(9, entity.getVisibility());
+        statement.bindString(10, entity.getLast_message());
+        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getLast_message_created());
+        if (_tmp_2 == null) {
+          statement.bindNull(11);
+        } else {
+          statement.bindString(11, _tmp_2);
+        }
+        statement.bindLong(12, entity.getMessages_count());
+        statement.bindLong(13, entity.getId());
       }
     });
   }
@@ -310,10 +319,12 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
           final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
           try {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfUuid = CursorUtil.getColumnIndexOrThrow(_cursor, "uuid");
             final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
             final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
             final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
+            final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
             final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
@@ -323,6 +334,8 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
             if (_cursor.moveToFirst()) {
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final String _tmpUuid;
+              _tmpUuid = _cursor.getString(_cursorIndexOfUuid);
               final String _tmpName;
               _tmpName = _cursor.getString(_cursorIndexOfName);
               final String _tmpDescription;
@@ -345,6 +358,10 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               } else {
                 _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
               }
+              final boolean _tmpIs_visible;
+              final int _tmp_1;
+              _tmp_1 = _cursor.getInt(_cursorIndexOfIsVisible);
+              _tmpIs_visible = _tmp_1 != 0;
               final long _tmpProfile_id;
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final int _tmpVisibility;
@@ -352,16 +369,16 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               final String _tmpLast_message;
               _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
               final Instant _tmpLast_message_created;
-              final String _tmp_1;
+              final String _tmp_2;
               if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
-                _tmp_1 = null;
+                _tmp_2 = null;
               } else {
-                _tmp_1 = _cursor.getString(_cursorIndexOfLastMessageCreated);
+                _tmp_2 = _cursor.getString(_cursorIndexOfLastMessageCreated);
               }
-              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_1);
+              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_2);
               final int _tmpMessages_count;
               _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
-              _result = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
+              _result = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
             } else {
               _result = null;
             }
@@ -395,10 +412,12 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
           final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
           try {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfUuid = CursorUtil.getColumnIndexOrThrow(_cursor, "uuid");
             final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
             final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
             final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
+            final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
             final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
@@ -409,6 +428,8 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               final Grupo _item;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final String _tmpUuid;
+              _tmpUuid = _cursor.getString(_cursorIndexOfUuid);
               final String _tmpName;
               _tmpName = _cursor.getString(_cursorIndexOfName);
               final String _tmpDescription;
@@ -431,6 +452,10 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               } else {
                 _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
               }
+              final boolean _tmpIs_visible;
+              final int _tmp_1;
+              _tmp_1 = _cursor.getInt(_cursorIndexOfIsVisible);
+              _tmpIs_visible = _tmp_1 != 0;
               final long _tmpProfile_id;
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final int _tmpVisibility;
@@ -438,16 +463,16 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               final String _tmpLast_message;
               _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
               final Instant _tmpLast_message_created;
-              final String _tmp_1;
+              final String _tmp_2;
               if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
-                _tmp_1 = null;
+                _tmp_2 = null;
               } else {
-                _tmp_1 = _cursor.getString(_cursorIndexOfLastMessageCreated);
+                _tmp_2 = _cursor.getString(_cursorIndexOfLastMessageCreated);
               }
-              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_1);
+              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_2);
               final int _tmpMessages_count;
               _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
-              _item = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
+              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -480,10 +505,12 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
           final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
           try {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfUuid = CursorUtil.getColumnIndexOrThrow(_cursor, "uuid");
             final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
             final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
             final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
+            final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
             final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
@@ -494,6 +521,8 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               final Grupo _item;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final String _tmpUuid;
+              _tmpUuid = _cursor.getString(_cursorIndexOfUuid);
               final String _tmpName;
               _tmpName = _cursor.getString(_cursorIndexOfName);
               final String _tmpDescription;
@@ -516,6 +545,10 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               } else {
                 _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
               }
+              final boolean _tmpIs_visible;
+              final int _tmp_1;
+              _tmp_1 = _cursor.getInt(_cursorIndexOfIsVisible);
+              _tmpIs_visible = _tmp_1 != 0;
               final long _tmpProfile_id;
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final int _tmpVisibility;
@@ -523,16 +556,16 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               final String _tmpLast_message;
               _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
               final Instant _tmpLast_message_created;
-              final String _tmp_1;
+              final String _tmp_2;
               if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
-                _tmp_1 = null;
+                _tmp_2 = null;
               } else {
-                _tmp_1 = _cursor.getString(_cursorIndexOfLastMessageCreated);
+                _tmp_2 = _cursor.getString(_cursorIndexOfLastMessageCreated);
               }
-              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_1);
+              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_2);
               final int _tmpMessages_count;
               _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
-              _item = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
+              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -562,10 +595,12 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
     final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
     try {
       final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+      final int _cursorIndexOfUuid = CursorUtil.getColumnIndexOrThrow(_cursor, "uuid");
       final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
       final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
       final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
       final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
+      final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
       final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
       final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
       final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
@@ -575,6 +610,8 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
       if (_cursor.moveToFirst()) {
         final long _tmpId;
         _tmpId = _cursor.getLong(_cursorIndexOfId);
+        final String _tmpUuid;
+        _tmpUuid = _cursor.getString(_cursorIndexOfUuid);
         final String _tmpName;
         _tmpName = _cursor.getString(_cursorIndexOfName);
         final String _tmpDescription;
@@ -597,6 +634,10 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
         } else {
           _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
         }
+        final boolean _tmpIs_visible;
+        final int _tmp_1;
+        _tmp_1 = _cursor.getInt(_cursorIndexOfIsVisible);
+        _tmpIs_visible = _tmp_1 != 0;
         final long _tmpProfile_id;
         _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
         final int _tmpVisibility;
@@ -604,16 +645,16 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
         final String _tmpLast_message;
         _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
         final Instant _tmpLast_message_created;
-        final String _tmp_1;
+        final String _tmp_2;
         if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
-          _tmp_1 = null;
+          _tmp_2 = null;
         } else {
-          _tmp_1 = _cursor.getString(_cursorIndexOfLastMessageCreated);
+          _tmp_2 = _cursor.getString(_cursorIndexOfLastMessageCreated);
         }
-        _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_1);
+        _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_2);
         final int _tmpMessages_count;
         _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
-        _result = new Grupo(_tmpId,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
+        _result = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
       } else {
         _result = null;
       }

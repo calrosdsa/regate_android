@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
 @SuppressLint("SuspiciousIndentation")
-suspend fun getBitmap(url:String,context:Context): Bitmap {
+suspend fun getBitmap (url:String,context:Context): Bitmap {
     val bitmap = CoroutineScope(Dispatchers.IO).async {
 
         val loader = ImageLoader(context)

@@ -52,7 +52,7 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
 import app.regate.compoundmodels.MessageSalaWithProfile
-import app.regate.compoundmodels.UserProfileSala
+import app.regate.compoundmodels.UserProfileRoom
 import app.regate.data.common.ReplyMessageData
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -71,7 +71,7 @@ internal fun Chat (
     lazyListState:LazyListState,
     modifier: Modifier = Modifier,
     user:User? = null,
-    getUserProfileSala: (id:Long)->UserProfileSala?,
+    getUserProfileSala: (id:Long)->UserProfileRoom?,
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -333,7 +333,7 @@ internal fun Chat (
 fun MessageReply(
     item:MessageSalaWithProfile,
     scrollToItem:()->Unit,
-    getUserProfileSala: (id:Long)->UserProfileSala?,
+    getUserProfileSala: (id:Long)->UserProfileRoom?,
     modifier:Modifier = Modifier
 ){
     val profile = item.reply?.let { getUserProfileSala(it.profile_id) }

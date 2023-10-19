@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "fc591c565b25b2c348970974f88fa0f5",
+    "identityHash": "cd5e287b96aeea608ab6259442a91e2e",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -1120,8 +1120,8 @@
         ]
       },
       {
-        "tableName": "user_sala",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `sala_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL)",
+        "tableName": "user_room",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `entity_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -1136,8 +1136,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "sala_id",
-            "columnName": "sala_id",
+            "fieldPath": "entity_id",
+            "columnName": "entity_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -1161,7 +1161,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fc591c565b25b2c348970974f88fa0f5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cd5e287b96aeea608ab6259442a91e2e')"
     ]
   }
 }

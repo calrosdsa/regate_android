@@ -128,8 +128,8 @@ fun EstablecimientoInfo(
             }
         }
         Divider(modifier = Modifier.padding(5.dp))
-        Text(text = "Horario de atencion",style = MaterialTheme.typography.titleSmall)
         state.attentionSchedule?.let {
+        Text(text = "Horario de atencion",style = MaterialTheme.typography.titleSmall)
             AttentionScheduleItem(
                 item = it,
                 modifier = Modifier.clickable { openAttentionScheduleWeek() }

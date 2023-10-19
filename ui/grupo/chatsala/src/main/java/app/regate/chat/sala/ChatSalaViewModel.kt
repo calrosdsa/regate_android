@@ -10,7 +10,7 @@ import app.cash.paging.cachedIn
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageSalaWithProfile
-import app.regate.compoundmodels.UserProfileSala
+import app.regate.compoundmodels.UserProfileRoom
 import app.regate.constant.Host
 import app.regate.data.common.MessageData
 import app.regate.data.dto.empresa.salas.MessageSalaDto
@@ -60,7 +60,7 @@ class ChatSalaViewModel(
     observeAuthState: ObserveAuthState,
     observeGrupo: ObserveGrupo,
     pagingInteractor: ObservePagerMessagesSala,
-    observeUsersSala: ObserveUsersSala,
+//    observeUsersSala: ObserveUsersSala,
 //    private val observeInstalacion: ObserveInstalacion
 ):ViewModel() {
 //    private val grupoId2:Long = savedStateHandle["id"]!!
@@ -79,8 +79,8 @@ class ChatSalaViewModel(
         observeUser.flow,
         observeAuthState.flow,
         observeGrupo.flow,
-        observeUsersSala.flow,
-    ){loading,message,messageChat,user,authState,grupo,usersSala->
+//        observeUsersSala.flow,
+    ){loading,message,messageChat,user,authState,grupo->
         ChatSalaState(
             loading = loading,
             message = message,
@@ -88,7 +88,7 @@ class ChatSalaViewModel(
             user = user,
             authState = authState,
             grupo = grupo,
-            usersSala = usersSala
+//            usersSala = usersSala
 
         )
     }.stateIn(
@@ -100,7 +100,7 @@ class ChatSalaViewModel(
         observeUser(Unit)
         observeAuthState(Unit)
         observeGrupo(ObserveGrupo.Param(id = salaId))
-        observeUsersSala(ObserveUsersSala.Params(id = salaId))
+//        observeUsersSala(ObserveUsersSala.Params(id = salaId))
         syncData()
         pagingInteractor(ObservePagerMessagesSala.Params(PAGING_CONFIG,salaId))
         viewModelScope.launch {
@@ -230,7 +230,7 @@ class ChatSalaViewModel(
     fun syncData(){
         viewModelScope.launch {
 //            if(state.value.authState == AppAuthState.LOGGED_IN){
-               launch { salaRepository.insertUsersSala(salaId) }
+//               launch { salaRepository.insertUsersSala(salaId) }
                launch{ salaRepository.syncMessages(salaId) }
 //            }
         }
@@ -241,7 +241,7 @@ class ChatSalaViewModel(
         }
     }
 
-    fun getUserSala(profileId:Long):UserProfileSala?{
+    fun getUserSala(profileId:Long):UserProfileRoom?{
         return state.value.usersSala.find {
             it.id == profileId
         }

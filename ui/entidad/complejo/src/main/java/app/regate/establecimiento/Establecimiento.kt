@@ -67,6 +67,7 @@ import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.constant.Route
 import app.regate.constant.id
+import app.regate.data.auth.AppAuthState
 import app.regate.data.common.encodeMediaData
 import app.regate.models.Establecimiento
 import kotlinx.coroutines.delay
@@ -118,6 +119,7 @@ fun Establecimiento(
         navigateToProfile = { navController.navigate(Route.PROFILE id it)},
         navigateToReviews = { navController.navigate(Route.REVIEWS id it)},
         navigateToCreateReview = { navController.navigate(Route.CREATE_REVIEW id it)},
+        openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
     )
 }
 
@@ -136,7 +138,8 @@ internal fun Establecimiento(
     navigateToPhoto: (String) -> Unit,
     navigateToProfile: (Long) -> Unit,
     navigateToReviews: (Long) -> Unit,
-    navigateToCreateReview: (Long) -> Unit
+    navigateToCreateReview: (Long) -> Unit,
+    openAuthBottomSheet:()-> Unit,
     ) {
     val appUtil = LocalAppUtil.current
     val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Hidden)
@@ -247,7 +250,13 @@ internal fun Establecimiento(
                     Crossfade(targetState = state.isFavorite) {
                         if (it) {
                             IconButton(
-                                onClick = { coroutineScope.launch { viewModel.removeLike() } },
+                                onClick = {
+                                    if(state.authState == AppAuthState.LOGGED_IN){
+                                    coroutineScope.launch { viewModel.removeLike() }
+                                    }else{
+                                        openAuthBottomSheet()
+                                    }
+                                          },
                                 modifier = Modifier
                                     .zIndex(1f)
                                     .padding(5.dp)

@@ -12,6 +12,7 @@ color tv_test_yellow
 drawable check
 drawable coin
 drawable default_image
+drawable delete_icon
 drawable doble_check
 drawable enabled_location
 drawable ic_launcher_background
@@ -44,6 +45,7 @@ string add_a_message
 string add_a_review
 string all
 string amount
+string amount_contributed
 string animals_and_nature
 string app_name
 string available_courts
@@ -71,6 +73,7 @@ string confirm
 string consume
 string continuar
 string contributed_amount
+string copy_link
 string count_selected
 string create_group
 string create_sala
@@ -85,6 +88,7 @@ string edit
 string email_verification
 string email_verification_help_text
 string emileys_emotion
+string establecimientos
 string exit
 string expiration_date
 string explore_exceptional_destinations
@@ -100,13 +104,17 @@ string gcp_id
 string get_started
 string grant_permission
 string group_description
+string group_privacy
 string group_visibility
 string groups
+string hidden
 string history
 string illegal_activity
 string inappropriate_material
 string inbox
 string inbox_to_establecimiento
+string invitation_link
+string invitation_link_info
 string invitations
 string join_a_group
 string language
@@ -134,6 +142,7 @@ string notification_sala_channel
 string notifications
 string nudes
 string objects
+string open_in_browser
 string other
 string password_dont_match
 string password_length
@@ -162,9 +171,13 @@ string request_removed
 string requests
 string resend_email_verification
 string reservation_date
+string reserved_room
+string reset_link
 string review
 string reviews
+string room_chat
 string room_has_been_reserved
+string room_not_available
 string rooms
 string rules_of_the_place
 string sala_help_text
@@ -176,11 +189,15 @@ string search
 string search_nearby_places
 string see
 string see_all
+string see_more_options
+string see_sala
 string select_group_text
 string send
 string send_to_a_group
 string services
 string settings
+string share_image_link
+string share_link
 string show_less
 string show_more
 string show_results
@@ -203,6 +220,9 @@ string unexpected_error
 string user_since
 string verify
 string version
+string view_group
+string visible
+string visible_info_group
 string visit
 string what_is_your_location
 string what_kind_of_game_do_you_prefere

@@ -3,7 +3,7 @@ package app.regate.data.sala
 import app.regate.data.daos.MessageSalaDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
-import app.regate.data.daos.UserSalaDao
+import app.regate.data.daos.UserRoomDao
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.salas.JoinSalaRequest
@@ -21,7 +21,7 @@ import app.regate.data.mappers.SalaDtoToSalaEntity
 import app.regate.inject.ApplicationScope
 import app.regate.models.MessageSala
 import app.regate.models.Profile
-import app.regate.models.UserSala
+import app.regate.models.UserRoom
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
@@ -38,40 +38,40 @@ class SalaRepository(
     private val messageMapperSalaDto:MessageToMessageSalaDto,
     private val messageMapperSala:MessageDtoToMessageSala,
     private val userDao: UserDao,
-    private val userSalaDao: UserSalaDao,
+//    private val userRoomDao: UserRoomDao,
     private val dispatchers:AppCoroutineDispatchers,
-    private val salaDtoToSalaEntity: SalaDtoToSalaEntity
+//    private val salaDtoToSalaEntity: SalaDtoToSalaEntity
 ){
 
     suspend fun searchSalas(d:SearchFilterRequest,page: Int,size:Int):PaginationSalaResponse{
         return salaDataSourceImpl.searchSalas(d,page,size)
     }
-    suspend fun insertUsersSala(salaId: Long){
-        withContext(dispatchers.computation){
-            try {
-                val res = salaDataSourceImpl.getUsersSala(salaId)
-                val profiles = res.map {
-                    Profile(
-                        id = it.profile_id,
-                        profile_photo = it.profile_photo,
-                        nombre = it.nombre,
-                        apellido = it.apellido,
-                    )
-                }
-                val usersSala = res.map {
-                    UserSala(
-                        id = it.id,
-                        profile_id = it.profile_id,
-                        sala_id = salaId,
-                    )
-                }
-                userSalaDao.upsertAll(usersSala)
-                profileDao.upsertAll(profiles)
-            }catch (e:Exception){
-                //TODO()
-            }
-        }
-    }
+//    suspend fun insertUsersSala(salaId: Long){
+//        withContext(dispatchers.computation){
+//            try {
+//                val res = salaDataSourceImpl.getUsersSala(salaId)
+//                val profiles = res.map {
+//                    Profile(
+//                        id = it.profile_id,
+//                        profile_photo = it.profile_photo,
+//                        nombre = it.nombre,
+//                        apellido = it.apellido,
+//                    )
+//                }
+//                val usersSala = res.map {
+//                    UserRoom(
+//                        id = it.id,
+//                        profile_id = it.profile_id,
+//                        entity_id = salaId,
+//                    )
+//                }
+//                userRoomDao.upsertAll(usersSala)
+//                profileDao.upsertAll(profiles)
+//            }catch (e:Exception){
+//                //TODO()
+//            }
+//        }
+//    }
     suspend fun getSalaCompleteHistory(salaId: Long):SalaCompleteDetail{
         return salaDataSourceImpl.getCompleteSalaHistory(salaId)
     }

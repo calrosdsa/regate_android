@@ -50,7 +50,7 @@ import app.regate.common.composes.util.prependErrorOrNull
 import app.regate.common.composes.util.refreshErrorOrNull
 import app.regate.common.composes.viewModel
 import app.regate.compoundmodels.MessageSalaWithProfile
-import app.regate.compoundmodels.UserProfileSala
+import app.regate.compoundmodels.UserProfileRoom
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
 import kotlinx.coroutines.delay
@@ -124,7 +124,7 @@ internal fun ChatSala   (
     formatterRelativeTime:(date:Instant)->String,
     clearMessage:(id:Long)->Unit,
     navigateToSala: (id: Long) -> Unit,
-    getUserProfileSala:(id:Long)->UserProfileSala?,
+    getUserProfileSala:(id:Long)->UserProfileRoom?,
     formatShortDate:(Instant)->String
 ) {
     val colors = listOf(

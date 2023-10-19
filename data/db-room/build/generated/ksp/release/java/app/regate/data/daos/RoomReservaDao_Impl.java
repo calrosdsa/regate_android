@@ -72,7 +72,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `reservas` SET `id` = ?,`instalacion_id` = ?,`instalacion_name` = ?,`establecimiento_id` = ?,`paid` = ?,`total_price` = ?,`start_date` = ?,`end_date` = ?,`user_id` = ?,`created_at` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `reservas` SET `id` = ?,`instalacion_id` = ?,`instalacion_name` = ?,`establecimiento_id` = ?,`pagado` = ?,`total_price` = ?,`start_date` = ?,`end_date` = ?,`user_id` = ?,`created_at` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -82,8 +82,8 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
         statement.bindLong(2, entity.getInstalacion_id());
         statement.bindString(3, entity.getInstalacion_name());
         statement.bindLong(4, entity.getEstablecimiento_id());
-        statement.bindLong(5, entity.getPaid());
-        statement.bindLong(6, entity.getTotal_price());
+        statement.bindDouble(5, entity.getPagado());
+        statement.bindDouble(6, entity.getTotal_price());
         final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getStart_date());
         if (_tmp == null) {
           statement.bindNull(7);
@@ -118,7 +118,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `reservas` (`id`,`instalacion_id`,`instalacion_name`,`establecimiento_id`,`paid`,`total_price`,`start_date`,`end_date`,`user_id`,`created_at`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `reservas` (`id`,`instalacion_id`,`instalacion_name`,`establecimiento_id`,`pagado`,`total_price`,`start_date`,`end_date`,`user_id`,`created_at`) VALUES (?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -128,8 +128,8 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
         statement.bindLong(2, entity.getInstalacion_id());
         statement.bindString(3, entity.getInstalacion_name());
         statement.bindLong(4, entity.getEstablecimiento_id());
-        statement.bindLong(5, entity.getPaid());
-        statement.bindLong(6, entity.getTotal_price());
+        statement.bindDouble(5, entity.getPagado());
+        statement.bindDouble(6, entity.getTotal_price());
         final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getStart_date());
         if (_tmp == null) {
           statement.bindNull(7);
@@ -154,7 +154,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `reservas` SET `id` = ?,`instalacion_id` = ?,`instalacion_name` = ?,`establecimiento_id` = ?,`paid` = ?,`total_price` = ?,`start_date` = ?,`end_date` = ?,`user_id` = ?,`created_at` = ? WHERE `id` = ?";
+        return "UPDATE `reservas` SET `id` = ?,`instalacion_id` = ?,`instalacion_name` = ?,`establecimiento_id` = ?,`pagado` = ?,`total_price` = ?,`start_date` = ?,`end_date` = ?,`user_id` = ?,`created_at` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -164,8 +164,8 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
         statement.bindLong(2, entity.getInstalacion_id());
         statement.bindString(3, entity.getInstalacion_name());
         statement.bindLong(4, entity.getEstablecimiento_id());
-        statement.bindLong(5, entity.getPaid());
-        statement.bindLong(6, entity.getTotal_price());
+        statement.bindDouble(5, entity.getPagado());
+        statement.bindDouble(6, entity.getTotal_price());
         final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getStart_date());
         if (_tmp == null) {
           statement.bindNull(7);
@@ -319,7 +319,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
             final int _cursorIndexOfInstalacionId = CursorUtil.getColumnIndexOrThrow(_cursor, "instalacion_id");
             final int _cursorIndexOfInstalacionName = CursorUtil.getColumnIndexOrThrow(_cursor, "instalacion_name");
             final int _cursorIndexOfEstablecimientoId = CursorUtil.getColumnIndexOrThrow(_cursor, "establecimiento_id");
-            final int _cursorIndexOfPaid = CursorUtil.getColumnIndexOrThrow(_cursor, "paid");
+            final int _cursorIndexOfPagado = CursorUtil.getColumnIndexOrThrow(_cursor, "pagado");
             final int _cursorIndexOfTotalPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "total_price");
             final int _cursorIndexOfStartDate = CursorUtil.getColumnIndexOrThrow(_cursor, "start_date");
             final int _cursorIndexOfEndDate = CursorUtil.getColumnIndexOrThrow(_cursor, "end_date");
@@ -336,10 +336,10 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
               _tmpInstalacion_name = _cursor.getString(_cursorIndexOfInstalacionName);
               final long _tmpEstablecimiento_id;
               _tmpEstablecimiento_id = _cursor.getLong(_cursorIndexOfEstablecimientoId);
-              final int _tmpPaid;
-              _tmpPaid = _cursor.getInt(_cursorIndexOfPaid);
-              final int _tmpTotal_price;
-              _tmpTotal_price = _cursor.getInt(_cursorIndexOfTotalPrice);
+              final double _tmpPagado;
+              _tmpPagado = _cursor.getDouble(_cursorIndexOfPagado);
+              final double _tmpTotal_price;
+              _tmpTotal_price = _cursor.getDouble(_cursorIndexOfTotalPrice);
               final Instant _tmpStart_date;
               final String _tmp;
               if (_cursor.isNull(_cursorIndexOfStartDate)) {
@@ -381,7 +381,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
               } else {
                 _tmpCreated_at = _tmp_5;
               }
-              _item = new Reserva(_tmpId,_tmpInstalacion_id,_tmpInstalacion_name,_tmpEstablecimiento_id,_tmpPaid,_tmpTotal_price,_tmpStart_date,_tmpEnd_date,_tmpUser_id,_tmpCreated_at);
+              _item = new Reserva(_tmpId,_tmpInstalacion_id,_tmpInstalacion_name,_tmpEstablecimiento_id,_tmpPagado,_tmpTotal_price,_tmpStart_date,_tmpEnd_date,_tmpUser_id,_tmpCreated_at);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -420,7 +420,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
             final int _cursorIndexOfInstalacionId = CursorUtil.getColumnIndexOrThrow(_cursor, "instalacion_id");
             final int _cursorIndexOfInstalacionName = CursorUtil.getColumnIndexOrThrow(_cursor, "instalacion_name");
             final int _cursorIndexOfEstablecimientoId = CursorUtil.getColumnIndexOrThrow(_cursor, "establecimiento_id");
-            final int _cursorIndexOfPaid = CursorUtil.getColumnIndexOrThrow(_cursor, "paid");
+            final int _cursorIndexOfPagado = CursorUtil.getColumnIndexOrThrow(_cursor, "pagado");
             final int _cursorIndexOfTotalPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "total_price");
             final int _cursorIndexOfStartDate = CursorUtil.getColumnIndexOrThrow(_cursor, "start_date");
             final int _cursorIndexOfEndDate = CursorUtil.getColumnIndexOrThrow(_cursor, "end_date");
@@ -450,10 +450,10 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
               _tmpInstalacion_name = _cursor.getString(_cursorIndexOfInstalacionName);
               final long _tmpEstablecimiento_id;
               _tmpEstablecimiento_id = _cursor.getLong(_cursorIndexOfEstablecimientoId);
-              final int _tmpPaid;
-              _tmpPaid = _cursor.getInt(_cursorIndexOfPaid);
-              final int _tmpTotal_price;
-              _tmpTotal_price = _cursor.getInt(_cursorIndexOfTotalPrice);
+              final double _tmpPagado;
+              _tmpPagado = _cursor.getDouble(_cursorIndexOfPagado);
+              final double _tmpTotal_price;
+              _tmpTotal_price = _cursor.getDouble(_cursorIndexOfTotalPrice);
               final Instant _tmpStart_date;
               final String _tmp;
               if (_cursor.isNull(_cursorIndexOfStartDate)) {
@@ -495,7 +495,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
               } else {
                 _tmpCreated_at = _tmp_5;
               }
-              _tmpReserva = new Reserva(_tmpId,_tmpInstalacion_id,_tmpInstalacion_name,_tmpEstablecimiento_id,_tmpPaid,_tmpTotal_price,_tmpStart_date,_tmpEnd_date,_tmpUser_id,_tmpCreated_at);
+              _tmpReserva = new Reserva(_tmpId,_tmpInstalacion_id,_tmpInstalacion_name,_tmpEstablecimiento_id,_tmpPagado,_tmpTotal_price,_tmpStart_date,_tmpEnd_date,_tmpUser_id,_tmpCreated_at);
               final Establecimiento _tmpEstablecimiento;
               final long _tmpKey_2;
               _tmpKey_2 = _cursor.getLong(_cursorIndexOfEstablecimientoId);
