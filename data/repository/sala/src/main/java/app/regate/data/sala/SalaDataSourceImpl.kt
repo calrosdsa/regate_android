@@ -6,16 +6,14 @@ import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
-import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.salas.CompleteSalaRequest
 import app.regate.data.dto.empresa.salas.MessageSalaDto
 import app.regate.data.dto.empresa.salas.MessageSalaPagination
 import app.regate.data.dto.empresa.salas.PaginationSalaResponse
 import app.regate.data.dto.empresa.salas.SalaCompleteDetail
-import app.regate.data.dto.empresa.salas.SalaCompleteDto
 import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.dto.empresa.salas.SalaRequestDto
-import app.regate.data.dto.empresa.salas.UserSala
+import app.regate.data.dto.empresa.salas.UserSalaDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -48,7 +46,7 @@ class SalaDataSourceImpl(
         }
     }
 
-    override suspend fun getUsersSala(salaId: Long): List<UserSala> {
+    override suspend fun getUsersSala(salaId: Long): List<UserSalaDto> {
         return client.get("/v1/sala/users/${salaId}/").body()
     }
 

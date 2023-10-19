@@ -342,10 +342,8 @@ fun MessageReply(
         shape = MaterialTheme.shapes.medium,
         onClick = {
             scrollToItem()
-
         }
     ) {
-
     Column(modifier = modifier
         .fillMaxWidth()
         .padding(10.dp)

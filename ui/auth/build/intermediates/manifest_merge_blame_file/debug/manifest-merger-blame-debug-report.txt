@@ -18,6 +18,6 @@
 18    package="app.regate.auth" >
 19
 20    <uses-sdk android:minSdkVersion="23" />
-20-->D:\Regate\regate_android\ui\auth\src\main\AndroidManifest.xml
+20-->C:\Users\PC\Desktop\projects\regate_android\ui\auth\src\main\AndroidManifest.xml
 21
 22</manifest>

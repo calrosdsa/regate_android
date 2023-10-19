@@ -46,18 +46,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.ui.PosterCardImage
@@ -105,16 +110,16 @@ fun ChatInput(
             Column {
 
                 AnimatedVisibility(visible = replyMessage != null,
-                    enter = scaleIn(),
-                    exit = scaleOut()
                 ) {
                     replyMessage?.let { item ->
                         Box( modifier = Modifier
-                            .padding(10.dp)
                             .fillMaxWidth(0.85f)
-                            .border(BorderStroke(1.dp, Color.LightGray))
+                            .bottomBorder(1.dp,Color.LightGray)
+//                            .border(BorderStroke(1.dp, Color.LightGray))
                             .clip(MaterialTheme.shapes.medium)
-                            .padding(10.dp)){
+                            .padding(horizontal =10.dp)
+                            .padding(vertical = 8.dp)
+                        ){
                             Icon(imageVector = Icons.Outlined.Close, contentDescription = "cancel",
                                 modifier = Modifier
                                     .size(20.dp)
@@ -123,8 +128,7 @@ fun ChatInput(
                                         clearReplyMessage()
                                     }
                                     .align(Alignment.TopEnd))
-                            Column(
-                            ) {
+                            Column {
                                 if(item.nombre != null){
                                 Text(
                                     text = "${item.nombre?:""} ${item.apellido ?: ""}",
@@ -141,7 +145,6 @@ fun ChatInput(
                                     text = item.content,
                                     style = MaterialTheme.typography.bodySmall,
                                 )
-
                             }
                         }
                     }
@@ -162,7 +165,7 @@ fun ChatInput(
                         Surface(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(42.dp)
+//                                .height(42.dp)
                                 .padding(0.dp)
 
                         ) {
@@ -440,3 +443,23 @@ fun keyboardAsState(): State<Keyboard> {
 
     return keyboardState
 }
+
+
+fun Modifier.bottomBorder(strokeWidth: Dp, color: Color) = composed(
+    factory = {
+        val density = LocalDensity.current
+        val strokeWidthPx = density.run { strokeWidth.toPx() }
+
+        Modifier.drawBehind {
+            val width = size.width
+            val height = size.height - strokeWidthPx/2
+
+            drawLine(
+                color = color,
+                start = Offset(x = 0f, y = height),
+                end = Offset(x = width , y = height),
+                strokeWidth = strokeWidthPx
+            )
+        }
+    }
+)

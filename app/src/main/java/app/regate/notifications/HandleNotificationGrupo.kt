@@ -18,6 +18,8 @@ import androidx.core.graphics.drawable.IconCompat
 import androidx.core.net.toUri
 import app.regate.MyFirebaseMessagingService
 import app.regate.common.resources.R
+import app.regate.constant.AppUrl
+import app.regate.constant.Route
 import app.regate.data.dto.notifications.MessageGroupPayload
 import app.regate.home.MainActivity
 import app.regate.models.Grupo
@@ -37,7 +39,7 @@ class HandleNotificationGrupo {
             val m3 = messages[0]
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "https://example.com/chat-grupo/grupo_id=${grupo.id}".toUri(),
+                "${AppUrl}/${Route.CHAT_GRUPO}/${grupo.id}".toUri(),
                 context,
                 MainActivity::class.java
             )

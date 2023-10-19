@@ -5,16 +5,14 @@ import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
-import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.salas.CompleteSalaRequest
 import app.regate.data.dto.empresa.salas.MessageSalaDto
 import app.regate.data.dto.empresa.salas.MessageSalaPagination
 import app.regate.data.dto.empresa.salas.PaginationSalaResponse
 import app.regate.data.dto.empresa.salas.SalaCompleteDetail
-import app.regate.data.dto.empresa.salas.SalaCompleteDto
 import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.dto.empresa.salas.SalaRequestDto
-import app.regate.data.dto.empresa.salas.UserSala
+import app.regate.data.dto.empresa.salas.UserSalaDto
 
 interface SalaDataSource {
    suspend fun getCompleteSalaHistory(salaId:Long):SalaCompleteDetail
@@ -30,7 +28,7 @@ interface SalaDataSource {
    suspend fun joinSala(d:JoinSalaRequest): ResponseMessage
    suspend fun createSala(d: SalaRequestDto):ResponseMessage
    suspend fun exitSala(id:Int)
-   suspend fun getUsersSala(salaId: Long):List<UserSala>
+   suspend fun getUsersSala(salaId: Long):List<UserSalaDto>
 
    suspend fun searchSalas(d:SearchFilterRequest,page:Int,size:Int):PaginationSalaResponse
 }

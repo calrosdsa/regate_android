@@ -140,20 +140,20 @@ class ChatSalaViewModel(
             }
         }
     }
-    suspend fun startWs(){
-        try {
-            val cl = client.webSocketSession(
-                method = HttpMethod.Get, host = Host.host,
-//                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
-                port = Host.port, path = "/v1/ws/chat-sala?id=${salaId}"
-            )
-            cl.apply { launch { outputMessage() } }
-
-
-        }catch (e:Exception){
-            //
-        }
-    }
+//    suspend fun startWs(){
+//        try {
+//            val cl = client.webSocketSession(
+//                method = HttpMethod.Get, host = Host.host,
+////                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
+//                port = Host.port, path = "/v1/ws/chat-sala?id=${salaId}"
+//            )
+//            cl.apply { launch { outputMessage() } }
+//
+//
+//        }catch (e:Exception){
+//            //
+//        }
+//    }
     companion object {
         val PAGING_CONFIG = PagingConfig(
             pageSize = 20,

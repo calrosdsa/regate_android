@@ -95,7 +95,7 @@ class HandleNotificationSala {
             )
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "${AppUrl}discover/data=${payloadString}".toUri(),
+                "${AppUrl}/${Route.DISCOVER}/${payloadString}".toUri(),
                 context,
                 MainActivity::class.java
             )
