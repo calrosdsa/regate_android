@@ -35,6 +35,7 @@ import app.regate.data.daos.ReservaDao
 import app.regate.data.daos.SearchHistoryDao
 import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
+import app.regate.data.daos.UserSalaDao
 import app.regate.data.db.AppDatabase
 import app.regate.data.db.DatabaseTransactionRunner
 import app.regate.data.db.RoomTransactionRunner
@@ -92,6 +93,8 @@ interface RoomDatabaseComponent {
     fun provideGrupoDao(db:AppDatabase):GrupoDao = db.grupoDao()
     @Provides
     fun provideUserGrupoDao(db:AppDatabase):UserGrupoDao = db.userGrupoDao()
+    @Provides
+    fun provideUserSalaDao(db:AppDatabase):UserSalaDao = db.userSalaDao()
 
     @Provides
     fun provideDatabaseTransactionRunner(runner: RoomTransactionRunner): DatabaseTransactionRunner = runner

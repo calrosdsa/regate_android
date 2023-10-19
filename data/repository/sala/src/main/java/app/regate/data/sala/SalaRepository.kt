@@ -3,6 +3,7 @@ package app.regate.data.sala
 import app.regate.data.daos.MessageSalaDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
+import app.regate.data.daos.UserSalaDao
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.salas.JoinSalaRequest
@@ -20,6 +21,7 @@ import app.regate.data.mappers.SalaDtoToSalaEntity
 import app.regate.inject.ApplicationScope
 import app.regate.models.MessageSala
 import app.regate.models.Profile
+import app.regate.models.UserSala
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
@@ -36,6 +38,7 @@ class SalaRepository(
     private val messageMapperSalaDto:MessageToMessageSalaDto,
     private val messageMapperSala:MessageDtoToMessageSala,
     private val userDao: UserDao,
+    private val userSalaDao: UserSalaDao,
     private val dispatchers:AppCoroutineDispatchers,
     private val salaDtoToSalaEntity: SalaDtoToSalaEntity
 ){
@@ -55,6 +58,14 @@ class SalaRepository(
                         apellido = it.apellido,
                     )
                 }
+                val usersSala = res.map {
+                    UserSala(
+                        id = it.id,
+                        profile_id = it.profile_id,
+                        sala_id = salaId,
+                    )
+                }
+                userSalaDao.upsertAll(usersSala)
                 profileDao.upsertAll(profiles)
             }catch (e:Exception){
                 //TODO()

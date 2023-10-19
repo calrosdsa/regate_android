@@ -4,6 +4,7 @@ import app.regate.api.UiMessage
 import app.regate.data.auth.AppAuthState
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.compoundmodels.UserProfileSala
 import app.regate.models.Grupo
 import app.regate.models.Message
 import app.regate.models.MessageSala
@@ -17,7 +18,7 @@ data class ChatSalaState(
     val grupo:Grupo? = null,
     val user:User? = null,
     val authState:AppAuthState? = null,
-    val usersGrupo: List<UserProfileGrupo> = emptyList()
+    val usersSala: List<UserProfileSala> = emptyList()
 ){
     companion object{
         val Empty = ChatSalaState()

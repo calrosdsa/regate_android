@@ -38,6 +38,8 @@ import app.regate.data.daos.RoomReservaDao
 import app.regate.data.daos.RoomSearchHistoryDao
 import app.regate.data.daos.RoomUserDao
 import app.regate.data.daos.RoomUserGrupoDao
+import app.regate.data.daos.RoomUserSalaDao
+import app.regate.data.daos.UserSalaDao
 import app.regate.data.db.AppDatabase
 import app.regate.data.db.AppTypeConverters
 import app.regate.data.db.DateTimeTypeConverters
@@ -60,6 +62,7 @@ import app.regate.models.SearchHistory
 import app.regate.models.Setting
 import app.regate.models.User
 import app.regate.models.UserGrupo
+import app.regate.models.UserSala
 
 @Database(
     entities = [
@@ -82,6 +85,7 @@ import app.regate.models.UserGrupo
         SearchHistory::class,
         Emoji::class,
         AttentionSchedule::class,
+        UserSala::class,
 //        SalaEntity::class,
        ],
 //    views = [
@@ -126,6 +130,7 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
     abstract override fun messageSalaDao(): RoomMessageSalaDao
     abstract override fun searchHistoryDao(): RoomSearchHistoryDao
     abstract override fun emojiDao(): RoomEmojiDao
+    abstract override fun userSalaDao(): RoomUserSalaDao
 //    abstract override fun salaEntityDao(): RoomSalaEntityDao
 
     companion object {

@@ -50,7 +50,7 @@ import app.regate.common.composes.util.prependErrorOrNull
 import app.regate.common.composes.util.refreshErrorOrNull
 import app.regate.common.composes.viewModel
 import app.regate.compoundmodels.MessageSalaWithProfile
-import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.compoundmodels.UserProfileSala
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
 import kotlinx.coroutines.delay
@@ -100,7 +100,7 @@ internal fun ChatSala   (
         formatterRelativeTime = formatter::formatShortRelativeTime,
         clearMessage = viewModel::clearMessage,
         navigateToSala = navigateToSala,
-        getUserProfileGrupo = viewModel::getUserGrupo,
+        getUserProfileSala = viewModel::getUserSala,
         formatShortDate = {
             formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)
         },
@@ -124,7 +124,7 @@ internal fun ChatSala   (
     formatterRelativeTime:(date:Instant)->String,
     clearMessage:(id:Long)->Unit,
     navigateToSala: (id: Long) -> Unit,
-    getUserProfileGrupo:(id:Long)->UserProfileGrupo?,
+    getUserProfileSala:(id:Long)->UserProfileSala?,
     formatShortDate:(Instant)->String
 ) {
     val colors = listOf(
@@ -256,7 +256,7 @@ internal fun ChatSala   (
                     replyMessage.value =it
                 },
                 lazyListState = lazyListState,
-                getUserProfileGrupo = getUserProfileGrupo,
+                getUserProfileSala = getUserProfileSala,
                 formatShortDate = formatShortDate
 
             )

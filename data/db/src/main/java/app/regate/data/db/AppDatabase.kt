@@ -17,6 +17,7 @@ import app.regate.data.daos.ReservaDao
 import app.regate.data.daos.SearchHistoryDao
 import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
+import app.regate.data.daos.UserSalaDao
 
 interface AppDatabase {
     fun establecimientoDao(): EstablecimientoDao
@@ -28,6 +29,7 @@ interface AppDatabase {
     fun labelsDao():LabelDao
     fun grupoDao():GrupoDao
     fun userGrupoDao():UserGrupoDao
+    fun userSalaDao():UserSalaDao
     fun myGroupsDao():MyGroupsDao
     fun favoriteEstablecimientos():FavoriteEstablecimientoDao
     fun messageInboxDao():MessageInboxDao

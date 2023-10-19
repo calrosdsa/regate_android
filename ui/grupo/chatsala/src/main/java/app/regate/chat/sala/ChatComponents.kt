@@ -47,12 +47,12 @@ import app.regate.common.composes.component.input.MessengerIcon
 import app.regate.common.composes.component.input.MessengerIcon2
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.util.itemsCustom
-import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.models.User
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
 import app.regate.compoundmodels.MessageSalaWithProfile
+import app.regate.compoundmodels.UserProfileSala
 import app.regate.data.common.ReplyMessageData
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -71,7 +71,7 @@ internal fun Chat (
     lazyListState:LazyListState,
     modifier: Modifier = Modifier,
     user:User? = null,
-    getUserProfileGrupo: (id:Long)->UserProfileGrupo?,
+    getUserProfileSala: (id:Long)->UserProfileSala?,
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -180,7 +180,7 @@ internal fun Chat (
                                                         )
                                                     }
                                                 }
-                                            }, getUserProfileGrupo = getUserProfileGrupo
+                                            }, getUserProfileSala = getUserProfileSala
                                         )
                                     }
 
@@ -289,7 +289,7 @@ internal fun Chat (
                                                     }
                                                 }
                                             }
-                                        }, getUserProfileGrupo = getUserProfileGrupo)
+                                        }, getUserProfileSala = getUserProfileSala)
                                     }
                                     Text(
                                         text = item.message.content,
@@ -333,10 +333,10 @@ internal fun Chat (
 fun MessageReply(
     item:MessageSalaWithProfile,
     scrollToItem:()->Unit,
-    getUserProfileGrupo: (id:Long)->UserProfileGrupo?,
+    getUserProfileSala: (id:Long)->UserProfileSala?,
     modifier:Modifier = Modifier
 ){
-    val profile = item.reply?.let { getUserProfileGrupo(it.profile_id) }
+    val profile = item.reply?.let { getUserProfileSala(it.profile_id) }
     Surface(
         border = BorderStroke(1.dp, Color.LightGray),
         shape = MaterialTheme.shapes.medium,

@@ -10,7 +10,7 @@ import app.cash.paging.cachedIn
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageSalaWithProfile
-import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.compoundmodels.UserProfileSala
 import app.regate.constant.Host
 import app.regate.data.common.MessageData
 import app.regate.data.dto.empresa.salas.MessageSalaDto
@@ -21,14 +21,13 @@ import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.grupo.ObserveGrupo
 import app.regate.domain.observers.pagination.ObservePagerMessagesSala
 import app.regate.domain.observers.ObserveUser
-import app.regate.domain.observers.grupo.ObserveUsersGrupo
+import app.regate.domain.observers.ObserveUsersSala
 import app.regate.extensions.combine
 import app.regate.models.MessageSala
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
 import io.ktor.client.plugins.websocket.webSocket
-import io.ktor.client.plugins.websocket.webSocketSession
 import io.ktor.http.HttpMethod
 import io.ktor.websocket.Frame
 import io.ktor.websocket.readText
@@ -61,7 +60,7 @@ class ChatSalaViewModel(
     observeAuthState: ObserveAuthState,
     observeGrupo: ObserveGrupo,
     pagingInteractor: ObservePagerMessagesSala,
-    observeUsersGrupo: ObserveUsersGrupo,
+    observeUsersSala: ObserveUsersSala,
 //    private val observeInstalacion: ObserveInstalacion
 ):ViewModel() {
 //    private val grupoId2:Long = savedStateHandle["id"]!!
@@ -80,8 +79,8 @@ class ChatSalaViewModel(
         observeUser.flow,
         observeAuthState.flow,
         observeGrupo.flow,
-        observeUsersGrupo.flow,
-    ){loading,message,messageChat,user,authState,grupo,usersGrupo->
+        observeUsersSala.flow,
+    ){loading,message,messageChat,user,authState,grupo,usersSala->
         ChatSalaState(
             loading = loading,
             message = message,
@@ -89,7 +88,7 @@ class ChatSalaViewModel(
             user = user,
             authState = authState,
             grupo = grupo,
-            usersGrupo = usersGrupo
+            usersSala = usersSala
 
         )
     }.stateIn(
@@ -101,7 +100,7 @@ class ChatSalaViewModel(
         observeUser(Unit)
         observeAuthState(Unit)
         observeGrupo(ObserveGrupo.Param(id = salaId))
-        observeUsersGrupo(ObserveUsersGrupo.Params(id = salaId))
+        observeUsersSala(ObserveUsersSala.Params(id = salaId))
         syncData()
         pagingInteractor(ObservePagerMessagesSala.Params(PAGING_CONFIG,salaId))
         viewModelScope.launch {
@@ -242,8 +241,8 @@ class ChatSalaViewModel(
         }
     }
 
-    fun getUserGrupo(profileId:Long):UserProfileGrupo?{
-        return state.value.usersGrupo.find {
+    fun getUserSala(profileId:Long):UserProfileSala?{
+        return state.value.usersSala.find {
             it.id == profileId
         }
     }
