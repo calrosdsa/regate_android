@@ -8,14 +8,13 @@ import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.data.dto.ResponseMessage
-import app.regate.data.dto.empresa.grupo.PendingRequestCount
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.system.ReportData
 import app.regate.data.dto.system.ReportType
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.grupo.ObserveGrupo
-import app.regate.domain.observers.ObserveUser
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.domain.observers.grupo.ObserveUsersGrupo
 import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter

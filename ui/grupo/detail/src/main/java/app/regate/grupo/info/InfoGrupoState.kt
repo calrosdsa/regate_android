@@ -5,14 +5,14 @@ import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.grupo.invitation.InvitationGrupoState
 import app.regate.models.MyGroups
-import app.regate.models.User
+import app.regate.models.account.User
 
 @Immutable
 data class InfoGrupoState(
     val loading:Boolean = false,
     val grupo:GrupoDto? = null,
     val myGroup:MyGroups? = null,
-    val user:User?= null,
+    val user: User?= null,
     val authState: AppAuthState = AppAuthState.LOGGED_OUT
 ){
     companion object{

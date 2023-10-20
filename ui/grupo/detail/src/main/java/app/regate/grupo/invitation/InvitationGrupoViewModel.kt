@@ -8,7 +8,7 @@ import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.observers.ObserveUser
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.domain.observers.grupo.ObserveMyGroupById
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body

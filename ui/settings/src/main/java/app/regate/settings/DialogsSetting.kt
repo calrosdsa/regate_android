@@ -27,7 +27,7 @@ import app.regate.common.resources.R
 
 
 @Composable
-fun ThemeDialog(
+fun ThemeDialog (
     theme:AppPreferences.Theme,
     onChangeTheme:(AppPreferences.Theme)->Unit,
     modifier: Modifier = Modifier,

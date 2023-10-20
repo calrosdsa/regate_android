@@ -1,10 +1,13 @@
 package app.regate.data.daos
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import app.regate.compoundmodels.UserProfile
-import app.regate.models.User
+import app.regate.models.account.User
+import app.regate.models.account.UserBalance
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -19,8 +22,12 @@ abstract class RoomUserDao:UserDao, RoomEntityDao<User> {
     @Transaction
     @Query("SELECT * FROM USERS  limit 1 ")
     abstract override fun observeUserAndProfile(): Flow<UserProfile>
+    @Transaction
+    @Query("SELECT * FROM user_balance  limit 1 ")
+    abstract override fun observeUserBalance(): Flow<UserBalance>
 
-
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract override suspend fun insetUserBalance(entity: UserBalance)
     @Query("DELETE FROM users")
     abstract override suspend fun deleteUser()
 }

@@ -8,7 +8,7 @@ import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.account.AccountRepository
 import app.regate.data.dto.ResponseMessage
-import app.regate.domain.observers.ObserveUser
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException

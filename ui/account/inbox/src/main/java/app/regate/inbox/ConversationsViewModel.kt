@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
 import app.regate.data.coin.ConversationRepository
 import app.regate.data.dto.empresa.conversation.Conversation
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,7 +18,8 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 class ConversationsViewModel(
-    private val conversationRepository:ConversationRepository
+    private val conversationRepository:ConversationRepository,
+    observeUser: ObserveUser,
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
@@ -25,12 +27,14 @@ class ConversationsViewModel(
     val state:StateFlow<ConversationsState>  = combine(
         loadingCounter.observable,
         uiMessageManager.message,
-        conversations
-    ){loading,message,conversations->
+        conversations,
+        observeUser.flow,
+    ){loading,message,conversations,user->
         ConversationsState(
             loading = loading,
             message = message,
-            conversations = conversations
+            conversations = conversations,
+            user = user
         )
     }.stateIn(
         scope = viewModelScope,
@@ -41,6 +45,7 @@ class ConversationsViewModel(
     init {
 //        Log.d("DEBUG_APP",establecimientoId.toString())
         getConversations()
+        observeUser(Unit)
     }
     fun getConversations(){
         viewModelScope.launch {

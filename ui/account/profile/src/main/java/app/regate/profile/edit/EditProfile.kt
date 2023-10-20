@@ -70,7 +70,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Objects
 
-typealias EditProfile = @Composable (
+typealias EditProfile= @Composable (
     navigateUp:()->Unit
 ) -> Unit
 

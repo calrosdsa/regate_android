@@ -59,9 +59,10 @@ import app.regate.models.Profile
 import app.regate.models.Reserva
 import app.regate.models.SearchHistory
 import app.regate.models.Setting
-import app.regate.models.User
+import app.regate.models.account.User
 import app.regate.models.UserGrupo
 import app.regate.models.UserRoom
+import app.regate.models.account.UserBalance
 
 @Database(
     entities = [
@@ -85,6 +86,7 @@ import app.regate.models.UserRoom
         Emoji::class,
         AttentionSchedule::class,
         UserRoom::class,
+        UserBalance::class,
 //        SalaEntity::class,
        ],
 //    views = [

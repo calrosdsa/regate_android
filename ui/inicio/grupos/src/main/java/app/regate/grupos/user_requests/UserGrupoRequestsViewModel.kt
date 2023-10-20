@@ -11,7 +11,7 @@ import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.UserGrupoRequestDto
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.observers.ObserveUser
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.domain.pagination.grupo.PaginationUserGrupoRequests
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.Flow

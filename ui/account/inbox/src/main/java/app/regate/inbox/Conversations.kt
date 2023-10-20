@@ -37,7 +37,7 @@ import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias Conversations= @Composable (
+typealias Conversations = @Composable (
     navigateUp:()->Unit,
     navigateToConversation:(Long,Long)->Unit
 //    navigateToReserva:(id:Long)->Unit,

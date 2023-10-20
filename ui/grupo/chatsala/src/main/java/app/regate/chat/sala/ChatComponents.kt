@@ -47,7 +47,7 @@ import app.regate.common.composes.component.input.MessengerIcon
 import app.regate.common.composes.component.input.MessengerIcon2
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.util.itemsCustom
-import app.regate.models.User
+import app.regate.models.account.User
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
@@ -70,7 +70,7 @@ internal fun Chat (
     formatterRelatimeTime:(date:Instant)->String,
     lazyListState:LazyListState,
     modifier: Modifier = Modifier,
-    user:User? = null,
+    user: User? = null,
     getUserProfileSala: (id:Long)->UserProfileRoom?,
 ) {
 

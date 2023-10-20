@@ -10,7 +10,7 @@ import app.regate.api.UiMessageManager
 import app.regate.data.dto.empresa.grupo.GrupoMessageData
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.grupo.GrupoRepository
-import app.regate.domain.observers.ObserveUser
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.domain.observers.grupo.ObserveUserGroups
 import app.regate.models.Grupo
 import app.regate.util.ObservableLoadingCounter

@@ -54,7 +54,7 @@ import app.regate.constant.id
 import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.account.auth.UserEstado
 
-typealias Account = @Composable (
+typealias Account= @Composable (
     navController:NavController,
     navigateToSettings:()->Unit,
     closeDrawer:()->Unit,

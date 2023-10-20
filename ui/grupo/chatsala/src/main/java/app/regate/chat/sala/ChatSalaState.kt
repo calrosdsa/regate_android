@@ -6,7 +6,7 @@ import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileRoom
 import app.regate.models.Grupo
 import app.regate.models.MessageSala
-import app.regate.models.User
+import app.regate.models.account.User
 
 data class ChatSalaState(
     val loading:Boolean = false,
@@ -14,7 +14,7 @@ data class ChatSalaState(
     val messageChat:MessageSala? = null,
     val messages:List<Pair<Int,MessageProfile>> = emptyList(),
     val grupo:Grupo? = null,
-    val user:User? = null,
+    val user: User? = null,
     val authState:AppAuthState? = null,
     val usersSala: List<UserProfileRoom> = emptyList()
 ){

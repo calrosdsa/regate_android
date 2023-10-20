@@ -50,7 +50,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 
-typealias Conversation= @Composable (
+typealias Conversation = @Composable (
     navigateUp:()->Unit
 //    navigateToReserva:(id:Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,
@@ -93,7 +93,7 @@ internal fun Conversation(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun Conversation(
-    viewState: ConversationsState,
+    viewState: ConversationState,
     lazyPagingItems: LazyPagingItems<MessageConversation>,
     formatterRelativeTime:(date: Instant)->String,
     formatShortDate:(Instant)->String,

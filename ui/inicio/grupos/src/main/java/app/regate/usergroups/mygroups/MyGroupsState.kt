@@ -3,14 +3,14 @@ package app.regate.usergroups.mygroups
 import androidx.compose.runtime.Immutable
 import app.regate.api.UiMessage
 import app.regate.models.Grupo
-import app.regate.models.User
+import app.regate.models.account.User
 
 @Immutable
 data class MyGroupsState(
     val loading:Boolean = false,
     val message:UiMessage? = null,
     val grupos:List<Grupo> = emptyList(),
-    val user:User?= null,
+    val user: User?= null,
     val selectedGroups:List<Grupo> = emptyList()
 
 ){

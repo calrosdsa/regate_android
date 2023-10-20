@@ -16,7 +16,7 @@ import app.regate.data.dto.empresa.conversation.ConversationMessage
 import app.regate.domain.interactors.UpdateEstablecimiento
 import app.regate.domain.observers.establecimiento.ObserveEstablecimientoDetail
 import app.regate.domain.observers.pagination.ObservePagerMessagesInbox
-import app.regate.domain.observers.ObserveUser
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.inbox.ConversationsState
 import app.regate.models.MessageInbox
 import app.regate.util.ObservableLoadingCounter
@@ -62,14 +62,14 @@ class ConversationViewModel(
     private val messageInbox = MutableStateFlow<MessageInbox?>(null)
     val pagedList: Flow<PagingData<MessageConversation>> =
         pagingInteractor.flow.cachedIn(viewModelScope)
-    val state:StateFlow<ConversationsState>  = combine(
+    val state:StateFlow<ConversationState>  = combine(
         loadingCounter.observable,
         uiMessageManager.message,
         observeUser.flow,
         messageInbox,
         observeEstablecimientoDetail.flow
     ){loading,message,user,messageInbox,establecimiento->
-        ConversationsState(
+        ConversationState(
             loading = loading,
             message = message,
             user = user,

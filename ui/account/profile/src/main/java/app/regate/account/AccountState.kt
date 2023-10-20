@@ -4,8 +4,8 @@ import app.regate.api.UiMessage
 import app.regate.compoundmodels.UserProfile
 import app.regate.data.auth.AppAuthState
 import app.regate.data.common.AddressDevice
-import app.regate.data.dto.empresa.coin.UserBalance
-import app.regate.models.User
+import app.regate.data.dto.empresa.coin.UserBalanceDto
+import app.regate.models.account.UserBalance
 
 data class AccountState(
     val loading: Boolean = false,

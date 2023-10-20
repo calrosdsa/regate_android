@@ -1,14 +1,6 @@
 package app.regate.chat.grupo
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.text.SpannableString
-import android.text.TextPaint
-import android.text.style.ClickableSpan
 import android.util.Log
-import android.view.View
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,15 +22,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Reply
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,41 +41,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.paging.compose.LazyPagingItems
 import app.regate.common.composes.component.images.ProfileImage
-import app.regate.common.composes.component.input.MessengerIcon
 import app.regate.common.composes.component.input.MessengerIcon2
-import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.util.itemsCustom
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
-import app.regate.models.User
+import app.regate.models.account.User
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
 import app.regate.data.common.ReplyMessageData
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
-import app.regate.data.dto.empresa.grupo.MessageInstalacionPayload
-import app.regate.data.dto.empresa.grupo.GrupoMessageType
-import app.regate.data.dto.empresa.grupo.MessageSalaPayload
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 import java.util.regex.Pattern
-import kotlin.time.Duration.Companion.minutes
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -106,7 +82,7 @@ internal fun Chat (
     openLink:(String)->Unit,
     navigateToSala: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    user:User? = null,
+    user: User? = null,
     getUserProfileGrupo: (id:Long)->UserProfileGrupo?,
 ) {
 

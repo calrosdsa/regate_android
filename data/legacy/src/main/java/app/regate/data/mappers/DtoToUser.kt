@@ -1,11 +1,11 @@
 package app.regate.data.mappers
 
 import app.regate.data.dto.account.auth.UserDto
-import app.regate.models.User
+import app.regate.models.account.User
 import me.tatarka.inject.annotations.Inject
 
 @Inject
-class DtoToUser:Mapper<UserDto,User> {
+class DtoToUser:Mapper<UserDto, User> {
     override suspend fun map(from: UserDto): User = User(
         user_id = from.user_id,
         email = from.email,

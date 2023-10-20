@@ -8,22 +8,17 @@ import app.regate.data.account.AccountRepository
 import app.regate.data.auth.AuthRepository
 import app.regate.data.coin.CoinRepository
 import app.regate.data.common.AddressDevice
-import app.regate.data.dto.empresa.coin.UserBalance
+import app.regate.data.dto.empresa.coin.UserBalanceDto
 import app.regate.data.system.SystemRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.observers.ObserveNotifications
-import app.regate.domain.observers.ObserveProfile
-import app.regate.domain.observers.ObserveUnreadNotificationCount
-import app.regate.domain.observers.ObserveUser
 import app.regate.domain.observers.ObserveUserProfile
+import app.regate.domain.observers.account.ObserveUserBalance
 import app.regate.extensions.combine
 import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
@@ -39,12 +34,12 @@ class AccountViewModel(
     private val systemRepository: SystemRepository,
     private val coinRepository: CoinRepository,
     observeAuthState: ObserveAuthState,
+    observeUserBalance: ObserveUserBalance,
 //    observeUnreadNotificationCount: ObserveUnreadNotificationCount,
 ):ViewModel() {
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val addressDevice = MutableStateFlow<AddressDevice?>(null)
-    private val userBalance = MutableStateFlow<UserBalance?>(null)
     private val notificationCount = MutableStateFlow(0)
     val state:StateFlow<AccountState> = combine(
         loadingState.observable,
@@ -52,7 +47,7 @@ class AccountViewModel(
         observeUser.flow,
         observeAuthState.flow,
         addressDevice,
-        userBalance,
+        observeUserBalance.flow,
        notificationCount,
     ){loading,message,user,authState,addressDevice,userBalance,unreadNotications ->
         AccountState(
@@ -70,6 +65,7 @@ class AccountViewModel(
         initialValue = AccountState.Empty
     )
     init {
+        observeUserBalance(Unit)
         observeUser(Unit)
 //        observeUnreadNotificationCount(Unit)
         observeAuthState(Unit)
@@ -107,8 +103,7 @@ class AccountViewModel(
     fun getUserBalance(){
         viewModelScope.launch {
             try{
-                val res = coinRepository.getUserBalance()
-                userBalance.emit(res)
+                coinRepository.getUserBalance()
             }catch (e:Exception){
                 //TODO()
             }

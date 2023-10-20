@@ -1,14 +1,12 @@
 package app.regate.settings
 
 import android.content.Context
-import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.regate.api.UiMessageManager
 import app.regate.data.account.AccountRepository
 import app.regate.data.auth.AuthRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.observers.ObserveUser
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

@@ -19,7 +19,8 @@ import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.compoundmodels.UserProfile;
 import app.regate.data.db.DateTimeTypeConverters;
 import app.regate.models.Profile;
-import app.regate.models.User;
+import app.regate.models.account.User;
+import app.regate.models.account.UserBalance;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.Integer;
@@ -41,6 +42,8 @@ import kotlinx.datetime.Instant;
 public final class RoomUserDao_Impl extends RoomUserDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<UserBalance> __insertionAdapterOfUserBalance;
+
   private final EntityDeletionOrUpdateAdapter<User> __deletionAdapterOfUser;
 
   private final EntityDeletionOrUpdateAdapter<User> __updateAdapterOfUser;
@@ -51,6 +54,21 @@ public final class RoomUserDao_Impl extends RoomUserDao {
 
   public RoomUserDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfUserBalance = new EntityInsertionAdapter<UserBalance>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR REPLACE INTO `user_balance` (`balance_id`,`profile_id`,`coins`) VALUES (?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final UserBalance entity) {
+        statement.bindLong(1, entity.getBalance_id());
+        statement.bindLong(2, entity.getProfile_id());
+        statement.bindDouble(3, entity.getCoins());
+      }
+    };
     this.__deletionAdapterOfUser = new EntityDeletionOrUpdateAdapter<User>(__db) {
       @Override
       @NonNull
@@ -127,6 +145,25 @@ public final class RoomUserDao_Impl extends RoomUserDao {
         statement.bindLong(7, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insetUserBalance(final UserBalance entity,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfUserBalance.insert(entity);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override
@@ -338,6 +375,50 @@ public final class RoomUserDao_Impl extends RoomUserDao {
         }
       }
     }, continuation);
+  }
+
+  @Override
+  public Flow<UserBalance> observeUserBalance() {
+    final String _sql = "SELECT * FROM user_balance  limit 1 ";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"user_balance"}, new Callable<UserBalance>() {
+      @Override
+      @NonNull
+      public UserBalance call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final int _cursorIndexOfBalanceId = CursorUtil.getColumnIndexOrThrow(_cursor, "balance_id");
+            final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+            final int _cursorIndexOfCoins = CursorUtil.getColumnIndexOrThrow(_cursor, "coins");
+            final UserBalance _result;
+            if (_cursor.moveToFirst()) {
+              final long _tmpBalance_id;
+              _tmpBalance_id = _cursor.getLong(_cursorIndexOfBalanceId);
+              final long _tmpProfile_id;
+              _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
+              final double _tmpCoins;
+              _tmpCoins = _cursor.getDouble(_cursorIndexOfCoins);
+              _result = new UserBalance(_tmpBalance_id,_tmpProfile_id,_tmpCoins);
+            } else {
+              _result = null;
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
   }
 
   @Override

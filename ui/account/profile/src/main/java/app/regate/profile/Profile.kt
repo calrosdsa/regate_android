@@ -52,7 +52,7 @@ import app.regate.data.common.encodeMediaData
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-typealias Profile = @Composable (
+typealias Profile= @Composable (
     navigateUp:()->Unit,
     navigateToEditProfile:(Long)->Unit,
     navigateToReport:(String)->Unit,

@@ -4,11 +4,10 @@ import app.regate.api.UiMessage
 import app.regate.data.auth.AppAuthState
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
-import app.regate.data.app.EmojisState
 import app.regate.models.Emoji
 import app.regate.models.Grupo
 import app.regate.models.Message
-import app.regate.models.User
+import app.regate.models.account.User
 
 data class ChatGrupoState(
     val loading:Boolean = false,
@@ -17,7 +16,7 @@ data class ChatGrupoState(
     val messages:List<MessageProfile> = emptyList(),
     val scrollToBottom:Boolean? = null,
     val grupo:Grupo? = null,
-    val user:User? = null,
+    val user: User? = null,
     val authState:AppAuthState? = null,
     val usersGrupo: List<UserProfileGrupo> = emptyList(),
     val emojiData:List<List<Emoji>> = emptyList()

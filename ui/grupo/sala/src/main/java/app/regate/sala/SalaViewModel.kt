@@ -11,7 +11,7 @@ import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.sala.SalaRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.instalacion.ObserveInstalacion
-import app.regate.domain.observers.ObserveUser
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
@@ -35,7 +35,7 @@ class SalaViewModel(
     private val salaRepository: SalaRepository,
     private val observeInstalacion: ObserveInstalacion,
     observeAuthState: ObserveAuthState,
-    observeUser:ObserveUser,
+    observeUser: ObserveUser,
     ):ViewModel() {
     private val salaId: Long = savedStateHandle["id"]!!
     private val loadingState = ObservableLoadingCounter()

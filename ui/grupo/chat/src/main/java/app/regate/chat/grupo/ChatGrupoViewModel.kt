@@ -27,7 +27,7 @@ import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.grupo.ObserveGrupo
 import app.regate.domain.observers.pagination.ObservePagerMessages
-import app.regate.domain.observers.ObserveUser
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.domain.observers.grupo.ObserveUsersGrupo
 import app.regate.extensions.combine
 import app.regate.models.Emoji
@@ -43,7 +43,6 @@ import io.ktor.util.InternalAPI
 import io.ktor.websocket.Frame
 import io.ktor.websocket.readText
 import io.ktor.websocket.send
-import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay

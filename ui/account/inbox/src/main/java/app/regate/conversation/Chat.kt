@@ -48,7 +48,7 @@ import app.regate.common.resources.R
 import app.regate.compoundmodels.MessageConversation
 import app.regate.data.common.ReplyMessageData
 import app.regate.models.MessageInbox
-import app.regate.models.User
+import app.regate.models.account.User
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -67,7 +67,7 @@ internal fun Chat (
     formatterRelatimeTime:(date:Instant)->String,
     lazyListState:LazyListState,
     modifier: Modifier = Modifier,
-    user:User? = null,
+    user: User? = null,
 //    getUserProfileGrupo: (id:Long)-> UserProfileGrupo?,
 ) {
 

@@ -4,11 +4,10 @@ import app.regate.data.dto.empresa.coin.QrRequest
 import app.regate.data.dto.empresa.coin.QrResponse
 import app.regate.data.dto.empresa.coin.RecargaCoinDto
 import app.regate.data.dto.empresa.coin.TokenQrReponse
-import app.regate.data.dto.empresa.coin.UserBalance
-import app.regate.data.dto.empresa.labels.LabelDto
+import app.regate.data.dto.empresa.coin.UserBalanceDto
 
 interface CoinDataSource {
-   suspend fun getUserBalance():UserBalance
+   suspend fun getUserBalance():UserBalanceDto
    suspend fun getRecargaCoins():List<RecargaCoinDto>
 
    suspend fun getToken():TokenQrReponse

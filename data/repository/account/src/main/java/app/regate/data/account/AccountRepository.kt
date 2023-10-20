@@ -16,7 +16,7 @@ import app.regate.data.dto.account.billing.DepositPaginationResponse
 import app.regate.data.mappers.DtoToUser
 import app.regate.inject.ApplicationScope
 import app.regate.models.Profile
-import app.regate.models.User
+import app.regate.models.account.User
 import app.regate.settings.AppPreferences
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.withContext
@@ -65,7 +65,7 @@ class AccountRepository(
         }
     }
 
-    private suspend fun updateUser(user:User){
+    private suspend fun updateUser(user: User){
             userDao.upsert(user)
     }
     private suspend fun insertProfile(user:UserDto){

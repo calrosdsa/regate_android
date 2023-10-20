@@ -12,7 +12,7 @@ import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.salas.CompleteSalaRequest
 import app.regate.data.dto.empresa.salas.SalaCompleteDetail
 import app.regate.data.sala.SalaRepository
-import app.regate.domain.observers.ObserveUser
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException

@@ -37,7 +37,7 @@ import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
 import app.regate.data.auth.AppAuthState
 
-typealias Setting = @Composable (
+typealias Setting= @Composable (
     navigateUp:()->Unit
         ) -> Unit
 

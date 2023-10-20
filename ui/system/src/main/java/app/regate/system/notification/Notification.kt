@@ -34,7 +34,7 @@ import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias Notifications = @Composable (
+typealias Notifications= @Composable (
     navigateUp:()->Unit,
     navigateToSala:(Long)->Unit,
     navigateToAccount:()->Unit,

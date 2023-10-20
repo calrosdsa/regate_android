@@ -9,6 +9,7 @@ import app.regate.settings.AppPreferences
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.messaging.ktx.messaging
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 
@@ -29,7 +30,12 @@ class MainActivityViewModel(
                 accountRepository.updateFcmToken(preferences.fcmToken)
             }
         }
-
+        viewModelScope.launch {
+            while(true){
+                delay(1000)
+                Log.d("DEBUG_APP","runn")
+            }
+        }
     }
 
     fun logRegToken() {

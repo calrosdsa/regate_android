@@ -1,25 +1,16 @@
 package app.regate.grupo.invitationlink
 
-import android.app.Activity
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
-import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.setting.GrupoInvitationLinkDto
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.observers.ObserveUser
-import app.regate.domain.observers.grupo.ObserveMyGroupById
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.util.ObservableLoadingCounter
-import io.ktor.client.call.body
-import io.ktor.client.plugins.ResponseException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
