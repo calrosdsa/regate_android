@@ -10,6 +10,7 @@ interface UserDao :EntityDao<User>{
     suspend fun getUser(id:Long): User
     suspend fun deleteUser()
     fun observeUserBalance():Flow<UserBalance>
+    fun updateUserBalance(profileId:Long,amount:Double,shouldAdd:Boolean)
     suspend fun insetUserBalance(entity:UserBalance)
     fun observeUserAndProfile():Flow<UserProfile>
 }

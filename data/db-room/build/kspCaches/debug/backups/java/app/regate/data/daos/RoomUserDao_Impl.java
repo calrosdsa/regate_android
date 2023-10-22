@@ -50,6 +50,8 @@ public final class RoomUserDao_Impl extends RoomUserDao {
 
   private final SharedSQLiteStatement __preparedStmtOfDeleteUser;
 
+  private final SharedSQLiteStatement __preparedStmtOfUpdateUserBalance;
+
   private final EntityUpsertionAdapter<User> __upsertionAdapterOfUser;
 
   public RoomUserDao_Impl(@NonNull final RoomDatabase __db) {
@@ -106,6 +108,17 @@ public final class RoomUserDao_Impl extends RoomUserDao {
       @NonNull
       public String createQuery() {
         final String _query = "DELETE FROM users";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfUpdateUserBalance = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "\n"
+                + "        update user_balance set coins = case when ? then coins + ? else coins - ? end \n"
+                + "        where profile_id = ?\n"
+                + "            ";
         return _query;
       }
     };
@@ -221,6 +234,30 @@ public final class RoomUserDao_Impl extends RoomUserDao {
         }
       }
     }, continuation);
+  }
+
+  @Override
+  public void updateUserBalance(final long profileId, final double amount,
+      final boolean shouldAdd) {
+    __db.assertNotSuspendingTransaction();
+    final SupportSQLiteStatement _stmt = __preparedStmtOfUpdateUserBalance.acquire();
+    int _argIndex = 1;
+    final int _tmp = shouldAdd ? 1 : 0;
+    _stmt.bindLong(_argIndex, _tmp);
+    _argIndex = 2;
+    _stmt.bindDouble(_argIndex, amount);
+    _argIndex = 3;
+    _stmt.bindDouble(_argIndex, amount);
+    _argIndex = 4;
+    _stmt.bindLong(_argIndex, profileId);
+    __db.beginTransaction();
+    try {
+      _stmt.executeUpdateDelete();
+      __db.setTransactionSuccessful();
+    } finally {
+      __db.endTransaction();
+      __preparedStmtOfUpdateUserBalance.release(_stmt);
+    }
   }
 
   @Override

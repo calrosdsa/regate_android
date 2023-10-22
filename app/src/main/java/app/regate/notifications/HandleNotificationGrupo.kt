@@ -20,9 +20,13 @@ import app.regate.MyFirebaseMessagingService
 import app.regate.common.resources.R
 import app.regate.constant.AppUrl
 import app.regate.constant.Route
+import app.regate.data.AppRoomDatabase
+import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
 import app.regate.data.dto.notifications.MessageGroupPayload
 import app.regate.home.MainActivity
 import app.regate.models.Grupo
+import app.regate.models.Message
+import app.regate.models.MyGroups
 
 class HandleNotificationGrupo {
     companion object{
@@ -34,6 +38,31 @@ class HandleNotificationGrupo {
     ) {
         try {
 //            val dasd = messages.elementAt(2)
+//            val lastMessage= messages[0]
+//            val db = AppRoomDatabase.getInstance(context)
+//            db.myGroupsDao().deleteByGroupId(grupo.id)
+//            db.myGroupsDao().upsert(
+//                MyGroups(
+//                    group_id = grupo.id,
+//                    request_estado = GrupoRequestEstado.JOINED,
+//                    last_message = lastMessage.content,
+//                    last_message_created = lastMessage.created_at,
+//                    messages_count = 1,
+//                )
+//            )
+//            db.myGroupsDao().updateLastMessageGrupo(grupo.id,lastMessage.content,lastMessage.created_at)
+//            db.messageProfileDao().upsert(
+//                Message(
+//                    id = lastMessage.id,
+//                    content = lastMessage.content,
+//                    grupo_id = lastMessage.grupo_id,
+//                    profile_id = lastMessage.profile_id,
+//                    created_at = lastMessage.created_at,
+//                    reply_to = lastMessage.reply_to,
+//                    type_message = lastMessage.type_message,
+//                )
+//            )
+//            AppRoomDatabase.destroyInstance()
             val m1 = messages[2]
             val m2 = messages[1]
             val m3 = messages[0]
@@ -84,6 +113,7 @@ class HandleNotificationGrupo {
             }
 
         }catch(e:Exception){
+//            AppRoomDatabase.destroyInstance()
             Log.d(TAG,e.localizedMessage?:"")
         }
     }

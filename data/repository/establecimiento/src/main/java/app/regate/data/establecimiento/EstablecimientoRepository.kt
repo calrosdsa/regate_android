@@ -7,7 +7,7 @@ import app.regate.data.dto.empresa.establecimiento.CupoEstablecimiento
 import app.regate.data.dto.empresa.establecimiento.CuposEstablecimientoRequest
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
-import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviewDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
@@ -17,7 +17,6 @@ import app.regate.data.mappers.establecimiento.DtoToAttentionSchedule
 import app.regate.data.mappers.establecimiento.EstablecimientoDtoToEstablecimiento
 import app.regate.data.mappers.establecimiento.SettingDtoToSetting
 import app.regate.inject.ApplicationScope
-import app.regate.models.AttentionSchedule
 import app.regate.models.FavoriteEstablecimiento
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.flow.Flow
@@ -41,10 +40,10 @@ class EstablecimientoRepository(
     suspend fun searcEstablecimientos(d: SearchFilterRequest, page:Int, size: Int):PaginationEstablecimientoResponse{
         return establecimientoDataSourceImpl.searcEstablecimientos(d,page,size)
     }
-    suspend fun getReviewUser(establecimientoId:Long):EstablecimientoReview{
+    suspend fun getReviewUser(establecimientoId:Long):EstablecimientoReviewDto{
         return establecimientoDataSourceImpl.getReviewUser(establecimientoId)
     }
-    suspend fun createEstablecimientoReview(d:EstablecimientoReview):EstablecimientoReview{
+    suspend fun createEstablecimientoReview(d:EstablecimientoReviewDto):EstablecimientoReviewDto{
         return establecimientoDataSourceImpl.createEstablecimientoReview(d)
     }
     suspend fun getEstablecimientoReviews(id: Long,page: Int,size:Int):EstablecimientoReviews{

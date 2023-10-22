@@ -1,6 +1,7 @@
 package app.regate.data.coin
 
 import app.regate.data.daos.UserDao
+import app.regate.data.dto.account.ws.PayloadUserBalanceUpdate
 import app.regate.data.dto.empresa.coin.QrRequest
 import app.regate.data.dto.empresa.coin.QrResponse
 import app.regate.data.dto.empresa.coin.RecargaCoinDto
@@ -18,6 +19,7 @@ class CoinRepository(
     private val userDao:UserDao,
     private val dispatchers:AppCoroutineDispatchers
 ){
+    @Suppress("SuspiciousIndentation")
     suspend fun getUserBalance() {
         withContext(dispatchers.computation){
             try{
@@ -31,6 +33,15 @@ class CoinRepository(
                 )
             }catch (e:Exception){
                 throw e
+            }
+        }
+    }
+    suspend fun updateUserBalance(d:PayloadUserBalanceUpdate){
+        withContext(dispatchers.computation){
+            try{
+                userDao.updateUserBalance(d.profile_id,d.amount,d.should_add)
+            }catch (e:Exception){
+                //TODO()
             }
         }
     }

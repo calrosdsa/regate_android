@@ -8,6 +8,7 @@ import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
 import app.regate.models.Grupo
 import app.regate.models.MyGroups
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Instant
 
 @Dao
 abstract class RoomMyGroupsDao:RoomEntityDao<MyGroups>,MyGroupsDao {
@@ -17,7 +18,7 @@ abstract class RoomMyGroupsDao:RoomEntityDao<MyGroups>,MyGroupsDao {
 //        select * from grupos as g (select count(*) from messages as m where g.id = m.grupo_id ) as cotun
     @Transaction
     @Query("""
-        select g.*,(select count(*) from messages as m where g.id = m.grupo_id ) as local_count_messages
+        select g.*,ug.last_message,ug.last_message_created,ug.messages_count,(select count(*) from messages as m where g.id = m.grupo_id ) as local_count_messages
         from my_groups as ug inner join grupos as g on g.id = ug.group_id
         where request_estado = :requestEstado
         """)
@@ -39,4 +40,16 @@ abstract class RoomMyGroupsDao:RoomEntityDao<MyGroups>,MyGroupsDao {
     abstract override suspend fun deleteAll()
     @Query("delete from my_groups where group_id = :id")
     abstract override suspend fun deleteByGroupId(id: Long)
+
+    @Query("""
+        update my_groups set last_message_created = :created,
+         last_message = :message,
+         messages_count = messages_count +1
+         where group_id = :grupoId
+         """)
+    abstract override suspend fun updateLastMessageGrupo(
+        grupoId: Long,
+        message: String,
+        created: Instant
+    )
 }

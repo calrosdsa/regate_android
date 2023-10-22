@@ -25,7 +25,11 @@ abstract class RoomUserDao:UserDao, RoomEntityDao<User> {
     @Transaction
     @Query("SELECT * FROM user_balance  limit 1 ")
     abstract override fun observeUserBalance(): Flow<UserBalance>
-
+    @Query("""
+        update user_balance set coins = case when :shouldAdd then coins + :amount else coins - :amount end 
+        where profile_id = :profileId
+            """)
+    abstract override fun updateUserBalance(profileId: Long, amount: Double, shouldAdd: Boolean)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract override suspend fun insetUserBalance(entity: UserBalance)
     @Query("DELETE FROM users")

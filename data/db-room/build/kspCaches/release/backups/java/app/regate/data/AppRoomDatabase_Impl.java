@@ -128,8 +128,9 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `attention_schedule` (`id` INTEGER NOT NULL, `day_week` INTEGER NOT NULL, `establecimiento_id` INTEGER NOT NULL, `open` INTEGER NOT NULL, `closed` INTEGER NOT NULL, `schedule_interval` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`establecimiento_id`) REFERENCES `establecimientos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_attention_schedule_establecimiento_id` ON `attention_schedule` (`establecimiento_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_room` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `entity_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `user_balance` (`balance_id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `coins` REAL NOT NULL, PRIMARY KEY(`balance_id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cd5e287b96aeea608ab6259442a91e2e')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ea0e1278321de7b33d516f9b237cbe0d')");
       }
 
       @Override
@@ -154,6 +155,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("DROP TABLE IF EXISTS `emoji`");
         db.execSQL("DROP TABLE IF EXISTS `attention_schedule`");
         db.execSQL("DROP TABLE IF EXISTS `user_room`");
+        db.execSQL("DROP TABLE IF EXISTS `user_balance`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -271,7 +273,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         final TableInfo _infoUsers = new TableInfo("users", _columnsUsers, _foreignKeysUsers, _indicesUsers);
         final TableInfo _existingUsers = TableInfo.read(db, "users");
         if (!_infoUsers.equals(_existingUsers)) {
-          return new RoomOpenHelper.ValidationResult(false, "users(app.regate.models.User).\n"
+          return new RoomOpenHelper.ValidationResult(false, "users(app.regate.models.account.User).\n"
                   + " Expected:\n" + _infoUsers + "\n"
                   + " Found:\n" + _existingUsers);
         }
@@ -536,9 +538,22 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoUserRoom + "\n"
                   + " Found:\n" + _existingUserRoom);
         }
+        final HashMap<String, TableInfo.Column> _columnsUserBalance = new HashMap<String, TableInfo.Column>(3);
+        _columnsUserBalance.put("balance_id", new TableInfo.Column("balance_id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsUserBalance.put("profile_id", new TableInfo.Column("profile_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsUserBalance.put("coins", new TableInfo.Column("coins", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysUserBalance = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesUserBalance = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoUserBalance = new TableInfo("user_balance", _columnsUserBalance, _foreignKeysUserBalance, _indicesUserBalance);
+        final TableInfo _existingUserBalance = TableInfo.read(db, "user_balance");
+        if (!_infoUserBalance.equals(_existingUserBalance)) {
+          return new RoomOpenHelper.ValidationResult(false, "user_balance(app.regate.models.account.UserBalance).\n"
+                  + " Expected:\n" + _infoUserBalance + "\n"
+                  + " Found:\n" + _existingUserBalance);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "cd5e287b96aeea608ab6259442a91e2e", "cbbae1deb1c4b266f7a1610fd6a2ca3b");
+    }, "ea0e1278321de7b33d516f9b237cbe0d", "b259095f36c76429133f3242e38656a6");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -549,7 +564,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas","notification","message_sala","search_history","emoji","attention_schedule","user_room");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas","notification","message_sala","search_history","emoji","attention_schedule","user_room","user_balance");
   }
 
   @Override
@@ -585,6 +600,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
       _db.execSQL("DELETE FROM `emoji`");
       _db.execSQL("DELETE FROM `attention_schedule`");
       _db.execSQL("DELETE FROM `user_room`");
+      _db.execSQL("DELETE FROM `user_balance`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();

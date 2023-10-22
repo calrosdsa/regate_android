@@ -1,23 +1,57 @@
 package app.regate.home
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.regate.api.UiMessage
+import app.regate.constant.Host
 import app.regate.data.account.AccountRepository
+import app.regate.data.coin.CoinRepository
 import app.regate.data.dto.account.auth.FcmRequest
+import app.regate.data.dto.account.ws.PayloadUserBalanceUpdate
+import app.regate.data.dto.account.ws.PayloadWsAccountType
+import app.regate.data.dto.account.ws.WsAccountPayload
+import app.regate.data.dto.empresa.grupo.GrupoEvent
+import app.regate.data.dto.empresa.grupo.GrupoEventType
+import app.regate.data.dto.empresa.grupo.GrupoMessageDto
+import app.regate.data.grupo.GrupoRepository
+import app.regate.domain.observers.account.ObserveUser
 import app.regate.settings.AppPreferences
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.messaging.ktx.messaging
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
+import io.ktor.client.plugins.websocket.webSocketSession
+import io.ktor.http.HttpMethod
+import io.ktor.util.InternalAPI
+import io.ktor.websocket.Frame
+import io.ktor.websocket.close
+import io.ktor.websocket.readText
+import io.ktor.websocket.send
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
+
+@OptIn(InternalAPI::class)
 
 @Inject
 class MainActivityViewModel(
     private val accountRepository:AccountRepository,
-    private val preferences:AppPreferences
-): ViewModel() {
+    private val preferences:AppPreferences,
+    private val client: HttpClient,
+    private val coinRepository: CoinRepository,
+    private val grupoRepository: GrupoRepository,
+    observeUser: ObserveUser,
+    ): ViewModel() {
 
     init {
         Log.d("DEBUG_",preferences.fcmToken)
@@ -30,13 +64,78 @@ class MainActivityViewModel(
                 accountRepository.updateFcmToken(preferences.fcmToken)
             }
         }
+        observeUser(Unit)
+
+
         viewModelScope.launch {
-            while(true){
-                delay(1000)
-                Log.d("DEBUG_APP","runn")
+            observeUser.flow.collectLatest {
+                try {
+                    if(it.profile_id != 0L){
+                    startWs(it.profile_id)
+                    }
+                    Log.d("DEBUG_APP_USER",it.toString())
+                }catch (e:Exception){
+                    Log.d("DEBUG_APP_USER_ERR",e.localizedMessage?:"")
+                }
             }
         }
     }
+
+    @SuppressLint("SuspiciousIndentation")
+    suspend fun startWs(profileId:Long){
+        try {
+            val cl = client.webSocketSession(method = HttpMethod.Get, host = Host.host,
+//                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
+                port = Host.port, path = "v1/ws/suscribe/user/?id=${profileId}")
+            Log.d("DEBUG_APP","start ws.......")
+            Log.d("DEBUG_APP_WS",cl.isActive.toString())
+//            cl.close()
+//            cl.apply {
+//                launch {
+//                    outputMessage()
+//                }
+//            }
+          cl.apply{
+              try {
+                  for (message in incoming) {
+                      message as? Frame.Text ?: continue
+                      val data = Json.decodeFromString<WsAccountPayload>(message.readText())
+                      when (data.type){
+                          PayloadWsAccountType.PAYLOAD_USER_BALANCE.ordinal->{
+                              Log.d("DEBUG_APP",message.readText())
+                              val payload = Json.decodeFromString<PayloadUserBalanceUpdate>(data.payload)
+                              coinRepository.updateUserBalance(payload)
+                          }
+                          PayloadWsAccountType.PAYLOAD_GRUPO_MESSAGE.ordinal ->{
+                              val payload = Json.decodeFromString<GrupoMessageDto>(data.payload)
+                              grupoRepository.updateLastMessage(payload.grupo_id,payload.content,payload.created_at?:Clock.System.now())
+                              Log.d("DEBUG_APP",payload.toString())
+//                              db.myGroupsDao().updateLastMessageGrupo(grupo.id,lastMessage.content,lastMessage.created_at)
+                          }
+                          else -> {}
+                      }
+                  }
+              } catch (e: Exception) {
+                  Log.d("DEBUG_APP_ER" , e.localizedMessage?:"")
+              }
+          }
+
+
+            cl.start(emptyList())
+        }catch (e:Exception){
+            delay(1000)
+            Log.d("DEBUG_ARR",e.localizedMessage?:"")
+            startWs(profileId)
+        }
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    suspend fun DefaultClientWebSocketSession.outputMessage(){
+                send(
+                    Json.encodeToString("DMASKDM KAS")
+                )
+    }
+
 
     fun logRegToken() {
 

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "cd5e287b96aeea608ab6259442a91e2e",
+    "identityHash": "ea0e1278321de7b33d516f9b237cbe0d",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -1156,12 +1156,44 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "user_balance",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`balance_id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `coins` REAL NOT NULL, PRIMARY KEY(`balance_id`))",
+        "fields": [
+          {
+            "fieldPath": "balance_id",
+            "columnName": "balance_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profile_id",
+            "columnName": "profile_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "coins",
+            "columnName": "coins",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "balance_id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cd5e287b96aeea608ab6259442a91e2e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ea0e1278321de7b33d516f9b237cbe0d')"
     ]
   }
 }

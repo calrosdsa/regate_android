@@ -1,6 +1,7 @@
 package app.regate.data.dto.notifications
 
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
+import app.regate.data.dto.empresa.grupo.GrupoMessageType
 import app.regate.data.dto.empresa.grupo.ReplyMessage
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
@@ -22,7 +23,10 @@ data class MessageGroupPayload(
     val grupo_id:Long,
     val profile_name:String,
     val profile_apellido:String? = null,
-    val profile_photo:String? = null
+    val profile_photo:String? = null,
+    val profile_id:Long=0,
+    val reply_to:Long? = null,
+    val type_message:Int = GrupoMessageType.MESSAGE.ordinal
 )
 
 

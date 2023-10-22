@@ -1,5 +1,6 @@
 package app.regate.create.sala
 
+import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
@@ -110,6 +111,7 @@ internal fun CreateSala(
     )
 }
 
+@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun CreateSala(

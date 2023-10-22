@@ -11,6 +11,7 @@ int color tv_test_yellow 0x0
 int drawable check 0x0
 int drawable coin 0x0
 int drawable default_image 0x0
+int drawable delete_icon 0x0
 int drawable doble_check 0x0
 int drawable enabled_location 0x0
 int drawable ic_launcher_background 0x0
@@ -43,6 +44,7 @@ int string add_a_message 0x0
 int string add_a_review 0x0
 int string all 0x0
 int string amount 0x0
+int string amount_contributed 0x0
 int string animals_and_nature 0x0
 int string app_name 0x0
 int string available_courts 0x0
@@ -70,6 +72,7 @@ int string confirm 0x0
 int string consume 0x0
 int string continuar 0x0
 int string contributed_amount 0x0
+int string copy_link 0x0
 int string count_selected 0x0
 int string create_group 0x0
 int string create_sala 0x0
@@ -84,6 +87,7 @@ int string edit 0x0
 int string email_verification 0x0
 int string email_verification_help_text 0x0
 int string emileys_emotion 0x0
+int string establecimientos 0x0
 int string exit 0x0
 int string expiration_date 0x0
 int string explore_exceptional_destinations 0x0
@@ -99,13 +103,17 @@ int string gcp_id 0x0
 int string get_started 0x0
 int string grant_permission 0x0
 int string group_description 0x0
+int string group_privacy 0x0
 int string group_visibility 0x0
 int string groups 0x0
+int string hidden 0x0
 int string history 0x0
 int string illegal_activity 0x0
 int string inappropriate_material 0x0
 int string inbox 0x0
 int string inbox_to_establecimiento 0x0
+int string invitation_link 0x0
+int string invitation_link_info 0x0
 int string invitations 0x0
 int string join_a_group 0x0
 int string language 0x0
@@ -133,6 +141,7 @@ int string notification_sala_channel 0x0
 int string notifications 0x0
 int string nudes 0x0
 int string objects 0x0
+int string open_in_browser 0x0
 int string other 0x0
 int string password_dont_match 0x0
 int string password_length 0x0
@@ -161,9 +170,13 @@ int string request_removed 0x0
 int string requests 0x0
 int string resend_email_verification 0x0
 int string reservation_date 0x0
+int string reserved_room 0x0
+int string reset_link 0x0
 int string review 0x0
 int string reviews 0x0
+int string room_chat 0x0
 int string room_has_been_reserved 0x0
+int string room_not_available 0x0
 int string rooms 0x0
 int string rules_of_the_place 0x0
 int string sala_help_text 0x0
@@ -175,11 +188,15 @@ int string search 0x0
 int string search_nearby_places 0x0
 int string see 0x0
 int string see_all 0x0
+int string see_more_options 0x0
+int string see_sala 0x0
 int string select_group_text 0x0
 int string send 0x0
 int string send_to_a_group 0x0
 int string services 0x0
 int string settings 0x0
+int string share_image_link 0x0
+int string share_link 0x0
 int string show_less 0x0
 int string show_more 0x0
 int string show_results 0x0
@@ -202,6 +219,9 @@ int string unexpected_error 0x0
 int string user_since 0x0
 int string verify 0x0
 int string version 0x0
+int string view_group 0x0
+int string visible 0x0
+int string visible_info_group 0x0
 int string visit 0x0
 int string what_is_your_location 0x0
 int string what_kind_of_game_do_you_prefere 0x0

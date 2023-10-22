@@ -165,6 +165,7 @@ class ChatGrupoViewModel(
             emojiData.emit(awaitAll(emoticonos,people,animales,alimentos,viajar,actividades,objetos,simbolos,banderas))
         }
     }
+    @SuppressLint("SuspiciousIndentation")
     suspend fun startWs(){
         try {
             val cl = client.webSocketSession(method = HttpMethod.Get, host = Host.host,
@@ -187,7 +188,9 @@ class ChatGrupoViewModel(
                     val event = Json.decodeFromString<GrupoEvent>(othersMessage.readText())
                         if (event.type == GrupoEventType.GrupoEventMessage || event.type == GrupoEventType.GrupoEventIgnore) {
                         grupoRepository.saveMessage(event.message)
-                    }
+//                            grupoRepository.updateLastMessage(grupoId,message.content,message.created_at)
+
+                        }
                     if (event.type == GrupoEventType.GrupoEvnetUser) {
                         val id = event.message.profile_id
                         try {
@@ -303,6 +306,7 @@ class ChatGrupoViewModel(
                 data = messageData.data
             )
             val res = async { grupoRepository.saveMessageLocal(message) }
+            grupoRepository.updateLastMessage(grupoId,message.content,message.created_at)
             res.await()
             animateScroll()
             messageChat.tryEmit(message)

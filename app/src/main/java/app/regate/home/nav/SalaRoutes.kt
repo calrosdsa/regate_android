@@ -78,7 +78,12 @@ internal fun NavGraphBuilder.SalaRoutes(
             },
             navigateToCreateGroup = { navController.navigate(Route.CREATE_GROUP)},
             navigateToGroup = {navController.navigate(Route.GRUPO id it){
-                popUpTo(navController.graph.findStartDestination().id)
+                popUpTo(Route.CREAR_SALA arg "id" arg "grupo_id" arg "page"){
+                    inclusive = true
+                }
+//                popUpTo(Route.ESTABLECIMIENTO_FILTER arg "grupo_id"){
+//                    inclusive = true
+//                }
             }
             },
             navigateToRecargaScreen = {navController.navigate(Route.RECARGAR)}

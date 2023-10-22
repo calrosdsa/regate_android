@@ -9,4 +9,5 @@ interface GrupoDao:EntityDao<Grupo> {
     fun observeUserGroups():Flow<List<Grupo>>
     fun deleteAll()
     fun getGrupo(id: Long):Grupo
+//    suspend fun updateGrupoLastMessage():
 }

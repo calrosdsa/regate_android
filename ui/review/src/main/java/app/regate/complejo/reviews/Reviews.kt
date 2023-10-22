@@ -35,7 +35,7 @@ import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.viewModel
 import app.regate.data.auth.AppAuthState
-import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviewDto
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -88,7 +88,7 @@ internal fun Reviews(
 @Composable
 internal fun Reviews(
     viewState: ReviewsState,
-    lazyPagingItems: LazyPagingItems<EstablecimientoReview>,
+    lazyPagingItems: LazyPagingItems<EstablecimientoReviewDto>,
     navigateUp: () -> Unit,
     navigateToProfile: (Long) -> Unit,
     openAuthBottomSheet: () -> Unit,

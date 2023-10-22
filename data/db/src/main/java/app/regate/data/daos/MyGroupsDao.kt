@@ -5,6 +5,7 @@ import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
 import app.regate.models.Grupo
 import app.regate.models.MyGroups
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Instant
 
 interface MyGroupsDao:EntityDao<MyGroups> {
     fun observeUserGroupsWithMessage(requestEstado: Int): Flow<List<GrupoWithMessage>>
@@ -14,4 +15,5 @@ interface MyGroupsDao:EntityDao<MyGroups> {
     suspend fun deleteMyGroups(estado:Int)
     suspend fun deleteAll()
     suspend fun deleteByGroupId(id:Long)
+    suspend fun updateLastMessageGrupo(grupoId:Long,message:String,created:Instant)
 }

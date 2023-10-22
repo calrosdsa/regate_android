@@ -114,10 +114,10 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `settings` (`uuid` TEXT NOT NULL, `paid_type` TEXT, `establecimiento_id` INTEGER NOT NULL, `payment_for_reservation` INTEGER, `horario_interval` TEXT NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`establecimiento_id`) REFERENCES `establecimientos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_settings_establecimiento_id` ON `settings` (`establecimiento_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `labels` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `thumbnail` TEXT, `type_label` TEXT, PRIMARY KEY(`id`, `name`))");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `grupos` (`id` INTEGER NOT NULL, `uuid` TEXT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, `is_visible` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `visibility` INTEGER NOT NULL, `last_message` TEXT NOT NULL, `last_message_created` TEXT, `messages_count` INTEGER NOT NULL, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `grupos` (`id` INTEGER NOT NULL, `uuid` TEXT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, `is_visible` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `visibility` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_grupo` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL, FOREIGN KEY(`grupo_id`) REFERENCES `grupos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_user_grupo_grupo_id` ON `user_grupo` (`grupo_id`)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `my_groups` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `group_id` INTEGER NOT NULL, `request_estado` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `my_groups` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `group_id` INTEGER NOT NULL, `request_estado` INTEGER NOT NULL, `last_message` TEXT NOT NULL, `last_message_created` TEXT, `messages_count` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_establecimiento` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `establecimiento_id` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `message_inbox` (`id` INTEGER NOT NULL, `conversation_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `sender_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `reservas` (`id` INTEGER NOT NULL, `instalacion_id` INTEGER NOT NULL, `instalacion_name` TEXT NOT NULL, `establecimiento_id` INTEGER NOT NULL, `pagado` REAL NOT NULL, `total_price` REAL NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `user_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`id`))");
@@ -130,7 +130,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_room` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `entity_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_balance` (`balance_id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `coins` REAL NOT NULL, PRIMARY KEY(`balance_id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ea0e1278321de7b33d516f9b237cbe0d')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1d4474d23fd7e20a4fe8d8bcf665c7e1')");
       }
 
       @Override
@@ -345,7 +345,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoLabels + "\n"
                   + " Found:\n" + _existingLabels);
         }
-        final HashMap<String, TableInfo.Column> _columnsGrupos = new HashMap<String, TableInfo.Column>(12);
+        final HashMap<String, TableInfo.Column> _columnsGrupos = new HashMap<String, TableInfo.Column>(9);
         _columnsGrupos.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsGrupos.put("uuid", new TableInfo.Column("uuid", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsGrupos.put("name", new TableInfo.Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -355,9 +355,6 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         _columnsGrupos.put("is_visible", new TableInfo.Column("is_visible", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsGrupos.put("profile_id", new TableInfo.Column("profile_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsGrupos.put("visibility", new TableInfo.Column("visibility", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsGrupos.put("last_message", new TableInfo.Column("last_message", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsGrupos.put("last_message_created", new TableInfo.Column("last_message_created", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsGrupos.put("messages_count", new TableInfo.Column("messages_count", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysGrupos = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesGrupos = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoGrupos = new TableInfo("grupos", _columnsGrupos, _foreignKeysGrupos, _indicesGrupos);
@@ -383,10 +380,13 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoUserGrupo + "\n"
                   + " Found:\n" + _existingUserGrupo);
         }
-        final HashMap<String, TableInfo.Column> _columnsMyGroups = new HashMap<String, TableInfo.Column>(3);
+        final HashMap<String, TableInfo.Column> _columnsMyGroups = new HashMap<String, TableInfo.Column>(6);
         _columnsMyGroups.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMyGroups.put("group_id", new TableInfo.Column("group_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMyGroups.put("request_estado", new TableInfo.Column("request_estado", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMyGroups.put("last_message", new TableInfo.Column("last_message", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMyGroups.put("last_message_created", new TableInfo.Column("last_message_created", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMyGroups.put("messages_count", new TableInfo.Column("messages_count", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysMyGroups = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesMyGroups = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoMyGroups = new TableInfo("my_groups", _columnsMyGroups, _foreignKeysMyGroups, _indicesMyGroups);
@@ -553,7 +553,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "ea0e1278321de7b33d516f9b237cbe0d", "b259095f36c76429133f3242e38656a6");
+    }, "1d4474d23fd7e20a4fe8d8bcf665c7e1", "e02c5e441d1e7ef0e1a51cec29ae5d51");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;

@@ -10,6 +10,7 @@ import app.regate.domain.observers.grupo.ObserveUserGroupsWithMessage
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -46,6 +47,11 @@ class UserGroupsViewModel(
         observeAuthState(Unit)
         observeGrupos(Unit)
         getUserGrupos()
+        viewModelScope.launch {
+            observeGrupos.flow.collectLatest{
+                Log.d("DEBUG_APP_G",it.toString())
+            }
+        }
     }
 
     fun getUserGrupos(){

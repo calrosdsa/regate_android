@@ -9,7 +9,7 @@ import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.establecimiento.AttentionScheduleDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDetailDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
-import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviewDto
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
@@ -57,7 +57,7 @@ class EstablecimientoDataSourceImpl(
         return client.get("/v1/review/establecimiento/${id}/?page=${page}&size=${size}").body()
     }
 
-    override suspend fun createEstablecimientoReview(d: EstablecimientoReview): EstablecimientoReview {
+    override suspend fun createEstablecimientoReview(d: EstablecimientoReviewDto): EstablecimientoReviewDto {
         val token = authStore.get()?.accessToken
         return client.post("/v1/review/establecimiento/") {
             header("Authorization","Bearer $token")
@@ -66,7 +66,7 @@ class EstablecimientoDataSourceImpl(
         }.body()
     }
 
-    override suspend fun getReviewUser(establecimientoId: Long): EstablecimientoReview {
+    override suspend fun getReviewUser(establecimientoId: Long): EstablecimientoReviewDto {
         val token = authStore.get()?.accessToken
         return client.get("/v1/review/establecimiento/profile/${establecimientoId}/") {
             header("Authorization","Bearer $token")

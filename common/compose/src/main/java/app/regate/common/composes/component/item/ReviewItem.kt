@@ -21,11 +21,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.component.images.ProfileImage
 import app.regate.data.dto.account.user.ProfileDto
-import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviewDto
 
 @Composable
 fun ReviewItem(
-    review:EstablecimientoReview,
+    review:EstablecimientoReviewDto,
     navigateToProfile:(Long) ->Unit,
     modifier:Modifier = Modifier,
 ){
@@ -71,7 +71,7 @@ fun ReviewItem(
 @Composable
 fun ReviewItemPreview(){
     ReviewItem(
-        review = EstablecimientoReview(
+        review = EstablecimientoReviewDto(
             establecimiento_id = 1,
             profile = ProfileDto(
                 nombre = "John",

@@ -6,23 +6,15 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.dto.ResponseMessage
-import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
-import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviewDto
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.pagination.PaginationReviews
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -40,7 +32,7 @@ class CreateReviewViewModel(
 ) : ViewModel() {
     private val establecimientoId = savedStateHandle.get<Long>("id")?: 0
     private val  loaderCounter = ObservableLoadingCounter()
-    private val establecimientoReview = MutableStateFlow<EstablecimientoReview?>(null)
+    private val establecimientoReview = MutableStateFlow<EstablecimientoReviewDto?>(null)
     private val uiMessageManager = UiMessageManager()
 
     val state:StateFlow<CreateReviewState> = combine(
@@ -80,7 +72,7 @@ class CreateReviewViewModel(
         viewModelScope.launch {
             try{
                 loaderCounter.addLoader()
-                val data = EstablecimientoReview(
+                val data = EstablecimientoReviewDto(
                     score = score,
                     review = review,
                     establecimiento_id = establecimientoId

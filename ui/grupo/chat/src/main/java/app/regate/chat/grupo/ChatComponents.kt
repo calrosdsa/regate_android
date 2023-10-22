@@ -412,6 +412,8 @@ internal fun Message(
     openLink:(String)->Unit,
     copyMessage: (m: String, isLink: Boolean) -> Unit,
 ){
+    if(message.isNotBlank()){
+
     val list = message.split(" ").toList()
 //    val annotatedString = buildAnnotatedString {
     FlowRow() {
@@ -434,6 +436,7 @@ internal fun Message(
                 Text(text = "$word ",style = MaterialTheme.typography.bodyMedium)
             }
         }
+    }
     }
     }
 //    ClickableText(text = annotatedString, style = MaterialTheme.typography.bodyMedium, onClick = { offset ->

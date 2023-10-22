@@ -37,6 +37,7 @@ import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Inject
 @ApplicationScope
 @Inject
@@ -56,6 +57,9 @@ class GrupoRepository(
     private val myGroupsDao: MyGroupsDao,
     private val profileMapper:UserGroupDtoToProfile
 ){
+    suspend fun updateLastMessage(grupoId:Long,message:String,created: Instant){
+        myGroupsDao.updateLastMessageGrupo(grupoId, message, created)
+    }
     suspend fun searchGrupos(d:SearchFilterRequest,page:Int =1,size:Int=5):PaginationGroupsResponse{
         return grupoDataSourceImpl.searchGrupos(d,page, size)
     }
@@ -74,8 +78,11 @@ class GrupoRepository(
             val grupos = response.map { dtoToGrupo.map(it) }
             val myGroups = response.map { MyGroups(
                 group_id = it.id,
-                request_estado = GrupoRequestEstado.fromInt(it.grupo_request_estado
-                ))}
+                request_estado = GrupoRequestEstado.fromInt(it.grupo_request_estado),
+                last_message = it.last_message,
+                last_message_created = it.last_message_created,
+                messages_count = it.messages_count,
+                )}
             myGroupsDao.deleteMyGroups(GrupoRequestEstado.JOINED.ordinal)
             myGroupsDao.upsertAll(myGroups)
             grupoDao.upsertAll(grupos)

@@ -8,13 +8,10 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import app.regate.api.UiMessageManager
-import app.regate.data.dto.empresa.establecimiento.EstablecimientoReview
-import app.regate.data.dto.empresa.salas.SalaDto
-import app.regate.data.dto.empresa.salas.SalaFilterData
+import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviewDto
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.pagination.PaginationReviews
-import app.regate.domain.pagination.PaginationSalaFilter
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -35,7 +32,7 @@ class ReviewsViewModel(
     private val establecimientoId = savedStateHandle.get<Long>("id")?: 0
     private val  loaderCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
-    val pagedList: Flow<PagingData<EstablecimientoReview>> = Pager(PAGING_CONFIG){
+    val pagedList: Flow<PagingData<EstablecimientoReviewDto>> = Pager(PAGING_CONFIG){
         PaginationReviews(isInit =true){page->
            establecimientoRepository.getEstablecimientoReviews(establecimientoId,page,20)
 //            salaRepository.filterSalas()

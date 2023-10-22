@@ -51,6 +51,8 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
 
   private final SharedSQLiteStatement __preparedStmtOfDeleteByGroupId;
 
+  private final SharedSQLiteStatement __preparedStmtOfUpdateLastMessageGrupo;
+
   private final EntityUpsertionAdapter<MyGroups> __upsertionAdapterOfMyGroups;
 
   public RoomMyGroupsDao_Impl(@NonNull final RoomDatabase __db) {
@@ -72,7 +74,7 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `my_groups` SET `id` = ?,`group_id` = ?,`request_estado` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `my_groups` SET `id` = ?,`group_id` = ?,`request_estado` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -82,7 +84,15 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
         statement.bindLong(2, entity.getGroup_id());
         final int _tmp = AppTypeConverters.INSTANCE.fromGrupoRequestEstado(entity.getRequest_estado());
         statement.bindLong(3, _tmp);
-        statement.bindLong(4, entity.getId());
+        statement.bindString(4, entity.getLast_message());
+        final String _tmp_1 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getLast_message_created());
+        if (_tmp_1 == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindString(5, _tmp_1);
+        }
+        statement.bindLong(6, entity.getMessages_count());
+        statement.bindLong(7, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteMyGroups = new SharedSQLiteStatement(__db) {
@@ -109,11 +119,24 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
         return _query;
       }
     };
+    this.__preparedStmtOfUpdateLastMessageGrupo = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "\n"
+                + "        update my_groups set last_message_created = ?,\n"
+                + "         last_message = ?,\n"
+                + "         messages_count = messages_count +1\n"
+                + "         where group_id = ?\n"
+                + "         ";
+        return _query;
+      }
+    };
     this.__upsertionAdapterOfMyGroups = new EntityUpsertionAdapter<MyGroups>(new EntityInsertionAdapter<MyGroups>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `my_groups` (`id`,`group_id`,`request_estado`) VALUES (nullif(?, 0),?,?)";
+        return "INSERT INTO `my_groups` (`id`,`group_id`,`request_estado`,`last_message`,`last_message_created`,`messages_count`) VALUES (nullif(?, 0),?,?,?,?,?)";
       }
 
       @Override
@@ -123,12 +146,20 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
         statement.bindLong(2, entity.getGroup_id());
         final int _tmp = AppTypeConverters.INSTANCE.fromGrupoRequestEstado(entity.getRequest_estado());
         statement.bindLong(3, _tmp);
+        statement.bindString(4, entity.getLast_message());
+        final String _tmp_1 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getLast_message_created());
+        if (_tmp_1 == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindString(5, _tmp_1);
+        }
+        statement.bindLong(6, entity.getMessages_count());
       }
     }, new EntityDeletionOrUpdateAdapter<MyGroups>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `my_groups` SET `id` = ?,`group_id` = ?,`request_estado` = ? WHERE `id` = ?";
+        return "UPDATE `my_groups` SET `id` = ?,`group_id` = ?,`request_estado` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -138,7 +169,15 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
         statement.bindLong(2, entity.getGroup_id());
         final int _tmp = AppTypeConverters.INSTANCE.fromGrupoRequestEstado(entity.getRequest_estado());
         statement.bindLong(3, _tmp);
-        statement.bindLong(4, entity.getId());
+        statement.bindString(4, entity.getLast_message());
+        final String _tmp_1 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getLast_message_created());
+        if (_tmp_1 == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindString(5, _tmp_1);
+        }
+        statement.bindLong(6, entity.getMessages_count());
+        statement.bindLong(7, entity.getId());
       }
     });
   }
@@ -246,6 +285,38 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
   }
 
   @Override
+  public Object updateLastMessageGrupo(final long grupoId, final String message,
+      final Instant created, final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfUpdateLastMessageGrupo.acquire();
+        int _argIndex = 1;
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(created);
+        if (_tmp == null) {
+          _stmt.bindNull(_argIndex);
+        } else {
+          _stmt.bindString(_argIndex, _tmp);
+        }
+        _argIndex = 2;
+        _stmt.bindString(_argIndex, message);
+        _argIndex = 3;
+        _stmt.bindLong(_argIndex, grupoId);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfUpdateLastMessageGrupo.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
   public Object upsert(final MyGroups entity, final Continuation<? super Long> continuation) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
@@ -303,7 +374,7 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
   @Override
   public Flow<List<GrupoWithMessage>> observeUserGroupsWithMessage(final int requestEstado) {
     final String _sql = "\n"
-            + "        select g.*,(select count(*) from messages as m where g.id = m.grupo_id ) as local_count_messages\n"
+            + "        select g.*,ug.last_message,ug.last_message_created,ug.messages_count,(select count(*) from messages as m where g.id = m.grupo_id ) as local_count_messages\n"
             + "        from my_groups as ug inner join grupos as g on g.id = ug.group_id\n"
             + "        where request_estado = ?\n"
             + "        ";
@@ -427,9 +498,6 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
             final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
-            final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
-            final int _cursorIndexOfLastMessageCreated = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message_created");
-            final int _cursorIndexOfMessagesCount = CursorUtil.getColumnIndexOrThrow(_cursor, "messages_count");
             final List<Grupo> _result = new ArrayList<Grupo>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final Grupo _item;
@@ -467,19 +535,7 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final int _tmpVisibility;
               _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
-              final String _tmpLast_message;
-              _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
-              final Instant _tmpLast_message_created;
-              final String _tmp_2;
-              if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
-                _tmp_2 = null;
-              } else {
-                _tmp_2 = _cursor.getString(_cursorIndexOfLastMessageCreated);
-              }
-              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_2);
-              final int _tmpMessages_count;
-              _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
-              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
+              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -514,6 +570,9 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
             final int _cursorIndexOfGroupId = CursorUtil.getColumnIndexOrThrow(_cursor, "group_id");
             final int _cursorIndexOfRequestEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "request_estado");
+            final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
+            final int _cursorIndexOfLastMessageCreated = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message_created");
+            final int _cursorIndexOfMessagesCount = CursorUtil.getColumnIndexOrThrow(_cursor, "messages_count");
             final List<MyGroups> _result = new ArrayList<MyGroups>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final MyGroups _item;
@@ -532,7 +591,19 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
               } else {
                 _tmpRequest_estado = _tmp_2;
               }
-              _item = new MyGroups(_tmpId,_tmpGroup_id,_tmpRequest_estado);
+              final String _tmpLast_message;
+              _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
+              final Instant _tmpLast_message_created;
+              final String _tmp_3;
+              if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
+                _tmp_3 = null;
+              } else {
+                _tmp_3 = _cursor.getString(_cursorIndexOfLastMessageCreated);
+              }
+              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_3);
+              final int _tmpMessages_count;
+              _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
+              _item = new MyGroups(_tmpId,_tmpGroup_id,_tmpRequest_estado,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -569,6 +640,9 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
             final int _cursorIndexOfGroupId = CursorUtil.getColumnIndexOrThrow(_cursor, "group_id");
             final int _cursorIndexOfRequestEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "request_estado");
+            final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
+            final int _cursorIndexOfLastMessageCreated = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message_created");
+            final int _cursorIndexOfMessagesCount = CursorUtil.getColumnIndexOrThrow(_cursor, "messages_count");
             final MyGroups _result;
             if (_cursor.moveToFirst()) {
               final long _tmpId;
@@ -586,7 +660,19 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
               } else {
                 _tmpRequest_estado = _tmp_2;
               }
-              _result = new MyGroups(_tmpId,_tmpGroup_id,_tmpRequest_estado);
+              final String _tmpLast_message;
+              _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
+              final Instant _tmpLast_message_created;
+              final String _tmp_3;
+              if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
+                _tmp_3 = null;
+              } else {
+                _tmp_3 = _cursor.getString(_cursorIndexOfLastMessageCreated);
+              }
+              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_3);
+              final int _tmpMessages_count;
+              _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
+              _result = new MyGroups(_tmpId,_tmpGroup_id,_tmpRequest_estado,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
             } else {
               _result = null;
             }
