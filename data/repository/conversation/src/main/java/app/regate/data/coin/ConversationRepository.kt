@@ -1,5 +1,6 @@
 package app.regate.data.coin
 
+import app.regate.data.daos.ChatDao
 import app.regate.data.daos.MessageInboxDao
 import app.regate.data.daos.UserDao
 import app.regate.data.dto.empresa.coin.RecargaCoinDto
@@ -10,6 +11,7 @@ import app.regate.data.dto.empresa.conversation.Reply
 import app.regate.data.mappers.MessageConversationToMessage
 import app.regate.inject.ApplicationScope
 import app.regate.models.MessageInbox
+import app.regate.models.chat.Chat
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -22,7 +24,8 @@ class ConversationRepository(
     private val dispatchers: AppCoroutineDispatchers,
     private val messageConversationMapper:MessageConversationToMessage,
     private val messageInboxDao: MessageInboxDao,
-    private val userDao:UserDao
+    private val userDao:UserDao,
+    private val chatDao: ChatDao,
 ) {
     suspend fun getConversationId(establecimientoId:Long):ConversationId{
         return  conversationDataSourceImpl.getConversationId(establecimientoId)
@@ -93,6 +96,33 @@ class ConversationRepository(
                 }
             }
             response.nextPage
+        } catch (e: Exception) {
+            //TODO()
+            0
+        }
+    }
+
+    //chats
+    suspend fun getChats(page: Int): Int {
+        return try {
+            val response = conversationDataSourceImpl.getChats(page)
+            withContext(dispatchers.computation) {
+                response.results.also { results ->
+                    val chats = results.map {result->
+                        Chat(
+                            id = result.id,
+                            name = result.name,
+                            photo = result.photo,
+                            last_message = result.last_message,
+                            last_message_created = result.last_message_created,
+                            messages_count = result.messages_count
+                        )
+                    }
+//                    val result = messages.await() + replies.await()
+                    chatDao.upsertAll(chats)
+                }
+            }
+            response.page
         } catch (e: Exception) {
             //TODO()
             0

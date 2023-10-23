@@ -42,6 +42,8 @@ import app.regate.extensions.unsafeLazy
 import app.regate.inject.ActivityComponent
 import app.regate.inject.ActivityScope
 import app.regate.inject.ApplicationComponent
+import app.regate.network.initListener
+import app.regate.network.isOnline
 import app.regate.settings.AppPreferences
 import app.regate.util.AppDateFormatter
 import app.regate.util.AppLocation
@@ -69,11 +71,10 @@ class MainActivity : ComponentActivity() {
             addInitializer(MainActivityViewModel::class) { component.viewModel() }
         }
     }
-
-
 //    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initListener(this)
 //        val action :String? = intent.action
         val dataUri:Uri? = intent.data
         val grupoId = dataUri?.getQueryParameter("grupoId")

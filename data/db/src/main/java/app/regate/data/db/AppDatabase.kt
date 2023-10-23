@@ -1,5 +1,6 @@
 package app.regate.data.db
 
+import app.regate.data.daos.ChatDao
 import app.regate.data.daos.CupoDao
 import app.regate.data.daos.EmojiDao
 import app.regate.data.daos.EstablecimientoDao
@@ -38,4 +39,5 @@ interface AppDatabase {
     fun messageSalaDao():MessageSalaDao
     fun searchHistoryDao():SearchHistoryDao
     fun emojiDao():EmojiDao
+    fun chatDao():ChatDao
 }

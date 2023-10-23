@@ -50,7 +50,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 
-typealias Conversation = @Composable (
+typealias Conversation= @Composable (
     navigateUp:()->Unit
 //    navigateToReserva:(id:Long)->Unit,
 //    navigateToSignUpScreen:() -> Unit,

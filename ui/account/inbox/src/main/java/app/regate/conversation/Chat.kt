@@ -59,7 +59,7 @@ import me.saket.swipe.SwipeableActionsBox
 
 
 @Composable
-internal fun Chat (
+internal fun Chat(
     lazyPagingItems: LazyPagingItems<MessageConversation>,
     colors: List<Color>,
     setReply:(message:ReplyMessageData?)->Unit,

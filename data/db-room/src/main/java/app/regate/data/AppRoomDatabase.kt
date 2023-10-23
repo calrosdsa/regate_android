@@ -21,6 +21,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import app.regate.data.daos.ChatDao
+import app.regate.data.daos.RoomChatDao
 import app.regate.data.daos.RoomCupoDao
 import app.regate.data.daos.RoomEmojiDao
 import app.regate.data.daos.RoomEstablecimientoDao
@@ -63,6 +65,7 @@ import app.regate.models.account.User
 import app.regate.models.UserGrupo
 import app.regate.models.UserRoom
 import app.regate.models.account.UserBalance
+import app.regate.models.chat.Chat
 
 @Database(
     entities = [
@@ -87,6 +90,7 @@ import app.regate.models.account.UserBalance
         AttentionSchedule::class,
         UserRoom::class,
         UserBalance::class,
+        Chat::class,
 //        SalaEntity::class,
        ],
 //    views = [
@@ -132,6 +136,7 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
     abstract override fun messageSalaDao(): RoomMessageSalaDao
     abstract override fun searchHistoryDao(): RoomSearchHistoryDao
     abstract override fun emojiDao(): RoomEmojiDao
+    abstract override fun chatDao(): RoomChatDao
 //    abstract override fun salaEntityDao(): RoomSalaEntityDao
 
     companion object {

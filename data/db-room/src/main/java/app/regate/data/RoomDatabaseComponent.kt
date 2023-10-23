@@ -18,6 +18,7 @@ package app.regate.data
 
 import android.app.Application
 import androidx.room.Room
+import app.regate.data.daos.ChatDao
 import app.regate.data.daos.CupoDao
 import app.regate.data.daos.EmojiDao
 import app.regate.data.daos.EstablecimientoDao
@@ -59,6 +60,8 @@ interface RoomDatabaseComponent {
     fun provideAppDatabase(bind: AppRoomDatabase): AppDatabase = bind
 //    @Provides
 //    fun provideSalaEntityDao(db: AppDatabase):SalaEntityDao = db.salaEntityDao()
+    @Provides
+    fun provideChatDao(db: AppDatabase):ChatDao = db.chatDao()
     @Provides
     fun provideEmojiDao(db: AppDatabase):EmojiDao = db.emojiDao()
     @Provides

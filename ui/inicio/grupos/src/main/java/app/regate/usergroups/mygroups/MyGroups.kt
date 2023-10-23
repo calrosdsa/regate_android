@@ -60,7 +60,7 @@ import kotlin.time.Duration.Companion.minutes
 import app.regate.common.resources.R
 import app.regate.data.dto.empresa.grupo.MessageSalaPayload
 
-typealias MyGroups = @Composable (
+typealias MyGroups= @Composable (
     navigateUp:()->Unit,
     navigateToChatGrupo:(Long,String)->Unit
 )-> Unit

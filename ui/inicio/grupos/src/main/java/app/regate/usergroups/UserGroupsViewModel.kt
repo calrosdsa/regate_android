@@ -3,11 +3,19 @@ package app.regate.usergroups
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import app.cash.paging.cachedIn
 import app.regate.api.UiMessageManager
+import app.regate.compoundmodels.MessageProfile
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
+import app.regate.domain.observers.chat.ObservePagerChat
 import app.regate.domain.observers.grupo.ObserveUserGroupsWithMessage
+import app.regate.domain.observers.pagination.ObservePagerMessages
+import app.regate.models.chat.Chat
 import app.regate.util.ObservableLoadingCounter
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -21,10 +29,14 @@ class UserGroupsViewModel(
     observeGrupos: ObserveUserGroupsWithMessage,
     private val grupoRepository: GrupoRepository,
     observeAuthState: ObserveAuthState,
+    pagingInteractor: ObservePagerChat,
+
 //    private val updateFilterGrupos: UpdateFilterGrupos
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
+    val pagedList: Flow<PagingData<Chat>> =
+        pagingInteractor.flow.cachedIn(viewModelScope)
     val state:StateFlow<UserGroupsState> = combine(
         observeGrupos.flow,
         loadingCounter.observable,
@@ -44,6 +56,7 @@ class UserGroupsViewModel(
     )
 
     init {
+        pagingInteractor(ObservePagerChat.Params(PAGING_CONFIG))
         observeAuthState(Unit)
         observeGrupos(Unit)
         getUserGrupos()
@@ -52,6 +65,12 @@ class UserGroupsViewModel(
                 Log.d("DEBUG_APP_G",it.toString())
             }
         }
+    }
+    companion object {
+        val PAGING_CONFIG = PagingConfig(
+            pageSize = 20,
+            initialLoadSize = 20,
+        )
     }
 
     fun getUserGrupos(){

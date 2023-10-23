@@ -33,6 +33,7 @@ import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.data.dto.empresa.conversation.Conversation
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -124,13 +125,14 @@ fun ConversationItem(
             horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
                 Text(text = item.establecimiento_name + "",style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.fillMaxWidth(0.7f), overflow = TextOverflow.Ellipsis)
-                Text(text = formatShortRelativeTime(item.last_message_created),
-                    style = MaterialTheme.typography.labelSmall)
+//                Text(text = formatShortRelativeTime(item.last_message_created),
+                Text(text = formatShortRelativeTime(Clock.System.now()),
+                style = MaterialTheme.typography.labelSmall)
             }
             Spacer(modifier = Modifier.height(5.dp))
-            Text(text = item.last_message,style = MaterialTheme.typography.labelMedium.copy(
-                fontWeight = FontWeight.Normal
-            ), overflow = TextOverflow.Ellipsis, maxLines = 1)
+//            Text(text = item.last_message,style = MaterialTheme.typography.labelMedium.copy(
+//                fontWeight = FontWeight.Normal
+//            ), overflow = TextOverflow.Ellipsis, maxLines = 1)
         }
 
     }

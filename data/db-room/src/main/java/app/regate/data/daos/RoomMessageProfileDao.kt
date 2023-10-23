@@ -2,6 +2,8 @@ package app.regate.data.daos
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import app.regate.compoundmodels.MessageProfile
@@ -23,5 +25,4 @@ abstract class RoomMessageProfileDao:RoomEntityDao<Message>,MessageProfileDao {
 
     @Query("select *  from messages where profile_id = :profileId and sended = 0 and grupo_id = :grupoId")
     abstract override suspend fun getUnSendedMessage(profileId: Long,grupoId:Long): List<Message>
-
 }

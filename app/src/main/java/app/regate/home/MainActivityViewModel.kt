@@ -15,7 +15,9 @@ import app.regate.data.dto.account.ws.WsAccountPayload
 import app.regate.data.dto.empresa.grupo.GrupoEvent
 import app.regate.data.dto.empresa.grupo.GrupoEventType
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
+import app.regate.data.dto.system.NotificationDto
 import app.regate.data.grupo.GrupoRepository
+import app.regate.data.system.SystemRepository
 import app.regate.domain.observers.account.ObserveUser
 import app.regate.settings.AppPreferences
 import com.google.firebase.ktx.Firebase
@@ -42,7 +44,6 @@ import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
 
 @OptIn(InternalAPI::class)
-
 @Inject
 class MainActivityViewModel(
     private val accountRepository:AccountRepository,
@@ -50,14 +51,15 @@ class MainActivityViewModel(
     private val client: HttpClient,
     private val coinRepository: CoinRepository,
     private val grupoRepository: GrupoRepository,
-    observeUser: ObserveUser,
+    private val systemRepository: SystemRepository,
+    private val observeUser: ObserveUser,
     ): ViewModel() {
 
     init {
         Log.d("DEBUG_",preferences.fcmToken)
         Log.d("DEBUG_",preferences.fcmToken.isBlank().toString())
         if(preferences.fcmToken.isBlank()){
-        logRegToken()
+            logRegToken()
         }else{
             viewModelScope.launch {
                 Log.d("DEBUG_","UPDATING FCM TOKEN")
@@ -65,13 +67,11 @@ class MainActivityViewModel(
             }
         }
         observeUser(Unit)
-
-
         viewModelScope.launch {
-            observeUser.flow.collectLatest {
+            observeUser.flow.collect {
                 try {
                     if(it.profile_id != 0L){
-                    startWs(it.profile_id)
+                        startWs(it.profile_id)
                     }
                     Log.d("DEBUG_APP_USER",it.toString())
                 }catch (e:Exception){
@@ -80,6 +80,7 @@ class MainActivityViewModel(
             }
         }
     }
+
 
     @SuppressLint("SuspiciousIndentation")
     suspend fun startWs(profileId:Long){
@@ -100,6 +101,7 @@ class MainActivityViewModel(
                   for (message in incoming) {
                       message as? Frame.Text ?: continue
                       val data = Json.decodeFromString<WsAccountPayload>(message.readText())
+                      Log.d("DEBUG_APP",message.readText())
                       when (data.type){
                           PayloadWsAccountType.PAYLOAD_USER_BALANCE.ordinal->{
                               Log.d("DEBUG_APP",message.readText())
@@ -111,6 +113,15 @@ class MainActivityViewModel(
                               grupoRepository.updateLastMessage(payload.grupo_id,payload.content,payload.created_at?:Clock.System.now())
                               Log.d("DEBUG_APP",payload.toString())
 //                              db.myGroupsDao().updateLastMessageGrupo(grupo.id,lastMessage.content,lastMessage.created_at)
+                          }
+                          PayloadWsAccountType.PAYLOAD_TYPE_NOTIFICATION.ordinal -> {
+                              try{
+                              val payload = Json.decodeFromString<NotificationDto>(data.payload)
+                              systemRepository.insertNotification(payload)
+                              Log.d("DEBUG_APP",payload.toString())
+                              }catch(e:Exception){
+                                  Log.d("DEBUG_APP_ER" , e.localizedMessage?:"")
+                              }
                           }
                           else -> {}
                       }

@@ -2,6 +2,7 @@ package app.regate.data.coin
 
 import app.regate.constant.HostMessage
 import app.regate.data.auth.store.AuthStore
+import app.regate.data.dto.chat.PaginateChatResponse
 import app.regate.data.dto.empresa.conversation.Conversation
 import app.regate.data.dto.empresa.conversation.ConversationId
 import app.regate.data.dto.empresa.conversation.ConversationMessage
@@ -52,6 +53,16 @@ class ConversationDataSourceImpl(
         val token = authStore.get()?.accessToken
         return  client.get{
             url("${baseUrl}/v1/conversations/")
+            header("Authorization","Bearer $token")
+        }.body()
+    }
+
+    //Chat
+    override suspend fun getChats(page:Int):PaginateChatResponse{
+        val token = authStore.get()?.accessToken
+        return client.config {
+        }.get{
+            url("${baseUrl}/v1/chats/?page=${page}")
             header("Authorization","Bearer $token")
         }.body()
     }

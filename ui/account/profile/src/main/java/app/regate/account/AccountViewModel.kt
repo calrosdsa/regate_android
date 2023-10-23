@@ -5,12 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
 import app.regate.data.account.AccountRepository
+import app.regate.data.auth.AppAuthState
 import app.regate.data.auth.AuthRepository
 import app.regate.data.coin.CoinRepository
 import app.regate.data.common.AddressDevice
-import app.regate.data.dto.empresa.coin.UserBalanceDto
 import app.regate.data.system.SystemRepository
 import app.regate.domain.observers.ObserveAuthState
+import app.regate.domain.observers.system.ObserveUnreadNotificationCount
 import app.regate.domain.observers.ObserveUserProfile
 import app.regate.domain.observers.account.ObserveUserBalance
 import app.regate.extensions.combine
@@ -19,6 +20,7 @@ import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
@@ -35,12 +37,12 @@ class AccountViewModel(
     private val coinRepository: CoinRepository,
     observeAuthState: ObserveAuthState,
     observeUserBalance: ObserveUserBalance,
-//    observeUnreadNotificationCount: ObserveUnreadNotificationCount,
+    observeUnreadNotificationCount: ObserveUnreadNotificationCount,
 ):ViewModel() {
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val addressDevice = MutableStateFlow<AddressDevice?>(null)
-    private val notificationCount = MutableStateFlow(0)
+//    private val notificationCount = MutableStateFlow(0)
     val state:StateFlow<AccountState> = combine(
         loadingState.observable,
         uiMessageManager.message,
@@ -48,7 +50,7 @@ class AccountViewModel(
         observeAuthState.flow,
         addressDevice,
         observeUserBalance.flow,
-       notificationCount,
+        observeUnreadNotificationCount.flow,
     ){loading,message,user,authState,addressDevice,userBalance,unreadNotications ->
         AccountState(
             loading = loading,
@@ -66,6 +68,7 @@ class AccountViewModel(
     )
     init {
         observeUserBalance(Unit)
+        observeUnreadNotificationCount(Unit)
         observeUser(Unit)
 //        observeUnreadNotificationCount(Unit)
         observeAuthState(Unit)
@@ -81,25 +84,36 @@ class AccountViewModel(
         }
         }
         viewModelScope.launch {
-        observeUser.flow.collect{
-            getNotificationCount()
+        observeAuthState.flow.collectLatest{authState:AppAuthState->
+            if(authState == AppAuthState.LOGGED_IN){
+                getUnreadNotifications()
+            }
         }
         }
         getUserBalance()
     }
-    fun getNotificationCount(){
+    private fun getUnreadNotifications(){
         viewModelScope.launch {
-        try{
-            val res = systemRepository.getNotificationsCount()
-            Log.d("DEBUG_APP_COUNT",res.toString())
-            notificationCount.emit(res.count)
-        }catch (e:Exception){
-            Log.d("DEBUG_APP_COUNT",e.localizedMessage?:"")
-
-            //TODO()
-        }
+            try{
+                systemRepository.getNotifications()
+            }catch (e:Exception){
+                Log.d("DEBUG_APP_E",e.localizedMessage?:"")
+            }
         }
     }
+//    fun getNotificationCount(){
+//        viewModelScope.launch {
+//        try{
+//            val res = systemRepository.getNotificationsCount()
+//            Log.d("DEBUG_APP_COUNT",res.toString())
+//            notificationCount.emit(res.count)
+//        }catch (e:Exception){
+//            Log.d("DEBUG_APP_COUNT",e.localizedMessage?:"")
+//
+//            //TODO()
+//        }
+//        }
+//    }
     fun getUserBalance(){
         viewModelScope.launch {
             try{

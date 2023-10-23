@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.ui.BottomBar
 import app.regate.common.composes.viewModel
@@ -138,7 +139,7 @@ internal fun Grupos(
             when (page) {
                 0 -> UserGroups(
 //                    modifier = Modifier,
-                    viewState = viewState,
+                    lazyPagingItems = viewModel.pagedList.collectAsLazyPagingItems(),
                     formatShortRelativeTime = formatShortRelativeTime,
                     navigateToChat = { navController.navigate(Route.CHAT_GRUPO + "?id=$it") }
                 )

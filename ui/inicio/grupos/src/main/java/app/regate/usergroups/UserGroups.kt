@@ -24,8 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import app.regate.common.composes.ui.PosterCardImage
+import app.regate.common.composes.util.itemsCustom
 import app.regate.compoundmodels.GrupoWithMessage
+import app.regate.models.chat.Chat
 import kotlinx.datetime.Instant
 
 //typealias UserGroups = @Composable (
@@ -61,14 +64,16 @@ import kotlinx.datetime.Instant
 
 @Composable
 internal fun UserGroups(
-    viewState:UserGroupsState,
+    lazyPagingItems: LazyPagingItems<Chat>,
     formatShortRelativeTime:(Instant)->String,
     navigateToChat: (id: Long) -> Unit
 ){
     LazyColumn(modifier = Modifier.fillMaxSize()){
-        items(items = viewState.grupos, key = {it.id}){item->
-            GrupoItemWithMessage(grupo = item, navigateToChatGrupo = navigateToChat,
-            formatShortRelativeTime = formatShortRelativeTime)
+        itemsCustom(items = lazyPagingItems, key = {it.id}){item->
+            if(item!= null){
+                GrupoItemWithMessage(grupo = item, navigateToChatGrupo = navigateToChat,
+                    formatShortRelativeTime = formatShortRelativeTime)
+            }
         }
     }
 }
@@ -77,7 +82,8 @@ internal fun UserGroups(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun GrupoItemWithMessage(
-    grupo: GrupoWithMessage,
+//    grupo: GrupoWithMessage,
+    grupo: Chat,
     navigateToChatGrupo: (id: Long) -> Unit,
     formatShortRelativeTime:(Instant)->String,
     modifier:Modifier = Modifier
@@ -110,21 +116,23 @@ internal fun GrupoItemWithMessage(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween){
 
-            if(grupo.last_message.isNotBlank()){
-                Text(text = grupo.last_message,style = MaterialTheme.typography.labelMedium.copy(
-                    fontWeight = FontWeight.Normal
-                ), overflow = TextOverflow.Ellipsis, maxLines = 1,
-                modifier = Modifier.fillMaxWidth(0.88f))
+            if(grupo.last_message?.isNotBlank() == true){
+                grupo.last_message?.let {
+                    Text(text = it,style = MaterialTheme.typography.labelMedium.copy(
+                        fontWeight = FontWeight.Normal
+                    ), overflow = TextOverflow.Ellipsis, maxLines = 1,
+                        modifier = Modifier.fillMaxWidth(0.88f))
+                }
             }
-                if(grupo.messages_count > grupo.local_count_messages){
+//                if(grupo.messages_count > grupo.local_count_messages){
                     Badge(
                         contentColor = MaterialTheme.colorScheme.onPrimary,
                         containerColor = MaterialTheme.colorScheme.primary
                     ){
-                  Text(text = (grupo.messages_count -grupo.local_count_messages).toString(),
+                  Text(text = (grupo.messages_count).toString(),
                   style = MaterialTheme.typography.labelLarge)
                     }
-                }
+//                }
             }
         }
 

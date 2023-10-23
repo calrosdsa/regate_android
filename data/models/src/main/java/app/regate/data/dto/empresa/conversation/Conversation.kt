@@ -9,6 +9,6 @@ data class Conversation(
     val establecimiento_name: String,
     val establecimiento_photo: String,
     val id: Long,
-    val last_message:String,
-    val last_message_created:Instant,
+//    val last_message:String,
+//    val last_message_created:Instant,
 )
