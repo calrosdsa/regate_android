@@ -134,7 +134,7 @@ class GrupoRepository(
                 val data = messages.map { messageMapperDto.map(it) }
                 if (messages.isEmpty()) return@withContext
                 val results = grupoDataSourceImpl.syncMessages(data).map {
-                    messageMapper.map(it)
+                    messageMapper.map(it).copy(readed = true)
                 }
                 messageProfileDao.upsertAll(results)
             } catch (e:Exception){
@@ -194,12 +194,29 @@ class GrupoRepository(
     suspend fun filterGrupos(d:FilterGrupoData,page: Int):PaginationGroupsResponse{
         return grupoDataSourceImpl.filterGrupos(d,page)
     }
-    suspend fun saveMessage(data:GrupoMessageDto){
+    suspend fun saveMessage(data:GrupoMessageDto,readed:Boolean){
         try{
-
-        messageProfileDao.upsert(messageMapper.map(data))
+            val message = messageMapper.map(data)
+        messageProfileDao.upsert(message.copy(readed = readed))
         }catch (e:Exception){
             //todo()
+        }
+    }
+    suspend fun saveMessageIgnoreOnConflict(data: GrupoMessageDto,readed: Boolean){
+        try{
+            val message = messageMapper.map(data)
+            messageProfileDao.upsertOnConflictStrategyIgnore(message.copy(readed = readed))
+        }catch (e:Exception){
+            //todo()
+        }
+    }
+    suspend fun updateUnreadMessages(grupoId:Long){
+        withContext(dispatchers.computation){
+        try{
+            messageProfileDao.updateMessages(grupoId)
+        }catch (e:Exception){
+            //TODO()
+        }
         }
     }
 

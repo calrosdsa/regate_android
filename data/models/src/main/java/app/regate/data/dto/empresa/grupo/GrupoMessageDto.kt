@@ -13,7 +13,7 @@ data class GrupoMessageDto(
     val grupo_id:Long,
     val type_message:Int = GrupoMessageType.MESSAGE.ordinal,
     val reply_to:Long? = null,
-    val reply_message: ReplyMessage = ReplyMessage.Empty
+    val reply_message: ReplyMessage = ReplyMessage.Empty,
     )
 
 @Serializable

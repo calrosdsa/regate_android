@@ -9,5 +9,9 @@ interface MessageProfileDao:EntityDao<Message> {
     fun observeMessages(id:Long): PagingSource<Int, MessageProfile>
     suspend fun getReplyMessage(id:Long):MessageProfile
     fun getMessages(id:Long):Flow<List<MessageProfile>>
+    suspend fun updateMessages(grupoId:Long)
     suspend fun getUnSendedMessage(profileId:Long,grupoId:Long):List<Message>
+    suspend fun upsertOnConflictStrategyIgnore(entity: Message)
+
+
 }

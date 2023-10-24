@@ -4,7 +4,7 @@ import app.cash.paging.Pager
 import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
 import app.regate.compoundmodels.MessageConversation
-import app.regate.data.coin.ConversationRepository
+import app.regate.data.chat.ConversationRepository
 import app.regate.data.daos.MessageInboxDao
 import app.regate.domain.PagingInteractor
 import app.regate.domain.pagination.mediator.PagingMessagesInboxMediator

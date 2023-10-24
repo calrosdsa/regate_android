@@ -8,6 +8,7 @@ import androidx.paging.PagingData
 import app.cash.paging.cachedIn
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageProfile
+import app.regate.data.chat.ConversationRepository
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.chat.ObservePagerChat
@@ -28,6 +29,7 @@ import me.tatarka.inject.annotations.Inject
 class UserGroupsViewModel(
     observeGrupos: ObserveUserGroupsWithMessage,
     private val grupoRepository: GrupoRepository,
+    private val conversationRepository: ConversationRepository,
     observeAuthState: ObserveAuthState,
     pagingInteractor: ObservePagerChat,
 
@@ -76,6 +78,7 @@ class UserGroupsViewModel(
     fun getUserGrupos(){
         viewModelScope.launch {
             try{
+                conversationRepository.getUnreadMessages(1)
             grupoRepository.myGroups()
             grupoRepository.myGroupsRequest()
             }catch(e:Exception){

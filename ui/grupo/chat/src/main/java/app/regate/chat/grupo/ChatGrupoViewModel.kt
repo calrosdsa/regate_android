@@ -187,7 +187,8 @@ class ChatGrupoViewModel(
                 if (othersMessage != null) {
                     val event = Json.decodeFromString<GrupoEvent>(othersMessage.readText())
                         if (event.type == GrupoEventType.GrupoEventMessage || event.type == GrupoEventType.GrupoEventIgnore) {
-                        grupoRepository.saveMessage(event.message)
+//                            Log.d("DEBUG_APP_MESSAGE_REC",event.message.toString())
+                        grupoRepository.saveMessage(event.message,true)
 //                            grupoRepository.updateLastMessage(grupoId,message.content,message.created_at)
 
                         }
@@ -264,7 +265,7 @@ class ChatGrupoViewModel(
     fun getData(){
         viewModelScope.launch {
             try {
-
+                grupoRepository.updateUnreadMessages(grupoId)
                 grupoRepository.getUsersGroup(grupoId)
 //                grupoRepository.getMessagesGrupo(grupoId)
             }catch(e:SerializationException){
@@ -303,7 +304,8 @@ class ChatGrupoViewModel(
                 grupo_id = grupoId,
                 id = getLongUuid(),
                 type_message = messageData.type_message,
-                data = messageData.data
+                data = messageData.data,
+                readed = true
             )
             val res = async { grupoRepository.saveMessageLocal(message) }
             grupoRepository.updateLastMessage(grupoId,message.content,message.created_at)

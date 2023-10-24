@@ -10,7 +10,7 @@ import app.cash.paging.cachedIn
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageConversation
 import app.regate.constant.HostMessage
-import app.regate.data.coin.ConversationRepository
+import app.regate.data.chat.ConversationRepository
 import app.regate.data.common.MessageData
 import app.regate.data.dto.empresa.conversation.ConversationMessage
 import app.regate.domain.interactors.UpdateEstablecimiento

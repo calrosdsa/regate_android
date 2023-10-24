@@ -13,16 +13,16 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 class ObservePagerMessages(
-    private val repository: GrupoRepository,
+//    private val repository: GrupoRepository,
     private val messageProfileDao: MessageProfileDao
 ):PagingInteractor<ObservePagerMessages.Params,MessageProfile>() {
 
     override fun createObservable(params: Params): Flow<PagingData<MessageProfile>> {
         return Pager(
             config = params.pagingConfig,
-            remoteMediator = PagingMessagesMediator(fetch = {
-                repository.getMessagesGrupo(params.grupoId,it)
-            }),
+//            remoteMediator = PagingMessagesMediator(fetch = {
+//                repository.getMessagesGrupo(params.grupoId,it)
+//            }),
             pagingSourceFactory = {
                 messageProfileDao.observeMessages(params.grupoId)
             }

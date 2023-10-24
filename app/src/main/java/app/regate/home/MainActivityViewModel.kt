@@ -110,7 +110,7 @@ class MainActivityViewModel(
                           }
                           PayloadWsAccountType.PAYLOAD_GRUPO_MESSAGE.ordinal ->{
                               val payload = Json.decodeFromString<GrupoMessageDto>(data.payload)
-                              grupoRepository.updateLastMessage(payload.grupo_id,payload.content,payload.created_at?:Clock.System.now())
+                              grupoRepository.saveMessageIgnoreOnConflict(payload,false)
                               Log.d("DEBUG_APP",payload.toString())
 //                              db.myGroupsDao().updateLastMessageGrupo(grupo.id,lastMessage.content,lastMessage.created_at)
                           }

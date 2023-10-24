@@ -8,6 +8,5 @@ interface EntityDao<in E> {
     suspend fun upsertAll(entities: List<E>)
 
     suspend fun update(entity: E)
-
     suspend fun deleteEntity(entity: E): Int
 }

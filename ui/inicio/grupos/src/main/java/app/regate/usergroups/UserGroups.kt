@@ -124,7 +124,7 @@ internal fun GrupoItemWithMessage(
                         modifier = Modifier.fillMaxWidth(0.88f))
                 }
             }
-//                if(grupo.messages_count > grupo.local_count_messages){
+                if(grupo.messages_count > 0){
                     Badge(
                         contentColor = MaterialTheme.colorScheme.onPrimary,
                         containerColor = MaterialTheme.colorScheme.primary
@@ -132,7 +132,7 @@ internal fun GrupoItemWithMessage(
                   Text(text = (grupo.messages_count).toString(),
                   style = MaterialTheme.typography.labelLarge)
                     }
-//                }
+                }
             }
         }
 

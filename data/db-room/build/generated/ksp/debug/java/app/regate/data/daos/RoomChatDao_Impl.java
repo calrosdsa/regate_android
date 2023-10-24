@@ -11,6 +11,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.RoomSQLiteQuery;
 import androidx.room.paging.LimitOffsetPagingSource;
 import androidx.room.util.CursorUtil;
+import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.data.db.DateTimeTypeConverters;
 import app.regate.models.chat.Chat;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import kotlin.Unit;
 import kotlin.coroutines.Continuation;
+import kotlinx.coroutines.flow.Flow;
 import kotlinx.datetime.Instant;
 
 @SuppressWarnings({"unchecked", "deprecation"})
@@ -244,34 +246,37 @@ public final class RoomChatDao_Impl extends RoomChatDao {
   }
 
   @Override
-  public PagingSource<Integer, Chat> observeChats() {
+  public PagingSource<Integer, Chat> observeChatsPaging() {
     final String _sql = "\n"
-            + "            SELECT * FROM chat \n"
+            + "            SELECT c.id,c.name,c.photo,\n"
+            + "              (select content from messages where grupo_id = c.id order by created_at DESC limit 1) as last_message,\n"
+            + "              (select created_at from messages where grupo_id = c.id order by created_at DESC limit 1) as last_message_created,\n"
+            + "              (select count(*) from messages where grupo_id = c.id and readed = 0) as messages_count FROM chat as c \n"
             + "    ";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
-    return new LimitOffsetPagingSource<Chat>(_statement, __db, "chat") {
+    return new LimitOffsetPagingSource<Chat>(_statement, __db, "messages", "chat") {
       @Override
       @NonNull
       protected List<Chat> convertRows(@NonNull final Cursor cursor) {
-        final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(cursor, "id");
-        final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(cursor, "photo");
-        final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(cursor, "name");
-        final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(cursor, "last_message");
-        final int _cursorIndexOfLastMessageCreated = CursorUtil.getColumnIndexOrThrow(cursor, "last_message_created");
-        final int _cursorIndexOfMessagesCount = CursorUtil.getColumnIndexOrThrow(cursor, "messages_count");
+        final int _cursorIndexOfId = 0;
+        final int _cursorIndexOfName = 1;
+        final int _cursorIndexOfPhoto = 2;
+        final int _cursorIndexOfLastMessage = 3;
+        final int _cursorIndexOfLastMessageCreated = 4;
+        final int _cursorIndexOfMessagesCount = 5;
         final List<Chat> _result = new ArrayList<Chat>(cursor.getCount());
         while (cursor.moveToNext()) {
           final Chat _item;
           final long _tmpId;
           _tmpId = cursor.getLong(_cursorIndexOfId);
+          final String _tmpName;
+          _tmpName = cursor.getString(_cursorIndexOfName);
           final String _tmpPhoto;
           if (cursor.isNull(_cursorIndexOfPhoto)) {
             _tmpPhoto = null;
           } else {
             _tmpPhoto = cursor.getString(_cursorIndexOfPhoto);
           }
-          final String _tmpName;
-          _tmpName = cursor.getString(_cursorIndexOfName);
           final String _tmpLast_message;
           if (cursor.isNull(_cursorIndexOfLastMessage)) {
             _tmpLast_message = null;
@@ -294,6 +299,79 @@ public final class RoomChatDao_Impl extends RoomChatDao {
         return _result;
       }
     };
+  }
+
+  @Override
+  public Flow<List<Chat>> observeChats(final int page, final int offset) {
+    final String _sql = "\n"
+            + "            SELECT * FROM chat limit ? offset ?\n"
+            + "      ";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, page);
+    _argIndex = 2;
+    _statement.bindLong(_argIndex, offset);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"chat"}, new Callable<List<Chat>>() {
+      @Override
+      @NonNull
+      public List<Chat> call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
+            final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+            final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
+            final int _cursorIndexOfLastMessageCreated = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message_created");
+            final int _cursorIndexOfMessagesCount = CursorUtil.getColumnIndexOrThrow(_cursor, "messages_count");
+            final List<Chat> _result = new ArrayList<Chat>(_cursor.getCount());
+            while (_cursor.moveToNext()) {
+              final Chat _item;
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final String _tmpPhoto;
+              if (_cursor.isNull(_cursorIndexOfPhoto)) {
+                _tmpPhoto = null;
+              } else {
+                _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
+              }
+              final String _tmpName;
+              _tmpName = _cursor.getString(_cursorIndexOfName);
+              final String _tmpLast_message;
+              if (_cursor.isNull(_cursorIndexOfLastMessage)) {
+                _tmpLast_message = null;
+              } else {
+                _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
+              }
+              final Instant _tmpLast_message_created;
+              final String _tmp;
+              if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
+                _tmp = null;
+              } else {
+                _tmp = _cursor.getString(_cursorIndexOfLastMessageCreated);
+              }
+              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+              final int _tmpMessages_count;
+              _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
+              _item = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
+              _result.add(_item);
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
   }
 
   @NonNull

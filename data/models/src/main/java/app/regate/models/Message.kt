@@ -31,4 +31,5 @@ data class Message(
     val profile_id:Long,
     val reply_to:Long? = null,
     val sended:Boolean = false,
+    val readed:Boolean = false
 ):AppEntity
