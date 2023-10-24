@@ -44,6 +44,8 @@ import kotlinx.datetime.Instant;
 public final class RoomCupoDao_Impl extends RoomCupoDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<Cupo> __insertionAdapterOfCupo;
+
   private final EntityDeletionOrUpdateAdapter<Cupo> __deletionAdapterOfCupo;
 
   private final EntityDeletionOrUpdateAdapter<Cupo> __updateAdapterOfCupo;
@@ -54,6 +56,27 @@ public final class RoomCupoDao_Impl extends RoomCupoDao {
 
   public RoomCupoDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfCupo = new EntityInsertionAdapter<Cupo>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `cupos` (`id`,`time`,`instalacion_id`,`price`) VALUES (nullif(?, 0),?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final Cupo entity) {
+        statement.bindLong(1, entity.getId());
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getTime());
+        if (_tmp == null) {
+          statement.bindNull(2);
+        } else {
+          statement.bindString(2, _tmp);
+        }
+        statement.bindLong(3, entity.getInstalacion_id());
+        statement.bindDouble(4, entity.getPrice());
+      }
+    };
     this.__deletionAdapterOfCupo = new EntityDeletionOrUpdateAdapter<Cupo>(__db) {
       @Override
       @NonNull
@@ -139,6 +162,44 @@ public final class RoomCupoDao_Impl extends RoomCupoDao {
         statement.bindLong(5, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final Cupo entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfCupo.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends Cupo> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfCupo.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

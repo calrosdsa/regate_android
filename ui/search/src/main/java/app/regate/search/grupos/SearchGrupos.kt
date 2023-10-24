@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -30,7 +29,6 @@ import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.search.salas.SearchSalasState
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -126,7 +124,7 @@ internal fun SearchGrupos(
                         items = lazyPagingItems
                     ) { result ->
                         if (result != null) {
-                            val grupoU = viewState.userGroups.find { it.group_id == result.id }
+                            val grupoU = viewState.userGroups.find { it.id == result.id }
                             if(grupoU != null){
                                 GrupoItem(
                                     navigate = navigateToGroup,

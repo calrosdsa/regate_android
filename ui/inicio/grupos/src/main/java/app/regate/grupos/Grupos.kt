@@ -141,7 +141,8 @@ internal fun Grupos(
 //                    modifier = Modifier,
                     lazyPagingItems = viewModel.pagedList.collectAsLazyPagingItems(),
                     formatShortRelativeTime = formatShortRelativeTime,
-                    navigateToChat = { navController.navigate(Route.CHAT_GRUPO + "?id=$it") },
+                    navigateToChat = {id,grupoId->
+                        navController.navigate(Route.CHAT_GRUPO + "?id=$id&grupoId=$grupoId") },
                     navigateToEstablecimientoInbox = { establecimientoId:Long,conversationId:Long->
                         navController.navigate(Route.CONVERSATION  id conversationId id establecimientoId)
                     }

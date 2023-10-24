@@ -61,14 +61,14 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT OR IGNORE INTO `messages` (`id`,`grupo_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`,`readed`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT OR IGNORE INTO `messages` (`id`,`chat_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`,`readed`,`parent_id`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Message entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindLong(2, entity.getGrupo_id());
+        statement.bindLong(2, entity.getChat_id());
         statement.bindString(3, entity.getContent());
         if (entity.getData() == null) {
           statement.bindNull(4);
@@ -92,6 +92,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         statement.bindLong(9, _tmp_1);
         final int _tmp_2 = entity.getReaded() ? 1 : 0;
         statement.bindLong(10, _tmp_2);
+        statement.bindLong(11, entity.getParent_id());
       }
     };
     this.__deletionAdapterOfMessage = new EntityDeletionOrUpdateAdapter<Message>(__db) {
@@ -111,14 +112,14 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `messages` SET `id` = ?,`grupo_id` = ?,`content` = ?,`data` = ?,`created_at` = ?,`type_message` = ?,`profile_id` = ?,`reply_to` = ?,`sended` = ?,`readed` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `messages` SET `id` = ?,`chat_id` = ?,`content` = ?,`data` = ?,`created_at` = ?,`type_message` = ?,`profile_id` = ?,`reply_to` = ?,`sended` = ?,`readed` = ?,`parent_id` = ? WHERE `id` = ?";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Message entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindLong(2, entity.getGrupo_id());
+        statement.bindLong(2, entity.getChat_id());
         statement.bindString(3, entity.getContent());
         if (entity.getData() == null) {
           statement.bindNull(4);
@@ -142,14 +143,15 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         statement.bindLong(9, _tmp_1);
         final int _tmp_2 = entity.getReaded() ? 1 : 0;
         statement.bindLong(10, _tmp_2);
-        statement.bindLong(11, entity.getId());
+        statement.bindLong(11, entity.getParent_id());
+        statement.bindLong(12, entity.getId());
       }
     };
     this.__preparedStmtOfUpdateMessages = new SharedSQLiteStatement(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        final String _query = "update messages set readed = 1 where grupo_id= ? and readed = 0";
+        final String _query = "update messages set readed = 1 where chat_id= ? and readed = 0";
         return _query;
       }
     };
@@ -157,14 +159,14 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `messages` (`id`,`grupo_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`,`readed`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `messages` (`id`,`chat_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`,`readed`,`parent_id`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Message entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindLong(2, entity.getGrupo_id());
+        statement.bindLong(2, entity.getChat_id());
         statement.bindString(3, entity.getContent());
         if (entity.getData() == null) {
           statement.bindNull(4);
@@ -188,19 +190,20 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         statement.bindLong(9, _tmp_1);
         final int _tmp_2 = entity.getReaded() ? 1 : 0;
         statement.bindLong(10, _tmp_2);
+        statement.bindLong(11, entity.getParent_id());
       }
     }, new EntityDeletionOrUpdateAdapter<Message>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `messages` SET `id` = ?,`grupo_id` = ?,`content` = ?,`data` = ?,`created_at` = ?,`type_message` = ?,`profile_id` = ?,`reply_to` = ?,`sended` = ?,`readed` = ? WHERE `id` = ?";
+        return "UPDATE `messages` SET `id` = ?,`chat_id` = ?,`content` = ?,`data` = ?,`created_at` = ?,`type_message` = ?,`profile_id` = ?,`reply_to` = ?,`sended` = ?,`readed` = ?,`parent_id` = ? WHERE `id` = ?";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final Message entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindLong(2, entity.getGrupo_id());
+        statement.bindLong(2, entity.getChat_id());
         statement.bindString(3, entity.getContent());
         if (entity.getData() == null) {
           statement.bindNull(4);
@@ -224,13 +227,14 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         statement.bindLong(9, _tmp_1);
         final int _tmp_2 = entity.getReaded() ? 1 : 0;
         statement.bindLong(10, _tmp_2);
-        statement.bindLong(11, entity.getId());
+        statement.bindLong(11, entity.getParent_id());
+        statement.bindLong(12, entity.getId());
       }
     });
   }
 
   @Override
-  public Object upsertOnConflictStrategyIgnore(final Message entity,
+  public Object insertOnConflictIgnore(final Message entities,
       final Continuation<? super Unit> continuation) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
@@ -238,7 +242,26 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       public Unit call() throws Exception {
         __db.beginTransaction();
         try {
-          __insertionAdapterOfMessage.insert(entity);
+          __insertionAdapterOfMessage.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends Message> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfMessage.insert(entities);
           __db.setTransactionSuccessful();
           return Unit.INSTANCE;
         } finally {
@@ -287,14 +310,14 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
   }
 
   @Override
-  public Object updateMessages(final long grupoId, final Continuation<? super Unit> continuation) {
+  public Object updateMessages(final long id, final Continuation<? super Unit> continuation) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
       public Unit call() throws Exception {
         final SupportSQLiteStatement _stmt = __preparedStmtOfUpdateMessages.acquire();
         int _argIndex = 1;
-        _stmt.bindLong(_argIndex, grupoId);
+        _stmt.bindLong(_argIndex, id);
         __db.beginTransaction();
         try {
           _stmt.executeUpdateDelete();
@@ -365,7 +388,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
 
   @Override
   public PagingSource<Integer, MessageProfile> observeMessages(final long id) {
-    final String _sql = "SELECT * FROM messages where grupo_id = ? ORDER BY datetime(created_at) DESC";
+    final String _sql = "SELECT * FROM messages where chat_id = ? ORDER BY datetime(created_at) DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
@@ -374,7 +397,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       @NonNull
       protected List<MessageProfile> convertRows(@NonNull final Cursor cursor) {
         final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(cursor, "id");
-        final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(cursor, "grupo_id");
+        final int _cursorIndexOfChatId = CursorUtil.getColumnIndexOrThrow(cursor, "chat_id");
         final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(cursor, "content");
         final int _cursorIndexOfData = CursorUtil.getColumnIndexOrThrow(cursor, "data");
         final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(cursor, "created_at");
@@ -383,6 +406,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         final int _cursorIndexOfReplyTo = CursorUtil.getColumnIndexOrThrow(cursor, "reply_to");
         final int _cursorIndexOfSended = CursorUtil.getColumnIndexOrThrow(cursor, "sended");
         final int _cursorIndexOfReaded = CursorUtil.getColumnIndexOrThrow(cursor, "readed");
+        final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(cursor, "parent_id");
         final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
         final LongSparseArray<Message> _collectionReply = new LongSparseArray<Message>();
         while (cursor.moveToNext()) {
@@ -408,8 +432,8 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final Message _tmpMessage;
           final long _tmpId;
           _tmpId = cursor.getLong(_cursorIndexOfId);
-          final long _tmpGrupo_id;
-          _tmpGrupo_id = cursor.getLong(_cursorIndexOfGrupoId);
+          final long _tmpChat_id;
+          _tmpChat_id = cursor.getLong(_cursorIndexOfChatId);
           final String _tmpContent;
           _tmpContent = cursor.getString(_cursorIndexOfContent);
           final String _tmpData;
@@ -449,7 +473,9 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final int _tmp_3;
           _tmp_3 = cursor.getInt(_cursorIndexOfReaded);
           _tmpReaded = _tmp_3 != 0;
-          _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded);
+          final long _tmpParent_id;
+          _tmpParent_id = cursor.getLong(_cursorIndexOfParentId);
+          _tmpMessage = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id);
           final Profile _tmpProfile;
           final long _tmpKey_2;
           _tmpKey_2 = cursor.getLong(_cursorIndexOfProfileId);
@@ -494,7 +520,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
           try {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-            final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(_cursor, "grupo_id");
+            final int _cursorIndexOfChatId = CursorUtil.getColumnIndexOrThrow(_cursor, "chat_id");
             final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
             final int _cursorIndexOfData = CursorUtil.getColumnIndexOrThrow(_cursor, "data");
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
@@ -503,6 +529,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             final int _cursorIndexOfReplyTo = CursorUtil.getColumnIndexOrThrow(_cursor, "reply_to");
             final int _cursorIndexOfSended = CursorUtil.getColumnIndexOrThrow(_cursor, "sended");
             final int _cursorIndexOfReaded = CursorUtil.getColumnIndexOrThrow(_cursor, "readed");
+            final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
             final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
             final LongSparseArray<Message> _collectionReply = new LongSparseArray<Message>();
             while (_cursor.moveToNext()) {
@@ -527,8 +554,8 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               final Message _tmpMessage;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              final long _tmpGrupo_id;
-              _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
+              final long _tmpChat_id;
+              _tmpChat_id = _cursor.getLong(_cursorIndexOfChatId);
               final String _tmpContent;
               _tmpContent = _cursor.getString(_cursorIndexOfContent);
               final String _tmpData;
@@ -568,7 +595,9 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               final int _tmp_3;
               _tmp_3 = _cursor.getInt(_cursorIndexOfReaded);
               _tmpReaded = _tmp_3 != 0;
-              _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded);
+              final long _tmpParent_id;
+              _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
+              _tmpMessage = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id);
               final Profile _tmpProfile;
               final long _tmpKey_2;
               _tmpKey_2 = _cursor.getLong(_cursorIndexOfProfileId);
@@ -607,7 +636,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
 
   @Override
   public Flow<List<MessageProfile>> getMessages(final long id) {
-    final String _sql = "SELECT * FROM messages where grupo_id = ? ORDER BY datetime(created_at) DESC LIMIT 5";
+    final String _sql = "SELECT * FROM messages where chat_id = ? ORDER BY datetime(created_at) DESC LIMIT 5";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
@@ -621,7 +650,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
           try {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-            final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(_cursor, "grupo_id");
+            final int _cursorIndexOfChatId = CursorUtil.getColumnIndexOrThrow(_cursor, "chat_id");
             final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
             final int _cursorIndexOfData = CursorUtil.getColumnIndexOrThrow(_cursor, "data");
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
@@ -630,6 +659,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             final int _cursorIndexOfReplyTo = CursorUtil.getColumnIndexOrThrow(_cursor, "reply_to");
             final int _cursorIndexOfSended = CursorUtil.getColumnIndexOrThrow(_cursor, "sended");
             final int _cursorIndexOfReaded = CursorUtil.getColumnIndexOrThrow(_cursor, "readed");
+            final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
             final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
             final LongSparseArray<Message> _collectionReply = new LongSparseArray<Message>();
             while (_cursor.moveToNext()) {
@@ -655,8 +685,8 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               final Message _tmpMessage;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              final long _tmpGrupo_id;
-              _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
+              final long _tmpChat_id;
+              _tmpChat_id = _cursor.getLong(_cursorIndexOfChatId);
               final String _tmpContent;
               _tmpContent = _cursor.getString(_cursorIndexOfContent);
               final String _tmpData;
@@ -696,7 +726,9 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               final int _tmp_3;
               _tmp_3 = _cursor.getInt(_cursorIndexOfReaded);
               _tmpReaded = _tmp_3 != 0;
-              _tmpMessage = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded);
+              final long _tmpParent_id;
+              _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
+              _tmpMessage = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id);
               final Profile _tmpProfile;
               final long _tmpKey_2;
               _tmpKey_2 = _cursor.getLong(_cursorIndexOfProfileId);
@@ -739,7 +771,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
   @Override
   public Object getUnSendedMessage(final long profileId, final long grupoId,
       final Continuation<? super List<Message>> continuation) {
-    final String _sql = "select *  from messages where profile_id = ? and sended = 0 and grupo_id = ?";
+    final String _sql = "select *  from messages where profile_id = ? and sended = 0 and chat_id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
     int _argIndex = 1;
     _statement.bindLong(_argIndex, profileId);
@@ -753,7 +785,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
           final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(_cursor, "grupo_id");
+          final int _cursorIndexOfChatId = CursorUtil.getColumnIndexOrThrow(_cursor, "chat_id");
           final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
           final int _cursorIndexOfData = CursorUtil.getColumnIndexOrThrow(_cursor, "data");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
@@ -762,13 +794,14 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final int _cursorIndexOfReplyTo = CursorUtil.getColumnIndexOrThrow(_cursor, "reply_to");
           final int _cursorIndexOfSended = CursorUtil.getColumnIndexOrThrow(_cursor, "sended");
           final int _cursorIndexOfReaded = CursorUtil.getColumnIndexOrThrow(_cursor, "readed");
+          final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
           final List<Message> _result = new ArrayList<Message>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final Message _item;
             final long _tmpId;
             _tmpId = _cursor.getLong(_cursorIndexOfId);
-            final long _tmpGrupo_id;
-            _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
+            final long _tmpChat_id;
+            _tmpChat_id = _cursor.getLong(_cursorIndexOfChatId);
             final String _tmpContent;
             _tmpContent = _cursor.getString(_cursorIndexOfContent);
             final String _tmpData;
@@ -808,7 +841,9 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             final int _tmp_3;
             _tmp_3 = _cursor.getInt(_cursorIndexOfReaded);
             _tmpReaded = _tmp_3 != 0;
-            _item = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded);
+            final long _tmpParent_id;
+            _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
+            _item = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id);
             _result.add(_item);
           }
           return _result;
@@ -930,7 +965,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       return;
     }
     final StringBuilder _stringBuilder = StringUtil.newStringBuilder();
-    _stringBuilder.append("SELECT `id`,`grupo_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`,`readed` FROM `messages` WHERE `id` IN (");
+    _stringBuilder.append("SELECT `id`,`chat_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`,`readed`,`parent_id` FROM `messages` WHERE `id` IN (");
     final int _inputSize = _map.size();
     StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
     _stringBuilder.append(")");
@@ -950,7 +985,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         return;
       }
       final int _cursorIndexOfId = 0;
-      final int _cursorIndexOfGrupoId = 1;
+      final int _cursorIndexOfChatId = 1;
       final int _cursorIndexOfContent = 2;
       final int _cursorIndexOfData = 3;
       final int _cursorIndexOfCreatedAt = 4;
@@ -959,6 +994,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       final int _cursorIndexOfReplyTo = 7;
       final int _cursorIndexOfSended = 8;
       final int _cursorIndexOfReaded = 9;
+      final int _cursorIndexOfParentId = 10;
       while (_cursor.moveToNext()) {
         final long _tmpKey;
         _tmpKey = _cursor.getLong(_itemKeyIndex);
@@ -966,8 +1002,8 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final Message _item_1;
           final long _tmpId;
           _tmpId = _cursor.getLong(_cursorIndexOfId);
-          final long _tmpGrupo_id;
-          _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
+          final long _tmpChat_id;
+          _tmpChat_id = _cursor.getLong(_cursorIndexOfChatId);
           final String _tmpContent;
           _tmpContent = _cursor.getString(_cursorIndexOfContent);
           final String _tmpData;
@@ -1007,7 +1043,9 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final int _tmp_3;
           _tmp_3 = _cursor.getInt(_cursorIndexOfReaded);
           _tmpReaded = _tmp_3 != 0;
-          _item_1 = new Message(_tmpId,_tmpGrupo_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded);
+          final long _tmpParent_id;
+          _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
+          _item_1 = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id);
           _map.put(_tmpKey, _item_1);
         }
       }

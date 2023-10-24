@@ -23,7 +23,7 @@ import kotlinx.datetime.Instant
 data class Message(
     @PrimaryKey
     override val id: Long,
-    val grupo_id:Long,
+    val chat_id:Long,
     val content:String,
     val data:String? = null,
     val created_at:Instant,
@@ -31,5 +31,6 @@ data class Message(
     val profile_id:Long,
     val reply_to:Long? = null,
     val sended:Boolean = false,
-    val readed:Boolean = false
+    val readed:Boolean = false,
+    val parent_id:Long = 0,
 ):AppEntity

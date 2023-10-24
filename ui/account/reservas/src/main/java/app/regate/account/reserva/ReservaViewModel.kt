@@ -5,10 +5,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
-import app.regate.data.chat.ConversationRepository
+import app.regate.data.chat.ChatRepository
 import app.regate.domain.interactors.UpdateEstablecimiento
 import app.regate.domain.interactors.UpdateInstalacion
-import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveReservaDetail
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,7 +24,7 @@ class ReservaViewModel(
     observeReservaDetail: ObserveReservaDetail,
     private val updateEstablecimiento: UpdateEstablecimiento,
     private val updateInstalacion: UpdateInstalacion,
-    private val conversationRepository: ConversationRepository
+    private val chatRepository: ChatRepository
 ):ViewModel() {
     private val reservaId = savedStateHandle.get<Long>("id") ?: 0
     private val instalacionId = savedStateHandle.get<Long>("instalacion_id") ?: 0
@@ -70,7 +69,7 @@ class ReservaViewModel(
     fun navigateToConversationE(navigate:(Long,Long)->Unit){
         viewModelScope.launch {
             try{
-                val res = conversationRepository.getConversationId(establecimientoId)
+                val res = chatRepository.getConversationId(establecimientoId)
                 navigate(res.id,establecimientoId)
             }catch (e:Exception){
                 Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")

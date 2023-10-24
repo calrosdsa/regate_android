@@ -36,6 +36,8 @@ import kotlinx.datetime.Instant;
 public final class RoomProfileDao_Impl extends RoomProfileDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<Profile> __insertionAdapterOfProfile;
+
   private final EntityDeletionOrUpdateAdapter<Profile> __deletionAdapterOfProfile;
 
   private final EntityDeletionOrUpdateAdapter<Profile> __updateAdapterOfProfile;
@@ -44,6 +46,47 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
 
   public RoomProfileDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfProfile = new EntityInsertionAdapter<Profile>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `profiles` (`id`,`uuid`,`user_id`,`email`,`profile_photo`,`nombre`,`apellido`,`created_at`) VALUES (?,?,?,?,?,?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final Profile entity) {
+        statement.bindLong(1, entity.getId());
+        statement.bindString(2, entity.getUuid());
+        if (entity.getUser_id() == null) {
+          statement.bindNull(3);
+        } else {
+          statement.bindLong(3, entity.getUser_id());
+        }
+        if (entity.getEmail() == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindString(4, entity.getEmail());
+        }
+        if (entity.getProfile_photo() == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindString(5, entity.getProfile_photo());
+        }
+        statement.bindString(6, entity.getNombre());
+        if (entity.getApellido() == null) {
+          statement.bindNull(7);
+        } else {
+          statement.bindString(7, entity.getApellido());
+        }
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindString(8, _tmp);
+        }
+      }
+    };
     this.__deletionAdapterOfProfile = new EntityDeletionOrUpdateAdapter<Profile>(__db) {
       @Override
       @NonNull
@@ -181,6 +224,44 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
         statement.bindLong(9, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final Profile entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfProfile.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends Profile> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfProfile.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

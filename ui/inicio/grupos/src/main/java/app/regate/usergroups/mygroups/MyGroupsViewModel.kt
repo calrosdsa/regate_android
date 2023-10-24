@@ -110,7 +110,7 @@ class MyGroupsViewModel(
                                 data = grupoMessageData.data,
                                 type_message = grupoMessageData.type_data,
                                 created_at = now(),
-                                grupo_id = grupo.id,
+                                chat_id = grupo.id,
                                 profile_id = it.profile_id
                             )
                         }

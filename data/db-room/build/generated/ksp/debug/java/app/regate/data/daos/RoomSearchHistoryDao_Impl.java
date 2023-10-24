@@ -37,6 +37,8 @@ import kotlinx.datetime.Instant;
 public final class RoomSearchHistoryDao_Impl extends RoomSearchHistoryDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<SearchHistory> __insertionAdapterOfSearchHistory;
+
   private final EntityDeletionOrUpdateAdapter<SearchHistory> __deletionAdapterOfSearchHistory;
 
   private final EntityDeletionOrUpdateAdapter<SearchHistory> __updateAdapterOfSearchHistory;
@@ -45,6 +47,26 @@ public final class RoomSearchHistoryDao_Impl extends RoomSearchHistoryDao {
 
   public RoomSearchHistoryDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfSearchHistory = new EntityInsertionAdapter<SearchHistory>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `search_history` (`id`,`query`,`created_at`) VALUES (nullif(?, 0),?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final SearchHistory entity) {
+        statement.bindLong(1, entity.getId());
+        statement.bindString(2, entity.getQuery());
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp == null) {
+          statement.bindNull(3);
+        } else {
+          statement.bindString(3, _tmp);
+        }
+      }
+    };
     this.__deletionAdapterOfSearchHistory = new EntityDeletionOrUpdateAdapter<SearchHistory>(__db) {
       @Override
       @NonNull
@@ -119,6 +141,44 @@ public final class RoomSearchHistoryDao_Impl extends RoomSearchHistoryDao {
         statement.bindLong(4, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final SearchHistory entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfSearchHistory.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends SearchHistory> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfSearchHistory.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

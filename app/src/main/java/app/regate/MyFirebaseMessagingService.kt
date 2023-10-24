@@ -56,7 +56,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val db = AppRoomDatabase.getInstance(applicationContext)
             try{
             val messages = Json.decodeFromString<List<MessageGroupPayload>>(data["payload"].toString())
-            val grupo = db.grupoDao().getGrupo(messages[0].grupo_id)
+            val grupo = db.grupoDao().getGrupo(messages[0].chat_id)
                 Log.d(TAG,"Success $messages")
                 scope.launch {
                   grupoHandler.sendNotificationGroupMessage(messages,grupo,applicationContext)

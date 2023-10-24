@@ -6,6 +6,8 @@ interface EntityDao<in E> {
     suspend fun upsertAll(vararg entity: E)
 
     suspend fun upsertAll(entities: List<E>)
+    suspend fun insertOnConflictIgnore(entities: E)
+    suspend fun insertAllonConflictIgnore(entities: List<E>)
 
     suspend fun update(entity: E)
     suspend fun deleteEntity(entity: E): Int

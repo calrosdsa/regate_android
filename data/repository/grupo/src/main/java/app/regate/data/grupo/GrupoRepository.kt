@@ -37,7 +37,6 @@ import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Inject
 @ApplicationScope
 @Inject
@@ -57,9 +56,7 @@ class GrupoRepository(
     private val myGroupsDao: MyGroupsDao,
     private val profileMapper:UserGroupDtoToProfile
 ){
-    suspend fun updateLastMessage(grupoId:Long,message:String,created: Instant){
-        myGroupsDao.updateLastMessageGrupo(grupoId, message, created)
-    }
+
     suspend fun searchGrupos(d:SearchFilterRequest,page:Int =1,size:Int=5):PaginationGroupsResponse{
         return grupoDataSourceImpl.searchGrupos(d,page, size)
     }
@@ -77,11 +74,8 @@ class GrupoRepository(
             val response = grupoDataSourceImpl.myGroups()
             val grupos = response.map { dtoToGrupo.map(it) }
             val myGroups = response.map { MyGroups(
-                group_id = it.id,
+                id = it.id,
                 request_estado = GrupoRequestEstado.fromInt(it.grupo_request_estado),
-                last_message = it.last_message,
-                last_message_created = it.last_message_created,
-                messages_count = it.messages_count,
                 )}
             myGroupsDao.deleteMyGroups(GrupoRequestEstado.JOINED.ordinal)
             myGroupsDao.upsertAll(myGroups)
@@ -94,7 +88,7 @@ class GrupoRepository(
             val response = grupoDataSourceImpl.myGroupsRequest()
 //            val grupos = response.map { dtoToGrupo.map(it) }
             val myGroups = response.map { MyGroups(
-                group_id = it.id,
+                id = it.id,
                 request_estado = GrupoRequestEstado.fromInt(it.grupo_request_estado
                 ))}
             myGroupsDao.deleteMyGroups(GrupoRequestEstado.PENDING.ordinal)
@@ -146,7 +140,7 @@ class GrupoRepository(
     suspend fun createGrupo(d:GroupRequest):GrupoDto{
         return grupoDataSourceImpl.createGroup(d).also {
             grupoDao.upsert(dtoToGrupo.map(it))
-            myGroupsDao.upsert(MyGroups(group_id = it.id))
+            myGroupsDao.upsert(MyGroups(id = it.id))
         }
     }
     suspend fun joinGrupo(grupoId:Long,visibility:Int=2,){
@@ -161,7 +155,7 @@ class GrupoRepository(
         grupoDataSourceImpl.joinGrupo(dataR).also {
             myGroupsDao.upsert(
                 MyGroups(
-                    group_id = grupoId,
+                    id = grupoId,
                     request_estado = GrupoRequestEstado.fromInt(requestEstado)
             )
             )
@@ -194,35 +188,7 @@ class GrupoRepository(
     suspend fun filterGrupos(d:FilterGrupoData,page: Int):PaginationGroupsResponse{
         return grupoDataSourceImpl.filterGrupos(d,page)
     }
-    suspend fun saveMessage(data:GrupoMessageDto,readed:Boolean){
-        try{
-            val message = messageMapper.map(data)
-        messageProfileDao.upsert(message.copy(readed = readed))
-        }catch (e:Exception){
-            //todo()
-        }
-    }
-    suspend fun saveMessageIgnoreOnConflict(data: GrupoMessageDto,readed: Boolean){
-        try{
-            val message = messageMapper.map(data)
-            messageProfileDao.upsertOnConflictStrategyIgnore(message.copy(readed = readed))
-        }catch (e:Exception){
-            //todo()
-        }
-    }
-    suspend fun updateUnreadMessages(grupoId:Long){
-        withContext(dispatchers.computation){
-        try{
-            messageProfileDao.updateMessages(grupoId)
-        }catch (e:Exception){
-            //TODO()
-        }
-        }
-    }
 
-    suspend fun saveMessageLocal(data:Message){
-        messageProfileDao.upsert(data)
-    }
     suspend fun getUsersGroup(id:Long){
         withContext(dispatchers.computation){ 
         grupoDataSourceImpl.getUsersGrupo(id).apply {
@@ -281,7 +247,7 @@ class GrupoRepository(
         grupoDataSourceImpl.addPendingRequest(d).also {
             myGroupsDao.upsert(
                 MyGroups(
-                    group_id = d.grupo_id,
+                    id = d.grupo_id,
                     request_estado = GrupoRequestEstado.PENDING
                 )
             )

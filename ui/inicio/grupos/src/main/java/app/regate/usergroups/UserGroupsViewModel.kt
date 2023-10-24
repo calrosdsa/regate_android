@@ -7,19 +7,14 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import app.cash.paging.cachedIn
 import app.regate.api.UiMessageManager
-import app.regate.compoundmodels.MessageProfile
-import app.regate.data.chat.ConversationRepository
-import app.regate.data.grupo.GrupoRepository
+import app.regate.data.chat.ChatRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.chat.ObservePagerChat
-import app.regate.domain.observers.grupo.ObserveUserGroupsWithMessage
-import app.regate.domain.observers.pagination.ObservePagerMessages
 import app.regate.models.chat.Chat
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -27,9 +22,8 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 class UserGroupsViewModel(
-    observeGrupos: ObserveUserGroupsWithMessage,
-    private val grupoRepository: GrupoRepository,
-    private val conversationRepository: ConversationRepository,
+//    private val grupoRepository: GrupoRepository,
+    private val chatRepository: ChatRepository,
     observeAuthState: ObserveAuthState,
     pagingInteractor: ObservePagerChat,
 //    private val updateFilterGrupos: UpdateFilterGrupos
@@ -39,15 +33,13 @@ class UserGroupsViewModel(
     val pagedList: Flow<PagingData<Chat>> =
         pagingInteractor.flow.cachedIn(viewModelScope)
     val state:StateFlow<UserGroupsState> = combine(
-        observeGrupos.flow,
         loadingCounter.observable,
         uiMessageManager.message,
         observeAuthState.flow
-    ){grupos,loading,message,authState->
+    ){loading,message,authState->
         UserGroupsState(
             loading = loading,
             message = message,
-            grupos = grupos,
             authState = authState
         )
     }.stateIn(
@@ -59,13 +51,7 @@ class UserGroupsViewModel(
     init {
         pagingInteractor(ObservePagerChat.Params(PAGING_CONFIG))
         observeAuthState(Unit)
-        observeGrupos(Unit)
         getUserGrupos()
-        viewModelScope.launch {
-            observeGrupos.flow.collectLatest{
-                Log.d("DEBUG_APP_G",it.toString())
-            }
-        }
     }
     companion object {
         val PAGING_CONFIG = PagingConfig(
@@ -77,7 +63,7 @@ class UserGroupsViewModel(
     fun getUserGrupos(){
         viewModelScope.launch {
             try{
-                conversationRepository.getUnreadMessages(1)
+                chatRepository.getUnreadMessages(1)
             }catch(e:Exception){
                 Log.d("DEBUG_APP_!21",e.localizedMessage?:"")
             }

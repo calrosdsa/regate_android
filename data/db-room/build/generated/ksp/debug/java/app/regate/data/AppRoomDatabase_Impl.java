@@ -113,7 +113,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `cupos` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `time` TEXT NOT NULL, `instalacion_id` INTEGER NOT NULL, `price` REAL NOT NULL)");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_cupos_instalacion_id` ON `cupos` (`instalacion_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `users` (`id` INTEGER NOT NULL, `user_id` INTEGER NOT NULL, `email` TEXT NOT NULL, `estado` INTEGER NOT NULL, `username` TEXT NOT NULL, `profile_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `messages` (`id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `data` TEXT, `created_at` TEXT NOT NULL, `type_message` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, `readed` INTEGER NOT NULL, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `messages` (`id` INTEGER NOT NULL, `chat_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `data` TEXT, `created_at` TEXT NOT NULL, `type_message` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, `readed` INTEGER NOT NULL, `parent_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `profiles` (`id` INTEGER NOT NULL, `uuid` TEXT NOT NULL, `user_id` INTEGER, `email` TEXT, `profile_photo` TEXT, `nombre` TEXT NOT NULL, `apellido` TEXT, `created_at` TEXT, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `settings` (`uuid` TEXT NOT NULL, `paid_type` TEXT, `establecimiento_id` INTEGER NOT NULL, `payment_for_reservation` INTEGER, `horario_interval` TEXT NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`establecimiento_id`) REFERENCES `establecimientos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_settings_establecimiento_id` ON `settings` (`establecimiento_id`)");
@@ -121,7 +121,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `grupos` (`id` INTEGER NOT NULL, `uuid` TEXT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, `is_visible` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `visibility` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_grupo` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL, FOREIGN KEY(`grupo_id`) REFERENCES `grupos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_user_grupo_grupo_id` ON `user_grupo` (`grupo_id`)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `my_groups` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `group_id` INTEGER NOT NULL, `request_estado` INTEGER NOT NULL, `last_message` TEXT NOT NULL, `last_message_created` TEXT, `messages_count` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `my_groups` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `request_estado` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_establecimiento` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `establecimiento_id` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `message_inbox` (`id` INTEGER NOT NULL, `conversation_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `sender_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `reservas` (`id` INTEGER NOT NULL, `instalacion_id` INTEGER NOT NULL, `instalacion_name` TEXT NOT NULL, `establecimiento_id` INTEGER NOT NULL, `pagado` REAL NOT NULL, `total_price` REAL NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `user_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`id`))");
@@ -135,7 +135,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_balance` (`balance_id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `coins` REAL NOT NULL, PRIMARY KEY(`balance_id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `chat` (`id` INTEGER NOT NULL, `photo` TEXT, `name` TEXT NOT NULL, `last_message` TEXT, `last_message_created` TEXT, `messages_count` INTEGER NOT NULL, `type_chat` INTEGER NOT NULL, `parent_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc067a4f0939aa68fc47dd3ba98f87a0')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '756ff8cb9d74e6019cfd597675cd133b')");
       }
 
       @Override
@@ -283,9 +283,9 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoUsers + "\n"
                   + " Found:\n" + _existingUsers);
         }
-        final HashMap<String, TableInfo.Column> _columnsMessages = new HashMap<String, TableInfo.Column>(10);
+        final HashMap<String, TableInfo.Column> _columnsMessages = new HashMap<String, TableInfo.Column>(11);
         _columnsMessages.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsMessages.put("grupo_id", new TableInfo.Column("grupo_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMessages.put("chat_id", new TableInfo.Column("chat_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMessages.put("content", new TableInfo.Column("content", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMessages.put("data", new TableInfo.Column("data", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMessages.put("created_at", new TableInfo.Column("created_at", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -294,6 +294,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         _columnsMessages.put("reply_to", new TableInfo.Column("reply_to", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMessages.put("sended", new TableInfo.Column("sended", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMessages.put("readed", new TableInfo.Column("readed", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMessages.put("parent_id", new TableInfo.Column("parent_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysMessages = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesMessages = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoMessages = new TableInfo("messages", _columnsMessages, _foreignKeysMessages, _indicesMessages);
@@ -387,13 +388,9 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoUserGrupo + "\n"
                   + " Found:\n" + _existingUserGrupo);
         }
-        final HashMap<String, TableInfo.Column> _columnsMyGroups = new HashMap<String, TableInfo.Column>(6);
+        final HashMap<String, TableInfo.Column> _columnsMyGroups = new HashMap<String, TableInfo.Column>(2);
         _columnsMyGroups.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsMyGroups.put("group_id", new TableInfo.Column("group_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMyGroups.put("request_estado", new TableInfo.Column("request_estado", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsMyGroups.put("last_message", new TableInfo.Column("last_message", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsMyGroups.put("last_message_created", new TableInfo.Column("last_message_created", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsMyGroups.put("messages_count", new TableInfo.Column("messages_count", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysMyGroups = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesMyGroups = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoMyGroups = new TableInfo("my_groups", _columnsMyGroups, _foreignKeysMyGroups, _indicesMyGroups);
@@ -578,7 +575,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "cc067a4f0939aa68fc47dd3ba98f87a0", "8860263fa51e3a7c0702ec2f777d5bc9");
+    }, "756ff8cb9d74e6019cfd597675cd133b", "a4b75bcc755b075067980452d5db8d1d");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;

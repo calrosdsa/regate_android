@@ -32,6 +32,8 @@ import kotlinx.coroutines.flow.Flow;
 public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<UserRoom> __insertionAdapterOfUserRoom;
+
   private final EntityDeletionOrUpdateAdapter<UserRoom> __deletionAdapterOfUserRoom;
 
   private final EntityDeletionOrUpdateAdapter<UserRoom> __updateAdapterOfUserRoom;
@@ -40,6 +42,23 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
 
   public RoomUserRoomDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfUserRoom = new EntityInsertionAdapter<UserRoom>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `user_room` (`id`,`profile_id`,`entity_id`,`is_admin`) VALUES (nullif(?, 0),?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final UserRoom entity) {
+        statement.bindLong(1, entity.getId());
+        statement.bindLong(2, entity.getProfile_id());
+        statement.bindLong(3, entity.getEntity_id());
+        final int _tmp = entity.is_admin() ? 1 : 0;
+        statement.bindLong(4, _tmp);
+      }
+    };
     this.__deletionAdapterOfUserRoom = new EntityDeletionOrUpdateAdapter<UserRoom>(__db) {
       @Override
       @NonNull
@@ -105,6 +124,44 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
         statement.bindLong(5, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final UserRoom entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfUserRoom.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends UserRoom> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfUserRoom.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

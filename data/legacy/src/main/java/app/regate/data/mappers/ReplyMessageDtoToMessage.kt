@@ -14,7 +14,7 @@ class ReplyMessageDtoToMessage:Mapper<ReplyMessage,Message> {
             profile_id = from.profile_id,
             created_at = from.created_at.toInstant(),
             type_message = from.type_message,
-            grupo_id = from.grupo_id,
+            chat_id = from.grupo_id,
             data = from.data,
             sended = true
         )

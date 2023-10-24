@@ -37,6 +37,8 @@ import kotlinx.coroutines.flow.Flow;
 public final class RoomLabelDao_Impl extends RoomLabelDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<Labels> __insertionAdapterOfLabels;
+
   private final EntityDeletionOrUpdateAdapter<Labels> __deletionAdapterOfLabels;
 
   private final EntityDeletionOrUpdateAdapter<Labels> __updateAdapterOfLabels;
@@ -45,6 +47,36 @@ public final class RoomLabelDao_Impl extends RoomLabelDao {
 
   public RoomLabelDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfLabels = new EntityInsertionAdapter<Labels>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `labels` (`id`,`name`,`thumbnail`,`type_label`) VALUES (?,?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final Labels entity) {
+        statement.bindLong(1, entity.getId());
+        statement.bindString(2, entity.getName());
+        if (entity.getThumbnail() == null) {
+          statement.bindNull(3);
+        } else {
+          statement.bindString(3, entity.getThumbnail());
+        }
+        final String _tmp;
+        if (entity.getType_label() == null) {
+          _tmp = null;
+        } else {
+          _tmp = AppTypeConverters.INSTANCE.fromLabelType(entity.getType_label());
+        }
+        if (_tmp == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindString(4, _tmp);
+        }
+      }
+    };
     this.__deletionAdapterOfLabels = new EntityDeletionOrUpdateAdapter<Labels>(__db) {
       @Override
       @NonNull
@@ -152,6 +184,44 @@ public final class RoomLabelDao_Impl extends RoomLabelDao {
         statement.bindString(6, entity.getName());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final Labels entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfLabels.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends Labels> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfLabels.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

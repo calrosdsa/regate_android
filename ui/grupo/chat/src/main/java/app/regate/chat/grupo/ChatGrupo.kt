@@ -57,6 +57,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.LocalAppUtil
+import app.regate.common.composes.component.chat.Chat
 import app.regate.common.composes.component.input.ChatInput
 import app.regate.common.composes.component.input.Keyboard
 import app.regate.common.composes.component.input.emoji.EmojiLayout
@@ -131,11 +132,11 @@ internal fun ChatGrupo(
         navigateUp = navigateUp,
         sendMessage = viewModel::sendMessage,
         openAuthBottomSheet = openAuthBottomSheet,
-        formatterRelativeTime = formatter::formatShortRelativeTime,
         clearMessage = viewModel::clearMessage,
 //        navigateToCreateSala = navigateToCreateSala,
         navigateToGroup = navigateToGroup,
         getUserProfileGrupo = viewModel::getUserGrupo,
+        formatterRelativeTime = formatter::formatShortRelativeTime,
         formatShortDate = {
             formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)
         },
@@ -166,11 +167,11 @@ internal fun ChatGrupo(
     navigateUp: () -> Unit,
     sendMessage:(MessageData,()->Unit)->Unit,
     openAuthBottomSheet: () -> Unit,
-    formatterRelativeTime:(date:Instant)->String,
     clearMessage:(id:Long)->Unit,
 //    navigateToCreateSala: (id: Long) -> Unit,
-    navigateToGroup: (id: Long) -> Unit,
     getUserProfileGrupo:(id:Long)->UserProfileGrupo?,
+    navigateToGroup: (id: Long) -> Unit,
+    formatterRelativeTime:(date:Instant)->String,
     formatShortDate:(Instant)->String,
     formatShortTime:(Instant)->String,
     formatShortDateFromString: (String) -> String,
@@ -386,19 +387,19 @@ internal fun ChatGrupo(
                 colors = colors,
                 lazyPagingItems = lazyPagingItems,
                 user = viewState.user,
-                formatterRelatimeTime = formatterRelativeTime,
                 setReply = {
                     coroutineScope.launch {
                     launch{ replyMessage.value =it }
                     }
                 },
-                lazyListState = lazyListState,
-                getUserProfileGrupo = getUserProfileGrupo,
+                formatterRelatimeTime = formatterRelativeTime,
                 formatShortDate = formatShortDate,
-                navigateToInstalacionReserva = navigateToInstalacionReserva,
                 formatShortTime = formatShortTime,
                 formatShortTimeFromString = formatShortTimeFromString,
                 formatShortDateFromString = formatShortDateFromString,
+                navigateToInstalacionReserva = navigateToInstalacionReserva,
+                getUserProfileGrupo = getUserProfileGrupo,
+                lazyListState = lazyListState,
                 navigateToSala = {navigateToSala(it.toLong())},
                 copyMessage = {text:String,isLink:Boolean->
                     clipboardManager.setText(AnnotatedString(text))

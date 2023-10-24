@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
-import app.regate.data.chat.ConversationRepository
+import app.regate.data.chat.ChatRepository
 import app.regate.data.dto.empresa.conversation.Conversation
 import app.regate.domain.observers.account.ObserveUser
 import app.regate.util.ObservableLoadingCounter
@@ -18,7 +18,7 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 class ConversationsViewModel(
-    private val conversationRepository: ConversationRepository,
+    private val chatRepository: ChatRepository,
     observeUser: ObserveUser,
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
@@ -50,7 +50,7 @@ class ConversationsViewModel(
     fun getConversations(){
         viewModelScope.launch {
             try{
-                val res = conversationRepository.getConversations()
+                val res = chatRepository.getConversations()
                 conversations.tryEmit(res)
             }catch (e:Exception){
                 Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")

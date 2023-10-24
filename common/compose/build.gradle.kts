@@ -46,6 +46,9 @@ dependencies {
 //    api(projects.common.ui.resources)
     api(projects.common.view)
 
+    implementation(libs.component.swipe)
+
+
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
-import app.regate.data.chat.ConversationRepository
+import app.regate.data.chat.ChatRepository
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import app.regate.data.dto.empresa.grupo.GrupoMessageData
@@ -50,7 +50,7 @@ class BottomReservaViewModel(
     private val reservaRepository: ReservaRepository,
     private val instalacionRepository: InstalacionRepository,
     private val establecimientoRepository: EstablecimientoRepository,
-    private val conversationRepository: ConversationRepository
+    private val chatRepository: ChatRepository
 //    private val updateEstablecimiento: UpdateEstablecimiento
 ):ViewModel(){
     private val instalacionId: Long = savedStateHandle["id"]!!
@@ -141,7 +141,7 @@ class BottomReservaViewModel(
     fun navigateToConversationE(navigate:(Long,Long)->Unit){
         viewModelScope.launch {
         try{
-            val res = conversationRepository.getConversationId(establecimientoId)
+            val res = chatRepository.getConversationId(establecimientoId)
             navigate(res.id,establecimientoId)
         }catch (e:Exception){
             Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")

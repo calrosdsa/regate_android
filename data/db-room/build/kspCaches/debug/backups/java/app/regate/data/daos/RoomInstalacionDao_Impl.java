@@ -38,6 +38,8 @@ import kotlinx.coroutines.flow.Flow;
 public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<Instalacion> __insertionAdapterOfInstalacion;
+
   private final EntityDeletionOrUpdateAdapter<Instalacion> __deletionAdapterOfInstalacion;
 
   private final EntityDeletionOrUpdateAdapter<Instalacion> __updateAdapterOfInstalacion;
@@ -50,6 +52,51 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
 
   public RoomInstalacionDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfInstalacion = new EntityInsertionAdapter<Instalacion>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `instalaciones` (`id`,`cantidad_personas`,`category_id`,`category_name`,`description`,`establecimiento_id`,`name`,`precio_hora`,`portada`) VALUES (?,?,?,?,?,?,?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final Instalacion entity) {
+        statement.bindLong(1, entity.getId());
+        if (entity.getCantidad_personas() == null) {
+          statement.bindNull(2);
+        } else {
+          statement.bindLong(2, entity.getCantidad_personas());
+        }
+        if (entity.getCategory_id() == null) {
+          statement.bindNull(3);
+        } else {
+          statement.bindLong(3, entity.getCategory_id());
+        }
+        if (entity.getCategory_name() == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindString(4, entity.getCategory_name());
+        }
+        if (entity.getDescription() == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindString(5, entity.getDescription());
+        }
+        statement.bindLong(6, entity.getEstablecimiento_id());
+        statement.bindString(7, entity.getName());
+        if (entity.getPrecio_hora() == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindLong(8, entity.getPrecio_hora());
+        }
+        if (entity.getPortada() == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindString(9, entity.getPortada());
+        }
+      }
+    };
     this.__deletionAdapterOfInstalacion = new EntityDeletionOrUpdateAdapter<Instalacion>(__db) {
       @Override
       @NonNull
@@ -215,6 +262,44 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
         statement.bindLong(10, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final Instalacion entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfInstalacion.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends Instalacion> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfInstalacion.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

@@ -246,6 +246,10 @@ internal fun AppNavigation(
         ){
             composeScreens.conversation(
                 navigateUp = navController::navigateUp,
+                navigateToInstalacionReserva = {instalacionId,establecimientoId ->
+                    navController.navigate(Route.RESERVAR id instalacionId id establecimientoId)
+                },
+                navigateToSala = { navController.navigate(Route.SALA id it)}
             )
         }
 

@@ -11,13 +11,15 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 abstract class RoomChatDao:ChatDao,RoomEntityDao<Chat> {
     @Transaction
-    @Query("""
+    @Query(
+        """
             SELECT c.id,c.name,c.photo,
-              (select content from messages where grupo_id = c.id order by created_at DESC limit 1) as last_message,
-              (select created_at from messages where grupo_id = c.id order by created_at DESC limit 1) as last_message_created,
-              (select count(*) from messages where grupo_id = c.id and readed = 0) as messages_count,type_chat,parent_id
+              (select content from messages where chat_id = c.id order by created_at DESC limit 1) as last_message,
+              (select created_at from messages where chat_id = c.id order by created_at DESC limit 1) as last_message_created,
+              (select count(*) from messages where chat_id = c.id and readed = 0) as messages_count,type_chat,parent_id
                FROM chat as c order by last_message_created desc
-    """)
+    """
+    )
     abstract override fun observeChatsPaging(): PagingSource<Int, Chat>
     @Transaction
     @Query("""

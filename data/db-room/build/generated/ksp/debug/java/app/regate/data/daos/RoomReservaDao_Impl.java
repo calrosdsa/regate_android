@@ -45,6 +45,8 @@ import kotlinx.datetime.Instant;
 public final class RoomReservaDao_Impl extends RoomReservaDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<Reserva> __insertionAdapterOfReserva;
+
   private final EntityDeletionOrUpdateAdapter<Reserva> __deletionAdapterOfReserva;
 
   private final EntityDeletionOrUpdateAdapter<Reserva> __updateAdapterOfReserva;
@@ -55,6 +57,43 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
 
   public RoomReservaDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfReserva = new EntityInsertionAdapter<Reserva>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `reservas` (`id`,`instalacion_id`,`instalacion_name`,`establecimiento_id`,`pagado`,`total_price`,`start_date`,`end_date`,`user_id`,`created_at`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final Reserva entity) {
+        statement.bindLong(1, entity.getId());
+        statement.bindLong(2, entity.getInstalacion_id());
+        statement.bindString(3, entity.getInstalacion_name());
+        statement.bindLong(4, entity.getEstablecimiento_id());
+        statement.bindDouble(5, entity.getPagado());
+        statement.bindDouble(6, entity.getTotal_price());
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getStart_date());
+        if (_tmp == null) {
+          statement.bindNull(7);
+        } else {
+          statement.bindString(7, _tmp);
+        }
+        final String _tmp_1 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getEnd_date());
+        if (_tmp_1 == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindString(8, _tmp_1);
+        }
+        statement.bindLong(9, entity.getUser_id());
+        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp_2 == null) {
+          statement.bindNull(10);
+        } else {
+          statement.bindString(10, _tmp_2);
+        }
+      }
+    };
     this.__deletionAdapterOfReserva = new EntityDeletionOrUpdateAdapter<Reserva>(__db) {
       @Override
       @NonNull
@@ -188,6 +227,44 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
         statement.bindLong(11, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final Reserva entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfReserva.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends Reserva> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfReserva.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

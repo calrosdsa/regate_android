@@ -68,7 +68,7 @@ class HandleNotificationGrupo {
             val m3 = messages[0]
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "${AppUrl}/${Route.CHAT_GRUPO}/${grupo.id}".toUri(),
+                "${AppUrl}/${Route.CHAT_GRUPO}/${messages[0].chat_id}/${grupo.id}".toUri(),
                 context,
                 MainActivity::class.java
             )

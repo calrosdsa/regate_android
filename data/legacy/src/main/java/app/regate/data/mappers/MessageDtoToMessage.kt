@@ -11,7 +11,7 @@ class MessageDtoToMessage:Mapper<GrupoMessageDto,Message> {
         return Message(
             id = from.id,
             profile_id = from.profile_id,
-            grupo_id = from.grupo_id,
+            chat_id = from.chat_id,
             content = from.content,
             created_at = from.created_at?: Clock.System.now(),
             reply_to = from.reply_to,
@@ -30,7 +30,7 @@ class MessageToMessageDto:Mapper<Message,GrupoMessageDto> {
         return GrupoMessageDto(
             id = from.id,
             profile_id = from.profile_id,
-            grupo_id = from.grupo_id,
+            chat_id = from.chat_id,
             content = from.content,
             created_at = from.created_at,
             data = from.data,

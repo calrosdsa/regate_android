@@ -35,6 +35,8 @@ import kotlinx.datetime.Instant;
 public final class RoomGrupoDao_Impl extends RoomGrupoDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<Grupo> __insertionAdapterOfGrupo;
+
   private final EntityDeletionOrUpdateAdapter<Grupo> __deletionAdapterOfGrupo;
 
   private final EntityDeletionOrUpdateAdapter<Grupo> __updateAdapterOfGrupo;
@@ -45,6 +47,41 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
 
   public RoomGrupoDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfGrupo = new EntityInsertionAdapter<Grupo>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `grupos` (`id`,`uuid`,`name`,`description`,`created_at`,`photo`,`is_visible`,`profile_id`,`visibility`) VALUES (?,?,?,?,?,?,?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final Grupo entity) {
+        statement.bindLong(1, entity.getId());
+        statement.bindString(2, entity.getUuid());
+        statement.bindString(3, entity.getName());
+        if (entity.getDescription() == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindString(4, entity.getDescription());
+        }
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindString(5, _tmp);
+        }
+        if (entity.getPhoto() == null) {
+          statement.bindNull(6);
+        } else {
+          statement.bindString(6, entity.getPhoto());
+        }
+        final int _tmp_1 = entity.is_visible() ? 1 : 0;
+        statement.bindLong(7, _tmp_1);
+        statement.bindLong(8, entity.getProfile_id());
+        statement.bindLong(9, entity.getVisibility());
+      }
+    };
     this.__deletionAdapterOfGrupo = new EntityDeletionOrUpdateAdapter<Grupo>(__db) {
       @Override
       @NonNull
@@ -172,6 +209,44 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
         statement.bindLong(10, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final Grupo entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfGrupo.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends Grupo> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfGrupo.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

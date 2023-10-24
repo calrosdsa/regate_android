@@ -16,7 +16,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.component.item.GrupoItem
 import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.viewModel
-import app.regate.constant.Route
 import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import me.tatarka.inject.annotations.Assisted
@@ -98,7 +97,7 @@ internal fun FilterGroups(
             items = lazyPagingItems,
         ) { result ->
             if (result != null) {
-                val grupoU = viewState.userGroups.find { it.group_id == result.id }
+                val grupoU = viewState.userGroups.find { it.id == result.id }
 
                 if(grupoU != null){
                     GrupoItem(

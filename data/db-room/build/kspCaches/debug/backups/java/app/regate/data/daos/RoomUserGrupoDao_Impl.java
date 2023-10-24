@@ -33,6 +33,8 @@ import kotlinx.coroutines.flow.Flow;
 public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<UserGrupo> __insertionAdapterOfUserGrupo;
+
   private final EntityDeletionOrUpdateAdapter<UserGrupo> __deletionAdapterOfUserGrupo;
 
   private final EntityDeletionOrUpdateAdapter<UserGrupo> __updateAdapterOfUserGrupo;
@@ -49,6 +51,23 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
 
   public RoomUserGrupoDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfUserGrupo = new EntityInsertionAdapter<UserGrupo>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `user_grupo` (`id`,`profile_id`,`grupo_id`,`is_admin`) VALUES (nullif(?, 0),?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final UserGrupo entity) {
+        statement.bindLong(1, entity.getId());
+        statement.bindLong(2, entity.getProfile_id());
+        statement.bindLong(3, entity.getGrupo_id());
+        final int _tmp = entity.is_admin() ? 1 : 0;
+        statement.bindLong(4, _tmp);
+      }
+    };
     this.__deletionAdapterOfUserGrupo = new EntityDeletionOrUpdateAdapter<UserGrupo>(__db) {
       @Override
       @NonNull
@@ -146,6 +165,44 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
         statement.bindLong(5, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final UserGrupo entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfUserGrupo.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends UserGrupo> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfUserGrupo.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

@@ -4,24 +4,20 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.regate.api.UiMessage
 import app.regate.constant.Host
 import app.regate.data.account.AccountRepository
+import app.regate.data.chat.ChatRepository
 import app.regate.data.coin.CoinRepository
 import app.regate.data.dto.account.auth.FcmRequest
 import app.regate.data.dto.account.ws.PayloadUserBalanceUpdate
 import app.regate.data.dto.account.ws.PayloadWsAccountType
 import app.regate.data.dto.account.ws.WsAccountPayload
-import app.regate.data.dto.empresa.grupo.GrupoEvent
-import app.regate.data.dto.empresa.grupo.GrupoEventType
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.system.NotificationDto
-import app.regate.data.grupo.GrupoRepository
 import app.regate.data.system.SystemRepository
 import app.regate.domain.observers.account.ObserveUser
 import app.regate.settings.AppPreferences
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.messaging.ktx.messaging
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
@@ -29,15 +25,11 @@ import io.ktor.client.plugins.websocket.webSocketSession
 import io.ktor.http.HttpMethod
 import io.ktor.util.InternalAPI
 import io.ktor.websocket.Frame
-import io.ktor.websocket.close
 import io.ktor.websocket.readText
 import io.ktor.websocket.send
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -50,7 +42,7 @@ class MainActivityViewModel(
     private val preferences:AppPreferences,
     private val client: HttpClient,
     private val coinRepository: CoinRepository,
-    private val grupoRepository: GrupoRepository,
+    private val chatRepository: ChatRepository,
     private val systemRepository: SystemRepository,
     private val observeUser: ObserveUser,
     ): ViewModel() {
@@ -110,7 +102,7 @@ class MainActivityViewModel(
                           }
                           PayloadWsAccountType.PAYLOAD_GRUPO_MESSAGE.ordinal ->{
                               val payload = Json.decodeFromString<GrupoMessageDto>(data.payload)
-                              grupoRepository.saveMessageIgnoreOnConflict(payload,false)
+                              chatRepository.saveMessageIgnoreOnConflict(payload,false)
                               Log.d("DEBUG_APP",payload.toString())
 //                              db.myGroupsDao().updateLastMessageGrupo(grupo.id,lastMessage.content,lastMessage.created_at)
                           }

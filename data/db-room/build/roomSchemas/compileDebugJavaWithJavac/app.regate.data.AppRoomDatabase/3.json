@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "cc067a4f0939aa68fc47dd3ba98f87a0",
+    "identityHash": "c3148020f2d879b8a1b317d8a6cfc6be",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -298,7 +298,7 @@
       },
       {
         "tableName": "messages",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `data` TEXT, `created_at` TEXT NOT NULL, `type_message` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, `readed` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `chat_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `data` TEXT, `created_at` TEXT NOT NULL, `type_message` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, `readed` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -307,8 +307,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "grupo_id",
-            "columnName": "grupo_id",
+            "fieldPath": "chat_id",
+            "columnName": "chat_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -667,7 +667,7 @@
       },
       {
         "tableName": "my_groups",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `group_id` INTEGER NOT NULL, `request_estado` INTEGER NOT NULL, `last_message` TEXT NOT NULL, `last_message_created` TEXT, `messages_count` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `request_estado` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -676,32 +676,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "group_id",
-            "columnName": "group_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
             "fieldPath": "request_estado",
             "columnName": "request_estado",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "last_message",
-            "columnName": "last_message",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "last_message_created",
-            "columnName": "last_message_created",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "messages_count",
-            "columnName": "messages_count",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -1261,7 +1237,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc067a4f0939aa68fc47dd3ba98f87a0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c3148020f2d879b8a1b317d8a6cfc6be')"
     ]
   }
 }

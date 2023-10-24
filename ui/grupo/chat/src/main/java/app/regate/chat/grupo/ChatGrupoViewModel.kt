@@ -8,16 +8,19 @@ import androidx.lifecycle.viewModelScope
 import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
 import app.cash.paging.cachedIn
-import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupo
-import app.regate.constant.Host
+import app.regate.constant.HostMessage
 import app.regate.data.app.EmojiCategory
+import app.regate.data.chat.ChatRepository
 import app.regate.data.common.MessageData
+import app.regate.data.dto.chat.MessageEvent
+import app.regate.data.dto.chat.MessageEventType
+import app.regate.data.dto.chat.MessagePublishRequest
+import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import app.regate.data.dto.empresa.grupo.GrupoEvent
-import app.regate.data.dto.empresa.grupo.GrupoEventType
 import app.regate.data.dto.empresa.grupo.GrupoMessageData
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.grupo.GrupoRepository
@@ -41,6 +44,7 @@ import io.ktor.client.plugins.websocket.webSocketSession
 import io.ktor.http.HttpMethod
 import io.ktor.util.InternalAPI
 import io.ktor.websocket.Frame
+import io.ktor.websocket.close
 import io.ktor.websocket.readText
 import io.ktor.websocket.send
 import kotlinx.coroutines.async
@@ -70,19 +74,19 @@ class ChatGrupoViewModel(
     private val client:HttpClient,
     private val grupoRepository:GrupoRepository,
     private val usersRepository: UsersRepository,
+    private val chatRepository: ChatRepository,
     private val cupoRepository: CupoRepository,
     private val preferences:AppPreferences,
-//    private val profileDao: ProfileDao,
     private val labelRepository: LabelRepository,
     observeUser: ObserveUser,
     observeAuthState: ObserveAuthState,
     observeGrupo: ObserveGrupo,
     pagingInteractor: ObservePagerMessages,
     observeUsersGrupo: ObserveUsersGrupo,
-//    private val observeInstalacion: ObserveInstalacion
 ):ViewModel() {
 //    private val grupoId2:Long = savedStateHandle["id"]!!
-    private val grupoId:Long = savedStateHandle["id"]!!
+    private val chatId:Long = savedStateHandle["id"]!!
+    private val grupoId:Long = savedStateHandle.get<Long>("grupoId")?:0
     private var data = savedStateHandle.get<String>("data")?:""
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
@@ -124,12 +128,13 @@ class ChatGrupoViewModel(
         observeAuthState(Unit)
         observeGrupo(ObserveGrupo.Param(id = grupoId))
         observeUsersGrupo(ObserveUsersGrupo.Params(id = grupoId))
-        pagingInteractor(ObservePagerMessages.Params(PAGING_CONFIG,grupoId))
+        pagingInteractor(ObservePagerMessages.Params(PAGING_CONFIG,chatId))
+        Log.d("DEBUG_APP_GRUPO_ID",grupoId.toString())
         viewModelScope.launch {
             startWs()
         }
         viewModelScope.launch {
-            grupoRepository.observeMessages(grupoId).collectLatest {
+            grupoRepository.observeMessages(chatId).collectLatest {
                 Log.d("DEBUG_APP_MESSAGE",it.size.toString())
                 val scroll = scrollToBottom.value?:false
                 scrollToBottom.tryEmit(!scroll)
@@ -144,10 +149,9 @@ class ChatGrupoViewModel(
                 }catch(e:Exception){
                     Log.d("DEBUG_APP",e.localizedMessage?:"")
                 }
-
             }
         }
-
+        outputMessage()
         getEmojiData()
 
     }
@@ -167,60 +171,65 @@ class ChatGrupoViewModel(
     }
     @SuppressLint("SuspiciousIndentation")
     suspend fun startWs(){
+        var cl:DefaultClientWebSocketSession? = null
         try {
-            val cl = client.webSocketSession(method = HttpMethod.Get, host = Host.host,
+            cl = client.webSocketSession(method = HttpMethod.Get, host = HostMessage.host,
 //                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
-                port =Host.port, path = "/v1/ws/chat-grupo?id=${grupoId}")
+                port =HostMessage.port, path = "/v1/ws/suscribe/chat/?id=${chatId}&profileId=43")
             Log.d("DEBUG_APP","start ws.......")
             Log.d("DEBUG_APP_WS",cl.isActive.toString())
-            cl.apply {
-                launch {
-                    outputMessage()
-                }
-            }
-            if(cl.isActive){
-                syncMessages()
-            }
-
-            while (cl.isActive) {
-                val othersMessage = cl.incoming.receive() as? Frame.Text
-                if (othersMessage != null) {
-                    val event = Json.decodeFromString<GrupoEvent>(othersMessage.readText())
-                        if (event.type == GrupoEventType.GrupoEventMessage || event.type == GrupoEventType.GrupoEventIgnore) {
+//            cl.apply {
+//                launch {
+//                    outputMessage()
+//                }
+//            }
+//            if(cl.isActive){
+//                syncMessages()
+//            }
+            cl.apply{
+                    for (message in incoming) {
+                        message as? Frame.Text ?: continue
+//                        val payload = Json.decodeFromString<WsAccountPayload>(message.readText())
+                        val event = Json.decodeFromString<MessageEvent>(message.readText())
+                        Log.d("DEBUG_APP",message.readText())
+                        if (event.type == MessageEventType.EventTypeMessage) {
+                            val payload = Json.decodeFromString<GrupoMessageDto>(event.payload)
 //                            Log.d("DEBUG_APP_MESSAGE_REC",event.message.toString())
-                        grupoRepository.saveMessage(event.message,true)
+                        chatRepository.saveMessage(payload,true)
 //                            grupoRepository.updateLastMessage(grupoId,message.content,message.created_at)
+                        }
+//                    if (event.type == GrupoEventType.GrupoEvnetUser) {
+//                        val id = event.message.profile_id
+//                        try {
+//                            val res = usersRepository.getProfile(id)
+//                            uiMessageManager.emitMessage(UiMessage(message = "${res.nombre} acaba de unirse al grupo"))
+//                        } catch (e: Exception) {
+//                            uiMessageManager.emitMessage(
+//                                UiMessage(
+//                                    message = e.localizedMessage ?: ""
+//                                )
+//                            )
+//                        }
+//                    }
+//                    if (event.type == GrupoEventType.GrupoEventSala) {
+//                        try {
+//                            uiMessageManager.emitMessage(UiMessage(message = "Se ha creado una nueva sala ${event.sala?.nombre}"))
+//                        } catch (e: Exception) {
+//                            uiMessageManager.emitMessage(
+//                                UiMessage(
+//                                    message = e.localizedMessage ?: ""
+//                                )
+//                            )
+//                        }
+//                    }
 
-                        }
-                    if (event.type == GrupoEventType.GrupoEvnetUser) {
-                        val id = event.message.profile_id
-                        try {
-                            val res = usersRepository.getProfile(id)
-                            uiMessageManager.emitMessage(UiMessage(message = "${res.nombre} acaba de unirse al grupo"))
-                        } catch (e: Exception) {
-                            uiMessageManager.emitMessage(
-                                UiMessage(
-                                    message = e.localizedMessage ?: ""
-                                )
-                            )
-                        }
+
                     }
-                    if (event.type == GrupoEventType.GrupoEventSala) {
-                        try {
-                            uiMessageManager.emitMessage(UiMessage(message = "Se ha creado una nueva sala ${event.sala?.nombre}"))
-                        } catch (e: Exception) {
-                            uiMessageManager.emitMessage(
-                                UiMessage(
-                                    message = e.localizedMessage ?: ""
-                                )
-                            )
-                        }
-                    }
-                    Log.d("DEBUG_APP", othersMessage.readText())
-                }
+
             }
             cl.start(emptyList())
         }catch (e:Exception){
+            cl?.close()
             delay(1000)
             Log.d("DEBUG_ARR",e.localizedMessage?:"")
             startWs()
@@ -234,38 +243,45 @@ class ChatGrupoViewModel(
 //            prefetchDistance = 1
         )
     }
-    @SuppressLint("SuspiciousIndentation")
-    suspend fun DefaultClientWebSocketSession.outputMessage(){
+//    @SuppressLint("SuspiciousIndentation")
+//    suspend fun DefaultClientWebSocketSession.outputMessage(){
+    fun outputMessage(){
+    viewModelScope.launch {
         messageChat.filterNotNull().collectLatest {data->
+            try{
             if (data.content == "" && data.data == null) return@collectLatest
                 state.value.user?.let {
                     Log.d("DEBUG_APP",it.toString())
                     val message = GrupoMessageDto(
                         profile_id = it.profile_id,
                         content = data.content,
-                        grupo_id = grupoId,
+                        chat_id = chatId,
                         type_message = data.type_message,
                         reply_to = data.reply_to,
                         data = data.data,
                         created_at = data.created_at,
                         id = data.id,
+                        parent_id = data.parent_id,
                     )
-                    val event =  GrupoEvent(
-                        type = "message",
+                    val event =  MessagePublishRequest(
                         message = message,
+                        chat_id = chatId,
+                        type_chat = TypeChat.TYPE_CHAT_GRUPO.ordinal
                     )
-                    send(
-                        Json.encodeToString(event)
-                    )
+                    Log.d("DEBUG_APP_DATA",event.toString())
+                   chatRepository.publishMessage(event)
                 }
-
+            }catch(e:Exception){
+                Log.d("DEBUG_APP",e.toString())
+            }
         }
+    }
     }
 
     fun getData(){
         viewModelScope.launch {
             try {
-                grupoRepository.updateUnreadMessages(grupoId)
+                chatRepository.updateUnreadMessages(chatId)
                 grupoRepository.getUsersGroup(grupoId)
 //                grupoRepository.getMessagesGrupo(grupoId)
             }catch(e:SerializationException){
@@ -301,14 +317,14 @@ class ChatGrupoViewModel(
                 reply_to = messageData.reply_to,
                 profile_id = state.value.user?.profile_id?:0,
                 created_at = Clock.System.now(),
-                grupo_id = grupoId,
+                chat_id = chatId,
                 id = getLongUuid(),
                 type_message = messageData.type_message,
                 data = messageData.data,
-                readed = true
+                readed = true,
+                parent_id = grupoId
             )
-            val res = async { grupoRepository.saveMessageLocal(message) }
-            grupoRepository.updateLastMessage(grupoId,message.content,message.created_at)
+            val res = async { chatRepository.saveMessageLocal(message) }
             res.await()
             animateScroll()
             messageChat.tryEmit(message)
@@ -317,7 +333,7 @@ class ChatGrupoViewModel(
     fun syncMessages(){
         viewModelScope.launch {
 //            if(state.value.authState == AppAuthState.LOGGED_IN){
-               grupoRepository.syncMessages(grupoId)
+               grupoRepository.syncMessages(chatId)
 //            }
         }
     }

@@ -36,6 +36,8 @@ import kotlinx.datetime.Instant;
 public final class RoomChatDao_Impl extends RoomChatDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<Chat> __insertionAdapterOfChat;
+
   private final EntityDeletionOrUpdateAdapter<Chat> __deletionAdapterOfChat;
 
   private final EntityDeletionOrUpdateAdapter<Chat> __updateAdapterOfChat;
@@ -44,6 +46,39 @@ public final class RoomChatDao_Impl extends RoomChatDao {
 
   public RoomChatDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfChat = new EntityInsertionAdapter<Chat>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `chat` (`id`,`photo`,`name`,`last_message`,`last_message_created`,`messages_count`,`type_chat`,`parent_id`) VALUES (?,?,?,?,?,?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final Chat entity) {
+        statement.bindLong(1, entity.getId());
+        if (entity.getPhoto() == null) {
+          statement.bindNull(2);
+        } else {
+          statement.bindString(2, entity.getPhoto());
+        }
+        statement.bindString(3, entity.getName());
+        if (entity.getLast_message() == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindString(4, entity.getLast_message());
+        }
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getLast_message_created());
+        if (_tmp == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindString(5, _tmp);
+        }
+        statement.bindLong(6, entity.getMessages_count());
+        statement.bindLong(7, entity.getType_chat());
+        statement.bindLong(8, entity.getParent_id());
+      }
+    };
     this.__deletionAdapterOfChat = new EntityDeletionOrUpdateAdapter<Chat>(__db) {
       @Override
       @NonNull
@@ -160,6 +195,44 @@ public final class RoomChatDao_Impl extends RoomChatDao {
   }
 
   @Override
+  public Object insertOnConflictIgnore(final Chat entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfChat.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends Chat> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfChat.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
   public Object deleteEntity(final Chat entity, final Continuation<? super Integer> continuation) {
     return CoroutinesRoom.execute(__db, true, new Callable<Integer>() {
       @Override
@@ -255,9 +328,9 @@ public final class RoomChatDao_Impl extends RoomChatDao {
   public PagingSource<Integer, Chat> observeChatsPaging() {
     final String _sql = "\n"
             + "            SELECT c.id,c.name,c.photo,\n"
-            + "              (select content from messages where grupo_id = c.id order by created_at DESC limit 1) as last_message,\n"
-            + "              (select created_at from messages where grupo_id = c.id order by created_at DESC limit 1) as last_message_created,\n"
-            + "              (select count(*) from messages where grupo_id = c.id and readed = 0) as messages_count,type_chat,parent_id\n"
+            + "              (select content from messages where chat_id = c.id order by created_at DESC limit 1) as last_message,\n"
+            + "              (select created_at from messages where chat_id = c.id order by created_at DESC limit 1) as last_message_created,\n"
+            + "              (select count(*) from messages where chat_id = c.id and readed = 0) as messages_count,type_chat,parent_id\n"
             + "               FROM chat as c order by last_message_created desc\n"
             + "    ";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);

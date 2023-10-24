@@ -65,7 +65,6 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.regate.common.composes.component.item.EstablecimientoItem
 import app.regate.common.composes.component.item.EstablecimientoItemWithLocation
 import app.regate.common.composes.component.item.GrupoItem
 import app.regate.common.composes.component.item.ProfileItem
@@ -360,7 +359,7 @@ internal fun Search(
                                                 items = viewState.grupos,
                                             ) { result ->
                                                 val grupoU =
-                                                    viewState.userGroups.find { it.group_id == result.id }
+                                                    viewState.userGroups.find { it.id == result.id }
 
                                                 if (grupoU != null) {
                                                     GrupoItem(

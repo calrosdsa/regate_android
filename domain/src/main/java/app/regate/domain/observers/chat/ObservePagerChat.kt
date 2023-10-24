@@ -3,7 +3,7 @@ package app.regate.domain.observers.chat
 import app.cash.paging.Pager
 import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
-import app.regate.data.chat.ConversationRepository
+import app.regate.data.chat.ChatRepository
 import app.regate.data.daos.ChatDao
 import app.regate.domain.PagingInteractor
 import app.regate.domain.pagination.chat.PagingChatsMediator
@@ -13,7 +13,7 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 class ObservePagerChat(
-    private val conversationRepository: ConversationRepository,
+    private val chatRepository: ChatRepository,
     private val chatDao: ChatDao,
 ):PagingInteractor<ObservePagerChat.Params,Chat>() {
 
@@ -21,7 +21,7 @@ class ObservePagerChat(
         return Pager(
             config = params.pagingConfig,
             remoteMediator = PagingChatsMediator(fetch = {page->
-                conversationRepository.getChats(page)
+                chatRepository.getChats(page)
             }),
             pagingSourceFactory = {
                 chatDao.observeChatsPaging()

@@ -5,6 +5,6 @@ import me.tatarka.inject.annotations.Provides
 interface ConversationBinds {
     @Provides
     fun provideLabelDataSource(
-        bind: ConversationDataSourceImpl
-    ): ConversationDataSource = bind
+        bind: ChatDataSourceImpl
+    ): ChatDataSource = bind
 }

@@ -65,7 +65,7 @@ import kotlinx.datetime.Instant
 internal fun UserGroups(
     lazyPagingItems: LazyPagingItems<Chat>,
     formatShortRelativeTime:(Instant)->String,
-    navigateToChat: (id: Long) -> Unit,
+    navigateToChat: (id: Long,grupoId:Long) -> Unit,
     navigateToEstablecimientoInbox:(Long,Long)->Unit,
 ){
     LazyColumn(modifier = Modifier.fillMaxSize()){
@@ -86,7 +86,7 @@ internal fun UserGroups(
 internal fun ChatItem(
 //    grupo: GrupoWithMessage,
     chat: Chat,
-    navigateToChatGrupo: (id: Long) -> Unit,
+    navigateToChatGrupo: (id: Long,grupoId:Long) -> Unit,
     navigateToEstablecimientoInbox: (Long, Long) -> Unit,
     formatShortRelativeTime:(Instant)->String,
     modifier:Modifier = Modifier
@@ -97,7 +97,7 @@ internal fun ChatItem(
             .clickable {
                 when(chat.type_chat){
                     TypeChat.TYPE_CHAT_GRUPO.ordinal ->{
-                        navigateToChatGrupo(chat.id)
+                        navigateToChatGrupo(chat.id,chat.parent_id)
                     }
                     TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal -> {
                         navigateToEstablecimientoInbox(chat.parent_id,chat.id)

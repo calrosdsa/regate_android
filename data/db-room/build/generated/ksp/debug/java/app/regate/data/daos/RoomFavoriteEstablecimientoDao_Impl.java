@@ -36,6 +36,8 @@ import kotlinx.coroutines.flow.Flow;
 public final class RoomFavoriteEstablecimientoDao_Impl extends RoomFavoriteEstablecimientoDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<FavoriteEstablecimiento> __insertionAdapterOfFavoriteEstablecimiento;
+
   private final EntityDeletionOrUpdateAdapter<FavoriteEstablecimiento> __deletionAdapterOfFavoriteEstablecimiento;
 
   private final EntityDeletionOrUpdateAdapter<FavoriteEstablecimiento> __updateAdapterOfFavoriteEstablecimiento;
@@ -48,6 +50,20 @@ public final class RoomFavoriteEstablecimientoDao_Impl extends RoomFavoriteEstab
 
   public RoomFavoriteEstablecimientoDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfFavoriteEstablecimiento = new EntityInsertionAdapter<FavoriteEstablecimiento>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `favorite_establecimiento` (`id`,`establecimiento_id`) VALUES (nullif(?, 0),?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final FavoriteEstablecimiento entity) {
+        statement.bindLong(1, entity.getId());
+        statement.bindLong(2, entity.getEstablecimiento_id());
+      }
+    };
     this.__deletionAdapterOfFavoriteEstablecimiento = new EntityDeletionOrUpdateAdapter<FavoriteEstablecimiento>(__db) {
       @Override
       @NonNull
@@ -120,6 +136,44 @@ public final class RoomFavoriteEstablecimientoDao_Impl extends RoomFavoriteEstab
         statement.bindLong(3, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final FavoriteEstablecimiento entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfFavoriteEstablecimiento.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends FavoriteEstablecimiento> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfFavoriteEstablecimiento.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

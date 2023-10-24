@@ -18,5 +18,5 @@ data class Chat(
     val last_message_created:Instant? = null,
     val messages_count:Int = 0,
     val type_chat:Int = TypeChat.TYPE_CHAT_GRUPO.ordinal,
-    val parent_id:Long = 0
+    val parent_id:Long = 0,
 ):AppEntity

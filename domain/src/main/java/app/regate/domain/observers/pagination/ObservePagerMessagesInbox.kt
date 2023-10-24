@@ -4,7 +4,7 @@ import app.cash.paging.Pager
 import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
 import app.regate.compoundmodels.MessageConversation
-import app.regate.data.chat.ConversationRepository
+import app.regate.data.chat.ChatRepository
 import app.regate.data.daos.MessageInboxDao
 import app.regate.domain.PagingInteractor
 import app.regate.domain.pagination.mediator.PagingMessagesInboxMediator
@@ -13,7 +13,7 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 class ObservePagerMessagesInbox(
-    private val repository: ConversationRepository,
+    private val repository: ChatRepository,
     private val messageInboxDao: MessageInboxDao
 ):PagingInteractor<ObservePagerMessagesInbox.Params,MessageConversation>() {
 

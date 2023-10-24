@@ -8,12 +8,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 
 interface MyGroupsDao:EntityDao<MyGroups> {
-    fun observeUserGroupsWithMessage(requestEstado: Int): Flow<List<GrupoWithMessage>>
     fun observeUserGroups(): Flow<List<Grupo>>
     fun observeMyGroups(): Flow<List<MyGroups>>
     fun observeMyGroupById(grupoId:Long): Flow<MyGroups?>
     suspend fun deleteMyGroups(estado:Int)
     suspend fun deleteAll()
     suspend fun deleteByGroupId(id:Long)
-    suspend fun updateLastMessageGrupo(grupoId:Long,message:String,created:Instant)
 }
