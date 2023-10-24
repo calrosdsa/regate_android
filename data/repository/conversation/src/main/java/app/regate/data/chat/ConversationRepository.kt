@@ -134,9 +134,8 @@ class ConversationRepository(
                             id = result.id,
                             name = result.name,
                             photo = result.photo,
-                            last_message = result.last_message,
-                            last_message_created = result.last_message_created,
-                            messages_count = result.messages_count
+                            type_chat = result.type_chat,
+                            parent_id = result.parent_id,
                         )
                     }
 //                    val result = messages.await() + replies.await()

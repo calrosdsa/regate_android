@@ -60,6 +60,7 @@ class GruposViewModel(
     )
 
     init{
+        getData()
         observeMyGroups(Unit)
         observeAuthState(Unit)
 //        Log.d("DEBUG_APP_222","INIT 222")
@@ -72,6 +73,17 @@ class GruposViewModel(
             pageSize = 20,
             initialLoadSize = 20,
         )
+    }
+
+    private fun getData(){
+        viewModelScope.launch {
+            try{
+                grupoRepository.myGroups()
+                grupoRepository.myGroupsRequest()
+            }catch(e:Exception){
+                Log.d("DEBUG_APP",e.localizedMessage?:"")
+            }
+        }
     }
 
     fun clearMessage(id:Long){

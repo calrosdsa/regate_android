@@ -141,7 +141,10 @@ internal fun Grupos(
 //                    modifier = Modifier,
                     lazyPagingItems = viewModel.pagedList.collectAsLazyPagingItems(),
                     formatShortRelativeTime = formatShortRelativeTime,
-                    navigateToChat = { navController.navigate(Route.CHAT_GRUPO + "?id=$it") }
+                    navigateToChat = { navController.navigate(Route.CHAT_GRUPO + "?id=$it") },
+                    navigateToEstablecimientoInbox = { establecimientoId:Long,conversationId:Long->
+                        navController.navigate(Route.CONVERSATION  id conversationId id establecimientoId)
+                    }
                 )
                 1 -> filterGroups()
                 2 -> userSalas()

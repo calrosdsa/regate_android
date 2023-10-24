@@ -32,7 +32,6 @@ class UserGroupsViewModel(
     private val conversationRepository: ConversationRepository,
     observeAuthState: ObserveAuthState,
     pagingInteractor: ObservePagerChat,
-
 //    private val updateFilterGrupos: UpdateFilterGrupos
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
@@ -79,8 +78,6 @@ class UserGroupsViewModel(
         viewModelScope.launch {
             try{
                 conversationRepository.getUnreadMessages(1)
-            grupoRepository.myGroups()
-            grupoRepository.myGroupsRequest()
             }catch(e:Exception){
                 Log.d("DEBUG_APP_!21",e.localizedMessage?:"")
             }

@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Badge
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.util.itemsCustom
-import app.regate.compoundmodels.GrupoWithMessage
+import app.regate.data.dto.chat.TypeChat
 import app.regate.models.chat.Chat
 import kotlinx.datetime.Instant
 
@@ -66,13 +65,16 @@ import kotlinx.datetime.Instant
 internal fun UserGroups(
     lazyPagingItems: LazyPagingItems<Chat>,
     formatShortRelativeTime:(Instant)->String,
-    navigateToChat: (id: Long) -> Unit
+    navigateToChat: (id: Long) -> Unit,
+    navigateToEstablecimientoInbox:(Long,Long)->Unit,
 ){
     LazyColumn(modifier = Modifier.fillMaxSize()){
         itemsCustom(items = lazyPagingItems, key = {it.id}){item->
             if(item!= null){
-                GrupoItemWithMessage(grupo = item, navigateToChatGrupo = navigateToChat,
-                    formatShortRelativeTime = formatShortRelativeTime)
+                ChatItem(chat = item, navigateToChatGrupo = navigateToChat,
+                    formatShortRelativeTime = formatShortRelativeTime,
+                    navigateToEstablecimientoInbox = navigateToEstablecimientoInbox
+                )
             }
         }
     }
@@ -81,32 +83,42 @@ internal fun UserGroups(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun GrupoItemWithMessage(
+internal fun ChatItem(
 //    grupo: GrupoWithMessage,
-    grupo: Chat,
+    chat: Chat,
     navigateToChatGrupo: (id: Long) -> Unit,
+    navigateToEstablecimientoInbox: (Long, Long) -> Unit,
     formatShortRelativeTime:(Instant)->String,
     modifier:Modifier = Modifier
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { navigateToChatGrupo(grupo.id) }
+            .clickable {
+                when(chat.type_chat){
+                    TypeChat.TYPE_CHAT_GRUPO.ordinal ->{
+                        navigateToChatGrupo(chat.id)
+                    }
+                    TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal -> {
+                        navigateToEstablecimientoInbox(chat.parent_id,chat.id)
+                    }
+                }
+            }
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         PosterCardImage(
-            model = grupo.photo, modifier = Modifier
+            model = chat.photo, modifier = Modifier
                 .size(60.dp), shape = CircleShape
         )
         Spacer(modifier = Modifier.width(10.dp))
         Column() {
             Row(modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
-                Text(text = grupo.name ,style = MaterialTheme.typography.labelLarge,
+                Text(text = chat.name ,style = MaterialTheme.typography.labelLarge,
                     modifier = Modifier.fillMaxWidth(0.65f), overflow = TextOverflow.Ellipsis)
-                if(grupo.last_message_created != null){
-                    Text(text = formatShortRelativeTime(grupo.last_message_created!!),
+                if(chat.last_message_created != null){
+                    Text(text = formatShortRelativeTime(chat.last_message_created!!),
                         style = MaterialTheme.typography.labelSmall, maxLines = 1,
                         overflow = TextOverflow.Ellipsis)
                 }
@@ -116,20 +128,20 @@ internal fun GrupoItemWithMessage(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween){
 
-            if(grupo.last_message?.isNotBlank() == true){
-                grupo.last_message?.let {
+            if(chat.last_message?.isNotBlank() == true){
+                chat.last_message?.let {
                     Text(text = it,style = MaterialTheme.typography.labelMedium.copy(
                         fontWeight = FontWeight.Normal
                     ), overflow = TextOverflow.Ellipsis, maxLines = 1,
                         modifier = Modifier.fillMaxWidth(0.88f))
                 }
             }
-                if(grupo.messages_count > 0){
+                if(chat.messages_count > 0){
                     Badge(
                         contentColor = MaterialTheme.colorScheme.onPrimary,
                         containerColor = MaterialTheme.colorScheme.primary
                     ){
-                  Text(text = (grupo.messages_count).toString(),
+                  Text(text = (chat.messages_count).toString(),
                   style = MaterialTheme.typography.labelLarge)
                     }
                 }

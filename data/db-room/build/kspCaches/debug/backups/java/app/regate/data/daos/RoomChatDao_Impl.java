@@ -61,7 +61,7 @@ public final class RoomChatDao_Impl extends RoomChatDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `chat` SET `id` = ?,`photo` = ?,`name` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `chat` SET `id` = ?,`photo` = ?,`name` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ?,`type_chat` = ?,`parent_id` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -86,14 +86,16 @@ public final class RoomChatDao_Impl extends RoomChatDao {
           statement.bindString(5, _tmp);
         }
         statement.bindLong(6, entity.getMessages_count());
-        statement.bindLong(7, entity.getId());
+        statement.bindLong(7, entity.getType_chat());
+        statement.bindLong(8, entity.getParent_id());
+        statement.bindLong(9, entity.getId());
       }
     };
     this.__upsertionAdapterOfChat = new EntityUpsertionAdapter<Chat>(new EntityInsertionAdapter<Chat>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `chat` (`id`,`photo`,`name`,`last_message`,`last_message_created`,`messages_count`) VALUES (?,?,?,?,?,?)";
+        return "INSERT INTO `chat` (`id`,`photo`,`name`,`last_message`,`last_message_created`,`messages_count`,`type_chat`,`parent_id`) VALUES (?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -118,12 +120,14 @@ public final class RoomChatDao_Impl extends RoomChatDao {
           statement.bindString(5, _tmp);
         }
         statement.bindLong(6, entity.getMessages_count());
+        statement.bindLong(7, entity.getType_chat());
+        statement.bindLong(8, entity.getParent_id());
       }
     }, new EntityDeletionOrUpdateAdapter<Chat>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `chat` SET `id` = ?,`photo` = ?,`name` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ? WHERE `id` = ?";
+        return "UPDATE `chat` SET `id` = ?,`photo` = ?,`name` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ?,`type_chat` = ?,`parent_id` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -148,7 +152,9 @@ public final class RoomChatDao_Impl extends RoomChatDao {
           statement.bindString(5, _tmp);
         }
         statement.bindLong(6, entity.getMessages_count());
-        statement.bindLong(7, entity.getId());
+        statement.bindLong(7, entity.getType_chat());
+        statement.bindLong(8, entity.getParent_id());
+        statement.bindLong(9, entity.getId());
       }
     });
   }
@@ -251,7 +257,8 @@ public final class RoomChatDao_Impl extends RoomChatDao {
             + "            SELECT c.id,c.name,c.photo,\n"
             + "              (select content from messages where grupo_id = c.id order by created_at DESC limit 1) as last_message,\n"
             + "              (select created_at from messages where grupo_id = c.id order by created_at DESC limit 1) as last_message_created,\n"
-            + "              (select count(*) from messages where grupo_id = c.id and readed = 0) as messages_count FROM chat as c \n"
+            + "              (select count(*) from messages where grupo_id = c.id and readed = 0) as messages_count,type_chat,parent_id\n"
+            + "               FROM chat as c order by last_message_created desc\n"
             + "    ";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return new LimitOffsetPagingSource<Chat>(_statement, __db, "messages", "chat") {
@@ -264,6 +271,8 @@ public final class RoomChatDao_Impl extends RoomChatDao {
         final int _cursorIndexOfLastMessage = 3;
         final int _cursorIndexOfLastMessageCreated = 4;
         final int _cursorIndexOfMessagesCount = 5;
+        final int _cursorIndexOfTypeChat = 6;
+        final int _cursorIndexOfParentId = 7;
         final List<Chat> _result = new ArrayList<Chat>(cursor.getCount());
         while (cursor.moveToNext()) {
           final Chat _item;
@@ -293,7 +302,11 @@ public final class RoomChatDao_Impl extends RoomChatDao {
           _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
           final int _tmpMessages_count;
           _tmpMessages_count = cursor.getInt(_cursorIndexOfMessagesCount);
-          _item = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
+          final int _tmpType_chat;
+          _tmpType_chat = cursor.getInt(_cursorIndexOfTypeChat);
+          final long _tmpParent_id;
+          _tmpParent_id = cursor.getLong(_cursorIndexOfParentId);
+          _item = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpType_chat,_tmpParent_id);
           _result.add(_item);
         }
         return _result;
@@ -325,6 +338,8 @@ public final class RoomChatDao_Impl extends RoomChatDao {
             final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
             final int _cursorIndexOfLastMessageCreated = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message_created");
             final int _cursorIndexOfMessagesCount = CursorUtil.getColumnIndexOrThrow(_cursor, "messages_count");
+            final int _cursorIndexOfTypeChat = CursorUtil.getColumnIndexOrThrow(_cursor, "type_chat");
+            final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
             final List<Chat> _result = new ArrayList<Chat>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final Chat _item;
@@ -354,7 +369,11 @@ public final class RoomChatDao_Impl extends RoomChatDao {
               _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
               final int _tmpMessages_count;
               _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
-              _item = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
+              final int _tmpType_chat;
+              _tmpType_chat = _cursor.getInt(_cursorIndexOfTypeChat);
+              final long _tmpParent_id;
+              _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
+              _item = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpType_chat,_tmpParent_id);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();

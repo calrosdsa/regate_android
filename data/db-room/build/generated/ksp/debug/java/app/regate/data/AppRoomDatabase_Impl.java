@@ -133,9 +133,9 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_attention_schedule_establecimiento_id` ON `attention_schedule` (`establecimiento_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_room` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `entity_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_balance` (`balance_id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `coins` REAL NOT NULL, PRIMARY KEY(`balance_id`))");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `chat` (`id` INTEGER NOT NULL, `photo` TEXT, `name` TEXT NOT NULL, `last_message` TEXT, `last_message_created` TEXT, `messages_count` INTEGER NOT NULL, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `chat` (`id` INTEGER NOT NULL, `photo` TEXT, `name` TEXT NOT NULL, `last_message` TEXT, `last_message_created` TEXT, `messages_count` INTEGER NOT NULL, `type_chat` INTEGER NOT NULL, `parent_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9d7fc1079d820e6e572e7379fb8fe94b')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc067a4f0939aa68fc47dd3ba98f87a0')");
       }
 
       @Override
@@ -558,13 +558,15 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoUserBalance + "\n"
                   + " Found:\n" + _existingUserBalance);
         }
-        final HashMap<String, TableInfo.Column> _columnsChat = new HashMap<String, TableInfo.Column>(6);
+        final HashMap<String, TableInfo.Column> _columnsChat = new HashMap<String, TableInfo.Column>(8);
         _columnsChat.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsChat.put("photo", new TableInfo.Column("photo", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsChat.put("name", new TableInfo.Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsChat.put("last_message", new TableInfo.Column("last_message", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsChat.put("last_message_created", new TableInfo.Column("last_message_created", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsChat.put("messages_count", new TableInfo.Column("messages_count", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsChat.put("type_chat", new TableInfo.Column("type_chat", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsChat.put("parent_id", new TableInfo.Column("parent_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysChat = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesChat = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoChat = new TableInfo("chat", _columnsChat, _foreignKeysChat, _indicesChat);
@@ -576,7 +578,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "9d7fc1079d820e6e572e7379fb8fe94b", "fc29339a0f0188ce800bf8e400ea0d86");
+    }, "cc067a4f0939aa68fc47dd3ba98f87a0", "8860263fa51e3a7c0702ec2f777d5bc9");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
