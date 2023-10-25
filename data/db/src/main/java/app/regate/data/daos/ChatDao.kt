@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface ChatDao:EntityDao<Chat> {
     fun observeChatsPaging(): PagingSource<Int, Chat>
+    suspend fun getChat(id:Long):Chat
     fun observeChats(page:Int,offset:Int):Flow<List<Chat>>
 }

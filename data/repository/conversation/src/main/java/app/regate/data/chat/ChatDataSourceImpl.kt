@@ -4,10 +4,12 @@ import app.regate.constant.HostMessage
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.chat.MessagePublishRequest
 import app.regate.data.dto.chat.PaginateChatResponse
+import app.regate.data.dto.chat.RequestChatUnreadMessages
 import app.regate.data.dto.empresa.conversation.Conversation
 import app.regate.data.dto.empresa.conversation.ConversationId
 import app.regate.data.dto.empresa.conversation.ConversationMessage
 import app.regate.data.dto.empresa.conversation.PaginationConversationMessages
+import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.PaginationGroupMessages
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -18,6 +20,7 @@ import io.ktor.client.request.setBody
 import io.ktor.client.request.url
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Inject
 
 @Inject
@@ -28,6 +31,13 @@ class ChatDataSourceImpl(
     companion object {
         const val baseUrl = HostMessage.url
 //          const val baseUrl = "http://172.20.20.76:9091"
+    }
+    override suspend fun getchatUnreadMessages(d:RequestChatUnreadMessages): List<GrupoMessageDto> {
+        return client.post{
+            url("$baseUrl/v1/chat/unread-messages/")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
     }
     override suspend fun getMessages(id: Long, page: Int): PaginationConversationMessages{
         return client.get{

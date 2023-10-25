@@ -18,6 +18,7 @@ import app.regate.data.common.MessageData
 import app.regate.data.dto.chat.MessageEvent
 import app.regate.data.dto.chat.MessageEventType
 import app.regate.data.dto.chat.MessagePublishRequest
+import app.regate.data.dto.chat.RequestChatUnreadMessages
 import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import app.regate.data.dto.empresa.grupo.GrupoEvent
@@ -35,6 +36,7 @@ import app.regate.domain.observers.grupo.ObserveUsersGrupo
 import app.regate.extensions.combine
 import app.regate.models.Emoji
 import app.regate.models.Message
+import app.regate.models.chat.Chat
 import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
 import app.regate.util.getLongUuid
@@ -93,6 +95,7 @@ class ChatGrupoViewModel(
     private val messageChat = MutableStateFlow<Message?>(null)
     private val scrollToBottom = MutableStateFlow<Boolean?>(null)
     private val emojiData = MutableStateFlow<List<List<Emoji>>>(emptyList())
+    private val chat = MutableStateFlow<Chat?>(null)
     val pagedList: Flow<PagingData<MessageProfile>> =
         pagingInteractor.flow.cachedIn(viewModelScope)
     val state:StateFlow<ChatGrupoState> = combine(
@@ -129,10 +132,17 @@ class ChatGrupoViewModel(
         observeGrupo(ObserveGrupo.Param(id = grupoId))
         observeUsersGrupo(ObserveUsersGrupo.Params(id = grupoId))
         pagingInteractor(ObservePagerMessages.Params(PAGING_CONFIG,chatId))
-        Log.d("DEBUG_APP_GRUPO_ID",grupoId.toString())
-        viewModelScope.launch {
-            startWs()
-        }
+            viewModelScope.launch {
+                observeUser.flow.collect {
+                    try {
+                        if(it.profile_id != 0L){
+                            startWs(it.profile_id)
+                        }
+                    }catch (e:Exception){
+                        Log.d("DEBUG_APP_USER_ERR",e.localizedMessage?:"")
+                    }
+                }
+            }
         viewModelScope.launch {
             grupoRepository.observeMessages(chatId).collectLatest {
                 Log.d("DEBUG_APP_MESSAGE",it.size.toString())
@@ -149,6 +159,13 @@ class ChatGrupoViewModel(
                 }catch(e:Exception){
                     Log.d("DEBUG_APP",e.localizedMessage?:"")
                 }
+            }
+        }
+        viewModelScope.launch {
+            try {
+                chat.tryEmit(chatRepository.getChat(chatId))
+            }catch (e:Exception){
+                //TODO()
             }
         }
         outputMessage()
@@ -170,22 +187,29 @@ class ChatGrupoViewModel(
         }
     }
     @SuppressLint("SuspiciousIndentation")
-    suspend fun startWs(){
+    suspend fun startWs(profileId: Long){
         var cl:DefaultClientWebSocketSession? = null
         try {
             cl = client.webSocketSession(method = HttpMethod.Get, host = HostMessage.host,
 //                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
-                port =HostMessage.port, path = "/v1/ws/suscribe/chat/?id=${chatId}&profileId=43")
+                port =HostMessage.port, path = "/v1/ws/suscribe/chat/?id=${chatId}&profileId=${profileId}")
             Log.d("DEBUG_APP","start ws.......")
-            Log.d("DEBUG_APP_WS",cl.isActive.toString())
+            Log.d("DEBUG_APP_WS_AC",cl.isActive.toString())
 //            cl.apply {
 //                launch {
 //                    outputMessage()
 //                }
 //            }
-//            if(cl.isActive){
-//                syncMessages()
-//            }
+            if(cl.isActive){
+                chat.value?.let { chat->
+                chatRepository.getUnreadMessages(RequestChatUnreadMessages(
+                    chat_id = chatId,
+                    last_update_chat = chat.updated_at,
+                    type_chat = TypeChat.TYPE_CHAT_GRUPO.ordinal
+                ))
+                }
+                Log.d("DEBUG_APP","IS ACTIVE ASDASD AS")
+            }
             cl.apply{
                     for (message in incoming) {
                         message as? Frame.Text ?: continue
@@ -232,7 +256,7 @@ class ChatGrupoViewModel(
             cl?.close()
             delay(1000)
             Log.d("DEBUG_ARR",e.localizedMessage?:"")
-            startWs()
+            startWs(profileId)
         }
     }
 
@@ -248,8 +272,8 @@ class ChatGrupoViewModel(
     fun outputMessage(){
     viewModelScope.launch {
         messageChat.filterNotNull().collectLatest {data->
-            try{
             if (data.content == "" && data.data == null) return@collectLatest
+            try{
                 state.value.user?.let {
                     Log.d("DEBUG_APP",it.toString())
                     val message = GrupoMessageDto(

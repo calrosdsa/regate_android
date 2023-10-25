@@ -7,6 +7,7 @@ import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.UserDao
 import app.regate.data.dto.chat.MessagePublishRequest
+import app.regate.data.dto.chat.RequestChatUnreadMessages
 import app.regate.data.dto.empresa.conversation.Conversation
 import app.regate.data.dto.empresa.conversation.ConversationId
 import app.regate.data.dto.empresa.conversation.ConversationMessage
@@ -23,6 +24,7 @@ import app.regate.models.MyGroups
 import app.regate.models.chat.Chat
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import me.tatarka.inject.annotations.Inject
@@ -41,6 +43,15 @@ class ChatRepository(
     private val grupoDao: GrupoDao,
     private val myGrupoDao: MyGroupsDao
 ) {
+    suspend fun getUnreadMessages(d: RequestChatUnreadMessages){
+        chatDataSourceImpl.getchatUnreadMessages(d).also {result->
+            val messages = result.map { messageMapper.map(it) }
+            messageProfileDao.insertAllonConflictIgnore(messages)
+        }
+    }
+    suspend fun getChat(id:Long):Chat{
+        return chatDao.getChat(id)
+    }
     suspend fun getConversationId(establecimientoId:Long):ConversationId{
         return  chatDataSourceImpl.getConversationId(establecimientoId)
     }

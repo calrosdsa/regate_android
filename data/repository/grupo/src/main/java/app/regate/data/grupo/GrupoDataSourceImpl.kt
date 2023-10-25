@@ -1,5 +1,6 @@
 package app.regate.data.grupo
 
+import app.regate.constant.HostMessage
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.SearchFilterRequest
@@ -26,10 +27,12 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
+import io.ktor.client.request.url
 import io.ktor.http.ContentType
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
+import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Inject
 
 @Inject
@@ -37,6 +40,10 @@ class GrupoDataSourceImpl(
     private val client:HttpClient,
     private val authStore: AuthStore
 ): GrupoDataSource {
+    companion object {
+        const val baseUrl = HostMessage.url
+//          const val baseUrl = "http://172.20.20.76:9091"
+    }
     override suspend fun myGroups(): List<GrupoDto> {
         val token = authStore.get()?.accessToken
         return client.get("/v1/grupo/user-groups/"){
@@ -55,6 +62,8 @@ class GrupoDataSourceImpl(
             setBody(d)
         }.body()
     }
+
+
     override suspend fun filterGrupos(d: FilterGrupoData,page: Int): PaginationGroupsResponse {
             return client.post("/v1/grupo/filter/?page=${page}"){
                 contentType(ContentType.Application.Json)

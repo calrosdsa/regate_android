@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml:2:13-83
-INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml:2:13-83
-INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml:2:13-83
+ADDED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml:2:13-83
+INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml:2:13-83
+INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml:2:13-83
 	package
-		INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml
-		ADDED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml:2:13-83
-		INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml
+		INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml
+		ADDED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml:2:13-83
+		INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml
 	xmlns:android
-		ADDED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml:2:23-81
+		ADDED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml:2:23-81
 uses-sdk
-INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml reason: use-sdk injection requested
-INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml
-INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml
-INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml
-INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml
+INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml reason: use-sdk injection requested
+INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml
+INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml
+INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml
+INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml
 	android:targetSdkVersion
-		INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml
-		ADDED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml
-		INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml
+		INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml
+		ADDED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml
+		INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml
 	android:minSdkVersion
-		INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml
-		ADDED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml
-		INJECTED from D:\Regate\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest11385518407780833748.xml
+		INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml
+		ADDED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml
+		INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\view\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7266453448793341958.xml

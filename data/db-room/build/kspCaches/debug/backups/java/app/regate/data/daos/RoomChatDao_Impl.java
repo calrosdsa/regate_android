@@ -1,6 +1,7 @@
 package app.regate.data.daos;
 
 import android.database.Cursor;
+import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
 import androidx.paging.PagingSource;
 import androidx.room.CoroutinesRoom;
@@ -17,6 +18,7 @@ import app.regate.data.db.DateTimeTypeConverters;
 import app.regate.models.chat.Chat;
 import java.lang.Class;
 import java.lang.Exception;
+import java.lang.IllegalStateException;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.Object;
@@ -50,7 +52,7 @@ public final class RoomChatDao_Impl extends RoomChatDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT OR IGNORE INTO `chat` (`id`,`photo`,`name`,`last_message`,`last_message_created`,`messages_count`,`type_chat`,`parent_id`) VALUES (?,?,?,?,?,?,?,?)";
+        return "INSERT OR IGNORE INTO `chat` (`id`,`photo`,`name`,`last_message`,`last_message_created`,`messages_count`,`type_chat`,`parent_id`,`updated_at`) VALUES (?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -77,6 +79,12 @@ public final class RoomChatDao_Impl extends RoomChatDao {
         statement.bindLong(6, entity.getMessages_count());
         statement.bindLong(7, entity.getType_chat());
         statement.bindLong(8, entity.getParent_id());
+        final String _tmp_1 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getUpdated_at());
+        if (_tmp_1 == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindString(9, _tmp_1);
+        }
       }
     };
     this.__deletionAdapterOfChat = new EntityDeletionOrUpdateAdapter<Chat>(__db) {
@@ -96,7 +104,7 @@ public final class RoomChatDao_Impl extends RoomChatDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `chat` SET `id` = ?,`photo` = ?,`name` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ?,`type_chat` = ?,`parent_id` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `chat` SET `id` = ?,`photo` = ?,`name` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ?,`type_chat` = ?,`parent_id` = ?,`updated_at` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -123,14 +131,20 @@ public final class RoomChatDao_Impl extends RoomChatDao {
         statement.bindLong(6, entity.getMessages_count());
         statement.bindLong(7, entity.getType_chat());
         statement.bindLong(8, entity.getParent_id());
-        statement.bindLong(9, entity.getId());
+        final String _tmp_1 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getUpdated_at());
+        if (_tmp_1 == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindString(9, _tmp_1);
+        }
+        statement.bindLong(10, entity.getId());
       }
     };
     this.__upsertionAdapterOfChat = new EntityUpsertionAdapter<Chat>(new EntityInsertionAdapter<Chat>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `chat` (`id`,`photo`,`name`,`last_message`,`last_message_created`,`messages_count`,`type_chat`,`parent_id`) VALUES (?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `chat` (`id`,`photo`,`name`,`last_message`,`last_message_created`,`messages_count`,`type_chat`,`parent_id`,`updated_at`) VALUES (?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -157,12 +171,18 @@ public final class RoomChatDao_Impl extends RoomChatDao {
         statement.bindLong(6, entity.getMessages_count());
         statement.bindLong(7, entity.getType_chat());
         statement.bindLong(8, entity.getParent_id());
+        final String _tmp_1 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getUpdated_at());
+        if (_tmp_1 == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindString(9, _tmp_1);
+        }
       }
     }, new EntityDeletionOrUpdateAdapter<Chat>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `chat` SET `id` = ?,`photo` = ?,`name` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ?,`type_chat` = ?,`parent_id` = ? WHERE `id` = ?";
+        return "UPDATE `chat` SET `id` = ?,`photo` = ?,`name` = ?,`last_message` = ?,`last_message_created` = ?,`messages_count` = ?,`type_chat` = ?,`parent_id` = ?,`updated_at` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -189,7 +209,13 @@ public final class RoomChatDao_Impl extends RoomChatDao {
         statement.bindLong(6, entity.getMessages_count());
         statement.bindLong(7, entity.getType_chat());
         statement.bindLong(8, entity.getParent_id());
-        statement.bindLong(9, entity.getId());
+        final String _tmp_1 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getUpdated_at());
+        if (_tmp_1 == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindString(9, _tmp_1);
+        }
+        statement.bindLong(10, entity.getId());
       }
     });
   }
@@ -330,7 +356,7 @@ public final class RoomChatDao_Impl extends RoomChatDao {
             + "            SELECT c.id,c.name,c.photo,\n"
             + "              (select content from messages where chat_id = c.id order by created_at DESC limit 1) as last_message,\n"
             + "              (select created_at from messages where chat_id = c.id order by created_at DESC limit 1) as last_message_created,\n"
-            + "              (select count(*) from messages where chat_id = c.id and readed = 0) as messages_count,type_chat,parent_id\n"
+            + "              (select count(*) from messages where chat_id = c.id and readed = 0) as messages_count,type_chat,parent_id,updated_at\n"
             + "               FROM chat as c order by last_message_created desc\n"
             + "    ";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
@@ -346,6 +372,7 @@ public final class RoomChatDao_Impl extends RoomChatDao {
         final int _cursorIndexOfMessagesCount = 5;
         final int _cursorIndexOfTypeChat = 6;
         final int _cursorIndexOfParentId = 7;
+        final int _cursorIndexOfUpdatedAt = 8;
         final List<Chat> _result = new ArrayList<Chat>(cursor.getCount());
         while (cursor.moveToNext()) {
           final Chat _item;
@@ -379,12 +406,105 @@ public final class RoomChatDao_Impl extends RoomChatDao {
           _tmpType_chat = cursor.getInt(_cursorIndexOfTypeChat);
           final long _tmpParent_id;
           _tmpParent_id = cursor.getLong(_cursorIndexOfParentId);
-          _item = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpType_chat,_tmpParent_id);
+          final Instant _tmpUpdated_at;
+          final String _tmp_1;
+          if (cursor.isNull(_cursorIndexOfUpdatedAt)) {
+            _tmp_1 = null;
+          } else {
+            _tmp_1 = cursor.getString(_cursorIndexOfUpdatedAt);
+          }
+          final Instant _tmp_2 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_1);
+          if (_tmp_2 == null) {
+            throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
+          } else {
+            _tmpUpdated_at = _tmp_2;
+          }
+          _item = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpType_chat,_tmpParent_id,_tmpUpdated_at);
           _result.add(_item);
         }
         return _result;
       }
     };
+  }
+
+  @Override
+  public Object getChat(final long id, final Continuation<? super Chat> continuation) {
+    final String _sql = "select * from chat where id = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, id);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Chat>() {
+      @Override
+      @NonNull
+      public Chat call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
+          final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+          final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
+          final int _cursorIndexOfLastMessageCreated = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message_created");
+          final int _cursorIndexOfMessagesCount = CursorUtil.getColumnIndexOrThrow(_cursor, "messages_count");
+          final int _cursorIndexOfTypeChat = CursorUtil.getColumnIndexOrThrow(_cursor, "type_chat");
+          final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
+          final int _cursorIndexOfUpdatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "updated_at");
+          final Chat _result;
+          if (_cursor.moveToFirst()) {
+            final long _tmpId;
+            _tmpId = _cursor.getLong(_cursorIndexOfId);
+            final String _tmpPhoto;
+            if (_cursor.isNull(_cursorIndexOfPhoto)) {
+              _tmpPhoto = null;
+            } else {
+              _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
+            }
+            final String _tmpName;
+            _tmpName = _cursor.getString(_cursorIndexOfName);
+            final String _tmpLast_message;
+            if (_cursor.isNull(_cursorIndexOfLastMessage)) {
+              _tmpLast_message = null;
+            } else {
+              _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
+            }
+            final Instant _tmpLast_message_created;
+            final String _tmp;
+            if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
+              _tmp = null;
+            } else {
+              _tmp = _cursor.getString(_cursorIndexOfLastMessageCreated);
+            }
+            _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+            final int _tmpMessages_count;
+            _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
+            final int _tmpType_chat;
+            _tmpType_chat = _cursor.getInt(_cursorIndexOfTypeChat);
+            final long _tmpParent_id;
+            _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
+            final Instant _tmpUpdated_at;
+            final String _tmp_1;
+            if (_cursor.isNull(_cursorIndexOfUpdatedAt)) {
+              _tmp_1 = null;
+            } else {
+              _tmp_1 = _cursor.getString(_cursorIndexOfUpdatedAt);
+            }
+            final Instant _tmp_2 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_1);
+            if (_tmp_2 == null) {
+              throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
+            } else {
+              _tmpUpdated_at = _tmp_2;
+            }
+            _result = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpType_chat,_tmpParent_id,_tmpUpdated_at);
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, continuation);
   }
 
   @Override
@@ -413,6 +533,7 @@ public final class RoomChatDao_Impl extends RoomChatDao {
             final int _cursorIndexOfMessagesCount = CursorUtil.getColumnIndexOrThrow(_cursor, "messages_count");
             final int _cursorIndexOfTypeChat = CursorUtil.getColumnIndexOrThrow(_cursor, "type_chat");
             final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
+            final int _cursorIndexOfUpdatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "updated_at");
             final List<Chat> _result = new ArrayList<Chat>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final Chat _item;
@@ -446,7 +567,20 @@ public final class RoomChatDao_Impl extends RoomChatDao {
               _tmpType_chat = _cursor.getInt(_cursorIndexOfTypeChat);
               final long _tmpParent_id;
               _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
-              _item = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpType_chat,_tmpParent_id);
+              final Instant _tmpUpdated_at;
+              final String _tmp_1;
+              if (_cursor.isNull(_cursorIndexOfUpdatedAt)) {
+                _tmp_1 = null;
+              } else {
+                _tmp_1 = _cursor.getString(_cursorIndexOfUpdatedAt);
+              }
+              final Instant _tmp_2 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_1);
+              if (_tmp_2 == null) {
+                throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
+              } else {
+                _tmpUpdated_at = _tmp_2;
+              }
+              _item = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpType_chat,_tmpParent_id,_tmpUpdated_at);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();

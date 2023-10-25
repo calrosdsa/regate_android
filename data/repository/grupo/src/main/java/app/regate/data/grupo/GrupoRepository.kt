@@ -8,6 +8,7 @@ import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
 import app.regate.data.dto.SearchFilterRequest
+import app.regate.data.dto.chat.RequestChatUnreadMessages
 import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
@@ -56,6 +57,7 @@ class GrupoRepository(
     private val myGroupsDao: MyGroupsDao,
     private val profileMapper:UserGroupDtoToProfile
 ){
+
 
     suspend fun searchGrupos(d:SearchFilterRequest,page:Int =1,size:Int=5):PaginationGroupsResponse{
         return grupoDataSourceImpl.searchGrupos(d,page, size)

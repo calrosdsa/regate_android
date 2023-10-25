@@ -16,6 +16,7 @@ import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.PendingRequestCount
 import app.regate.data.dto.empresa.grupo.UserGrupoDto
 import app.regate.data.dto.empresa.grupo.setting.GrupoInvitationLinkDto
+import kotlinx.datetime.Instant
 
 interface GrupoDataSource {
    suspend fun myGroups():List<GrupoDto>

@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import app.regate.data.dto.chat.TypeChat
 import app.regate.models.AppEntity
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
 @Entity(
@@ -19,4 +20,5 @@ data class Chat(
     val messages_count:Int = 0,
     val type_chat:Int = TypeChat.TYPE_CHAT_GRUPO.ordinal,
     val parent_id:Long = 0,
+    val updated_at:Instant = Clock.System.now()
 ):AppEntity
