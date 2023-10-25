@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
-import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.system.ReportData
@@ -44,8 +44,8 @@ class GrupoViewModel(
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val salas = MutableStateFlow<List<SalaDto>>(emptyList())
-    private val currentUser = MutableStateFlow<UserProfileGrupo?>(null)
-    private val selectedUser = MutableStateFlow<UserProfileGrupo?>(null)
+    private val currentUser = MutableStateFlow<UserProfileGrupoAndSala?>(null)
+    private val selectedUser = MutableStateFlow<UserProfileGrupoAndSala?>(null)
     val state:StateFlow<GrupoState> = combine(
         uiMessageManager.message,
         loadingState.observable,
@@ -88,8 +88,8 @@ class GrupoViewModel(
                     try {
                         Log.d("DEBUG_APP_SS", results.toString())
                         observeUser.flow.collect { result ->
-                                val user = results.find { it.id == result.profile_id }
-                                currentUser.tryEmit(results.find { it.id == user?.id })
+                                val user = results.find { it.profile_id == result.profile_id }
+                                currentUser.tryEmit(results.find { it.profile_id == user?.profile_id })
                         }
                     } catch (e: Exception) {
                         //TODO()
@@ -137,7 +137,7 @@ class GrupoViewModel(
     fun selectUser(id:Long){
         viewModelScope.launch {
         try{
-            val user = state.value.usersProfileGrupo.first { it.id == id }
+            val user = state.value.usersProfileGrupo.first { it.profile_id == id }
             selectedUser.tryEmit(user)
         }catch (e:Exception){
             //TODO()
@@ -147,7 +147,7 @@ class GrupoViewModel(
     fun removeUserFromGroup(){
         viewModelScope.launch {
             try{
-            selectedUser.value?.let { grupoRepository.removeUserFromGroup(it.user_group_id)}
+            selectedUser.value?.let { grupoRepository.removeUserFromGroup(it.id)}
             }catch (e:Exception){
                 Log.d("DEBUG_APP_WS",e.localizedMessage?:"")
             }
@@ -156,7 +156,7 @@ class GrupoViewModel(
     fun removeUserAdmin(){
         viewModelScope.launch {
             try{
-            selectedUser.value?.let { grupoRepository.changeStatusUser(it.user_group_id,false) }
+            selectedUser.value?.let { grupoRepository.changeStatusUser(it.id,false) }
             }catch (e:Exception){
                 Log.d("DEBUG_APP_WS",e.localizedMessage?:"")
             }
@@ -166,7 +166,7 @@ class GrupoViewModel(
         viewModelScope.launch {
             try{
 
-            selectedUser.value?.let { grupoRepository.changeStatusUser(it.user_group_id,true) }
+            selectedUser.value?.let { grupoRepository.changeStatusUser(it.id,true) }
             }catch (e:Exception){
                 Log.d("DEBUG_APP_WS",e.localizedMessage?:"")
             }
@@ -178,8 +178,8 @@ class GrupoViewModel(
             try{
 
             val targetUser = state.value.usersProfileGrupo
-                .first { it.id == state.value.user?.profile_id }
-                grupoRepository.removeUserFromGroup(targetUser.user_group_id)
+                .first { it.profile_id == state.value.user?.profile_id }
+                grupoRepository.removeUserFromGroup(targetUser.id)
                 grupoRepository.deleteGroupUserLocal(groupId = grupoId)
             navigateUp()
             }catch (e:Exception){

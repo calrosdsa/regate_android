@@ -10,3 +10,9 @@ data class MessagePublishRequest(
     val type_chat:Int,
     val chat_id:Long,
 )
+
+
+@Serializable
+data class MessagePublishResponse(
+    val id:Long
+)

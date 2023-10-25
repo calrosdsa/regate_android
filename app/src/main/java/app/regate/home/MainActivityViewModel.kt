@@ -82,14 +82,10 @@ class MainActivityViewModel(
                 port = Host.port, path = "v1/ws/suscribe/user/?id=${profileId}")
             Log.d("DEBUG_APP","start ws.......")
             Log.d("DEBUG_APP_WS",cl.isActive.toString())
-//            cl.close()
-//            cl.apply {
-//                launch {
-//                    outputMessage()
-//                }
-//            }
+            if(cl.isActive){
+                chatRepository.syncMessages()
+            }
           cl.apply{
-              try {
                   for (message in incoming) {
                       message as? Frame.Text ?: continue
                       val data = Json.decodeFromString<WsAccountPayload>(message.readText())
@@ -118,12 +114,8 @@ class MainActivityViewModel(
                           else -> {}
                       }
                   }
-              } catch (e: Exception) {
-                  Log.d("DEBUG_APP_ER" , e.localizedMessage?:"")
-              }
+
           }
-
-
             cl.start(emptyList())
         }catch (e:Exception){
             delay(1000)

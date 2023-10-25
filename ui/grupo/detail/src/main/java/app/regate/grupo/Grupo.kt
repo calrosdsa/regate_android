@@ -6,11 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,16 +18,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Chat
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Flag
-import androidx.compose.material.icons.filled.Link
-import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Pending
-import androidx.compose.material.icons.filled.PendingActions
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -39,13 +28,10 @@ import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.OutlinedButton
@@ -67,10 +53,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -87,12 +71,9 @@ import app.regate.common.composes.util.spacerLazyList
 import app.regate.common.composes.viewModel
 import app.regate.data.auth.AppAuthState
 import app.regate.common.resources.R
-import app.regate.compoundmodels.UserProfileGrupo
 import app.regate.constant.Route
 import app.regate.constant.id
 import app.regate.data.common.encodeMediaData
-import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.data.dto.empresa.grupo.GrupoVisibility
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -250,12 +231,12 @@ internal fun Grupo(
         rememberPullRefreshState(refreshing = viewState.loading, onRefresh = { refresh() })
     val isCurrentUserSuperAdmin by remember(key1 = viewState.currentUser) {
         derivedStateOf {
-            viewState.currentUser?.id == viewState.grupo?.profile_id
+            viewState.currentUser?.profile_id == viewState.grupo?.profile_id
         }
     }
     val isSelectedUserIsSuperAdmin by remember(key1 = viewState.selectedUser) {
         derivedStateOf {
-            viewState.selectedUser?.id == viewState.grupo?.profile_id
+            viewState.selectedUser?.profile_id == viewState.grupo?.profile_id
         }
     }
     val isSelectedUserIsAdmin by remember(key1 = viewState.selectedUser) {
@@ -389,7 +370,7 @@ internal fun Grupo(
                     }
                 },
                 floatingActionButton = {
-                    if (!viewState.usersProfileGrupo.map { it.id }
+                    if (!viewState.usersProfileGrupo.map { it.profile_id }
                             .contains(viewState.user?.profile_id)
                         && viewState.usersProfileGrupo.isNotEmpty()
                     ) {
@@ -556,7 +537,7 @@ internal fun Grupo(
                                     items = viewState.usersProfileGrupo,
                                 ) { profile ->
                                     ProfileItemGrupo(
-                                        id = profile.id,
+                                        id = profile.profile_id,
                                         nombre = profile.nombre,
                                         apellido = profile.apellido,
                                         photo = profile.profile_photo,
@@ -565,9 +546,9 @@ internal fun Grupo(
                                             ?: false,
                                         selectUser = {
                                             dialogUserMenu = true
-                                            selectUser(profile.id)
+                                            selectUser(profile.profile_id)
                                         },
-                                        isMe = profile.id == viewState.user?.profile_id,
+                                        isMe = profile.profile_id == viewState.user?.profile_id,
                                         navigateToProfile = navigateToProfile
                                     )
                                 }

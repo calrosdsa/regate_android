@@ -17,6 +17,7 @@ class MessageDtoToMessage:Mapper<GrupoMessageDto,Message> {
             reply_to = from.reply_to,
             type_message = from.type_message,
             data = from.data,
+            parent_id = from.parent_id,
             sended = true,
             readed = false
         )
@@ -36,6 +37,7 @@ class MessageToMessageDto:Mapper<Message,GrupoMessageDto> {
             data = from.data,
             type_message = from.type_message,
             reply_to = from.reply_to,
+            parent_id = from.parent_id
         )
     }
 }

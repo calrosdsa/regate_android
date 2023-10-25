@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import app.regate.compoundmodels.MessageProfile
+import app.regate.compoundmodels.MessageWithChat
 import app.regate.models.Message
 import kotlinx.coroutines.flow.Flow
 
@@ -21,15 +22,20 @@ abstract class RoomMessageProfileDao:RoomEntityDao<Message>,MessageProfileDao {
     abstract override fun getMessages(id: Long):Flow<List<MessageProfile>>
 
     @Query("update messages set readed = 1 where chat_id= :id and readed = 0")
-    abstract override suspend fun updateMessages(id: Long)
+    abstract override suspend fun updateUnreadMessages(id: Long)
+    @Query("update messages set sended = 1,id = :newId where id = :id and sended = 0")
+    abstract override suspend fun updateSendedMessage(id: Long,newId: Long)
     @Transaction
     @Query("SELECT * FROM messages where id = :id")
     abstract override suspend fun getReplyMessage(id: Long): MessageProfile
 
-    @Query("select *  from messages where profile_id = :profileId and sended = 0 and chat_id = :grupoId")
-    abstract override suspend fun getUnSendedMessage(profileId: Long,grupoId:Long): List<Message>
+    @Transaction
+    @Query("select *  from messages where sended = 0")
+    abstract override suspend fun getUnSendedMessage(): List<MessageWithChat>
 
+    @Query("select * from messages where sended = 1 and chat_id = :chatId order by created_at desc limit 1")
+    abstract override suspend fun getLastMessageSended(chatId: Long): Message?
 
-
-
+    @Query("update messages set id = :newId ,sended = 1,readed = 1 where id= :id")
+    abstract override suspend fun updatedPrimaryKey(id: Long,newId:Long)
 }

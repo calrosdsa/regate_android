@@ -15,5 +15,6 @@ data class ChatDto(
 enum class TypeChat {
     NONE,
     TYPE_CHAT_GRUPO,
-    TYPE_CHAT_INBOX_ESTABLECIMIENTO;
+    TYPE_CHAT_INBOX_ESTABLECIMIENTO,
+    TYPE_CHAT_SALA;
 }

@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import app.regate.compoundmodels.MessageProfile
-import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import kotlinx.datetime.Instant
 
@@ -20,7 +20,7 @@ import kotlinx.datetime.Instant
 fun MessageReply(
     item: MessageProfile,
     scrollToItem:()->Unit,
-    getUserProfileGrupo: (id:Long)-> UserProfileGrupo?,
+    getUserProfileGrupoAndSala: (id:Long)-> UserProfileGrupoAndSala?,
     navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
     navigateToSala: (Int) -> Unit,
     formatShortDate: (Instant) -> String,
@@ -29,7 +29,7 @@ fun MessageReply(
     formatShortTimeFromString: (String,Int) -> String,
     modifier: Modifier = Modifier
 ){
-    val profile = item.reply?.let { getUserProfileGrupo(it.profile_id) }
+    val profile = item.reply?.let { getUserProfileGrupoAndSala(it.profile_id) }
     Surface(
         border = BorderStroke(1.dp, Color.LightGray),
         shape = MaterialTheme.shapes.medium,

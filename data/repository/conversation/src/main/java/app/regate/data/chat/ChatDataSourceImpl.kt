@@ -3,6 +3,7 @@ package app.regate.data.chat
 import app.regate.constant.HostMessage
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.chat.MessagePublishRequest
+import app.regate.data.dto.chat.MessagePublishResponse
 import app.regate.data.dto.chat.PaginateChatResponse
 import app.regate.data.dto.chat.RequestChatUnreadMessages
 import app.regate.data.dto.empresa.conversation.Conversation
@@ -88,7 +89,7 @@ class ChatDataSourceImpl(
         }.body()
     }
 
-    override suspend fun publishMessage(data: MessagePublishRequest) {
+    override suspend fun publishMessage(data: MessagePublishRequest):MessagePublishResponse {
         val token = authStore.get()?.accessToken
         return client.post{
             url("$baseUrl/v1/chat/publish/message/")

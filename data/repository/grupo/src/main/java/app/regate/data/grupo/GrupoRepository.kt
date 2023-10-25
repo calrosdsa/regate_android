@@ -62,9 +62,6 @@ class GrupoRepository(
     suspend fun searchGrupos(d:SearchFilterRequest,page:Int =1,size:Int=5):PaginationGroupsResponse{
         return grupoDataSourceImpl.searchGrupos(d,page, size)
     }
-    fun observeMessages(id: Long): Flow<List<MessageProfile>> {
-        return messageProfileDao.getMessages(id)
-    }
     suspend fun getGroupsWhereUserIsAdmin():List<GrupoDto>{
         return grupoDataSourceImpl.getGroupsWhereUserIsAdmin()
     }
@@ -120,23 +117,6 @@ class GrupoRepository(
             } catch (e: Exception) {
                 //TODO
             }
-        }
-    }
-    suspend fun syncMessages(grupoId: Long){
-        withContext(dispatchers.io){
-            try {
-                val user = userDao.getUser(0)
-                val messages = messageProfileDao.getUnSendedMessage(user.profile_id, grupoId)
-                val data = messages.map { messageMapperDto.map(it) }
-                if (messages.isEmpty()) return@withContext
-                val results = grupoDataSourceImpl.syncMessages(data).map {
-                    messageMapper.map(it).copy(readed = true)
-                }
-                messageProfileDao.upsertAll(results)
-            } catch (e:Exception){
-                //TODO()
-            }
-
         }
     }
     suspend fun createGrupo(d:GroupRequest):GrupoDto{

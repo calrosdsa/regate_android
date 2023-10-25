@@ -10,7 +10,7 @@ import app.cash.paging.PagingData
 import app.cash.paging.cachedIn
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageProfile
-import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.constant.HostMessage
 import app.regate.data.app.EmojiCategory
 import app.regate.data.chat.ChatRepository
@@ -18,25 +18,23 @@ import app.regate.data.common.MessageData
 import app.regate.data.dto.chat.MessageEvent
 import app.regate.data.dto.chat.MessageEventType
 import app.regate.data.dto.chat.MessagePublishRequest
-import app.regate.data.dto.chat.RequestChatUnreadMessages
 import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
-import app.regate.data.dto.empresa.grupo.GrupoEvent
 import app.regate.data.dto.empresa.grupo.GrupoMessageData
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.grupo.GrupoRepository
 import app.regate.data.instalacion.CupoRepository
 import app.regate.data.labels.LabelRepository
-import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.grupo.ObserveGrupo
 import app.regate.domain.observers.pagination.ObservePagerMessages
 import app.regate.domain.observers.account.ObserveUser
+import app.regate.domain.observers.chat.ObserveChat
+import app.regate.domain.observers.chat.ObserveUsersForChat
 import app.regate.domain.observers.grupo.ObserveUsersGrupo
 import app.regate.extensions.combine
 import app.regate.models.Emoji
 import app.regate.models.Message
-import app.regate.models.chat.Chat
 import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
 import app.regate.util.getLongUuid
@@ -48,7 +46,6 @@ import io.ktor.util.InternalAPI
 import io.ktor.websocket.Frame
 import io.ktor.websocket.close
 import io.ktor.websocket.readText
-import io.ktor.websocket.send
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
@@ -57,14 +54,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -75,47 +70,44 @@ class ChatGrupoViewModel(
     @Assisted savedStateHandle: SavedStateHandle,
     private val client:HttpClient,
     private val grupoRepository:GrupoRepository,
-    private val usersRepository: UsersRepository,
     private val chatRepository: ChatRepository,
     private val cupoRepository: CupoRepository,
     private val preferences:AppPreferences,
     private val labelRepository: LabelRepository,
     observeUser: ObserveUser,
     observeAuthState: ObserveAuthState,
-    observeGrupo: ObserveGrupo,
+//    observeGrupo: ObserveGrupo,
     pagingInteractor: ObservePagerMessages,
-    observeUsersGrupo: ObserveUsersGrupo,
+    observeUsers: ObserveUsersForChat,
+    observeChat:ObserveChat,
 ):ViewModel() {
 //    private val grupoId2:Long = savedStateHandle["id"]!!
     private val chatId:Long = savedStateHandle["id"]!!
     private val grupoId:Long = savedStateHandle.get<Long>("grupoId")?:0
+    private val typeChat:Int = savedStateHandle.get<Int>("typeChat")?:TypeChat.TYPE_CHAT_GRUPO.ordinal
     private var data = savedStateHandle.get<String>("data")?:""
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
-    private val messageChat = MutableStateFlow<Message?>(null)
     private val scrollToBottom = MutableStateFlow<Boolean?>(null)
     private val emojiData = MutableStateFlow<List<List<Emoji>>>(emptyList())
-    private val chat = MutableStateFlow<Chat?>(null)
     val pagedList: Flow<PagingData<MessageProfile>> =
         pagingInteractor.flow.cachedIn(viewModelScope)
     val state:StateFlow<ChatGrupoState> = combine(
         loadingState.observable,
         uiMessageManager.message,
-        messageChat,
         observeUser.flow,
         observeAuthState.flow,
-        observeGrupo.flow,
-        observeUsersGrupo.flow,
+        observeChat.flow,
+        observeUsers.flow,
         scrollToBottom,
         emojiData
-    ){loading,message,messageChat,user,authState,grupo,usersGrupo,scrollToBottom,emojiData->
+    ){loading,message,user,authState,chat,usersGrupo,scrollToBottom,emojiData->
         ChatGrupoState(
             loading = loading,
             message = message,
-            messageChat = messageChat,
             user = user,
             authState = authState,
-            grupo = grupo,
+            chat = chat,
             usersGrupo = usersGrupo,
             scrollToBottom = scrollToBottom,
             emojiData = emojiData
@@ -129,22 +121,11 @@ class ChatGrupoViewModel(
         getData()
         observeUser(Unit)
         observeAuthState(Unit)
-        observeGrupo(ObserveGrupo.Param(id = grupoId))
-        observeUsersGrupo(ObserveUsersGrupo.Params(id = grupoId))
+        observeChat(ObserveChat.Params(id = chatId))
+        observeUsers(ObserveUsersForChat.Params(id = grupoId,typeChat = typeChat))
         pagingInteractor(ObservePagerMessages.Params(PAGING_CONFIG,chatId))
-            viewModelScope.launch {
-                observeUser.flow.collect {
-                    try {
-                        if(it.profile_id != 0L){
-                            startWs(it.profile_id)
-                        }
-                    }catch (e:Exception){
-                        Log.d("DEBUG_APP_USER_ERR",e.localizedMessage?:"")
-                    }
-                }
-            }
         viewModelScope.launch {
-            grupoRepository.observeMessages(chatId).collectLatest {
+            chatRepository.observeMessages(chatId).collectLatest {
                 Log.d("DEBUG_APP_MESSAGE",it.size.toString())
                 val scroll = scrollToBottom.value?:false
                 scrollToBottom.tryEmit(!scroll)
@@ -153,6 +134,9 @@ class ChatGrupoViewModel(
         viewModelScope.launch {
             observeUser.flow.collect{user ->
                 try{
+                    if(user.profile_id != 0L){
+                        startWs(user.profile_id)
+                    }
                     delay(100)
                     sendSharedMessage()
                     Log.d("DEBUG_APP_USER",user.toString())
@@ -161,18 +145,10 @@ class ChatGrupoViewModel(
                 }
             }
         }
-        viewModelScope.launch {
-            try {
-                chat.tryEmit(chatRepository.getChat(chatId))
-            }catch (e:Exception){
-                //TODO()
-            }
-        }
-        outputMessage()
         getEmojiData()
 
     }
-    fun getEmojiData(){
+    private fun getEmojiData(){
         viewModelScope.launch {
             val emoticonos = async { labelRepository.getEmojiByCategory(EmojiCategory.Emoticonos) }
             val people = async { labelRepository.getEmojiByCategory(EmojiCategory.Gente) }
@@ -201,13 +177,7 @@ class ChatGrupoViewModel(
 //                }
 //            }
             if(cl.isActive){
-                chat.value?.let { chat->
-                chatRepository.getUnreadMessages(RequestChatUnreadMessages(
-                    chat_id = chatId,
-                    last_update_chat = chat.updated_at,
-                    type_chat = TypeChat.TYPE_CHAT_GRUPO.ordinal
-                ))
-                }
+                chatRepository.getChatUnreadMessages(chatId, typeChat)
                 Log.d("DEBUG_APP","IS ACTIVE ASDASD AS")
             }
             cl.apply{
@@ -215,39 +185,14 @@ class ChatGrupoViewModel(
                         message as? Frame.Text ?: continue
 //                        val payload = Json.decodeFromString<WsAccountPayload>(message.readText())
                         val event = Json.decodeFromString<MessageEvent>(message.readText())
-                        Log.d("DEBUG_APP",message.readText())
                         if (event.type == MessageEventType.EventTypeMessage) {
-                            val payload = Json.decodeFromString<GrupoMessageDto>(event.payload)
+                        Log.d("DEBUG_APP_MESSAGE_PAYLOAD",message.readText())
+                        val payload = Json.decodeFromString<GrupoMessageDto>(event.payload)
 //                            Log.d("DEBUG_APP_MESSAGE_REC",event.message.toString())
-                        chatRepository.saveMessage(payload,true)
+                        delay(1000)
+                        chatRepository.updateOrSaveMessage(payload,true)
 //                            grupoRepository.updateLastMessage(grupoId,message.content,message.created_at)
                         }
-//                    if (event.type == GrupoEventType.GrupoEvnetUser) {
-//                        val id = event.message.profile_id
-//                        try {
-//                            val res = usersRepository.getProfile(id)
-//                            uiMessageManager.emitMessage(UiMessage(message = "${res.nombre} acaba de unirse al grupo"))
-//                        } catch (e: Exception) {
-//                            uiMessageManager.emitMessage(
-//                                UiMessage(
-//                                    message = e.localizedMessage ?: ""
-//                                )
-//                            )
-//                        }
-//                    }
-//                    if (event.type == GrupoEventType.GrupoEventSala) {
-//                        try {
-//                            uiMessageManager.emitMessage(UiMessage(message = "Se ha creado una nueva sala ${event.sala?.nombre}"))
-//                        } catch (e: Exception) {
-//                            uiMessageManager.emitMessage(
-//                                UiMessage(
-//                                    message = e.localizedMessage ?: ""
-//                                )
-//                            )
-//                        }
-//                    }
-
-
                     }
 
             }
@@ -269,28 +214,26 @@ class ChatGrupoViewModel(
     }
 //    @SuppressLint("SuspiciousIndentation")
 //    suspend fun DefaultClientWebSocketSession.outputMessage(){
-    fun outputMessage(){
-    viewModelScope.launch {
-        messageChat.filterNotNull().collectLatest {data->
-            if (data.content == "" && data.data == null) return@collectLatest
+    private suspend fun outputMessage(data:Message){
+            if (data.content == "" && data.data == null) return
             try{
                 state.value.user?.let {
                     Log.d("DEBUG_APP",it.toString())
                     val message = GrupoMessageDto(
-                        profile_id = it.profile_id,
+                        profile_id = data.profile_id,
+                        chat_id = data.chat_id,
                         content = data.content,
-                        chat_id = chatId,
+                        created_at = data.created_at,
+                        data = data.data,
                         type_message = data.type_message,
                         reply_to = data.reply_to,
-                        data = data.data,
-                        created_at = data.created_at,
-                        id = data.id,
                         parent_id = data.parent_id,
+                        local_id = data.id
                     )
                     val event =  MessagePublishRequest(
                         message = message,
                         chat_id = chatId,
-                        type_chat = TypeChat.TYPE_CHAT_GRUPO.ordinal
+                        type_chat = typeChat
                     )
                     Log.d("DEBUG_APP_DATA",event.toString())
                    chatRepository.publishMessage(event)
@@ -298,8 +241,6 @@ class ChatGrupoViewModel(
             }catch(e:Exception){
                 Log.d("DEBUG_APP",e.toString())
             }
-        }
-    }
     }
 
     fun getData(){
@@ -309,11 +250,8 @@ class ChatGrupoViewModel(
                 grupoRepository.getUsersGroup(grupoId)
 //                grupoRepository.getMessagesGrupo(grupoId)
             }catch(e:SerializationException){
-                Log.d("DEBUG_ERROR",e.message.toString())
-                Log.d("DEBUG_ERROR","serialization exeption")
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
             }catch (e:Exception){
-                Log.d("DEBUG_ERROR","fail to fetchUsers")
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
             }
         }
@@ -351,14 +289,8 @@ class ChatGrupoViewModel(
             val res = async { chatRepository.saveMessageLocal(message) }
             res.await()
             animateScroll()
-            messageChat.tryEmit(message)
-        }
-    }
-    fun syncMessages(){
-        viewModelScope.launch {
-//            if(state.value.authState == AppAuthState.LOGGED_IN){
-               grupoRepository.syncMessages(chatId)
-//            }
+            outputMessage(message)
+
         }
     }
     fun clearMessage(id:Long){
@@ -367,9 +299,9 @@ class ChatGrupoViewModel(
         }
     }
 
-    fun getUserGrupo(profileId:Long):UserProfileGrupo?{
+    fun getUserGrupo(profileId:Long):UserProfileGrupoAndSala?{
         return state.value.usersGrupo.find {
-            it.id == profileId
+            it.profile_id == profileId
         }
     }
 

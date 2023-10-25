@@ -9,6 +9,7 @@ data class GrupoMessageDto(
     val data:String? = null,
     val created_at: Instant? = null,
     val id: Long = 0,
+    val local_id:Long = 0,
     val profile_id: Long,
     val chat_id:Long,
     val type_message:Int = GrupoMessageType.MESSAGE.ordinal,

@@ -11,7 +11,7 @@ import androidx.room.RoomSQLiteQuery;
 import androidx.room.SharedSQLiteStatement;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
-import app.regate.compoundmodels.UserProfileGrupo;
+import app.regate.compoundmodels.UserProfileGrupoAndSala;
 import app.regate.models.UserGrupo;
 import java.lang.Class;
 import java.lang.Exception;
@@ -392,9 +392,9 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
   }
 
   @Override
-  public Flow<List<UserProfileGrupo>> observeUsersGrupo(final long id) {
+  public Flow<List<UserProfileGrupoAndSala>> observeUsersGrupo(final long id) {
     final String _sql = "\n"
-            + "        select p.id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.id as user_group_id from user_grupo as ug\n"
+            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.id as id from user_grupo as ug\n"
             + "        inner join profiles as p on p.id = ug.profile_id\n"
             + "        where ug.grupo_id = ?\n"
             + "    ";
@@ -402,25 +402,25 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
     return CoroutinesRoom.createFlow(__db, true, new String[] {"user_grupo",
-        "profiles"}, new Callable<List<UserProfileGrupo>>() {
+        "profiles"}, new Callable<List<UserProfileGrupoAndSala>>() {
       @Override
       @NonNull
-      public List<UserProfileGrupo> call() throws Exception {
+      public List<UserProfileGrupoAndSala> call() throws Exception {
         __db.beginTransaction();
         try {
           final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
           try {
-            final int _cursorIndexOfId = 0;
+            final int _cursorIndexOfProfileId = 0;
             final int _cursorIndexOfNombre = 1;
             final int _cursorIndexOfApellido = 2;
             final int _cursorIndexOfProfilePhoto = 3;
             final int _cursorIndexOfIsAdmin = 4;
-            final int _cursorIndexOfUserGroupId = 5;
-            final List<UserProfileGrupo> _result = new ArrayList<UserProfileGrupo>(_cursor.getCount());
+            final int _cursorIndexOfId = 5;
+            final List<UserProfileGrupoAndSala> _result = new ArrayList<UserProfileGrupoAndSala>(_cursor.getCount());
             while (_cursor.moveToNext()) {
-              final UserProfileGrupo _item;
-              final long _tmpId;
-              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final UserProfileGrupoAndSala _item;
+              final long _tmpProfile_id;
+              _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final String _tmpNombre;
               _tmpNombre = _cursor.getString(_cursorIndexOfNombre);
               final String _tmpApellido;
@@ -439,9 +439,79 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
               final int _tmp;
               _tmp = _cursor.getInt(_cursorIndexOfIsAdmin);
               _tmpIs_admin = _tmp != 0;
-              final long _tmpUser_group_id;
-              _tmpUser_group_id = _cursor.getLong(_cursorIndexOfUserGroupId);
-              _item = new UserProfileGrupo(_tmpId,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpUser_group_id);
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              _item = new UserProfileGrupoAndSala(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpId);
+              _result.add(_item);
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public Flow<List<UserProfileGrupoAndSala>> observeUsersRoom(final long id) {
+    final String _sql = "\n"
+            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ur.is_admin,ur.id as id from user_room as ur\n"
+            + "        inner join profiles as p on p.id = ur.profile_id\n"
+            + "        where ur.sala_id = ?\n"
+            + "    ";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, id);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"user_room",
+        "profiles"}, new Callable<List<UserProfileGrupoAndSala>>() {
+      @Override
+      @NonNull
+      public List<UserProfileGrupoAndSala> call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final int _cursorIndexOfProfileId = 0;
+            final int _cursorIndexOfNombre = 1;
+            final int _cursorIndexOfApellido = 2;
+            final int _cursorIndexOfProfilePhoto = 3;
+            final int _cursorIndexOfIsAdmin = 4;
+            final int _cursorIndexOfId = 5;
+            final List<UserProfileGrupoAndSala> _result = new ArrayList<UserProfileGrupoAndSala>(_cursor.getCount());
+            while (_cursor.moveToNext()) {
+              final UserProfileGrupoAndSala _item;
+              final long _tmpProfile_id;
+              _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
+              final String _tmpNombre;
+              _tmpNombre = _cursor.getString(_cursorIndexOfNombre);
+              final String _tmpApellido;
+              if (_cursor.isNull(_cursorIndexOfApellido)) {
+                _tmpApellido = null;
+              } else {
+                _tmpApellido = _cursor.getString(_cursorIndexOfApellido);
+              }
+              final String _tmpProfile_photo;
+              if (_cursor.isNull(_cursorIndexOfProfilePhoto)) {
+                _tmpProfile_photo = null;
+              } else {
+                _tmpProfile_photo = _cursor.getString(_cursorIndexOfProfilePhoto);
+              }
+              final boolean _tmpIs_admin;
+              final int _tmp;
+              _tmp = _cursor.getInt(_cursorIndexOfIsAdmin);
+              _tmpIs_admin = _tmp != 0;
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              _item = new UserProfileGrupoAndSala(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpId);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();

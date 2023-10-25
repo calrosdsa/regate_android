@@ -1,5 +1,6 @@
 package app.regate.data.dto.chat
 
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 

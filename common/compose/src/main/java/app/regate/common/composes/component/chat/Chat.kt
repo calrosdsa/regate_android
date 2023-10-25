@@ -50,7 +50,7 @@ import app.regate.common.composes.component.input.MessengerIcon2
 import app.regate.common.composes.util.Layout
 import app.regate.common.composes.util.itemsCustom
 import app.regate.compoundmodels.MessageProfile
-import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.models.account.User
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
@@ -83,7 +83,7 @@ fun Chat (
     navigateToSala: (Int) -> Unit,
     modifier: Modifier = Modifier,
     user: User? = null,
-    getUserProfileGrupo: (id:Long)->UserProfileGrupo? = {null},
+    getUserProfileGrupoAndSala: (id:Long)->UserProfileGrupoAndSala? = {null},
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -203,7 +203,7 @@ fun Chat (
 //                                                    lazyListState.scrollToItem( lazyPagingItems.itemCount)
 
                                                 }
-                                            }, getUserProfileGrupo = getUserProfileGrupo,
+                                            }, getUserProfileGrupoAndSala = getUserProfileGrupoAndSala,
                                             navigateToInstalacionReserva = navigateToInstalacionReserva,
                                             formatShortDate = formatShortDate,
                                             formatShortTime = formatShortTime,
@@ -341,7 +341,7 @@ fun Chat (
                                                     }
                                                 }
                                             }
-                                        }, getUserProfileGrupo = getUserProfileGrupo,
+                                        }, getUserProfileGrupoAndSala = getUserProfileGrupoAndSala,
                                             navigateToInstalacionReserva = navigateToInstalacionReserva,
                                             formatShortDate = formatShortDate,
                                             formatShortTime = formatShortTime,

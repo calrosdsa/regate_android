@@ -22,15 +22,16 @@ internal fun NavGraphBuilder.GrupoRoutes(
 //    openSettings: () -> Unit,
 ) {
     animatedComposable(
-        route = Route.CHAT_GRUPO  +"?id={id}&grupoId={grupoId}&data={data}",
+        route = Route.CHAT_GRUPO  +"?id={id}&grupoId={grupoId}&data={data}&typeChat={typeChat}",
         arguments = listOf(
             navArgument("id") { type = NavType.LongType },
             navArgument("grupoId") { type = NavType.LongType },
+            navArgument("typeChat") { type = NavType.IntType },
             navArgument("data") {
                 type = NavType.StringType
                 defaultValue ="2312312" },
         ),
-        deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.CHAT_GRUPO}/{id}/{grupoId}" })
+        deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.CHAT_GRUPO}/{id}/{grupoId}/{typeChat}" })
     ) {
         composeScreens.chatGrupo(
             navigateUp = navController::navigateUp,

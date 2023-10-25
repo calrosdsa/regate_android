@@ -21,13 +21,12 @@ abstract class RoomChatDao:ChatDao,RoomEntityDao<Chat> {
     """
     )
     abstract override fun observeChatsPaging(): PagingSource<Int, Chat>
+
+    @Transaction
+    @Query("select * from chat where id = :id")
+    abstract override fun observeChat(id: Long): Flow<Chat>
     @Query("select * from chat where id = :id")
     abstract override suspend fun getChat(id:Long):Chat
-    @Transaction
-    @Query("""
-            SELECT * FROM chat limit :page offset :offset
-      """)
-    abstract override fun observeChats(page:Int,offset:Int): Flow<List<Chat>>
 
 }
 //

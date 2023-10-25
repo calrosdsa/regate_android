@@ -3,7 +3,7 @@ package app.regate.data.daos
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.models.UserGrupo
 import kotlinx.coroutines.flow.Flow
 
@@ -11,11 +11,19 @@ import kotlinx.coroutines.flow.Flow
 abstract class RoomUserGrupoDao:UserGrupoDao,RoomEntityDao<UserGrupo> {
     @Transaction
     @Query("""
-        select p.id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.id as user_group_id from user_grupo as ug
+        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.id as id from user_grupo as ug
         inner join profiles as p on p.id = ug.profile_id
         where ug.grupo_id = :id
     """)
-    abstract override fun observeUsersGrupo(id: Long): Flow<List<UserProfileGrupo>>
+    abstract override fun observeUsersGrupo(id: Long): Flow<List<UserProfileGrupoAndSala>>
+
+    @Transaction
+    @Query("""
+        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ur.is_admin,ur.id as id from user_room as ur
+        inner join profiles as p on p.id = ur.profile_id
+        where ur.sala_id = :id
+    """)
+    abstract override fun observeUsersRoom(id: Long): Flow<List<UserProfileGrupoAndSala>>
 
     @Query("DELETE FROM user_grupo where grupo_id = :id")
     abstract override suspend fun deleteUsers(id:Long)

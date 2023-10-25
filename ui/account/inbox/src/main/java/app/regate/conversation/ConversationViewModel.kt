@@ -1,5 +1,6 @@
 package app.regate.conversation
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -10,37 +11,52 @@ import app.cash.paging.cachedIn
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageProfile
 import app.regate.constant.HostMessage
+import app.regate.data.app.EmojiCategory
 import app.regate.data.chat.ChatRepository
 import app.regate.data.common.MessageData
-import app.regate.data.dto.empresa.conversation.ConversationMessage
+import app.regate.data.dto.chat.MessageEvent
+import app.regate.data.dto.chat.MessageEventType
+import app.regate.data.dto.chat.MessagePublishRequest
+import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
+import app.regate.data.dto.empresa.grupo.GrupoMessageData
+import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.instalacion.CupoRepository
+import app.regate.data.labels.LabelRepository
+import app.regate.data.mappers.MessageToMessageDto
 import app.regate.domain.interactors.UpdateEstablecimiento
+import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.establecimiento.ObserveEstablecimientoDetail
 import app.regate.domain.observers.account.ObserveUser
 import app.regate.domain.observers.pagination.ObservePagerMessages
+import app.regate.extensions.combine
+import app.regate.models.Emoji
 import app.regate.models.Message
-import app.regate.models.MessageInbox
+import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
 import app.regate.util.getLongUuid
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
-import io.ktor.client.plugins.websocket.webSocket
+import io.ktor.client.plugins.websocket.webSocketSession
 import io.ktor.http.HttpMethod
+import io.ktor.util.InternalAPI
 import io.ktor.websocket.Frame
-import io.ktor.websocket.send
+import io.ktor.websocket.close
+import io.ktor.websocket.readText
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
-import kotlinx.serialization.encodeToString
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -52,93 +68,200 @@ class ConversationViewModel(
     private val chatRepository: ChatRepository,
     private val updateEstablecimiento: UpdateEstablecimiento,
     private val cupoRepository: CupoRepository,
+    private val preferences: AppPreferences,
+    private val labelRepository: LabelRepository,
     observeUser: ObserveUser,
+    observeAuthState: ObserveAuthState,
     observeEstablecimientoDetail: ObserveEstablecimientoDetail,
-//    pagingInteractor: ObservePagerMessagesInbox,
     pagingInteractor: ObservePagerMessages,
     ):ViewModel() {
-    private val chatId = savedStateHandle.get<Long>("id")?:0
-    private val establecimientoId = savedStateHandle.get<Long>("establecimientoId")?:0
+    private val chatId = savedStateHandle.get<Long>("id") ?: 0
+    private val establecimientoId = savedStateHandle.get<Long>("establecimientoId") ?: 0
+    private var data = savedStateHandle.get<String>("data")?:""
     private val loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
-    private val messageInbox = MutableStateFlow<MessageInbox?>(null)
+    private val scrollToBottom = MutableStateFlow<Boolean?>(null)
+    private val emojiData = MutableStateFlow<List<List<Emoji>>>(emptyList())
     val pagedList: Flow<PagingData<MessageProfile>> =
         pagingInteractor.flow.cachedIn(viewModelScope)
-    val state:StateFlow<ConversationState>  = combine(
+    val state: StateFlow<ConversationState> = combine(
         loadingCounter.observable,
         uiMessageManager.message,
         observeUser.flow,
-        messageInbox,
+        observeAuthState.flow,
+        scrollToBottom,
+        emojiData,
         observeEstablecimientoDetail.flow
-    ){loading,message,user,messageInbox,establecimiento->
+    ) { loading,message,user,authState,scrollToBottom,emojiData,establecimiento->
         ConversationState(
             loading = loading,
             message = message,
             user = user,
-            messageInbox = messageInbox,
-            establecimiento = establecimiento
+            scrollToBottom = scrollToBottom,
+            authState = authState,
+            establecimiento = establecimiento,
+            emojiData = emojiData
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
         initialValue = ConversationState.Empty
     )
-    init {
-//        pagingInteractor(ObservePagerMessagesInbox.Params(PAGING_CONFIG,conversationId))
-        pagingInteractor(ObservePagerMessages.Params(PAGING_CONFIG,chatId))
 
-        viewModelScope.launch {
-            updateEstablecimiento.executeSync(UpdateEstablecimiento.Params(
-                id = establecimientoId
-            ))
-        }
-        syncMessages()
+    init {
+        getData()
         observeUser(Unit)
-        observeEstablecimientoDetail(ObserveEstablecimientoDetail.Params(id = establecimientoId))
-        Log.d("DEBUG_APP",chatId.toString())
+        observeEstablecimientoDetail(ObserveEstablecimientoDetail.Params(establecimientoId))
+        observeAuthState(Unit)
+        pagingInteractor(ObservePagerMessages.Params(PAGING_CONFIG,chatId))
         viewModelScope.launch {
-            try{
+            chatRepository.observeMessages(chatId).collectLatest {
+                Log.d("DEBUG_APP_MESSAGE",it.size.toString())
+                val scroll = scrollToBottom.value?:false
+                scrollToBottom.tryEmit(!scroll)
+            }
+        }
+        viewModelScope.launch {
+            observeUser.flow.collect{user ->
+                try{
+                    if(user.profile_id != 0L){
+                        startWs(user.profile_id)
+                    }
+                    delay(100)
+                    sendSharedMessage()
+                    Log.d("DEBUG_APP_USER",user.toString())
+                }catch(e:Exception){
+                    Log.d("DEBUG_APP",e.localizedMessage?:"")
+                }
+            }
+        }
+        viewModelScope.launch {
+            updateEstablecimiento.executeSync(UpdateEstablecimiento.Params(id = establecimientoId))
+        }
+        getEmojiData()
+    }
+
+
+    private fun getEmojiData(){
+        viewModelScope.launch {
+            val emoticonos = async { labelRepository.getEmojiByCategory(EmojiCategory.Emoticonos) }
+            val people = async { labelRepository.getEmojiByCategory(EmojiCategory.Gente) }
+            val animales = async { labelRepository.getEmojiByCategory(EmojiCategory.Animales) }
+            val alimentos = async { labelRepository.getEmojiByCategory(EmojiCategory.Alimentos) }
+            val viajar = async { labelRepository.getEmojiByCategory(EmojiCategory.Viajar) }
+            val actividades = async { labelRepository.getEmojiByCategory(EmojiCategory.Actividades) }
+            val objetos = async { labelRepository.getEmojiByCategory(EmojiCategory.Objetos) }
+            val simbolos = async { labelRepository.getEmojiByCategory(EmojiCategory.Simbolos) }
+            val banderas = async { labelRepository.getEmojiByCategory(EmojiCategory.Banderas) }
+            emojiData.emit(awaitAll(emoticonos,people,animales,alimentos,viajar,actividades,objetos,simbolos,banderas))
+        }
+    }
+    @OptIn(InternalAPI::class)
+    @SuppressLint("SuspiciousIndentation")
+    suspend fun startWs(profileId: Long){
+        var cl:DefaultClientWebSocketSession? = null
+        try {
+            cl = client.webSocketSession(method = HttpMethod.Get, host = HostMessage.host,
 //                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
-                client.webSocket(method = HttpMethod.Get, host = HostMessage.host,
-                    port = HostMessage.port, path = "v1/ws/conversation/?id=$chatId"){
-                    launch { outputMessage() }
-                    while (true){
-                        val othersMessage = incoming.receive() as? Frame.Text
-                        if (othersMessage != null) {
-//                            val data = Json.decodeFromString<ConversationMessage>(othersMessage.readText())
-                            try{
-//                                conversationRepository.saveMessage(data)
-                            }catch (e:Exception){
-                                Log.d("DEBUG_APP_ERROR_",e.localizedMessage?:"")
-                            }
-                        }
+                port =HostMessage.port, path = "/v1/ws/suscribe/chat/?id=${chatId}&profileId=${profileId}")
+            Log.d("DEBUG_APP","start ws.......")
+            Log.d("DEBUG_APP_WS_AC",cl.isActive.toString())
+//            cl.apply {
+//                launch {
+//                    outputMessage()
+//                }
+//            }
+            if(cl.isActive){
+                chatRepository.getChatUnreadMessages(chatId, TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal)
+                Log.d("DEBUG_APP","IS ACTIVE ASDASD AS")
+            }
+            cl.apply{
+                for (message in incoming) {
+                    message as? Frame.Text ?: continue
+//                        val payload = Json.decodeFromString<WsAccountPayload>(message.readText())
+                    val event = Json.decodeFromString<MessageEvent>(message.readText())
+                    if (event.type == MessageEventType.EventTypeMessage) {
+                    Log.d("DEBUG_APP",message.readText())
+                        val payload = Json.decodeFromString<GrupoMessageDto>(event.payload)
+//                            Log.d("DEBUG_APP_MESSAGE_REC",event.message.toString())
+                        chatRepository.updateOrSaveMessage(payload,true)
+//                            grupoRepository.updateLastMessage(grupoId,message.content,message.created_at)
                     }
                 }
-            }catch(e:Exception){
-                Log.d("DEBUG_APP",e.localizedMessage?:"")
+
             }
+            cl.start(emptyList())
+        }catch (e:Exception){
+            cl?.close()
+            delay(1000)
+            Log.d("DEBUG_ARR",e.localizedMessage?:"")
+            startWs(profileId)
         }
     }
-    private fun syncMessages(){
+
+    companion object {
+        val PAGING_CONFIG = PagingConfig(
+            pageSize = 20,
+            initialLoadSize = 20,
+//            prefetchDistance = 1
+        )
+    }
+    //    @SuppressLint("SuspiciousIndentation")
+//    suspend fun DefaultClientWebSocketSession.outputMessage(){
+    private suspend fun outputMessage(data:Message){
+        if (data.content == "" && data.data == null) return
+        try{
+            state.value.user?.let {
+                Log.d("DEBUG_APP",it.toString())
+                val message = GrupoMessageDto(
+                    profile_id = data.profile_id,
+                    chat_id = data.chat_id,
+                    content = data.content,
+                    created_at = data.created_at,
+                    data = data.data,
+                    type_message = data.type_message,
+                    reply_to = data.reply_to,
+                    parent_id = data.parent_id,
+                    local_id = data.id
+                )
+                val event =  MessagePublishRequest(
+                    message = message,
+                    chat_id = chatId,
+                    type_chat = TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal
+                )
+                Log.d("DEBUG_APP_DATA",event.toString())
+                chatRepository.publishMessage(event)
+            }
+        }catch(e:Exception){
+            Log.d("DEBUG_APP",e.toString())
+        }
+    }
+
+    fun getData(){
         viewModelScope.launch {
-            chatRepository.syncMessages(chatId)
+            try {
+                chatRepository.updateUnreadMessages(chatId)
+//                grupoRepository.getMessagesGrupo(grupoId)
+            }catch(e:SerializationException){
+                Log.d("DEBUG_ERROR",e.localizedMessage?:"")
+            }catch (e:Exception){
+                Log.d("DEBUG_ERROR",e.localizedMessage?:"")
+            }
         }
     }
-    private suspend fun DefaultClientWebSocketSession.outputMessage(){
-        messageInbox.filterNotNull().collectLatest {data->
-            if(data.content != ""){
-                state.value.user?.let {
-                    val message = ConversationMessage(
-                        id = data.id,
-                        conversation_id = data.conversation_id,
-                        sender_id = data.sender_id,
-                        reply_to = data.reply_to,
-                        content = data.content,
-                        created_at = data.created_at
-                    )
-                    send(Json.encodeToString(message))
-                }
-            }
+    private fun sendSharedMessage(){
+        try {
+            if(data.isBlank()) return
+            Log.d("DEBUG_APP_DATA",data)
+            val grupoMessageData = Json.decodeFromString<GrupoMessageData>(data)
+            val message = MessageData(
+                data = grupoMessageData.data,
+                content = grupoMessageData.content,
+                type_message = grupoMessageData.type_data
+            )
+            sendMessage(message,{})
+        }catch (e:Exception){
+            //todo()
         }
     }
 
@@ -153,16 +276,24 @@ class ConversationViewModel(
                 id = getLongUuid(),
                 type_message = messageData.type_message,
                 data = messageData.data,
-                readed = true
+                readed = true,
+                parent_id = establecimientoId
             )
             val res = async { chatRepository.saveMessageLocal(message) }
             res.await()
             animateScroll()
-//            messageChat.tryEmit(message)
+            outputMessage(message)
+
+        }
+    }
+    fun clearMessage(id:Long){
+        viewModelScope.launch {
+            uiMessageManager.clearMessage(id)
         }
     }
 
-    fun navigateToInstalacionReserva(instalacionId:Long, establecimientoId:Long, cupos:List<CupoInstalacion>,
+
+    fun navigateToInstalacionReserva(instalacionId:Long,establecimientoId:Long,cupos:List<CupoInstalacion>,
                                      navigate:(Long,Long)->Unit){
         viewModelScope.launch {
             try{
@@ -175,19 +306,18 @@ class ConversationViewModel(
         }
     }
 
-    companion object {
-        val PAGING_CONFIG = PagingConfig(
-            pageSize = 20,
-            initialLoadSize = 20,
-//            prefetchDistance = 1
-        )
+    fun getKeyBoardHeight():Int{
+        return preferences.keyBoardHeight
+    }
+    fun setKeyboardHeight(height:Int){
+        preferences.keyBoardHeight = height
     }
 
-//    companion object {
-//        val PAGING_CONFIG = PagingConfig(
-//            pageSize = 20,
-//            initialLoadSize = 20,
-//            prefetchDistance = 5
-//        )
-//    }
+    fun resetScroll(){
+        viewModelScope.launch {
+            scrollToBottom.tryEmit(null)
+        }
+    }
+
+
 }

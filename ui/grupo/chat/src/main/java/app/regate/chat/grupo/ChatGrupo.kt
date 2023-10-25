@@ -1,8 +1,6 @@
 package app.regate.chat.grupo
 
 import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -49,9 +47,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.intl.Locale
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -67,17 +62,13 @@ import app.regate.common.composes.util.prependErrorOrNull
 import app.regate.common.composes.util.refreshErrorOrNull
 import app.regate.common.composes.viewModel
 import app.regate.compoundmodels.MessageProfile
-import app.regate.compoundmodels.UserProfileGrupo
-import app.regate.data.app.EmojiDto
-import app.regate.data.app.EmojisState
+import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -134,8 +125,8 @@ internal fun ChatGrupo(
         openAuthBottomSheet = openAuthBottomSheet,
         clearMessage = viewModel::clearMessage,
 //        navigateToCreateSala = navigateToCreateSala,
-        navigateToGroup = navigateToGroup,
-        getUserProfileGrupo = viewModel::getUserGrupo,
+
+        getUserProfileGrupoAndSala = viewModel::getUserGrupo,
         formatterRelativeTime = formatter::formatShortRelativeTime,
         formatShortDate = {
             formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)
@@ -145,15 +136,16 @@ internal fun ChatGrupo(
         formatShortTimeFromString = {time,minutes->
         formatter.formatShortTime(time,minutes.toLong())
     },
+        navigateToSala = navigateToSala,
         navigateToInstalacionReserva = {instalacionId,establecimientoId,cupos->
             viewModel.navigateToInstalacionReserva(instalacionId,establecimientoId,cupos,navigateToInstalacionReserva)
         },
         resetScroll = viewModel::resetScroll,
         getKeyboardHeight = viewModel::getKeyBoardHeight,
         setKeyboardHeight = viewModel::setKeyboardHeight,
-        navigateToSala = navigateToSala,
 //        formatShortTime = {formatter.formatShortTime(it.toInstant())},
 //        formatDate = {formatter.formatWithSkeleton(it.toInstant().toEpochMilliseconds(),formatter.monthDaySkeleton)}
+        navigateToGroup = navigateToGroup,
     )
 }
 
@@ -169,7 +161,7 @@ internal fun ChatGrupo(
     openAuthBottomSheet: () -> Unit,
     clearMessage:(id:Long)->Unit,
 //    navigateToCreateSala: (id: Long) -> Unit,
-    getUserProfileGrupo:(id:Long)->UserProfileGrupo?,
+    getUserProfileGrupoAndSala:(id:Long)->UserProfileGrupoAndSala?,
     navigateToGroup: (id: Long) -> Unit,
     formatterRelativeTime:(date:Instant)->String,
     formatShortDate:(Instant)->String,
@@ -230,7 +222,7 @@ internal fun ChatGrupo(
 //    val density = LocalDensity.current
     LaunchedEffect(key1 = isKeyboardOpen, block = {
         if(isKeyboardOpen == Keyboard.Opened){
-            updateKeboardHeight(context){
+            appUtil.updateKeboardHeight(context){
                 setKeyboardHeight(it)
             }
             openBottomLayout = false
@@ -292,7 +284,7 @@ internal fun ChatGrupo(
         topBar = {
             TopBarChat(
                 navigateUp = navigateUp,
-                grupo = viewState.grupo,
+                chat = viewState.chat,
 //                navigateTocreateSala = navigateToCreateSala,
                 navigateToGroup = navigateToGroup,
                 users = viewState.usersGrupo
@@ -398,7 +390,7 @@ internal fun ChatGrupo(
                 formatShortTimeFromString = formatShortTimeFromString,
                 formatShortDateFromString = formatShortDateFromString,
                 navigateToInstalacionReserva = navigateToInstalacionReserva,
-                getUserProfileGrupo = getUserProfileGrupo,
+                getUserProfileGrupoAndSala = getUserProfileGrupoAndSala,
                 lazyListState = lazyListState,
                 navigateToSala = {navigateToSala(it.toLong())},
                 copyMessage = {text:String,isLink:Boolean->
@@ -418,22 +410,7 @@ internal fun ChatGrupo(
                     }
                     }
             )
-
-
         }
     }
 }
 
-fun updateKeboardHeight(
-    activity: Activity,
-    setBottomLayoutHeight:(Int)->Unit
-){
-    val insets = ViewCompat.getRootWindowInsets(activity.window.decorView)
-    val keyboardHeight =
-        insets?.getInsets(WindowInsetsCompat.Type.ime())?.bottom
-    val bottomBarHeight = insets?.getInsets(WindowInsetsCompat.Type.navigationBars())?.bottom
-    Log.d("DEBUG_APP_INSET",keyboardHeight.toString())
-    Log.d("DEBUG_APP_INSET",bottomBarHeight.toString())
-
-    setBottomLayoutHeight(keyboardHeight!! - bottomBarHeight!!)
-}

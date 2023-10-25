@@ -1,6 +1,5 @@
 package app.regate.grupos
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -43,7 +42,7 @@ import app.regate.common.resources.R
 import app.regate.constant.Route
 import app.regate.constant.id
 import app.regate.data.auth.AppAuthState
-import app.regate.usergroups.UserGroups
+import app.regate.usergroups.ChatsUser
 import app.regate.usergroups.UserGroupsViewModel
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
@@ -137,15 +136,18 @@ internal fun Grupos(
         HorizontalPager(pageCount = 3,state= pagerState,modifier = Modifier
             .padding(paddingValue)) {page->
             when (page) {
-                0 -> UserGroups(
+                0 -> ChatsUser(
 //                    modifier = Modifier,
                     lazyPagingItems = viewModel.pagedList.collectAsLazyPagingItems(),
                     formatShortRelativeTime = formatShortRelativeTime,
-                    navigateToChat = {id,grupoId->
-                        navController.navigate(Route.CHAT_GRUPO + "?id=$id&grupoId=$grupoId") },
+                    navigateToChat = {id,grupoId,type->
+                        navController.navigate(Route.CHAT_GRUPO + "?id=$id&grupoId=$grupoId&typeChat=$type") },
                     navigateToEstablecimientoInbox = { establecimientoId:Long,conversationId:Long->
                         navController.navigate(Route.CONVERSATION  id conversationId id establecimientoId)
-                    }
+                    },
+//                    navigateToChatSala = {chatId:Long,salaId:Long->
+//                        navController.navigate(Route.CHAT_SALA + "?id=$chatId&salaId=$salaId")
+//                    }
                 )
                 1 -> filterGroups()
                 2 -> userSalas()

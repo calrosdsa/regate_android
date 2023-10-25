@@ -3,6 +3,7 @@ package app.regate.data.daos;
 import android.database.Cursor;
 import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.collection.LongSparseArray;
 import androidx.paging.PagingSource;
 import androidx.room.CoroutinesRoom;
@@ -19,9 +20,11 @@ import androidx.room.util.RelationUtil;
 import androidx.room.util.StringUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.compoundmodels.MessageProfile;
+import app.regate.compoundmodels.MessageWithChat;
 import app.regate.data.db.DateTimeTypeConverters;
 import app.regate.models.Message;
 import app.regate.models.Profile;
+import app.regate.models.chat.Chat;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.IllegalStateException;
@@ -51,7 +54,11 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
 
   private final EntityDeletionOrUpdateAdapter<Message> __updateAdapterOfMessage;
 
-  private final SharedSQLiteStatement __preparedStmtOfUpdateMessages;
+  private final SharedSQLiteStatement __preparedStmtOfUpdateUnreadMessages;
+
+  private final SharedSQLiteStatement __preparedStmtOfUpdateSendedMessage;
+
+  private final SharedSQLiteStatement __preparedStmtOfUpdatedPrimaryKey;
 
   private final EntityUpsertionAdapter<Message> __upsertionAdapterOfMessage;
 
@@ -147,11 +154,27 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         statement.bindLong(12, entity.getId());
       }
     };
-    this.__preparedStmtOfUpdateMessages = new SharedSQLiteStatement(__db) {
+    this.__preparedStmtOfUpdateUnreadMessages = new SharedSQLiteStatement(__db) {
       @Override
       @NonNull
       public String createQuery() {
         final String _query = "update messages set readed = 1 where chat_id= ? and readed = 0";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfUpdateSendedMessage = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "update messages set sended = 1,id = ? where id = ? and sended = 0";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfUpdatedPrimaryKey = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "update messages set id = ? ,sended = 1,readed = 1 where id= ?";
         return _query;
       }
     };
@@ -310,12 +333,12 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
   }
 
   @Override
-  public Object updateMessages(final long id, final Continuation<? super Unit> continuation) {
+  public Object updateUnreadMessages(final long id, final Continuation<? super Unit> continuation) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
       public Unit call() throws Exception {
-        final SupportSQLiteStatement _stmt = __preparedStmtOfUpdateMessages.acquire();
+        final SupportSQLiteStatement _stmt = __preparedStmtOfUpdateUnreadMessages.acquire();
         int _argIndex = 1;
         _stmt.bindLong(_argIndex, id);
         __db.beginTransaction();
@@ -325,7 +348,57 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           return Unit.INSTANCE;
         } finally {
           __db.endTransaction();
-          __preparedStmtOfUpdateMessages.release(_stmt);
+          __preparedStmtOfUpdateUnreadMessages.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object updateSendedMessage(final long id, final long newId,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfUpdateSendedMessage.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, newId);
+        _argIndex = 2;
+        _stmt.bindLong(_argIndex, id);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfUpdateSendedMessage.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object updatedPrimaryKey(final long id, final long newId,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfUpdatedPrimaryKey.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, newId);
+        _argIndex = 2;
+        _stmt.bindLong(_argIndex, id);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfUpdatedPrimaryKey.release(_stmt);
         }
       }
     }, continuation);
@@ -769,19 +842,121 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
   }
 
   @Override
-  public Object getUnSendedMessage(final long profileId, final long grupoId,
-      final Continuation<? super List<Message>> continuation) {
-    final String _sql = "select *  from messages where profile_id = ? and sended = 0 and chat_id = ?";
-    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
-    int _argIndex = 1;
-    _statement.bindLong(_argIndex, profileId);
-    _argIndex = 2;
-    _statement.bindLong(_argIndex, grupoId);
+  public Object getUnSendedMessage(final Continuation<? super List<MessageWithChat>> continuation) {
+    final String _sql = "select *  from messages where sended = 0";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
-    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<List<Message>>() {
+    return CoroutinesRoom.execute(__db, true, _cancellationSignal, new Callable<List<MessageWithChat>>() {
       @Override
       @NonNull
-      public List<Message> call() throws Exception {
+      public List<MessageWithChat> call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfChatId = CursorUtil.getColumnIndexOrThrow(_cursor, "chat_id");
+            final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
+            final int _cursorIndexOfData = CursorUtil.getColumnIndexOrThrow(_cursor, "data");
+            final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
+            final int _cursorIndexOfTypeMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "type_message");
+            final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+            final int _cursorIndexOfReplyTo = CursorUtil.getColumnIndexOrThrow(_cursor, "reply_to");
+            final int _cursorIndexOfSended = CursorUtil.getColumnIndexOrThrow(_cursor, "sended");
+            final int _cursorIndexOfReaded = CursorUtil.getColumnIndexOrThrow(_cursor, "readed");
+            final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
+            final LongSparseArray<Chat> _collectionChat = new LongSparseArray<Chat>();
+            while (_cursor.moveToNext()) {
+              final long _tmpKey;
+              _tmpKey = _cursor.getLong(_cursorIndexOfChatId);
+              _collectionChat.put(_tmpKey, null);
+            }
+            _cursor.moveToPosition(-1);
+            __fetchRelationshipchatAsappRegateModelsChatChat(_collectionChat);
+            final List<MessageWithChat> _result = new ArrayList<MessageWithChat>(_cursor.getCount());
+            while (_cursor.moveToNext()) {
+              final MessageWithChat _item;
+              final Message _tmpMessage;
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final long _tmpChat_id;
+              _tmpChat_id = _cursor.getLong(_cursorIndexOfChatId);
+              final String _tmpContent;
+              _tmpContent = _cursor.getString(_cursorIndexOfContent);
+              final String _tmpData;
+              if (_cursor.isNull(_cursorIndexOfData)) {
+                _tmpData = null;
+              } else {
+                _tmpData = _cursor.getString(_cursorIndexOfData);
+              }
+              final Instant _tmpCreated_at;
+              final String _tmp;
+              if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+                _tmp = null;
+              } else {
+                _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+              }
+              final Instant _tmp_1 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+              if (_tmp_1 == null) {
+                throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
+              } else {
+                _tmpCreated_at = _tmp_1;
+              }
+              final int _tmpType_message;
+              _tmpType_message = _cursor.getInt(_cursorIndexOfTypeMessage);
+              final long _tmpProfile_id;
+              _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
+              final Long _tmpReply_to;
+              if (_cursor.isNull(_cursorIndexOfReplyTo)) {
+                _tmpReply_to = null;
+              } else {
+                _tmpReply_to = _cursor.getLong(_cursorIndexOfReplyTo);
+              }
+              final boolean _tmpSended;
+              final int _tmp_2;
+              _tmp_2 = _cursor.getInt(_cursorIndexOfSended);
+              _tmpSended = _tmp_2 != 0;
+              final boolean _tmpReaded;
+              final int _tmp_3;
+              _tmp_3 = _cursor.getInt(_cursorIndexOfReaded);
+              _tmpReaded = _tmp_3 != 0;
+              final long _tmpParent_id;
+              _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
+              _tmpMessage = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id);
+              final Chat _tmpChat;
+              final long _tmpKey_1;
+              _tmpKey_1 = _cursor.getLong(_cursorIndexOfChatId);
+              _tmpChat = _collectionChat.get(_tmpKey_1);
+              _item = new MessageWithChat();
+              _item.message = _tmpMessage;
+              _item.setChat(_tmpChat);
+              _result.add(_item);
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+            _statement.release();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object getLastMessageSended(final long chatId,
+      final Continuation<? super Message> continuation) {
+    final String _sql = "select * from messages where sended = 1 and chat_id = ? order by created_at desc limit 1";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, chatId);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Message>() {
+      @Override
+      @Nullable
+      public Message call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
           final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
@@ -795,9 +970,8 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final int _cursorIndexOfSended = CursorUtil.getColumnIndexOrThrow(_cursor, "sended");
           final int _cursorIndexOfReaded = CursorUtil.getColumnIndexOrThrow(_cursor, "readed");
           final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
-          final List<Message> _result = new ArrayList<Message>(_cursor.getCount());
-          while (_cursor.moveToNext()) {
-            final Message _item;
+          final Message _result;
+          if (_cursor.moveToFirst()) {
             final long _tmpId;
             _tmpId = _cursor.getLong(_cursorIndexOfId);
             final long _tmpChat_id;
@@ -843,8 +1017,9 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             _tmpReaded = _tmp_3 != 0;
             final long _tmpParent_id;
             _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
-            _item = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id);
-            _result.add(_item);
+            _result = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id);
+          } else {
+            _result = null;
           }
           return _result;
         } finally {
@@ -1046,6 +1221,104 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final long _tmpParent_id;
           _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
           _item_1 = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id);
+          _map.put(_tmpKey, _item_1);
+        }
+      }
+    } finally {
+      _cursor.close();
+    }
+  }
+
+  private void __fetchRelationshipchatAsappRegateModelsChatChat(
+      @NonNull final LongSparseArray<Chat> _map) {
+    if (_map.isEmpty()) {
+      return;
+    }
+    if (_map.size() > RoomDatabase.MAX_BIND_PARAMETER_CNT) {
+      RelationUtil.recursiveFetchLongSparseArray(_map, false, (map) -> {
+        __fetchRelationshipchatAsappRegateModelsChatChat(map);
+        return Unit.INSTANCE;
+      });
+      return;
+    }
+    final StringBuilder _stringBuilder = StringUtil.newStringBuilder();
+    _stringBuilder.append("SELECT `id`,`photo`,`name`,`last_message`,`last_message_created`,`messages_count`,`type_chat`,`parent_id`,`updated_at` FROM `chat` WHERE `id` IN (");
+    final int _inputSize = _map.size();
+    StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
+    _stringBuilder.append(")");
+    final String _sql = _stringBuilder.toString();
+    final int _argCount = 0 + _inputSize;
+    final RoomSQLiteQuery _stmt = RoomSQLiteQuery.acquire(_sql, _argCount);
+    int _argIndex = 1;
+    for (int i = 0; i < _map.size(); i++) {
+      final long _item = _map.keyAt(i);
+      _stmt.bindLong(_argIndex, _item);
+      _argIndex++;
+    }
+    final Cursor _cursor = DBUtil.query(__db, _stmt, false, null);
+    try {
+      final int _itemKeyIndex = CursorUtil.getColumnIndex(_cursor, "id");
+      if (_itemKeyIndex == -1) {
+        return;
+      }
+      final int _cursorIndexOfId = 0;
+      final int _cursorIndexOfPhoto = 1;
+      final int _cursorIndexOfName = 2;
+      final int _cursorIndexOfLastMessage = 3;
+      final int _cursorIndexOfLastMessageCreated = 4;
+      final int _cursorIndexOfMessagesCount = 5;
+      final int _cursorIndexOfTypeChat = 6;
+      final int _cursorIndexOfParentId = 7;
+      final int _cursorIndexOfUpdatedAt = 8;
+      while (_cursor.moveToNext()) {
+        final long _tmpKey;
+        _tmpKey = _cursor.getLong(_itemKeyIndex);
+        if (_map.containsKey(_tmpKey)) {
+          final Chat _item_1;
+          final long _tmpId;
+          _tmpId = _cursor.getLong(_cursorIndexOfId);
+          final String _tmpPhoto;
+          if (_cursor.isNull(_cursorIndexOfPhoto)) {
+            _tmpPhoto = null;
+          } else {
+            _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
+          }
+          final String _tmpName;
+          _tmpName = _cursor.getString(_cursorIndexOfName);
+          final String _tmpLast_message;
+          if (_cursor.isNull(_cursorIndexOfLastMessage)) {
+            _tmpLast_message = null;
+          } else {
+            _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
+          }
+          final Instant _tmpLast_message_created;
+          final String _tmp;
+          if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
+            _tmp = null;
+          } else {
+            _tmp = _cursor.getString(_cursorIndexOfLastMessageCreated);
+          }
+          _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+          final int _tmpMessages_count;
+          _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
+          final int _tmpType_chat;
+          _tmpType_chat = _cursor.getInt(_cursorIndexOfTypeChat);
+          final long _tmpParent_id;
+          _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
+          final Instant _tmpUpdated_at;
+          final String _tmp_1;
+          if (_cursor.isNull(_cursorIndexOfUpdatedAt)) {
+            _tmp_1 = null;
+          } else {
+            _tmp_1 = _cursor.getString(_cursorIndexOfUpdatedAt);
+          }
+          final Instant _tmp_2 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_1);
+          if (_tmp_2 == null) {
+            throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
+          } else {
+            _tmpUpdated_at = _tmp_2;
+          }
+          _item_1 = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpType_chat,_tmpParent_id,_tmpUpdated_at);
           _map.put(_tmpKey, _item_1);
         }
       }

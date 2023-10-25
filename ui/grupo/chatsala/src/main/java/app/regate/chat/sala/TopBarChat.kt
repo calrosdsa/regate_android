@@ -36,7 +36,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.resources.R
-import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.models.Grupo
 
 
@@ -46,7 +46,7 @@ fun TopBarChat (
     grupo:Grupo?,
     navigateTocreateSala:(id:Long)->Unit,
     navigateToGroup:(id:Long)->Unit,
-    users:List<UserProfileGrupo>,
+    users:List<UserProfileGrupoAndSala>,
     modifier:Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }

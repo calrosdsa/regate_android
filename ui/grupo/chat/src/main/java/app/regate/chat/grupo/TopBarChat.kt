@@ -1,9 +1,7 @@
 package app.regate.chat.grupo
 
-import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,39 +12,29 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.ui.PosterCardImage
-import app.regate.common.resources.R
-import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.models.Grupo
+import app.regate.models.chat.Chat
 
 
 @Composable
 fun TopBarChat (
     navigateUp:()->Unit,
-    grupo:Grupo?,
+    chat:Chat?,
 //    navigateTocreateSala:(id:Long)->Unit,
     navigateToGroup:(id:Long)->Unit,
-    users:List<UserProfileGrupo>,
+    users:List<UserProfileGrupoAndSala>,
     modifier:Modifier = Modifier
 ) {
 //    var expanded by remember { mutableStateOf(false) }
@@ -68,26 +56,28 @@ fun TopBarChat (
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back_esta")
             }
             PosterCardImage(
-                model = grupo?.photo, modifier = Modifier.size(40.dp),
+                model = chat?.photo, modifier = Modifier.size(40.dp),
                 shape = CircleShape,
                 onClick = {
-                    if (grupo != null) {
-                        navigateToGroup(grupo.id)
+                    if (chat != null) {
+                        navigateToGroup(chat.id)
                     }
                 }
             )
             Spacer(modifier = Modifier.width(5.dp))
             Column(modifier = Modifier.clickable {
-                if (grupo != null) {
-                    navigateToGroup(grupo.id)
+                if (chat != null) {
+                    navigateToGroup(chat.id)
                 }
             }) {
-            Text(text = grupo?.name?:"", style = MaterialTheme.typography.titleMedium, maxLines = 1)
+            Text(text = chat?.name?:"", style = MaterialTheme.typography.titleMedium, maxLines = 1)
+                if(users.isNotEmpty()){
                 Text(text = users.joinToString(separator = " - ") { it.nombre  },
                     maxLines = 1, overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.fillMaxWidth(0.7f)
                 )
+                }
             }
         }
 //        Row() {

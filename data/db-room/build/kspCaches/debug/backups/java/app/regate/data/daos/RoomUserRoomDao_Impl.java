@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.RoomSQLiteQuery;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
-import app.regate.compoundmodels.UserProfileRoom;
+import app.regate.compoundmodels.UserProfileGrupoAndSala;
 import app.regate.models.UserRoom;
 import java.lang.Class;
 import java.lang.Exception;
@@ -46,7 +46,7 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT OR IGNORE INTO `user_room` (`id`,`profile_id`,`entity_id`,`is_admin`) VALUES (nullif(?, 0),?,?,?)";
+        return "INSERT OR IGNORE INTO `user_room` (`id`,`profile_id`,`sala_id`,`is_admin`) VALUES (nullif(?, 0),?,?,?)";
       }
 
       @Override
@@ -54,7 +54,7 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
           @NonNull final UserRoom entity) {
         statement.bindLong(1, entity.getId());
         statement.bindLong(2, entity.getProfile_id());
-        statement.bindLong(3, entity.getEntity_id());
+        statement.bindLong(3, entity.getSala_id());
         final int _tmp = entity.is_admin() ? 1 : 0;
         statement.bindLong(4, _tmp);
       }
@@ -76,7 +76,7 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `user_room` SET `id` = ?,`profile_id` = ?,`entity_id` = ?,`is_admin` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `user_room` SET `id` = ?,`profile_id` = ?,`sala_id` = ?,`is_admin` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -84,7 +84,7 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
           @NonNull final UserRoom entity) {
         statement.bindLong(1, entity.getId());
         statement.bindLong(2, entity.getProfile_id());
-        statement.bindLong(3, entity.getEntity_id());
+        statement.bindLong(3, entity.getSala_id());
         final int _tmp = entity.is_admin() ? 1 : 0;
         statement.bindLong(4, _tmp);
         statement.bindLong(5, entity.getId());
@@ -94,7 +94,7 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `user_room` (`id`,`profile_id`,`entity_id`,`is_admin`) VALUES (nullif(?, 0),?,?,?)";
+        return "INSERT INTO `user_room` (`id`,`profile_id`,`sala_id`,`is_admin`) VALUES (nullif(?, 0),?,?,?)";
       }
 
       @Override
@@ -102,7 +102,7 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
           @NonNull final UserRoom entity) {
         statement.bindLong(1, entity.getId());
         statement.bindLong(2, entity.getProfile_id());
-        statement.bindLong(3, entity.getEntity_id());
+        statement.bindLong(3, entity.getSala_id());
         final int _tmp = entity.is_admin() ? 1 : 0;
         statement.bindLong(4, _tmp);
       }
@@ -110,7 +110,7 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `user_room` SET `id` = ?,`profile_id` = ?,`entity_id` = ?,`is_admin` = ? WHERE `id` = ?";
+        return "UPDATE `user_room` SET `id` = ?,`profile_id` = ?,`sala_id` = ?,`is_admin` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -118,7 +118,7 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
           @NonNull final UserRoom entity) {
         statement.bindLong(1, entity.getId());
         statement.bindLong(2, entity.getProfile_id());
-        statement.bindLong(3, entity.getEntity_id());
+        statement.bindLong(3, entity.getSala_id());
         final int _tmp = entity.is_admin() ? 1 : 0;
         statement.bindLong(4, _tmp);
         statement.bindLong(5, entity.getId());
@@ -258,35 +258,35 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
   }
 
   @Override
-  public Flow<List<UserProfileRoom>> observeUsersRoom(final long id) {
+  public Flow<List<UserProfileGrupoAndSala>> observeUsersRoom(final long id) {
     final String _sql = "\n"
-            + "        select p.id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.id as user_sala_id from user_room as ug\n"
+            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.id as id from user_room as ug\n"
             + "        inner join profiles as p on p.id = ug.profile_id\n"
-            + "        where ug.entity_id = ?\n"
+            + "        where ug.sala_id = ?\n"
             + "    ";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
     return CoroutinesRoom.createFlow(__db, true, new String[] {"user_room",
-        "profiles"}, new Callable<List<UserProfileRoom>>() {
+        "profiles"}, new Callable<List<UserProfileGrupoAndSala>>() {
       @Override
       @NonNull
-      public List<UserProfileRoom> call() throws Exception {
+      public List<UserProfileGrupoAndSala> call() throws Exception {
         __db.beginTransaction();
         try {
           final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
           try {
-            final int _cursorIndexOfId = 0;
+            final int _cursorIndexOfProfileId = 0;
             final int _cursorIndexOfNombre = 1;
             final int _cursorIndexOfApellido = 2;
             final int _cursorIndexOfProfilePhoto = 3;
             final int _cursorIndexOfIsAdmin = 4;
-            final int _cursorIndexOfUserSalaId = 5;
-            final List<UserProfileRoom> _result = new ArrayList<UserProfileRoom>(_cursor.getCount());
+            final int _cursorIndexOfId = 5;
+            final List<UserProfileGrupoAndSala> _result = new ArrayList<UserProfileGrupoAndSala>(_cursor.getCount());
             while (_cursor.moveToNext()) {
-              final UserProfileRoom _item;
-              final long _tmpId;
-              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final UserProfileGrupoAndSala _item;
+              final long _tmpProfile_id;
+              _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final String _tmpNombre;
               _tmpNombre = _cursor.getString(_cursorIndexOfNombre);
               final String _tmpApellido;
@@ -305,9 +305,9 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
               final int _tmp;
               _tmp = _cursor.getInt(_cursorIndexOfIsAdmin);
               _tmpIs_admin = _tmp != 0;
-              final long _tmpUser_sala_id;
-              _tmpUser_sala_id = _cursor.getLong(_cursorIndexOfUserSalaId);
-              _item = new UserProfileRoom(_tmpId,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpUser_sala_id);
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              _item = new UserProfileGrupoAndSala(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpId);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();

@@ -30,7 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.resources.R
-import app.regate.compoundmodels.UserProfileGrupo
+import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.data.common.encodeMediaData
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -42,7 +42,7 @@ internal fun GrupoMenu(
     isCurrentUserisAdmin:Boolean?,
     isCurrentUserSuperAdmin:Boolean,
     pendingRequestCount:Int,
-    currentUser: UserProfileGrupo?,
+    currentUser: UserProfileGrupoAndSala?,
     members:Int,
     createSala: () -> Unit,
     editGroup: () -> Unit,

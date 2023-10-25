@@ -1,6 +1,7 @@
 package app.regate.data.chat
 
 import app.regate.data.dto.chat.MessagePublishRequest
+import app.regate.data.dto.chat.MessagePublishResponse
 import app.regate.data.dto.chat.PaginateChatResponse
 import app.regate.data.dto.chat.RequestChatUnreadMessages
 import app.regate.data.dto.empresa.conversation.Conversation
@@ -21,6 +22,6 @@ interface ChatDataSource {
     //chat
     suspend fun getChats(page: Int):PaginateChatResponse
     suspend fun getUnreadMessages(page:Int):PaginationGroupMessages
-    suspend fun publishMessage(data:MessagePublishRequest)
+    suspend fun publishMessage(data:MessagePublishRequest):MessagePublishResponse
 }
 

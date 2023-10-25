@@ -93,17 +93,29 @@ internal fun NavGraphBuilder.SalaRoutes(
 
 
     animatedComposable(
-        route = Route.CHAT_SALA arg "id" arg "title",
+        route = Route.CHAT_SALA  +"?id={id}&salaId={salaId}&data={data}",
         arguments = listOf(
             navArgument("id") { type = NavType.LongType },
-            navArgument("title") { type = NavType.StringType }
+            navArgument("salaId") { type = NavType.LongType },
+            navArgument("data") {
+                type = NavType.StringType
+                defaultValue ="2312312" },
         ),
-        deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.CHAT_SALA}/{id}/{title}" })
+        deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.CHAT_GRUPO}/{id}/{salaId}" })
+//        route = Route.CHAT_SALA arg "id" arg "title",
+//        arguments = listOf(
+//            navArgument("id") { type = NavType.LongType },
+//            navArgument("title") { type = NavType.StringType }
+//        ),
+//        deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.CHAT_SALA}/{id}/{title}" })
     ) {
         composeScreens.chatSala(
             navigateUp = navController::navigateUp,
             openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
-            navigateToSala = { navController.navigate(Route.SALA id it)}
+            navigateToSala = { navController.navigate(Route.SALA id it)},
+            navigateToInstalacionReserva = {instalacionId,establecimientoId ->
+                navController.navigate(Route.RESERVAR id instalacionId id establecimientoId)
+            },
         )
     }
 

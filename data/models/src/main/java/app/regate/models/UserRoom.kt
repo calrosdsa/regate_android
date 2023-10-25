@@ -22,6 +22,6 @@ data class UserRoom(
     @PrimaryKey(autoGenerate = true)
     override val id: Long = 0,
     val profile_id:Long,
-    val entity_id:Long,
+    val sala_id:Long,
     val is_admin:Boolean = false
 ):AppEntity

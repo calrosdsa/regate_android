@@ -9,6 +9,8 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.ChecksSdkIntAtLeast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import app.regate.constant.AppUrl
 import app.regate.constant.Route
 import app.regate.inject.ActivityScope
@@ -71,6 +73,20 @@ class AppUtil(
             Log.d("DEBUG_APP",e.localizedMessage?:"")
 
         }
+    }
+
+    fun updateKeboardHeight(
+        activity: Activity,
+        setBottomLayoutHeight:(Int)->Unit
+    ){
+        val insets = ViewCompat.getRootWindowInsets(activity.window.decorView)
+        val keyboardHeight =
+            insets?.getInsets(WindowInsetsCompat.Type.ime())?.bottom
+        val bottomBarHeight = insets?.getInsets(WindowInsetsCompat.Type.navigationBars())?.bottom
+        Log.d("DEBUG_APP_INSET",keyboardHeight.toString())
+        Log.d("DEBUG_APP_INSET",bottomBarHeight.toString())
+
+        setBottomLayoutHeight(keyboardHeight!! - bottomBarHeight!!)
     }
 
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.TIRAMISU)
