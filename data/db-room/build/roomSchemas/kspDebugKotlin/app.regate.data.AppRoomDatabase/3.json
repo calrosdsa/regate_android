@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "21fd2d131f664f0c6ca3fa993fda3f40",
+    "identityHash": "362171b8ee9acba2c867a4a9ab216af1",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -298,7 +298,7 @@
       },
       {
         "tableName": "messages",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `chat_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `data` TEXT, `created_at` TEXT NOT NULL, `type_message` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, `readed` INTEGER NOT NULL, `parent_id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `chat_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `data` TEXT, `created_at` TEXT NOT NULL, `type_message` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, `readed` INTEGER NOT NULL, `parent_id` INTEGER NOT NULL, `is_user` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -363,6 +363,12 @@
           {
             "fieldPath": "parent_id",
             "columnName": "parent_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "is_user",
+            "columnName": "is_user",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -1249,7 +1255,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '21fd2d131f664f0c6ca3fa993fda3f40')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '362171b8ee9acba2c867a4a9ab216af1')"
     ]
   }
 }

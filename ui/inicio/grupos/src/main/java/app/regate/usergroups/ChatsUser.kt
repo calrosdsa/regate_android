@@ -66,14 +66,12 @@ internal fun ChatsUser(
     lazyPagingItems: LazyPagingItems<Chat>,
     formatShortRelativeTime:(Instant)->String,
     navigateToChat: (id: Long,grupoId:Long,typeChat:Int) -> Unit,
-    navigateToEstablecimientoInbox:(Long,Long)->Unit,
 ){
     LazyColumn(modifier = Modifier.fillMaxSize()){
         itemsCustom(items = lazyPagingItems, key = {it.id}){item->
             if(item!= null){
                 ChatItem(chat = item, navigateToChat = navigateToChat,
                     formatShortRelativeTime = formatShortRelativeTime,
-                    navigateToEstablecimientoInbox = navigateToEstablecimientoInbox,
                 )
             }
         }
@@ -87,7 +85,7 @@ internal fun ChatItem(
 //    grupo: GrupoWithMessage,
     chat: Chat,
     navigateToChat: (id: Long,grupoId:Long,typeChat:Int) -> Unit,
-    navigateToEstablecimientoInbox: (Long, Long) -> Unit,
+//    navigateToEstablecimientoInbox: (Long, Long) -> Unit,
     formatShortRelativeTime:(Instant)->String,
     modifier:Modifier = Modifier
 ) {
@@ -100,7 +98,8 @@ internal fun ChatItem(
                         navigateToChat(chat.id,chat.parent_id,chat.type_chat)
                     }
                     TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal -> {
-                        navigateToEstablecimientoInbox(chat.parent_id,chat.id)
+                        navigateToChat(chat.id,chat.parent_id,chat.type_chat)
+//                        navigateToEstablecimientoInbox(chat.parent_id,chat.id)
                     }
                     TypeChat.TYPE_CHAT_SALA.ordinal -> {
                         navigateToChat(chat.id,chat.parent_id,chat.type_chat)

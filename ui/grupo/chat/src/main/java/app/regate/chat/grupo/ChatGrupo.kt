@@ -65,6 +65,7 @@ import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
+import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -146,6 +147,7 @@ internal fun ChatGrupo(
 //        formatShortTime = {formatter.formatShortTime(it.toInstant())},
 //        formatDate = {formatter.formatWithSkeleton(it.toInstant().toEpochMilliseconds(),formatter.monthDaySkeleton)}
         navigateToGroup = navigateToGroup,
+        getTypeOfChat = viewModel::getTypeOfChat
     )
 }
 
@@ -173,13 +175,11 @@ internal fun ChatGrupo(
     navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
     navigateToSala: (Long) -> Unit,
     resetScroll:()->Unit,
+    getTypeOfChat:()->TypeChat
 ) {
     val appUtil = LocalAppUtil.current
     val clipboardManager = LocalClipboardManager.current
-    val colors = listOf(
-        MaterialTheme.colorScheme.inverseOnSurface,
-        MaterialTheme.colorScheme.inverseOnSurface
-    )
+
     val message = remember {
         mutableStateOf(TextFieldValue())
     }
@@ -376,7 +376,6 @@ internal fun ChatGrupo(
                 .fillMaxSize()
         ) {
             Chat(
-                colors = colors,
                 lazyPagingItems = lazyPagingItems,
                 user = viewState.user,
                 setReply = {
@@ -408,7 +407,8 @@ internal fun ChatGrupo(
                         }
                         Log.d("DEBUG_APP",e.localizedMessage?:"")
                     }
-                    }
+                    },
+                getTypeOfChat = getTypeOfChat
             )
         }
     }

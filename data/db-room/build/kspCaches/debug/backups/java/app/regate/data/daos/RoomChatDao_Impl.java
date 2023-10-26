@@ -3,6 +3,7 @@ package app.regate.data.daos;
 import android.database.Cursor;
 import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.paging.PagingSource;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityDeletionOrUpdateAdapter;
@@ -525,7 +526,7 @@ public final class RoomChatDao_Impl extends RoomChatDao {
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
     return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Chat>() {
       @Override
-      @NonNull
+      @Nullable
       public Chat call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {

@@ -162,6 +162,7 @@ class ChatGrupoViewModel(
             emojiData.emit(awaitAll(emoticonos,people,animales,alimentos,viajar,actividades,objetos,simbolos,banderas))
         }
     }
+
     @SuppressLint("SuspiciousIndentation")
     suspend fun startWs(profileId: Long){
         var cl:DefaultClientWebSocketSession? = null
@@ -228,7 +229,8 @@ class ChatGrupoViewModel(
                         type_message = data.type_message,
                         reply_to = data.reply_to,
                         parent_id = data.parent_id,
-                        local_id = data.id
+                        local_id = data.id,
+                        is_user = data.is_user,
                     )
                     val event =  MessagePublishRequest(
                         message = message,
@@ -284,7 +286,8 @@ class ChatGrupoViewModel(
                 type_message = messageData.type_message,
                 data = messageData.data,
                 readed = true,
-                parent_id = grupoId
+                parent_id = grupoId,
+                is_user = typeChat == TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal
             )
             val res = async { chatRepository.saveMessageLocal(message) }
             res.await()
@@ -328,6 +331,15 @@ class ChatGrupoViewModel(
     fun resetScroll(){
         viewModelScope.launch {
             scrollToBottom.tryEmit(null)
+        }
+    }
+
+    fun getTypeOfChat():TypeChat{
+        return when(typeChat){
+            TypeChat.TYPE_CHAT_GRUPO.ordinal ->TypeChat.TYPE_CHAT_GRUPO
+            TypeChat.TYPE_CHAT_SALA.ordinal ->TypeChat.TYPE_CHAT_SALA
+            TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal ->TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO
+            else -> TypeChat.NONE
         }
     }
 

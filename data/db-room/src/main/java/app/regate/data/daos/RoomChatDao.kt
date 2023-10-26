@@ -26,7 +26,7 @@ abstract class RoomChatDao:ChatDao,RoomEntityDao<Chat> {
     @Query("select * from chat where id = :id")
     abstract override fun observeChat(id: Long): Flow<Chat>
     @Query("select * from chat where id = :id")
-    abstract override suspend fun getChat(id:Long):Chat
+    abstract override suspend fun getChat(id:Long):Chat?
 
 }
 //

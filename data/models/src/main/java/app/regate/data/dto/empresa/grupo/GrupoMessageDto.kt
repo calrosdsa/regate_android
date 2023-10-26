@@ -17,6 +17,8 @@ data class GrupoMessageDto(
     val reply_to:Long? = null,
     val reply_message: ReplyMessage = ReplyMessage.Empty,
     val parent_id:Long = 0,
+    //only for conversation message
+    val is_user:Boolean = false,
     )
 
 @Serializable

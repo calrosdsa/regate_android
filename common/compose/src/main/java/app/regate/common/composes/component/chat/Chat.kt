@@ -56,6 +56,7 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import app.regate.common.resources.R
 import app.regate.data.common.ReplyMessageData
+import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -69,7 +70,7 @@ import java.util.regex.Pattern
 @Composable
 fun Chat (
     lazyPagingItems: LazyPagingItems<MessageProfile>,
-    colors: List<Color>,
+//    colors: List<Color>,
     lazyListState:LazyListState,
     copyMessage:(m:String,isLink:Boolean)->Unit,
     setReply:(message:ReplyMessageData?)->Unit,
@@ -81,10 +82,14 @@ fun Chat (
     navigateToInstalacionReserva:(Long,Long,List<CupoInstalacion>)->Unit,
     openLink:(String)->Unit,
     navigateToSala: (Int) -> Unit,
+    getTypeOfChat:()->TypeChat,
     modifier: Modifier = Modifier,
     user: User? = null,
     getUserProfileGrupoAndSala: (id:Long)->UserProfileGrupoAndSala? = {null},
 ) {
+    val typeOfChat = remember {
+        getTypeOfChat()
+    }
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -122,8 +127,8 @@ fun Chat (
     ) {
         itemsCustom(items = lazyPagingItems,key={it.message.id}) { result->
                 result?.let { item ->
-                    val isUserExists = user != null && item.profile?.id == user.profile_id
-                    if (isUserExists) {
+                    val isUserExists = if(typeOfChat == TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO) false else user != null && item.profile?.id == user.profile_id
+                    if (isUserExists || item.message.is_user) {
                         SwipeableActionsBox(
                             startActions = listOf(SwipeAction(
                                 icon = rememberVectorPainter(image = Icons.Default.Reply),
@@ -165,9 +170,9 @@ fun Chat (
                                         )
                                         .combinedClickable(
                                             onLongClick = {
-                                                copyMessage(item.message.content,false)
+                                                copyMessage(item.message.content, false)
                                             }
-                                        ) {  }
+                                        ) { }
                                         .fillMaxWidth(0.95f)
                                         .background(MaterialTheme.colorScheme.inverseOnSurface)
                                         .padding(
@@ -198,10 +203,6 @@ fun Chat (
                                                             e.localizedMessage ?: ""
                                                         )
                                                     }
-
-////                                                    lazyPagingItems.itemCount
-//                                                    lazyListState.scrollToItem( lazyPagingItems.itemCount)
-
                                                 }
                                             }, getUserProfileGrupoAndSala = getUserProfileGrupoAndSala,
                                             navigateToInstalacionReserva = navigateToInstalacionReserva,
@@ -294,6 +295,7 @@ fun Chat (
                                     .fillMaxWidth(if (selectedMessage.value == item.message.id) 1f else 0.8f)
                                     .background(if (selectedMessage.value == item.message.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
                             ) {
+                                if(typeOfChat != TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO){
                                 ProfileImage(
                                     profileImage = item.profile?.profile_photo,
                                     contentDescription = item.profile?.nombre ?: "",
@@ -301,11 +303,12 @@ fun Chat (
                                         .clip(CircleShape)
                                         .size(30.dp)
                                 )
-                                MessengerIcon2(colors)
+                                }
+//                                MessengerIcon2(colors)
                                 Column(
                                     modifier = Modifier
                                         .clickable {
-                                            copyMessage(item.message.content,false)
+                                            copyMessage(item.message.content, false)
                                         }
                                         .clip(
                                             RoundedCornerShape(
@@ -322,11 +325,13 @@ fun Chat (
                                             bottom = 5.dp
                                         )
                                 ) {
-                                    Text(
-                                        text = "${item.profile?.nombre ?: ""} ${item.profile?.apellido ?: ""}",
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.primary
-                                    )
+                                    if(typeOfChat != TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO) {
+                                        Text(
+                                            text = "${item.profile?.nombre ?: ""} ${item.profile?.apellido ?: ""}",
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = MaterialTheme.colorScheme.primary
+                                        )
+                                    }
                                     if (item.message.reply_to != null) {
                                         MessageReply(item = item, scrollToItem = {
                                             coroutineScope.launch {

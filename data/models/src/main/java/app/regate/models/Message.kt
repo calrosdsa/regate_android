@@ -33,4 +33,6 @@ data class Message(
     val sended:Boolean = false,
     val readed:Boolean = false,
     val parent_id:Long = 0,
+    //only for conversation message
+    val is_user:Boolean = false,
 ):AppEntity

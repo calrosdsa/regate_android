@@ -54,7 +54,6 @@ import app.regate.sala.Sala
 import app.regate.settings.Setting
 import app.regate.auth.signup.SignUp
 import app.regate.auth.signup.emailverification.EmailVerification
-import app.regate.chat.sala.ChatSala
 import app.regate.create.sala.CreateSala
 import app.regate.complejo.createreview.CreateReview
 import app.regate.complejo.reviews.Reviews
@@ -115,7 +114,6 @@ class ComposeScreens(
     val filterSalas:FilterSalas,
     val chatGrupo: ChatGrupo,
     val myGroups:MyGroups,
-    val chatSala:ChatSala,
     val createSala: CreateSala,
     val settings:Setting,
     val favorites:Favorites,

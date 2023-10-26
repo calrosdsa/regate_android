@@ -99,7 +99,7 @@ class MainActivityViewModel(
                           PayloadWsAccountType.PAYLOAD_GRUPO_MESSAGE.ordinal ->{
                               val payload = Json.decodeFromString<GrupoMessageDto>(data.payload)
                               chatRepository.saveMessageIgnoreOnConflict(payload,false)
-                              Log.d("DEBUG_APP",payload.toString())
+                              Log.d("DEBUG_APP_WS_USER",payload.toString())
 //                              db.myGroupsDao().updateLastMessageGrupo(grupo.id,lastMessage.content,lastMessage.created_at)
                           }
                           PayloadWsAccountType.PAYLOAD_TYPE_NOTIFICATION.ordinal -> {

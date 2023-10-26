@@ -59,9 +59,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 scope.launch {
                     try {
                         val chat = db.chatDao().getChat(messages[0].message.chat_id)
+                        if(chat != null){
                         Log.d(TAG,"Success CHat $chat")
                         Log.d(TAG,"Success $messages")
                         grupoHandler.sendNotificationGroupMessage(messages,chat,applicationContext)
+                        }
                     }catch (e:Exception){
                         throw  e
                     }

@@ -55,6 +55,7 @@ import app.regate.compoundmodels.MessageProfile
 import app.regate.data.auth.AppAuthState
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
+import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -138,10 +139,10 @@ internal fun Conversation(
     val message = remember {
         mutableStateOf(TextFieldValue())
     }
-    val colors = listOf(
-        MaterialTheme.colorScheme.inverseOnSurface,
-        MaterialTheme.colorScheme.inverseOnSurface
-    )
+//    val colors = listOf(
+//        MaterialTheme.colorScheme.inverseOnSurface,
+//        MaterialTheme.colorScheme.inverseOnSurface
+//    )
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
     val focusRequester = remember { FocusRequester() }
@@ -197,7 +198,7 @@ internal fun Conversation(
             .fillMaxSize()
             .padding(paddingValues)){
             Chat(
-                colors = colors,
+//                colors = colors,
                 lazyPagingItems = lazyPagingItems,
                 user = viewState.user,
                 setReply = {
@@ -227,6 +228,7 @@ internal fun Conversation(
                         Log.d("DEBUG_APP",e.localizedMessage?:"")
                     }
                 },
+                getTypeOfChat = { TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO}
             )
         }
     }

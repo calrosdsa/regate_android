@@ -142,9 +142,9 @@ internal fun Grupos(
                     formatShortRelativeTime = formatShortRelativeTime,
                     navigateToChat = {id,grupoId,type->
                         navController.navigate(Route.CHAT_GRUPO + "?id=$id&grupoId=$grupoId&typeChat=$type") },
-                    navigateToEstablecimientoInbox = { establecimientoId:Long,conversationId:Long->
-                        navController.navigate(Route.CONVERSATION  id conversationId id establecimientoId)
-                    },
+//                    navigateToEstablecimientoInbox = { establecimientoId:Long,conversationId:Long->
+//                        navController.navigate(Route.CONVERSATION  id conversationId id establecimientoId)
+//                    },
 //                    navigateToChatSala = {chatId:Long,salaId:Long->
 //                        navController.navigate(Route.CHAT_SALA + "?id=$chatId&salaId=$salaId")
 //                    }
