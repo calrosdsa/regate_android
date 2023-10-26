@@ -13,7 +13,7 @@ class MessageDtoToMessage:Mapper<GrupoMessageDto,Message> {
             profile_id = from.profile_id,
             chat_id = from.chat_id,
             content = from.content,
-            created_at = from.created_at?: Clock.System.now(),
+            created_at = from.created_at,
             reply_to = from.reply_to,
             type_message = from.type_message,
             data = from.data,

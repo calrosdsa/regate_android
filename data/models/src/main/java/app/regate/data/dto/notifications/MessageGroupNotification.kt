@@ -15,19 +15,18 @@ data class MessageGroupNotification (
 
 @Serializable
 data class MessageGroupPayload(
-    val content: String,
-    val created_at: Instant,
-    val id: Long = 0,
-//    val profile_id: Long,
-    val chat_id:Long,
-    val profile_name:String,
-    val profile_apellido:String? = null,
-    val profile_photo:String? = null,
-    val profile_id:Long=0,
-    val reply_to:Long? = null,
-    val type_message:Int = GrupoMessageType.MESSAGE.ordinal
+    val message:GrupoMessageDto,
+    val profile:ProfileBaseDto
 )
 
+
+@Serializable
+data class ProfileBaseDto(
+    val id:Long,
+    val name:String,
+    val apellido:String? = null,
+    val profile_photo:String? = null
+)
 
 enum class TypeNotification {
     NOTIFICATION_GROUP,

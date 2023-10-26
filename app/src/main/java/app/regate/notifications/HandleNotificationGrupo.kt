@@ -27,6 +27,7 @@ import app.regate.home.MainActivity
 import app.regate.models.Grupo
 import app.regate.models.Message
 import app.regate.models.MyGroups
+import app.regate.models.chat.Chat
 
 class HandleNotificationGrupo {
     companion object{
@@ -34,7 +35,7 @@ class HandleNotificationGrupo {
     }
     @SuppressLint("RestrictedApi")
     suspend fun sendNotificationGroupMessage(
-        messages:List<MessageGroupPayload>, grupo: Grupo, context: Context
+        messages:List<MessageGroupPayload>, chat: Chat, context: Context
     ) {
         try {
 //            val dasd = messages.elementAt(2)
@@ -68,7 +69,7 @@ class HandleNotificationGrupo {
             val m3 = messages[0]
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "${AppUrl}/${Route.CHAT_GRUPO}/${messages[0].chat_id}/${grupo.id}".toUri(),
+                "${AppUrl}/${Route.CHAT_GRUPO}/${chat.id}/${chat.parent_id}/${chat.type_chat}".toUri(),
                 context,
                 MainActivity::class.java
             )
@@ -79,8 +80,8 @@ class HandleNotificationGrupo {
             val persons = mutableListOf<Person>()
             messages.map {
                 val person = Person.Builder()
-                    .setIcon(IconCompat.createWithBitmap(getBitmap(it.profile_photo?:"",context)))
-                    .setName("${it.profile_name} ${it.profile_apellido?:""}" )
+                    .setIcon(IconCompat.createWithBitmap(getBitmap(it.profile.profile_photo?:"",context)))
+                    .setName("${it.profile.name} ${it.profile.apellido?:""}" )
                     .build()
                 persons.add(person)
             }
@@ -89,11 +90,11 @@ class HandleNotificationGrupo {
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setStyle(
                     NotificationCompat.MessagingStyle("Me")
-                        .setConversationTitle(grupo.name)
+                        .setConversationTitle(chat.name)
                         .setGroupConversation(true)
-                        .addMessage(m1.content, m1.created_at.epochSeconds, persons[2])
-                        .addMessage(m2.content, m2.created_at.epochSeconds, persons[1])
-                        .addMessage(m3.content, m3.created_at.epochSeconds, persons[0])
+                        .addMessage(m1.message.content, m1.message.created_at.epochSeconds, persons[2])
+                        .addMessage(m2.message.content, m2.message.created_at.epochSeconds, persons[1])
+                        .addMessage(m3.message.content, m3.message.created_at.epochSeconds, persons[0])
                 )
                 .setSmallIcon(R.drawable.logo_app)
                 .setContentIntent(pendingIntent)
@@ -109,7 +110,7 @@ class HandleNotificationGrupo {
                     return
                 }
                 Log.d(TAG,"SENDIN NOTIFICATION")
-                notify(grupo.id.toInt(), notification)
+                notify(chat.id.toInt(), notification)
             }
 
         }catch(e:Exception){

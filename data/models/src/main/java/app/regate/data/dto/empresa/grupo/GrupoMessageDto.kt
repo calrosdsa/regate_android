@@ -1,5 +1,6 @@
 package app.regate.data.dto.empresa.grupo
 
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
@@ -7,7 +8,7 @@ import kotlinx.serialization.Serializable
 data class GrupoMessageDto(
     val content: String,
     val data:String? = null,
-    val created_at: Instant? = null,
+    val created_at: Instant = Clock.System.now(),
     val id: Long = 0,
     val local_id:Long = 0,
     val profile_id: Long,

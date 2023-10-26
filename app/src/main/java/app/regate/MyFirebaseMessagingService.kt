@@ -56,13 +56,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val db = AppRoomDatabase.getInstance(applicationContext)
             try{
             val messages = Json.decodeFromString<List<MessageGroupPayload>>(data["payload"].toString())
-            val grupo = db.grupoDao().getGrupo(messages[0].chat_id)
-                Log.d(TAG,"Success $messages")
                 scope.launch {
-                  grupoHandler.sendNotificationGroupMessage(messages,grupo,applicationContext)
+                    try {
+                        val chat = db.chatDao().getChat(messages[0].message.chat_id)
+                        Log.d(TAG,"Success CHat $chat")
+                        Log.d(TAG,"Success $messages")
+                        grupoHandler.sendNotificationGroupMessage(messages,chat,applicationContext)
+                    }catch (e:Exception){
+                        throw  e
+                    }
                 }
             AppRoomDatabase.destroyInstance()
             }catch(e:Exception){
+                Log.d(TAG,"ERROR HERE")
                 Log.d(TAG,e.localizedMessage?:"")
             }
             }
