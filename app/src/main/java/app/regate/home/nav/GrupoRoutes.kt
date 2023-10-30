@@ -50,7 +50,7 @@ internal fun NavGraphBuilder.GrupoRoutes(
             navArgument("data") { type = NavType.StringType;defaultValue ="" },
         ),
     ) {
-        composeScreens.myGroups(
+        composeScreens.myChats(
             navigateUp = navController::navigateUp,
             navigateToChatGrupo= {it1,it2->
                 navController.navigate(Route.CHAT_GRUPO + "?id=$it1&data=$it2")

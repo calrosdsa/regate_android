@@ -2,6 +2,7 @@ package app.regate.common.composes.component.chat
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessibleForward
 import androidx.compose.material.icons.filled.ArrowCircleRight

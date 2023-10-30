@@ -33,6 +33,7 @@ dependencies {
 //    api(libs.store)
     implementation(libs.kotlinx.atomicfu)
 
+    implementation(libs.ktor.client.content.negotiation)
     implementation(libs.kotlininject.runtime)
     implementation(libs.ktor.client.core)
     ksp(libs.kotlininject.compiler)

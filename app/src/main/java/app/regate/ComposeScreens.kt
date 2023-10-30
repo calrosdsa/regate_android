@@ -72,7 +72,7 @@ import app.regate.search.profiles.SearchProfiles
 import app.regate.search.salas.SearchSalas
 import app.regate.system.notification.Notifications
 import app.regate.system.report.Report
-import app.regate.usergroups.mygroups.MyGroups
+import app.regate.chats.mychats.MyChats
 import app.regate.usersalas.UserSalas
 import app.regate.welcome.Welcome
 import me.tatarka.inject.annotations.Inject
@@ -112,7 +112,7 @@ class ComposeScreens(
     val salaComplete: SalaComplete,
     val filterSalas:FilterSalas,
     val chatGrupo: ChatGrupo,
-    val myGroups:MyGroups,
+    val myChats:MyChats,
     val createSala: CreateSala,
     val settings:Setting,
     val favorites:Favorites,

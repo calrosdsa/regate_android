@@ -42,8 +42,8 @@ import app.regate.common.resources.R
 import app.regate.constant.Route
 import app.regate.constant.id
 import app.regate.data.auth.AppAuthState
-import app.regate.usergroups.ChatsUser
-import app.regate.usergroups.UserGroupsViewModel
+import app.regate.chats.ChatsUser
+import app.regate.chats.ChatsViewModel
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
@@ -61,7 +61,7 @@ typealias Grupos= @Composable (
 @Inject
 @Composable
 fun Grupos (
-    viewModelFactory:()->UserGroupsViewModel,
+    viewModelFactory:()->ChatsViewModel,
     @Assisted navController: NavController,
     @Assisted filterGroups:@Composable () -> Unit,
     @Assisted userSalas:@Composable () -> Unit,
@@ -91,7 +91,7 @@ fun Grupos (
 @Composable
 internal fun Grupos(
     navController: NavController,
-    viewModel:UserGroupsViewModel,
+    viewModel:ChatsViewModel,
     uuid:String,
     formatShortRelativeTime: (Instant) -> String,
     openAuthBottomSheet:()->Unit,

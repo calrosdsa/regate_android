@@ -142,8 +142,8 @@ internal fun Establecimiento(
     openAuthBottomSheet:()-> Unit,
     ) {
     val appUtil = LocalAppUtil.current
-    val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Hidden)
-    val sheetStateAttentionSchedule = rememberStandardBottomSheetState(initialValue = SheetValue.Hidden)
+    val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Hidden, skipHiddenState = false)
+    val sheetStateAttentionSchedule = rememberStandardBottomSheetState(initialValue = SheetValue.Hidden, skipHiddenState = false)
     val category = remember { mutableStateOf(0L) }
     val state by viewModel.state.collectAsState()
     val secondState by viewModel.secondState.collectAsState()
