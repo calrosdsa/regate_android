@@ -60,6 +60,10 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
 
   private final SharedSQLiteStatement __preparedStmtOfUpdatedPrimaryKey;
 
+  private final SharedSQLiteStatement __preparedStmtOfDeleteMessageById;
+
+  private final SharedSQLiteStatement __preparedStmtOfUpdateMessageToDeleted;
+
   private final EntityUpsertionAdapter<Message> __upsertionAdapterOfMessage;
 
   public RoomMessageProfileDao_Impl(@NonNull final RoomDatabase __db) {
@@ -68,7 +72,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT OR IGNORE INTO `messages` (`id`,`chat_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`,`readed`,`parent_id`,`is_user`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT OR IGNORE INTO `messages` (`id`,`chat_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`,`readed`,`parent_id`,`is_user`,`is_deleted`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -102,6 +106,8 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         statement.bindLong(11, entity.getParent_id());
         final int _tmp_3 = entity.is_user() ? 1 : 0;
         statement.bindLong(12, _tmp_3);
+        final int _tmp_4 = entity.is_deleted() ? 1 : 0;
+        statement.bindLong(13, _tmp_4);
       }
     };
     this.__deletionAdapterOfMessage = new EntityDeletionOrUpdateAdapter<Message>(__db) {
@@ -121,7 +127,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `messages` SET `id` = ?,`chat_id` = ?,`content` = ?,`data` = ?,`created_at` = ?,`type_message` = ?,`profile_id` = ?,`reply_to` = ?,`sended` = ?,`readed` = ?,`parent_id` = ?,`is_user` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `messages` SET `id` = ?,`chat_id` = ?,`content` = ?,`data` = ?,`created_at` = ?,`type_message` = ?,`profile_id` = ?,`reply_to` = ?,`sended` = ?,`readed` = ?,`parent_id` = ?,`is_user` = ?,`is_deleted` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -155,7 +161,9 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         statement.bindLong(11, entity.getParent_id());
         final int _tmp_3 = entity.is_user() ? 1 : 0;
         statement.bindLong(12, _tmp_3);
-        statement.bindLong(13, entity.getId());
+        final int _tmp_4 = entity.is_deleted() ? 1 : 0;
+        statement.bindLong(13, _tmp_4);
+        statement.bindLong(14, entity.getId());
       }
     };
     this.__preparedStmtOfUpdateUnreadMessages = new SharedSQLiteStatement(__db) {
@@ -182,11 +190,27 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         return _query;
       }
     };
+    this.__preparedStmtOfDeleteMessageById = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "delete from messages where id = ?";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfUpdateMessageToDeleted = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "update messages set is_deleted = 1 where id = ?";
+        return _query;
+      }
+    };
     this.__upsertionAdapterOfMessage = new EntityUpsertionAdapter<Message>(new EntityInsertionAdapter<Message>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `messages` (`id`,`chat_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`,`readed`,`parent_id`,`is_user`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `messages` (`id`,`chat_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`,`readed`,`parent_id`,`is_user`,`is_deleted`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -220,12 +244,14 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         statement.bindLong(11, entity.getParent_id());
         final int _tmp_3 = entity.is_user() ? 1 : 0;
         statement.bindLong(12, _tmp_3);
+        final int _tmp_4 = entity.is_deleted() ? 1 : 0;
+        statement.bindLong(13, _tmp_4);
       }
     }, new EntityDeletionOrUpdateAdapter<Message>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `messages` SET `id` = ?,`chat_id` = ?,`content` = ?,`data` = ?,`created_at` = ?,`type_message` = ?,`profile_id` = ?,`reply_to` = ?,`sended` = ?,`readed` = ?,`parent_id` = ?,`is_user` = ? WHERE `id` = ?";
+        return "UPDATE `messages` SET `id` = ?,`chat_id` = ?,`content` = ?,`data` = ?,`created_at` = ?,`type_message` = ?,`profile_id` = ?,`reply_to` = ?,`sended` = ?,`readed` = ?,`parent_id` = ?,`is_user` = ?,`is_deleted` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -259,7 +285,9 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         statement.bindLong(11, entity.getParent_id());
         final int _tmp_3 = entity.is_user() ? 1 : 0;
         statement.bindLong(12, _tmp_3);
-        statement.bindLong(13, entity.getId());
+        final int _tmp_4 = entity.is_deleted() ? 1 : 0;
+        statement.bindLong(13, _tmp_4);
+        statement.bindLong(14, entity.getId());
       }
     });
   }
@@ -413,6 +441,51 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
   }
 
   @Override
+  public Object deleteMessageById(final long id, final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteMessageById.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, id);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteMessageById.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object updateMessageToDeleted(final long id,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfUpdateMessageToDeleted.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, id);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfUpdateMessageToDeleted.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
   public Object upsert(final Message entity, final Continuation<? super Long> continuation) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
@@ -489,6 +562,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         final int _cursorIndexOfReaded = CursorUtil.getColumnIndexOrThrow(cursor, "readed");
         final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(cursor, "parent_id");
         final int _cursorIndexOfIsUser = CursorUtil.getColumnIndexOrThrow(cursor, "is_user");
+        final int _cursorIndexOfIsDeleted = CursorUtil.getColumnIndexOrThrow(cursor, "is_deleted");
         final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
         final LongSparseArray<Message> _collectionReply = new LongSparseArray<Message>();
         while (cursor.moveToNext()) {
@@ -561,7 +635,11 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final int _tmp_4;
           _tmp_4 = cursor.getInt(_cursorIndexOfIsUser);
           _tmpIs_user = _tmp_4 != 0;
-          _tmpMessage = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id,_tmpIs_user);
+          final boolean _tmpIs_deleted;
+          final int _tmp_5;
+          _tmp_5 = cursor.getInt(_cursorIndexOfIsDeleted);
+          _tmpIs_deleted = _tmp_5 != 0;
+          _tmpMessage = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id,_tmpIs_user,_tmpIs_deleted);
           final Profile _tmpProfile;
           final long _tmpKey_2;
           _tmpKey_2 = cursor.getLong(_cursorIndexOfProfileId);
@@ -617,6 +695,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             final int _cursorIndexOfReaded = CursorUtil.getColumnIndexOrThrow(_cursor, "readed");
             final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
             final int _cursorIndexOfIsUser = CursorUtil.getColumnIndexOrThrow(_cursor, "is_user");
+            final int _cursorIndexOfIsDeleted = CursorUtil.getColumnIndexOrThrow(_cursor, "is_deleted");
             final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
             final LongSparseArray<Message> _collectionReply = new LongSparseArray<Message>();
             while (_cursor.moveToNext()) {
@@ -688,7 +767,11 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               final int _tmp_4;
               _tmp_4 = _cursor.getInt(_cursorIndexOfIsUser);
               _tmpIs_user = _tmp_4 != 0;
-              _tmpMessage = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id,_tmpIs_user);
+              final boolean _tmpIs_deleted;
+              final int _tmp_5;
+              _tmp_5 = _cursor.getInt(_cursorIndexOfIsDeleted);
+              _tmpIs_deleted = _tmp_5 != 0;
+              _tmpMessage = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id,_tmpIs_user,_tmpIs_deleted);
               final Profile _tmpProfile;
               final long _tmpKey_2;
               _tmpKey_2 = _cursor.getLong(_cursorIndexOfProfileId);
@@ -752,6 +835,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             final int _cursorIndexOfReaded = CursorUtil.getColumnIndexOrThrow(_cursor, "readed");
             final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
             final int _cursorIndexOfIsUser = CursorUtil.getColumnIndexOrThrow(_cursor, "is_user");
+            final int _cursorIndexOfIsDeleted = CursorUtil.getColumnIndexOrThrow(_cursor, "is_deleted");
             final LongSparseArray<Profile> _collectionProfile = new LongSparseArray<Profile>();
             final LongSparseArray<Message> _collectionReply = new LongSparseArray<Message>();
             while (_cursor.moveToNext()) {
@@ -824,7 +908,11 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               final int _tmp_4;
               _tmp_4 = _cursor.getInt(_cursorIndexOfIsUser);
               _tmpIs_user = _tmp_4 != 0;
-              _tmpMessage = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id,_tmpIs_user);
+              final boolean _tmpIs_deleted;
+              final int _tmp_5;
+              _tmp_5 = _cursor.getInt(_cursorIndexOfIsDeleted);
+              _tmpIs_deleted = _tmp_5 != 0;
+              _tmpMessage = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id,_tmpIs_user,_tmpIs_deleted);
               final Profile _tmpProfile;
               final long _tmpKey_2;
               _tmpKey_2 = _cursor.getLong(_cursorIndexOfProfileId);
@@ -889,6 +977,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             final int _cursorIndexOfReaded = CursorUtil.getColumnIndexOrThrow(_cursor, "readed");
             final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
             final int _cursorIndexOfIsUser = CursorUtil.getColumnIndexOrThrow(_cursor, "is_user");
+            final int _cursorIndexOfIsDeleted = CursorUtil.getColumnIndexOrThrow(_cursor, "is_deleted");
             final LongSparseArray<Chat> _collectionChat = new LongSparseArray<Chat>();
             while (_cursor.moveToNext()) {
               final long _tmpKey;
@@ -950,7 +1039,11 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               final int _tmp_4;
               _tmp_4 = _cursor.getInt(_cursorIndexOfIsUser);
               _tmpIs_user = _tmp_4 != 0;
-              _tmpMessage = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id,_tmpIs_user);
+              final boolean _tmpIs_deleted;
+              final int _tmp_5;
+              _tmp_5 = _cursor.getInt(_cursorIndexOfIsDeleted);
+              _tmpIs_deleted = _tmp_5 != 0;
+              _tmpMessage = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id,_tmpIs_user,_tmpIs_deleted);
               final Chat _tmpChat;
               final long _tmpKey_1;
               _tmpKey_1 = _cursor.getLong(_cursorIndexOfChatId);
@@ -999,6 +1092,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final int _cursorIndexOfReaded = CursorUtil.getColumnIndexOrThrow(_cursor, "readed");
           final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
           final int _cursorIndexOfIsUser = CursorUtil.getColumnIndexOrThrow(_cursor, "is_user");
+          final int _cursorIndexOfIsDeleted = CursorUtil.getColumnIndexOrThrow(_cursor, "is_deleted");
           final Message _result;
           if (_cursor.moveToFirst()) {
             final long _tmpId;
@@ -1050,7 +1144,11 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             final int _tmp_4;
             _tmp_4 = _cursor.getInt(_cursorIndexOfIsUser);
             _tmpIs_user = _tmp_4 != 0;
-            _result = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id,_tmpIs_user);
+            final boolean _tmpIs_deleted;
+            final int _tmp_5;
+            _tmp_5 = _cursor.getInt(_cursorIndexOfIsDeleted);
+            _tmpIs_deleted = _tmp_5 != 0;
+            _result = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id,_tmpIs_user,_tmpIs_deleted);
           } else {
             _result = null;
           }
@@ -1173,7 +1271,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       return;
     }
     final StringBuilder _stringBuilder = StringUtil.newStringBuilder();
-    _stringBuilder.append("SELECT `id`,`chat_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`,`readed`,`parent_id`,`is_user` FROM `messages` WHERE `id` IN (");
+    _stringBuilder.append("SELECT `id`,`chat_id`,`content`,`data`,`created_at`,`type_message`,`profile_id`,`reply_to`,`sended`,`readed`,`parent_id`,`is_user`,`is_deleted` FROM `messages` WHERE `id` IN (");
     final int _inputSize = _map.size();
     StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
     _stringBuilder.append(")");
@@ -1204,6 +1302,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       final int _cursorIndexOfReaded = 9;
       final int _cursorIndexOfParentId = 10;
       final int _cursorIndexOfIsUser = 11;
+      final int _cursorIndexOfIsDeleted = 12;
       while (_cursor.moveToNext()) {
         final long _tmpKey;
         _tmpKey = _cursor.getLong(_itemKeyIndex);
@@ -1258,7 +1357,11 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           final int _tmp_4;
           _tmp_4 = _cursor.getInt(_cursorIndexOfIsUser);
           _tmpIs_user = _tmp_4 != 0;
-          _item_1 = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id,_tmpIs_user);
+          final boolean _tmpIs_deleted;
+          final int _tmp_5;
+          _tmp_5 = _cursor.getInt(_cursorIndexOfIsDeleted);
+          _tmpIs_deleted = _tmp_5 != 0;
+          _item_1 = new Message(_tmpId,_tmpChat_id,_tmpContent,_tmpData,_tmpCreated_at,_tmpType_message,_tmpProfile_id,_tmpReply_to,_tmpSended,_tmpReaded,_tmpParent_id,_tmpIs_user,_tmpIs_deleted);
           _map.put(_tmpKey, _item_1);
         }
       }
@@ -1280,7 +1383,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       return;
     }
     final StringBuilder _stringBuilder = StringUtil.newStringBuilder();
-    _stringBuilder.append("SELECT `id`,`photo`,`name`,`last_message`,`last_message_created`,`messages_count`,`type_chat`,`parent_id`,`updated_at` FROM `chat` WHERE `id` IN (");
+    _stringBuilder.append("SELECT `id`,`photo`,`name`,`last_message`,`last_message_created`,`messages_count`,`type_chat`,`is_message_deleted`,`parent_id`,`updated_at` FROM `chat` WHERE `id` IN (");
     final int _inputSize = _map.size();
     StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
     _stringBuilder.append(")");
@@ -1306,8 +1409,9 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       final int _cursorIndexOfLastMessageCreated = 4;
       final int _cursorIndexOfMessagesCount = 5;
       final int _cursorIndexOfTypeChat = 6;
-      final int _cursorIndexOfParentId = 7;
-      final int _cursorIndexOfUpdatedAt = 8;
+      final int _cursorIndexOfIsMessageDeleted = 7;
+      final int _cursorIndexOfParentId = 8;
+      final int _cursorIndexOfUpdatedAt = 9;
       while (_cursor.moveToNext()) {
         final long _tmpKey;
         _tmpKey = _cursor.getLong(_itemKeyIndex);
@@ -1341,22 +1445,26 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
           final int _tmpType_chat;
           _tmpType_chat = _cursor.getInt(_cursorIndexOfTypeChat);
+          final boolean _tmpIs_message_deleted;
+          final int _tmp_1;
+          _tmp_1 = _cursor.getInt(_cursorIndexOfIsMessageDeleted);
+          _tmpIs_message_deleted = _tmp_1 != 0;
           final long _tmpParent_id;
           _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
           final Instant _tmpUpdated_at;
-          final String _tmp_1;
+          final String _tmp_2;
           if (_cursor.isNull(_cursorIndexOfUpdatedAt)) {
-            _tmp_1 = null;
+            _tmp_2 = null;
           } else {
-            _tmp_1 = _cursor.getString(_cursorIndexOfUpdatedAt);
+            _tmp_2 = _cursor.getString(_cursorIndexOfUpdatedAt);
           }
-          final Instant _tmp_2 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_1);
-          if (_tmp_2 == null) {
+          final Instant _tmp_3 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_2);
+          if (_tmp_3 == null) {
             throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
           } else {
-            _tmpUpdated_at = _tmp_2;
+            _tmpUpdated_at = _tmp_3;
           }
-          _item_1 = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpType_chat,_tmpParent_id,_tmpUpdated_at);
+          _item_1 = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpType_chat,_tmpIs_message_deleted,_tmpParent_id,_tmpUpdated_at);
           _map.put(_tmpKey, _item_1);
         }
       }

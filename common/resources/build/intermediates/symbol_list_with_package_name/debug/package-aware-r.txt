@@ -74,10 +74,12 @@ string consume
 string continuar
 string contributed_amount
 string copy_link
+string copy_text
 string count_selected
 string create_group
 string create_sala
 string decline
+string delete_message
 string deposits
 string description
 string discount
@@ -85,6 +87,7 @@ string do_you_want_receive_notifications
 string dont_receive_code
 string dynamic_color
 string edit
+string edit_message
 string email_verification
 string email_verification_help_text
 string emileys_emotion
@@ -129,6 +132,7 @@ string map
 string mapbox_access_token
 string meke_user_admin
 string members
+string message_deleted
 string name
 string near_me
 string new_offers
@@ -164,6 +168,7 @@ string recent
 string recommended_places
 string remove_user
 string remove_user_admin
+string reply
 string report
 string request_accepted
 string request_declined

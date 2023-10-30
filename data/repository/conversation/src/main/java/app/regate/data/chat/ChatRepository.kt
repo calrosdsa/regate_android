@@ -7,6 +7,7 @@ import app.regate.data.daos.MessageInboxDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.UserDao
+import app.regate.data.dto.chat.DeleteMessageRequest
 import app.regate.data.dto.chat.MessagePublishRequest
 import app.regate.data.dto.chat.RequestChatUnreadMessages
 import app.regate.data.dto.empresa.conversation.Conversation
@@ -46,31 +47,34 @@ class ChatRepository(
     fun observeMessages(id: Long): Flow<List<MessageProfile>> {
         return messageProfileDao.getMessages(id)
     }
-    suspend fun getChatUnreadMessages(chatId:Long,typeChat:Int){
-        try{
-        val lastMessage = messageProfileDao.getLastMessageSended(chatId)
-        val chat = chatDao.getChat(chatId)
-        var d = RequestChatUnreadMessages(
-            chat_id = chatId,
-            type_chat = typeChat,
-            last_update_chat = Clock.System.now()
-        )
-        if(lastMessage != null){
-            d = d.copy(last_update_chat = lastMessage.created_at)
-        }else if(chat != null){
-            d = d.copy(last_update_chat = chat.updated_at)
-        }
-        chatDataSourceImpl.getchatUnreadMessages(d).also {result->
-            val messages = result.map { messageMapper.map(it) }
-            messageProfileDao.insertAllonConflictIgnore(messages)
-        }
-        }catch (e:Exception){
+
+    suspend fun getChatUnreadMessages(chatId: Long, typeChat: Int) {
+        try {
+            val lastMessage = messageProfileDao.getLastMessageSended(chatId)
+            val chat = chatDao.getChat(chatId)
+            var d = RequestChatUnreadMessages(
+                chat_id = chatId,
+                type_chat = typeChat,
+                last_update_chat = Clock.System.now()
+            )
+            if (lastMessage != null) {
+                d = d.copy(last_update_chat = lastMessage.created_at)
+            } else if (chat != null) {
+                d = d.copy(last_update_chat = chat.updated_at)
+            }
+            chatDataSourceImpl.getchatUnreadMessages(d).also { result ->
+                val messages = result.map { messageMapper.map(it) }
+                messageProfileDao.insertAllonConflictIgnore(messages)
+            }
+        } catch (e: Exception) {
             //TODO()
         }
     }
-    suspend fun getConversationId(establecimientoId:Long):ConversationId{
-        return  chatDataSourceImpl.getConversationId(establecimientoId)
+
+    suspend fun getConversationId(establecimientoId: Long): ConversationId {
+        return chatDataSourceImpl.getConversationId(establecimientoId)
     }
+
     @Suppress("SuspiciousIndentation")
     suspend fun syncMessages() {
         withContext(dispatchers.computation) {
@@ -78,15 +82,15 @@ class ChatRepository(
 //                val profileId = userDao.getUser(0).profile_id
                 val messages = messageProfileDao.getUnSendedMessage()
                 if (messages.isEmpty()) return@withContext
-                messages.map {result->
-                    result.chat?.let { chat->
-                    val requestData =  MessagePublishRequest(
-                        message = messageMapperDto.map(result.message),
-                        type_chat = chat.type_chat,
-                        chat_id = chat.id
-                    )
+                messages.map { result ->
+                    result.chat?.let { chat ->
+                        val requestData = MessagePublishRequest(
+                            message = messageMapperDto.map(result.message),
+                            type_chat = chat.type_chat,
+                            chat_id = chat.id
+                        )
                         val res = chatDataSourceImpl.publishMessage(requestData)
-                        messageProfileDao.updateSendedMessage(result.message.id,res.id)
+                        messageProfileDao.updateSendedMessage(result.message.id, res.id)
                     }
                 }
 //                val results = chatDataSourceImpl.publishMessage(data).map {
@@ -98,34 +102,36 @@ class ChatRepository(
         }
     }
 
-    suspend fun updateOrSaveMessage(data: GrupoMessageDto, readed:Boolean){
-        try{
-            messageProfileDao.updatedPrimaryKey(data.local_id,data.id)
+    suspend fun updateOrSaveMessage(data: GrupoMessageDto, readed: Boolean) {
+        try {
+            messageProfileDao.updatedPrimaryKey(data.local_id, data.id)
             val message = messageMapper.map(data)
             messageProfileDao.insertOnConflictIgnore(message.copy(readed = readed))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             //todo()
         }
     }
-    suspend fun saveMessageIgnoreOnConflict(data: GrupoMessageDto, readed: Boolean){
-        try{
+
+    suspend fun saveMessageIgnoreOnConflict(data: GrupoMessageDto, readed: Boolean) {
+        try {
             val message = messageMapper.map(data)
             messageProfileDao.insertOnConflictIgnore(message.copy(readed = readed))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             //todo()
         }
     }
-    suspend fun updateUnreadMessages(chatId:Long){
-        withContext(dispatchers.computation){
-            try{
+
+    suspend fun updateUnreadMessages(chatId: Long) {
+        withContext(dispatchers.computation) {
+            try {
                 messageProfileDao.updateUnreadMessages(chatId)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 //TODO()
             }
         }
     }
 
-    suspend fun saveMessageLocal(data: Message){
+    suspend fun saveMessageLocal(data: Message) {
         messageProfileDao.upsert(data)
     }
 
@@ -162,18 +168,20 @@ class ChatRepository(
         }
     }
 
-    suspend fun getUnreadMessages(page:Int){
-        withContext(dispatchers.computation){
-            try{
+    suspend fun getUnreadMessages(page: Int) {
+        withContext(dispatchers.computation) {
+            try {
                 val res = chatDataSourceImpl.getUnreadMessages(page)
                 res.results.map {
-                   messageProfileDao.insertOnConflictIgnore(messageMapper.map(it).copy(readed = false))
+                    messageProfileDao.insertOnConflictIgnore(
+                        messageMapper.map(it).copy(readed = false)
+                    )
                 }
-                if(res.page != 0){
+                if (res.page != 0) {
                     getUnreadMessages(res.page)
                 }
-            }catch (e:Exception){
-                throw  e
+            } catch (e: Exception) {
+                throw e
             }
         }
     }
@@ -184,7 +192,7 @@ class ChatRepository(
             val response = chatDataSourceImpl.getChats(page)
             withContext(dispatchers.computation) {
                 response.results.also { results ->
-                    val chats = results.map {result->
+                    val chats = results.map { result ->
                         Chat(
                             id = result.id,
                             name = result.name,
@@ -195,14 +203,14 @@ class ChatRepository(
                         )
                     }
                     chatDao.upsertAll(chats)
-                    val grupos = results.map { result->
+                    val grupos = results.map { result ->
                         Grupo(
                             name = result.name,
                             photo = result.photo,
                             id = result.parent_id
                         )
                     }
-                    val myGroups = results.map {result->
+                    val myGroups = results.map { result ->
                         MyGroups(
                             id = result.parent_id,
                             request_estado = GrupoRequestEstado.JOINED,
@@ -220,7 +228,7 @@ class ChatRepository(
         }
     }
 
-    suspend fun publishMessage(data:MessagePublishRequest){
+    suspend fun publishMessage(data: MessagePublishRequest) {
         chatDataSourceImpl.publishMessage(data)
 //        try{
 //            val res = chatDataSourceImpl.publishMessage(data)
@@ -229,5 +237,43 @@ class ChatRepository(
 //            throw e
 //        }
 
+    }
+    suspend fun getDeletedMessages(id:Long){
+        withContext(dispatchers.io){
+            try {
+                chatDataSourceImpl.getDeletedMessages(id).also {result->
+                    result.ids.map { id->
+                        updateMessageToDeleted(id)
+                    }
+                }
+            }catch (e:Exception){
+                throw e
+            }
+        }
+    }
+
+    suspend fun updateMessageToDeleted(id:Long){
+        messageProfileDao.updateMessageToDeleted(id)
+    }
+    suspend fun deleteMessageLocal(id: Long) {
+        withContext(dispatchers.io) {
+            try {
+                messageProfileDao.deleteMessageById(id)
+            } catch (e: Exception) {
+                throw e
+            }
+        }
+    }
+
+    suspend fun deleteMessage(d: DeleteMessageRequest) {
+        withContext(dispatchers.io) {
+            try {
+                chatDataSourceImpl.deleteMessage(d).also {
+                    messageProfileDao.updateMessageToDeleted(d.id)
+                }
+            } catch (e: Exception) {
+                throw e
+            }
+        }
     }
 }

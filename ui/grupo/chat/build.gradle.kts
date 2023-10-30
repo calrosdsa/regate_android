@@ -31,6 +31,7 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.data.db)
 
+    implementation("io.github.dokar3:sheets-m3:0.4.4")
     implementation(libs.ktor.client.core)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

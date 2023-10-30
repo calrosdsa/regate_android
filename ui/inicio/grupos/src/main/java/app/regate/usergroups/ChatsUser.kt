@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
+import app.regate.common.composes.component.chat.DeleteMessage
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.util.itemsCustom
 import app.regate.data.dto.chat.TypeChat
@@ -93,16 +94,18 @@ internal fun ChatItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable {
-                when(chat.type_chat){
-                    TypeChat.TYPE_CHAT_GRUPO.ordinal ->{
-                        navigateToChat(chat.id,chat.parent_id,chat.type_chat)
+                when (chat.type_chat) {
+                    TypeChat.TYPE_CHAT_GRUPO.ordinal -> {
+                        navigateToChat(chat.id, chat.parent_id, chat.type_chat)
                     }
+
                     TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal -> {
-                        navigateToChat(chat.id,chat.parent_id,chat.type_chat)
+                        navigateToChat(chat.id, chat.parent_id, chat.type_chat)
 //                        navigateToEstablecimientoInbox(chat.parent_id,chat.id)
                     }
+
                     TypeChat.TYPE_CHAT_SALA.ordinal -> {
-                        navigateToChat(chat.id,chat.parent_id,chat.type_chat)
+                        navigateToChat(chat.id, chat.parent_id, chat.type_chat)
                     }
                 }
             }
@@ -115,36 +118,55 @@ internal fun ChatItem(
         )
         Spacer(modifier = Modifier.width(10.dp))
         Column() {
-            Row(modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
-                Text(text = chat.name ,style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.fillMaxWidth(0.65f), overflow = TextOverflow.Ellipsis)
-                if(chat.last_message_created != null){
-                    Text(text = formatShortRelativeTime(chat.last_message_created!!),
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = chat.name, style = MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.fillMaxWidth(0.65f), overflow = TextOverflow.Ellipsis
+                )
+                if (chat.last_message_created != null) {
+                    Text(
+                        text = formatShortRelativeTime(chat.last_message_created!!),
                         style = MaterialTheme.typography.labelSmall, maxLines = 1,
-                        overflow = TextOverflow.Ellipsis)
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
+
             }
             Spacer(modifier = Modifier.height(5.dp))
-            Row(modifier = Modifier.fillMaxWidth(),
+            Row(
+                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween){
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
 
-            if(chat.last_message?.isNotBlank() == true){
-                chat.last_message?.let {
-                    Text(text = it,style = MaterialTheme.typography.labelMedium.copy(
-                        fontWeight = FontWeight.Normal
-                    ), overflow = TextOverflow.Ellipsis, maxLines = 1,
-                        modifier = Modifier.fillMaxWidth(0.88f))
+                if (!chat.is_message_deleted) {
+
+                    if (chat.last_message?.isNotBlank() == true) {
+                        chat.last_message?.let {
+                            Text(
+                                text = it, style = MaterialTheme.typography.labelMedium.copy(
+                                    fontWeight = FontWeight.Normal
+                                ), overflow = TextOverflow.Ellipsis, maxLines = 1,
+                                modifier = Modifier.fillMaxWidth(0.88f)
+                            )
+                        }
+                    }
+                } else {
+                    DeleteMessage()
                 }
-            }
-                if(chat.messages_count > 0){
+                if (chat.messages_count > 0) {
                     Badge(
                         contentColor = MaterialTheme.colorScheme.onPrimary,
                         containerColor = MaterialTheme.colorScheme.primary
-                    ){
-                  Text(text = (chat.messages_count).toString(),
-                  style = MaterialTheme.typography.labelLarge)
+                    ) {
+                        Text(
+                            text = (chat.messages_count).toString(),
+                            style = MaterialTheme.typography.labelLarge
+                        )
                     }
                 }
             }

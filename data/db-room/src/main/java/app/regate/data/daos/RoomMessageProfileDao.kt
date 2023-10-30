@@ -38,4 +38,11 @@ abstract class RoomMessageProfileDao:RoomEntityDao<Message>,MessageProfileDao {
 
     @Query("update messages set id = :newId ,sended = 1,readed = 1 where id= :id")
     abstract override suspend fun updatedPrimaryKey(id: Long,newId:Long)
+
+    @Query("delete from messages where id = :id")
+    abstract override suspend fun deleteMessageById(id: Long)
+
+    @Query("update messages set is_deleted = 1 where id = :id")
+    abstract override suspend fun updateMessageToDeleted(id: Long)
+
 }

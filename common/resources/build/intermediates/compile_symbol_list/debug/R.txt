@@ -73,10 +73,12 @@ int string consume 0x0
 int string continuar 0x0
 int string contributed_amount 0x0
 int string copy_link 0x0
+int string copy_text 0x0
 int string count_selected 0x0
 int string create_group 0x0
 int string create_sala 0x0
 int string decline 0x0
+int string delete_message 0x0
 int string deposits 0x0
 int string description 0x0
 int string discount 0x0
@@ -84,6 +86,7 @@ int string do_you_want_receive_notifications 0x0
 int string dont_receive_code 0x0
 int string dynamic_color 0x0
 int string edit 0x0
+int string edit_message 0x0
 int string email_verification 0x0
 int string email_verification_help_text 0x0
 int string emileys_emotion 0x0
@@ -128,6 +131,7 @@ int string map 0x0
 int string mapbox_access_token 0x0
 int string meke_user_admin 0x0
 int string members 0x0
+int string message_deleted 0x0
 int string name 0x0
 int string near_me 0x0
 int string new_offers 0x0
@@ -163,6 +167,7 @@ int string recent 0x0
 int string recommended_places 0x0
 int string remove_user 0x0
 int string remove_user_admin 0x0
+int string reply 0x0
 int string report 0x0
 int string request_accepted 0x0
 int string request_declined 0x0

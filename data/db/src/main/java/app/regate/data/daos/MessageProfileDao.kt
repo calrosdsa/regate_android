@@ -15,5 +15,8 @@ interface MessageProfileDao:EntityDao<Message> {
     suspend fun getUnSendedMessage():List<MessageWithChat>
     suspend fun getLastMessageSended(chatId:Long):Message?
     suspend fun updatedPrimaryKey(id:Long,newId:Long)
+    suspend fun deleteMessageById(id: Long)
+    suspend fun updateMessageToDeleted(id:Long)
+
 //    suspend fun deleteById(id:Long)
 }

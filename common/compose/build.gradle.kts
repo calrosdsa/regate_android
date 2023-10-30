@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.compose.animation.animation)
     implementation(libs.compose.ui.tooling)
 
+    implementation("io.github.dokar3:sheets-m3:0.4.4")
+
     implementation("io.github.boguszpawlowski.composecalendar:composecalendar:1.1.1")
     implementation("io.github.boguszpawlowski.composecalendar:kotlinx-datetime:1.1.1")
 //    implementation(libs.accompanist.navigation.material)

@@ -13,13 +13,16 @@ import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.KeyboardDoubleArrowDown
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -27,6 +30,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -45,14 +49,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.LocalAppUtil
 import app.regate.common.composes.component.chat.Chat
+import app.regate.common.composes.component.chat.DeleteMessageDialog
+import app.regate.common.composes.component.chat.MessageOptions
 import app.regate.common.composes.component.input.ChatInput
 import app.regate.common.composes.component.input.Keyboard
 import app.regate.common.composes.component.input.emoji.EmojiLayout
@@ -67,11 +76,15 @@ import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
 import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
+import com.dokar.sheets.PeekHeight
+import com.dokar.sheets.m3.BottomSheet
+import com.dokar.sheets.rememberBottomSheetState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import app.regate.common.resources.R
 
 
 typealias ChatGrupo  = @Composable (
@@ -147,11 +160,13 @@ internal fun ChatGrupo(
 //        formatShortTime = {formatter.formatShortTime(it.toInstant())},
 //        formatDate = {formatter.formatWithSkeleton(it.toInstant().toEpochMilliseconds(),formatter.monthDaySkeleton)}
         navigateToGroup = navigateToGroup,
-        getTypeOfChat = viewModel::getTypeOfChat
+        getTypeOfChat = viewModel::getTypeOfChat,
+        deleteMessageForEveryone = viewModel::deleteMessageForEveryone,
+        deleteMessageForMe = viewModel::deleteMessageForMe
     )
 }
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalLayoutApi::class,
+@OptIn(ExperimentalAnimationApi::class,
     ExperimentalComposeUiApi::class
 )
 @Composable
@@ -175,7 +190,9 @@ internal fun ChatGrupo(
     navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
     navigateToSala: (Long) -> Unit,
     resetScroll:()->Unit,
-    getTypeOfChat:()->TypeChat
+    getTypeOfChat:()->TypeChat,
+    deleteMessageForEveryone:(Long)->Unit,
+    deleteMessageForMe: (Long) -> Unit
 ) {
     val appUtil = LocalAppUtil.current
     val clipboardManager = LocalClipboardManager.current
@@ -189,6 +206,9 @@ internal fun ChatGrupo(
     val keyboardController = LocalSoftwareKeyboardController.current
     val replyMessage = remember {
         mutableStateOf<ReplyMessageData?>(null)
+    }
+    val selectedMessage = remember {
+        mutableStateOf<MessageProfile?>(null)
     }
     val lazyListState = rememberLazyListState()
 
@@ -211,6 +231,9 @@ internal fun ChatGrupo(
 
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
+    var deleteMessageDialog by remember { mutableStateOf(false) }
+
+    val sheet1 = rememberBottomSheetState()
     LaunchedEffect(key1 = isFocused) {
         if (isFocused) {
             bottomImePadding = getKeyboardHeight()
@@ -375,6 +398,30 @@ internal fun ChatGrupo(
                 .padding(paddingValues)
                 .fillMaxSize()
         ) {
+            if(selectedMessage.value != null){
+            MessageOptions(
+                state = sheet1,
+                onDeleteMessage = {
+                    coroutineScope.launch {
+                        launch { sheet1.collapse() }
+                        launch { deleteMessageDialog = true }
+                    }
+                },
+                message = selectedMessage.value!!,
+                copyMessage = {text:String->
+                    coroutineScope.launch {
+                    clipboardManager.setText(AnnotatedString(text))
+                        sheet1.collapse()
+                    }
+                },
+                setReply = {
+                    coroutineScope.launch {
+                        launch { sheet1.collapse() }
+                        launch{ replyMessage.value =it }
+                    }
+                },
+            )
+            }
             Chat(
                 lazyPagingItems = lazyPagingItems,
                 user = viewState.user,
@@ -392,12 +439,19 @@ internal fun ChatGrupo(
                 getUserProfileGrupoAndSala = getUserProfileGrupoAndSala,
                 lazyListState = lazyListState,
                 navigateToSala = {navigateToSala(it.toLong())},
-                copyMessage = {text:String,isLink:Boolean->
-                    clipboardManager.setText(AnnotatedString(text))
-                    if(isLink){
-                        Toast.makeText(context,"Enlace copiado",Toast.LENGTH_SHORT).show()
+                copyMessage = {text:String,->
+                    coroutineScope.launch {
+                    sheet1.expand()
                     }
-                              },
+                    clipboardManager.setText(AnnotatedString(text))
+                    Toast.makeText(context,"Enlace copiado",Toast.LENGTH_SHORT).show()
+                },
+                selectMessage = {
+                    selectedMessage.value = it
+                    coroutineScope.launch {
+                        sheet1.expand()
+                    }
+                                },
                 openLink = {url->
                     try{
                        appUtil.openInBrowser(context,url)
@@ -410,6 +464,18 @@ internal fun ChatGrupo(
                     },
                 getTypeOfChat = getTypeOfChat
             )
+        }
+
+        if(selectedMessage.value != null){
+
+       DeleteMessageDialog(
+           open = deleteMessageDialog,
+           close = { deleteMessageDialog = false},
+           message = selectedMessage.value!!,
+           deleteMessageForEveryone = deleteMessageForEveryone,
+           deleteMessageForMe = deleteMessageForMe,
+           user =viewState.user
+       )
         }
     }
 }

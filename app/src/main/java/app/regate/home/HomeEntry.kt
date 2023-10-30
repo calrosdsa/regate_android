@@ -236,24 +236,6 @@ internal fun AppNavigation(
         }
 
 
-            animatedComposable(
-            route = Route.CONVERSATION arg "id" arg "establecimientoId",
-            arguments = listOf(navArgument("id") {
-                type = NavType.LongType
-            },navArgument("establecimientoId") {
-                type = NavType.LongType
-            })
-        ){
-            composeScreens.conversation(
-                navigateUp = navController::navigateUp,
-                navigateToInstalacionReserva = {instalacionId,establecimientoId ->
-                    navController.navigate(Route.RESERVAR id instalacionId id establecimientoId)
-                },
-                navigateToSala = { navController.navigate(Route.SALA id it)}
-            )
-        }
-
-
         animatedComposable(route = Route.RECARGAR){
             composeScreens.recargar(
                 navigateUp = navController::navigateUp,

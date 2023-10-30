@@ -1,5 +1,7 @@
 package app.regate.data.chat
 
+import app.regate.data.dto.chat.DeleteMessageRequest
+import app.regate.data.dto.chat.DeletedMessagesIds
 import app.regate.data.dto.chat.MessagePublishRequest
 import app.regate.data.dto.chat.MessagePublishResponse
 import app.regate.data.dto.chat.PaginateChatResponse
@@ -23,5 +25,7 @@ interface ChatDataSource {
     suspend fun getChats(page: Int):PaginateChatResponse
     suspend fun getUnreadMessages(page:Int):PaginationGroupMessages
     suspend fun publishMessage(data:MessagePublishRequest):MessagePublishResponse
+    suspend fun deleteMessage(data:DeleteMessageRequest)
+    suspend fun getDeletedMessages(id:Long):DeletedMessagesIds
 }
 

@@ -10,11 +10,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import kotlinx.datetime.Instant
+import app.regate.common.resources.R
 
 @Composable
 fun MessageReply(
@@ -27,6 +31,7 @@ fun MessageReply(
     formatShortTime: (Instant) -> String,
     formatShortDateFromString: (String) -> String,
     formatShortTimeFromString: (String,Int) -> String,
+    typeOfChat:TypeChat,
     modifier: Modifier = Modifier
 ){
     val profile = item.reply?.let { getUserProfileGrupoAndSala(it.profile_id) }
@@ -43,11 +48,16 @@ fun MessageReply(
             .fillMaxWidth()
             .padding(10.dp)
         ) {
+            if(typeOfChat != TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO){
             Text(
                 text = "${profile?.nombre?:""} ${profile?.apellido ?: ""}",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary
             )
+            }
+            if(item.reply?.is_deleted == true){
+              DeleteMessage()
+            }else{
             item.reply?.data?.let { data->
                 MessageContent1(
                     content = data,
@@ -65,5 +75,7 @@ fun MessageReply(
                 style = MaterialTheme.typography.bodySmall,
             )
         }
+            }
     }
 }
+

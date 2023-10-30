@@ -2,6 +2,8 @@ package app.regate.data.chat
 
 import app.regate.constant.HostMessage
 import app.regate.data.auth.store.AuthStore
+import app.regate.data.dto.chat.DeleteMessageRequest
+import app.regate.data.dto.chat.DeletedMessagesIds
 import app.regate.data.dto.chat.MessagePublishRequest
 import app.regate.data.dto.chat.MessagePublishResponse
 import app.regate.data.dto.chat.PaginateChatResponse
@@ -96,6 +98,21 @@ class ChatDataSourceImpl(
             header("Authorization","Bearer $token")
             contentType(ContentType.Application.Json)
             setBody(data)
+        }.body()
+    }
+    override suspend fun deleteMessage(data: DeleteMessageRequest) {
+        val token = authStore.get()?.accessToken
+        return client.post{
+            url("$baseUrl/v1/chat/delete/message/")
+            header("Authorization","Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(data)
+        }.body()
+    }
+
+    override suspend fun getDeletedMessages(id: Long): DeletedMessagesIds {
+        return client.get{
+            url("$baseUrl/v1/chat/deleted/messages/$id/")
         }.body()
     }
 }

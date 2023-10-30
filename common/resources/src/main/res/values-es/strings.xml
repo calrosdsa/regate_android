@@ -184,4 +184,9 @@
     <string name="view_group">View group</string>
     <string name="share_image_link">Compartir enlace de la imagen</string>
     <string name="open_in_browser">Abrir en el navegador</string>
+    <string name="copy_text">Copiar texto</string>
+    <string name="reply">Responder</string>
+    <string name="edit_message">Editar mensaje</string>
+    <string name="delete_message">Delete message</string>
+    <string name="message_deleted">Este mensaje ha sido eliminado.</string>
 </resources>

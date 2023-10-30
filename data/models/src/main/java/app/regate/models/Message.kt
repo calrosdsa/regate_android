@@ -35,4 +35,5 @@ data class Message(
     val parent_id:Long = 0,
     //only for conversation message
     val is_user:Boolean = false,
+    val is_deleted:Boolean = false,
 ):AppEntity

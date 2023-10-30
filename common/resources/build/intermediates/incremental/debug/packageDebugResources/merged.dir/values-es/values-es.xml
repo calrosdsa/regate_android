@@ -29,10 +29,12 @@
     <string name="continuar">Continuar</string>
     <string name="contributed_amount">Monto aportado %1$s</string>
     <string name="copy_link">Copiar enlace</string>
+    <string name="copy_text">Copiar texto</string>
     <string name="count_selected">%1$d seleccionado</string>
     <string name="create_group">Crear grupo</string>
     <string name="create_sala">Crear sala</string>
     <string name="decline">Declinar</string>
+    <string name="delete_message">Delete message</string>
     <string name="deposits">Depósitos</string>
     <string name="description">Descripción</string>
     <string name="discount">Los beneficios y descuento se lanzan regularmente</string>
@@ -40,6 +42,7 @@
     <string name="dont_receive_code">¿No recibiste el código?</string>
     <string name="dynamic_color">Dynamic colors</string>
     <string name="edit">Editar</string>
+    <string name="edit_message">Editar mensaje</string>
     <string name="email_verification">Verificacion de email</string>
     <string name="email_verification_help_text">Antes de continuar, necesitamos verificar su correo electrónico. Por favor ingrese el código que fue enviado a su correo electrónico (<b>%1$s</b>)</string>
     <string name="emileys_emotion">EMOCIONES Y EMOCIONES</string>
@@ -79,6 +82,7 @@
     <string name="map">Mapa</string>
     <string name="meke_user_admin">Nombrar a este usuario como administrador</string>
     <string name="members">%1$d miembros</string>
+    <string name="message_deleted">Este mensaje ha sido eliminado.</string>
     <string name="name">Nombre</string>
     <string name="near_me">Cerca de mi</string>
     <string name="new_offers">¡Nuevas ofertas aquí!</string>
@@ -112,6 +116,7 @@
     <string name="recommended_places">Lugares recomendados</string>
     <string name="remove_user">Remover este  usuario del grupo</string>
     <string name="remove_user_admin">Revocar el estatus de administrador</string>
+    <string name="reply">Responder</string>
     <string name="report">Reportar</string>
     <string name="request_accepted">Solicitud aceptada</string>
     <string name="request_declined">Solicitud rechazada</string>

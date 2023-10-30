@@ -15,6 +15,8 @@ import app.regate.constant.HostMessage
 import app.regate.data.app.EmojiCategory
 import app.regate.data.chat.ChatRepository
 import app.regate.data.common.MessageData
+import app.regate.data.dto.chat.DeleteMessageRequest
+import app.regate.data.dto.chat.IdDto
 import app.regate.data.dto.chat.MessageEvent
 import app.regate.data.dto.chat.MessageEventType
 import app.regate.data.dto.chat.MessagePublishRequest
@@ -181,20 +183,32 @@ class ChatGrupoViewModel(
                 chatRepository.getChatUnreadMessages(chatId, typeChat)
                 Log.d("DEBUG_APP","IS ACTIVE ASDASD AS")
             }
-            cl.apply{
-                    for (message in incoming) {
-                        message as? Frame.Text ?: continue
+            cl.apply {
+                for (message in incoming) {
+                    message as? Frame.Text ?: continue
 //                        val payload = Json.decodeFromString<WsAccountPayload>(message.readText())
-                        val event = Json.decodeFromString<MessageEvent>(message.readText())
-                        if (event.type == MessageEventType.EventTypeMessage) {
-                        Log.d("DEBUG_APP_MESSAGE_PAYLOAD",message.readText())
-                        val payload = Json.decodeFromString<GrupoMessageDto>(event.payload)
-//                            Log.d("DEBUG_APP_MESSAGE_REC",event.message.toString())
-                        delay(1000)
-                        chatRepository.updateOrSaveMessage(payload,true)
-//                            grupoRepository.updateLastMessage(grupoId,message.content,message.created_at)
+                    val event = Json.decodeFromString<MessageEvent>(message.readText())
+                    when (event.type) {
+                        MessageEventType.EventTypeMessage -> {
+                            try {
+
+                            Log.d("DEBUG_APP_MESSAGE_PAYLOAD", message.readText())
+                            val payload = Json.decodeFromString<GrupoMessageDto>(event.payload)
+                            chatRepository.updateOrSaveMessage(payload, true)
+                            }catch (e:Exception){
+                                Log.d("DEBUG_WS_ERROR_1",e.localizedMessage?:"")
+                            }
+                        }
+                        MessageEventType.EventTypeDeleteMessage -> {
+                            try {
+                                val payload = Json.decodeFromString<IdDto>(event.payload)
+                                chatRepository.updateMessageToDeleted(payload.id)
+                            }catch (e:Exception){
+                                Log.d("DEBUG_WS_ERROR_1",e.localizedMessage?:"")
+                            }
                         }
                     }
+                }
 
             }
             cl.start(emptyList())
@@ -250,6 +264,7 @@ class ChatGrupoViewModel(
             try {
                 chatRepository.updateUnreadMessages(chatId)
                 grupoRepository.getUsersGroup(grupoId)
+                chatRepository.getDeletedMessages(chatId)
 //                grupoRepository.getMessagesGrupo(grupoId)
             }catch(e:SerializationException){
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
@@ -331,6 +346,32 @@ class ChatGrupoViewModel(
     fun resetScroll(){
         viewModelScope.launch {
             scrollToBottom.tryEmit(null)
+        }
+    }
+
+    fun deleteMessageForEveryone(id:Long){
+        viewModelScope.launch {
+            try {
+                val requestData = DeleteMessageRequest(
+                    id = id,
+                    chat_id = chatId,
+                    type_chat = typeChat,
+                    ids = state.value.usersGrupo.map { it.profile_id }
+                )
+            chatRepository.deleteMessage(requestData)
+            }catch (e:Exception){
+                Log.d("DEBUG_APP_ERR_D",e.localizedMessage?:"")
+            }
+        }
+    }
+
+    fun deleteMessageForMe(id:Long){
+        viewModelScope.launch {
+            try {
+                chatRepository.deleteMessageLocal(id)
+            }catch (e:Exception){
+                Log.d("DEBUG_APP_ERR_D",e.localizedMessage?:"")
+            }
         }
     }
 

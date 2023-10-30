@@ -72,7 +72,8 @@ fun Chat (
     lazyPagingItems: LazyPagingItems<MessageProfile>,
 //    colors: List<Color>,
     lazyListState:LazyListState,
-    copyMessage:(m:String,isLink:Boolean)->Unit,
+    copyMessage:(m:String)->Unit,
+    selectMessage:(MessageProfile)->Unit,
     setReply:(message:ReplyMessageData?)->Unit,
     formatShortDate:(Instant)->String,
     formatShortTime:(Instant)->String,
@@ -128,7 +129,7 @@ fun Chat (
         itemsCustom(items = lazyPagingItems,key={it.message.id}) { result->
                 result?.let { item ->
                     val isUserExists = if(typeOfChat == TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO) false else user != null && item.profile?.id == user.profile_id
-                    if (isUserExists || item.message.is_user) {
+//                    if (isUserExists || item.message.is_user) {
                         SwipeableActionsBox(
                             startActions = listOf(SwipeAction(
                                 icon = rememberVectorPainter(image = Icons.Default.Reply),
@@ -151,240 +152,107 @@ fun Chat (
                                 .padding(horizontal = Layout.bodyMargin)
                                 .fillMaxWidth(),
                         ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(if (selectedMessage.value == item.message.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
-                            ) {
-                                Spacer(modifier = Modifier.fillMaxWidth(0.25f))
+                                MessageComponent(
+                                    item = item,
+                                    scrollToItem = {
+                                        coroutineScope.launch {
+                                            try {
 
-
-                                Column(
-                                    modifier = Modifier
-                                        .clip(
-                                            RoundedCornerShape(
-                                                topStart = 15.dp,
-                                                bottomStart = 15.dp,
-                                                bottomEnd = 15.dp
-                                            )
-                                        )
-                                        .combinedClickable(
-                                            onLongClick = {
-                                                copyMessage(item.message.content, false)
-                                            }
-                                        ) { }
-                                        .fillMaxWidth(0.95f)
-                                        .background(MaterialTheme.colorScheme.inverseOnSurface)
-                                        .padding(
-                                            start = 10.dp,
-                                            end = 10.dp,
-                                            top = 5.dp,
-                                            bottom = 5.dp
-                                        )
-                                ) {
-                                    if (item.message.reply_to != null) {
-                                        MessageReply(
-                                            item = item,
-                                            scrollToItem = {
-                                                coroutineScope.launch {
-                                                    try {
-
-                                                        items.forEachIndexed { index, messageProfile ->
-                                                            if (messageProfile.message.id == item.message.reply_to) {
-                                                                lazyListState.scrollToItem(index)
-                                                                selectedMessage.value =
-                                                                    messageProfile.message.id
-                                                                return@launch
-                                                            }
-                                                        }
-                                                    } catch (e: Exception) {
-                                                        Log.d(
-                                                            "DEBUG_LIST",
-                                                            e.localizedMessage ?: ""
-                                                        )
-                                                    }
-                                                }
-                                            }, getUserProfileGrupoAndSala = getUserProfileGrupoAndSala,
-                                            navigateToInstalacionReserva = navigateToInstalacionReserva,
-                                            formatShortDate = formatShortDate,
-                                            formatShortTime = formatShortTime,
-                                            formatShortTimeFromString = formatShortTimeFromString,
-                                            formatShortDateFromString = formatShortDateFromString,
-                                            navigateToSala = navigateToSala
-                                        )
-                                    }
-                                    item.message.data?.let {data->
-                                    MessageContent1(
-                                        content = data,
-                                        messageType = item.message.type_message,
-                                        navigateToInstalacionReserva = navigateToInstalacionReserva,
-                                        formatShortDate = formatShortDate,
-                                        formatShortTime = formatShortTime,
-                                        formatShortTimeFromString = formatShortTimeFromString,
-                                        formatShortDateFromString = formatShortDateFromString,
-                                        navigateToSala = navigateToSala
-                                    )
-                                    }
-                                    Message(
-                                        message = item.message.content,
-                                        openLink = openLink,
-                                        copyMessage = copyMessage
-                                    )
-//                                    if(item.message.content.isBlank()) {
-//                                        Text(
-//                                            text = item.message.content,
-//                                            style = MaterialTheme.typography.bodySmall,
-//                                        )
-//                                    }
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Text(
-                                            text = formatterRelatimeTime(item.message.created_at),
-                                            style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp)
-                                        )
-                                        if (item.message.sended) {
-                                            Image(
-                                                painter = painterResource(id = R.drawable.doble_check),
-                                                contentDescription = "double_check",
-                                                modifier = Modifier.size(14.dp),
-                                                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
-                                            )
-                                        } else {
-                                            Icon(
-                                                imageVector = Icons.Default.Check,
-                                                contentDescription = "check",
-                                                modifier = Modifier.size(14.dp),
-//                                                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
-                                            )
-                                        }
-                                    }
-                                }
-//                                MessengerIcon(colors)
-                            }
-                        }
-
-
-                    } else {
-                        SwipeableActionsBox(
-                            startActions = listOf(SwipeAction(
-                                icon = rememberVectorPainter(image = Icons.Default.Reply),
-                                background = Color.Transparent,
-                                onSwipe = {
-                                    setReply(null)
-                                    setReply(ReplyMessageData(
-                                        nombre = item.profile?.nombre?:"",
-                                        apellido = item.profile?.apellido,
-                                        content = item.message.content,
-                                        id = item.message.id,
-                                        type_message = item.message.type_message,
-                                        data = item.message.data
-                                    ))
-                                }
-                            )),
-                            swipeThreshold = 100.dp,
-                            backgroundUntilSwipeThreshold = Color.Transparent,
-                            modifier = Modifier
-                                .padding(horizontal = Layout.bodyMargin)
-                                .fillMaxWidth(),
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth(if (selectedMessage.value == item.message.id) 1f else 0.8f)
-                                    .background(if (selectedMessage.value == item.message.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
-                            ) {
-                                if(typeOfChat != TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO){
-                                ProfileImage(
-                                    profileImage = item.profile?.profile_photo,
-                                    contentDescription = item.profile?.nombre ?: "",
-                                    modifier = Modifier
-                                        .clip(CircleShape)
-                                        .size(30.dp)
-                                )
-                                }
-//                                MessengerIcon2(colors)
-                                Column(
-                                    modifier = Modifier
-                                        .clickable {
-                                            copyMessage(item.message.content, false)
-                                        }
-                                        .clip(
-                                            RoundedCornerShape(
-                                                topEnd = 15.dp,
-                                                bottomStart = 15.dp,
-                                                bottomEnd = 15.dp
-                                            )
-                                        )
-                                        .background(MaterialTheme.colorScheme.inverseOnSurface)
-                                        .padding(
-                                            start = 10.dp,
-                                            end = 10.dp,
-                                            top = 5.dp,
-                                            bottom = 5.dp
-                                        )
-                                ) {
-                                    if(typeOfChat != TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO) {
-                                        Text(
-                                            text = "${item.profile?.nombre ?: ""} ${item.profile?.apellido ?: ""}",
-                                            style = MaterialTheme.typography.labelSmall,
-                                            color = MaterialTheme.colorScheme.primary
-                                        )
-                                    }
-                                    if (item.message.reply_to != null) {
-                                        MessageReply(item = item, scrollToItem = {
-                                            coroutineScope.launch {
                                                 items.forEachIndexed { index, messageProfile ->
-
                                                     if (messageProfile.message.id == item.message.reply_to) {
                                                         lazyListState.scrollToItem(index)
                                                         selectedMessage.value =
                                                             messageProfile.message.id
-
-                                                        return@forEachIndexed
+                                                        return@launch
                                                     }
                                                 }
+                                            } catch (e: Exception) {
+                                                Log.d(
+                                                    "DEBUG_LIST",
+                                                    e.localizedMessage ?: ""
+                                                )
                                             }
-                                        }, getUserProfileGrupoAndSala = getUserProfileGrupoAndSala,
-                                            navigateToInstalacionReserva = navigateToInstalacionReserva,
-                                            formatShortDate = formatShortDate,
-                                            formatShortTime = formatShortTime,
-                                            formatShortTimeFromString = formatShortTimeFromString,
-                                            formatShortDateFromString = formatShortDateFromString,
-                                            navigateToSala = navigateToSala
-                                        )
-                                    }
-                                    item.message.data?.let {data->
-                                        MessageContent1(
-                                            content = data,
-                                            messageType = item.message.type_message,
-                                            navigateToInstalacionReserva = navigateToInstalacionReserva,
-                                            formatShortDate = formatShortDate,
-                                            formatShortTime = formatShortTime,
-                                            formatShortTimeFromString = formatShortTimeFromString,
-                                            formatShortDateFromString = formatShortDateFromString,
-                                            navigateToSala = navigateToSala
-                                        )
-                                    }
-//                                    Text(
-//                                        text = item.message.content,
-//                                        style = MaterialTheme.typography.bodySmall,
-//                                    )
-                                    Message(
-                                        message = item.message.content,
-                                        openLink = openLink,
-                                        copyMessage = copyMessage
-                                    )
-                                    Text(
-                                        text = formatterRelatimeTime(item.message.created_at),
-                                        style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp)
-                                    )
-                                }
-                            }
+                                        }
+                                    },
+                                    selectMessage = selectMessage,
+                                    formatterRelatimeTime = formatterRelatimeTime,
+                                    formatShortDate = formatShortDate,
+                                    formatShortTime = formatShortTime,
+                                    formatShortTimeFromString = formatShortTimeFromString,
+                                    formatShortDateFromString = formatShortDateFromString,
+                                    navigateToInstalacionReserva = navigateToInstalacionReserva,
+                                    getUserProfileGrupoAndSala = getUserProfileGrupoAndSala,
+                                    openLink = openLink,
+                                    copyMessage = copyMessage,
+                                    typeOfChat = typeOfChat,
+                                    navigateToSala = navigateToSala,
+                                    isUserExist = isUserExists,
+                                    selectedMessage = selectedMessage.value,
+                                )
                         }
-
-                    }
+//                    } else {
+//                        SwipeableActionsBox(
+//                            startActions = listOf(SwipeAction(
+//                                icon = rememberVectorPainter(image = Icons.Default.Reply),
+//                                background = Color.Transparent,
+//                                onSwipe = {
+//                                    setReply(null)
+//                                    setReply(ReplyMessageData(
+//                                        nombre = item.profile?.nombre?:"",
+//                                        apellido = item.profile?.apellido,
+//                                        content = item.message.content,
+//                                        id = item.message.id,
+//                                        type_message = item.message.type_message,
+//                                        data = item.message.data
+//                                    ))
+//                                }
+//                            )),
+//                            swipeThreshold = 100.dp,
+//                            backgroundUntilSwipeThreshold = Color.Transparent,
+//                            modifier = Modifier
+//                                .padding(horizontal = Layout.bodyMargin)
+//                                .fillMaxWidth(),
+//                        ) {
+//                            MessageComponent(
+//                                item = item,
+//                                scrollToItem = {
+//                                    coroutineScope.launch {
+//                                        try {
+//
+//                                            items.forEachIndexed { index, messageProfile ->
+//                                                if (messageProfile.message.id == item.message.reply_to) {
+//                                                    lazyListState.scrollToItem(index)
+//                                                    selectedMessage.value =
+//                                                        messageProfile.message.id
+//                                                    return@launch
+//                                                }
+//                                            }
+//                                        } catch (e: Exception) {
+//                                            Log.d(
+//                                                "DEBUG_LIST",
+//                                                e.localizedMessage ?: ""
+//                                            )
+//                                        }
+//                                    }
+//                                },
+//                                selectMessage = selectMessage,
+//                                formatterRelatimeTime = formatterRelatimeTime,
+//                                formatShortDate = formatShortDate,
+//                                formatShortTime = formatShortTime,
+//                                formatShortTimeFromString = formatShortTimeFromString,
+//                                formatShortDateFromString = formatShortDateFromString,
+//                                navigateToInstalacionReserva = navigateToInstalacionReserva,
+//                                getUserProfileGrupoAndSala = getUserProfileGrupoAndSala,
+//                                openLink = openLink,
+//                                copyMessage = copyMessage,
+//                                typeOfChat = typeOfChat,
+//                                navigateToSala = navigateToSala,
+//                                isUserExist = isUserExists,
+//                                selectedMessage = selectedMessage.value
+//                            )
+//                        }
+//
+//                    }
                     Spacer(modifier = Modifier.height(10.dp))
                     if (checkIsLast(
                             item.message.created_at.toLocalDateTime(TimeZone.UTC).date,
@@ -415,7 +283,7 @@ fun Chat (
 internal fun Message(
     message:String,
     openLink:(String)->Unit,
-    copyMessage: (m: String, isLink: Boolean) -> Unit,
+    copyMessage: (m: String) -> Unit,
 ){
     if(message.isNotBlank()){
 
@@ -427,7 +295,7 @@ internal fun Message(
             if(matcher.find()){
                 Text(text = "$word ",style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary,modifier = Modifier.combinedClickable(
-                        onLongClick = { copyMessage(word,true) }
+                        onLongClick = { copyMessage(word) }
                 ) {
                     openLink(word)
                     })

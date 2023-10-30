@@ -219,5 +219,10 @@
     <string name="view_group">View group</string>
     <string name="share_image_link">Share image link</string>
     <string name="open_in_browser">Open in browser</string>
+    <string name="copy_text">Copy text</string>
+    <string name="reply">Reply</string>
+    <string name="edit_message">Edit message</string>
+    <string name="delete_message">Delete message</string>
+    <string name="message_deleted">This message has been deleted.</string>
 
 </resources>

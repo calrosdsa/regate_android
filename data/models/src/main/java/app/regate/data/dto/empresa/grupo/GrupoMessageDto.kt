@@ -17,6 +17,7 @@ data class GrupoMessageDto(
     val reply_to:Long? = null,
     val reply_message: ReplyMessage = ReplyMessage.Empty,
     val parent_id:Long = 0,
+    val is_deleted:Boolean = false,
     //only for conversation message
     val is_user:Boolean = false,
     val is_read:Boolean = true,

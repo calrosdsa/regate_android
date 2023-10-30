@@ -46,7 +46,6 @@ import app.regate.favorites.Favorites
 import app.regate.grupo.Grupo
 import app.regate.grupos.FilterGroups
 import app.regate.grupos.Grupos
-import app.regate.conversation.Conversation
 import app.regate.media.photo.Photo
 import app.regate.profile.Profile
 import app.regate.profile.edit.EditProfile
@@ -117,7 +116,6 @@ class ComposeScreens(
     val createSala: CreateSala,
     val settings:Setting,
     val favorites:Favorites,
-    val conversation:Conversation,
     val inbox:Conversations,
     val billing:Billing,
     val deposits: Deposits,

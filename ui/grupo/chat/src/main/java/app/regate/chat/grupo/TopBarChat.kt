@@ -60,14 +60,14 @@ fun TopBarChat (
                 shape = CircleShape,
                 onClick = {
                     if (chat != null) {
-                        navigateToGroup(chat.id)
+                        navigateToGroup(chat.parent_id)
                     }
                 }
             )
             Spacer(modifier = Modifier.width(5.dp))
             Column(modifier = Modifier.clickable {
                 if (chat != null) {
-                    navigateToGroup(chat.id)
+                    navigateToGroup(chat.parent_id)
                 }
             }) {
             Text(text = chat?.name?:"", style = MaterialTheme.typography.titleMedium, maxLines = 1)

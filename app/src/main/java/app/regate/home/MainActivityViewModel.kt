@@ -12,6 +12,7 @@ import app.regate.data.dto.account.auth.FcmRequest
 import app.regate.data.dto.account.ws.PayloadUserBalanceUpdate
 import app.regate.data.dto.account.ws.PayloadWsAccountType
 import app.regate.data.dto.account.ws.WsAccountPayload
+import app.regate.data.dto.chat.IdDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.system.NotificationDto
 import app.regate.data.system.SystemRepository
@@ -89,10 +90,10 @@ class MainActivityViewModel(
                   for (message in incoming) {
                       message as? Frame.Text ?: continue
                       val data = Json.decodeFromString<WsAccountPayload>(message.readText())
-                      Log.d("DEBUG_APP",message.readText())
+                      Log.d("DEBUG_APP_WS_MAIN",message.readText())
                       when (data.type){
                           PayloadWsAccountType.PAYLOAD_USER_BALANCE.ordinal->{
-                              Log.d("DEBUG_APP",message.readText())
+                              Log.d("DEBUG_APP_WS_MAIN",message.readText())
                               val payload = Json.decodeFromString<PayloadUserBalanceUpdate>(data.payload)
                               coinRepository.updateUserBalance(payload)
                           }
@@ -111,6 +112,15 @@ class MainActivityViewModel(
                                   Log.d("DEBUG_APP_ER" , e.localizedMessage?:"")
                               }
                           }
+                          PayloadWsAccountType.PAYLOAD_DELETE_MESSAGE.ordinal -> {
+                              try{
+                                  val payload = Json.decodeFromString<IdDto>(data.payload)
+                                  chatRepository.updateMessageToDeleted(payload.id)
+                                  Log.d("DEBUG_APP",payload.toString())
+                              }catch(e:Exception){
+                                  Log.d("DEBUG_APP_ER" , e.localizedMessage?:"")
+                              }
+                          }
                           else -> {}
                       }
                   }
@@ -119,7 +129,7 @@ class MainActivityViewModel(
             cl.start(emptyList())
         }catch (e:Exception){
             delay(1000)
-            Log.d("DEBUG_ARR",e.localizedMessage?:"")
+            Log.d("DEBUG_ARR_WS",e.localizedMessage?:"")
             startWs(profileId)
         }
     }
