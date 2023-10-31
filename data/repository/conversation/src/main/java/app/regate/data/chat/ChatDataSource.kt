@@ -1,11 +1,13 @@
 package app.regate.data.chat
 
+import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.data.dto.chat.DeleteMessageRequest
 import app.regate.data.dto.chat.DeletedMessagesIds
 import app.regate.data.dto.chat.MessagePublishRequest
 import app.regate.data.dto.chat.MessagePublishResponse
 import app.regate.data.dto.chat.PaginateChatResponse
 import app.regate.data.dto.chat.RequestChatUnreadMessages
+import app.regate.data.dto.chat.RequestUserGroupAndRoom
 import app.regate.data.dto.empresa.conversation.Conversation
 import app.regate.data.dto.empresa.conversation.ConversationId
 import app.regate.data.dto.empresa.conversation.ConversationMessage
@@ -27,5 +29,6 @@ interface ChatDataSource {
     suspend fun publishMessage(data:MessagePublishRequest):MessagePublishResponse
     suspend fun deleteMessage(data:DeleteMessageRequest)
     suspend fun getDeletedMessages(id:Long):DeletedMessagesIds
+    suspend fun getUsers(d:RequestUserGroupAndRoom):List<UserProfileGrupoAndSala>?
 }
 

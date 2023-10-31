@@ -1,6 +1,7 @@
 package app.regate.data.grupo
 
 import app.regate.compoundmodels.MessageProfile
+import app.regate.data.daos.ChatDao
 import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
@@ -9,6 +10,7 @@ import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.chat.RequestChatUnreadMessages
+import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
@@ -34,6 +36,7 @@ import app.regate.inject.ApplicationScope
 import app.regate.models.Message
 import app.regate.models.MyGroups
 import app.regate.models.Profile
+import app.regate.models.chat.Chat
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
@@ -46,10 +49,7 @@ class GrupoRepository(
     private val grupoDao: GrupoDao,
     private val userGrupoDao: UserGrupoDao,
     private val profileDao: ProfileDao,
-    private val messageProfileDao: MessageProfileDao,
-    private val messageMapper:MessageDtoToMessage,
-    private val messageMapperDto:MessageToMessageDto,
-    private val replyMessageMapper:ReplyMessageDtoToMessage,
+    private val chatDao: ChatDao,
     private val dtoToGrupo: DtoToGrupo,
     private val dtoToUserGrupo: DtoToUserGrupo,
     private val dispatchers: AppCoroutineDispatchers,
@@ -120,9 +120,17 @@ class GrupoRepository(
         }
     }
     suspend fun createGrupo(d:GroupRequest):GrupoDto{
-        return grupoDataSourceImpl.createGroup(d).also {
-            grupoDao.upsert(dtoToGrupo.map(it))
-            myGroupsDao.upsert(MyGroups(id = it.id))
+        return grupoDataSourceImpl.createGroup(d).also {grupo->
+            grupoDao.upsert(dtoToGrupo.map(grupo))
+            myGroupsDao.upsert(MyGroups(id = grupo.id))
+            val chat = Chat(
+                parent_id = grupo.id,
+                id = grupo.id,
+                type_chat = TypeChat.TYPE_CHAT_GRUPO.ordinal,
+                name = grupo.name,
+                photo = grupo.photo
+            )
+            chatDao.upsert(chat)
         }
     }
     suspend fun joinGrupo(grupoId:Long,visibility:Int=2,){
@@ -172,7 +180,7 @@ class GrupoRepository(
     }
 
     suspend fun getUsersGroup(id:Long){
-        withContext(dispatchers.computation){ 
+        withContext(dispatchers.computation){
         grupoDataSourceImpl.getUsersGrupo(id).apply {
             userGrupoDao.deleteUsersGroup(id)
             val profiles = map {
@@ -190,24 +198,7 @@ class GrupoRepository(
         }
         }
     }
-    suspend fun getMessagesGrupo(id:Long,page:Int):Int{
-          return   try{
-              val data = grupoDataSourceImpl.getMessagesGrupo(id,page)
-              withContext(dispatchers.computation){
-               data.let { apiResult ->
-                val messages =async{ apiResult.results.map { messageMapper.map(it) } }
-                val replies =async{ apiResult.results.filter { it.reply_to != null }.map {
-                    replyMessageMapper.map(it.reply_message) }
-                }
-             val results = messages.await() + replies.await()
-             messageProfileDao.upsertAll(results)
-              }
-             }
-              data.page
-         }catch (e:Exception){
-             0
-         }
-    }
+
     //REQUEST
     suspend fun getPendingRequests(groupId:Long,page:Int,estado:GrupoPendingRequestEstado = GrupoPendingRequestEstado.PENDING):PaginationPendingRequestUser{
         return grupoDataSourceImpl.getPendingRequests(groupId,page,estado.ordinal)

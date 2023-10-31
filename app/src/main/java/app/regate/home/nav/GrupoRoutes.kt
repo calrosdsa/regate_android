@@ -22,16 +22,16 @@ internal fun NavGraphBuilder.GrupoRoutes(
 //    openSettings: () -> Unit,
 ) {
     animatedComposable(
-        route = Route.CHAT_GRUPO  +"?id={id}&grupoId={grupoId}&data={data}&typeChat={typeChat}",
+        route = Route.CHAT_GRUPO  +"?id={id}&parentId={parentId}&data={data}&typeChat={typeChat}",
         arguments = listOf(
             navArgument("id") { type = NavType.LongType },
-            navArgument("grupoId") { type = NavType.LongType },
+            navArgument("parentId") { type = NavType.LongType },
             navArgument("typeChat") { type = NavType.IntType },
             navArgument("data") {
                 type = NavType.StringType
                 defaultValue ="2312312" },
         ),
-        deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.CHAT_GRUPO}/{id}/{grupoId}/{typeChat}" })
+        deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.CHAT_GRUPO}/{id}/{parentId}/{typeChat}" })
     ) {
         composeScreens.chatGrupo(
             navigateUp = navController::navigateUp,
@@ -42,19 +42,6 @@ internal fun NavGraphBuilder.GrupoRoutes(
                 navController.navigate(Route.RESERVAR id instalacionId id establecimientoId)
             },
             navigateToSala = { navController.navigate(Route.SALA id it)}
-        )
-    }
-    animatedComposable(
-        route = Route.MY_GROUPS + "?data={data}",
-        arguments = listOf(
-            navArgument("data") { type = NavType.StringType;defaultValue ="" },
-        ),
-    ) {
-        composeScreens.myChats(
-            navigateUp = navController::navigateUp,
-            navigateToChatGrupo= {it1,it2->
-                navController.navigate(Route.CHAT_GRUPO + "?id=$it1&data=$it2")
-            }
         )
     }
 

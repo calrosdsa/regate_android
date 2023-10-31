@@ -43,6 +43,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.LocalAppDateFormatter
@@ -59,25 +60,26 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import kotlin.time.Duration.Companion.minutes
 import app.regate.common.resources.R
+import app.regate.constant.Route
 import app.regate.data.dto.empresa.grupo.MessageSalaPayload
 import app.regate.models.chat.Chat
 
 typealias MyChats= @Composable (
-    navigateUp:()->Unit,
-    navigateToChatGrupo:(Long,String)->Unit
+    navController:NavController,
 )-> Unit
 
 @Inject
 @Composable
 fun MyChats(
     viewModelFactory:(SavedStateHandle)->MyChatsViewModel,
-    @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToChatGrupo: (Long, String) -> Unit
-){
+    @Assisted navController:NavController,
+) {
     MyChats(
         viewModel = viewModel(factory = viewModelFactory),
-        navigateUp = navigateUp,
-        navigateToChatGrupo = navigateToChatGrupo
+        navigateUp = navController::navigateUp,
+        navigateToChat = {chatId:Long,parentId:Long,data:String,typeChat:Int->
+            navController.navigate(Route.CHAT_GRUPO + "?id=$chatId&parentId=$parentId&typeChat=$typeChat&data=$data")
+        }
     )
 }
 
@@ -85,14 +87,14 @@ fun MyChats(
 internal fun MyChats(
     viewModel: MyChatsViewModel,
     navigateUp: () -> Unit,
-    navigateToChatGrupo: (Long, String) -> Unit
+    navigateToChat: (Long,Long,String,Int) -> Unit
 ){
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
     MyChats(
         viewState = state,
-        navigateToChat = {it1,it2->
-            viewModel.navigateToGroupChat(it1,context,it2,navigateToChatGrupo,navigateUp)
+        navigateToChat = {it1,parentId,it2,typeChat->
+            viewModel.navigateToGroupChat(it1,context,it2,parentId,typeChat,navigateToChat)
         },
         navigateUp = navigateUp,
         sharedMessage = viewModel.getData(),
@@ -108,7 +110,7 @@ internal fun MyChats(
     viewState:MyChatsState,
     lazyPagingItems:LazyPagingItems<Chat>,
     sharedMessage:String,
-    navigateToChat: (id: Long,content:String) -> Unit,
+    navigateToChat: (Long,Long,String,Int) -> Unit,
     navigateUp: () -> Unit,
     selectChat:(Chat)->Unit
 ){
@@ -156,7 +158,8 @@ internal fun MyChats(
                           IconButton(
                               onClick = {
                               if(viewState.selectedChats.isNotEmpty()){
-                                  navigateToChat(viewState.selectedChats[0].id,message)
+                                  val chat = viewState.selectedChats[0]
+                                  navigateToChat(chat.id,chat.parent_id,message,chat.type_chat)
                               } },
                               colors = IconButtonDefaults.iconButtonColors(
                                   containerColor = MaterialTheme.colorScheme.primary,

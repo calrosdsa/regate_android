@@ -1,6 +1,7 @@
 package app.regate.data.daos;
 
 import android.database.Cursor;
+import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityDeletionOrUpdateAdapter;
@@ -46,7 +47,7 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT OR IGNORE INTO `user_room` (`id`,`profile_id`,`sala_id`,`is_admin`) VALUES (nullif(?, 0),?,?,?)";
+        return "INSERT OR IGNORE INTO `user_room` (`id`,`profile_id`,`sala_id`,`is_admin`,`is_out`) VALUES (nullif(?, 0),?,?,?,?)";
       }
 
       @Override
@@ -57,6 +58,8 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
         statement.bindLong(3, entity.getSala_id());
         final int _tmp = entity.is_admin() ? 1 : 0;
         statement.bindLong(4, _tmp);
+        final int _tmp_1 = entity.is_out() ? 1 : 0;
+        statement.bindLong(5, _tmp_1);
       }
     };
     this.__deletionAdapterOfUserRoom = new EntityDeletionOrUpdateAdapter<UserRoom>(__db) {
@@ -76,7 +79,7 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `user_room` SET `id` = ?,`profile_id` = ?,`sala_id` = ?,`is_admin` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `user_room` SET `id` = ?,`profile_id` = ?,`sala_id` = ?,`is_admin` = ?,`is_out` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -87,14 +90,16 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
         statement.bindLong(3, entity.getSala_id());
         final int _tmp = entity.is_admin() ? 1 : 0;
         statement.bindLong(4, _tmp);
-        statement.bindLong(5, entity.getId());
+        final int _tmp_1 = entity.is_out() ? 1 : 0;
+        statement.bindLong(5, _tmp_1);
+        statement.bindLong(6, entity.getId());
       }
     };
     this.__upsertionAdapterOfUserRoom = new EntityUpsertionAdapter<UserRoom>(new EntityInsertionAdapter<UserRoom>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `user_room` (`id`,`profile_id`,`sala_id`,`is_admin`) VALUES (nullif(?, 0),?,?,?)";
+        return "INSERT INTO `user_room` (`id`,`profile_id`,`sala_id`,`is_admin`,`is_out`) VALUES (nullif(?, 0),?,?,?,?)";
       }
 
       @Override
@@ -105,12 +110,14 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
         statement.bindLong(3, entity.getSala_id());
         final int _tmp = entity.is_admin() ? 1 : 0;
         statement.bindLong(4, _tmp);
+        final int _tmp_1 = entity.is_out() ? 1 : 0;
+        statement.bindLong(5, _tmp_1);
       }
     }, new EntityDeletionOrUpdateAdapter<UserRoom>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `user_room` SET `id` = ?,`profile_id` = ?,`sala_id` = ?,`is_admin` = ? WHERE `id` = ?";
+        return "UPDATE `user_room` SET `id` = ?,`profile_id` = ?,`sala_id` = ?,`is_admin` = ?,`is_out` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -121,7 +128,9 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
         statement.bindLong(3, entity.getSala_id());
         final int _tmp = entity.is_admin() ? 1 : 0;
         statement.bindLong(4, _tmp);
-        statement.bindLong(5, entity.getId());
+        final int _tmp_1 = entity.is_out() ? 1 : 0;
+        statement.bindLong(5, _tmp_1);
+        statement.bindLong(6, entity.getId());
       }
     });
   }
@@ -260,7 +269,7 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
   @Override
   public Flow<List<UserProfileGrupoAndSala>> observeUsersRoom(final long id) {
     final String _sql = "\n"
-            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.id as id from user_room as ug\n"
+            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.is_out,ug.id as id from user_room as ug\n"
             + "        inner join profiles as p on p.id = ug.profile_id\n"
             + "        where ug.sala_id = ?\n"
             + "    ";
@@ -281,7 +290,8 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
             final int _cursorIndexOfApellido = 2;
             final int _cursorIndexOfProfilePhoto = 3;
             final int _cursorIndexOfIsAdmin = 4;
-            final int _cursorIndexOfId = 5;
+            final int _cursorIndexOfIsOut = 5;
+            final int _cursorIndexOfId = 6;
             final List<UserProfileGrupoAndSala> _result = new ArrayList<UserProfileGrupoAndSala>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final UserProfileGrupoAndSala _item;
@@ -305,9 +315,13 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
               final int _tmp;
               _tmp = _cursor.getInt(_cursorIndexOfIsAdmin);
               _tmpIs_admin = _tmp != 0;
+              final boolean _tmpIs_out;
+              final int _tmp_1;
+              _tmp_1 = _cursor.getInt(_cursorIndexOfIsOut);
+              _tmpIs_out = _tmp_1 != 0;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              _item = new UserProfileGrupoAndSala(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpId);
+              _item = new UserProfileGrupoAndSala(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpIs_out,_tmpId);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -325,6 +339,40 @@ public final class RoomUserRoomDao_Impl extends RoomUserRoomDao {
         _statement.release();
       }
     });
+  }
+
+  @Override
+  public Object getUsersCount(final boolean isOut, final long roomId,
+      final Continuation<? super Integer> continuation) {
+    final String _sql = "select count(*) from user_room where sala_id = ? and is_out = ? ";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, roomId);
+    _argIndex = 2;
+    final int _tmp = isOut ? 1 : 0;
+    _statement.bindLong(_argIndex, _tmp);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Integer>() {
+      @Override
+      @NonNull
+      public Integer call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final Integer _result;
+          if (_cursor.moveToFirst()) {
+            final int _tmp_1;
+            _tmp_1 = _cursor.getInt(0);
+            _result = _tmp_1;
+          } else {
+            _result = 0;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, continuation);
   }
 
   @NonNull

@@ -187,7 +187,9 @@ fun MessageComponent(
 
 
 @Composable
-fun DeleteMessage(){
+fun DeleteMessage(
+    modifier: Modifier = Modifier
+){
     Text(text = stringResource(id = R.string.message_deleted), fontStyle = FontStyle.Italic,
-        style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Normal))
+        style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Normal),modifier = modifier)
 }

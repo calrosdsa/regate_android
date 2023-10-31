@@ -12,7 +12,7 @@ class DtoToUserGrupo:MapperWithAttr<UserGrupoDto,UserGrupo> {
             profile_id = from.profile_id,
             grupo_id = id,
             is_admin = from.is_admin,
-            id = from.id
+            id = from.id,
         )
     }
 }

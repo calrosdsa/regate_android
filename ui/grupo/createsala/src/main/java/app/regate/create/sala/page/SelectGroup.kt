@@ -28,7 +28,7 @@ import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.common.resources.R
 
 @Composable
-internal fun SelectGroup (
+internal fun SelectGroup(
     grupos:List<GrupoDto>,
     selectedGroupId:Long?,
     loading:Boolean,

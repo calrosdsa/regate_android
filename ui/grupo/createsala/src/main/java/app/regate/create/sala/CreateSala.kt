@@ -43,7 +43,7 @@ import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias CreateSala = @Composable (
+typealias CreateSala= @Composable (
     navigateUp:()->Unit,
     reservarInstalacion: @Composable () -> Unit,
     navigateToCreateGroup:()->Unit,

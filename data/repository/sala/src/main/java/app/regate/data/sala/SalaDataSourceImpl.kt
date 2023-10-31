@@ -7,6 +7,7 @@ import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.salas.CompleteSalaRequest
+import app.regate.data.dto.empresa.salas.CreateSalaResponse
 import app.regate.data.dto.empresa.salas.MessageSalaDto
 import app.regate.data.dto.empresa.salas.MessageSalaPagination
 import app.regate.data.dto.empresa.salas.PaginationSalaResponse
@@ -30,7 +31,7 @@ class SalaDataSourceImpl(
     private val authStore: AuthStore
 ): SalaDataSource {
 
-    override suspend fun createSala(d: SalaRequestDto):ResponseMessage {
+    override suspend fun createSala(d: SalaRequestDto):CreateSalaResponse {
         val token = authStore.get()?.accessToken
         return client.post("/v1/sala/"){
             header("Authorization", "Bearer $token")

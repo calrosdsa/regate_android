@@ -6,6 +6,7 @@ import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.salas.CompleteSalaRequest
+import app.regate.data.dto.empresa.salas.CreateSalaResponse
 import app.regate.data.dto.empresa.salas.MessageSalaDto
 import app.regate.data.dto.empresa.salas.MessageSalaPagination
 import app.regate.data.dto.empresa.salas.PaginationSalaResponse
@@ -26,7 +27,7 @@ interface SalaDataSource {
    suspend fun getSala(id:Long):SalaDetail
    suspend fun getMessagesSala(id:Long,page: Int):MessageSalaPagination
    suspend fun joinSala(d:JoinSalaRequest): ResponseMessage
-   suspend fun createSala(d: SalaRequestDto):ResponseMessage
+   suspend fun createSala(d: SalaRequestDto):CreateSalaResponse
    suspend fun exitSala(id:Int)
    suspend fun getUsersSala(salaId: Long):List<UserSalaDto>
 

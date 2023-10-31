@@ -112,7 +112,7 @@ class ComposeScreens(
     val salaComplete: SalaComplete,
     val filterSalas:FilterSalas,
     val chatGrupo: ChatGrupo,
-    val myChats:MyChats,
+    val chats:MyChats,
     val createSala: CreateSala,
     val settings:Setting,
     val favorites:Favorites,

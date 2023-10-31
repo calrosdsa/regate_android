@@ -21,7 +21,8 @@ data class GrupoDto(
     val messages_count:Int = 0,
     val members:Int = 0,
     val isMyGroup:Boolean = false,
-    val grupo_request_estado: Int = GrupoRequestEstado.NONE.ordinal
+    val grupo_request_estado: Int = GrupoRequestEstado.NONE.ordinal,
+    val chat_id:Long = 0
 )
 
 enum class GrupoVisibility {

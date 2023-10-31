@@ -2,7 +2,6 @@ package app.regate.home.nav
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -16,7 +15,7 @@ import app.regate.home.animatedComposableVariant
 import app.regate.home.uri
 
 @ExperimentalAnimationApi
-internal fun NavGraphBuilder.SalaRoutes(
+internal fun NavGraphBuilder.SalaRoutes (
     composeScreens: ComposeScreens,
     navController: NavController,
 //    navigateToMap:()->Unit
@@ -57,7 +56,7 @@ internal fun NavGraphBuilder.SalaRoutes(
             navigateToInstalacion = {navController.navigate(Route.INSTALACION id it)},
             navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
             navigateToComplete = {navController.navigate(Route.SALA_COMPLETE id it)},
-            navigateToSelectGroup = {navController.navigate(Route.MY_GROUPS + "?data=${it}")},
+            navigateToSelectGroup = {navController.navigate(Route.MY_CHATS + "?data=${it}")},
             navController = navController
         )
     }

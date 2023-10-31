@@ -30,7 +30,7 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
 
-typealias UserSalas= @Composable (
+typealias UserSalas = @Composable (
     navigateToSala:(Long,String)->Unit,
 ) -> Unit
 

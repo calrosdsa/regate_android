@@ -28,12 +28,10 @@ import app.regate.data.grupo.GrupoRepository
 import app.regate.data.instalacion.CupoRepository
 import app.regate.data.labels.LabelRepository
 import app.regate.domain.observers.ObserveAuthState
-import app.regate.domain.observers.grupo.ObserveGrupo
 import app.regate.domain.observers.pagination.ObservePagerMessages
 import app.regate.domain.observers.account.ObserveUser
 import app.regate.domain.observers.chat.ObserveChat
 import app.regate.domain.observers.chat.ObserveUsersForChat
-import app.regate.domain.observers.grupo.ObserveUsersGrupo
 import app.regate.extensions.combine
 import app.regate.models.Emoji
 import app.regate.models.Message
@@ -71,7 +69,6 @@ import me.tatarka.inject.annotations.Inject
 class ChatGrupoViewModel(
     @Assisted savedStateHandle: SavedStateHandle,
     private val client:HttpClient,
-    private val grupoRepository:GrupoRepository,
     private val chatRepository: ChatRepository,
     private val cupoRepository: CupoRepository,
     private val preferences:AppPreferences,
@@ -85,7 +82,7 @@ class ChatGrupoViewModel(
 ):ViewModel() {
 //    private val grupoId2:Long = savedStateHandle["id"]!!
     private val chatId:Long = savedStateHandle["id"]!!
-    private val grupoId:Long = savedStateHandle.get<Long>("grupoId")?:0
+    private val parentId:Long = savedStateHandle.get<Long>("parentId")?:0
     private val typeChat:Int = savedStateHandle.get<Int>("typeChat")?:TypeChat.TYPE_CHAT_GRUPO.ordinal
     private var data = savedStateHandle.get<String>("data")?:""
     private val loadingState = ObservableLoadingCounter()
@@ -124,7 +121,7 @@ class ChatGrupoViewModel(
         observeUser(Unit)
         observeAuthState(Unit)
         observeChat(ObserveChat.Params(id = chatId))
-        observeUsers(ObserveUsersForChat.Params(id = grupoId,typeChat = typeChat))
+        observeUsers(ObserveUsersForChat.Params(id = parentId,typeChat = typeChat))
         pagingInteractor(ObservePagerMessages.Params(PAGING_CONFIG,chatId))
         viewModelScope.launch {
             chatRepository.observeMessages(chatId).collectLatest {
@@ -134,14 +131,14 @@ class ChatGrupoViewModel(
             }
         }
         viewModelScope.launch {
-            observeUser.flow.collect{user ->
+            observeUser.flow.collectLatest{user ->
                 try{
                     if(user.profile_id != 0L){
+                    Log.d("DEBUG_APP_DATA_2",data)
+                    sendSharedMessage(user.profile_id)
+                    Log.d("DEBUG_APP_USER",user.toString())
                         startWs(user.profile_id)
                     }
-                    delay(100)
-                    sendSharedMessage()
-                    Log.d("DEBUG_APP_USER",user.toString())
                 }catch(e:Exception){
                     Log.d("DEBUG_APP",e.localizedMessage?:"")
                 }
@@ -191,7 +188,6 @@ class ChatGrupoViewModel(
                     when (event.type) {
                         MessageEventType.EventTypeMessage -> {
                             try {
-
                             Log.d("DEBUG_APP_MESSAGE_PAYLOAD", message.readText())
                             val payload = Json.decodeFromString<GrupoMessageDto>(event.payload)
                             chatRepository.updateOrSaveMessage(payload, true)
@@ -229,7 +225,7 @@ class ChatGrupoViewModel(
     }
 //    @SuppressLint("SuspiciousIndentation")
 //    suspend fun DefaultClientWebSocketSession.outputMessage(){
-    private suspend fun outputMessage(data:Message){
+    private suspend fun outputMessage(data:Message,isShare:Boolean){
             if (data.content == "" && data.data == null) return
             try{
                 state.value.user?.let {
@@ -252,7 +248,11 @@ class ChatGrupoViewModel(
                         type_chat = typeChat
                     )
                     Log.d("DEBUG_APP_DATA",event.toString())
+                    if(isShare){
+                        chatRepository.publishSharedMessage(event)
+                    }else {
                    chatRepository.publishMessage(event)
+                    }
                 }
             }catch(e:Exception){
                 Log.d("DEBUG_APP",e.toString())
@@ -263,7 +263,7 @@ class ChatGrupoViewModel(
         viewModelScope.launch {
             try {
                 chatRepository.updateUnreadMessages(chatId)
-                grupoRepository.getUsersGroup(grupoId)
+                chatRepository.getUsers(parentId,typeChat)
                 chatRepository.getDeletedMessages(chatId)
 //                grupoRepository.getMessagesGrupo(grupoId)
             }catch(e:SerializationException){
@@ -273,41 +273,41 @@ class ChatGrupoViewModel(
             }
         }
     }
-    private fun sendSharedMessage(){
+    private fun sendSharedMessage(profileId:Long){
         try {
-            if(data.isBlank()) return
             Log.d("DEBUG_APP_DATA",data)
+            if(data.isBlank()) return
             val grupoMessageData = Json.decodeFromString<GrupoMessageData>(data)
             val message = MessageData(
                 data = grupoMessageData.data,
                 content = grupoMessageData.content,
-                type_message = grupoMessageData.type_data
+                type_message = grupoMessageData.type_data,
             )
-            sendMessage(message,{})
+            sendMessage(message,{},profileId,true)
         }catch (e:Exception){
             //todo()
         }
     }
 
-    fun sendMessage(messageData: MessageData,animateScroll:()->Unit){
+    fun sendMessage(messageData: MessageData,animateScroll:()->Unit,profileId: Long=0,isShare:Boolean =false){
         viewModelScope.launch {
             val message =  Message(
                 content = messageData.content,
                 reply_to = messageData.reply_to,
-                profile_id = state.value.user?.profile_id?:0,
+                profile_id = if(profileId != 0L) profileId else state.value.user?.profile_id?:0,
                 created_at = Clock.System.now(),
                 chat_id = chatId,
                 id = getLongUuid(),
                 type_message = messageData.type_message,
                 data = messageData.data,
                 readed = true,
-                parent_id = grupoId,
+                parent_id = parentId,
                 is_user = typeChat == TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal
             )
             val res = async { chatRepository.saveMessageLocal(message) }
             res.await()
             animateScroll()
-            outputMessage(message)
+            outputMessage(message,isShare)
 
         }
     }

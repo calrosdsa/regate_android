@@ -63,7 +63,7 @@ import kotlinx.datetime.Instant
 
 
 @Composable
-internal fun ChatsUser(
+internal fun ChatsUser (
     lazyPagingItems: LazyPagingItems<Chat>,
     formatShortRelativeTime:(Instant)->String,
     navigateToChat: (id: Long,grupoId:Long,typeChat:Int) -> Unit,

@@ -33,7 +33,7 @@ object Route {
     const val AUTH_DIALOG = "auth_dialog"
     const val MAP = "map"
     const val CHAT_GRUPO = "chat_grupo"
-    const val MY_GROUPS = "my_groups"
+    const val MY_CHATS = "my_groups"
     const val CHAT_SALA = "chat_sala"
 
     const val SETTING = "setting"

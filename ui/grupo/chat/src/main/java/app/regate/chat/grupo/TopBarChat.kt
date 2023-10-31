@@ -29,7 +29,7 @@ import app.regate.models.chat.Chat
 
 
 @Composable
-fun TopBarChat (
+fun TopBarChat(
     navigateUp:()->Unit,
     chat:Chat?,
 //    navigateTocreateSala:(id:Long)->Unit,

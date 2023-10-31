@@ -6,10 +6,15 @@ import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.MessageInboxDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
+import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
+import app.regate.data.daos.UserGrupoDao
+import app.regate.data.daos.UserRoomDao
 import app.regate.data.dto.chat.DeleteMessageRequest
 import app.regate.data.dto.chat.MessagePublishRequest
 import app.regate.data.dto.chat.RequestChatUnreadMessages
+import app.regate.data.dto.chat.RequestUserGroupAndRoom
+import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.conversation.Conversation
 import app.regate.data.dto.empresa.conversation.ConversationId
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
@@ -22,6 +27,9 @@ import app.regate.models.Grupo
 import app.regate.models.Message
 import app.regate.models.MessageInbox
 import app.regate.models.MyGroups
+import app.regate.models.Profile
+import app.regate.models.UserGrupo
+import app.regate.models.UserRoom
 import app.regate.models.chat.Chat
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
@@ -42,10 +50,81 @@ class ChatRepository(
     private val messageMapper:MessageDtoToMessage,
     private val messageMapperDto: MessageToMessageDto,
     private val grupoDao: GrupoDao,
-    private val myGrupoDao: MyGroupsDao
+    private val myGrupoDao: MyGroupsDao,
+    private val userGrupoDao: UserGrupoDao,
+    private val userRoomDao: UserRoomDao,
+    private val profileDao: ProfileDao
 ) {
     fun observeMessages(id: Long): Flow<List<MessageProfile>> {
         return messageProfileDao.getMessages(id)
+    }
+
+    suspend fun getUsers(parentId:Long,typeChat: Int){
+        withContext(dispatchers.io){
+            try{
+                val d = RequestUserGroupAndRoom(
+                    type_chat = typeChat,
+                    parent_id = parentId
+                )
+                when(typeChat){
+                    TypeChat.TYPE_CHAT_GRUPO.ordinal ->{
+                        val actives = userGrupoDao.getUsersCount(false,parentId)
+                        val inactives = userGrupoDao.getUsersCount(true,parentId)
+                        val res = chatDataSourceImpl.getUsers(d.copy(active_users_count = actives, inactive_users_count = inactives))
+                        res?.let { users->
+                            val profiles = users.map {user->
+                                Profile(
+                                    nombre = user.nombre,
+                                    apellido = user.apellido,
+                                    profile_photo = user.profile_photo,
+                                    id = user.profile_id
+                                )
+                            }
+                            val usersGroup = users.map {user->
+                                UserGrupo(
+                                    id = user.id,
+                                    profile_id = user.profile_id,
+                                    grupo_id = parentId,
+                                    is_admin = user.is_admin,
+                                    is_out = user.is_out
+                                )
+                            }
+                            profileDao.upsertAll(profiles)
+                            userGrupoDao.upsertAll(usersGroup)
+                        }
+                    }
+                    TypeChat.TYPE_CHAT_SALA.ordinal ->{
+                        val actives = userRoomDao.getUsersCount(false,parentId)
+                        val inactives = userRoomDao.getUsersCount(true,parentId)
+                        val res = chatDataSourceImpl.getUsers(d.copy(active_users_count = actives, inactive_users_count = inactives))
+                        res?.let { users->
+                            val profiles = users.map {user->
+                                Profile(
+                                    nombre = user.nombre,
+                                    apellido = user.apellido,
+                                    profile_photo = user.profile_photo,
+                                    id = user.profile_id
+                                )
+                            }
+                            val usersRoom = users.map {user->
+                                UserRoom(
+                                    id = user.id,
+                                    profile_id = user.profile_id,
+                                    sala_id = parentId,
+                                    is_admin = user.is_admin,
+                                    is_out = user.is_out
+                                )
+                            }
+                            profileDao.upsertAll(profiles)
+                            userRoomDao.upsertAll(usersRoom)
+                        }
+                    }
+                        else ->{}
+                }
+            }catch (e:Exception){
+                throw e
+            }
+        }
     }
 
     suspend fun getChatUnreadMessages(chatId: Long, typeChat: Int) {
@@ -63,7 +142,7 @@ class ChatRepository(
                 d = d.copy(last_update_chat = chat.updated_at)
             }
             chatDataSourceImpl.getchatUnreadMessages(d).also { result ->
-                val messages = result.map { messageMapper.map(it) }
+                val messages = result.map { messageMapper.map(it).copy(readed = true) }
                 messageProfileDao.insertAllonConflictIgnore(messages)
             }
         } catch (e: Exception) {
@@ -132,7 +211,13 @@ class ChatRepository(
     }
 
     suspend fun saveMessageLocal(data: Message) {
-        messageProfileDao.upsert(data)
+        withContext(dispatchers.io){
+            try{
+                messageProfileDao.upsert(data)
+            }catch (e:Exception){
+                throw e
+            }
+        }
     }
 
     suspend fun getConversations(): List<Conversation> {
@@ -228,14 +313,24 @@ class ChatRepository(
         }
     }
 
+    suspend fun publishSharedMessage(data: MessagePublishRequest) {
+        withContext(dispatchers.io) {
+            try {
+                val res = chatDataSourceImpl.publishMessage(data)
+                messageProfileDao.updatedPrimaryKey(data.message.local_id,res.id)
+            } catch (e: Exception) {
+                throw e
+            }
+        }
+    }
     suspend fun publishMessage(data: MessagePublishRequest) {
-        chatDataSourceImpl.publishMessage(data)
-//        try{
-//            val res = chatDataSourceImpl.publishMessage(data)
-//            messageProfileDao.updatedPrimaryKey(data.message.id,res.id)
-//        }catch (e:Exception){
-//            throw e
-//        }
+        withContext(dispatchers.io) {
+            try {
+                chatDataSourceImpl.publishMessage(data)
+            } catch (e: Exception) {
+                throw e
+            }
+        }
 
     }
     suspend fun getDeletedMessages(id:Long){

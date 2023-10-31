@@ -17,7 +17,7 @@ import kotlinx.datetime.Instant
 import kotlin.time.Duration.Companion.minutes
 
 @Composable
-internal fun InstalacionSelected (
+internal fun InstalacionSelected(
     instalacionCupos:InstalacionCupos?,
     formatDate:(Instant)->String,
     formatShortTime:(Instant)->String,

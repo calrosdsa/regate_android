@@ -23,5 +23,6 @@ data class UserRoom(
     override val id: Long = 0,
     val profile_id:Long,
     val sala_id:Long,
-    val is_admin:Boolean = false
+    val is_admin:Boolean = false,
+    val is_out:Boolean = false
 ):AppEntity

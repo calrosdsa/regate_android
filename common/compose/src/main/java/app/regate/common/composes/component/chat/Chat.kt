@@ -190,69 +190,7 @@ fun Chat (
                                     selectedMessage = selectedMessage.value,
                                 )
                         }
-//                    } else {
-//                        SwipeableActionsBox(
-//                            startActions = listOf(SwipeAction(
-//                                icon = rememberVectorPainter(image = Icons.Default.Reply),
-//                                background = Color.Transparent,
-//                                onSwipe = {
-//                                    setReply(null)
-//                                    setReply(ReplyMessageData(
-//                                        nombre = item.profile?.nombre?:"",
-//                                        apellido = item.profile?.apellido,
-//                                        content = item.message.content,
-//                                        id = item.message.id,
-//                                        type_message = item.message.type_message,
-//                                        data = item.message.data
-//                                    ))
-//                                }
-//                            )),
-//                            swipeThreshold = 100.dp,
-//                            backgroundUntilSwipeThreshold = Color.Transparent,
-//                            modifier = Modifier
-//                                .padding(horizontal = Layout.bodyMargin)
-//                                .fillMaxWidth(),
-//                        ) {
-//                            MessageComponent(
-//                                item = item,
-//                                scrollToItem = {
-//                                    coroutineScope.launch {
-//                                        try {
-//
-//                                            items.forEachIndexed { index, messageProfile ->
-//                                                if (messageProfile.message.id == item.message.reply_to) {
-//                                                    lazyListState.scrollToItem(index)
-//                                                    selectedMessage.value =
-//                                                        messageProfile.message.id
-//                                                    return@launch
-//                                                }
-//                                            }
-//                                        } catch (e: Exception) {
-//                                            Log.d(
-//                                                "DEBUG_LIST",
-//                                                e.localizedMessage ?: ""
-//                                            )
-//                                        }
-//                                    }
-//                                },
-//                                selectMessage = selectMessage,
-//                                formatterRelatimeTime = formatterRelatimeTime,
-//                                formatShortDate = formatShortDate,
-//                                formatShortTime = formatShortTime,
-//                                formatShortTimeFromString = formatShortTimeFromString,
-//                                formatShortDateFromString = formatShortDateFromString,
-//                                navigateToInstalacionReserva = navigateToInstalacionReserva,
-//                                getUserProfileGrupoAndSala = getUserProfileGrupoAndSala,
-//                                openLink = openLink,
-//                                copyMessage = copyMessage,
-//                                typeOfChat = typeOfChat,
-//                                navigateToSala = navigateToSala,
-//                                isUserExist = isUserExists,
-//                                selectedMessage = selectedMessage.value
-//                            )
-//                        }
-//
-//                    }
+
                     Spacer(modifier = Modifier.height(10.dp))
                     if (checkIsLast(
                             item.message.created_at.toLocalDateTime(TimeZone.UTC).date,

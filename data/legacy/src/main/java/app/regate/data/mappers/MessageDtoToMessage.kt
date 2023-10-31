@@ -20,7 +20,8 @@ class MessageDtoToMessage:Mapper<GrupoMessageDto,Message> {
             parent_id = from.parent_id,
             sended = true,
             readed = false,
-            is_deleted = from.is_deleted
+            is_deleted = from.is_deleted,
+            is_user = from.is_user
         )
     }
 }

@@ -12,7 +12,7 @@ import app.regate.constant.id
 import app.regate.home.animatedComposable
 
 @ExperimentalAnimationApi
-internal fun NavGraphBuilder.AccountRoutes (
+internal fun NavGraphBuilder.AccountRoutes(
     composeScreens: ComposeScreens,
     navController: NavController,
 //    navigateToMap:()->Unit

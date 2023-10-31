@@ -439,6 +439,79 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
   }
 
   @Override
+  public Instalacion getInstalacion(final long id) {
+    final String _sql = "select * from instalaciones where id = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, id);
+    __db.assertNotSuspendingTransaction();
+    final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+    try {
+      final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+      final int _cursorIndexOfCantidadPersonas = CursorUtil.getColumnIndexOrThrow(_cursor, "cantidad_personas");
+      final int _cursorIndexOfCategoryId = CursorUtil.getColumnIndexOrThrow(_cursor, "category_id");
+      final int _cursorIndexOfCategoryName = CursorUtil.getColumnIndexOrThrow(_cursor, "category_name");
+      final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
+      final int _cursorIndexOfEstablecimientoId = CursorUtil.getColumnIndexOrThrow(_cursor, "establecimiento_id");
+      final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+      final int _cursorIndexOfPrecioHora = CursorUtil.getColumnIndexOrThrow(_cursor, "precio_hora");
+      final int _cursorIndexOfPortada = CursorUtil.getColumnIndexOrThrow(_cursor, "portada");
+      final Instalacion _result;
+      if (_cursor.moveToFirst()) {
+        final long _tmpId;
+        _tmpId = _cursor.getLong(_cursorIndexOfId);
+        final Integer _tmpCantidad_personas;
+        if (_cursor.isNull(_cursorIndexOfCantidadPersonas)) {
+          _tmpCantidad_personas = null;
+        } else {
+          _tmpCantidad_personas = _cursor.getInt(_cursorIndexOfCantidadPersonas);
+        }
+        final Integer _tmpCategory_id;
+        if (_cursor.isNull(_cursorIndexOfCategoryId)) {
+          _tmpCategory_id = null;
+        } else {
+          _tmpCategory_id = _cursor.getInt(_cursorIndexOfCategoryId);
+        }
+        final String _tmpCategory_name;
+        if (_cursor.isNull(_cursorIndexOfCategoryName)) {
+          _tmpCategory_name = null;
+        } else {
+          _tmpCategory_name = _cursor.getString(_cursorIndexOfCategoryName);
+        }
+        final String _tmpDescription;
+        if (_cursor.isNull(_cursorIndexOfDescription)) {
+          _tmpDescription = null;
+        } else {
+          _tmpDescription = _cursor.getString(_cursorIndexOfDescription);
+        }
+        final long _tmpEstablecimiento_id;
+        _tmpEstablecimiento_id = _cursor.getLong(_cursorIndexOfEstablecimientoId);
+        final String _tmpName;
+        _tmpName = _cursor.getString(_cursorIndexOfName);
+        final Integer _tmpPrecio_hora;
+        if (_cursor.isNull(_cursorIndexOfPrecioHora)) {
+          _tmpPrecio_hora = null;
+        } else {
+          _tmpPrecio_hora = _cursor.getInt(_cursorIndexOfPrecioHora);
+        }
+        final String _tmpPortada;
+        if (_cursor.isNull(_cursorIndexOfPortada)) {
+          _tmpPortada = null;
+        } else {
+          _tmpPortada = _cursor.getString(_cursorIndexOfPortada);
+        }
+        _result = new Instalacion(_tmpId,_tmpCantidad_personas,_tmpCategory_id,_tmpCategory_name,_tmpDescription,_tmpEstablecimiento_id,_tmpName,_tmpPrecio_hora,_tmpPortada);
+      } else {
+        _result = null;
+      }
+      return _result;
+    } finally {
+      _cursor.close();
+      _statement.release();
+    }
+  }
+
+  @Override
   public Flow<List<Instalacion>> observeInstalaciones(final long id) {
     final String _sql = "SELECT * FROM instalaciones WHERE establecimiento_id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);

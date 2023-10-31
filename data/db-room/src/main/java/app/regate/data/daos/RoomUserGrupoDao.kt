@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 abstract class RoomUserGrupoDao:UserGrupoDao,RoomEntityDao<UserGrupo> {
     @Transaction
     @Query("""
-        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.id as id from user_grupo as ug
+        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.is_out,ug.id as id from user_grupo as ug
         inner join profiles as p on p.id = ug.profile_id
         where ug.grupo_id = :id
     """)
@@ -19,12 +19,13 @@ abstract class RoomUserGrupoDao:UserGrupoDao,RoomEntityDao<UserGrupo> {
 
     @Transaction
     @Query("""
-        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ur.is_admin,ur.id as id from user_room as ur
+        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ur.is_admin,ur.is_out,ur.id as id from user_room as ur
         inner join profiles as p on p.id = ur.profile_id
         where ur.sala_id = :id
     """)
     abstract override fun observeUsersRoom(id: Long): Flow<List<UserProfileGrupoAndSala>>
-
+    @Query("select count(*) from user_grupo where grupo_id = :grupoId and is_out = :isOut ")
+    abstract override suspend fun getUsersCount(isOut: Boolean, grupoId: Long): Int
     @Query("DELETE FROM user_grupo where grupo_id = :id")
     abstract override suspend fun deleteUsers(id:Long)
 

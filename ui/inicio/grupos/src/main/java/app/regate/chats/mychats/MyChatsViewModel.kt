@@ -10,9 +10,13 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import app.cash.paging.cachedIn
 import app.regate.api.UiMessageManager
+import app.regate.data.chat.ChatRepository
+import app.regate.data.dto.chat.MessagePublishRequest
+import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.GrupoMessageData
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.grupo.GrupoRepository
+import app.regate.data.mappers.MessageDtoToMessage
 import app.regate.domain.observers.account.ObserveUser
 import app.regate.domain.observers.chat.ObservePagerChat
 import app.regate.domain.observers.grupo.ObserveUserGroups
@@ -40,6 +44,8 @@ class MyChatsViewModel(
     observeGrupos: ObserveUserGroups,
     observeUser: ObserveUser,
     private val grupoRepository: GrupoRepository,
+    private val chatRepository: ChatRepository,
+    private val messageDtoToMessage: MessageDtoToMessage,
     pagingInteractor: ObservePagerChat,
 //    private val updateFilterGrupos: UpdateFilterGrupos
 ):ViewModel() {
@@ -108,46 +114,49 @@ class MyChatsViewModel(
         }
     }
 
-    fun navigateToGroupChat(groupId: Long,context:Context,content:String,navigate: (Long, String) -> Unit,
-    navigateUp:()->Unit) {
-        try {
-            if (data.isNotBlank()) {
-                val grupoMessageData = Json.decodeFromString<GrupoMessageData>(data)
-                val newData = Json.encodeToString(grupoMessageData.copy(content = content))
-                if (selectedChats.value.size > 1) {
-                    val messages = mutableListOf<GrupoMessageDto>()
-                    selectedChats.value.map { grupo->
-                        val message = state.value.user?.let {
-                            GrupoMessageDto(
-                                id = getLongUuid(),
-                                content = content,
-                                data = grupoMessageData.data,
-                                type_message = grupoMessageData.type_data,
-                                created_at = now(),
-                                chat_id = grupo.id,
-                                profile_id = it.profile_id
-                            )
+    fun navigateToGroupChat(groupId: Long,context:Context,content:String,parentId:Long,
+    typeChat: Int,navigate: (Long,Long,String,Int) -> Unit) {
+        viewModelScope.launch {
+            try {
+                if (data.isNotBlank()) {
+                    val grupoMessageData = Json.decodeFromString<GrupoMessageData>(data)
+                    val newData = Json.encodeToString(grupoMessageData.copy(content = content))
+                    if (selectedChats.value.size > 1) {
+                        selectedChats.value.map { chat ->
+                            val message = state.value.user?.let {
+                                GrupoMessageDto(
+                                    local_id = getLongUuid(),
+                                    content = content,
+                                    data = grupoMessageData.data,
+                                    type_message = grupoMessageData.type_data,
+                                    created_at = now(),
+                                    chat_id = chat.id,
+                                    profile_id = it.profile_id,
+                                    parent_id = chat.parent_id,
+                                    is_user = typeChat == TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal
+                                )
+                            }
+                            if (message != null) {
+                                val messagePublish = MessagePublishRequest(
+                                    message = message,
+                                    type_chat = chat.type_chat,
+                                    chat_id = chat.id
+                                )
+                                chatRepository.saveMessageLocal(messageDtoToMessage.map(message).copy(readed = true, id = message.local_id))
+                                chatRepository.publishSharedMessage(messagePublish)
+                            }
                         }
-                        if (message != null) {
-                            messages.add(message)
-                        }
+                        Toast.makeText(context, "Mensages enviados...", Toast.LENGTH_SHORT)
+                            .show()
+                        selectedChats.emit(emptyList())
+                    } else {
+                        Log.d("DEBUG_APP_DATA",newData)
+                        navigate(groupId,parentId,newData,typeChat)
                     }
-                    viewModelScope.launch {
-                        try {
-                            grupoRepository.sendShareMessage(messages)
-                            Toast.makeText(context,"Mensages enviados...",Toast.LENGTH_SHORT).show()
-                            delay(2000)
-                            navigateUp()
-                        } catch (e: Exception) {
-                            Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")
-                        }
-                    }
-                } else {
-                    navigate(groupId, newData)
                 }
+            } catch (e: Exception) {
+                Log.d("DEBUG_APP", e.localizedMessage ?: "")
             }
-        } catch (e: Exception) {
-            Log.d("DEBUG_APP", e.localizedMessage ?: "")
         }
     }
     fun getData():String{

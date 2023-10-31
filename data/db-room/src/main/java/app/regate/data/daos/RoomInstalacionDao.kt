@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class RoomInstalacionDao: InstalacionDao,RoomEntityDao<Instalacion> {
+    @Query("select * from instalaciones where id = :id")
+    abstract override fun getInstalacion(id: Long): Instalacion?
     @Transaction
     @Query("SELECT * FROM instalaciones WHERE establecimiento_id = :id")
     abstract override fun observeInstalaciones(id:Long): Flow<List<Instalacion>>

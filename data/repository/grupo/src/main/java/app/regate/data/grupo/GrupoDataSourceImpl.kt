@@ -137,9 +137,6 @@ class GrupoDataSourceImpl(
             setBody(d)
         }.body()
     }
-    override suspend fun getMessagesGrupo(id: Long,page:Int): PaginationGroupMessages {
-        return client.get("/v1/grupo/messages/${id}/?page=${page}").body()
-    }
 
     override suspend fun getGrupoDetail(id: Long):GrupoResponse {
         return client.get("/v1/grupo/detail/${id}/").body()

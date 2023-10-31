@@ -49,7 +49,7 @@ import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias Grupos= @Composable (
+typealias Grupos = @Composable (
     navController: NavController,
     filterGroups:@Composable () -> Unit,
     userSalas:@Composable () -> Unit,
@@ -140,8 +140,8 @@ internal fun Grupos(
 //                    modifier = Modifier,
                     lazyPagingItems = viewModel.pagedList.collectAsLazyPagingItems(),
                     formatShortRelativeTime = formatShortRelativeTime,
-                    navigateToChat = {id,grupoId,type->
-                        navController.navigate(Route.CHAT_GRUPO + "?id=$id&grupoId=$grupoId&typeChat=$type") },
+                    navigateToChat = {id,parentId,type->
+                        navController.navigate(Route.CHAT_GRUPO + "?id=$id&parentId=$parentId&typeChat=$type") },
 //                    navigateToEstablecimientoInbox = { establecimientoId:Long,conversationId:Long->
 //                        navController.navigate(Route.CONVERSATION  id conversationId id establecimientoId)
 //                    },

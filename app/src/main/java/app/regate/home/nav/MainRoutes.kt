@@ -9,6 +9,7 @@ import androidx.navigation.navDeepLink
 import app.regate.ComposeScreens
 import app.regate.constant.Route
 import app.regate.constant.id
+import app.regate.home.animatedComposable
 import app.regate.home.uri
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.navigation
@@ -16,7 +17,7 @@ import com.google.accompanist.navigation.animation.navigation
 
 @ExperimentalAnimationApi
 //@Composable
-fun NavGraphBuilder.AddMainNav(
+fun NavGraphBuilder.AddMainNav (
     composeScreens: ComposeScreens,
     navController: NavController,
 //    navigateToMap:()->Unit
@@ -80,6 +81,19 @@ fun NavGraphBuilder.AddMainNav(
                 },
                 uuid = uuid
             )}
+
+
+        animatedComposable(
+            route = Route.MY_CHATS + "?data={data}",
+            arguments = listOf(
+                navArgument("data") { type = NavType.StringType;defaultValue ="" },
+            ),
+        ) {
+            composeScreens.chats(
+                navController = navController
+            )
+        }
+
 
 //        composable(route= Route.ACTIVITIES){
 //            composeScreens.actividades(navController = navController)

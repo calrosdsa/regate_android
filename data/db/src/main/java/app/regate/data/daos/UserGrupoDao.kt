@@ -9,7 +9,7 @@ interface UserGrupoDao:EntityDao<UserGrupo> {
     suspend fun deleteUsers(id:Long)
     suspend fun deleteUserGroup(id:Long)
     suspend fun deleteUsersGroup(groupId:Long)
-
     suspend fun updateUser(id:Long,status:Boolean)
+    suspend fun getUsersCount(isOut:Boolean,grupoId:Long):Int
     fun observeUsersRoom(id:Long): Flow<List<UserProfileGrupoAndSala>>
 }

@@ -1,6 +1,7 @@
 package app.regate.data.daos;
 
 import android.database.Cursor;
+import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityDeletionOrUpdateAdapter;
@@ -55,7 +56,7 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT OR IGNORE INTO `user_grupo` (`id`,`profile_id`,`grupo_id`,`is_admin`) VALUES (nullif(?, 0),?,?,?)";
+        return "INSERT OR IGNORE INTO `user_grupo` (`id`,`profile_id`,`grupo_id`,`is_admin`,`is_out`) VALUES (nullif(?, 0),?,?,?,?)";
       }
 
       @Override
@@ -66,6 +67,8 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
         statement.bindLong(3, entity.getGrupo_id());
         final int _tmp = entity.is_admin() ? 1 : 0;
         statement.bindLong(4, _tmp);
+        final int _tmp_1 = entity.is_out() ? 1 : 0;
+        statement.bindLong(5, _tmp_1);
       }
     };
     this.__deletionAdapterOfUserGrupo = new EntityDeletionOrUpdateAdapter<UserGrupo>(__db) {
@@ -85,7 +88,7 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `user_grupo` SET `id` = ?,`profile_id` = ?,`grupo_id` = ?,`is_admin` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `user_grupo` SET `id` = ?,`profile_id` = ?,`grupo_id` = ?,`is_admin` = ?,`is_out` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -96,7 +99,9 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
         statement.bindLong(3, entity.getGrupo_id());
         final int _tmp = entity.is_admin() ? 1 : 0;
         statement.bindLong(4, _tmp);
-        statement.bindLong(5, entity.getId());
+        final int _tmp_1 = entity.is_out() ? 1 : 0;
+        statement.bindLong(5, _tmp_1);
+        statement.bindLong(6, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteUsers = new SharedSQLiteStatement(__db) {
@@ -135,7 +140,7 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `user_grupo` (`id`,`profile_id`,`grupo_id`,`is_admin`) VALUES (nullif(?, 0),?,?,?)";
+        return "INSERT INTO `user_grupo` (`id`,`profile_id`,`grupo_id`,`is_admin`,`is_out`) VALUES (nullif(?, 0),?,?,?,?)";
       }
 
       @Override
@@ -146,12 +151,14 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
         statement.bindLong(3, entity.getGrupo_id());
         final int _tmp = entity.is_admin() ? 1 : 0;
         statement.bindLong(4, _tmp);
+        final int _tmp_1 = entity.is_out() ? 1 : 0;
+        statement.bindLong(5, _tmp_1);
       }
     }, new EntityDeletionOrUpdateAdapter<UserGrupo>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `user_grupo` SET `id` = ?,`profile_id` = ?,`grupo_id` = ?,`is_admin` = ? WHERE `id` = ?";
+        return "UPDATE `user_grupo` SET `id` = ?,`profile_id` = ?,`grupo_id` = ?,`is_admin` = ?,`is_out` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -162,7 +169,9 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
         statement.bindLong(3, entity.getGrupo_id());
         final int _tmp = entity.is_admin() ? 1 : 0;
         statement.bindLong(4, _tmp);
-        statement.bindLong(5, entity.getId());
+        final int _tmp_1 = entity.is_out() ? 1 : 0;
+        statement.bindLong(5, _tmp_1);
+        statement.bindLong(6, entity.getId());
       }
     });
   }
@@ -394,7 +403,7 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
   @Override
   public Flow<List<UserProfileGrupoAndSala>> observeUsersGrupo(final long id) {
     final String _sql = "\n"
-            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.id as id from user_grupo as ug\n"
+            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.is_out,ug.id as id from user_grupo as ug\n"
             + "        inner join profiles as p on p.id = ug.profile_id\n"
             + "        where ug.grupo_id = ?\n"
             + "    ";
@@ -415,7 +424,8 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
             final int _cursorIndexOfApellido = 2;
             final int _cursorIndexOfProfilePhoto = 3;
             final int _cursorIndexOfIsAdmin = 4;
-            final int _cursorIndexOfId = 5;
+            final int _cursorIndexOfIsOut = 5;
+            final int _cursorIndexOfId = 6;
             final List<UserProfileGrupoAndSala> _result = new ArrayList<UserProfileGrupoAndSala>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final UserProfileGrupoAndSala _item;
@@ -439,9 +449,13 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
               final int _tmp;
               _tmp = _cursor.getInt(_cursorIndexOfIsAdmin);
               _tmpIs_admin = _tmp != 0;
+              final boolean _tmpIs_out;
+              final int _tmp_1;
+              _tmp_1 = _cursor.getInt(_cursorIndexOfIsOut);
+              _tmpIs_out = _tmp_1 != 0;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              _item = new UserProfileGrupoAndSala(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpId);
+              _item = new UserProfileGrupoAndSala(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpIs_out,_tmpId);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -462,9 +476,43 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
   }
 
   @Override
+  public Object getUsersCount(final boolean isOut, final long grupoId,
+      final Continuation<? super Integer> continuation) {
+    final String _sql = "select count(*) from user_grupo where grupo_id = ? and is_out = ? ";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, grupoId);
+    _argIndex = 2;
+    final int _tmp = isOut ? 1 : 0;
+    _statement.bindLong(_argIndex, _tmp);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Integer>() {
+      @Override
+      @NonNull
+      public Integer call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final Integer _result;
+          if (_cursor.moveToFirst()) {
+            final int _tmp_1;
+            _tmp_1 = _cursor.getInt(0);
+            _result = _tmp_1;
+          } else {
+            _result = 0;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
   public Flow<List<UserProfileGrupoAndSala>> observeUsersRoom(final long id) {
     final String _sql = "\n"
-            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ur.is_admin,ur.id as id from user_room as ur\n"
+            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ur.is_admin,ur.is_out,ur.id as id from user_room as ur\n"
             + "        inner join profiles as p on p.id = ur.profile_id\n"
             + "        where ur.sala_id = ?\n"
             + "    ";
@@ -485,7 +533,8 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
             final int _cursorIndexOfApellido = 2;
             final int _cursorIndexOfProfilePhoto = 3;
             final int _cursorIndexOfIsAdmin = 4;
-            final int _cursorIndexOfId = 5;
+            final int _cursorIndexOfIsOut = 5;
+            final int _cursorIndexOfId = 6;
             final List<UserProfileGrupoAndSala> _result = new ArrayList<UserProfileGrupoAndSala>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final UserProfileGrupoAndSala _item;
@@ -509,9 +558,13 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
               final int _tmp;
               _tmp = _cursor.getInt(_cursorIndexOfIsAdmin);
               _tmpIs_admin = _tmp != 0;
+              final boolean _tmpIs_out;
+              final int _tmp_1;
+              _tmp_1 = _cursor.getInt(_cursorIndexOfIsOut);
+              _tmpIs_out = _tmp_1 != 0;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              _item = new UserProfileGrupoAndSala(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpId);
+              _item = new UserProfileGrupoAndSala(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpIs_out,_tmpId);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();

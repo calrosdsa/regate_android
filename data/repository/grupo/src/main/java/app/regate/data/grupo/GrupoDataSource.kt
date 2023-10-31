@@ -25,7 +25,6 @@ interface GrupoDataSource {
    suspend fun filterGrupos(d:FilterGrupoData,page:Int):PaginationGroupsResponse
    suspend fun getGrupoDetail(id:Long):GrupoResponse
    suspend fun getGrupo(id:Long):GrupoDto
-   suspend fun getMessagesGrupo(id:Long,page:Int):PaginationGroupMessages
    suspend fun joinGrupo(d:AddUserGrupoRequest): ResponseMessage
    suspend fun getUsersGrupo(id:Long):List<UserGrupoDto>
    suspend fun createGroup(d:GroupRequest):GrupoDto

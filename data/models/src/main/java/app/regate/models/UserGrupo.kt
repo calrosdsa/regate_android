@@ -25,5 +25,6 @@ data class UserGrupo(
     override val id: Long = 0,
     val profile_id:Long,
     val grupo_id:Long,
-    val is_admin:Boolean
+    val is_admin:Boolean,
+    val is_out:Boolean = false
 ):AppEntity

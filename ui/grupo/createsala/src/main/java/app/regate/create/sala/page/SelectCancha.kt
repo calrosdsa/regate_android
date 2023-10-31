@@ -18,7 +18,7 @@ import app.regate.compoundmodels.InstalacionCupos
 import kotlinx.datetime.Instant
 
 @Composable
-internal fun Page1 (
+internal fun Page1(
     asunto:String,
     description:String,
     cupos:String,

@@ -87,7 +87,7 @@ import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
 
 
-typealias ChatGrupo  = @Composable (
+typealias ChatGrupo = @Composable (
     navigateUp:()->Unit,
     openAuthBottomSheet:()->Unit,
 //    navigateToCreateSala:(id:Long)->Unit,

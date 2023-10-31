@@ -164,7 +164,7 @@ internal fun AppNavigation(
                     navController.navigate(Route.CONVERSATION id it1 id it2 )
                 },
                 navigateToCreateSala = {navController.navigate(Route.CREAR_SALA id it id 0 id 1)},
-                navigateToSelectGroup = {navController.navigate(Route.MY_GROUPS + "?data=${it}")},
+                navigateToSelectGroup = {navController.navigate(Route.MY_CHATS + "?data=${it}")},
                 navController = navController
             )
         }

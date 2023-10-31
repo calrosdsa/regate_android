@@ -164,11 +164,11 @@ class CreateSalaViewModel(
                         grupo_id = state.value.selectedGroup
                     )
                     Log.d("DEBUG_APP_CUPOS", "SALA DATA $data")
-                    val res = salaRepository.createSala(data)
+                    salaRepository.createSala(data)
                     if( state.value.selectedGroup != 0L){
                     navigateToGroup(state.value.selectedGroup)
                     }
-                    Log.d("DEBUG_APP_CUPOS", "SALA DATA $res")
+//                    Log.d("DEBUG_APP_CUPOS", "SALA DATA $res")
                 }
                 loadingStateDialog.removeLoader()
 
