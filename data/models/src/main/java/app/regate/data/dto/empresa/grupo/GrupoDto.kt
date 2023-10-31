@@ -65,7 +65,7 @@ data class GrupoResponse(
 )
 
 @Serializable
-data class UserGrupoDto(
+data class  UserGrupoDto(
     val nombre: String,
     val apellido: String? = null,
     val profile_id: Long,

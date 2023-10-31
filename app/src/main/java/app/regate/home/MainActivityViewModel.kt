@@ -116,7 +116,7 @@ class MainActivityViewModel(
                               try{
                                   val payload = Json.decodeFromString<IdDto>(data.payload)
                                   chatRepository.updateMessageToDeleted(payload.id)
-                                  Log.d("DEBUG_APP",payload.toString())
+                                  Log.d("DEBUG_APP_DELETE",payload.toString())
                               }catch(e:Exception){
                                   Log.d("DEBUG_APP_ER" , e.localizedMessage?:"")
                               }
