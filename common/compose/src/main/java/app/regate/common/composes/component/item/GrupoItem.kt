@@ -25,7 +25,7 @@ import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
 import app.regate.data.dto.empresa.grupo.GrupoVisibility
 
 @Composable
-fun GrupoItem(
+fun GrupoItem (
     grupo:GrupoDto,
     navigate:(Long)->Unit,
     joinToGroup:(Long,Int)->Unit,

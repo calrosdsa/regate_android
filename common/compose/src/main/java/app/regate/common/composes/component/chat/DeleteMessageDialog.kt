@@ -23,7 +23,7 @@ import app.regate.common.resources.R
 import app.regate.models.account.User
 
 @Composable
-fun DeleteMessageDialog(
+fun DeleteMessageDialog (
     open:Boolean,
     close:()->Unit,
     message:MessageProfile,

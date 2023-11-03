@@ -38,8 +38,8 @@ import app.regate.tasks.TasksComponent
 import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 
-    @Component
-    @ApplicationScope
+@Component
+@ApplicationScope
 abstract class ApplicationComponent(
     @get:Provides val application: Application,
 ):

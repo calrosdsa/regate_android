@@ -21,7 +21,7 @@ import kotlinx.datetime.Instant
 import app.regate.common.resources.R
 
 @Composable
-fun MessageReply(
+fun MessageReply (
     item: MessageProfile,
     scrollToItem:()->Unit,
     getUserProfileGrupoAndSala: (id:Long)-> UserProfileGrupoAndSala?,

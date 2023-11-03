@@ -27,7 +27,7 @@ import kotlin.time.Duration.Companion.minutes
 
 
 @Composable
-fun MessageContent1(
+fun MessageContent1 (
     messageType:Int,
     content:String,
     navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,

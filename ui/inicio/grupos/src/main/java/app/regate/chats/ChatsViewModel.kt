@@ -13,6 +13,7 @@ import app.regate.domain.observers.chat.ObservePagerChat
 import app.regate.models.chat.Chat
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -30,17 +31,20 @@ class ChatsViewModel(
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
+    private val selectedChat = MutableStateFlow<Chat?>(null)
     val pagedList: Flow<PagingData<Chat>> =
         pagingInteractor.flow.cachedIn(viewModelScope)
     val state:StateFlow<ChatsState> = combine(
         loadingCounter.observable,
         uiMessageManager.message,
-        observeAuthState.flow
-    ){loading,message,authState->
+        observeAuthState.flow,
+        selectedChat,
+    ){loading,message,authState,selectedChat->
         ChatsState(
             loading = loading,
             message = message,
-            authState = authState
+            authState = authState,
+            selectedChat = selectedChat
         )
     }.stateIn(
         scope = viewModelScope,
@@ -66,6 +70,24 @@ class ChatsViewModel(
                 chatRepository.getUnreadMessages(1)
             }catch(e:Exception){
                 Log.d("DEBUG_APP_!21",e.localizedMessage?:"")
+            }
+        }
+    }
+
+    fun selectChat(chat:Chat){
+        viewModelScope.launch {
+            selectedChat.emit(chat)
+        }
+    }
+    fun deleteChat(){
+        viewModelScope.launch {
+            try{
+                val chat = selectedChat.value
+                if(chat != null){
+                chatRepository.deleteChat(chat.id)
+                }
+            }catch (e:Exception){
+                Log.d("DEBUG_APP_ERR",e.localizedMessage?:"")
             }
         }
     }

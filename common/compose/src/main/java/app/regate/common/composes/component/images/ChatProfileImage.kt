@@ -10,7 +10,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun ProfileImage (
+fun ProfileImage(
     modifier:Modifier = Modifier,
     profileImage:String? = null,
     contentDescription:String? = null,

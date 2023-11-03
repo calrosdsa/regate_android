@@ -78,6 +78,7 @@ int string count_selected 0x0
 int string create_group 0x0
 int string create_sala 0x0
 int string decline 0x0
+int string delete_chat 0x0
 int string delete_message 0x0
 int string deposits 0x0
 int string description 0x0

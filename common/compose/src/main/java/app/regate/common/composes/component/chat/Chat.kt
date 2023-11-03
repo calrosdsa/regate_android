@@ -1,5 +1,6 @@
 package app.regate.common.composes.component.chat
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -66,6 +67,7 @@ import me.saket.swipe.SwipeableActionsBox
 import java.util.regex.Pattern
 
 
+@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Chat (
@@ -109,9 +111,9 @@ fun Chat (
         return try{
             val isLast =  items
 //                .sortedBy { it.first }
-                .map {
-                    it
-                }
+//                .map {
+//                    it
+//                }
                 .last { it.message.created_at.toLocalDateTime(TimeZone.UTC).date == date }
             isLast.message.id == item.message.id
         }catch(e:Exception){

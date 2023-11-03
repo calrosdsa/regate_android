@@ -9,6 +9,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -16,10 +17,11 @@ import androidx.compose.ui.unit.dp
 import app.regate.common.resources.R
 
 @Composable
-fun CardImage (
+fun CardImage(
     modifier:Modifier = Modifier,
     isUser:Boolean = false,
     src:String? = null,
+    colorFilter: ColorFilter? = null,
     contentDescription:String = "",
     shape:Shape = MaterialTheme.shapes.medium,
     contentScale:ContentScale = ContentScale.Crop,
@@ -35,6 +37,7 @@ fun CardImage (
                 modifier = Modifier.fillMaxSize()
                     .clickable { onClick() },
                 contentScale = contentScale,
+                colorFilter = colorFilter
             )
         }
     }else{
@@ -49,7 +52,8 @@ fun CardImage (
                 Image(
                     painter = painterResource(id = R.drawable.user_profile),
                     contentDescription = contentDescription,
-                    modifier =Modifier.fillMaxSize()
+                    modifier =Modifier.fillMaxSize(),
+                    colorFilter = colorFilter
                 )
             }
         }else{
@@ -58,7 +62,8 @@ fun CardImage (
              Image(
                  painter = painterResource(id = R.drawable.default_image),
                 contentDescription = contentDescription,
-                modifier =Modifier.fillMaxSize().padding(10.dp)
+                modifier =Modifier.fillMaxSize().padding(10.dp),
+                 colorFilter = colorFilter
             )
         }
         }

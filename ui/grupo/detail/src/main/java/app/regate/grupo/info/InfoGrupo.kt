@@ -49,7 +49,7 @@ import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias InfoGrupo = @Composable (
+typealias InfoGrupo= @Composable (
     navigateUp:()->Unit,
     navigateToPhoto:(String)->Unit,
     openAuthBottomSheet:()->Unit,

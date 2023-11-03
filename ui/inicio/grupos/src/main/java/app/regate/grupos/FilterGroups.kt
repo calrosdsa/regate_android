@@ -75,7 +75,7 @@ internal fun FilterGroups(
     navigateToGroup:(id:Long)->Unit,
     lazyPagingItems: LazyPagingItems<GrupoDto>,
     clearMessage:(id:Long)->Unit,
-    joinToGroup: (Long,Int)->Unit,
+    joinToGroup: (Long,Int,GrupoDto)->Unit,
     navigateToInfoGrupo: (id: Long) -> Unit,
     openAuthBottomSheet: () -> Unit
 //    modifier: Modifier = Modifier
@@ -107,7 +107,7 @@ internal fun FilterGroups(
                         ),
                         joinToGroup = {it1,it2->
                             if(viewState.authState == AppAuthState.LOGGED_IN) {
-                                joinToGroup(it1, it2)
+                                joinToGroup(it1, it2,result)
                             }else{
                                 openAuthBottomSheet()
                             }
@@ -121,7 +121,7 @@ internal fun FilterGroups(
                     grupo = result,
                     joinToGroup = {it1,it2->
                         if(viewState.authState == AppAuthState.LOGGED_IN){
-                        joinToGroup(it1,it2)
+                        joinToGroup(it1,it2,result)
                         }else{
                             openAuthBottomSheet()
                         }

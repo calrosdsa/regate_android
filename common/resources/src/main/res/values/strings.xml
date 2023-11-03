@@ -224,5 +224,6 @@
     <string name="edit_message">Edit message</string>
     <string name="delete_message">Delete message</string>
     <string name="message_deleted">This message has been deleted.</string>
+    <string name="delete_chat">Delete chat</string>
 
 </resources>

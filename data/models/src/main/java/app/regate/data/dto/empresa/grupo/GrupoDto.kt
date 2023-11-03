@@ -52,18 +52,6 @@ enum class UserGrupoRequesEstado {
     }
 }
 
-@Serializable
-data class PaginationGroupsResponse(
-    val results:List<GrupoDto>,
-    val page:Int
-)
-
-@Serializable
-data class GrupoResponse(
-    val grupo: GrupoDto,
-    val profiles:List<UserGrupoDto>,
-    val salas:List<SalaDto>
-)
 
 @Serializable
 data class  UserGrupoDto(

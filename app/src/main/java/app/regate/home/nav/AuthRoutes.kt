@@ -36,11 +36,17 @@ internal fun NavGraphBuilder.AuthRoutes (
     animatedComposable(route = Route.LOGIN_PAGE) {
         composeScreens.login(
             navigateToSignUpScreen = { navController.navigate(Route.SIGNUP_SCREEN) },
-            navigateToHomeScreen = {
-                navController.navigate(Route.HOME){
-                    popUpTo(0)
-                }
-            },
+            navigateToHomeScreen = navController::navigateUp
+//            navigateToHomeScreen = {
+//                navController.navigate(Route.ACCOUNT){
+//                    popUpTo(Route.LOGIN_PAGE){
+//                        inclusive = true
+//                    }
+//                    popUpTo(Route.ACCOUNT){
+//                        inclusive = true
+//                    }
+//                }
+//            },
 //                navigateToVerificationEmail = {
 //                    navController.navigate(Route.EMAIL_VERIFICATION)
 //                }
@@ -66,15 +72,6 @@ internal fun NavGraphBuilder.AuthRoutes (
             },
         )
     }
-    animatedComposable(route = Route.PHOTO arg "data",
-        arguments = listOf(
-            navArgument("data") { type = NavType.StringType }
-        )){
 
-        composeScreens.photo(
-            navigateUp = navController::navigateUp,
-            navigateToReport = {navController.navigate(Route.REPORT id it)}
-        )
-    }
 
 }

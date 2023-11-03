@@ -75,6 +75,7 @@ import app.regate.common.composes.viewModel
 import app.regate.constant.Route
 import app.regate.constant.id
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
+import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.models.SearchHistory
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
@@ -161,7 +162,7 @@ internal fun Search(
     navigateToGroup: (Long) -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
     navigateToInfoGrupo:(Long)->Unit,
-    joinToGroup:(Long,Int)->Unit,
+    joinToGroup:(Long,Int,GrupoDto)->Unit,
     searchGrupos: @Composable () -> Unit,
     searchProfiles: @Composable () -> Unit,
     searchSalas: @Composable () -> Unit,
@@ -368,7 +369,7 @@ internal fun Search(
                                                             grupo_request_estado = grupoU.request_estado.ordinal
                                                         ),
                                                         joinToGroup = { it1, it2 ->
-                                                            joinToGroup(it1, it2)
+                                                            joinToGroup(it1, it2,result)
                                                         },
                                                         navigateToInfoGrupo = navigateToInfoGrupo
                                                     )
@@ -377,7 +378,7 @@ internal fun Search(
                                                         navigate = navigateToInfoGrupo,
                                                         grupo = result,
                                                         joinToGroup = { it1, it2 ->
-                                                            joinToGroup(it1, it2)
+                                                            joinToGroup(it1, it2,result)
                                                         }
                                                     )
                                                 }

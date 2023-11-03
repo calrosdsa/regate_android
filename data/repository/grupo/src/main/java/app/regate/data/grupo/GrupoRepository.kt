@@ -1,21 +1,17 @@
 package app.regate.data.grupo
 
-import app.regate.compoundmodels.MessageProfile
 import app.regate.data.daos.ChatDao
 import app.regate.data.daos.GrupoDao
-import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
 import app.regate.data.dto.SearchFilterRequest
-import app.regate.data.dto.chat.RequestChatUnreadMessages
 import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoPendingRequestEstado
 import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
 import app.regate.data.dto.empresa.grupo.GrupoVisibility
@@ -28,18 +24,12 @@ import app.regate.data.dto.empresa.grupo.setting.GrupoInvitationLinkDto
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.mappers.DtoToGrupo
 import app.regate.data.mappers.DtoToUserGrupo
-import app.regate.data.mappers.MessageDtoToMessage
-import app.regate.data.mappers.MessageToMessageDto
-import app.regate.data.mappers.ReplyMessageDtoToMessage
 import app.regate.data.mappers.UserGroupDtoToProfile
 import app.regate.inject.ApplicationScope
-import app.regate.models.Message
 import app.regate.models.MyGroups
 import app.regate.models.Profile
 import app.regate.models.chat.Chat
 import app.regate.util.AppCoroutineDispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import me.tatarka.inject.annotations.Inject
 @ApplicationScope
@@ -64,9 +54,6 @@ class GrupoRepository(
     }
     suspend fun getGroupsWhereUserIsAdmin():List<GrupoDto>{
         return grupoDataSourceImpl.getGroupsWhereUserIsAdmin()
-    }
-    suspend fun sendShareMessage(d:List<GrupoMessageDto>){
-            grupoDataSourceImpl.sendShareMessage(d)
     }
     suspend fun myGroups(){
         withContext(dispatchers.computation){
@@ -105,6 +92,17 @@ class GrupoRepository(
             }
         }
     }
+    suspend fun leaveGrupo(id:Long,chatId: Long) {
+        withContext(dispatchers.computation) {
+            try {
+                grupoDataSourceImpl.removeUserFromGroup(id)
+                userGrupoDao.deleteUserGroup(id)
+                chatDao.updateWhenUserLeave(chatId)
+            } catch (e: Exception) {
+                //TODO()
+            }
+        }
+    }
     suspend fun deleteGroupUserLocal(groupId:Long){
         myGroupsDao.deleteByGroupId(groupId)
     }
@@ -133,7 +131,7 @@ class GrupoRepository(
             chatDao.upsert(chat)
         }
     }
-    suspend fun joinGrupo(grupoId:Long,visibility:Int=2,){
+    suspend fun joinGrupo(grupoId:Long,visibility:Int=2,grupoDto: GrupoDto?){
         try{
         val user  = userDao.getUser(0)
         val requestEstado= if(visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
@@ -142,7 +140,17 @@ class GrupoRepository(
             grupo_id = grupoId,
             profile_id = user.profile_id
         )
-        grupoDataSourceImpl.joinGrupo(dataR).also {
+        grupoDataSourceImpl.joinGrupo(dataR).also {response->
+            if (grupoDto != null) {
+                chatDao.upsert(Chat(
+                    id = response.chat_id,
+                    parent_id = grupoDto.id,
+                    name = grupoDto.name,
+                    photo = grupoDto.photo,
+                    type_chat = TypeChat.TYPE_CHAT_GRUPO.ordinal
+
+                ))
+            }
             myGroupsDao.upsert(
                 MyGroups(
                     id = grupoId,

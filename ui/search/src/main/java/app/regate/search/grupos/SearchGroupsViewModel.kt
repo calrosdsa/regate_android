@@ -95,7 +95,7 @@ class SearchGroupsViewModel(
             try{
                 loadingCounter.addLoader()
 //                val visibilidad = if(visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
-                grupoRepository.joinGrupo(groupId,visibility)
+                grupoRepository.joinGrupo(groupId,visibility,null)
 //                getGrupo()
                 loadingCounter.removeLoader()
 //                Log.d("DEBUG_APP_ERROR",res.message)

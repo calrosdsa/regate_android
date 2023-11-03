@@ -88,6 +88,7 @@ class ChatGrupoViewModel(
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val scrollToBottom = MutableStateFlow<Boolean?>(null)
+//    private val isUserInt = MutableStateFlow(true)
     private val emojiData = MutableStateFlow<List<List<Emoji>>>(emptyList())
     val pagedList: Flow<PagingData<MessageProfile>> =
         pagingInteractor.flow.cachedIn(viewModelScope)
@@ -223,8 +224,6 @@ class ChatGrupoViewModel(
 //            prefetchDistance = 1
         )
     }
-//    @SuppressLint("SuspiciousIndentation")
-//    suspend fun DefaultClientWebSocketSession.outputMessage(){
     private suspend fun outputMessage(data:Message,isShare:Boolean){
             if (data.content == "" && data.data == null) return
             try{
@@ -283,13 +282,13 @@ class ChatGrupoViewModel(
                 content = grupoMessageData.content,
                 type_message = grupoMessageData.type_data,
             )
-            sendMessage(message,{},profileId,true)
+            sendMessage(message,profileId,true)
         }catch (e:Exception){
             //todo()
         }
     }
 
-    fun sendMessage(messageData: MessageData,animateScroll:()->Unit,profileId: Long=0,isShare:Boolean =false){
+    fun sendMessage(messageData: MessageData,profileId: Long=0,isShare:Boolean =false){
         viewModelScope.launch {
             val message =  Message(
                 content = messageData.content,
@@ -306,7 +305,6 @@ class ChatGrupoViewModel(
             )
             val res = async { chatRepository.saveMessageLocal(message) }
             res.await()
-            animateScroll()
             outputMessage(message,isShare)
 
         }

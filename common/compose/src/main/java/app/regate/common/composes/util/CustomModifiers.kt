@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import kotlin.math.absoluteValue
 
 
-fun Modifier.shimmerBackground(shape: androidx.compose.ui.graphics.Shape= RectangleShape): Modifier = composed{
+fun Modifier.shimmerBackground(shape: androidx.compose.ui.graphics.Shape= RectangleShape):Modifier = composed {
     val transition = rememberInfiniteTransition()
     val translateAnimation by transition.animateFloat(
         initialValue = 0f,

@@ -142,12 +142,10 @@ internal fun Grupos(
                     formatShortRelativeTime = formatShortRelativeTime,
                     navigateToChat = {id,parentId,type->
                         navController.navigate(Route.CHAT_GRUPO + "?id=$id&parentId=$parentId&typeChat=$type") },
-//                    navigateToEstablecimientoInbox = { establecimientoId:Long,conversationId:Long->
-//                        navController.navigate(Route.CONVERSATION  id conversationId id establecimientoId)
-//                    },
-//                    navigateToChatSala = {chatId:Long,salaId:Long->
-//                        navController.navigate(Route.CHAT_SALA + "?id=$chatId&salaId=$salaId")
-//                    }
+                    selectChat = viewModel::selectChat,
+                    deleteChat = viewModel::deleteChat,
+                    viewState = viewState,
+                    coroutineScope = coroutineScope
                 )
                 1 -> filterGroups()
                 2 -> userSalas()

@@ -62,7 +62,8 @@ internal fun GrupoMenu(
                 onClick = {
                     val payload = Json.encodeToString(encodeMediaData(listOf(grupo.photo.toString())))
                     navigateToPhoto(payload)
-                }
+                },
+                darkerImage = true
             )
             Column(modifier = Modifier.padding(10.dp).align(Alignment.BottomStart)) {
                 Text(text = grupo.name,style = MaterialTheme.typography.titleLarge,
@@ -115,7 +116,7 @@ internal fun GrupoMenu(
             }
         )
 
-        if (isCurrentUserSuperAdmin) {
+        if (isCurrentUserSuperAdmin && currentUser != null) {
             DropdownMenuItem(
                 text = { Text("Editar") },
                 onClick = { editGroup()},

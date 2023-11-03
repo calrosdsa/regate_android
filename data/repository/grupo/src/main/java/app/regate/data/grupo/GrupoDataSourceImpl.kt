@@ -10,6 +10,7 @@ import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
+import app.regate.data.dto.empresa.grupo.JoinGrupoResponse
 import app.regate.data.dto.empresa.grupo.PaginationGroupMessages
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
@@ -54,12 +55,6 @@ class GrupoDataSourceImpl(
         val token = authStore.get()?.accessToken
         return client.get("/v1/grupo/user-groups-request/"){
             header("Authorization","Bearer $token")
-        }.body()
-    }
-    override  suspend fun syncMessages(d:List<GrupoMessageDto>):List<GrupoMessageDto>{
-        return client.post("/v1/grupo/message/sync-message/"){
-            contentType(ContentType.Application.Json)
-            setBody(d)
         }.body()
     }
 
@@ -119,14 +114,6 @@ class GrupoDataSourceImpl(
             header("Authorization","Bearer $token")
         }.body()
     }
-
-    override suspend fun sendShareMessage(d:List<GrupoMessageDto>) {
-        client.post("/v1/grupo/send/share-message/"){
-            contentType(ContentType.Application.Json)
-            setBody(d)
-        }
-    }
-
     override suspend fun searchGrupos(
         d: SearchFilterRequest,
         page: Int,
@@ -144,7 +131,7 @@ class GrupoDataSourceImpl(
     override suspend fun getGrupo(id: Long):GrupoDto {
         return client.get("/v1/grupo/${id}/").body()
     }
-    override suspend fun joinGrupo(d: AddUserGrupoRequest):ResponseMessage {
+    override suspend fun joinGrupo(d: AddUserGrupoRequest):JoinGrupoResponse {
         val token = authStore.get()?.accessToken
         return client.post("/v1/grupo/add-user/"){
             header("Authorization","Bearer $token")

@@ -71,7 +71,7 @@ import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias InvitationLink = @Composable (
+typealias InvitationLink= @Composable (
     navigateUp:()->Unit,
     openAuthBottomSheet: () -> Unit,
     ) -> Unit

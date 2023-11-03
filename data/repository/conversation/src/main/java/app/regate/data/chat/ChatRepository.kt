@@ -44,7 +44,6 @@ class ChatRepository(
     private val dispatchers: AppCoroutineDispatchers,
     private val messageConversationMapper:MessageConversationToMessage,
     private val messageInboxDao: MessageInboxDao,
-    private val userDao:UserDao,
     private val chatDao: ChatDao,
     private val messageProfileDao: MessageProfileDao,
     private val messageMapper:MessageDtoToMessage,
@@ -55,6 +54,18 @@ class ChatRepository(
     private val userRoomDao: UserRoomDao,
     private val profileDao: ProfileDao
 ) {
+    suspend fun deleteChat(id:Long){
+        withContext(dispatchers.io){
+            try{
+                chatDao.deleteById(id)
+            }catch (e:Exception){
+                //TODO()
+            }
+        }
+    }
+    suspend fun getChatByType(parentId: Long,typeChat: Int):Chat{
+        return chatDao.getChatByType(parentId,typeChat)
+    }
     fun observeMessages(id: Long): Flow<List<MessageProfile>> {
         return messageProfileDao.getMessages(id)
     }

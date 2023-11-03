@@ -174,7 +174,7 @@ internal fun ChatGrupo(
     viewState: ChatGrupoState,
     lazyPagingItems: LazyPagingItems<MessageProfile>,
     navigateUp: () -> Unit,
-    sendMessage:(MessageData,()->Unit)->Unit,
+    sendMessage:(MessageData)->Unit,
     openAuthBottomSheet: () -> Unit,
     clearMessage:(id:Long)->Unit,
 //    navigateToCreateSala: (id: Long) -> Unit,
@@ -227,6 +227,9 @@ internal fun ChatGrupo(
     }
     var openBottomLayout by remember{
         mutableStateOf(false)
+    }
+    val isUserOut by remember(key1 = viewState.chat) {
+        derivedStateOf { viewState.chat?.is_user_out }
     }
 
     val interactionSource = remember { MutableInteractionSource() }
@@ -350,12 +353,13 @@ internal fun ChatGrupo(
                     focusRequester = focusRequester,
                     openAuthBottomSheet = openAuthBottomSheet,
                     sendMessage = {
-                        sendMessage(it) {
+                        if(isUserOut == true){
                             coroutineScope.launch {
-                                delay(300)
-//                        lazyListState.animateScrollToItem(0)
+                            snackbarHostState.showSnackbar("No puedes enviar mensajes, ya que no eres miembro de este grupo.")
                             }
+                            return@ChatInput
                         }
+                        sendMessage(it)
                     },
                     openBottomLayout = {
                         if (openBottomLayout) {

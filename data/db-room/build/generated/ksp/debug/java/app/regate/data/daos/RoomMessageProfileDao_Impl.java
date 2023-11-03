@@ -1383,7 +1383,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       return;
     }
     final StringBuilder _stringBuilder = StringUtil.newStringBuilder();
-    _stringBuilder.append("SELECT `id`,`photo`,`name`,`last_message`,`last_message_created`,`messages_count`,`type_chat`,`is_message_deleted`,`parent_id`,`updated_at` FROM `chat` WHERE `id` IN (");
+    _stringBuilder.append("SELECT `id`,`photo`,`name`,`last_message`,`last_message_created`,`messages_count`,`type_chat`,`is_message_deleted`,`parent_id`,`is_user_out`,`updated_at` FROM `chat` WHERE `id` IN (");
     final int _inputSize = _map.size();
     StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
     _stringBuilder.append(")");
@@ -1411,7 +1411,8 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
       final int _cursorIndexOfTypeChat = 6;
       final int _cursorIndexOfIsMessageDeleted = 7;
       final int _cursorIndexOfParentId = 8;
-      final int _cursorIndexOfUpdatedAt = 9;
+      final int _cursorIndexOfIsUserOut = 9;
+      final int _cursorIndexOfUpdatedAt = 10;
       while (_cursor.moveToNext()) {
         final long _tmpKey;
         _tmpKey = _cursor.getLong(_itemKeyIndex);
@@ -1451,20 +1452,24 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           _tmpIs_message_deleted = _tmp_1 != 0;
           final long _tmpParent_id;
           _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
+          final boolean _tmpIs_user_out;
+          final int _tmp_2;
+          _tmp_2 = _cursor.getInt(_cursorIndexOfIsUserOut);
+          _tmpIs_user_out = _tmp_2 != 0;
           final Instant _tmpUpdated_at;
-          final String _tmp_2;
+          final String _tmp_3;
           if (_cursor.isNull(_cursorIndexOfUpdatedAt)) {
-            _tmp_2 = null;
+            _tmp_3 = null;
           } else {
-            _tmp_2 = _cursor.getString(_cursorIndexOfUpdatedAt);
+            _tmp_3 = _cursor.getString(_cursorIndexOfUpdatedAt);
           }
-          final Instant _tmp_3 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_2);
-          if (_tmp_3 == null) {
+          final Instant _tmp_4 = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_3);
+          if (_tmp_4 == null) {
             throw new IllegalStateException("Expected non-null kotlinx.datetime.Instant, but it was null.");
           } else {
-            _tmpUpdated_at = _tmp_3;
+            _tmpUpdated_at = _tmp_4;
           }
-          _item_1 = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpType_chat,_tmpIs_message_deleted,_tmpParent_id,_tmpUpdated_at);
+          _item_1 = new Chat(_tmpId,_tmpPhoto,_tmpName,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpType_chat,_tmpIs_message_deleted,_tmpParent_id,_tmpIs_user_out,_tmpUpdated_at);
           _map.put(_tmpKey, _item_1);
         }
       }

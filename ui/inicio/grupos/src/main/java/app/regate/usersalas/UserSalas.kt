@@ -96,7 +96,7 @@ internal fun UserSalas(
                     items = lazyPagingItems
                 ){sala->
                 if ( sala != null) {
-                    SalaItemUser (
+                    SalaItemUser(
                         sala = sala,
                         formatDate = formatDate,
                         formatShortTime = formatShortTime,

@@ -350,7 +350,7 @@ internal fun MessageContent2(
 }
 
 @Composable
-fun MessengerIcon2(
+fun MessengerIcon2 (
     colors: List<Color>,
     modifier: Modifier=Modifier,
 ) {

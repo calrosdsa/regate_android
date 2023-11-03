@@ -158,12 +158,12 @@ class SearchViewModel(
         }
     }
 
-    fun joinToGroup(groupId:Long,visibility: Int){
+    fun joinToGroup(groupId:Long,visibility: Int,grupo:GrupoDto){
         viewModelScope.launch {
             try{
                 loadingCounter.addLoader()
 //                val visibilidad = if(visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
-                grupoRepository.joinGrupo(groupId,visibility)
+                grupoRepository.joinGrupo(groupId,visibility,grupo)
 //                getGrupo()
                 loadingCounter.removeLoader()
 //                Log.d("DEBUG_APP_ERROR",res.message)

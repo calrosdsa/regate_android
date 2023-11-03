@@ -3,6 +3,6 @@
 3    package="app.regate.tasks" >
 4
 5    <uses-sdk android:minSdkVersion="23" />
-5-->D:\Regate\regate_android\tasks\android\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest1840682769198826249.xml
+5-->D:\Regate\regate_android\tasks\android\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest2727293729300794467.xml
 6
 7</manifest>

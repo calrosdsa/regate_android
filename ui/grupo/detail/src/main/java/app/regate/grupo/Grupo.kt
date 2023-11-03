@@ -144,16 +144,12 @@ internal fun Grupo(
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
-    val joinSalaDialog = remember {
-        mutableStateOf(false)
-    }
     Grupo(
         viewState = viewState,
         navigateUp = navigateUp,
         formatShortTime = formatter::formatShortTime,
         formatDate = formatter::formatShortDate,
         openAuthBottomSheet = openAuthBottomSheet,
-        openDialogConfirmation = {joinSalaDialog.value = true},
         clearMessage = viewModel::clearMessage,
         refresh = viewModel::refresh,
         createSala = createSala,
@@ -175,13 +171,6 @@ internal fun Grupo(
         getPendingRequestCount = viewModel::getPendingRequestCount,
         navigateToInvitationLink = navigateToInvitationLink
     )
-    DialogConfirmation(open = joinSalaDialog.value,
-        dismiss = { joinSalaDialog.value = false },
-        confirm = {
-            viewModel.joinGrupo()
-            joinSalaDialog.value = false
-        }
-    )
 }
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
@@ -193,7 +182,6 @@ internal fun Grupo(
     formatDate:(date:String)->String,
     editGroup: (Long) -> Unit,
     openAuthBottomSheet: () -> Unit,
-    openDialogConfirmation:()->Unit,
     refresh:()->Unit,
     clearMessage:(id:Long)->Unit,
     createSala: (id:Long) -> Unit,
@@ -214,12 +202,8 @@ internal fun Grupo(
     ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
-    val isLogged by remember(viewState.authState) {
-        derivedStateOf {
-            viewState.authState == AppAuthState.LOGGED_IN
-        }
-    }
     var dialogUserMenu by remember { mutableStateOf(false) }
+    var leaveGroupDialog by remember { mutableStateOf(false) }
 //    val isMe by remember(key1 = viewState.usersProfileGrupo,key2 = viewState.user){
 //        derivedStateOf {
 //            viewState.usersProfileGrupo.map { it.id }.contains(viewState.user?.profile_id)
@@ -309,6 +293,13 @@ internal fun Grupo(
             }
         }
     }
+    DialogConfirmation(open = leaveGroupDialog, dismiss = { leaveGroupDialog = false}, confirm = {
+        if(viewState.authState == AppAuthState.LOGGED_IN){
+            leaveGroup()
+        }else{
+            openAuthBottomSheet()
+        }
+    })
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         ModalNavigationDrawer(drawerState = drawerState,
             drawerContent = {
@@ -324,7 +315,7 @@ internal fun Grupo(
                                 currentUser = viewState.currentUser,
                                 createSala = { createSala(viewState.grupo.id) },
                                 editGroup = { editGroup(viewState.grupo.id) },
-                                leaveGroup = { leaveGroup() },
+                                leaveGroup = { leaveGroupDialog = true},
                                 navigateToReport = navigateToReport,
                                 navigateToPendingRequests = { navigateToPendingRequests(viewState.grupo.id) },
                                 navigateToChatGroup = navigateToChatGroup,
@@ -332,7 +323,8 @@ internal fun Grupo(
                                 pendingRequestCount = pendingRequestCount,
                                 members = viewState.usersProfileGrupo.size,
                                 navigateToPhoto = navigateToPhoto,
-                                navigateToInvitationLink = navigateToInvitationLink
+                                navigateToInvitationLink = navigateToInvitationLink,
+
                             )
                         }
                     }
@@ -369,23 +361,6 @@ internal fun Grupo(
                         }
                     }
                 },
-                floatingActionButton = {
-                    if (!viewState.usersProfileGrupo.map { it.profile_id }
-                            .contains(viewState.user?.profile_id)
-                        && viewState.usersProfileGrupo.isNotEmpty()
-                    ) {
-                        Button(onClick = {
-                            if (isLogged) {
-                                openDialogConfirmation()
-                            } else {
-                                openAuthBottomSheet()
-                            }
-                        }) {
-                            Text(text = "Unirme")
-                        }
-                    }
-                },
-                floatingActionButtonPosition = FabPosition.Center,
                 snackbarHost = {
                     SnackbarHost(hostState = snackbarHostState)
                 },

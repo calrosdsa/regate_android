@@ -189,4 +189,5 @@
     <string name="edit_message">Editar mensaje</string>
     <string name="delete_message">Delete message</string>
     <string name="message_deleted">Este mensaje ha sido eliminado.</string>
+    <string name="delete_chat">Eliminar chat</string>
 </resources>

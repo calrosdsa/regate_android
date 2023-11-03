@@ -40,7 +40,7 @@ import app.regate.data.dto.empresa.grupo.PendingRequestUserDto
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias PendingRequests = @Composable (
+typealias PendingRequests= @Composable (
     navigateUp:()->Unit
 ) ->Unit
 

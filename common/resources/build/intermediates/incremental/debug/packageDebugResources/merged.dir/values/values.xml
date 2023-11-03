@@ -50,6 +50,7 @@
     <string name="create_group">Create group</string>
     <string name="create_sala">Create sala</string>
     <string name="decline">Decline</string>
+    <string name="delete_chat">Delete chat</string>
     <string name="delete_message">Delete message</string>
     <string name="deposits">Deposits</string>
     <string name="description">Description</string>

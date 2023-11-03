@@ -79,6 +79,7 @@ string count_selected
 string create_group
 string create_sala
 string decline
+string delete_chat
 string delete_message
 string deposits
 string description

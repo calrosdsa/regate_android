@@ -8,7 +8,7 @@ import androidx.compose.ui.window.Dialog
 
 
 @Composable
-fun LoaderDialog (
+fun LoaderDialog(
     loading:Boolean,
     modifier:Modifier = Modifier
 ){

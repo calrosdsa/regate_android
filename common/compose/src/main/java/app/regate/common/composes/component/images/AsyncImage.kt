@@ -14,7 +14,7 @@ import coil.compose.AsyncImagePainter
 import coil.request.ImageRequest
 
 @Composable
-fun AsyncImage(
+fun AsyncImage (
     model: Any?,
     contentDescription: String?,
     modifier: Modifier = Modifier,

@@ -7,6 +7,6 @@ import androidx.compose.ui.Modifier
 import app.regate.common.composes.util.shimmerBackground
 
 @Composable
-fun Skeleton(modifier: Modifier = Modifier) {
+fun Skeleton(modifier: Modifier = Modifier){
     Box(modifier = modifier.shimmerBackground(CardDefaults.shape))
 }

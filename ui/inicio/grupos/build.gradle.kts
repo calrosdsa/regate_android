@@ -54,6 +54,7 @@ dependencies {
 
     implementation(libs.compose.material.material)
 
+    implementation(libs.io.github.dokar3)
 
 //    ksp(libs.kotlininject.compiler)
 

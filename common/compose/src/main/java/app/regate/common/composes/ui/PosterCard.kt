@@ -47,7 +47,7 @@ fun PosterCardImageDark (
     Card(modifier = modifier) {
             AsyncImage(
                 model = model,
-                requestBuilder = { crossfade(true) },
+                requestBuilder = {crossfade(true) },
                 contentDescription = model,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
@@ -58,11 +58,12 @@ fun PosterCardImageDark (
 
 
 @Composable
-fun  PosterCardImage (
+fun  PosterCardImage(
     model:String?,
     modifier: Modifier = Modifier,
     shape:Shape = CardDefaults.shape,
     isUser:Boolean = false,
+    darkerImage:Boolean = false,
     contentScale:ContentScale = ContentScale.Crop,
     onClick:()->Unit = {},
 ) {
@@ -72,7 +73,8 @@ fun  PosterCardImage (
         modifier = modifier,
         contentScale = contentScale,
         isUser = isUser,
-        onClick = onClick
+        onClick = onClick,
+        colorFilter = if(darkerImage) ColorFilter.colorMatrix(ColorMatrix().apply{setToScale(0.8f,0.8f,0.8f,1f)}) else null,
     )
 //    Card(modifier = modifier,
 //    shape = shape) {

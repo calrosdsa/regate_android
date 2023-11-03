@@ -88,7 +88,7 @@ fun SalaItem (
 
 
 @Composable
-fun SalaItemUser(
+fun SalaItemUser (
     sala: SalaDto,
     formatDate:(String)->String,
     formatShortTime:(String,Long)->String,

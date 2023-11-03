@@ -23,6 +23,7 @@ import app.regate.constant.AppUrl
 import app.regate.constant.Route
 import app.regate.constant.arg
 import app.regate.constant.id
+import app.regate.data.dto.chat.TypeChat
 import app.regate.home.nav.AccountRoutes
 import app.regate.home.nav.AddMainNav
 import app.regate.home.nav.AuthRoutes
@@ -161,7 +162,7 @@ internal fun AppNavigation(
                 navigateUp = navController::navigateUp,
                 navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
                 navigateToConversation = {it1,it2->
-                    navController.navigate(Route.CONVERSATION id it1 id it2 )
+                    navController.navigate(Route.CHAT_GRUPO + "?id=${it1}&parentId=${it2}&typeChat=${TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal}" )
                 },
                 navigateToCreateSala = {navController.navigate(Route.CREAR_SALA id it id 0 id 1)},
                 navigateToSelectGroup = {navController.navigate(Route.MY_CHATS + "?data=${it}")},
@@ -175,6 +176,16 @@ internal fun AppNavigation(
             )
         }
 
+        animatedComposable(route = Route.PHOTO arg "data",
+            arguments = listOf(
+                navArgument("data") { type = NavType.StringType }
+            )){
+
+            composeScreens.photo(
+                navigateUp = navController::navigateUp,
+                navigateToReport = {navController.navigate(Route.REPORT id it)}
+            )
+        }
 
 
 

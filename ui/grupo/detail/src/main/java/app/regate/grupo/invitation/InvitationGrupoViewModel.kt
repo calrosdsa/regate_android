@@ -86,7 +86,7 @@ class InvitationGrupoViewModel(
                 state.value.grupo?.id?.let {grupoId ->
                 loadingCounter.addLoader()
 //                val visibilidad = if(visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
-                grupoRepository.joinGrupo(grupoId,visibility)
+                grupoRepository.joinGrupo(grupoId,visibility,null)
 //                getGrupo()
                 loadingCounter.removeLoader()
                 }

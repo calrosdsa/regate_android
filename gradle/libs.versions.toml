@@ -183,5 +183,6 @@ play-services-location = "com.google.android.gms:play-services-location:21.0.1"
 com-github-nestedscroll = "com.github.Tlaster:NestedScrollView:0.7.0"
 
 com-github-wheelpicker = "com.github.commandiron:WheelPickerCompose:1.1.11"
+io-github-dokar3 = "io.github.dokar3:sheets-m3:0.4.4"
 
 component-swipe = "me.saket.swipe:swipe:1.2.0"

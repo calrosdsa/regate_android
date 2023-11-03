@@ -1,6 +1,8 @@
 package app.regate.chats
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,8 +18,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Badge
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -25,10 +33,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import app.regate.common.composes.component.chat.DeleteMessage
+import app.regate.common.composes.component.dialog.DialogConfirmation
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.util.itemsCustom
 import app.regate.data.dto.chat.TypeChat
 import app.regate.models.chat.Chat
+import com.dokar.sheets.rememberBottomSheetState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 
 //typealias UserGroups = @Composable (
@@ -65,26 +77,58 @@ import kotlinx.datetime.Instant
 @Composable
 internal fun ChatsUser (
     lazyPagingItems: LazyPagingItems<Chat>,
+    coroutineScope: CoroutineScope,
+    viewState:ChatsState,
+    selectChat:(Chat)->Unit,
+    deleteChat:()->Unit,
     formatShortRelativeTime:(Instant)->String,
     navigateToChat: (id: Long,grupoId:Long,typeChat:Int) -> Unit,
 ){
+    val sheetState = rememberBottomSheetState()
+    var deleteDialogConfirmation by remember {
+        mutableStateOf(false)
+    }
+
     LazyColumn(modifier = Modifier.fillMaxSize()){
         itemsCustom(items = lazyPagingItems, key = {it.id}){item->
             if(item!= null){
                 ChatItem(chat = item, navigateToChat = navigateToChat,
                     formatShortRelativeTime = formatShortRelativeTime,
+                    selectChat = {
+                        coroutineScope.launch {
+                            selectChat(it)
+                            sheetState.expand()
+                        }
+                    },
                 )
             }
         }
     }
+
+    if(viewState.selectedChat != null){
+        ChatSelectDialog(
+            state = sheetState,
+            deleteChat = {deleteDialogConfirmation = true},
+            chat = viewState.selectedChat,
+            close = {coroutineScope.launch {
+                sheetState.collapse()
+            }}
+        )
+    }
+
+    DialogConfirmation(open = deleteDialogConfirmation,
+        dismiss = { deleteDialogConfirmation = false },
+        confirm = { deleteChat()})
+
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 internal fun ChatItem(
 //    grupo: GrupoWithMessage,
     chat: Chat,
+    selectChat:(Chat)->Unit,
     navigateToChat: (id: Long,grupoId:Long,typeChat:Int) -> Unit,
 //    navigateToEstablecimientoInbox: (Long, Long) -> Unit,
     formatShortRelativeTime:(Instant)->String,
@@ -93,21 +137,12 @@ internal fun ChatItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable {
-                when (chat.type_chat) {
-                    TypeChat.TYPE_CHAT_GRUPO.ordinal -> {
-                        navigateToChat(chat.id, chat.parent_id, chat.type_chat)
-                    }
-
-                    TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal -> {
-                        navigateToChat(chat.id, chat.parent_id, chat.type_chat)
-//                        navigateToEstablecimientoInbox(chat.parent_id,chat.id)
-                    }
-
-                    TypeChat.TYPE_CHAT_SALA.ordinal -> {
-                        navigateToChat(chat.id, chat.parent_id, chat.type_chat)
-                    }
+            .combinedClickable(
+                onLongClick = {
+                    selectChat(chat)
                 }
+            ) {
+                navigateToChat(chat.id, chat.parent_id, chat.type_chat)
             }
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically

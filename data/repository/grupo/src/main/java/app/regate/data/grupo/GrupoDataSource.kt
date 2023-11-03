@@ -8,6 +8,7 @@ import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
+import app.regate.data.dto.empresa.grupo.JoinGrupoResponse
 import app.regate.data.dto.empresa.grupo.PaginationGroupMessages
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
@@ -21,17 +22,15 @@ import kotlinx.datetime.Instant
 interface GrupoDataSource {
    suspend fun myGroups():List<GrupoDto>
    suspend fun myGroupsRequest():List<GrupoDto>
-   suspend fun syncMessages(d:List<GrupoMessageDto>):List<GrupoMessageDto>
    suspend fun filterGrupos(d:FilterGrupoData,page:Int):PaginationGroupsResponse
    suspend fun getGrupoDetail(id:Long):GrupoResponse
    suspend fun getGrupo(id:Long):GrupoDto
-   suspend fun joinGrupo(d:AddUserGrupoRequest): ResponseMessage
+   suspend fun joinGrupo(d:AddUserGrupoRequest): JoinGrupoResponse
    suspend fun getUsersGrupo(id:Long):List<UserGrupoDto>
    suspend fun createGroup(d:GroupRequest):GrupoDto
    suspend fun removeUserFromGroup(id:Long)
    suspend fun changeStatusUser(id:Long,status:Boolean)
    suspend fun getGroupsWhereUserIsAdmin():List<GrupoDto>
-   suspend fun sendShareMessage(d:List<GrupoMessageDto>)
    suspend fun searchGrupos(d: SearchFilterRequest, page:Int, size: Int): PaginationGroupsResponse
 
 

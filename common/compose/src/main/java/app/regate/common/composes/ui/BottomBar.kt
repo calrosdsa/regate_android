@@ -32,7 +32,7 @@ import app.regate.constant.Route
 
 
 @Composable
-fun BottomBar(
+fun BottomBar (
     navController:NavController,
     modifier: Modifier = Modifier
 ){

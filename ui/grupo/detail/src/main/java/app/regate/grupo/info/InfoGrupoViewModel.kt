@@ -89,7 +89,7 @@ class InfoGrupoViewModel(
             try{
                 loadingCounter.addLoader()
 //                val visibilidad = if(visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
-                grupoRepository.joinGrupo(grupoId,visibility)
+                grupoRepository.joinGrupo(grupoId,visibility,grupo.value)
 //                getGrupo()
                 loadingCounter.removeLoader()
 //                Log.d("DEBUG_APP_ERROR",res.message)
