@@ -2,7 +2,7 @@ package app.regate.chats
 
 import androidx.compose.runtime.Immutable
 import app.regate.api.UiMessage
-import app.regate.compoundmodels.GrupoWithMessage
+import app.regate.compoundmodels.grupo.GrupoWithMessage
 import app.regate.data.auth.AppAuthState
 import app.regate.models.chat.Chat
 

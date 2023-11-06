@@ -121,7 +121,8 @@ fun Grupo(
         navigateToPhoto = {navController.navigate(Route.PHOTO id it)},
         navigateToPendingRequests = {navController.navigate(Route.PENDING_REQUESTS id it)},
         navigateToChatGroup = { navController.navigate(Route.CHAT_GRUPO + "?id=${it}")},
-        navigateToInvitationLink = {navController.navigate(Route.GRUPO_INVITATION_LINK id it)}
+        navigateToInvitationLink = {navController.navigate(Route.GRUPO_INVITATION_LINK id it)},
+        navigateToInviteUser = {navController.navigate(Route.GRUPO_INVITE_USER id it)}
     )
 }
 
@@ -141,6 +142,7 @@ internal fun Grupo(
     navigateToPendingRequests:(Long)->Unit,
     navigateToChatGroup:(Long)->Unit,
     navigateToInvitationLink: (Long) -> Unit,
+    navigateToInviteUser: (Long) -> Unit
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -169,7 +171,8 @@ internal fun Grupo(
         navigateToPendingRequests = navigateToPendingRequests,
         navigateToChatGroup = navigateToChatGroup,
         getPendingRequestCount = viewModel::getPendingRequestCount,
-        navigateToInvitationLink = navigateToInvitationLink
+        navigateToInvitationLink = navigateToInvitationLink,
+        navigateToInviteUser = navigateToInviteUser
     )
 }
 
@@ -199,6 +202,7 @@ internal fun Grupo(
     navigateToChatGroup: (Long) -> Unit,
     getPendingRequestCount:suspend ()->Int,
     navigateToInvitationLink:(Long)->Unit,
+    navigateToInviteUser:(Long)->Unit,
     ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
@@ -324,7 +328,7 @@ internal fun Grupo(
                                 members = viewState.usersProfileGrupo.size,
                                 navigateToPhoto = navigateToPhoto,
                                 navigateToInvitationLink = navigateToInvitationLink,
-
+                                navigateToInviteUser = navigateToInviteUser
                             )
                         }
                     }

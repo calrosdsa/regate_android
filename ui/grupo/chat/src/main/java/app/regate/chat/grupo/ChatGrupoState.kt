@@ -6,7 +6,6 @@ import app.regate.data.auth.AppAuthState
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.models.Emoji
-import app.regate.models.Grupo
 import app.regate.models.account.User
 import app.regate.models.chat.Chat
 

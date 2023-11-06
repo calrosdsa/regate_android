@@ -1,7 +1,7 @@
 package app.regate.data.daos
 
 import app.regate.compoundmodels.UserProfileGrupoAndSala
-import app.regate.models.UserGrupo
+import app.regate.models.grupo.UserGrupo
 import kotlinx.coroutines.flow.Flow
 
 interface UserGrupoDao:EntityDao<UserGrupo> {

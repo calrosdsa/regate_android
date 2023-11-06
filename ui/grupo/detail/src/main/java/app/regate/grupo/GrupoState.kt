@@ -4,7 +4,7 @@ import app.regate.api.UiMessage
 import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.salas.SalaDto
-import app.regate.models.Grupo
+import app.regate.models.grupo.Grupo
 import app.regate.models.account.User
 
 data class GrupoState(
@@ -13,7 +13,7 @@ data class GrupoState(
     val user: User? = null,
     val authState:AppAuthState? = null,
     val usersProfileGrupo: List<UserProfileGrupoAndSala> = emptyList(),
-    val grupo:Grupo? = null,
+    val grupo: Grupo? = null,
     val salas:List<SalaDto> = emptyList(),
     val currentUser:UserProfileGrupoAndSala? = null,
     val selectedUser:UserProfileGrupoAndSala? = null,

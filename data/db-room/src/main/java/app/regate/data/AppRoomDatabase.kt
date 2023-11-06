@@ -21,7 +21,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import app.regate.data.daos.ChatDao
 import app.regate.data.daos.RoomChatDao
 import app.regate.data.daos.RoomCupoDao
 import app.regate.data.daos.RoomEmojiDao
@@ -49,23 +48,24 @@ import app.regate.models.Cupo
 import app.regate.models.Emoji
 import app.regate.models.Establecimiento
 import app.regate.models.FavoriteEstablecimiento
-import app.regate.models.Grupo
+import app.regate.models.grupo.Grupo
 import app.regate.models.Instalacion
 import app.regate.models.Labels
 import app.regate.models.Message
 import app.regate.models.MessageInbox
 import app.regate.models.MessageSala
-import app.regate.models.MyGroups
+import app.regate.models.grupo.MyGroups
 import app.regate.models.Notification
 import app.regate.models.Profile
 import app.regate.models.Reserva
 import app.regate.models.SearchHistory
 import app.regate.models.Setting
 import app.regate.models.account.User
-import app.regate.models.UserGrupo
+import app.regate.models.grupo.UserGrupo
 import app.regate.models.UserRoom
 import app.regate.models.account.UserBalance
 import app.regate.models.chat.Chat
+import app.regate.models.grupo.InvitationGrupo
 
 @Database(
     entities = [
@@ -91,6 +91,7 @@ import app.regate.models.chat.Chat
         UserRoom::class,
         UserBalance::class,
         Chat::class,
+        InvitationGrupo::class
 //        SalaEntity::class,
        ],
 //    views = [

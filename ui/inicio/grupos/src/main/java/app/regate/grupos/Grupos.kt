@@ -44,12 +44,13 @@ import app.regate.constant.id
 import app.regate.data.auth.AppAuthState
 import app.regate.chats.ChatsUser
 import app.regate.chats.ChatsViewModel
+import app.regate.data.dto.chat.TypeChat
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias Grupos = @Composable (
+typealias Grupos= @Composable (
     navController: NavController,
     filterGroups:@Composable () -> Unit,
     userSalas:@Composable () -> Unit,
@@ -78,7 +79,8 @@ fun Grupos (
         openAuthBottomSheet = { navController.navigate(Route.AUTH_DIALOG) },
         navigateToUserGrupoRequests = { navController.navigate(Route.USER_PENDING_REQUESTS)},
         navigateToInvitationGrupo = { navController.navigate(Route.INVITATION_GRUPO + "?uuid=${it}")},
-        uuid = uuid
+        uuid = uuid,
+        navigateToUserInvitations = {navController.navigate(Route.USER_INVITATIONS)}
 //        navigateToPhoto = {
 ////            val url = URLEncoder.encode(it, StandardCharsets.UTF_8.toString())
 //            navController.navigate(Route.PHOTO id it)
@@ -97,6 +99,7 @@ internal fun Grupos(
     openAuthBottomSheet:()->Unit,
     navigateToUserGrupoRequests:()->Unit,
     navigateToInvitationGrupo:(String)->Unit,
+    navigateToUserInvitations:()->Unit,
 //    navigateToPhoto:(String)->Unit,
     filterGroups:@Composable () -> Unit,
     userSalas:@Composable () -> Unit,
@@ -128,7 +131,8 @@ internal fun Grupos(
                 navigateToCreateSala = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id 0)},
                 openAuthBottomSheet = openAuthBottomSheet,
                 appAuthState = viewState.authState,
-                navigateToUserGrupoRequests = navigateToUserGrupoRequests
+                navigateToUserGrupoRequests = navigateToUserGrupoRequests,
+                navigateToUserInvitations = navigateToUserInvitations
             )
 
     }
@@ -145,7 +149,20 @@ internal fun Grupos(
                     selectChat = viewModel::selectChat,
                     deleteChat = viewModel::deleteChat,
                     viewState = viewState,
-                    coroutineScope = coroutineScope
+                    coroutineScope = coroutineScope,
+                    navigateToParent = {id,typeChat->
+                        when(typeChat){
+                            TypeChat.TYPE_CHAT_GRUPO.ordinal ->{
+                                navController.navigate(Route.GRUPO id id)
+                            }
+                            TypeChat.TYPE_CHAT_SALA.ordinal ->{
+                                navController.navigate(Route.SALA id id)
+                            }
+                            TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal -> {
+                                navController.navigate(Route.ESTABLECIMIENTO id id id 0)
+                            }
+                        }
+                    }
                 )
                 1 -> filterGroups()
                 2 -> userSalas()
@@ -210,6 +227,7 @@ internal fun Indicators(
     navigateToCreateSala:()->Unit,
     openAuthBottomSheet: () -> Unit,
     navigateToUserGrupoRequests: () -> Unit,
+    navigateToUserInvitations: () -> Unit,
     modifier:Modifier = Modifier
 ){
     var expanded by remember { mutableStateOf(false) }
@@ -294,7 +312,11 @@ internal fun Indicators(
                     DropdownMenuItem(
                         text = { Text(text = stringResource(id = R.string.invitations)) },
                         onClick = {
-
+                            if (appAuthState == AppAuthState.LOGGED_IN) {
+                                navigateToUserInvitations()
+                            }else {
+                                openAuthBottomSheet()
+                            }
                         }
                     )
                     }

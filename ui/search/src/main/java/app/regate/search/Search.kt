@@ -65,6 +65,7 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import app.regate.common.composes.component.input.SearchInput
 import app.regate.common.composes.component.item.EstablecimientoItemWithLocation
 import app.regate.common.composes.component.item.GrupoItem
 import app.regate.common.composes.component.item.ProfileItem
@@ -212,73 +213,82 @@ internal fun Search(
 
     Scaffold(
         topBar = {
-            Row(
-                modifier = Modifier.padding(5.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(onClick = { navigateUp() }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = stringResource(id = R.string.back)
-                    )
-                }
-                BasicTextField(value = query,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Search
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onSearch = {
-                            onSearch(query)
-                        }
-                    ),
-                    modifier = Modifier.focusRequester(focusRequester),
-                    maxLines = 1,
-                    onValueChange = { query = it },
-                    textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
-                    interactionSource = interactionSource,
-                    decorationBox = { innerTextField ->
-                        Surface(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(40.dp)
-                                .padding(horizontal = 0.dp),
-                            shape = CircleShape,
-                            color = MaterialTheme.colorScheme.inverseOnSurface
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.padding(5.dp)
-                            ) {
-                                Spacer(modifier = Modifier.width(5.dp))
-                                Box(modifier = Modifier.fillMaxWidth(0.9f)) {
-                                    if (query.isBlank()) {
-                                        Text(
-                                            text = stringResource(id = R.string.search),
-                                            style = MaterialTheme.typography.labelLarge,
-                                            color = MaterialTheme.colorScheme.inverseSurface
-                                        )
-                                    }
-                                    innerTextField()
-                                }
-                                Crossfade(targetState = !query.isBlank()) {
-                                    if (it) {
-                                        IconButton(onClick = {
-                                            query = ""
-                                            shouldShowResults = false
-                                            focusRequester.requestFocus()
-                                        }) {
-                                            Icon(
-                                                imageVector = Icons.Outlined.Close,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                )
-            }
+                 SearchInput(
+                     query = query,
+                     focusRequester = focusRequester,
+                     interactionSource = interactionSource,
+                     shouldShowResults = { shouldShowResults = true },
+                     onSearch = {onSearch(it) },
+                     onChange = {query = it},
+                     navigateUp = navigateUp
+                 )
+//            Row(
+//                modifier = Modifier.padding(5.dp),
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                IconButton(onClick = { navigateUp() }) {
+//                    Icon(
+//                        imageVector = Icons.Default.ArrowBack,
+//                        contentDescription = stringResource(id = R.string.back)
+//                    )
+//                }
+//                BasicTextField(value = query,
+//                    keyboardOptions = KeyboardOptions(
+//                        imeAction = ImeAction.Search
+//                    ),
+//                    keyboardActions = KeyboardActions(
+//                        onSearch = {
+//                            onSearch(query)
+//                        }
+//                    ),
+//                    modifier = Modifier.focusRequester(focusRequester),
+//                    maxLines = 1,
+//                    onValueChange = { query = it },
+//                    textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
+//                    interactionSource = interactionSource,
+//                    decorationBox = { innerTextField ->
+//                        Surface(
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .height(40.dp)
+//                                .padding(horizontal = 0.dp),
+//                            shape = CircleShape,
+//                            color = MaterialTheme.colorScheme.inverseOnSurface
+//                        ) {
+//                            Row(
+//                                verticalAlignment = Alignment.CenterVertically,
+//                                modifier = Modifier.padding(5.dp)
+//                            ) {
+//                                Spacer(modifier = Modifier.width(5.dp))
+//                                Box(modifier = Modifier.fillMaxWidth(0.9f)) {
+//                                    if (query.isBlank()) {
+//                                        Text(
+//                                            text = stringResource(id = R.string.search),
+//                                            style = MaterialTheme.typography.labelLarge,
+//                                            color = MaterialTheme.colorScheme.inverseSurface
+//                                        )
+//                                    }
+//                                    innerTextField()
+//                                }
+//                                Crossfade(targetState = !query.isBlank()) {
+//                                    if (it) {
+//                                        IconButton(onClick = {
+//                                            query = ""
+//                                            shouldShowResults = false
+//                                            focusRequester.requestFocus()
+//                                        }) {
+//                                            Icon(
+//                                                imageVector = Icons.Outlined.Close,
+//                                                contentDescription = null
+//                                            )
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                )
+//            }
         },
     ) { paddingValues ->
         Box(
@@ -286,7 +296,7 @@ internal fun Search(
                 .padding(paddingValues)
                 .fillMaxSize()
         ) {
-            if (shouldShowResults) {
+                if (shouldShowResults) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Indicators(navToTab = {
                         coroutineScope.launch {

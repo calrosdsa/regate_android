@@ -21,7 +21,7 @@ import app.regate.data.dto.empresa.grupo.GrupoDto
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias FilterGroups= @Composable (
+typealias FilterGroups = @Composable (
     navigateToGroup:(id:Long)->Unit,
     navigateToInfoGrupo:(id:Long) ->Unit,
     openAuthBottomSheet:()->Unit,

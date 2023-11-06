@@ -3,9 +3,7 @@ package app.regate.grupos
 import androidx.compose.runtime.Immutable
 import app.regate.api.UiMessage
 import app.regate.data.auth.AppAuthState
-import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.models.Grupo
-import app.regate.models.MyGroups
+import app.regate.models.grupo.MyGroups
 
 @Immutable
 data class GruposState(

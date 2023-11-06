@@ -7,7 +7,6 @@ import app.regate.data.daos.MessageInboxDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.ProfileDao
-import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
 import app.regate.data.daos.UserRoomDao
 import app.regate.data.dto.chat.DeleteMessageRequest
@@ -23,12 +22,12 @@ import app.regate.data.mappers.MessageConversationToMessage
 import app.regate.data.mappers.MessageDtoToMessage
 import app.regate.data.mappers.MessageToMessageDto
 import app.regate.inject.ApplicationScope
-import app.regate.models.Grupo
+import app.regate.models.grupo.Grupo
 import app.regate.models.Message
 import app.regate.models.MessageInbox
-import app.regate.models.MyGroups
+import app.regate.models.grupo.MyGroups
 import app.regate.models.Profile
-import app.regate.models.UserGrupo
+import app.regate.models.grupo.UserGrupo
 import app.regate.models.UserRoom
 import app.regate.models.chat.Chat
 import app.regate.util.AppCoroutineDispatchers
@@ -239,6 +238,7 @@ class ChatRepository(
         return try {
             val response = chatDataSourceImpl.getMessages(id, page)
             withContext(dispatchers.computation) {
+                try {
                 response.results.also { results ->
                     val messages = async { results.map { messageConversationMapper.map(it) } }
                     val replies = async {
@@ -255,6 +255,9 @@ class ChatRepository(
                     }
                     val result = messages.await() + replies.await()
                     messageInboxDao.upsertAll(result)
+                }
+                }catch (e:Exception){
+                    throw e
                 }
             }
             response.nextPage

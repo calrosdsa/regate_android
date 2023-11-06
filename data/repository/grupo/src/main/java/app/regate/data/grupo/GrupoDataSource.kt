@@ -1,15 +1,15 @@
 package app.regate.data.grupo
 
-import app.regate.data.dto.ResponseMessage
+import GrupoInvitationRequest
+import PaginationInvitationResponse
+import PaginationUserInvitationsResponse
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
 import app.regate.data.dto.empresa.grupo.JoinGrupoResponse
-import app.regate.data.dto.empresa.grupo.PaginationGroupMessages
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
 import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
@@ -17,7 +17,6 @@ import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.PendingRequestCount
 import app.regate.data.dto.empresa.grupo.UserGrupoDto
 import app.regate.data.dto.empresa.grupo.setting.GrupoInvitationLinkDto
-import kotlinx.datetime.Instant
 
 interface GrupoDataSource {
    suspend fun myGroups():List<GrupoDto>
@@ -43,10 +42,18 @@ interface GrupoDataSource {
    suspend fun confirmPendingRequest(d:PendingRequest)
    suspend fun getPendingRequestCount(groupId: Long):PendingRequestCount
 
+   //Invitation
+   suspend fun sendInvitation(d:GrupoInvitationRequest)
+   suspend fun acceptInvitation(d:GrupoInvitationRequest)
+   suspend fun declineInvitation(d:GrupoInvitationRequest)
+
+   suspend fun getInvitationUsers(groupId: Long,page: Int):PaginationInvitationResponse
+   suspend fun getUserInvitations(page: Int):PaginationUserInvitationsResponse
+
+
 
    //Setting
    suspend fun getGrupoByIdLink(idLink:String):GrupoDto
-
    suspend fun getOrInsertInvitationLink(id:Long):GrupoInvitationLinkDto
    suspend fun resetInvitationLink(id:Long):GrupoInvitationLinkDto
 

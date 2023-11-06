@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import app.regate.compoundmodels.UserProfileGrupoAndSala
-import app.regate.models.UserGrupo
+import app.regate.models.grupo.UserGrupo
 import kotlinx.coroutines.flow.Flow
 
 @Dao

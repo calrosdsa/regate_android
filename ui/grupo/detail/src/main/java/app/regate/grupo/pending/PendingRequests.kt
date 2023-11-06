@@ -47,7 +47,7 @@ typealias PendingRequests= @Composable (
 @Inject
 @Composable
 fun PendingRequests(
-    viewModelFactory:(SavedStateHandle)->PendingRequestsViewModel,
+    viewModelFactory:(SavedStateHandle)-> PendingRequestsViewModel,
     @Assisted navigateUp: () -> Unit
 ){
     PendingRequests(

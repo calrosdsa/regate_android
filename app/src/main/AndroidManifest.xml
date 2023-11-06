@@ -84,6 +84,7 @@
 <!--                    android:host="gizmos" />-->
 <!--            </intent-filter>-->
 
+
         </activity>
 
         <provider

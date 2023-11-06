@@ -51,10 +51,12 @@ dependencies {
 
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
-
     implementation(libs.compose.material.material)
 
     implementation(libs.io.github.dokar3)
+
+
+
 
 //    ksp(libs.kotlininject.compiler)
 

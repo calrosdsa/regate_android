@@ -134,8 +134,10 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_room` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `sala_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL, `is_out` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_balance` (`balance_id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `coins` REAL NOT NULL, PRIMARY KEY(`balance_id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `chat` (`id` INTEGER NOT NULL, `photo` TEXT, `name` TEXT NOT NULL, `last_message` TEXT, `last_message_created` TEXT, `messages_count` INTEGER NOT NULL, `type_chat` INTEGER NOT NULL, `is_message_deleted` INTEGER NOT NULL, `parent_id` INTEGER NOT NULL, `is_user_out` INTEGER NOT NULL, `updated_at` TEXT NOT NULL, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `invitation_grupo` (`profile_id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `estado` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`profile_id`, `grupo_id`), FOREIGN KEY(`grupo_id`) REFERENCES `grupos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_invitation_grupo_grupo_id` ON `invitation_grupo` (`grupo_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ca35d9ee102eb3cda8d9d159cd738224')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '385d3edaa7cb12fad89a9cd2eddd1b7a')");
       }
 
       @Override
@@ -162,6 +164,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("DROP TABLE IF EXISTS `user_room`");
         db.execSQL("DROP TABLE IF EXISTS `user_balance`");
         db.execSQL("DROP TABLE IF EXISTS `chat`");
+        db.execSQL("DROP TABLE IF EXISTS `invitation_grupo`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -370,7 +373,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         final TableInfo _infoGrupos = new TableInfo("grupos", _columnsGrupos, _foreignKeysGrupos, _indicesGrupos);
         final TableInfo _existingGrupos = TableInfo.read(db, "grupos");
         if (!_infoGrupos.equals(_existingGrupos)) {
-          return new RoomOpenHelper.ValidationResult(false, "grupos(app.regate.models.Grupo).\n"
+          return new RoomOpenHelper.ValidationResult(false, "grupos(app.regate.models.grupo.Grupo).\n"
                   + " Expected:\n" + _infoGrupos + "\n"
                   + " Found:\n" + _existingGrupos);
         }
@@ -387,7 +390,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         final TableInfo _infoUserGrupo = new TableInfo("user_grupo", _columnsUserGrupo, _foreignKeysUserGrupo, _indicesUserGrupo);
         final TableInfo _existingUserGrupo = TableInfo.read(db, "user_grupo");
         if (!_infoUserGrupo.equals(_existingUserGrupo)) {
-          return new RoomOpenHelper.ValidationResult(false, "user_grupo(app.regate.models.UserGrupo).\n"
+          return new RoomOpenHelper.ValidationResult(false, "user_grupo(app.regate.models.grupo.UserGrupo).\n"
                   + " Expected:\n" + _infoUserGrupo + "\n"
                   + " Found:\n" + _existingUserGrupo);
         }
@@ -399,7 +402,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         final TableInfo _infoMyGroups = new TableInfo("my_groups", _columnsMyGroups, _foreignKeysMyGroups, _indicesMyGroups);
         final TableInfo _existingMyGroups = TableInfo.read(db, "my_groups");
         if (!_infoMyGroups.equals(_existingMyGroups)) {
-          return new RoomOpenHelper.ValidationResult(false, "my_groups(app.regate.models.MyGroups).\n"
+          return new RoomOpenHelper.ValidationResult(false, "my_groups(app.regate.models.grupo.MyGroups).\n"
                   + " Expected:\n" + _infoMyGroups + "\n"
                   + " Found:\n" + _existingMyGroups);
         }
@@ -580,9 +583,25 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoChat + "\n"
                   + " Found:\n" + _existingChat);
         }
+        final HashMap<String, TableInfo.Column> _columnsInvitationGrupo = new HashMap<String, TableInfo.Column>(4);
+        _columnsInvitationGrupo.put("profile_id", new TableInfo.Column("profile_id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsInvitationGrupo.put("grupo_id", new TableInfo.Column("grupo_id", "INTEGER", true, 2, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsInvitationGrupo.put("estado", new TableInfo.Column("estado", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsInvitationGrupo.put("created_at", new TableInfo.Column("created_at", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysInvitationGrupo = new HashSet<TableInfo.ForeignKey>(1);
+        _foreignKeysInvitationGrupo.add(new TableInfo.ForeignKey("grupos", "CASCADE", "CASCADE", Arrays.asList("grupo_id"), Arrays.asList("id")));
+        final HashSet<TableInfo.Index> _indicesInvitationGrupo = new HashSet<TableInfo.Index>(1);
+        _indicesInvitationGrupo.add(new TableInfo.Index("index_invitation_grupo_grupo_id", false, Arrays.asList("grupo_id"), Arrays.asList("ASC")));
+        final TableInfo _infoInvitationGrupo = new TableInfo("invitation_grupo", _columnsInvitationGrupo, _foreignKeysInvitationGrupo, _indicesInvitationGrupo);
+        final TableInfo _existingInvitationGrupo = TableInfo.read(db, "invitation_grupo");
+        if (!_infoInvitationGrupo.equals(_existingInvitationGrupo)) {
+          return new RoomOpenHelper.ValidationResult(false, "invitation_grupo(app.regate.models.grupo.InvitationGrupo).\n"
+                  + " Expected:\n" + _infoInvitationGrupo + "\n"
+                  + " Found:\n" + _existingInvitationGrupo);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "ca35d9ee102eb3cda8d9d159cd738224", "9f4dcbfe7371c843f24663f0835f2f93");
+    }, "385d3edaa7cb12fad89a9cd2eddd1b7a", "65321946c74e8c7ebf0c9d250faf8f6e");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -593,7 +612,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas","notification","message_sala","search_history","emoji","attention_schedule","user_room","user_balance","chat");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas","notification","message_sala","search_history","emoji","attention_schedule","user_room","user_balance","chat","invitation_grupo");
   }
 
   @Override
@@ -631,6 +650,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
       _db.execSQL("DELETE FROM `user_room`");
       _db.execSQL("DELETE FROM `user_balance`");
       _db.execSQL("DELETE FROM `chat`");
+      _db.execSQL("DELETE FROM `invitation_grupo`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();

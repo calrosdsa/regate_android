@@ -79,6 +79,7 @@ string copy_text
 string count_selected
 string create_group
 string create_sala
+string create_shortcut
 string decline
 string delete_chat
 string delete_message
@@ -121,6 +122,7 @@ string inbox_to_establecimiento
 string invitation_link
 string invitation_link_info
 string invitations
+string invite
 string join_a_group
 string language
 string later

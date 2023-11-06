@@ -1,16 +1,26 @@
 package app.regate.util
 
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.ChecksSdkIntAtLeast
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import app.regate.common.resources.R
 import app.regate.constant.AppUrl
 import app.regate.constant.Route
 import app.regate.inject.ActivityScope
@@ -93,4 +103,5 @@ class AppUtil(
     fun isRequiredAskForNotificationPermission():Boolean{
         return Build.VERSION.SDK_INT >= 33
     }
+
 }

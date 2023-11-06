@@ -33,6 +33,7 @@
     <string name="count_selected">%1$d seleccionado</string>
     <string name="create_group">Crear grupo</string>
     <string name="create_sala">Crear sala</string>
+    <string name="create_shortcut">Crear un acceso directo</string>
     <string name="decline">Declinar</string>
     <string name="delete_chat">Eliminar chat</string>
     <string name="delete_message">Delete message</string>
@@ -72,6 +73,7 @@
     <string name="invitation_link">Enlace de invitación</string>
     <string name="invitation_link_info">Las personas que accedan a este enlace podrán unirse al grupo sin necesidad de ser aprobadas por un administrador.</string>
     <string name="invitations">Invitaciones</string>
+    <string name="invite">Invitar</string>
     <string name="join_a_group">Unirse al grupo</string>
     <string name="language">Idioma</string>
     <string name="later">Luego</string>

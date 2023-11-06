@@ -3,12 +3,9 @@ package app.regate.data.daos
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import app.regate.compoundmodels.GrupoWithMessage
-import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
-import app.regate.models.Grupo
-import app.regate.models.MyGroups
+import app.regate.models.grupo.Grupo
+import app.regate.models.grupo.MyGroups
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
 
 @Dao
 abstract class RoomMyGroupsDao:RoomEntityDao<MyGroups>,MyGroupsDao {

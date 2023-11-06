@@ -1,17 +1,17 @@
 package app.regate.data.grupo
 
+import GrupoInvitationRequest
+import PaginationInvitationResponse
+import PaginationUserInvitationsResponse
 import app.regate.constant.HostMessage
 import app.regate.data.auth.store.AuthStore
-import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
 import app.regate.data.dto.empresa.grupo.JoinGrupoResponse
-import app.regate.data.dto.empresa.grupo.PaginationGroupMessages
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
 import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
@@ -28,12 +28,10 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
-import io.ktor.client.request.url
 import io.ktor.http.ContentType
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
-import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Inject
 
 @Inject
@@ -193,13 +191,54 @@ class GrupoDataSourceImpl(
             setBody(d)
         }
     }
-
     override suspend fun getPendingRequestCount(groupId: Long):PendingRequestCount {
         val token = authStore.get()?.accessToken
         return client.get("/v1/grupo/count/pending-requests/${groupId}/"){
             header("Authorization","Bearer $token")
         }.body()
     }
+
+    //Invitation
+    override suspend fun sendInvitation(d: GrupoInvitationRequest) {
+        val token = authStore.get()?.accessToken
+        client.post("/v1/grupo/send/invitation/"){
+            header("Authorization","Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }
+    }
+    override suspend fun acceptInvitation(d: GrupoInvitationRequest) {
+        val token = authStore.get()?.accessToken
+        client.post("/v1/grupo/accept/invitation/"){
+            header("Authorization","Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }
+    }
+    override suspend fun declineInvitation(d: GrupoInvitationRequest) {
+        val token = authStore.get()?.accessToken
+        client.post("/v1/grupo/decline/invitation/"){
+            header("Authorization","Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }
+    }
+    override suspend fun getInvitationUsers(
+        groupId: Long,
+        page: Int
+    ): PaginationInvitationResponse {
+        return client.get("/v1/grupo/invitations/${groupId}/?page=${page}").body()
+    }
+    override suspend fun getUserInvitations(
+        page: Int
+    ): PaginationUserInvitationsResponse {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/grupo/user/invitations/?page=${page}"){
+            header("Authorization","Bearer $token")
+        }.body()
+    }
+
+
 
     //SETTING
     override suspend fun getGrupoByIdLink(idLink: String):GrupoDto {

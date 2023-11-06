@@ -6,10 +6,7 @@ import app.regate.data.common.AddressDevice
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.data.dto.empresa.salas.SalaDto
-import app.regate.models.Grupo
-import app.regate.models.MyGroups
-import app.regate.models.Profile
+import app.regate.models.grupo.MyGroups
 import app.regate.models.SearchHistory
 
 data class SearchState(

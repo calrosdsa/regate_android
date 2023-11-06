@@ -64,7 +64,7 @@ import app.regate.constant.Route
 import app.regate.data.dto.empresa.grupo.MessageSalaPayload
 import app.regate.models.chat.Chat
 
-typealias MyChats= @Composable (
+typealias MyChats = @Composable (
     navController:NavController,
 )-> Unit
 

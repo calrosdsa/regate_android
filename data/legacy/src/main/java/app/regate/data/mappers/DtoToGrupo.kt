@@ -1,11 +1,11 @@
 package app.regate.data.mappers
 
 import app.regate.data.dto.empresa.grupo.GrupoDto
-import app.regate.models.Grupo
+import app.regate.models.grupo.Grupo
 import me.tatarka.inject.annotations.Inject
 
 @Inject
-class DtoToGrupo:Mapper<GrupoDto,Grupo> {
+class DtoToGrupo:Mapper<GrupoDto, Grupo> {
     override suspend fun map(from: GrupoDto): Grupo {
         return Grupo(
             id = from.id,

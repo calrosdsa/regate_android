@@ -1,5 +1,7 @@
 package app.regate.data.grupo
 
+import GrupoInvitationRequest
+import InvitationEstado
 import app.regate.data.daos.ChatDao
 import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.MyGroupsDao
@@ -26,9 +28,11 @@ import app.regate.data.mappers.DtoToGrupo
 import app.regate.data.mappers.DtoToUserGrupo
 import app.regate.data.mappers.UserGroupDtoToProfile
 import app.regate.inject.ApplicationScope
-import app.regate.models.MyGroups
+import app.regate.models.grupo.MyGroups
 import app.regate.models.Profile
 import app.regate.models.chat.Chat
+import app.regate.models.grupo.Grupo
+import app.regate.models.grupo.InvitationGrupo
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.withContext
 import me.tatarka.inject.annotations.Inject
@@ -62,7 +66,8 @@ class GrupoRepository(
             val myGroups = response.map { MyGroups(
                 id = it.id,
                 request_estado = GrupoRequestEstado.fromInt(it.grupo_request_estado),
-                )}
+                )
+            }
             myGroupsDao.deleteMyGroups(GrupoRequestEstado.JOINED.ordinal)
             myGroupsDao.upsertAll(myGroups)
             grupoDao.upsertAll(grupos)
@@ -76,7 +81,8 @@ class GrupoRepository(
             val myGroups = response.map { MyGroups(
                 id = it.id,
                 request_estado = GrupoRequestEstado.fromInt(it.grupo_request_estado
-                ))}
+                ))
+            }
             myGroupsDao.deleteMyGroups(GrupoRequestEstado.PENDING.ordinal)
             myGroupsDao.upsertAll(myGroups)
 //            grupoDao.upsertAll(grupos)
@@ -240,6 +246,102 @@ class GrupoRepository(
     suspend fun getPendingRequestCount(grupoId:Long):PendingRequestCount{
         return grupoDataSourceImpl.getPendingRequestCount(grupoId)
     }
+    //Invitation
+    suspend fun updateInvitationSource(grupoId: Long,page: Int):Int{
+        return try {
+            val res = grupoDataSourceImpl.getInvitationUsers(groupId = grupoId, page = page)
+            withContext(dispatchers.io) {
+                try {
+                    grupoDao.deleteInvitations(grupoId)
+                    res.results.map {result->
+                    grupoDao.insertInvitation(
+                        InvitationGrupo(
+                            profile_id = result.profile_id,
+                            grupo_id = result.grupo_id,
+                            estado = result.estado,
+                        )
+                    )
+                    }
+                    val profiles = res.results.map {result->
+                            Profile(
+                                id = result.profile_id,
+                                nombre = result.nombre,
+                                apellido = result.apellido,
+                                profile_photo = result.profile_photo
+                            )
+                    }
+                    profileDao.insertAllonConflictIgnore(profiles)
+                } catch (e: java.lang.Exception) {
+                    throw e
+                }
+            }
+            res.page
+        }catch (e:Exception){
+            0
+        }
+    }
+    suspend fun updateUserInvitationsSource(profileId:Long,page: Int):Int {
+        return try {
+            val res = grupoDataSourceImpl.getUserInvitations(page = page)
+            withContext(dispatchers.io) {
+                try {
+                    grupoDao.deleteUserInvitations(profileId)
+                    val grupos = res.results.map { result ->
+                        Grupo(
+                            id = result.grupo_id,
+                            name = result.name,
+                            photo = result.photo,
+                        )
+                    }
+                    grupoDao.upsertAll(grupos)
+                    res.results.map { result ->
+                        grupoDao.insertInvitation(
+                            InvitationGrupo(
+                                profile_id = result.profile_id,
+                                grupo_id = result.grupo_id,
+                                estado = result.estado,
+                            )
+                        )
+                    }
+                } catch (e: Exception) {
+                    throw e
+                }
+            }
+            res.page
+        } catch (e: Exception) {
+            0
+        }
+    }
+    suspend fun sendInvitation(d:GrupoInvitationRequest) {
+        withContext(dispatchers.io) {
+            try {
+                grupoDataSourceImpl.sendInvitation(d)
+                grupoDao.updateInvitationEstado(d.grupo_id,d.profile_id,InvitationEstado.PENDIENTE.ordinal)
+            } catch (e: Exception) {
+                throw e
+            }
+        }
+    }
+    suspend fun declineGrupoInvitation(d:GrupoInvitationRequest){
+        withContext(dispatchers.io){
+            try {
+                grupoDataSourceImpl.declineInvitation(d)
+                grupoDao.updateInvitationEstado(d.grupo_id,d.profile_id,InvitationEstado.NONE.ordinal)
+            }catch (e:Exception){
+                throw e
+            }
+        }
+    }
+    suspend fun acceptGrupoInvition(d:GrupoInvitationRequest){
+        withContext(dispatchers.io){
+            try {
+                grupoDataSourceImpl.acceptInvitation(d)
+                grupoDao.updateInvitationEstado(d.grupo_id,d.profile_id,InvitationEstado.ACEPTADO.ordinal)
+            }catch (e:Exception){
+                throw e
+            }
+        }
+    }
 
     //SETTING
     suspend fun getGrupoByIdLink(idLink:String):GrupoDto{
@@ -251,4 +353,7 @@ class GrupoRepository(
     suspend fun resetInvitationLink(id:Long):GrupoInvitationLinkDto{
         return grupoDataSourceImpl.resetInvitationLink(id)
     }
+
+
+
 }

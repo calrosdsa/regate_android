@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import app.regate.api.UiMessage
 import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.SearchFilterRequest
-import app.regate.models.MyGroups
+import app.regate.models.grupo.MyGroups
 
 @Immutable
 data class SearchSalasState(

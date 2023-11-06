@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Flag
+import androidx.compose.material.icons.filled.GroupAdd
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.PendingActions
@@ -32,13 +33,14 @@ import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.resources.R
 import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.data.common.encodeMediaData
+import app.regate.models.grupo.Grupo
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun GrupoMenu(
-    grupo: app.regate.models.Grupo,
+    grupo: Grupo,
     isCurrentUserisAdmin:Boolean?,
     isCurrentUserSuperAdmin:Boolean,
     pendingRequestCount:Int,
@@ -52,6 +54,7 @@ internal fun GrupoMenu(
     navigateToChatGroup: (Long) -> Unit,
     navigateToPhoto: (String) -> Unit,
     navigateToInvitationLink:(Long)->Unit,
+    navigateToInviteUser:(Long)->Unit
 ){
     Column() {
         Box(){
@@ -78,6 +81,15 @@ internal fun GrupoMenu(
                 onClick = {createSala() },
                 leadingIcon = {
                     Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+                }
+            )
+        }
+        if (isCurrentUserisAdmin == true) {
+            DropdownMenuItem(
+                text = { Text(text = stringResource(id = R.string.invite)) },
+                onClick = { navigateToInviteUser(grupo.id) },
+                leadingIcon = {
+                    Icon(imageVector = Icons.Filled.GroupAdd, contentDescription = null)
                 }
             )
         }

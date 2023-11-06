@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.material3.Badge
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -43,39 +44,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 
-//typealias UserGroups = @Composable (
-//    navigateToChat:(id:Long)->Unit,
-////    navigateToSignUpScreen:() -> Unit,
-//
-//) -> Unit
-//
-//@Inject
-//@Composable
-//fun UserGroups (
-//    viewModelFactory:()-> UserGroupsViewModel,
-//    @Assisted navigateToChat: (id: Long) -> Unit,
-////    @Assisted navigateToReserva: (id:Long) -> Unit,
-////    viewModelFactory:()->ReservasViewModel
-//){
-//    UserGroups(
-//        viewModel = viewModel(factory = viewModelFactory),
-//        navigateToChat = navigateToChat
-//    )
-//}
-
-
-//@Composable
-//internal fun UserGroups (
-//    viewModel: UserGroupsViewModel,
-//    navigateToChat: (id: Long) -> Unit
-//){
-//    val state by viewModel.state.collectAsState()
-//    UserGroups(viewState = state, navigateToChat = navigateToChat)
-//}
 
 
 @Composable
-internal fun ChatsUser (
+internal fun ChatsUser(
     lazyPagingItems: LazyPagingItems<Chat>,
     coroutineScope: CoroutineScope,
     viewState:ChatsState,
@@ -83,6 +55,7 @@ internal fun ChatsUser (
     deleteChat:()->Unit,
     formatShortRelativeTime:(Instant)->String,
     navigateToChat: (id: Long,grupoId:Long,typeChat:Int) -> Unit,
+    navigateToParent:(Long,Int)->Unit,
 ){
     val sheetState = rememberBottomSheetState()
     var deleteDialogConfirmation by remember {
@@ -112,7 +85,8 @@ internal fun ChatsUser (
             chat = viewState.selectedChat,
             close = {coroutineScope.launch {
                 sheetState.collapse()
-            }}
+            }},
+           navigateToParent = navigateToParent
         )
     }
 

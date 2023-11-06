@@ -8,6 +8,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import app.regate.api.UiMessageManager
+import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.account.user.ProfileDto
 import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.ObserveAuthState
@@ -38,7 +39,6 @@ class SearchProfilesViewModel(
     val pagedList: Flow<PagingData<ProfileDto>> = Pager(PAGING_CONFIG){
         PaginationSearchProfiles(init =filterData.value.query.isNotBlank()){page->
            usersRepository.searchProfiles(filterData.value,page,20)
-//            salaRepository.filterSalas()
         }
     }.flow.cachedIn(viewModelScope)
     val state:StateFlow<SearchSalasState> = combine(

@@ -10,6 +10,7 @@ import android.app.NotificationChannel
 import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.content.IntentSender
 import android.net.Uri
 import android.os.Build
@@ -28,6 +29,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import androidx.lifecycle.viewmodel.viewModelFactory
 import app.regate.ComposeScreens
 import app.regate.common.composes.LocalAppDateFormatter
@@ -75,6 +79,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initListener(this)
+
+//    val shortcut = ShortcutInfoCompat.Builder(this, "id1")
+//        .setShortLabel("Website")
+//        .setLongLabel("Open the website")
+//        .setIcon(IconCompat.createWithResource(this, R.drawable.icon_mac))
+//        .setIntent(
+//            Intent(Intent.ACTION_VIEW,
+//            Uri.parse("https://www.mysite.example.com/"))
+//        )
+//        .build()
+//
+//    ShortcutManagerCompat.pushDynamicShortcut(this, shortcut)
 //        val action :String? = intent.action
         val dataUri:Uri? = intent.data
         val grupoId = dataUri?.getQueryParameter("grupoId")

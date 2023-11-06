@@ -73,6 +73,8 @@ import app.regate.search.salas.SearchSalas
 import app.regate.system.notification.Notifications
 import app.regate.system.report.Report
 import app.regate.chats.mychats.MyChats
+import app.regate.grupo.invitations.InviteUser
+import app.regate.grupos.userinvitations.UserInvitations
 import app.regate.usersalas.UserSalas
 import app.regate.welcome.Welcome
 import me.tatarka.inject.annotations.Inject
@@ -128,9 +130,11 @@ class ComposeScreens(
     val grupo:Grupo,
     val userGrupoRequests:UserGrupoRequests,
     val infoGrupo:InfoGrupo,
+    val inviteUser: InviteUser,
     val invitationLink:InvitationLink,
     val invitationGrupo: InvitationGrupo,
-    val pendingRequests:PendingRequests,
+    val userInvitations: UserInvitations,
+    val pendingRequests: PendingRequests,
     val grupoSalas:GrupoSalas,
     val userSalas:UserSalas,
     val filterGroups:FilterGroups,

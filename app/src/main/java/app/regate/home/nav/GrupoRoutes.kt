@@ -106,6 +106,29 @@ internal fun NavGraphBuilder.GrupoRoutes(
             openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
         )
     }
+
+    animatedComposable(
+        route = Route.GRUPO_INVITE_USER arg "id",
+        arguments = listOf(
+            navArgument("id") {
+                type = NavType.LongType
+            },
+        ),
+    ) {
+        composeScreens.inviteUser(
+            navigateUp = navController::navigateUp,
+            navigateToProfile = {navController.navigate(Route.PROFILE id it)}
+        )
+    }
+
+    animatedComposable(
+        route = Route.USER_INVITATIONS ,
+    ) {
+        composeScreens.userInvitations(
+            navigateUp = navController::navigateUp,
+        )
+    }
+
     animatedComposable(
         route = Route.USER_PENDING_REQUESTS,
     ) {

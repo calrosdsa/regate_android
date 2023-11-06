@@ -13,7 +13,7 @@ import androidx.room.SharedSQLiteStatement;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.compoundmodels.UserProfileGrupoAndSala;
-import app.regate.models.UserGrupo;
+import app.regate.models.grupo.UserGrupo;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.Integer;

@@ -1,11 +1,8 @@
 package app.regate.data.daos
 
-import app.regate.compoundmodels.GrupoWithMessage
-import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
-import app.regate.models.Grupo
-import app.regate.models.MyGroups
+import app.regate.models.grupo.Grupo
+import app.regate.models.grupo.MyGroups
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
 
 interface MyGroupsDao:EntityDao<MyGroups> {
     fun observeUserGroups(): Flow<List<Grupo>>
