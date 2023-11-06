@@ -8,7 +8,7 @@ import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
 import app.regate.data.dto.FileData
 import app.regate.data.users.UsersRepository
-import app.regate.domain.observers.ObserveProfile
+import app.regate.domain.observers.user.ObserveProfile
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

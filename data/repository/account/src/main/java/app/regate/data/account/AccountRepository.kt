@@ -1,5 +1,6 @@
 package app.regate.data.account
 
+import app.regate.data.common.getDataEntityFromJson
 import app.regate.data.daos.FavoriteEstablecimientoDao
 import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.NotificationDao
@@ -20,6 +21,8 @@ import app.regate.models.account.User
 import app.regate.settings.AppPreferences
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
 @ApplicationScope
 @Inject
@@ -78,9 +81,13 @@ class AccountRepository(
         ))
     }
     suspend fun  login(d: LoginRequest) {
-        val fcmToken = appPreferences.fcmToken
-        val data = d.copy(fcm_token = fcmToken)
         withContext(dispatchers.computation){
+        val fcmToken = appPreferences.fcmToken
+        val categories = try { Json.decodeFromString(appPreferences.categories) }catch(e:Exception){ emptyList<Int>() }
+        val data = d.copy(
+            fcm_token = fcmToken,
+            categories = categories
+        )
             try {
                 accountDataSourceImpl.login(data).also {
                     updateUser(dtoToUser.map(it.user))
@@ -92,10 +99,11 @@ class AccountRepository(
         }
     }
     suspend fun signUp(d:SignUpRequest){
-        val fcmToken = appPreferences.fcmToken
-        val data = d.copy(fcm_token = fcmToken)
         withContext(dispatchers.computation){
             try{
+                val fcmToken = appPreferences.fcmToken
+                val categories = try { Json.decodeFromString(appPreferences.categories) }catch(e:Exception){ emptyList<Int>() }
+                val data = d.copy(fcm_token = fcmToken, categories = categories)
             accountDataSourceImpl.signUp(data).also {
                 updateUser(dtoToUser.map(it.user))
                 insertProfile(it.user)
@@ -114,12 +122,23 @@ class AccountRepository(
             }
         }
     }
-    suspend fun  socialLogin(user: UserDto){
-        withContext(dispatchers.computation){
-         accountDataSourceImpl.socialLogin(SocialRequest(user = user,fcm_token = appPreferences.fcmToken)).also {
-            updateUser(dtoToUser.map(it.user))
-             insertProfile(it.user)
-        }
+    suspend fun  socialLogin(user: UserDto) {
+        withContext(dispatchers.computation) {
+            try {
+                val categories = try { Json.decodeFromString(appPreferences.categories) }catch(e:Exception){ emptyList<Int>() }
+                accountDataSourceImpl.socialLogin(
+                    SocialRequest(
+                        user = user,
+                        fcm_token = appPreferences.fcmToken,
+                        categories = categories
+                    )
+                ).also {
+                    updateUser(dtoToUser.map(it.user))
+                    insertProfile(it.user)
+                }
+            } catch (e: Exception) {
+                //TODO()
+            }
         }
     }
     suspend fun saveFcmToken(data:FcmRequest){

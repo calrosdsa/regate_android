@@ -10,7 +10,6 @@ import app.regate.data.dto.empresa.instalacion.InstalacionRequest
 import app.regate.data.dto.empresa.instalacion.InstalacionesAvailables
 import app.regate.data.dto.empresa.instalacion.PaginationInstalacionReponse
 import app.regate.inject.ApplicationScope
-import app.regate.models.Establecimiento
 import app.regate.models.Instalacion
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.flow.Flow

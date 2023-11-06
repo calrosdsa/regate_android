@@ -192,6 +192,22 @@ class GrupoRepository(
     suspend fun filterGrupos(d:FilterGrupoData,page: Int):PaginationGroupsResponse{
         return grupoDataSourceImpl.filterGrupos(d,page)
     }
+    suspend fun updateGruposSource(page: Int):Int{
+        return try{
+            val res = grupoDataSourceImpl.filterGrupos(FilterGrupoData(category_id = 1),page)
+            withContext(dispatchers.io){
+                try{
+                    val grupos = res.results.map{ dtoToGrupo.map(it)}
+                    grupoDao.insertAllonConflictIgnore(grupos)
+                }catch(e:Exception){
+                    throw e
+                }
+            }
+            res.page
+        }catch(e:Exception){
+            0
+        }
+    }
 
     suspend fun getUsersGroup(id:Long){
         withContext(dispatchers.computation){

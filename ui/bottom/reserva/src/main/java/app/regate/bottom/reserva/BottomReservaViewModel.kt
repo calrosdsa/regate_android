@@ -24,6 +24,7 @@ import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -127,11 +128,18 @@ class BottomReservaViewModel(
                 Log.d("DEBUG_APP","ESTABLECIIENTO_ID $establecimientoId")
                 delay(1000)
 //                uiMessageManager.emitMessage(UiMessage(message = "Se ha completado el proceso"))
-                uiMessageManager.emitMessage(UiMessage(message = res.message))
+                uiMessageManager.emitMessage(UiMessage(message = res.message,type = ReservarMessageType.VER_RESERVA.ordinal))
                 loadingState.removeLoader()
             }catch (e:ResponseException){
                 loadingState.removeLoader()
+                when(e.response.status){
+                 HttpStatusCode.NotAcceptable ->{
+                     uiMessageManager.emitMessage(UiMessage(message =  e.response.body<ResponseMessage>().message, type = ReservarMessageType.MONTO_INSUFICIENTE.ordinal))
+                 }
+                    else ->{
                 uiMessageManager.emitMessage(UiMessage(message = e.response.body<ResponseMessage>().message))
+                    }
+                }
             }catch(e:Exception){
                 loadingState.removeLoader()
                 uiMessageManager.emitMessage(UiMessage(message = e.localizedMessage?:""))

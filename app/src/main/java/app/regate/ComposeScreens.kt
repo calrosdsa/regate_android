@@ -44,7 +44,7 @@ import app.regate.discover.filter.Filter
 import app.regate.entidad.actividades.ActividadesEstablecimiento
 import app.regate.favorites.Favorites
 import app.regate.grupo.Grupo
-import app.regate.grupos.FilterGroups
+import app.regate.grupos.filtergrupos.FilterGroups
 import app.regate.grupos.Grupos
 import app.regate.media.photo.Photo
 import app.regate.profile.Profile
@@ -137,8 +137,10 @@ class ComposeScreens(
     val pendingRequests: PendingRequests,
     val grupoSalas:GrupoSalas,
     val userSalas:UserSalas,
-    val filterGroups:FilterGroups,
+    val filterGroups: FilterGroups,
     val createGroup: CreateGroup,
+
+
 
     val establecimientoFilter: EstablecimientoFilter,
 

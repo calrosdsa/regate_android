@@ -30,8 +30,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDismissState
@@ -108,7 +110,11 @@ fun Reservar(
         navigateToConversation = navigateToConversation,
         navigateToCreateSala = navigateToCreateSala,
         navigateToSelectGroup = navigateToSelectGroup,
-        navigateToInstalacion = {navController.navigate(Route.INSTALACION id  it)}
+        navigateToInstalacion = {navController.navigate(Route.INSTALACION id  it)},
+        navigateToReservas = { navController.navigate(Route.RESERVAS)
+        },
+        navigateToRecarga = {navController.navigate(Route.RECARGAR)}
+
 //        navigateToReserva = navigateToReserva
     )
 }
@@ -124,7 +130,8 @@ internal fun Reservar(
     navigateToCreateSala: (Long) -> Unit,
     navigateToSelectGroup: (String) -> Unit,
     navigateToInstalacion:(Long)->Unit,
-//    navigateToReserva: () -> Unit,
+    navigateToReservas: () -> Unit,
+    navigateToRecarga:()->Unit,
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -150,7 +157,9 @@ internal fun Reservar(
         navigateToSelectGroup = {
             viewModel.navigateSelect(navigateToSelectGroup)
         },
-        navigateToInstalacion = navigateToInstalacion
+        navigateToInstalacion = navigateToInstalacion,
+        navigateToRecarga = navigateToRecarga,
+        navigateToReservas = navigateToReservas
     )
 }
 
@@ -169,19 +178,11 @@ internal fun Reservar(
     openMap:(lng:String?,lat:String?,label:String?)->Unit,
     navigateToCreateSala: (Long) -> Unit,
     navigateToSelectGroup: () -> Unit,
-    navigateToInstalacion:(Long)->Unit
+    navigateToInstalacion:(Long)->Unit,
+    navigateToReservas: () -> Unit,
+    navigateToRecarga:()->Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-    val dismissSnackbarState = rememberDismissState(
-        confirmValueChange = { value ->
-            if (value != DismissValue.Default) {
-                snackbarHostState.currentSnackbarData?.dismiss()
-                true
-            } else {
-                false
-            }
-        },
-    )
     val confirmate = remember {
         mutableStateOf(false)
     }
@@ -190,15 +191,9 @@ internal fun Reservar(
     }
     val currentTime =Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).toInstant(
         TimeZone.UTC)
-//    val currentTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).toInstant(
-//        TimeZone.currentSystemDefault())
-//    val price =  viewState.cupos.reduce{sum,element->
-//        sum.price+element.price
-//    }.price
 
     if (viewState.loading) {
         Dialog(onDismissRequest = { /*TODO*/ }) {
-//        Text(text = "Title")
             CircularProgressIndicator()
         }
     }
@@ -213,12 +208,35 @@ internal fun Reservar(
 
     viewState.message?.let { message ->
         LaunchedEffect(message) {
-            snackbarHostState.showSnackbar(message.message)
+            when (message.type) {
+                ReservarMessageType.MONTO_INSUFICIENTE.ordinal -> {
+                    val result = snackbarHostState.showSnackbar(
+                        message.message, actionLabel = "Recargar",duration = SnackbarDuration.Short,
+                    )
+                    when(result){
+                        SnackbarResult.ActionPerformed -> { navigateToRecarga() }
+                        else ->{}
+                    }
+                }
+                ReservarMessageType.VER_RESERVA.ordinal -> {
+                    val result = snackbarHostState.showSnackbar(
+                        message.message, actionLabel = "Ver",duration = SnackbarDuration.Short,
+                    )
+                    when(result){
+                        SnackbarResult.ActionPerformed -> { navigateToReservas()}
+                        else ->{}
+                    }
+                }
+               else -> {
+                    snackbarHostState.showSnackbar(message.message)
+                }
+            }
             // Notify the view model that the message has been dismissed
             onMessageShown(message.id)
         }
     }
     Scaffold(
+        snackbarHost = {SnackbarHost(hostState = snackbarHostState)},
         topBar = {
             SimpleTopBar(navigateUp = { navigateUp()},title = viewState.instalacion?.name,
             actions = {
@@ -372,7 +390,7 @@ internal fun Reservar(
                     if(viewState.cupos.isNotEmpty()){
 
                     Text(
-                        text = "Hora en la que se jugara",
+                        text = "Hora de la reserva",
                         style = MaterialTheme.typography.labelLarge
                     )
                     Text(
@@ -435,18 +453,6 @@ internal fun Reservar(
                     )
                 }
 
-
-
-            SnackbarHost(hostState = snackbarHostState) { data ->
-                SwipeToDismiss(
-                    state = dismissSnackbarState,
-                    background = {},
-                    dismissContent = { Snackbar(snackbarData = data) },
-                    modifier = Modifier
-                        .padding(horizontal = Layout.bodyMargin)
-                        .fillMaxWidth(),
-                )
-            }
         }
     }
 

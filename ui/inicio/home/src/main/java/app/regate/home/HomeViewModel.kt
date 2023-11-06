@@ -8,12 +8,15 @@ import app.regate.data.common.AddressDevice
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
+import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.establecimiento.EstablecimientoRepository
+import app.regate.data.grupo.GrupoRepository
 import app.regate.data.sala.SalaRepository
 import app.regate.domain.Converter
 import app.regate.domain.observers.ObserveAuthState
+import app.regate.domain.observers.grupo.ObserveGrupos
 import app.regate.extensions.combine
 import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
@@ -36,8 +39,10 @@ class HomeViewModel(
     private val accountRepository: AccountRepository,
     private val establecimientoRepository: EstablecimientoRepository,
     private val converter:Converter,
+    private val grupoRepository: GrupoRepository,
 //    private val salaRepository: SalaRepository,
 //    authStore: AuthStore,
+    observeGrupo:ObserveGrupos,
     observeAuthState: ObserveAuthState,
     ):ViewModel() {
     private val loadingState = ObservableLoadingCounter()
@@ -47,12 +52,14 @@ class HomeViewModel(
         data,
         converter.observeAddress(),
         observeAuthState.flow,
-    ){loading,data,addressDevice,authState->
+        observeGrupo.flow,
+    ){loading,data,addressDevice,authState,grupos->
         HomeState(
             loading = loading,
             authState = authState,
             data = data,
-            addressDevice = addressDevice
+            addressDevice = addressDevice,
+            grupos = grupos
         )
     }.stateIn(
         scope = viewModelScope,
@@ -63,7 +70,9 @@ class HomeViewModel(
     init{
 //        me()
         observeAuthState(Unit)
+        observeGrupo(Unit)
         viewModelScope.launch {
+            launch { getGrupos() }
 //            salaRepository.insertSalas()
         converter.observeAddress().collectLatest {
             Log.d("API_REQUEST","$it DATA ------")
@@ -91,6 +100,16 @@ class HomeViewModel(
             }catch(e:Exception){
                 loadingState.removeLoader()
                 Log.d("API_REQUEST",e.localizedMessage?:e.message?:"Unexpected")
+            }
+        }
+    }
+
+    fun getGrupos(){
+        viewModelScope.launch {
+            try{
+                grupoRepository.updateGruposSource(1)
+            }catch (e:Exception){
+                Log.d("DEBUG_APP_",e.localizedMessage?:e.message?:"Unexpected")
             }
         }
     }

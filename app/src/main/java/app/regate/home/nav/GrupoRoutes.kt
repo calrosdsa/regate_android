@@ -176,4 +176,17 @@ internal fun NavGraphBuilder.GrupoRoutes(
             navigateToSelectEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO_FILTER id it)}
         )
     }
+
+    animatedComposable(
+        route = Route.FILTER_GRUPOS,
+    ){
+        composeScreens.filterGroups(
+            navigateUp = navController::navigateUp,
+            navigateToGroup = {navController.navigate(Route.GRUPO id it)},
+            navigateToInfoGrupo = {navController.navigate(Route.INFO_GRUPO id it)},
+            openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)}
+        )
+    }
+
+
 }

@@ -18,7 +18,7 @@ import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.compoundmodels.ReservaDetail;
 import app.regate.data.db.AppTypeConverters;
 import app.regate.data.db.DateTimeTypeConverters;
-import app.regate.models.Establecimiento;
+import app.regate.models.establecimiento.Establecimiento;
 import app.regate.models.Instalacion;
 import app.regate.models.Reserva;
 import java.lang.Boolean;
@@ -382,7 +382,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
 
   @Override
   public Flow<List<Reserva>> observeReservas() {
-    final String _sql = "select * from reservas";
+    final String _sql = "select * from reservas order by start_date desc";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, true, new String[] {"reservas"}, new Callable<List<Reserva>>() {
       @Override

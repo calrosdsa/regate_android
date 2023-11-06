@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 abstract class RoomReservaDao:RoomEntityDao<Reserva> ,ReservaDao {
     @Transaction
-    @Query("select * from reservas")
+    @Query("select * from reservas order by start_date desc")
     abstract override fun observeReservas(): Flow<List<Reserva>>
 
     @Transaction

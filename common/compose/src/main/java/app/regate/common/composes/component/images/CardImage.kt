@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -20,6 +21,7 @@ import app.regate.common.resources.R
 fun CardImage(
     modifier:Modifier = Modifier,
     isUser:Boolean = false,
+    enabled:Boolean = true,
     src:String? = null,
     colorFilter: ColorFilter? = null,
     contentDescription:String = "",
@@ -28,14 +30,16 @@ fun CardImage(
     onClick:()->Unit = {}
 ){
     if(!src.isNullOrBlank()){
-        Card(modifier = modifier,
+        Surface(
+            enabled = enabled,
+            modifier = modifier,
+            onClick = onClick,
             shape = shape) {
             AsyncImage(
                 model = src,
                 contentDescription = contentDescription,
                 requestBuilder = { crossfade(true) },
-                modifier = Modifier.fillMaxSize()
-                    .clickable { onClick() },
+                modifier = Modifier.fillMaxSize(),
                 contentScale = contentScale,
                 colorFilter = colorFilter
             )
@@ -57,8 +61,9 @@ fun CardImage(
                 )
             }
         }else{
-        Card(modifier = modifier,
-            shape = shape) {
+            Card(
+                modifier = modifier,
+                shape = shape){
              Image(
                  painter = painterResource(id = R.drawable.default_image),
                 contentDescription = contentDescription,

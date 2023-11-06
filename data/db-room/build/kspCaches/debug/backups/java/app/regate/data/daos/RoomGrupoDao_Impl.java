@@ -70,7 +70,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT OR IGNORE INTO `grupos` (`id`,`uuid`,`name`,`description`,`created_at`,`photo`,`is_visible`,`profile_id`,`visibility`) VALUES (?,?,?,?,?,?,?,?,?)";
+        return "INSERT OR IGNORE INTO `grupos` (`id`,`uuid`,`name`,`description`,`created_at`,`photo`,`is_visible`,`profile_id`,`visibility`,`members`) VALUES (?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -99,6 +99,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
         statement.bindLong(7, _tmp_1);
         statement.bindLong(8, entity.getProfile_id());
         statement.bindLong(9, entity.getVisibility());
+        statement.bindLong(10, entity.getMembers());
       }
     };
     this.__deletionAdapterOfGrupo = new EntityDeletionOrUpdateAdapter<Grupo>(__db) {
@@ -118,7 +119,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `grupos` SET `id` = ?,`uuid` = ?,`name` = ?,`description` = ?,`created_at` = ?,`photo` = ?,`is_visible` = ?,`profile_id` = ?,`visibility` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `grupos` SET `id` = ?,`uuid` = ?,`name` = ?,`description` = ?,`created_at` = ?,`photo` = ?,`is_visible` = ?,`profile_id` = ?,`visibility` = ?,`members` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -147,7 +148,8 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
         statement.bindLong(7, _tmp_1);
         statement.bindLong(8, entity.getProfile_id());
         statement.bindLong(9, entity.getVisibility());
-        statement.bindLong(10, entity.getId());
+        statement.bindLong(10, entity.getMembers());
+        statement.bindLong(11, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
@@ -186,7 +188,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `grupos` (`id`,`uuid`,`name`,`description`,`created_at`,`photo`,`is_visible`,`profile_id`,`visibility`) VALUES (?,?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `grupos` (`id`,`uuid`,`name`,`description`,`created_at`,`photo`,`is_visible`,`profile_id`,`visibility`,`members`) VALUES (?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -215,12 +217,13 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
         statement.bindLong(7, _tmp_1);
         statement.bindLong(8, entity.getProfile_id());
         statement.bindLong(9, entity.getVisibility());
+        statement.bindLong(10, entity.getMembers());
       }
     }, new EntityDeletionOrUpdateAdapter<Grupo>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `grupos` SET `id` = ?,`uuid` = ?,`name` = ?,`description` = ?,`created_at` = ?,`photo` = ?,`is_visible` = ?,`profile_id` = ?,`visibility` = ? WHERE `id` = ?";
+        return "UPDATE `grupos` SET `id` = ?,`uuid` = ?,`name` = ?,`description` = ?,`created_at` = ?,`photo` = ?,`is_visible` = ?,`profile_id` = ?,`visibility` = ?,`members` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -249,7 +252,8 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
         statement.bindLong(7, _tmp_1);
         statement.bindLong(8, entity.getProfile_id());
         statement.bindLong(9, entity.getVisibility());
-        statement.bindLong(10, entity.getId());
+        statement.bindLong(10, entity.getMembers());
+        statement.bindLong(11, entity.getId());
       }
     });
     this.__upsertionAdapterOfInvitationGrupo = new EntityUpsertionAdapter<InvitationGrupo>(new EntityInsertionAdapter<InvitationGrupo>(__db) {
@@ -556,6 +560,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
             final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
+            final int _cursorIndexOfMembers = CursorUtil.getColumnIndexOrThrow(_cursor, "members");
             final Grupo _result;
             if (_cursor.moveToFirst()) {
               final long _tmpId;
@@ -592,7 +597,9 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final int _tmpVisibility;
               _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
-              _result = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility);
+              final int _tmpMembers;
+              _tmpMembers = _cursor.getInt(_cursorIndexOfMembers);
+              _result = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpMembers);
             } else {
               _result = null;
             }
@@ -614,9 +621,76 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
   }
 
   @Override
-  public Flow<List<Grupo>> observeGrupos() {
-    final String _sql = "select * from grupos";
+  public PagingSource<Integer, Grupo> observePaginationGroups() {
+    final String _sql = "select * from grupos ";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return new LimitOffsetPagingSource<Grupo>(_statement, __db, "grupos") {
+      @Override
+      @NonNull
+      protected List<Grupo> convertRows(@NonNull final Cursor cursor) {
+        final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(cursor, "id");
+        final int _cursorIndexOfUuid = CursorUtil.getColumnIndexOrThrow(cursor, "uuid");
+        final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(cursor, "name");
+        final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(cursor, "description");
+        final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(cursor, "created_at");
+        final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(cursor, "photo");
+        final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(cursor, "is_visible");
+        final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(cursor, "profile_id");
+        final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(cursor, "visibility");
+        final int _cursorIndexOfMembers = CursorUtil.getColumnIndexOrThrow(cursor, "members");
+        final List<Grupo> _result = new ArrayList<Grupo>(cursor.getCount());
+        while (cursor.moveToNext()) {
+          final Grupo _item;
+          final long _tmpId;
+          _tmpId = cursor.getLong(_cursorIndexOfId);
+          final String _tmpUuid;
+          _tmpUuid = cursor.getString(_cursorIndexOfUuid);
+          final String _tmpName;
+          _tmpName = cursor.getString(_cursorIndexOfName);
+          final String _tmpDescription;
+          if (cursor.isNull(_cursorIndexOfDescription)) {
+            _tmpDescription = null;
+          } else {
+            _tmpDescription = cursor.getString(_cursorIndexOfDescription);
+          }
+          final Instant _tmpCreated_at;
+          final String _tmp;
+          if (cursor.isNull(_cursorIndexOfCreatedAt)) {
+            _tmp = null;
+          } else {
+            _tmp = cursor.getString(_cursorIndexOfCreatedAt);
+          }
+          _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+          final String _tmpPhoto;
+          if (cursor.isNull(_cursorIndexOfPhoto)) {
+            _tmpPhoto = null;
+          } else {
+            _tmpPhoto = cursor.getString(_cursorIndexOfPhoto);
+          }
+          final boolean _tmpIs_visible;
+          final int _tmp_1;
+          _tmp_1 = cursor.getInt(_cursorIndexOfIsVisible);
+          _tmpIs_visible = _tmp_1 != 0;
+          final long _tmpProfile_id;
+          _tmpProfile_id = cursor.getLong(_cursorIndexOfProfileId);
+          final int _tmpVisibility;
+          _tmpVisibility = cursor.getInt(_cursorIndexOfVisibility);
+          final int _tmpMembers;
+          _tmpMembers = cursor.getInt(_cursorIndexOfMembers);
+          _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpMembers);
+          _result.add(_item);
+        }
+        return _result;
+      }
+    };
+  }
+
+  @Override
+  public Flow<List<Grupo>> observeGrupos(final int size) {
+    final String _sql = "select * from grupos limit ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, size);
     return CoroutinesRoom.createFlow(__db, true, new String[] {"grupos"}, new Callable<List<Grupo>>() {
       @Override
       @NonNull
@@ -634,6 +708,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
             final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
+            final int _cursorIndexOfMembers = CursorUtil.getColumnIndexOrThrow(_cursor, "members");
             final List<Grupo> _result = new ArrayList<Grupo>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final Grupo _item;
@@ -671,7 +746,9 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final int _tmpVisibility;
               _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
-              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility);
+              final int _tmpMembers;
+              _tmpMembers = _cursor.getInt(_cursorIndexOfMembers);
+              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpMembers);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -712,6 +789,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
             final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
+            final int _cursorIndexOfMembers = CursorUtil.getColumnIndexOrThrow(_cursor, "members");
             final List<Grupo> _result = new ArrayList<Grupo>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final Grupo _item;
@@ -749,7 +827,9 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final int _tmpVisibility;
               _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
-              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility);
+              final int _tmpMembers;
+              _tmpMembers = _cursor.getInt(_cursorIndexOfMembers);
+              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpMembers);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -907,6 +987,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
       final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
       final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
       final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
+      final int _cursorIndexOfMembers = CursorUtil.getColumnIndexOrThrow(_cursor, "members");
       final Grupo _result;
       if (_cursor.moveToFirst()) {
         final long _tmpId;
@@ -943,7 +1024,9 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
         _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
         final int _tmpVisibility;
         _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
-        _result = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility);
+        final int _tmpMembers;
+        _tmpMembers = _cursor.getInt(_cursorIndexOfMembers);
+        _result = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpMembers);
       } else {
         _result = null;
       }
@@ -1064,7 +1147,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
       return;
     }
     final StringBuilder _stringBuilder = StringUtil.newStringBuilder();
-    _stringBuilder.append("SELECT `id`,`uuid`,`name`,`description`,`created_at`,`photo`,`is_visible`,`profile_id`,`visibility` FROM `grupos` WHERE `id` IN (");
+    _stringBuilder.append("SELECT `id`,`uuid`,`name`,`description`,`created_at`,`photo`,`is_visible`,`profile_id`,`visibility`,`members` FROM `grupos` WHERE `id` IN (");
     final int _inputSize = _map.size();
     StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
     _stringBuilder.append(")");
@@ -1092,6 +1175,7 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
       final int _cursorIndexOfIsVisible = 6;
       final int _cursorIndexOfProfileId = 7;
       final int _cursorIndexOfVisibility = 8;
+      final int _cursorIndexOfMembers = 9;
       while (_cursor.moveToNext()) {
         final long _tmpKey;
         _tmpKey = _cursor.getLong(_itemKeyIndex);
@@ -1131,7 +1215,9 @@ public final class RoomGrupoDao_Impl extends RoomGrupoDao {
           _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
           final int _tmpVisibility;
           _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
-          _item_1 = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility);
+          final int _tmpMembers;
+          _tmpMembers = _cursor.getInt(_cursorIndexOfMembers);
+          _item_1 = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpMembers);
           _map.put(_tmpKey, _item_1);
         }
       }

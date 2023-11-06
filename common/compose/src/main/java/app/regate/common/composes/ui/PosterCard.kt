@@ -63,10 +63,12 @@ fun  PosterCardImage(
     modifier: Modifier = Modifier,
     shape:Shape = CardDefaults.shape,
     isUser:Boolean = false,
+    enabled: Boolean = true,
     darkerImage:Boolean = false,
     contentScale:ContentScale = ContentScale.Crop,
     onClick:()->Unit = {},
 ) {
+
     CardImage(
         src = model,
         shape = shape,
@@ -74,6 +76,7 @@ fun  PosterCardImage(
         contentScale = contentScale,
         isUser = isUser,
         onClick = onClick,
+        enabled = enabled,
         colorFilter = if(darkerImage) ColorFilter.colorMatrix(ColorMatrix().apply{setToScale(0.8f,0.8f,0.8f,1f)}) else null,
     )
 //    Card(modifier = modifier,
@@ -130,34 +133,3 @@ fun UploadImageBitmap(
 }
 
 
-@Composable
-private fun PosterCardContent(establecimiento: EstablecimientoDto) {
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(
-            text = establecimiento.name,
-            style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier
-                .padding(4.dp)
-                .align(Alignment.CenterStart),
-        )
-        AsyncImage(
-            model = establecimiento.photo,
-            requestBuilder = { crossfade(true) },
-            contentDescription = establecimiento.photo,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop,
-        )
-    }
-}
-
-@Composable
-fun PlaceholderPosterCard(
-    modifier: Modifier = Modifier,
-) {
-    Card(modifier = modifier) {
-        Box {
-            // TODO: display something better
-        }
-    }
-}

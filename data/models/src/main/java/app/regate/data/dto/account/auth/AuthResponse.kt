@@ -11,15 +11,16 @@ data class AuthResponse(
 @Serializable
 data class UserDto(
     val email: String,
-    val estado: Int,
-    val user_id: Long,
+    val estado: Int = 0,
+    val password:String = "",
+    val user_id: Long =0,
     val otp:Int= 0,
     val username: String,
     val profile_photo:String?=null,
-    val nombre:String,
+    val nombre:String = "",
     val apellido:String? = null,
     val social_id:String? = null,
-    val profile_id:Long
+    val profile_id:Long = 0
 )
 
 

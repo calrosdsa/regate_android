@@ -2,7 +2,7 @@ package app.regate.data.mappers.establecimiento
 
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.data.mappers.Mapper
-import app.regate.models.Establecimiento
+import app.regate.models.establecimiento.Establecimiento
 import me.tatarka.inject.annotations.Inject
 
 @Inject

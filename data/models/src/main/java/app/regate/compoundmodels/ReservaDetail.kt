@@ -2,10 +2,8 @@ package app.regate.compoundmodels
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import app.regate.models.Establecimiento
+import app.regate.models.establecimiento.Establecimiento
 import app.regate.models.Instalacion
-import app.regate.models.Message
-import app.regate.models.Profile
 import app.regate.models.Reserva
 import java.util.Objects
 

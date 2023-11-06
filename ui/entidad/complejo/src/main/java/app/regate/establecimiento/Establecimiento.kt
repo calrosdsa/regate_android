@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -69,7 +68,7 @@ import app.regate.constant.Route
 import app.regate.constant.id
 import app.regate.data.auth.AppAuthState
 import app.regate.data.common.encodeMediaData
-import app.regate.models.Establecimiento
+import app.regate.models.establecimiento.Establecimiento
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString

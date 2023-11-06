@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.component.text.Label
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
@@ -113,10 +114,6 @@ internal fun Profile(
 ) {
     val scrollState = rememberScrollState()
 
-    val like = remember {
-        mutableStateOf(false)
-    }
-
     Scaffold(
         topBar = {
             SimpleTopBar(navigateUp =  navigateUp,
@@ -181,23 +178,15 @@ internal fun Profile(
                         }
                     }
                     }
-                    Crossfade(targetState = like.value) {
-                        if(it){
-                            IconButton(onClick = { like.value = !like.value }) {
-                                Icon(imageVector = Icons.Default.ThumbUp, contentDescription = "like")
-                            }
-                        }else{
-                            IconButton(onClick = { like.value = !like.value  }) {
-                                Icon(imageVector = Icons.Outlined.ThumbUp, contentDescription = "dis_like")
-                            }
-                        }
-                    }
+
 
                 }
                 Text(text = "An Administrator has access to the entire system, including the Account Setup tab." +
                         "They can update and run the model, create needs and work orders, add new users, and run reports." +
                         " You can have as",
                 style = MaterialTheme.typography.bodySmall,modifier = Modifier.padding(vertical = 15.dp))
+
+                Label(text = "Areas de interes ")
 
 
                 Surface(modifier = Modifier.padding(15.dp),

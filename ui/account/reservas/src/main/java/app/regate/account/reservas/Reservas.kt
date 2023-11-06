@@ -118,9 +118,9 @@ fun ReservaItem(
 ) {
     Column(modifier = modifier) {
         Text(text = item.instalacion_name, style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.primary)
+            color = MaterialTheme.colorScheme.primary, maxLines = 1)
         Text(
-            text = "Hora de la reserva",
+            text = "Fecha de la reserva",
             style = MaterialTheme.typography.labelLarge
         )
         Text(text = formatterDateReserva(item.start_date,item.end_date),style = MaterialTheme.typography.labelMedium)

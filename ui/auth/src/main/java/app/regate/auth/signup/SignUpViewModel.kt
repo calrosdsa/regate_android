@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
 import app.regate.data.dto.ResponseMessage
+import app.regate.data.dto.account.auth.UserDto
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
 import io.ktor.http.HttpStatusCode
@@ -58,9 +59,11 @@ class SignUpViewModel (
             try{
                 loadingCounter.addLoader()
                 val request = SignUpRequest(
+                    user = UserDto(
                     email = email,
                     password = password,
                     username = username
+                    )
                 )
                 accountRepository.signUp(request)
                 loadingCounter.removeLoader()

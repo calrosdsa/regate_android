@@ -12,7 +12,7 @@ import app.regate.data.common.AddressDevice
 import app.regate.data.system.SystemRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.system.ObserveUnreadNotificationCount
-import app.regate.domain.observers.ObserveUserProfile
+import app.regate.domain.observers.user.ObserveUserProfile
 import app.regate.domain.observers.account.ObserveUserBalance
 import app.regate.extensions.combine
 import app.regate.settings.AppPreferences

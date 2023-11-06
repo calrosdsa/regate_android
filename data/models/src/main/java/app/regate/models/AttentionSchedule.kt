@@ -5,6 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import app.regate.data.dto.empresa.establecimiento.AttentionScheduleTimeDto
+import app.regate.models.establecimiento.Establecimiento
 
 @Entity(
     tableName= "attention_schedule",

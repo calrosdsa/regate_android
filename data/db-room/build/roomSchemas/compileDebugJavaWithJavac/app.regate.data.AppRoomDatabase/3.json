@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "385d3edaa7cb12fad89a9cd2eddd1b7a",
+    "identityHash": "cd81edeb7bb764a126e34a63409e44ab",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -557,7 +557,7 @@
       },
       {
         "tableName": "grupos",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `uuid` TEXT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, `is_visible` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `visibility` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `uuid` TEXT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `created_at` TEXT, `photo` TEXT, `is_visible` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `visibility` INTEGER NOT NULL, `members` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -610,6 +610,12 @@
           {
             "fieldPath": "visibility",
             "columnName": "visibility",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "members",
+            "columnName": "members",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -1346,7 +1352,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '385d3edaa7cb12fad89a9cd2eddd1b7a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cd81edeb7bb764a126e34a63409e44ab')"
     ]
   }
 }

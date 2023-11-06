@@ -2,7 +2,7 @@ package app.regate.create.sala.establecimiento
 
 import app.regate.api.UiMessage
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
-import app.regate.models.Establecimiento
+import app.regate.models.establecimiento.Establecimiento
 
 data class EstablecimientoFilterState(
     val loading:Boolean = false,

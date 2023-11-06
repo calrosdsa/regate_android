@@ -5,7 +5,7 @@ import app.regate.data.db.DatabaseTransactionRunner
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.data.mappers.establecimiento.EstablecimientoDtoToEstablecimiento
 import app.regate.inject.ApplicationScope
-import app.regate.models.Establecimiento
+import app.regate.models.establecimiento.Establecimiento
 import me.tatarka.inject.annotations.Inject
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
@@ -20,7 +20,7 @@ class EstablecimientoStore(
     establecimientoDataSourceImpl: EstablecimientoDataSourceImpl,
     transactionRunner: DatabaseTransactionRunner,
     establecimientoMapper: EstablecimientoDtoToEstablecimiento
-):Store<Long,Establecimiento> by StoreBuilder.from(
+):Store<Long, Establecimiento> by StoreBuilder.from(
     fetcher = Fetcher.of {id:Long->
         establecimientoDataSourceImpl.getEstablecimiento(id)
     },

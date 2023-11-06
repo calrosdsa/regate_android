@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface GrupoDao:EntityDao<Grupo> {
     fun observeGrupo(id:Long):Flow<Grupo>
-    fun observeGrupos():Flow<List<Grupo>>
+    fun observePaginationGroups():PagingSource<Int,Grupo>
+    fun observeGrupos(size:Int):Flow<List<Grupo>>
     fun observeUserGroups():Flow<List<Grupo>>
     fun observeInvitations(grupoId:Long):PagingSource<Int,UserInvitationGrupo>
     fun observeUserInvitations(profileId:Long):PagingSource<Int,UserInvitation>

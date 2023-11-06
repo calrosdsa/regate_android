@@ -17,7 +17,8 @@ import app.regate.data.mappers.establecimiento.DtoToAttentionSchedule
 import app.regate.data.mappers.establecimiento.EstablecimientoDtoToEstablecimiento
 import app.regate.data.mappers.establecimiento.SettingDtoToSetting
 import app.regate.inject.ApplicationScope
-import app.regate.models.FavoriteEstablecimiento
+import app.regate.models.establecimiento.FavoriteEstablecimiento
+import app.regate.models.establecimiento.Establecimiento
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -79,7 +80,7 @@ class EstablecimientoRepository(
             }
         }
     }
-    fun observeEstablecimiento(id:Long): Flow<app.regate.models.Establecimiento> {
+    fun observeEstablecimiento(id:Long): Flow<Establecimiento> {
         return establecimientoDao.observeEstablecimiento(id)
     }
 

@@ -46,6 +46,7 @@ object Route {
     const val FILTER = "filter"
 
     const val GRUPO = "grupo"
+    const val FILTER_GRUPOS = "filter-grupos"
     const val INFO_GRUPO = "info-grupo"
     const val INVITATION_GRUPO = "invitation-grupo"
     const val GRUPO_INVITATION_LINK = "grupo-invitation-link"
@@ -55,6 +56,8 @@ object Route {
     const val USER_PENDING_REQUESTS = "user-pending-requests"
     const val CREATE_GROUP = "create_group"
     const val GRUPO_SALAS = "grupo_salas"
+
+
 
     const val ESTABLECIMIENTO_FILTER = "establecimiento_filter"
     const val PHOTO = "media_photo"

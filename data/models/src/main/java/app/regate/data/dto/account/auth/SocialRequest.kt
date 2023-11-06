@@ -5,5 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SocialRequest(
     val user:UserDto,
-    val fcm_token:String
+    val fcm_token:String,
+    val categories:List<Int> = emptyList()
 )

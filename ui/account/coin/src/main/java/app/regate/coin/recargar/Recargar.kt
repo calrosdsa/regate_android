@@ -186,7 +186,7 @@ fun RecargarCustomMonto(
                 )
             )
             SmallButton(onClick = { navigateToPay() }) {
-                Text(text = value,style = MaterialTheme.typography.labelMedium,
+                Text(text = stringResource(id = R.string.purchase),style = MaterialTheme.typography.labelMedium,
                     modifier =Modifier.padding(horizontal = 10.dp, vertical = 7.dp),
                     textAlign = TextAlign.Center)
             }
@@ -203,7 +203,7 @@ fun SmallButton(
 ){
     Surface(shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary,
-        modifier = modifier.width(70.dp),
+        modifier = modifier.width(90.dp),
         onClick = {onClick () }) {
         content()
     }

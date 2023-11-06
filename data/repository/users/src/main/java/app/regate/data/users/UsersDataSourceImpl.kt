@@ -4,6 +4,7 @@ import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.FileData
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.account.user.PaginationProfilesResponse
+import app.regate.data.dto.account.user.ProfileDetailDto
 import app.regate.data.dto.account.user.ProfileDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -24,7 +25,7 @@ class UsersDataSourceImpl(
     private val client:HttpClient,
     private val authStore: AuthStore
 ): UsersDataSource {
-    override suspend fun getProfile(id: Long): ProfileDto {
+    override suspend fun getProfile(id: Long): ProfileDetailDto {
         return client.get("v1/users/profile/${id}/").body()
     }
 

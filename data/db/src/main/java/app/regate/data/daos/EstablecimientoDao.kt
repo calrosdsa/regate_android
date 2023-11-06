@@ -1,9 +1,7 @@
 package app.regate.data.daos
 
 import app.regate.models.AttentionSchedule
-import app.regate.models.Establecimiento
-import app.regate.models.LabelType
-import app.regate.models.Labels
+import app.regate.models.establecimiento.Establecimiento
 import app.regate.models.Setting
 import kotlinx.coroutines.flow.Flow
 

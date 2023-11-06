@@ -375,6 +375,7 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
             final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
+            final int _cursorIndexOfMembers = CursorUtil.getColumnIndexOrThrow(_cursor, "members");
             final List<Grupo> _result = new ArrayList<Grupo>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final Grupo _item;
@@ -412,7 +413,9 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final int _tmpVisibility;
               _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
-              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility);
+              final int _tmpMembers;
+              _tmpMembers = _cursor.getInt(_cursorIndexOfMembers);
+              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpMembers);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();

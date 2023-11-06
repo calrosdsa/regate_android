@@ -134,7 +134,8 @@ internal fun ChatItem(
             ) {
                 Text(
                     text = chat.name, style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.fillMaxWidth(0.65f), overflow = TextOverflow.Ellipsis
+                    modifier = Modifier.fillMaxWidth(0.65f), overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
                 )
                 if (chat.last_message_created != null) {
                     Text(

@@ -3,7 +3,9 @@ package app.regate.data.daos
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Upsert
 import app.regate.models.Profile
+import app.regate.models.ProfileCategory
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,4 +17,7 @@ abstract class RoomProfileDao:RoomEntityDao<Profile> ,ProfileDao{
     @Transaction
     @Query("select * from profiles where id in (:ids)")
     abstract override fun observeProfileSalas(ids: List<Long>) :Flow<List<Profile>>
+
+    @Upsert
+    abstract override fun insertProfileCategories(entities: List<ProfileCategory>)
 }

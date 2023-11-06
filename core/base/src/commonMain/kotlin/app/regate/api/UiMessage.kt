@@ -27,7 +27,13 @@ import kotlinx.coroutines.sync.withLock
 data class UiMessage(
     val message: String,
     val id: Long = UUID.randomUUID().mostSignificantBits,
+    val type:Int = 0,
 )
+
+//enum class UiMessageType {
+//    NONE,
+//    NAVIGATE
+//}
 
 fun UiMessage(
     t: Throwable,

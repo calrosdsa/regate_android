@@ -53,15 +53,12 @@ class BottomAuthViewModel(
                     val profile = if(it.photoUrl?.path == null) null else it.photoUrl.toString()
                     Log.d("DEBUG_APP", profile.toString());
                     val user = UserDto(
-                        user_id = 0,
                         profile_photo =profile,
-                        estado = 0,
                         nombre = it.givenName?:"",
                         apellido = it.familyName,
                         email = it.email?:"",
                         username = it.email?:"",
                         social_id = it.id?:"",
-                        profile_id = 0,
                 )
                     accountRepository.socialLogin(user)
                 }

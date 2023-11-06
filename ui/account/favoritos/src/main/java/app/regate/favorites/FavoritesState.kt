@@ -1,7 +1,7 @@
 package app.regate.favorites
 
 import app.regate.api.UiMessage
-import app.regate.models.Establecimiento
+import app.regate.models.establecimiento.Establecimiento
 
 
 data class FavoritesState(

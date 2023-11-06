@@ -14,11 +14,15 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 abstract class RoomGrupoDao:GrupoDao,RoomEntityDao<Grupo>{
     @Transaction
+    @Query("select * from grupos ")
+    abstract override fun observePaginationGroups(): PagingSource<Int, Grupo>
+
+    @Transaction
     @Query("select * from grupos where id = :id")
     abstract override fun observeGrupo(id: Long): Flow<Grupo>
     @Transaction
-    @Query("select * from grupos")
-    abstract override fun observeGrupos(): Flow<List<Grupo>>
+    @Query("select * from grupos limit :size")
+    abstract override fun observeGrupos(size:Int): Flow<List<Grupo>>
 
     @Transaction
     @Query("select * from invitation_grupo where grupo_id = :grupoId")

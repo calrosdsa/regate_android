@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import app.regate.api.UiMessage
 import app.regate.data.auth.AppAuthState
 import app.regate.models.Cupo
-import app.regate.models.Establecimiento
+import app.regate.models.establecimiento.Establecimiento
 import app.regate.models.Instalacion
 import app.regate.models.Setting
 
@@ -23,4 +23,9 @@ data class BottomReservaState(
     companion object{
         val Empty = BottomReservaState()
     }
+}
+
+internal enum class ReservarMessageType{
+    MONTO_INSUFICIENTE,
+    VER_RESERVA,
 }

@@ -20,5 +20,5 @@ data class Grupo(
     //id del usuario que creo
     val profile_id:Long = 0,
     val visibility:Int = 1,
-
+    val members:Int = 0
 ): AppEntity

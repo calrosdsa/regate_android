@@ -11,6 +11,10 @@ class ObserveGrupos (
     private val grupoDao: GrupoDao
     ):SubjectInteractor<Unit,List<Grupo>>() {
     override fun createObservable(params: Unit): Flow<List<Grupo>> {
-        return  grupoDao.observeGrupos()
+        return  grupoDao.observeGrupos(10)
     }
+
+//    data class Params(
+//        val size:Int = 20
+//    )
 }

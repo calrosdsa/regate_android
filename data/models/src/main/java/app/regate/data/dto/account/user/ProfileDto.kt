@@ -5,6 +5,12 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
+data class ProfileDetailDto(
+    val profile:ProfileDto,
+    val categories:List<Int> = emptyList()
+)
+
+@Serializable
 data class ProfileDto(
     val uuid:String ="",
     val created_at: Instant?=null,

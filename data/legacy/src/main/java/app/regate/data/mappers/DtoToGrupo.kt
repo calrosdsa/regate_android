@@ -16,7 +16,23 @@ class DtoToGrupo:Mapper<GrupoDto, Grupo> {
             photo = from.photo,
             profile_id = from.profile_id,
             visibility = from.visibility,
-            is_visible = from.is_visible
+            is_visible = from.is_visible,
+            members = from.members,
         )
     }
+}
+
+fun Grupo.grupoToDto():GrupoDto{
+    return  GrupoDto(
+        id = id,
+        uuid = uuid,
+        created_at = created_at,
+        descripcion = description,
+        name = name,
+        photo = photo,
+        profile_id = profile_id,
+        visibility = visibility,
+        is_visible = is_visible,
+        members =  members
+    )
 }

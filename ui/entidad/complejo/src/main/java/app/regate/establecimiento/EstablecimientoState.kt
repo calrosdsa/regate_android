@@ -5,10 +5,8 @@ import app.regate.api.UiMessage
 import app.regate.compoundmodels.InstalacionCategoryCount
 import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoReviews
-import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.models.AttentionSchedule
-import app.regate.models.Establecimiento
-import app.regate.models.Instalacion
+import app.regate.models.establecimiento.Establecimiento
 import app.regate.models.Labels
 
 @Immutable

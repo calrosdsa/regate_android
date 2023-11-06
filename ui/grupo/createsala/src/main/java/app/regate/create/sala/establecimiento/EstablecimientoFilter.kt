@@ -42,7 +42,7 @@ import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.util.itemsCustom
 import app.regate.common.composes.viewModel
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
-import app.regate.models.Establecimiento
+import app.regate.models.establecimiento.Establecimiento
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -157,7 +157,7 @@ internal fun EstablecimientoFilter(
 
 @Composable
 fun EstablecimientoCard(
-    item:Establecimiento,
+    item: Establecimiento,
     modifier:Modifier = Modifier,
     navigateToComplejo:(Long)->Unit
 ){

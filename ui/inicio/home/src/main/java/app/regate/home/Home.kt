@@ -66,6 +66,8 @@ import app.regate.constant.Route
 import app.regate.constant.id
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.home.carousel.HomeMediaCarousel
+import app.regate.home.item.GrupoItem
+
 //import app.regate.home.carousel.HomeMediaCarousel
 
 
@@ -152,7 +154,9 @@ internal fun Home(
             formatShortTime = formatter::formatShortTime,
             formatDate = formatter::formatShortDate,
             goToSala = {navController.navigate(Route.SALA id it)},
-            viewMoreSalas = { navController.navigate(Route.FILTER_SALAS)}
+            viewMoreSalas = { navController.navigate(Route.FILTER_SALAS)},
+            navigateToGrupoInfo = {navController.navigate(Route.INFO_GRUPO id it)},
+            navigateToGroupsFilter = {navController.navigate(Route.FILTER_GRUPOS)}
         )
     }
 }
@@ -170,6 +174,8 @@ internal fun Home(
     formatDate:(date: String)->String,
     goToSala:(Long)->Unit,
     viewMoreSalas:()->Unit,
+    navigateToGrupoInfo:(Long)->Unit,
+    navigateToGroupsFilter:()->Unit
     ) {
 
     val listImage = listOf("https://img.freepik.com/free-photo/abstract-grunge-decorative-relief-navy-blue-stucco-wall-texture-wide-angle-rough-colored-background_1258-28311.jpg",
@@ -265,6 +271,21 @@ internal fun Home(
                 }
             }
         }
+
+        ViewMore(label = stringResource(id = R.string.groups),
+            onClick={navigateToGroupsFilter()},
+            styleText = MaterialTheme.typography.titleLarge)
+        LazyRow(contentPadding = PaddingValues(horizontal = 10.dp), modifier = containerHeight) {
+            items(
+                items = viewState.grupos
+            ){item->
+                GrupoItem(
+                    grupo = item,
+                    navigateToGrupoInfo = navigateToGrupoInfo
+                )
+            }
+        }
+
 
         ViewMore(label = stringResource(id = R.string.rooms),onClick={ viewMoreSalas()},
             styleText = MaterialTheme.typography.titleLarge)

@@ -3,7 +3,6 @@ package app.regate.models.grupo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import app.regate.models.Establecimiento
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 

@@ -12,9 +12,12 @@ import app.regate.api.UiMessageManager
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.grupo.GrupoRepository
+import app.regate.domain.PagingInteractor
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.grupo.ObserveMyGroups
+import app.regate.domain.observers.grupo.ObservePagerGroups
 import app.regate.domain.pagination.grupo.PaginationGroups
+import app.regate.models.grupo.Grupo
 import app.regate.util.ObservableLoadingCounter
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
@@ -30,14 +33,13 @@ import me.tatarka.inject.annotations.Inject
 class GruposViewModel(
     private val grupoRepository: GrupoRepository,
     observeMyGroups: ObserveMyGroups,
-    observeAuthState: ObserveAuthState
+    observeAuthState: ObserveAuthState,
+    pagingInteractor: ObservePagerGroups,
 //    private val updateFilterGrupos: UpdateFilterGrupos
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
-    val pagingList:Flow<PagingData<GrupoDto>> = Pager(PAGING_CONFIG){
-        PaginationGroups(grupoRepository)
-    }.flow.cachedIn(viewModelScope)
+    val pagingList:Flow<PagingData<Grupo>> = pagingInteractor.flow.cachedIn(viewModelScope)
 //    private val grupos = MutableStateFlow<List<GrupoDto>>(emptyList())
     val state:StateFlow<GruposState> = combine(
 //        grupos,
@@ -63,6 +65,9 @@ class GruposViewModel(
         getData()
         observeMyGroups(Unit)
         observeAuthState(Unit)
+        pagingInteractor(ObservePagerGroups.Params(
+            pagingConfig = PAGING_CONFIG
+        ))
 //        Log.d("DEBUG_APP_222","INIT 222")
 //        observeGrupos(Unit)
 //        getFilterGrupos()

@@ -70,6 +70,7 @@ fun NavGraphBuilder.AddMainNav (
             val uuid = navArguments.arguments?.getString("uuid")?:""
             composeScreens.grupos(navController = navController,filterGroups={
                 composeScreens.filterGroups(
+                    navigateUp = navController::navigateUp,
                     navigateToGroup = {navController.navigate(Route.GRUPO id it)},
                     navigateToInfoGrupo = {navController.navigate(Route.INFO_GRUPO id it)},
                     openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)}

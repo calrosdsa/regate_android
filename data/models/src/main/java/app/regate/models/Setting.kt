@@ -6,6 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import app.regate.data.dto.empresa.establecimiento.HorarioInterval
 import app.regate.data.dto.empresa.establecimiento.PaidType
+import app.regate.models.establecimiento.Establecimiento
 
 @Entity(
     tableName= "settings",

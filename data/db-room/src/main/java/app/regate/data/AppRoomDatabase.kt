@@ -46,8 +46,8 @@ import app.regate.data.db.DateTimeTypeConverters
 import app.regate.models.AttentionSchedule
 import app.regate.models.Cupo
 import app.regate.models.Emoji
-import app.regate.models.Establecimiento
-import app.regate.models.FavoriteEstablecimiento
+import app.regate.models.establecimiento.Establecimiento
+import app.regate.models.establecimiento.FavoriteEstablecimiento
 import app.regate.models.grupo.Grupo
 import app.regate.models.Instalacion
 import app.regate.models.Labels
@@ -57,6 +57,7 @@ import app.regate.models.MessageSala
 import app.regate.models.grupo.MyGroups
 import app.regate.models.Notification
 import app.regate.models.Profile
+import app.regate.models.ProfileCategory
 import app.regate.models.Reserva
 import app.regate.models.SearchHistory
 import app.regate.models.Setting
@@ -91,7 +92,8 @@ import app.regate.models.grupo.InvitationGrupo
         UserRoom::class,
         UserBalance::class,
         Chat::class,
-        InvitationGrupo::class
+        InvitationGrupo::class,
+        ProfileCategory::class
 //        SalaEntity::class,
        ],
 //    views = [
