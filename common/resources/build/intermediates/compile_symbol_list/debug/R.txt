@@ -53,6 +53,7 @@ int string balance_coins 0x0
 int string book_a_court 0x0
 int string bookings 0x0
 int string cancel_request 0x0
+int string categories 0x0
 int string channel_group_description 0x0
 int string channel_message_description 0x0
 int string chat_group 0x0

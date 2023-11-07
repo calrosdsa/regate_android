@@ -227,5 +227,6 @@
     <string name="delete_chat">Delete chat</string>
     <string name="create_shortcut">Create shortcut</string>
     <string name="invite">Invite</string>
+    <string name="categories">Categories</string>
 
 </resources>

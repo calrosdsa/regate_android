@@ -18,9 +18,9 @@ import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.compoundmodels.ReservaDetail;
 import app.regate.data.db.AppTypeConverters;
 import app.regate.data.db.DateTimeTypeConverters;
-import app.regate.models.establecimiento.Establecimiento;
 import app.regate.models.Instalacion;
 import app.regate.models.Reserva;
+import app.regate.models.establecimiento.Establecimiento;
 import java.lang.Boolean;
 import java.lang.Class;
 import java.lang.Exception;
@@ -514,7 +514,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
               _collectionInstalacion.put(_tmpKey_1, null);
             }
             _cursor.moveToPosition(-1);
-            __fetchRelationshipestablecimientosAsappRegateModelsEstablecimiento(_collectionEstablecimiento);
+            __fetchRelationshipestablecimientosAsappRegateModelsEstablecimientoEstablecimiento(_collectionEstablecimiento);
             __fetchRelationshipinstalacionesAsappRegateModelsInstalacion(_collectionInstalacion);
             final ReservaDetail _result;
             if (_cursor.moveToFirst()) {
@@ -610,14 +610,14 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
     return Collections.emptyList();
   }
 
-  private void __fetchRelationshipestablecimientosAsappRegateModelsEstablecimiento(
+  private void __fetchRelationshipestablecimientosAsappRegateModelsEstablecimientoEstablecimiento(
       @NonNull final LongSparseArray<Establecimiento> _map) {
     if (_map.isEmpty()) {
       return;
     }
     if (_map.size() > RoomDatabase.MAX_BIND_PARAMETER_CNT) {
       RelationUtil.recursiveFetchLongSparseArray(_map, false, (map) -> {
-        __fetchRelationshipestablecimientosAsappRegateModelsEstablecimiento(map);
+        __fetchRelationshipestablecimientosAsappRegateModelsEstablecimientoEstablecimiento(map);
         return Unit.INSTANCE;
       });
       return;

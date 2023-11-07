@@ -54,6 +54,7 @@ string balance_coins
 string book_a_court
 string bookings
 string cancel_request
+string categories
 string channel_group_description
 string channel_message_description
 string chat_group

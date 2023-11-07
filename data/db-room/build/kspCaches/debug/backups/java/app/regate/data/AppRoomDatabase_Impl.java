@@ -136,8 +136,9 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `chat` (`id` INTEGER NOT NULL, `photo` TEXT, `name` TEXT NOT NULL, `last_message` TEXT, `last_message_created` TEXT, `messages_count` INTEGER NOT NULL, `type_chat` INTEGER NOT NULL, `is_message_deleted` INTEGER NOT NULL, `parent_id` INTEGER NOT NULL, `is_user_out` INTEGER NOT NULL, `updated_at` TEXT NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `invitation_grupo` (`profile_id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `estado` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`profile_id`, `grupo_id`), FOREIGN KEY(`grupo_id`) REFERENCES `grupos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_invitation_grupo_grupo_id` ON `invitation_grupo` (`grupo_id`)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `profile_category` (`profile_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`profile_id`, `category_id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cd81edeb7bb764a126e34a63409e44ab')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '174c40bb3e2cf106ed64200b2201747c')");
       }
 
       @Override
@@ -165,6 +166,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("DROP TABLE IF EXISTS `user_balance`");
         db.execSQL("DROP TABLE IF EXISTS `chat`");
         db.execSQL("DROP TABLE IF EXISTS `invitation_grupo`");
+        db.execSQL("DROP TABLE IF EXISTS `profile_category`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -230,7 +232,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         final TableInfo _infoEstablecimientos = new TableInfo("establecimientos", _columnsEstablecimientos, _foreignKeysEstablecimientos, _indicesEstablecimientos);
         final TableInfo _existingEstablecimientos = TableInfo.read(db, "establecimientos");
         if (!_infoEstablecimientos.equals(_existingEstablecimientos)) {
-          return new RoomOpenHelper.ValidationResult(false, "establecimientos(app.regate.models.Establecimiento).\n"
+          return new RoomOpenHelper.ValidationResult(false, "establecimientos(app.regate.models.establecimiento.Establecimiento).\n"
                   + " Expected:\n" + _infoEstablecimientos + "\n"
                   + " Found:\n" + _existingEstablecimientos);
         }
@@ -415,7 +417,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         final TableInfo _infoFavoriteEstablecimiento = new TableInfo("favorite_establecimiento", _columnsFavoriteEstablecimiento, _foreignKeysFavoriteEstablecimiento, _indicesFavoriteEstablecimiento);
         final TableInfo _existingFavoriteEstablecimiento = TableInfo.read(db, "favorite_establecimiento");
         if (!_infoFavoriteEstablecimiento.equals(_existingFavoriteEstablecimiento)) {
-          return new RoomOpenHelper.ValidationResult(false, "favorite_establecimiento(app.regate.models.FavoriteEstablecimiento).\n"
+          return new RoomOpenHelper.ValidationResult(false, "favorite_establecimiento(app.regate.models.establecimiento.FavoriteEstablecimiento).\n"
                   + " Expected:\n" + _infoFavoriteEstablecimiento + "\n"
                   + " Found:\n" + _existingFavoriteEstablecimiento);
         }
@@ -600,9 +602,22 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoInvitationGrupo + "\n"
                   + " Found:\n" + _existingInvitationGrupo);
         }
+        final HashMap<String, TableInfo.Column> _columnsProfileCategory = new HashMap<String, TableInfo.Column>(3);
+        _columnsProfileCategory.put("profile_id", new TableInfo.Column("profile_id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsProfileCategory.put("category_id", new TableInfo.Column("category_id", "INTEGER", true, 2, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsProfileCategory.put("created_at", new TableInfo.Column("created_at", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysProfileCategory = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesProfileCategory = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoProfileCategory = new TableInfo("profile_category", _columnsProfileCategory, _foreignKeysProfileCategory, _indicesProfileCategory);
+        final TableInfo _existingProfileCategory = TableInfo.read(db, "profile_category");
+        if (!_infoProfileCategory.equals(_existingProfileCategory)) {
+          return new RoomOpenHelper.ValidationResult(false, "profile_category(app.regate.models.ProfileCategory).\n"
+                  + " Expected:\n" + _infoProfileCategory + "\n"
+                  + " Found:\n" + _existingProfileCategory);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "cd81edeb7bb764a126e34a63409e44ab", "704010419dc7de194fb3120ce75a88cc");
+    }, "174c40bb3e2cf106ed64200b2201747c", "b3f46c097c1ce9bd1547b604595bbb50");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -613,7 +628,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas","notification","message_sala","search_history","emoji","attention_schedule","user_room","user_balance","chat","invitation_grupo");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas","notification","message_sala","search_history","emoji","attention_schedule","user_room","user_balance","chat","invitation_grupo","profile_category");
   }
 
   @Override
@@ -652,6 +667,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
       _db.execSQL("DELETE FROM `user_balance`");
       _db.execSQL("DELETE FROM `chat`");
       _db.execSQL("DELETE FROM `invitation_grupo`");
+      _db.execSQL("DELETE FROM `profile_category`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();

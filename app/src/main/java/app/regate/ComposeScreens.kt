@@ -75,6 +75,7 @@ import app.regate.system.report.Report
 import app.regate.chats.mychats.MyChats
 import app.regate.grupo.invitations.InviteUser
 import app.regate.grupos.userinvitations.UserInvitations
+import app.regate.profile.categories.ProfileCategories
 import app.regate.usersalas.UserSalas
 import app.regate.welcome.Welcome
 import me.tatarka.inject.annotations.Inject
@@ -101,8 +102,11 @@ class ComposeScreens(
 
     val map:Map,
     val account:Account,
+
     val profile:Profile,
     val editProfile:EditProfile,
+    val profileCategories:ProfileCategories,
+
     val reservas: Reservas,
     val reserva:Reserva,
 

@@ -9,6 +9,7 @@ import app.regate.data.dto.system.ReportType
 import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.user.ObserveProfile
 import app.regate.domain.observers.account.ObserveUser
+import app.regate.domain.observers.user.ObserveProfileCategory
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -26,6 +27,7 @@ class ProfileViewModel(
     private val usersRepository: UsersRepository,
     observeProfile: ObserveProfile,
     observeUser: ObserveUser,
+    observeProfileCategory:ObserveProfileCategory,
 ):ViewModel() {
     private val id = savedStateHandle.get<Long>("id")?:0
     private val loadingCounter = ObservableLoadingCounter()
@@ -35,13 +37,15 @@ class ProfileViewModel(
         loadingCounter.observable,
         uiMessageManager.message,
         observeProfile.flow,
-        observeUser.flow
-    ){loading,message,profile,user->
+        observeUser.flow,
+        observeProfileCategory.flow
+    ){loading,message,profile,user,categories->
         ProfileState(
             loading = loading,
             message = message,
             profile = profile,
-            user = user
+            user = user,
+            categories = categories
         )
     }.stateIn(
         scope = viewModelScope,
@@ -50,6 +54,7 @@ class ProfileViewModel(
     )
     init{
         observeProfile(ObserveProfile.Params(id))
+        observeProfileCategory(ObserveProfileCategory.Params(id))
         observeUser(Unit)
         getProfile()
     }

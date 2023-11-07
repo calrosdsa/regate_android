@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "cd81edeb7bb764a126e34a63409e44ab",
+    "identityHash": "174c40bb3e2cf106ed64200b2201747c",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -1347,12 +1347,45 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "profile_category",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`profile_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`profile_id`, `category_id`))",
+        "fields": [
+          {
+            "fieldPath": "profile_id",
+            "columnName": "profile_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "category_id",
+            "columnName": "category_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "created_at",
+            "columnName": "created_at",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "profile_id",
+            "category_id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cd81edeb7bb764a126e34a63409e44ab')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '174c40bb3e2cf106ed64200b2201747c')"
     ]
   }
 }

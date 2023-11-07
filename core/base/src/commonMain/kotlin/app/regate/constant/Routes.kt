@@ -42,6 +42,7 @@ object Route {
 
     const val PROFILE = "profile"
     const val EDIT_PROFILE = "edit_profile"
+    const val PROFILE_CATEGORIES= "profile_categories"
 
     const val FILTER = "filter"
 

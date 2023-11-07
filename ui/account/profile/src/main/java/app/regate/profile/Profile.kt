@@ -3,6 +3,8 @@ package app.regate.profile
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.outlined.Flag
@@ -39,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppDateFormatter
+import app.regate.common.composes.component.input.AmenityItem
 import app.regate.common.composes.component.text.Label
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.ui.SimpleTopBar
@@ -74,7 +78,8 @@ fun Profile(
         navigateUp = navigateUp,
         navigateToEditProfile = navigateToEditProfile,
         navigateToReport = navigateToReport,
-        navigateToPhoto = {navController.navigate(Route.PHOTO id it)}
+        navigateToPhoto = {navController.navigate(Route.PHOTO id it)},
+        navigateToProfileCategories = {navController.navigate(Route.PROFILE_CATEGORIES id it)}
     )
 }
 
@@ -85,6 +90,7 @@ internal fun Profile(
     navigateToEditProfile: (Long) -> Unit,
     navigateToReport:(String)->Unit,
     navigateToPhoto:(String)->Unit,
+    navigateToProfileCategories:(Long)->Unit
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -98,11 +104,12 @@ internal fun Profile(
                 navigateToReport(it)
             }
         },
-        navigateToPhoto = navigateToPhoto
+        navigateToPhoto = navigateToPhoto,
+        navigateToProfileCategories = navigateToProfileCategories
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 internal fun Profile(
     viewState:ProfileState,
@@ -110,7 +117,8 @@ internal fun Profile(
     formatterDate:(Instant)->String,
     navigateToEditProfile: (Long) -> Unit,
     navigateToReport:()->Unit,
-    navigateToPhoto: (String) -> Unit
+    navigateToPhoto: (String) -> Unit,
+    navigateToProfileCategories: (Long) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -186,7 +194,6 @@ internal fun Profile(
                         " You can have as",
                 style = MaterialTheme.typography.bodySmall,modifier = Modifier.padding(vertical = 15.dp))
 
-                Label(text = "Areas de interes ")
 
 
                 Surface(modifier = Modifier.padding(15.dp),
@@ -204,6 +211,23 @@ internal fun Profile(
                         }
                     }
                 }
+                Row(modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically) {
+                Label(text = "Areas de interes ")
+                    IconButton(onClick = { navigateToProfileCategories(viewState.profile.id) }) {
+                        Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = null)
+                    }
+                }
+                FlowRow(modifier = Modifier.padding()) {
+                    viewState.categories.map{item->
+                        AmenityItem(amenity = item)
+                        Spacer(modifier = Modifier.width(8.dp))
+//                        Text(text = it.name)
+                    }
+                }
+
+
             }
         }
     }

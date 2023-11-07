@@ -12,8 +12,12 @@ import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.room.util.StringUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
+import app.regate.data.db.AppTypeConverters;
 import app.regate.data.db.DateTimeTypeConverters;
+import app.regate.models.LabelType;
+import app.regate.models.Labels;
 import app.regate.models.Profile;
+import app.regate.models.ProfileCategory;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.Integer;
@@ -43,6 +47,8 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
   private final EntityDeletionOrUpdateAdapter<Profile> __updateAdapterOfProfile;
 
   private final EntityUpsertionAdapter<Profile> __upsertionAdapterOfProfile;
+
+  private final EntityUpsertionAdapter<ProfileCategory> __upsertionAdapterOfProfileCategory;
 
   public RoomProfileDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
@@ -224,6 +230,47 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
         statement.bindLong(9, entity.getId());
       }
     });
+    this.__upsertionAdapterOfProfileCategory = new EntityUpsertionAdapter<ProfileCategory>(new EntityInsertionAdapter<ProfileCategory>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT INTO `profile_category` (`profile_id`,`category_id`,`created_at`) VALUES (?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final ProfileCategory entity) {
+        statement.bindLong(1, entity.getProfile_id());
+        statement.bindLong(2, entity.getCategory_id());
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp == null) {
+          statement.bindNull(3);
+        } else {
+          statement.bindString(3, _tmp);
+        }
+      }
+    }, new EntityDeletionOrUpdateAdapter<ProfileCategory>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "UPDATE `profile_category` SET `profile_id` = ?,`category_id` = ?,`created_at` = ? WHERE `profile_id` = ? AND `category_id` = ?";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final ProfileCategory entity) {
+        statement.bindLong(1, entity.getProfile_id());
+        statement.bindLong(2, entity.getCategory_id());
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp == null) {
+          statement.bindNull(3);
+        } else {
+          statement.bindString(3, _tmp);
+        }
+        statement.bindLong(4, entity.getProfile_id());
+        statement.bindLong(5, entity.getCategory_id());
+      }
+    });
   }
 
   @Override
@@ -358,6 +405,18 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
   }
 
   @Override
+  public void insertProfileCategories(final List<ProfileCategory> entities) {
+    __db.assertNotSuspendingTransaction();
+    __db.beginTransaction();
+    try {
+      __upsertionAdapterOfProfileCategory.upsert(entities);
+      __db.setTransactionSuccessful();
+    } finally {
+      __db.endTransaction();
+    }
+  }
+
+  @Override
   public Flow<Profile> observeProfile(final long id) {
     final String _sql = "select * from profiles where id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
@@ -422,6 +481,73 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
               _result = new Profile(_tmpId,_tmpUuid,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCreated_at);
             } else {
               _result = null;
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public Flow<List<Labels>> observeProfileCategory(final long id, final LabelType typeLabel) {
+    final String _sql = "\n"
+            + "        select l.* from profile_category as p \n"
+            + "        left join labels as l on l.id = p.category_id and l.type_label = ?\n"
+            + "           where p.profile_id = ?\n"
+            + "        ";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
+    int _argIndex = 1;
+    final String _tmp = AppTypeConverters.INSTANCE.fromLabelType(typeLabel);
+    _statement.bindString(_argIndex, _tmp);
+    _argIndex = 2;
+    _statement.bindLong(_argIndex, id);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"profile_category",
+        "labels"}, new Callable<List<Labels>>() {
+      @Override
+      @NonNull
+      public List<Labels> call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+            final int _cursorIndexOfThumbnail = CursorUtil.getColumnIndexOrThrow(_cursor, "thumbnail");
+            final int _cursorIndexOfTypeLabel = CursorUtil.getColumnIndexOrThrow(_cursor, "type_label");
+            final List<Labels> _result = new ArrayList<Labels>(_cursor.getCount());
+            while (_cursor.moveToNext()) {
+              final Labels _item;
+              final long _tmpId;
+              _tmpId = _cursor.getLong(_cursorIndexOfId);
+              final String _tmpName;
+              _tmpName = _cursor.getString(_cursorIndexOfName);
+              final String _tmpThumbnail;
+              if (_cursor.isNull(_cursorIndexOfThumbnail)) {
+                _tmpThumbnail = null;
+              } else {
+                _tmpThumbnail = _cursor.getString(_cursorIndexOfThumbnail);
+              }
+              final LabelType _tmpType_label;
+              final String _tmp_1;
+              if (_cursor.isNull(_cursorIndexOfTypeLabel)) {
+                _tmp_1 = null;
+              } else {
+                _tmp_1 = _cursor.getString(_cursorIndexOfTypeLabel);
+              }
+              _tmpType_label = AppTypeConverters.INSTANCE.toLabelType(_tmp_1);
+              _item = new Labels(_tmpId,_tmpName,_tmpThumbnail,_tmpType_label);
+              _result.add(_item);
             }
             __db.setTransactionSuccessful();
             return _result;

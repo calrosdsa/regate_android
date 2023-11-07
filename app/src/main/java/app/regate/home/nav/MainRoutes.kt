@@ -26,7 +26,7 @@ fun NavGraphBuilder.AddMainNav (
 
     navigation(
         route = Route.MAIN,
-        startDestination = Route.HOME,
+        startDestination = Route.ACCOUNT,
     ) {
         composable(route= Route.HOME) {
             composeScreens.home(

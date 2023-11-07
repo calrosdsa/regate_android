@@ -75,11 +75,16 @@ fun RowCheckSelectWithImage(
 @Composable
 fun AmenityItem(
     amenity:Labels,
-    modifier: Modifier=Modifier
+    modifier: Modifier=Modifier,
+    isSelect:Boolean = false,
+    enabled:Boolean = false,
+    onClick:()->Unit = {},
 ) {
     Surface(
         shape = MaterialTheme.shapes.large,
-        border = (BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground))
+        border =if(!isSelect)BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground) else BorderStroke(1.dp,MaterialTheme.colorScheme.primary),
+        onClick = onClick,
+        enabled = enabled
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -89,10 +94,10 @@ fun AmenityItem(
             AsyncImage(
                 model = amenity.thumbnail,
                 contentDescription = amenity.name,
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(19.dp),
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
             )
-            Spacer(modifier = Modifier.width(10.dp))
+            Spacer(modifier = Modifier.width(5.dp))
             Text(text = amenity.name, style = MaterialTheme.typography.labelSmall)
         }
     }

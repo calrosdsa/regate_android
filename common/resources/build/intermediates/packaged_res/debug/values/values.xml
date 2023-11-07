@@ -25,6 +25,7 @@
     <string name="book_a_court">Book a court</string>
     <string name="bookings">Bookings</string>
     <string name="cancel_request">Cancel request</string>
+    <string name="categories">Categories</string>
     <string name="channel_group_description" translatable="false">group_notification</string>
     <string name="channel_message_description" translatable="false">message_notification</string>
     <string name="chat_group">Chat group</string>

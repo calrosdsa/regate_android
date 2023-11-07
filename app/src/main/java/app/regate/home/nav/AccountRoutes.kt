@@ -42,6 +42,16 @@ internal fun NavGraphBuilder.AccountRoutes(
         )
     }
     animatedComposable(
+        route = Route.PROFILE_CATEGORIES arg "id",
+        arguments = listOf(
+            navArgument("id") { type = NavType.LongType },
+        )
+    ){
+        composeScreens.profileCategories(
+            navigateUp = navController::navigateUp
+        )
+    }
+    animatedComposable(
         route = Route.BILLING,
     ) {
         composeScreens.billing(

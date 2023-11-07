@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
+import app.regate.models.LabelType
+import app.regate.models.Labels
 import app.regate.models.Profile
 import app.regate.models.ProfileCategory
 import kotlinx.coroutines.flow.Flow
@@ -13,6 +15,14 @@ abstract class RoomProfileDao:RoomEntityDao<Profile> ,ProfileDao{
     @Transaction
     @Query("select * from profiles where id = :id")
     abstract override fun observeProfile(id:Long):Flow<Profile>
+
+    @Transaction
+    @Query("""
+        select l.* from profile_category as p 
+        left join labels as l on l.id = p.category_id and l.type_label = :typeLabel
+           where p.profile_id = :id
+        """)
+    abstract override fun observeProfileCategory(id: Long,typeLabel:LabelType): Flow<List<Labels>>
 
     @Transaction
     @Query("select * from profiles where id in (:ids)")

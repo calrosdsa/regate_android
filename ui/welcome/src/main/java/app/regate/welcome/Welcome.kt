@@ -97,7 +97,6 @@ internal fun Welcome(
             }
         }
     )
-
     val locationPermission = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
         onResult = { perms ->
