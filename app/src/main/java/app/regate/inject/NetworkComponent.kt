@@ -24,7 +24,6 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 interface NetworkComponent {
-
     @ApplicationScope
     @Provides
     fun provideOkHttpClient(
@@ -38,7 +37,6 @@ interface NetworkComponent {
                 maxRequestsPerHost = 10
             },
         )
-        // Increase timeouts
         .connectTimeout(20, TimeUnit.SECONDS)
         .readTimeout(20, TimeUnit.SECONDS)
         .writeTimeout(20, TimeUnit.SECONDS)

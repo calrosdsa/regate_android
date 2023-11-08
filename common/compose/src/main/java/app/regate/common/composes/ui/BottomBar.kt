@@ -181,8 +181,8 @@ private val HomeNavigationItems = listOf(
     ),
     HomeNavigationItem.ImageVectorIcon(
         screen = Route.GRUPOS,
-        labelResId = "Grupos",
-        contentDescriptionResId = "grupos",
+        labelResId = "Chats",
+        contentDescriptionResId = "chats",
         iconImageVector = Icons.Outlined.Group,
         selectedImageVector = Icons.Default.Group,
     ),

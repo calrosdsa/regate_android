@@ -11,6 +11,13 @@ data class ProfileDetailDto(
 )
 
 @Serializable
+data class ProfileCategoryRequest(
+    val category_id:Int,
+    val should_delete:Boolean,
+    val should_insert:Boolean,
+)
+
+@Serializable
 data class ProfileDto(
     val uuid:String ="",
     val created_at: Instant?=null,

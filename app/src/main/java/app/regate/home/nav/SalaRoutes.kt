@@ -15,7 +15,7 @@ import app.regate.home.animatedComposableVariant
 import app.regate.home.uri
 
 @ExperimentalAnimationApi
-internal fun NavGraphBuilder.SalaRoutes (
+internal fun NavGraphBuilder.SalaRoutes(
     composeScreens: ComposeScreens,
     navController: NavController,
 //    navigateToMap:()->Unit

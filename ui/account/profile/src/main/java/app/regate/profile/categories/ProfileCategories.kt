@@ -2,6 +2,7 @@ package app.regate.profile.categories
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -25,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -34,6 +36,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,6 +44,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
+import app.regate.common.composes.component.dialog.DialogConfirmation
+import app.regate.common.composes.component.dialog.LoaderDialog
 import app.regate.common.composes.component.images.AsyncImage
 import app.regate.common.composes.component.input.AmenityItem
 import app.regate.common.composes.viewModel
@@ -59,6 +64,7 @@ fun ProfileCategories(
     viewModelFactory:(SavedStateHandle) ->ProfileCategoriesViewModel,
     @Assisted navigateUp: () -> Unit
 ){
+
     ProfileCategories(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp
@@ -76,7 +82,8 @@ internal  fun ProfileCategories(
         navigateUp = navigateUp,
         clearMessage = viewModel::clearMessage,
         add = viewModel::add,
-        remove = viewModel::remove
+        remove = viewModel::remove,
+        save = viewModel::save
     )
 }
 
@@ -86,20 +93,28 @@ internal fun ProfileCategories(
     viewState:ProfileCategoriesState,
     clearMessage:(Long)->Unit,
     navigateUp: () -> Unit,
+    save:()->Unit,
     add:(Long)->Unit,
     remove:(Long)->Unit
 ) {
     val selectedIds by remember(key1 = viewState.userCategories) {
         mutableStateOf(viewState.userCategories.map { it.id })
     }
+//    var confirmationDialog by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     viewState.message?.let { message ->
         LaunchedEffect(key1 = message, block = {
-            snackbarHostState.showSnackbar(message.message)
+             snackbarHostState.showSnackbar(message.message)
             clearMessage(message.id)
         })
     }
+
+    LoaderDialog(loading = viewState.loading)
+//    DialogConfirmation(open = confirmationDialog, dismiss = { confirmationDialog = false },
+//        confirm = { save() })
+
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState)},
         topBar = {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -118,9 +133,9 @@ internal fun ProfileCategories(
         bottomBar = {
             BottomAppBar() {
                 Row(modifier = Modifier.fillMaxWidth(),
-
+                    horizontalArrangement = Arrangement.End
                 ) {
-                    Button(onClick = { /*TODO*/ }) {
+                    Button(onClick = {save() }) {
                         Text(text = stringResource(id = R.string.save))
                     }
                 }
@@ -135,7 +150,6 @@ internal fun ProfileCategories(
         ) {
             LazyRow(
                 modifier = Modifier
-                    .height(40.dp)
                     .padding(vertical = 15.dp), content = {
                     items(
                         items = viewState.userCategories

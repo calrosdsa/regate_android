@@ -17,7 +17,7 @@ import app.regate.home.uri
 
 
 @ExperimentalAnimationApi
-internal fun NavGraphBuilder.EstablecimientoRoutes (
+internal fun NavGraphBuilder.EstablecimientoRoutes(
     composeScreens: ComposeScreens,
     navController: NavController,
 //    navigateToMap:()->Unit

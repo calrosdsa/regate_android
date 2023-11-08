@@ -102,7 +102,7 @@ private val fadeTween = tween<Float>(durationMillis = DURATION_EXIT)
 private val fadeSpec = fadeTween
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.animatedComposable (
+fun NavGraphBuilder.animatedComposable(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
     deepLinks: List<NavDeepLink> = emptyList(),

@@ -55,6 +55,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.regate.common.composes.LocalAppDateFormatter
@@ -85,6 +86,8 @@ import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
+import app.regate.constant.Route
+import app.regate.constant.id
 
 
 typealias ChatGrupo = @Composable (
@@ -93,7 +96,8 @@ typealias ChatGrupo = @Composable (
 //    navigateToCreateSala:(id:Long)->Unit,
     navigateToGroup:(id:Long)->Unit,
     navigateToInstalacionReserva:(Long,Long)->Unit,
-    navigateToSala:(Long)->Unit
+    navigateToSala:(Long)->Unit,
+    navController: NavController
         ) -> Unit
 
 @Inject
@@ -105,7 +109,8 @@ fun ChatGrupo(
 //    @Assisted navigateToCreateSala: (id: Long) -> Unit,
     @Assisted navigateToGroup: (id: Long) -> Unit,
     @Assisted navigateToInstalacionReserva:(Long,Long)->Unit,
-    @Assisted navigateToSala: (Long) -> Unit
+    @Assisted navigateToSala: (Long) -> Unit,
+    @Assisted navController: NavController,
 ){
     ChatGrupo(
         viewModel = viewModel(factory = viewModelFactory),
@@ -114,7 +119,8 @@ fun ChatGrupo(
 //        navigateToCreateSala = navigateToCreateSala,
         navigateToGroup = navigateToGroup,
         navigateToInstalacionReserva = navigateToInstalacionReserva,
-        navigateToSala = navigateToSala
+        navigateToSala = navigateToSala,
+        navigateToEstablecimiento = { navController.navigate(Route.ESTABLECIMIENTO id it id 0L) }
     )
 }
 
@@ -126,7 +132,8 @@ internal fun ChatGrupo(
 //    navigateToCreateSala: (id: Long) -> Unit,
     navigateToGroup: (id: Long) -> Unit,
     navigateToInstalacionReserva: (Long, Long) -> Unit,
-    navigateToSala: (Long) -> Unit
+    navigateToSala: (Long) -> Unit,
+    navigateToEstablecimiento:(Long)->Unit
 ){
     val viewState by viewModel.state.collectAsState()
 
@@ -162,7 +169,8 @@ internal fun ChatGrupo(
         navigateToGroup = navigateToGroup,
         getTypeOfChat = viewModel::getTypeOfChat,
         deleteMessageForEveryone = viewModel::deleteMessageForEveryone,
-        deleteMessageForMe = viewModel::deleteMessageForMe
+        deleteMessageForMe = viewModel::deleteMessageForMe,
+        navigateToEstablecimiento = navigateToEstablecimiento
     )
 }
 
@@ -189,6 +197,7 @@ internal fun ChatGrupo(
     setKeyboardHeight:(Int)->Unit,
     navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
     navigateToSala: (Long) -> Unit,
+    navigateToEstablecimiento: (Long) -> Unit,
     resetScroll:()->Unit,
     getTypeOfChat:()->TypeChat,
     deleteMessageForEveryone:(Long)->Unit,
@@ -313,7 +322,9 @@ internal fun ChatGrupo(
                 chat = viewState.chat,
 //                navigateTocreateSala = navigateToCreateSala,
                 navigateToGroup = navigateToGroup,
-                users = viewState.usersGrupo
+                users = viewState.usersGrupo,
+                navigateToEstablecimiento = navigateToEstablecimiento,
+                navigateToSala = navigateToSala
             )
         },
         snackbarHost = {

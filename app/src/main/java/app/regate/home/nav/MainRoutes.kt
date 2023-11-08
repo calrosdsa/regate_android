@@ -26,7 +26,7 @@ fun NavGraphBuilder.AddMainNav (
 
     navigation(
         route = Route.MAIN,
-        startDestination = Route.ACCOUNT,
+        startDestination = Route.HOME,
     ) {
         composable(route= Route.HOME) {
             composeScreens.home(
@@ -68,13 +68,7 @@ fun NavGraphBuilder.AddMainNav (
             deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.GRUPOS}/{uuid}" })
         ){navArguments->
             val uuid = navArguments.arguments?.getString("uuid")?:""
-            composeScreens.grupos(navController = navController,filterGroups={
-                composeScreens.filterGroups(
-                    navigateUp = navController::navigateUp,
-                    navigateToGroup = {navController.navigate(Route.GRUPO id it)},
-                    navigateToInfoGrupo = {navController.navigate(Route.INFO_GRUPO id it)},
-                    openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)}
-                )},
+            composeScreens.grupos(navController = navController,
                 userSalas = { composeScreens.userSalas(
                     navigateToSala = { it1,it2->
                         navController.navigate(Route.CHAT_SALA id it1 id it2)},

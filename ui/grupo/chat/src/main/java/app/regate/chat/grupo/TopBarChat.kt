@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.data.dto.chat.TypeChat
 import app.regate.models.chat.Chat
 
 
@@ -33,11 +34,21 @@ fun TopBarChat(
     chat:Chat?,
 //    navigateTocreateSala:(id:Long)->Unit,
     navigateToGroup:(id:Long)->Unit,
+    navigateToSala:(id:Long)->Unit,
+    navigateToEstablecimiento:(Long)->Unit,
     users:List<UserProfileGrupoAndSala>,
     modifier:Modifier = Modifier
 ) {
 //    var expanded by remember { mutableStateOf(false) }
 //    val context = LocalContext.current
+
+    fun navigateToParent(id:Long,type:Int){
+        when(type){
+            TypeChat.TYPE_CHAT_SALA.ordinal -> navigateToSala(id)
+            TypeChat.TYPE_CHAT_GRUPO.ordinal -> navigateToGroup(id)
+            TypeChat.TYPE_CHAT_INBOX_ESTABLECIMIENTO.ordinal -> navigateToEstablecimiento(id)
+        }
+    }
 
     Surface(color = MaterialTheme.colorScheme.primary,
     contentColor = MaterialTheme.colorScheme.onPrimary) {
@@ -59,14 +70,14 @@ fun TopBarChat(
                 shape = CircleShape,
                 onClick = {
                     if (chat != null) {
-                        navigateToGroup(chat.parent_id)
+                       navigateToParent(chat.parent_id,chat.type_chat)
                     }
                 }
             )
             Spacer(modifier = Modifier.width(5.dp))
             Column(modifier = Modifier.clickable {
                 if (chat != null) {
-                    navigateToGroup(chat.parent_id)
+                    navigateToParent(chat.parent_id,chat.type_chat)
                 }
             }) {
             Text(text = chat?.name?:"", style = MaterialTheme.typography.titleMedium, maxLines = 1)

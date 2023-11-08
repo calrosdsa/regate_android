@@ -41,7 +41,8 @@ internal fun NavGraphBuilder.GrupoRoutes(
             navigateToInstalacionReserva = {instalacionId,establecimientoId ->
                 navController.navigate(Route.RESERVAR id instalacionId id establecimientoId)
             },
-            navigateToSala = { navController.navigate(Route.SALA id it)}
+            navigateToSala = { navController.navigate(Route.SALA id it)},
+            navController = navController
         )
     }
 

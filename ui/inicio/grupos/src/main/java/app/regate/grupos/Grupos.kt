@@ -52,7 +52,6 @@ import me.tatarka.inject.annotations.Inject
 
 typealias Grupos= @Composable (
     navController: NavController,
-    filterGroups:@Composable () -> Unit,
     userSalas:@Composable () -> Unit,
     uuid:String,
 //    navigateToReserva:(id:Long)->Unit,
@@ -64,7 +63,6 @@ typealias Grupos= @Composable (
 fun Grupos (
     viewModelFactory:()->ChatsViewModel,
     @Assisted navController: NavController,
-    @Assisted filterGroups:@Composable () -> Unit,
     @Assisted userSalas:@Composable () -> Unit,
     @Assisted uuid:String,
 //    @Assisted navigateToReserva: (id:Long) -> Unit,
@@ -73,7 +71,6 @@ fun Grupos (
     val formatter = LocalAppDateFormatter.current
     Grupos(navController = navController,
         viewModel = viewModel(factory = viewModelFactory),
-        filterGroups = filterGroups,
         userSalas = userSalas,
         formatShortRelativeTime = formatter::formatShortRelativeTime,
         openAuthBottomSheet = { navController.navigate(Route.AUTH_DIALOG) },
@@ -101,7 +98,6 @@ internal fun Grupos(
     navigateToInvitationGrupo:(String)->Unit,
     navigateToUserInvitations:()->Unit,
 //    navigateToPhoto:(String)->Unit,
-    filterGroups:@Composable () -> Unit,
     userSalas:@Composable () -> Unit,
     ) {
 //    val pagingItems = viewModel.pagingList.collectasLa
@@ -164,8 +160,7 @@ internal fun Grupos(
                         }
                     }
                 )
-                1 -> filterGroups()
-                2 -> userSalas()
+                1 -> userSalas()
             }
         }
     }
@@ -239,26 +234,26 @@ internal fun Indicators(
     ScrollableTabRow(selectedTabIndex = currentTab, edgePadding = 1.dp,
         modifier = modifier.fillMaxWidth(0.8f)) {
         Tab(
-            text = { Text(text = "Mis Grupos", style = MaterialTheme.typography.labelMedium) },
+            text = { Text(text = "Chats", style = MaterialTheme.typography.labelMedium) },
             selected = currentTab == 0,
             onClick = {
                 navToTab(0)
             },
         )
-        Tab(
-            text = { Text(text = stringResource(id = R.string.groups),style = MaterialTheme.typography.labelMedium) },
-            selected = currentTab ==1,
-            onClick = {
-                // Animate to the selected page when clicked
-                navToTab(1)
-            },
-        )
+//        Tab(
+//            text = { Text(text = stringResource(id = R.string.groups),style = MaterialTheme.typography.labelMedium) },
+//            selected = currentTab ==1,
+//            onClick = {
+//                // Animate to the selected page when clicked
+//                navToTab(1)
+//            },
+//        )
         Tab(
             text = { Text(text = stringResource(id = R.string.rooms),style = MaterialTheme.typography.labelMedium) },
             selected = currentTab ==1,
             onClick = {
                 // Animate to the selected page when clicked
-                navToTab(2)
+                navToTab(1)
             },
         )
     }

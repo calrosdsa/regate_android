@@ -8,6 +8,7 @@ import androidx.room.EntityInsertionAdapter;
 import androidx.room.EntityUpsertionAdapter;
 import androidx.room.RoomDatabase;
 import androidx.room.RoomSQLiteQuery;
+import androidx.room.SharedSQLiteStatement;
 import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.room.util.StringUtil;
@@ -45,6 +46,8 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
   private final EntityDeletionOrUpdateAdapter<Profile> __deletionAdapterOfProfile;
 
   private final EntityDeletionOrUpdateAdapter<Profile> __updateAdapterOfProfile;
+
+  private final SharedSQLiteStatement __preparedStmtOfDeleteAllProfileCategories;
 
   private final EntityUpsertionAdapter<Profile> __upsertionAdapterOfProfile;
 
@@ -146,6 +149,14 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
           statement.bindString(8, _tmp);
         }
         statement.bindLong(9, entity.getId());
+      }
+    };
+    this.__preparedStmtOfDeleteAllProfileCategories = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "delete from profile_category where profile_id = ?";
+        return _query;
       }
     };
     this.__upsertionAdapterOfProfile = new EntityUpsertionAdapter<Profile>(new EntityInsertionAdapter<Profile>(__db) {
@@ -350,6 +361,29 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
   }
 
   @Override
+  public Object deleteAllProfileCategories(final long id,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteAllProfileCategories.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, id);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteAllProfileCategories.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
   public Object upsert(final Profile entity, final Continuation<? super Long> continuation) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
@@ -405,15 +439,22 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
   }
 
   @Override
-  public void insertProfileCategories(final List<ProfileCategory> entities) {
-    __db.assertNotSuspendingTransaction();
-    __db.beginTransaction();
-    try {
-      __upsertionAdapterOfProfileCategory.upsert(entities);
-      __db.setTransactionSuccessful();
-    } finally {
-      __db.endTransaction();
-    }
+  public Object insertProfileCategories(final List<ProfileCategory> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __upsertionAdapterOfProfileCategory.upsert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

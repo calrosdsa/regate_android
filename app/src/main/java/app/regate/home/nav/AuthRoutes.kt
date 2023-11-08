@@ -14,7 +14,7 @@ import app.regate.home.slideInVerticallyComposable
 import com.google.accompanist.navigation.material.bottomSheet
 
 @ExperimentalAnimationApi
-internal fun NavGraphBuilder.AuthRoutes (
+internal fun NavGraphBuilder.AuthRoutes(
     composeScreens: ComposeScreens,
     navController: NavController,
 //    navigateToMap:()->Unit

@@ -302,14 +302,14 @@ class ChatRepository(
                         )
                     }
                     chatDao.upsertAll(chats)
-                    val grupos = results.map { result ->
+                    val grupos = results.filter{it.type_chat == TypeChat.TYPE_CHAT_GRUPO.ordinal}.map { result ->
                         Grupo(
                             name = result.name,
                             photo = result.photo,
                             id = result.parent_id
                         )
                     }
-                    val myGroups = results.map { result ->
+                    val myGroups = results.filter{it.type_chat == TypeChat.TYPE_CHAT_GRUPO.ordinal}.map { result ->
                         MyGroups(
                             id = result.parent_id,
                             request_estado = GrupoRequestEstado.JOINED,

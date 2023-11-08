@@ -28,6 +28,9 @@ abstract class RoomProfileDao:RoomEntityDao<Profile> ,ProfileDao{
     @Query("select * from profiles where id in (:ids)")
     abstract override fun observeProfileSalas(ids: List<Long>) :Flow<List<Profile>>
 
+    @Query("delete from profile_category where profile_id = :id")
+    abstract override suspend fun deleteAllProfileCategories(id: Long)
+
     @Upsert
-    abstract override fun insertProfileCategories(entities: List<ProfileCategory>)
+    abstract override suspend fun insertProfileCategories(entities: List<ProfileCategory>)
 }

@@ -4,6 +4,7 @@ import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.FileData
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.account.user.PaginationProfilesResponse
+import app.regate.data.dto.account.user.ProfileCategoryRequest
 import app.regate.data.dto.account.user.ProfileDetailDto
 import app.regate.data.dto.account.user.ProfileDto
 import io.ktor.client.HttpClient
@@ -58,6 +59,15 @@ class UsersDataSourceImpl(
         size: Int
     ): PaginationProfilesResponse {
         return client.post("/v1/users/profile/search/?page=${page}&size=${size}"){
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
+    }
+
+    override suspend fun updateCategoriesProfile(d: List<ProfileCategoryRequest>){
+        val token = authStore.get()?.accessToken
+        return client.post("/v1/profile/update-categories/"){
+            header("Authorization","Bearer $token")
             contentType(ContentType.Application.Json)
             setBody(d)
         }.body()
