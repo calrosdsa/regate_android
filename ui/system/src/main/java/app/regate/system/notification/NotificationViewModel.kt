@@ -3,9 +3,11 @@ package app.regate.system.notification
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.regate.constant.Route
 import app.regate.data.system.SystemRepository
 import app.regate.domain.observers.system.ObserveNotifications
 import app.regate.domain.observers.system.ObserveUnreadNotificationCount
+import app.regate.settings.AppPreferences
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -18,6 +20,7 @@ class NotificationViewModel(
  observeNotifications: ObserveNotifications,
 // observeUnreadNotificationCount: ObserveUnreadNotificationCount,
    private val systemRepository: SystemRepository,
+   private val preferences: AppPreferences,
 ) : ViewModel() {
  // val loadingCounter = ObservableLoadingCounter()
 // val uiMessageManager = UiMessageManager()
@@ -38,7 +41,14 @@ class NotificationViewModel(
   observeNotifications(Unit)
 //  observeUnreadNotificationCount(Unit)
   updateUnreadNotifications()
+
+
 //  getData()
+  updatePreferences()
+ }
+
+ private fun updatePreferences(){
+  preferences.startRoute = Route.NOTIFICATIONS
  }
 
 // fun getData(){

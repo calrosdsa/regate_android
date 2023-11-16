@@ -3,6 +3,7 @@ package app.regate.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.regate.constant.Route
 import app.regate.data.account.AccountRepository
 import app.regate.data.common.AddressDevice
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
@@ -40,6 +41,7 @@ class HomeViewModel(
     private val establecimientoRepository: EstablecimientoRepository,
     private val converter:Converter,
     private val grupoRepository: GrupoRepository,
+    private val preferences: AppPreferences,
 //    private val salaRepository: SalaRepository,
 //    authStore: AuthStore,
     observeGrupo:ObserveGrupos,
@@ -79,6 +81,12 @@ class HomeViewModel(
             getEstablecimientos(it)
         }
         }
+
+        updatePreferences()
+    }
+
+    private fun updatePreferences(){
+        preferences.startRoute = Route.HOME
     }
 //    fun getReccomendedEstablecimientos(){
 //    }

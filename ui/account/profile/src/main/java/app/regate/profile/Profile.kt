@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -121,12 +122,17 @@ internal fun Profile(
     navigateToProfileCategories: (Long) -> Unit,
 ) {
     val scrollState = rememberScrollState()
+    val isMyProfile by remember(viewState.user) {
+        derivedStateOf{
+            viewState.user?.profile_id   == viewState.profile?.id
+        }
+    }
 
     Scaffold(
         topBar = {
             SimpleTopBar(navigateUp =  navigateUp,
             actions = {
-                if(viewState.profile?.id == viewState.user?.profile_id){
+                if(isMyProfile){
                     TextButton(onClick = { viewState.profile?.id?.let { navigateToEditProfile(it) } }) {
                         Text(text = stringResource(id = R.string.edit),style = MaterialTheme.typography.labelLarge,
                             textDecoration = TextDecoration.Underline)
@@ -215,9 +221,13 @@ internal fun Profile(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically) {
                 Label(text = "Areas de interes ")
+
+                    if(isMyProfile){
                     IconButton(onClick = { navigateToProfileCategories(viewState.profile.id) }) {
                         Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = null)
                     }
+                    }
+
                 }
                 FlowRow(modifier = Modifier.padding()) {
                     viewState.categories.map{item->

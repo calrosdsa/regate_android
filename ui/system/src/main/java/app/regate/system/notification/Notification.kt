@@ -12,11 +12,16 @@ import app.regate.common.resources.R
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -24,8 +29,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.component.text.DateTextWithIcon
+import app.regate.common.composes.ui.BottomBar
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import app.regate.models.Notification
@@ -35,42 +42,42 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
 typealias Notifications= @Composable (
-    navigateUp:()->Unit,
     navigateToSala:(Long)->Unit,
     navigateToAccount:()->Unit,
+    navController:NavController
         ) -> Unit
 
 @Inject
 @Composable
 fun Notifications(
     viewModelFactory:()->NotificationViewModel,
-    @Assisted navigateUp: () -> Unit,
     @Assisted navigateToSala: (Long) -> Unit,
     @Assisted navigateToAccount:()->Unit,
+    @Assisted navController: NavController,
 ){
     Notifications(
         viewModel = viewModel(factory = viewModelFactory),
-        navigateUp = navigateUp,
         navigateToSala = navigateToSala,
-        navigateToAccount = navigateToAccount
+        navigateToAccount = navigateToAccount,
+        navController = navController
     )
 }
 
 @Composable
 internal fun Notifications(
   viewModel: NotificationViewModel,
-  navigateUp: () -> Unit,
   navigateToSala: (Long) -> Unit,
-  navigateToAccount: () -> Unit
+  navigateToAccount: () -> Unit,
+  navController: NavController
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
     Notifications(
         viewState = state,
-        navigateUp = navigateUp,
         navigateToSala = navigateToSala,
         formatRelativeTime = formatter::formatShortRelativeTime,
-        navigateToAccount = navigateToAccount
+        navigateToAccount = navigateToAccount,
+        navController = navController
     )
 }
 
@@ -78,16 +85,23 @@ internal fun Notifications(
 @Composable
 internal fun Notifications(
     viewState:NotificationState,
-    navigateUp: () -> Unit,
     navigateToSala: (Long) -> Unit,
     formatRelativeTime:(Instant)->String,
-    navigateToAccount: () -> Unit
+    navigateToAccount: () -> Unit,
+    navController: NavController
 ){
     Scaffold(
-        topBar = {
-            SimpleTopBar(navigateUp = navigateUp,
-            title = stringResource(id = R.string.notifications))
-        }
+       topBar = { TopAppBar(
+           title = { Text(text = stringResource(id = R.string.notifications))},
+           actions = {
+               IconButton(onClick = { /*TODO*/ }) {
+                   Icon(imageVector = Icons.Default.Settings, contentDescription = null)
+               }
+           }
+       ) },
+       bottomBar = {
+           BottomBar(navController = navController)
+       }
     ) {paddingValues->
         Box(modifier = Modifier
             .fillMaxSize()

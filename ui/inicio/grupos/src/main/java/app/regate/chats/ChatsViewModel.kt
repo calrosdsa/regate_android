@@ -7,10 +7,12 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import app.cash.paging.cachedIn
 import app.regate.api.UiMessageManager
+import app.regate.constant.Route
 import app.regate.data.chat.ChatRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.chat.ObservePagerChat
 import app.regate.models.chat.Chat
+import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +29,7 @@ class ChatsViewModel(
     private val chatRepository: ChatRepository,
     observeAuthState: ObserveAuthState,
     pagingInteractor: ObservePagerChat,
+    private val preferences: AppPreferences
 //    private val updateFilterGrupos: UpdateFilterGrupos
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
@@ -56,7 +59,14 @@ class ChatsViewModel(
         pagingInteractor(ObservePagerChat.Params(PAGING_CONFIG))
         observeAuthState(Unit)
         getUserGrupos()
+
+        updatePreferences()
     }
+    private fun updatePreferences(){
+        preferences.startRoute = Route.GRUPOS
+    }
+
+
     companion object {
         val PAGING_CONFIG = PagingConfig(
             pageSize = 20,

@@ -52,6 +52,7 @@ int string back 0x0
 int string balance_coins 0x0
 int string book_a_court 0x0
 int string bookings 0x0
+int string cancel 0x0
 int string cancel_request 0x0
 int string categories 0x0
 int string channel_group_description 0x0

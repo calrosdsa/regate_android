@@ -60,7 +60,8 @@ typealias Account= @Composable (
     closeDrawer:()->Unit,
     navigateToReservas:()->Unit,
     openAuthBottomSheet:()->Unit,
-    navigateToRecargaCoins:()->Unit
+    navigateToRecargaCoins:()->Unit,
+
         ) -> Unit
 
 @Inject

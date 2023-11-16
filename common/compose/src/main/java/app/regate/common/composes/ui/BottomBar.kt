@@ -1,19 +1,30 @@
 package app.regate.common.composes.ui
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.CalendarToday
+import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.material.icons.outlined.Group
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -25,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -64,6 +76,9 @@ fun NavController.currentScreenAsState(): State<String> {
                 destination.hierarchy.any { it.route == Route.HOME } -> {
                     selectedItem.value = Route.HOME
                 }
+                destination.hierarchy.any { it.route == Route.NOTIFICATIONS} -> {
+                    selectedItem.value = Route.NOTIFICATIONS
+                }
                 destination.hierarchy.any { it.route == Route.DISCOVER + "?data={data}" } -> {
                     selectedItem.value = Route.DISCOVER
                 }
@@ -97,22 +112,31 @@ internal fun HomeNavigationBar(
     onNavigationSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    NavigationBar(modifier = modifier) {
+    Surface(
+        shadowElevation = 2.dp,
+        color = MaterialTheme.colorScheme.inverseOnSurface
+    ) {
+
+    Row(modifier = modifier
+        .padding(5.dp)
+        .height(50.dp)) {
         for (item in HomeNavigationItems) {
             NavigationBarItem(
                 icon = {
+//                       Icon(imageVector = item., contentDescription =null )
                     HomeNavigationItemIcon(
                         item = item,
                         selected = selectedNavigation == item.screen,
                     )
                 },
-                label = { Text(text = item.labelResId, maxLines = 1) },
-                selected = selectedNavigation == item.screen,
+//                label = { Text(text = item.labelResId, maxLines = 1) },
+                selected = false,
                 onClick = { onNavigationSelected(item.screen) },
             )
         }
     }
 }
+    }
 
 @Composable
 private fun HomeNavigationItemIcon(item: HomeNavigationItem, selected: Boolean) {
@@ -170,28 +194,35 @@ private val HomeNavigationItems = listOf(
         labelResId = "Home",
         contentDescriptionResId ="home",
         iconImageVector = Icons.Outlined.Home,
-        selectedImageVector = Icons.Default.Home,
+        selectedImageVector = Icons.Filled.Home,
     ),
     HomeNavigationItem.ImageVectorIcon(
         screen = Route.DISCOVER,
         labelResId = "Reservas",
         contentDescriptionResId = "reservas",
         iconImageVector = Icons.Outlined.CalendarToday,
-        selectedImageVector = Icons.Default.CalendarToday,
+        selectedImageVector = Icons.Filled.CalendarToday,
+    ),
+    HomeNavigationItem.ImageVectorIcon(
+        screen = Route.NOTIFICATIONS,
+        labelResId = "Notificaciones",
+        contentDescriptionResId = "notificaciones",
+        iconImageVector = Icons.Outlined.Notifications,
+        selectedImageVector = Icons.Filled.Notifications,
     ),
     HomeNavigationItem.ImageVectorIcon(
         screen = Route.GRUPOS,
         labelResId = "Chats",
         contentDescriptionResId = "chats",
-        iconImageVector = Icons.Outlined.Group,
-        selectedImageVector = Icons.Default.Group,
+        iconImageVector = Icons.Outlined.Chat,
+        selectedImageVector = Icons.Filled.Chat,
     ),
     HomeNavigationItem.ImageVectorIcon(
         screen = Route.ACCOUNT,
         labelResId = "Account",
         contentDescriptionResId = "account",
         iconImageVector = Icons.Outlined.AccountCircle,
-        selectedImageVector = Icons.Default.AccountCircle,
+        selectedImageVector = Icons.Filled.AccountCircle,
     ),
 //    HomeNavigationItem.ImageVectorIcon(
 //        screen = Route.SERVICIOS,

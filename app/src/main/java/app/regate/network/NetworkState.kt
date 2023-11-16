@@ -49,7 +49,7 @@ private val networkCallback = object : ConnectivityManager.NetworkCallback() {
 }
 
 @RequiresApi(Build.VERSION_CODES.N)
-fun initListener(context: Context){
+fun initListener(context: Context) {
     val connectivityManager = context.getSystemService(ConnectivityManager::class.java) as ConnectivityManager
     connectivityManager.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network : Network) {

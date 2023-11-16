@@ -77,6 +77,7 @@ import me.tatarka.inject.annotations.Inject
 import kotlin.time.Duration.Companion.days
 import app.regate.common.resources.R
 import app.regate.constant.id
+import app.regate.discover.timepicker.ShowTimeDialog
 import app.regate.discover.timepicker.TimeFormat
 import app.regate.discover.timepicker.WheelTimePicker
 import app.regate.util.roundOffDecimal
@@ -123,9 +124,9 @@ internal fun Discover(
     val startDate = (now - (1.days)).toEpochMilliseconds()
     val showDialog = remember { mutableStateOf(false) }
     val showTimeDialog = remember { mutableStateOf(false) }
-    val showDialogIntervalo = remember {
-        mutableStateOf(false)
-    }
+//    val showDialogIntervalo = remember {
+//        mutableStateOf(false)
+//    }
     val snackbarHostState = remember { SnackbarHostState() }
     val dismissSnackbarState = rememberDismissState(
         confirmValueChange = { value ->
@@ -161,13 +162,13 @@ internal fun Discover(
             viewModel.clearMessage(message.id)
         }
     }
-    DialogHour2(
-        showDialog = showDialogIntervalo.value,
-        dismiss = { showDialogIntervalo.value = false },
-        intervalos = viewState.horaIntervalo,
-        setIntervalo = viewModel::setInterval,
-        minutes = viewState.filter.interval
-    )
+//    DialogHour2(
+//        showDialog = showDialogIntervalo.value,
+//        dismiss = { showDialogIntervalo.value = false },
+//        intervalos = viewState.horaIntervalo,
+//        setIntervalo = viewModel::setInterval,
+//        minutes = viewState.filter.interval
+//    )
     DatePickerDialogComponent(
         state = dateState,
         show = showDialog.value,
@@ -176,19 +177,14 @@ internal fun Discover(
             (it in startDate..endDate)
         }
     )
-    if(showTimeDialog.value){
-    Dialog(onDismissRequest = {showTimeDialog.value = false }) {
-        WheelTimePicker(
-            timeFormat = TimeFormat.HOUR_24,
-            startTime = viewState.filter.currentTime.toJavaLocalTime(),
-            modifier = Modifier
-                .clip(MaterialTheme.shapes.medium)
-                .background(MaterialTheme.colorScheme.surface)
-                .padding(10.dp),
-            onSnappedTime = { viewModel.setTime(it.toKotlinLocalTime()) }
-        )
-    }
-    }
+
+    ShowTimeDialog(
+        show = showTimeDialog.value,
+        onDismiss = { showTimeDialog.value = false },
+        startTime =  viewState.filter.currentTime,
+        setTime = viewModel::setTime,
+        endTime = viewState.filter.endTime
+    )
 
     Scaffold(
         topBar = {
@@ -196,12 +192,13 @@ internal fun Discover(
                    place = viewState.addressDevice,
                    showDateDialog = {showDialog.value = true},
                    showTimeDialog = { showTimeDialog.value = true },
-                   showDialogInterval = {showDialogIntervalo.value = true},
+//                   showDialogInterval = {showDialogIntervalo.value = true},
                    date = formatter.formatWithSkeleton(dateState.selectedDateMillis!!, formatter.yearAbbrMonthDaySkeleton),
                    navigateToFilter = {navController.navigate(Route.FILTER)},
                    categories = viewState.categories,
                    currentTime = viewState.filter.currentTime.toJavaLocalTime(),
-                   currentInterval = viewState.filter.interval,
+                   endTime = viewState.filter.endTime.toJavaLocalTime(),
+//                   currentInterval = viewState.filter.interval,
                    setCategory = viewModel::setCategory,
                    selectedCategory = viewState.selectedCategory
                    )
@@ -230,7 +227,9 @@ internal fun Discover(
             .fillMaxSize()) {
             Discover(
                 viewState = viewState,
-                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
                 lazyPagingItems = lazyPagingItems,
             ) { instalacion ->
                 viewModel.openReservaBottomSheet(
@@ -240,7 +239,9 @@ internal fun Discover(
 
             if(isEmpty){
                 Text(text = stringResource(id = R.string.no_result_found),
-                    modifier = Modifier.fillMaxWidth(0.7f).align(Alignment.Center), style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .align(Alignment.Center), style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center)
             }
             PullRefreshIndicator(

@@ -7,6 +7,8 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
+import kotlinx.datetime.toJavaLocalTime
+import kotlinx.datetime.toKotlinLocalTime
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.Serializable
 
@@ -18,6 +20,7 @@ data class FilterInstalacionData(
 //    val currentTime:LocalTime = Clock.System.now().toLocalDateTime(TimeZone.UTC).time,
 //    val currentTime:LocalTime = LocalTime.parse("21:00"),
     val currentTime:LocalTime = getMostNearTime(),
+    val endTime:LocalTime = getMostNearTime().toJavaLocalTime().plusMinutes(30).toKotlinLocalTime(),
     val date:List<String> = emptyList(),
     val time:List<String> = emptyList(),
     val day_week:Int = 0,

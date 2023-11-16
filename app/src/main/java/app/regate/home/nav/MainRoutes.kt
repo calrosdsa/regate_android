@@ -20,13 +20,14 @@ import com.google.accompanist.navigation.animation.navigation
 fun NavGraphBuilder.AddMainNav (
     composeScreens: ComposeScreens,
     navController: NavController,
+    startRoute:String,
 //    navigateToMap:()->Unit
 //    openSettings: () -> Unit,
 ) {
 
     navigation(
         route = Route.MAIN,
-        startDestination = Route.HOME,
+        startDestination = startRoute,
     ) {
         composable(route= Route.HOME) {
             composeScreens.home(
@@ -85,6 +86,15 @@ fun NavGraphBuilder.AddMainNav (
             ),
         ) {
             composeScreens.chats(
+                navController = navController
+            )
+        }
+
+        animatedComposable(route = Route.NOTIFICATIONS,
+            deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.NOTIFICATIONS}" })) {
+            composeScreens.notifications(
+                navigateToSala = { navController.navigate(Route.SALA id it) },
+                navigateToAccount = { navController.navigate(Route.BILLING) },
                 navController = navController
             )
         }

@@ -45,13 +45,14 @@ internal fun HeaderFilter(
     place: AddressDevice?,
     showTimeDialog:()->Unit,
     showDateDialog:()->Unit,
-    showDialogInterval:()->Unit,
+//    showDialogInterval:()->Unit,
     date:String,
     navigateToFilter:()->Unit,
     categories:List<Labels>,
 //    currentCategoryId:Long,
     currentTime:LocalTime,
-    currentInterval:Long,
+    endTime:LocalTime,
+//    currentInterval:Long,
     setCategory: (Long) -> Unit,
     selectedCategory:Labels?,
     modifier:Modifier = Modifier
@@ -138,14 +139,7 @@ internal fun HeaderFilter(
                                 .padding(5.dp)
                                 .size(40.dp)
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = "add-sport",
-                                modifier = Modifier
-                                    .zIndex(1f)
-                                    .size(8.dp)
-                                    .align(Alignment.TopEnd)
-                            )
+
                             if (selectedCategory != null) {
                                 AsyncImage(
                                     model = selectedCategory.thumbnail ?: "",
@@ -154,6 +148,15 @@ internal fun HeaderFilter(
                                         .size(30.dp)
                                         .align(Alignment.Center),
                                     colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
+                                )
+                            }else{
+                                Icon(
+                                    imageVector = Icons.Default.Add,
+                                    contentDescription = "add-sport",
+                                    modifier = Modifier
+                                        .zIndex(1f)
+                                        .size(20.dp)
+                                        .align(Alignment.Center)
                                 )
                             }
                         }
@@ -204,40 +207,40 @@ internal fun HeaderFilter(
                                 text = "Hora",
                                 style = MaterialTheme.typography.labelSmall
                             )
-                            Spacer(modifier = Modifier.width(5.dp))
+
                             Text(
-                                text = "$currentTime",
+                                text = "$currentTime - $endTime",
                                 style = MaterialTheme.typography.labelMedium,
                             )
                         }
                     }
                 }
-                item {
-                    Divider(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(1.dp)
-                    )
-                }
-                item{
-                    Surface(onClick = { showDialogInterval() }, modifier = Modifier,
-                        color = MaterialTheme.colorScheme.inverseOnSurface
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.time_interval),
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                            Spacer(modifier = Modifier.width(5.dp))
-                            Text(
-                                text = "$currentInterval min",
-                                style = MaterialTheme.typography.labelMedium,
-                            )
-                        }
-                    }
-                }
+//                item {
+//                    Divider(
+//                        modifier = Modifier
+//                            .fillMaxHeight()
+//                            .width(1.dp)
+//                    )
+//                }
+//                item{
+//                    Surface(onClick = { showDialogInterval() }, modifier = Modifier,
+//                        color = MaterialTheme.colorScheme.inverseOnSurface
+//                    ) {
+//                        Column(
+//                            modifier = Modifier.padding(10.dp)
+//                        ) {
+//                            Text(
+//                                text = stringResource(id = R.string.time_interval),
+//                                style = MaterialTheme.typography.labelSmall
+//                            )
+//                            Spacer(modifier = Modifier.width(5.dp))
+//                            Text(
+//                                text = "$currentInterval min",
+//                                style = MaterialTheme.typography.labelMedium,
+//                            )
+//                        }
+//                    }
+//                }
 
             }
 //            Divider()

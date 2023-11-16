@@ -10,6 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
+import app.regate.constant.Route
 import app.regate.data.common.AddressDevice
 import app.regate.data.common.getDataEntityFromJson
 import app.regate.data.dto.empresa.instalacion.FilterInstalacionData
@@ -60,7 +61,7 @@ class DiscoverViewModel(
     observeLabelType: ObserveLabelType,
     observeAddressDevice: ObserveAddressDevice,
     private val cupoRepository: CupoRepository,
-    private val appDateFormatter: AppDateFormatter
+    private val appDateFormatter: AppDateFormatter,
 ): ViewModel() {
     private var dataFilter =  savedStateHandle.get<String>("data")?:""
     private val filterData = MutableStateFlow(FILTER_DATA)
@@ -130,6 +131,12 @@ class DiscoverViewModel(
                 }
             }
         }
+
+        updatePreferences()
+    }
+
+    private fun updatePreferences(){
+        appPreferences.startRoute = Route.GRUPOS
     }
 
     companion object {
@@ -202,10 +209,14 @@ class DiscoverViewModel(
         return listTime.toList()
     }
 
-    fun setTime(time:LocalTime) {
+    fun setTime(start:LocalTime,end:LocalTime) {
+        val interval = (end.toSecondOfDay() - start.toSecondOfDay()).div(60)
+//        Log.d("DEBUG_APP_TIME","${start.toSecondOfDay()} -- ${end.toSecondOfDay()} ----- ${diff.div(60)}")
         appPreferences.filter = Json.encodeToString(
             filterData.value.copy(
-                currentTime = time,
+                currentTime = start,
+                interval = interval.toLong(),
+                endTime = end
             )
         )
     }
@@ -228,9 +239,9 @@ class DiscoverViewModel(
             selectedCategory.tryEmit(selected)
         }
     }
-    fun setInterval(minutes:Long){
-        appPreferences.filter = Json.encodeToString(filterData.value.copy(interval = minutes))
-    }
+//    fun setInterval(minutes:Long){
+//        appPreferences.filter = Json.encodeToString(filterData.value.copy(interval = minutes))
+//    }
     fun clearMessage(id:Long){
         viewModelScope.launch {
             uiMessageManager.clearMessage(id)

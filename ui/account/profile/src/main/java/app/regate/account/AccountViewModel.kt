@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
+import app.regate.constant.Route
 import app.regate.data.account.AccountRepository
 import app.regate.data.auth.AppAuthState
 import app.regate.data.auth.AuthRepository
@@ -38,6 +39,7 @@ class AccountViewModel(
     observeAuthState: ObserveAuthState,
     observeUserBalance: ObserveUserBalance,
     observeUnreadNotificationCount: ObserveUnreadNotificationCount,
+    private val preferences: AppPreferences
 ):ViewModel() {
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
@@ -91,6 +93,10 @@ class AccountViewModel(
         }
         }
         getUserBalance()
+        updatePreferences()
+    }
+    private fun updatePreferences(){
+        preferences.startRoute = Route.ACCOUNT
     }
     private fun getUnreadNotifications(){
         viewModelScope.launch {

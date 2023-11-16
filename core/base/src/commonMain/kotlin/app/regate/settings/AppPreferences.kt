@@ -22,6 +22,8 @@ interface AppPreferences {
 
     fun setup()
 
+    var startRoute:String
+
     var categories:String
 
     var keyBoardHeight:Int

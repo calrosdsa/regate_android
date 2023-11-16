@@ -44,6 +44,7 @@ fun HomeEntry(
     composeScreens: ComposeScreens,
     establecimientoId:String?,
     startScreen:String,
+    startRoute:String
 //    navigateToMap:()->Unit
 ) {
     val bottomSheetNavigator = rememberBottomSheetNavigator()
@@ -81,6 +82,7 @@ fun HomeEntry(
                     composeScreens = composeScreens,
                     modifier = Modifier,
                     startScreen = startScreen,
+                    startRoute = startRoute,
 //                    finishActivity = establecimientoId != null,
 //                    navigateToMap = navigateToMap
                 )
@@ -96,6 +98,7 @@ internal fun AppNavigation(
     navController: NavHostController,
     composeScreens: ComposeScreens,
     startScreen:String,
+    startRoute: String,
     modifier: Modifier = Modifier,
 //    navigateToMap:()->Unit
 ) {
@@ -143,14 +146,7 @@ internal fun AppNavigation(
             navigateUp = navController::navigateUp
             )
         }
-        animatedComposable(route = Route.NOTIFICATIONS,
-            deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.NOTIFICATIONS}" })) {
-            composeScreens.notifications(
-                navigateUp = navController::navigateUp,
-                navigateToSala = { navController.navigate(Route.SALA id it) },
-                navigateToAccount = { navController.navigate(Route.BILLING) }
-            )
-        }
+
         animatedComposable(route = Route.RESERVAR arg "id" arg "establecimientoId",
         arguments = listOf(
             navArgument("id"){ type = NavType.LongType },
@@ -297,6 +293,9 @@ internal fun AppNavigation(
             )
         }
 
-        AddMainNav(composeScreens, navController)
+        AddMainNav(
+            composeScreens, navController,
+            startRoute = startRoute
+        )
     }
 }
