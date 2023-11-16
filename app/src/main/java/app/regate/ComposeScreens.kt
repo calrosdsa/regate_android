@@ -75,6 +75,7 @@ import app.regate.system.report.Report
 import app.regate.chats.mychats.MyChats
 import app.regate.grupo.invitations.InviteUser
 import app.regate.grupos.userinvitations.UserInvitations
+import app.regate.main.InicioScreen
 import app.regate.profile.categories.ProfileCategories
 import app.regate.usersalas.UserSalas
 import app.regate.welcome.Welcome
@@ -83,6 +84,7 @@ import me.tatarka.inject.annotations.Inject
 //@ActivityScope
 @Inject
 class ComposeScreens(
+
     val welcome:Welcome,
     val report:Report,
     val notifications:Notifications,
@@ -90,11 +92,15 @@ class ComposeScreens(
     val login: Login,
     val signUp: SignUp,
     val emailVerification:EmailVerification,
+
+    val inicio:InicioScreen,
     val home: Home,
     val grupos:Grupos,
     val servicios: Servicios,
     val discover:DiscoverScreen,
     val actividades: Actividades,
+
+
     val establecimiento: Establecimiento,
     val instalacion: InstalacionDetail,
     val bottomReserva:Reservar,

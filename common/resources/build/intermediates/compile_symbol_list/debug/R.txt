@@ -83,6 +83,7 @@ int string create_shortcut 0x0
 int string decline 0x0
 int string delete_chat 0x0
 int string delete_message 0x0
+int string delete_reservation 0x0
 int string deposits 0x0
 int string description 0x0
 int string discount 0x0
@@ -127,6 +128,7 @@ int string join_a_group 0x0
 int string language 0x0
 int string later 0x0
 int string leave_group 0x0
+int string leave_room 0x0
 int string location 0x0
 int string location_static_url 0x0
 int string login 0x0
@@ -202,7 +204,7 @@ int string see_more_options 0x0
 int string see_sala 0x0
 int string select_group_text 0x0
 int string send 0x0
-int string send_to_a_group 0x0
+int string send_to_a_chat 0x0
 int string services 0x0
 int string settings 0x0
 int string share_image_link 0x0

@@ -31,14 +31,14 @@ import me.tatarka.inject.annotations.Inject
 
 
 typealias UserSalas= @Composable (
-    navigateToSala:(Long,String)->Unit,
+    navigateToSala:(Long)->Unit,
 ) -> Unit
 
 @Inject
 @Composable
 fun UserSalas(
     viewModelFactory:()-> UserSalasViewModel,
-    @Assisted navigateToSala: (Long,String) -> Unit,
+    @Assisted navigateToSala: (Long) -> Unit,
 ){
     UserSalas(
         viewModel = viewModel(factory = viewModelFactory),
@@ -49,7 +49,7 @@ fun UserSalas(
 @Composable
 internal fun UserSalas(
     viewModel: UserSalasViewModel,
-    navigateToSala: (Long,String) -> Unit,
+    navigateToSala: (Long) -> Unit,
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -71,7 +71,7 @@ internal fun UserSalas(
     lazyPagingItems: LazyPagingItems<SalaDto>,
     formatShortTime:(time: String,plusMinutes:Long)->String,
     formatDate:(date: String)->String,
-    navigateToSala:(Long,String)->Unit,
+    navigateToSala:(Long)->Unit,
 ){
     val refreshing = lazyPagingItems.loadState.refresh == LoadState.Loading
     val pullRefreshState = rememberPullRefreshState(

@@ -22,7 +22,7 @@ interface AppPreferences {
 
     fun setup()
 
-    var startRoute:String
+    var startRoute:Int
 
     var categories:String
 

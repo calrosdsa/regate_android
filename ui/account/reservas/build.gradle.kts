@@ -46,4 +46,7 @@ dependencies {
     ksp(libs.kotlininject.compiler)
 
     lintChecks(libs.slack.lint.compose)
+
+    implementation(libs.io.github.dokar3)
+
 }

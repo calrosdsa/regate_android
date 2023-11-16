@@ -29,7 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.component.text.DateTextWithIcon
 import app.regate.common.composes.ui.BottomBar
@@ -44,7 +43,6 @@ import me.tatarka.inject.annotations.Inject
 typealias Notifications= @Composable (
     navigateToSala:(Long)->Unit,
     navigateToAccount:()->Unit,
-    navController:NavController
         ) -> Unit
 
 @Inject
@@ -53,13 +51,11 @@ fun Notifications(
     viewModelFactory:()->NotificationViewModel,
     @Assisted navigateToSala: (Long) -> Unit,
     @Assisted navigateToAccount:()->Unit,
-    @Assisted navController: NavController,
 ){
     Notifications(
         viewModel = viewModel(factory = viewModelFactory),
         navigateToSala = navigateToSala,
         navigateToAccount = navigateToAccount,
-        navController = navController
     )
 }
 
@@ -68,7 +64,6 @@ internal fun Notifications(
   viewModel: NotificationViewModel,
   navigateToSala: (Long) -> Unit,
   navigateToAccount: () -> Unit,
-  navController: NavController
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -77,7 +72,6 @@ internal fun Notifications(
         navigateToSala = navigateToSala,
         formatRelativeTime = formatter::formatShortRelativeTime,
         navigateToAccount = navigateToAccount,
-        navController = navController
     )
 }
 
@@ -88,7 +82,7 @@ internal fun Notifications(
     navigateToSala: (Long) -> Unit,
     formatRelativeTime:(Instant)->String,
     navigateToAccount: () -> Unit,
-    navController: NavController
+
 ){
     Scaffold(
        topBar = { TopAppBar(
@@ -99,9 +93,6 @@ internal fun Notifications(
                }
            }
        ) },
-       bottomBar = {
-           BottomBar(navController = navController)
-       }
     ) {paddingValues->
         Box(modifier = Modifier
             .fillMaxSize()

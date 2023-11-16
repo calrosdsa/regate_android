@@ -13,12 +13,11 @@ import androidx.room.SharedSQLiteStatement;
 import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
-import app.regate.compoundmodels.GrupoWithMessage;
 import app.regate.data.db.AppTypeConverters;
 import app.regate.data.db.DateTimeTypeConverters;
 import app.regate.data.dto.empresa.grupo.GrupoRequestEstado;
-import app.regate.models.Grupo;
-import app.regate.models.MyGroups;
+import app.regate.models.grupo.Grupo;
+import app.regate.models.grupo.MyGroups;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.IllegalStateException;
@@ -41,6 +40,8 @@ import kotlinx.datetime.Instant;
 public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<MyGroups> __insertionAdapterOfMyGroups;
+
   private final EntityDeletionOrUpdateAdapter<MyGroups> __deletionAdapterOfMyGroups;
 
   private final EntityDeletionOrUpdateAdapter<MyGroups> __updateAdapterOfMyGroups;
@@ -55,6 +56,21 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
 
   public RoomMyGroupsDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfMyGroups = new EntityInsertionAdapter<MyGroups>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `my_groups` (`id`,`request_estado`) VALUES (nullif(?, 0),?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final MyGroups entity) {
+        statement.bindLong(1, entity.getId());
+        final int _tmp = AppTypeConverters.INSTANCE.fromGrupoRequestEstado(entity.getRequest_estado());
+        statement.bindLong(2, _tmp);
+      }
+    };
     this.__deletionAdapterOfMyGroups = new EntityDeletionOrUpdateAdapter<MyGroups>(__db) {
       @Override
       @NonNull
@@ -72,17 +88,16 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `my_groups` SET `id` = ?,`group_id` = ?,`request_estado` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `my_groups` SET `id` = ?,`request_estado` = ? WHERE `id` = ?";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final MyGroups entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindLong(2, entity.getGroup_id());
         final int _tmp = AppTypeConverters.INSTANCE.fromGrupoRequestEstado(entity.getRequest_estado());
-        statement.bindLong(3, _tmp);
-        statement.bindLong(4, entity.getId());
+        statement.bindLong(2, _tmp);
+        statement.bindLong(3, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteMyGroups = new SharedSQLiteStatement(__db) {
@@ -105,7 +120,7 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
       @Override
       @NonNull
       public String createQuery() {
-        final String _query = "delete from my_groups where group_id = ?";
+        final String _query = "delete from my_groups where id = ?";
         return _query;
       }
     };
@@ -113,34 +128,70 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `my_groups` (`id`,`group_id`,`request_estado`) VALUES (nullif(?, 0),?,?)";
+        return "INSERT INTO `my_groups` (`id`,`request_estado`) VALUES (nullif(?, 0),?)";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final MyGroups entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindLong(2, entity.getGroup_id());
         final int _tmp = AppTypeConverters.INSTANCE.fromGrupoRequestEstado(entity.getRequest_estado());
-        statement.bindLong(3, _tmp);
+        statement.bindLong(2, _tmp);
       }
     }, new EntityDeletionOrUpdateAdapter<MyGroups>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `my_groups` SET `id` = ?,`group_id` = ?,`request_estado` = ? WHERE `id` = ?";
+        return "UPDATE `my_groups` SET `id` = ?,`request_estado` = ? WHERE `id` = ?";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final MyGroups entity) {
         statement.bindLong(1, entity.getId());
-        statement.bindLong(2, entity.getGroup_id());
         final int _tmp = AppTypeConverters.INSTANCE.fromGrupoRequestEstado(entity.getRequest_estado());
-        statement.bindLong(3, _tmp);
-        statement.bindLong(4, entity.getId());
+        statement.bindLong(2, _tmp);
+        statement.bindLong(3, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final MyGroups entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfMyGroups.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends MyGroups> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfMyGroups.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override
@@ -301,112 +352,9 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
   }
 
   @Override
-  public Flow<List<GrupoWithMessage>> observeUserGroupsWithMessage(final int requestEstado) {
-    final String _sql = "\n"
-            + "        select g.*,(select count(*) from messages as m where g.id = m.grupo_id ) as local_count_messages\n"
-            + "        from my_groups as ug inner join grupos as g on g.id = ug.group_id\n"
-            + "        where request_estado = ?\n"
-            + "        ";
-    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
-    int _argIndex = 1;
-    _statement.bindLong(_argIndex, requestEstado);
-    return CoroutinesRoom.createFlow(__db, true, new String[] {"messages", "my_groups",
-        "grupos"}, new Callable<List<GrupoWithMessage>>() {
-      @Override
-      @NonNull
-      public List<GrupoWithMessage> call() throws Exception {
-        __db.beginTransaction();
-        try {
-          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
-          try {
-            final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-            final int _cursorIndexOfUuid = CursorUtil.getColumnIndexOrThrow(_cursor, "uuid");
-            final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
-            final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
-            final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
-            final int _cursorIndexOfPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "photo");
-            final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
-            final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
-            final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
-            final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
-            final int _cursorIndexOfLastMessageCreated = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message_created");
-            final int _cursorIndexOfMessagesCount = CursorUtil.getColumnIndexOrThrow(_cursor, "messages_count");
-            final int _cursorIndexOfLocalCountMessages = CursorUtil.getColumnIndexOrThrow(_cursor, "local_count_messages");
-            final List<GrupoWithMessage> _result = new ArrayList<GrupoWithMessage>(_cursor.getCount());
-            while (_cursor.moveToNext()) {
-              final GrupoWithMessage _item;
-              final long _tmpId;
-              _tmpId = _cursor.getLong(_cursorIndexOfId);
-              final String _tmpUuid;
-              _tmpUuid = _cursor.getString(_cursorIndexOfUuid);
-              final String _tmpName;
-              _tmpName = _cursor.getString(_cursorIndexOfName);
-              final String _tmpDescription;
-              if (_cursor.isNull(_cursorIndexOfDescription)) {
-                _tmpDescription = null;
-              } else {
-                _tmpDescription = _cursor.getString(_cursorIndexOfDescription);
-              }
-              final Instant _tmpCreated_at;
-              final String _tmp;
-              if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
-                _tmp = null;
-              } else {
-                _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
-              }
-              _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
-              final String _tmpPhoto;
-              if (_cursor.isNull(_cursorIndexOfPhoto)) {
-                _tmpPhoto = null;
-              } else {
-                _tmpPhoto = _cursor.getString(_cursorIndexOfPhoto);
-              }
-              final boolean _tmpIs_visible;
-              final int _tmp_1;
-              _tmp_1 = _cursor.getInt(_cursorIndexOfIsVisible);
-              _tmpIs_visible = _tmp_1 != 0;
-              final long _tmpProfile_id;
-              _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
-              final int _tmpVisibility;
-              _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
-              final String _tmpLast_message;
-              _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
-              final Instant _tmpLast_message_created;
-              final String _tmp_2;
-              if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
-                _tmp_2 = null;
-              } else {
-                _tmp_2 = _cursor.getString(_cursorIndexOfLastMessageCreated);
-              }
-              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_2);
-              final int _tmpMessages_count;
-              _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
-              final int _tmpLocal_count_messages;
-              _tmpLocal_count_messages = _cursor.getInt(_cursorIndexOfLocalCountMessages);
-              _item = new GrupoWithMessage(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count,_tmpLocal_count_messages);
-              _result.add(_item);
-            }
-            __db.setTransactionSuccessful();
-            return _result;
-          } finally {
-            _cursor.close();
-          }
-        } finally {
-          __db.endTransaction();
-        }
-      }
-
-      @Override
-      protected void finalize() {
-        _statement.release();
-      }
-    });
-  }
-
-  @Override
   public Flow<List<Grupo>> observeUserGroups() {
     final String _sql = "\n"
-            + "        select g.* from my_groups as ug inner join grupos as g on g.id = ug.group_id\n"
+            + "        select g.* from my_groups as ug inner join grupos as g on g.id = ug.id\n"
             + "        ";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, true, new String[] {"my_groups",
@@ -427,9 +375,7 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
             final int _cursorIndexOfIsVisible = CursorUtil.getColumnIndexOrThrow(_cursor, "is_visible");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final int _cursorIndexOfVisibility = CursorUtil.getColumnIndexOrThrow(_cursor, "visibility");
-            final int _cursorIndexOfLastMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message");
-            final int _cursorIndexOfLastMessageCreated = CursorUtil.getColumnIndexOrThrow(_cursor, "last_message_created");
-            final int _cursorIndexOfMessagesCount = CursorUtil.getColumnIndexOrThrow(_cursor, "messages_count");
+            final int _cursorIndexOfMembers = CursorUtil.getColumnIndexOrThrow(_cursor, "members");
             final List<Grupo> _result = new ArrayList<Grupo>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final Grupo _item;
@@ -467,19 +413,9 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final int _tmpVisibility;
               _tmpVisibility = _cursor.getInt(_cursorIndexOfVisibility);
-              final String _tmpLast_message;
-              _tmpLast_message = _cursor.getString(_cursorIndexOfLastMessage);
-              final Instant _tmpLast_message_created;
-              final String _tmp_2;
-              if (_cursor.isNull(_cursorIndexOfLastMessageCreated)) {
-                _tmp_2 = null;
-              } else {
-                _tmp_2 = _cursor.getString(_cursorIndexOfLastMessageCreated);
-              }
-              _tmpLast_message_created = DateTimeTypeConverters.INSTANCE.toInstant(_tmp_2);
-              final int _tmpMessages_count;
-              _tmpMessages_count = _cursor.getInt(_cursorIndexOfMessagesCount);
-              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpLast_message,_tmpLast_message_created,_tmpMessages_count);
+              final int _tmpMembers;
+              _tmpMembers = _cursor.getInt(_cursorIndexOfMembers);
+              _item = new Grupo(_tmpId,_tmpUuid,_tmpName,_tmpDescription,_tmpCreated_at,_tmpPhoto,_tmpIs_visible,_tmpProfile_id,_tmpVisibility,_tmpMembers);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -512,15 +448,12 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
           final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
           try {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-            final int _cursorIndexOfGroupId = CursorUtil.getColumnIndexOrThrow(_cursor, "group_id");
             final int _cursorIndexOfRequestEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "request_estado");
             final List<MyGroups> _result = new ArrayList<MyGroups>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final MyGroups _item;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              final long _tmpGroup_id;
-              _tmpGroup_id = _cursor.getLong(_cursorIndexOfGroupId);
               final GrupoRequestEstado _tmpRequest_estado;
               final int _tmp;
               _tmp = _cursor.getInt(_cursorIndexOfRequestEstado);
@@ -532,7 +465,7 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
               } else {
                 _tmpRequest_estado = _tmp_2;
               }
-              _item = new MyGroups(_tmpId,_tmpGroup_id,_tmpRequest_estado);
+              _item = new MyGroups(_tmpId,_tmpRequest_estado);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -554,7 +487,7 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
 
   @Override
   public Flow<MyGroups> observeMyGroupById(final long grupoId) {
-    final String _sql = "select * from my_groups where group_id = ?";
+    final String _sql = "select * from my_groups where id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindLong(_argIndex, grupoId);
@@ -567,14 +500,11 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
           final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
           try {
             final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-            final int _cursorIndexOfGroupId = CursorUtil.getColumnIndexOrThrow(_cursor, "group_id");
             final int _cursorIndexOfRequestEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "request_estado");
             final MyGroups _result;
             if (_cursor.moveToFirst()) {
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              final long _tmpGroup_id;
-              _tmpGroup_id = _cursor.getLong(_cursorIndexOfGroupId);
               final GrupoRequestEstado _tmpRequest_estado;
               final int _tmp;
               _tmp = _cursor.getInt(_cursorIndexOfRequestEstado);
@@ -586,7 +516,7 @@ public final class RoomMyGroupsDao_Impl extends RoomMyGroupsDao {
               } else {
                 _tmpRequest_estado = _tmp_2;
               }
-              _result = new MyGroups(_tmpId,_tmpGroup_id,_tmpRequest_estado);
+              _result = new MyGroups(_tmpId,_tmpRequest_estado);
             } else {
               _result = null;
             }

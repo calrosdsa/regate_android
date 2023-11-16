@@ -16,7 +16,9 @@ abstract class RoomMessageProfileDao:RoomEntityDao<Message>,MessageProfileDao {
     @Transaction
     @Query("SELECT * FROM messages where chat_id = :id ORDER BY datetime(created_at) DESC")
     abstract override fun observeMessages(id: Long): PagingSource<Int, MessageProfile>
-
+    @Transaction
+    @Query("SELECT count(*) FROM messages where readed = 0")
+    abstract override fun observeUnreadMessagesCount(): Flow<Int>
     @Transaction
     @Query("SELECT * FROM messages where chat_id = :id ORDER BY datetime(created_at) DESC LIMIT 5")
     abstract override fun getMessages(id: Long):Flow<List<MessageProfile>>

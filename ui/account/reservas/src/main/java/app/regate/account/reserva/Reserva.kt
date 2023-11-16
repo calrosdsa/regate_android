@@ -15,15 +15,23 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,11 +41,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.LocalAppUtil
+import app.regate.common.composes.component.dialog.DialogConfirmation
+import app.regate.common.composes.component.text.Label
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.ui.PosterCardImageDark
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
+import app.regate.data.auth.AppAuthState
+import com.dokar.sheets.rememberBottomSheetState
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -47,6 +60,8 @@ typealias Reserva = @Composable (
     navigateUp:()->Unit,
     navigateToEstablecimiento:(Long)->Unit,
     navigateToConversation:(Long,Long)->Unit,
+    openAuthDialog:()->Unit,
+    navigateToMyChats:()->Unit,
 //    navigateToSignUpScreen:() -> Unit,
 ) -> Unit
 
@@ -56,6 +71,8 @@ fun Reserva (
     @Assisted navigateUp: () -> Unit,
     @Assisted navigateToEstablecimiento:(Long)->Unit,
     @Assisted navigateToConversation: (Long,Long) -> Unit,
+    @Assisted openAuthDialog:()->Unit,
+    @Assisted navigateToMyChats: () -> Unit,
     viewModelFactory:(SavedStateHandle)-> ReservaViewModel
 ){
 
@@ -63,7 +80,9 @@ fun Reserva (
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
         navigateToEstablecimiento = navigateToEstablecimiento,
-        navigateToConversation = navigateToConversation
+        navigateToConversation = navigateToConversation,
+        navigateToMyChats = navigateToMyChats,
+        openAuthDialog = openAuthDialog
     )
 }
 
@@ -72,7 +91,9 @@ internal fun Reserva(
     viewModel: ReservaViewModel,
     navigateUp: () -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
-    navigateToConversation: (Long,Long) -> Unit
+    navigateToConversation: (Long,Long) -> Unit,
+    navigateToMyChats: () -> Unit,
+    openAuthDialog: () -> Unit
 ){
     val state  by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -86,7 +107,11 @@ internal fun Reserva(
         },
         formatShortTime = {formatter.formatShortTime(it)},
         formatDate = {formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)},
-        openMap = appUtil::openMap
+        openMap = appUtil::openMap,
+        openAuthDialog = openAuthDialog,
+        navigateToMyChats = navigateToMyChats,
+        deleteReserva = viewModel::deleteReserva,
+        updateDescription = viewModel::updateDescription
     )
 }
 
@@ -97,13 +122,86 @@ internal fun Reserva(
     openMap:(lng:String?,lat:String?,label:String?)->Unit,
     formatShortTime:(time: Instant)->String,
     formatDate:(date: Instant)->String,
+    deleteReserva:()->Unit,
+    updateDescription:(String) ->Unit,
     navigateUp: () -> Unit,
     navigateToEstablecimiento:(Long)->Unit,
-    navigateToConversation: () -> Unit
+    navigateToConversation: () -> Unit,
+    navigateToMyChats: () -> Unit,
+    openAuthDialog:()->Unit,
 ) {
+    var expanded by remember {
+        mutableStateOf(false)
+    }
+    var deleteReservaConfirmation by remember {
+        mutableStateOf(false)
+    }
+    val sheetState = rememberBottomSheetState()
+    val coroutineScope = rememberCoroutineScope()
+
+    AddDescriptionBottomSheen(
+        state = sheetState,
+        description = viewState.data?.reserva?.description ?: "",
+        save = {description->
+            coroutineScope.launch {
+                updateDescription(description)
+                sheetState.collapse()
+            }
+        }
+    )
+
+
+    DialogConfirmation(open = deleteReservaConfirmation,
+        dismiss = { deleteReservaConfirmation = false },
+        confirm = {
+            deleteReserva()
+            navigateUp()
+        })
     Scaffold(
         topBar = {
-            SimpleTopBar(navigateUp = { navigateUp() })
+            SimpleTopBar(navigateUp = { navigateUp() },
+                actions = {
+                    Box() {
+                        IconButton(onClick = { expanded = true }) {
+                            Icon(imageVector = Icons.Default.MoreVert, contentDescription = "menu")
+                        }
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                        ) {
+
+                            DropdownMenuItem(
+                                text = { Text(text = stringResource(id = R.string.send_to_a_chat)) },
+                                onClick = {
+                                    if (viewState.authState == AppAuthState.LOGGED_IN) {
+                                        navigateToMyChats()
+                                    } else {
+                                        openAuthDialog()
+                                    }
+                                    expanded = false
+                                }
+                            )
+
+                            DropdownMenuItem(
+                                text = { Text(text = stringResource(id = R.string.delete_reservation)) },
+                                onClick = {
+                                    deleteReservaConfirmation = true
+                                    expanded = false
+                                }
+                            )
+
+                            DropdownMenuItem(
+                                text = { Text(text = if (viewState.data?.reserva?.description == null) "Agregar descripción" else "Editar descripción") },
+                                onClick = { coroutineScope.launch {
+                                    sheetState.expand()
+                                    expanded = false
+
+                                } }
+                            )
+
+                        }
+                    }
+                })
         }
     ) { paddingValues ->
         Column(
@@ -134,7 +232,7 @@ internal fun Reserva(
                     Spacer(modifier = Modifier.width(10.dp))
                     Column() {
                         Text(
-                            text = data.establecimiento?.name?:"", modifier = Modifier
+                            text = data.establecimiento?.name ?: "", modifier = Modifier
                                 .clickable {
                                     data.establecimiento?.let {
                                         navigateToEstablecimiento(
@@ -164,23 +262,33 @@ internal fun Reserva(
                 }
                 Divider(modifier = Modifier.padding(vertical = 5.dp))
 
-                Row() {
-                Column(modifier = Modifier.fillMaxWidth(0.5f)) {
+                viewState.data.reserva.description?.let {description->
 
-                Text(
-                    text = stringResource(id = R.string.reservation_date),
-                    style = MaterialTheme.typography.labelLarge
-                )
-                Text(
-                    text = formatDate(data.reserva.start_date) +
-                            " ${formatShortTime(data.reserva.start_date)} a ${
-                                formatShortTime(
-                                    data.reserva.end_date.plus(30.minutes)
-                                )
-                            }",
-                    style = MaterialTheme.typography.titleSmall
-                )
+                Label(text = stringResource(id = R.string.description))
+
+                Text(text = description,style=MaterialTheme.typography.bodyMedium)
+                Divider(modifier = Modifier.padding(vertical = 5.dp))
                 }
+
+
+
+                Row() {
+                    Column(modifier = Modifier.fillMaxWidth(0.5f)) {
+
+                        Text(
+                            text = stringResource(id = R.string.reservation_date),
+                            style = MaterialTheme.typography.labelLarge
+                        )
+                        Text(
+                            text = formatDate(data.reserva.start_date) +
+                                    " ${formatShortTime(data.reserva.start_date)} a ${
+                                        formatShortTime(
+                                            data.reserva.end_date.plus(30.minutes)
+                                        )
+                                    }",
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                    }
 
                     Column(modifier = Modifier.fillMaxWidth()) {
 
@@ -212,7 +320,7 @@ internal fun Reserva(
                     .fillMaxWidth()) {
                     PosterCardImageDark(model = data.instalacion?.portada)
                     Text(
-                        text = data.instalacion?.name?:"", modifier = Modifier
+                        text = data.instalacion?.name ?: "", modifier = Modifier
                             .align(Alignment.BottomStart)
                             .padding(5.dp),
                         style = MaterialTheme.typography.labelLarge, color = Color.White
@@ -230,11 +338,13 @@ internal fun Reserva(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp),
-                    onClick = { openMap(
-                        data.establecimiento?.longitud,
-                        data.establecimiento?.latidud,
-                        data.establecimiento?.name,
-                    )}
+                    onClick = {
+                        openMap(
+                            data.establecimiento?.longitud,
+                            data.establecimiento?.latidud,
+                            data.establecimiento?.name,
+                        )
+                    }
                 )
 
                 Text(

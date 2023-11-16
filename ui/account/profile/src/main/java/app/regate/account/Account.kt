@@ -98,9 +98,6 @@ internal fun Account(
 ) {
     val viewState by viewModel.state.collectAsState()
     Scaffold(
-        bottomBar = {
-            BottomBar(navController = navController)
-        },
     ) {paddingValues->
         Account(
             viewState = viewState,
@@ -118,9 +115,7 @@ internal fun Account(
             navigateToFavorites = { navController.navigate(Route.FAVORITES)},
             modifier = Modifier.padding(paddingValues),
             navigateToRecargaCoins = navigateToRecargaCoins,
-            navigateToInbox = {navController.navigate(Route.INBOX)},
             navigateToBilling = { navController.navigate(Route.BILLING)},
-            navigateToNotifications = { navController.navigate(Route.NOTIFICATIONS)},
             navigateToVerificationEmail = {navController.navigate(Route.EMAIL_VERIFICATION)}
         )
     }
@@ -136,9 +131,7 @@ internal fun Account(
     navigateToFavorites: ()-> Unit,
     navigateToProfile:(Long)->Unit,
     navigateToRecargaCoins: () -> Unit,
-    navigateToInbox:()->Unit,
     navigateToBilling:()->Unit,
-    navigateToNotifications:()->Unit,
     navigateToVerificationEmail:()->Unit,
     modifier:Modifier = Modifier
 ) {
@@ -226,28 +219,7 @@ internal fun Account(
                     style=  MaterialTheme.typography.labelMedium)
                     }
                 }
-//                viewState.addressDevice?.let {
-//                    Surface(onClick = {}) {
-//                        Row(
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(10.dp),
-//                            horizontalArrangement = Arrangement.SpaceBetween,
-//                            verticalAlignment = Alignment.CenterVertically
-//                        ) {
-//                            Text(
-//                                text = it.city ?: "", style = MaterialTheme.typography.labelMedium,
-//                                color = MaterialTheme.colorScheme.inverseSurface,
-//                                textDecoration = TextDecoration.Underline
-//                            )
-//                            Icon(
-//                                imageVector = Icons.Outlined.Map,
-//                                contentDescription = "place_direction"
-//                            )
-//                        }
-//                    }
-//                }
-//                Divider(modifier = Modifier.padding(bottom = 10.dp))
+
 
 
             }
@@ -261,19 +233,7 @@ internal fun Account(
                     .fillMaxWidth()
                     .padding(10.dp))
             if(isAuth){
-                RowIconOption(icon = Icons.Outlined.CollectionsBookmark, text = stringResource(id = R.string.inbox),
-                modifier = Modifier
-                    .clickable { navigateToInbox() }
-                    .fillMaxWidth()
-                    .padding(10.dp))
 
-                RowIconOptionWithBadged(icon = Icons.Outlined.Notifications, text = stringResource(id = R.string.notifications),
-                    modifier = Modifier
-                        .clickable { navigateToNotifications() }
-                        .fillMaxWidth()
-                        .padding(10.dp),
-                    badgeText = viewState.unreadNotifications.toString()
-                )
 
                 RowIconOption(icon = Icons.Outlined.CollectionsBookmark, text = stringResource(id = R.string.bookings),
                     modifier = Modifier

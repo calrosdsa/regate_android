@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
+import app.regate.constant.MainPages
 import app.regate.constant.Route
 import app.regate.data.account.AccountRepository
 import app.regate.data.auth.AppAuthState
@@ -96,7 +97,7 @@ class AccountViewModel(
         updatePreferences()
     }
     private fun updatePreferences(){
-        preferences.startRoute = Route.ACCOUNT
+        preferences.startRoute = MainPages.Account
     }
     private fun getUnreadNotifications(){
         viewModelScope.launch {

@@ -21,7 +21,7 @@ import app.regate.common.resources.R
 @Composable
 internal fun SalaMenu(
     salaTitle:String,
-    leaveGroup: () -> Unit,
+    leaveRoom: () -> Unit,
     shareSalaWithGroup: () -> Unit,
     navigateToChat:()->Unit,
     navigateToComplete: () -> Unit,
@@ -41,7 +41,7 @@ internal fun SalaMenu(
             }
         )
         DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.send_to_a_group)) },
+            text = { Text(text = stringResource(id = R.string.send_to_a_chat)) },
             onClick = { shareSalaWithGroup() },
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Send, contentDescription = null)
@@ -66,8 +66,8 @@ internal fun SalaMenu(
             )
 
             DropdownMenuItem(
-                text = { Text(stringResource(id = R.string.leave_group)) },
-                onClick = { leaveGroup() },
+                text = { Text(stringResource(id = R.string.leave_room)) },
+                onClick = { leaveRoom() },
                 leadingIcon = {
                     Icon(imageVector = Icons.Filled.Logout, contentDescription = null)
                 }

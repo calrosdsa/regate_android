@@ -114,9 +114,6 @@ internal fun Grupos(
         }
     })
     Scaffold(
-        bottomBar = {
-            BottomBar(navController = navController)
-        },
     topBar = {
             Indicators(navToTab = {
                coroutineScope.launch {

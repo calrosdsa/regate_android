@@ -5,12 +5,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -44,6 +48,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.component.input.AmenityItem
+import app.regate.common.composes.component.item.GrupoItemCard
 import app.regate.common.composes.component.text.Label
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.ui.SimpleTopBar
@@ -80,8 +85,10 @@ fun Profile(
         navigateToEditProfile = navigateToEditProfile,
         navigateToReport = navigateToReport,
         navigateToPhoto = {navController.navigate(Route.PHOTO id it)},
-        navigateToProfileCategories = {navController.navigate(Route.PROFILE_CATEGORIES id it)}
-    )
+        navigateToProfileCategories = {navController.navigate(Route.PROFILE_CATEGORIES id it)},
+        navigateToGrupoInfo = {navController.navigate(Route.INFO_GRUPO id it)},
+
+        )
 }
 
 @Composable
@@ -91,7 +98,8 @@ internal fun Profile(
     navigateToEditProfile: (Long) -> Unit,
     navigateToReport:(String)->Unit,
     navigateToPhoto:(String)->Unit,
-    navigateToProfileCategories:(Long)->Unit
+    navigateToProfileCategories:(Long)->Unit,
+    navigateToGrupoInfo:(Long)->Unit,
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -106,7 +114,8 @@ internal fun Profile(
             }
         },
         navigateToPhoto = navigateToPhoto,
-        navigateToProfileCategories = navigateToProfileCategories
+        navigateToProfileCategories = navigateToProfileCategories,
+        navigateToGrupoInfo = navigateToGrupoInfo
     )
 }
 
@@ -120,6 +129,7 @@ internal fun Profile(
     navigateToReport:()->Unit,
     navigateToPhoto: (String) -> Unit,
     navigateToProfileCategories: (Long) -> Unit,
+    navigateToGrupoInfo: (Long) -> Unit
 ) {
     val scrollState = rememberScrollState()
     val isMyProfile by remember(viewState.user) {
@@ -145,7 +155,7 @@ internal fun Profile(
                 }
             })
         },
-        modifier = Modifier.padding(horizontal =  10.dp)
+
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -155,7 +165,7 @@ internal fun Profile(
             viewState.profile?.let {profile->
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
-                    .padding(vertical = 15.dp)
+                    .padding(vertical = 15.dp, horizontal = 10.dp)
                     .fillMaxWidth()) {
                     Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.fillMaxWidth(0.8f)) {
                     PosterCardImage(
@@ -198,11 +208,11 @@ internal fun Profile(
                 Text(text = "An Administrator has access to the entire system, including the Account Setup tab." +
                         "They can update and run the model, create needs and work orders, add new users, and run reports." +
                         " You can have as",
-                style = MaterialTheme.typography.bodySmall,modifier = Modifier.padding(vertical = 15.dp))
+                style = MaterialTheme.typography.bodySmall,modifier = Modifier.padding(vertical = 15.dp, horizontal = 10.dp))
 
 
 
-                Surface(modifier = Modifier.padding(15.dp),
+                Surface(modifier = Modifier.padding(vertical = 15.dp, horizontal = 20.dp),
                 shadowElevation = 10.dp, shape = MaterialTheme.shapes.medium) {
                     Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier
                         .padding(5.dp)
@@ -217,10 +227,11 @@ internal fun Profile(
                         }
                     }
                 }
-                Row(modifier = Modifier.fillMaxWidth(),
+                Row(modifier = Modifier.fillMaxWidth()
+                    .padding(horizontal= 10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically) {
-                Label(text = "Areas de interes ")
+                Label(text = "Areas de interes", modifier = Modifier.padding(horizontal = 10.dp))
 
                     if(isMyProfile){
                     IconButton(onClick = { navigateToProfileCategories(viewState.profile.id) }) {
@@ -229,11 +240,24 @@ internal fun Profile(
                     }
 
                 }
-                FlowRow(modifier = Modifier.padding()) {
+                FlowRow(modifier = Modifier.padding(horizontal = 10.dp)) {
                     viewState.categories.map{item->
                         AmenityItem(amenity = item)
                         Spacer(modifier = Modifier.width(8.dp))
 //                        Text(text = it.name)
+                    }
+                }
+
+                Label(text = "Grupos",modifier = Modifier.padding(horizontal = 10.dp))
+
+                LazyRow(contentPadding = PaddingValues(horizontal = 10.dp), modifier =Modifier.height(130.dp)) {
+                    items(
+                        items = viewState.grupos
+                    ){item->
+                        GrupoItemCard(
+                            grupo = item,
+                            navigateToGrupoInfo = navigateToGrupoInfo
+                        )
                     }
                 }
 

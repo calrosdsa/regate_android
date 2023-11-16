@@ -22,6 +22,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.core.content.edit
+import app.regate.constant.MainPages
 import app.regate.constant.Route
 import app.regate.core.preferences.R
 import kotlinx.coroutines.flow.Flow
@@ -53,7 +54,7 @@ class AppPreferencesImpl(
         }
     }
     companion object {
-        const val KEY_START_ROUTE = "start_route"
+        const val KEY_START_ROUTE = "start_route_page"
         const val KEY_KEYBOARD_HEIGHT = "keyboard_height"
         const val KEY_CATEGORIES = "categories"
         const val KEY_FILTER = "filter"
@@ -71,10 +72,10 @@ class AppPreferencesImpl(
     override fun setup() {
         sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
     }
-    override var startRoute: String
-        get() = sharedPreferences.getString(KEY_START_ROUTE, Route.HOME)!!
+    override var startRoute: Int
+        get() = sharedPreferences.getInt(KEY_START_ROUTE, MainPages.Home)
         set(value) = sharedPreferences.edit{
-            putString(KEY_START_ROUTE,value)
+            putInt(KEY_START_ROUTE,value)
         }
     override var keyBoardHeight: Int
         get() = sharedPreferences.getInt(KEY_KEYBOARD_HEIGHT, 750)

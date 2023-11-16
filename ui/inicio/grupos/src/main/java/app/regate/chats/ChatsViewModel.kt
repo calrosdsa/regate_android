@@ -7,7 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import app.cash.paging.cachedIn
 import app.regate.api.UiMessageManager
-import app.regate.constant.Route
+import app.regate.constant.MainPages
 import app.regate.data.chat.ChatRepository
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.chat.ObservePagerChat
@@ -58,12 +58,12 @@ class ChatsViewModel(
     init {
         pagingInteractor(ObservePagerChat.Params(PAGING_CONFIG))
         observeAuthState(Unit)
-        getUserGrupos()
+        getUnreadMessages()
 
         updatePreferences()
     }
     private fun updatePreferences(){
-        preferences.startRoute = Route.GRUPOS
+        preferences.startRoute = MainPages.Chat
     }
 
 
@@ -74,7 +74,7 @@ class ChatsViewModel(
         )
     }
 
-    fun getUserGrupos(){
+    private fun getUnreadMessages(){
         viewModelScope.launch {
             try{
                 chatRepository.getUnreadMessages(1)

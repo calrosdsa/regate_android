@@ -3,26 +3,19 @@ package app.regate.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.regate.constant.MainPages
 import app.regate.constant.Route
 import app.regate.data.account.AccountRepository
 import app.regate.data.common.AddressDevice
-import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.data.dto.empresa.establecimiento.InitialData
 import app.regate.data.dto.empresa.establecimiento.InitialDataFilter
-import app.regate.data.dto.empresa.grupo.FilterGrupoData
-import app.regate.data.dto.empresa.salas.SalaDto
-import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.data.grupo.GrupoRepository
-import app.regate.data.sala.SalaRepository
 import app.regate.domain.Converter
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.grupo.ObserveGrupos
-import app.regate.extensions.combine
 import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,10 +23,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
-import java.util.UUID
 
 @Inject
 class HomeViewModel(
@@ -86,7 +76,7 @@ class HomeViewModel(
     }
 
     private fun updatePreferences(){
-        preferences.startRoute = Route.HOME
+        preferences.startRoute = MainPages.Home
     }
 //    fun getReccomendedEstablecimientos(){
 //    }

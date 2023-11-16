@@ -668,6 +668,43 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
   }
 
   @Override
+  public Flow<Integer> observeUnreadMessagesCount() {
+    final String _sql = "SELECT count(*) FROM messages where readed = 0";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"messages"}, new Callable<Integer>() {
+      @Override
+      @NonNull
+      public Integer call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final Integer _result;
+            if (_cursor.moveToFirst()) {
+              final int _tmp;
+              _tmp = _cursor.getInt(0);
+              _result = _tmp;
+            } else {
+              _result = 0;
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
   public Object getReplyMessage(final long id,
       final Continuation<? super MessageProfile> continuation) {
     final String _sql = "SELECT * FROM messages where id = ?";

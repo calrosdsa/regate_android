@@ -23,6 +23,7 @@ import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +38,7 @@ import app.regate.common.composes.component.chat.DeleteMessage
 import app.regate.common.composes.component.dialog.DialogConfirmation
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.util.itemsCustom
+import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.chat.TypeChat
 import app.regate.models.chat.Chat
 import com.dokar.sheets.rememberBottomSheetState
@@ -61,6 +63,12 @@ internal fun ChatsUser(
     var deleteDialogConfirmation by remember {
         mutableStateOf(false)
     }
+
+//    LaunchedEffect(key1 = viewState.authState, block = {
+//        if(viewState.authState == AppAuthState.LOGGED_IN){
+//            lazyPagingItems.refresh();
+//        }
+//    })
 
     LazyColumn(modifier = Modifier.fillMaxSize()){
         itemsCustom(items = lazyPagingItems, key = {it.id}){item->

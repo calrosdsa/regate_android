@@ -9,6 +9,7 @@ data class ReservasState(
     val loading:Boolean = false,
     val message:UiMessage? = null,
     val reservas: List<Reserva> = emptyList(),
+    val selectedReservas:List<Long> = emptyList(),
 ){
     companion object {
         val Empty = ReservasState()

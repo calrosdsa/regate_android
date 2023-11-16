@@ -71,7 +71,7 @@ fun InputForm(
     modifier: Modifier = Modifier,
     placeholder:String="",
     label:String = "",
-    maxLines:Int = 1,
+    maxLines:Int = Int.MAX_VALUE,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,

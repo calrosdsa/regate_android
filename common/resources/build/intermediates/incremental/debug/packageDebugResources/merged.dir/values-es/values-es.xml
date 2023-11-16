@@ -39,6 +39,7 @@
     <string name="decline">Declinar</string>
     <string name="delete_chat">Eliminar chat</string>
     <string name="delete_message">Delete message</string>
+    <string name="delete_reservation">Eliminar reserva</string>
     <string name="deposits">Depósitos</string>
     <string name="description">Descripción</string>
     <string name="discount">Los beneficios y descuento se lanzan regularmente</string>
@@ -80,6 +81,7 @@
     <string name="language">Idioma</string>
     <string name="later">Luego</string>
     <string name="leave_group">Salir del grupo</string>
+    <string name="leave_room">Salir de la sala</string>
     <string name="location">Ubicación</string>
     <string name="login">Iniciar Sessión</string>
     <string name="logout">Cerrar Sessión</string>
@@ -151,7 +153,7 @@
     <string name="see_sala">Ver sala</string>
     <string name="select_group_text">¿En qué grupo te gustaría crear esta sala?</string>
     <string name="send">Enviar</string>
-    <string name="send_to_a_group">Enviar a un grupo</string>
+    <string name="send_to_a_chat">Enviar a un chat</string>
     <string name="services">Servicios</string>
     <string name="settings">Configuraciones</string>
     <string name="share_image_link">Compartir enlace de la imagen</string>

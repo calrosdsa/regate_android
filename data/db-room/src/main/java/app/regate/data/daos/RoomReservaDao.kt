@@ -22,4 +22,10 @@ abstract class RoomReservaDao:RoomEntityDao<Reserva> ,ReservaDao {
     @Transaction
     @Query("delete from reservas")
     abstract override suspend fun deleteAll()
+
+    @Query("delete from reservas where id in (:ids)")
+    abstract override suspend fun deleteByIds(ids: List<Long>)
+
+    @Query("update reservas set description = :descrption where id = :id")
+    abstract override suspend fun updateDescriptionReserva(descrption: String, id: Long)
 }

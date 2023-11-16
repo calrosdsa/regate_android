@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml:2:13-83
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml:2:13-83
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml:2:13-83
+ADDED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml:2:13-83
+INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml:2:13-83
+INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml:2:13-83
 	package
-		INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml
-		ADDED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml:2:13-83
-		INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml
+		INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml
+		ADDED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml:2:13-83
+		INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml
 	xmlns:android
-		ADDED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml:2:23-81
+		ADDED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml:2:23-81
 uses-sdk
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml reason: use-sdk injection requested
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml
+INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml reason: use-sdk injection requested
+INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml
+INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml
+INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml
+INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml
 	android:targetSdkVersion
-		INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml
-		ADDED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml
-		INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml
+		INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml
+		ADDED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml
+		INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml
-		ADDED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml
-		INJECTED from C:\Users\PC\Desktop\projects\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest4569452952742285389.xml
+		INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml
+		ADDED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml
+		INJECTED from D:\Regate\regate_android\common\compose\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest12416713698385865163.xml

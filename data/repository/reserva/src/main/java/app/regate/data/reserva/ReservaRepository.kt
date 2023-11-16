@@ -24,6 +24,21 @@ class ReservaRepository(
         return reservaDataSourceImpl.getReserva(id)
     }
 
+    suspend fun updateDescriptionReserva(description:String,id: Long){
+        withContext(dispatchers.io){
+            reservaDao.updateDescriptionReserva(description,id)
+        }
+    }
+    suspend fun deleteReservas(ids:List<Long>){
+        withContext(dispatchers.io){
+            try{
+                reservaDao.deleteByIds(ids)
+            }catch (e:Exception){
+                //TODO()
+            }
+        }
+    }
+
     suspend fun updateReservas() {
         withContext(dispatchers.computation){
             try{
@@ -39,12 +54,13 @@ class ReservaRepository(
                             total_price = it.total_price,
                             start_date = it.start_date,
                             end_date = it.end_date,
-                            created_at = it.created_at
+                            created_at = it.created_at,
+                            instalacion_photo = it.instalacion_photo
                         )
                     }
                 }
-                reservaDao.deleteAll()
-                reservaDao.upsertAll(res)
+//                reservaDao.deleteAll()
+                reservaDao.insertAllonConflictIgnore(res)
             }catch(e:Exception){
                 throw e
             }

@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
 import app.regate.data.chat.ChatRepository
+import app.regate.data.reserva.ReservaRepository
 import app.regate.domain.interactors.UpdateEstablecimiento
 import app.regate.domain.interactors.UpdateInstalacion
+import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.ObserveReservaDetail
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,8 +24,10 @@ import me.tatarka.inject.annotations.Inject
 class ReservaViewModel(
     @Assisted savedStateHandle: SavedStateHandle,
     observeReservaDetail: ObserveReservaDetail,
+    observeAuthState:ObserveAuthState,
     private val updateEstablecimiento: UpdateEstablecimiento,
     private val updateInstalacion: UpdateInstalacion,
+    private val reservaRepository: ReservaRepository,
     private val chatRepository: ChatRepository
 ):ViewModel() {
     private val reservaId = savedStateHandle.get<Long>("id") ?: 0
@@ -37,11 +41,13 @@ class ReservaViewModel(
         loadingCounter.observable,
         uiMessageManager.message,
         observeReservaDetail.flow,
-    ){loading,message,data->
+        observeAuthState.flow,
+    ){loading,message,data,authState->
         ReservaState(
             loading = loading,
             message = message,
-            data = data
+            data = data,
+            authState = authState
         )
     }.stateIn(
         scope = viewModelScope,
@@ -52,6 +58,7 @@ class ReservaViewModel(
     init{
         Log.d("DEBUG_APP_","RESERVA ID $reservaId")
         observeReservaDetail(ObserveReservaDetail.Params(id = reservaId))
+        observeAuthState(Unit)
         getData()
     }
 
@@ -77,4 +84,20 @@ class ReservaViewModel(
             }
         }
     }
+
+    fun updateDescription(description:String){
+        viewModelScope.launch {
+            reservaRepository.updateDescriptionReserva(description,reservaId)
+        }
+    }
+    fun deleteReserva(){
+        viewModelScope.launch {
+            try{
+                reservaRepository.deleteReservas(listOf(reservaId))
+            }catch(e:Exception){
+                //todo()
+            }
+        }
+    }
+
 }

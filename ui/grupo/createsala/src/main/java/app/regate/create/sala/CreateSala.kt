@@ -38,6 +38,7 @@ import app.regate.common.composes.viewModel
 import app.regate.create.sala.page.Page1
 import app.regate.create.sala.page.Page2
 import app.regate.create.sala.page.SelectGroup
+import app.regate.data.dto.empresa.salas.SalaVisibility
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
@@ -95,8 +96,8 @@ internal fun CreateSala(
         viewState = viewState,
         navigateUp = navigateUp,
         reservarInstalacion = reservarInstalacion,
-        createSala = {asunto,descripcion,cupos->
-            viewModel.createSala(asunto,descripcion,cupos,navigateToGroup)
+        createSala = {asunto,descripcion,cupos,visibility->
+            viewModel.createSala(asunto,descripcion,cupos,visibility,navigateToGroup)
         },
         clearMessage = viewModel::clearMessage,
         formatShortTime = {formatter.formatShortTime(it)},
@@ -118,7 +119,7 @@ internal fun CreateSala(
     viewState: CreateSalaState,
     navigateUp: () -> Unit,
     reservarInstalacion:@Composable () -> Unit,
-    createSala:(String,String,String)->Unit,
+    createSala:(String,String,String,Int)->Unit,
     clearMessage:(id:Long)->Unit,
     formatShortTime:(time: Instant)->String,
     formatDate:(date: Instant)->String,
@@ -136,6 +137,7 @@ internal fun CreateSala(
     var asunto by remember{ mutableStateOf("Sala de juegos") }
     var description by remember{ mutableStateOf("Armemos 2 equipos de 10 ") }
     var cupos by remember{ mutableStateOf("15") }
+    var visibility by remember { mutableStateOf(SalaVisibility.PUBLIC.ordinal) }
     val pagerState = rememberPagerState(initialPage = page)
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -190,7 +192,7 @@ internal fun CreateSala(
     DialogConfirmation(open = showConfirmationDialog.value,
         dismiss = { showConfirmationDialog.value = false },
         confirm = {
-            createSala(asunto,description,cupos)
+            createSala(asunto,description,cupos,visibility)
             showConfirmationDialog.value = false
         })
 
@@ -262,6 +264,8 @@ internal fun CreateSala(
                     instalacionCupos = viewState.instalacionCupos,
                     formatDate = formatDate,
                     formatShortTime = formatShortTime,
+                    visibility = visibility,
+                    onChangeVisibility = {visibility = it}
                 )
                 2 -> SelectGroup(
                     grupos = viewState.grupos,

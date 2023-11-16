@@ -1,5 +1,6 @@
 package app.regate.sala
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,31 +21,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.AttachMoney
-import androidx.compose.material.icons.filled.Chat
-import androidx.compose.material.icons.filled.CurrencyBitcoin
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Money
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -61,6 +52,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
@@ -71,6 +63,7 @@ import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.component.CustomButton
 import app.regate.common.composes.component.card.InstalacionCard
 import app.regate.common.composes.component.dialog.DialogConfirmation
+import app.regate.common.composes.component.dialog.LoaderDialog
 import app.regate.common.composes.component.item.ProfileItem
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.util.dividerLazyList
@@ -163,6 +156,7 @@ internal fun Sala(
         },
 //        navigateToGroup = navigateToGroup,
         navigateToInfoGrupo = navigateToInfoGrupo,
+        exitSala = viewModel::exitSala,
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -188,12 +182,13 @@ internal fun Sala(
     clearMessage:(id:Long)->Unit,
     navigateToInstalacion: (Long) -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
-//    exitSala:()->Unit,
+    exitSala:(Context,()->Unit)->Unit,
     navigateToComplete: (Long) -> Unit,
     shareSalaWithGroup:()->Unit,
 //    navigateToGroup:(Long)->Unit,
     navigateToInfoGrupo: (Long) -> Unit
 ) {
+    val context = LocalContext.current
     val participantes = remember(viewState.data?.profiles) {
         derivedStateOf {
             viewState.data?.profiles?.size
@@ -227,6 +222,7 @@ internal fun Sala(
             clearMessage(message.id)
         }
     }
+    LoaderDialog(loading = viewState.loading)
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         ModalNavigationDrawer(drawerState = drawerState,
@@ -237,7 +233,7 @@ internal fun Sala(
                         modifier = Modifier.fillMaxWidth(0.7f)
                     ) {
                         SalaMenu(
-                            leaveGroup = {},
+                            leaveRoom = {exitSala(context,navigateUp)},
                             shareSalaWithGroup = shareSalaWithGroup,
                             imIntheRoom = iAmInTheRoom?: false,
                             navigateToChat = {

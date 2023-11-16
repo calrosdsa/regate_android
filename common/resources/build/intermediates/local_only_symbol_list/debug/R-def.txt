@@ -85,6 +85,7 @@ string create_shortcut
 string decline
 string delete_chat
 string delete_message
+string delete_reservation
 string deposits
 string description
 string discount
@@ -129,6 +130,7 @@ string join_a_group
 string language
 string later
 string leave_group
+string leave_room
 string location
 string location_static_url
 string login
@@ -204,7 +206,7 @@ string see_more_options
 string see_sala
 string select_group_text
 string send
-string send_to_a_group
+string send_to_a_chat
 string services
 string settings
 string share_image_link

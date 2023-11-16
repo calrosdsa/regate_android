@@ -203,9 +203,6 @@ internal fun Discover(
                    selectedCategory = viewState.selectedCategory
                    )
         },
-        bottomBar = {
-            BottomBar(navController = navController)
-        },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState) { data ->
                 SwipeToDismiss(

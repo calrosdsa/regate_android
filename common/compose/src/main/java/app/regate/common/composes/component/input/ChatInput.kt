@@ -1,6 +1,7 @@
 package app.regate.common.composes.component.input
 
 
+import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.view.ViewTreeObserver
 import androidx.compose.animation.AnimatedVisibility
@@ -165,7 +166,7 @@ fun ChatInput(
                         Surface(
                             modifier = Modifier
                                 .fillMaxWidth()
-//                                .height(42.dp)
+                                .height(40.dp)
                                 .padding(0.dp)
 
                         ) {
@@ -239,6 +240,7 @@ fun ChatInput(
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 internal fun MessageContent2(
     data:String,

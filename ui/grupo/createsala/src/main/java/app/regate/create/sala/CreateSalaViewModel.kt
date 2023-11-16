@@ -138,7 +138,7 @@ class CreateSalaViewModel(
         }
     }
 
-    fun createSala(asunto: String, description: String, cupos: String,navigateToGroup:(Long)->Unit) {
+    fun createSala(asunto: String, description: String, cupos: String,visibility:Int,navigateToGroup:(Long)->Unit) {
         Log.d("DEBUG_APP_CUPOS", "SALA DATA CREATE ${salaData.value}")
         viewModelScope.launch {
             try {
@@ -161,6 +161,7 @@ class CreateSalaViewModel(
                         descripcion = description,
 //                        establecimiento_id = establecimientoId,
                         cupos = cupos.toInt(),
+                        visibility = visibility,
                         grupo_id = state.value.selectedGroup
                     )
                     Log.d("DEBUG_APP_CUPOS", "SALA DATA $data")

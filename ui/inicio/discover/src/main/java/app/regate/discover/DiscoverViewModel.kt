@@ -10,6 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import app.regate.api.UiMessage
 import app.regate.api.UiMessageManager
+import app.regate.constant.MainPages
 import app.regate.constant.Route
 import app.regate.data.common.AddressDevice
 import app.regate.data.common.getDataEntityFromJson
@@ -136,7 +137,7 @@ class DiscoverViewModel(
     }
 
     private fun updatePreferences(){
-        appPreferences.startRoute = Route.GRUPOS
+        appPreferences.startRoute = MainPages.Discover
     }
 
     companion object {

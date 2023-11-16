@@ -1,5 +1,6 @@
 package app.regate.sala
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -28,6 +29,7 @@ import app.regate.data.dto.empresa.grupo.GrupoMessageType
 import app.regate.data.dto.empresa.grupo.MessageSalaPayload
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import app.regate.common.resources.R
 
 @Inject
 class SalaViewModel(
@@ -123,23 +125,26 @@ class SalaViewModel(
             //TODO()
         }
     }
-//    fun exitSala(context:Context, navigateUp:()->Unit){
-//        viewModelScope.launch {
-//            try{
-//                state.value.data?.profiles?.find {
-//                    it.profile_id == state.value.user?.profile_id
-//                }?.user_id.also {userSalaId->
-//                    if(userSalaId != null){
-//                        salaRepository.exitSala(userSalaId.toInt())
-//                    }
-//                }
-//                navigateUp()
-//            }catch (e:Exception){
-//                uiMessageManager.emitMessage(UiMessage(message = context.getString(R.string.unexpected_error)))
-//                Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"error")
-//            }
-//        }
-//    }
+    fun exitSala(context: Context, navigateUp:()->Unit){
+        viewModelScope.launch {
+            try{
+                loadingState.addLoader()
+                state.value.data?.profiles?.find {
+                    it.profile_id == state.value.user?.profile_id
+                }?.id .also {userSalaId->
+                    if(userSalaId != null){
+                        salaRepository.exitSala(userSalaId.toInt())
+                    }
+                }
+                loadingState.removeLoader()
+                navigateUp()
+            }catch (e:Exception){
+                loadingState.removeLoader()
+                uiMessageManager.emitMessage(UiMessage(message = context.getString(R.string.unexpected_error)))
+                Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"error")
+            }
+        }
+    }
 
     fun refresh(){
         viewModelScope.launch {

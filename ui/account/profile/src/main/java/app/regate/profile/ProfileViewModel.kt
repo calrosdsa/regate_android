@@ -9,7 +9,10 @@ import app.regate.data.dto.system.ReportType
 import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.user.ObserveProfile
 import app.regate.domain.observers.account.ObserveUser
+import app.regate.domain.observers.grupo.ObserveMyGroups
+import app.regate.domain.observers.grupo.ObserveUserGroups
 import app.regate.domain.observers.user.ObserveProfileCategory
+import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,6 +31,7 @@ class ProfileViewModel(
     observeProfile: ObserveProfile,
     observeUser: ObserveUser,
     observeProfileCategory:ObserveProfileCategory,
+    observeUserGroups: ObserveUserGroups,
 ):ViewModel() {
     private val id = savedStateHandle.get<Long>("id")?:0
     private val loadingCounter = ObservableLoadingCounter()
@@ -38,14 +42,16 @@ class ProfileViewModel(
         uiMessageManager.message,
         observeProfile.flow,
         observeUser.flow,
-        observeProfileCategory.flow
-    ){loading,message,profile,user,categories->
+        observeProfileCategory.flow,
+        observeUserGroups.flow,
+    ){loading,message,profile,user,categories,grupos->
         ProfileState(
             loading = loading,
             message = message,
             profile = profile,
             user = user,
-            categories = categories
+            categories = categories,
+            grupos = grupos
         )
     }.stateIn(
         scope = viewModelScope,
@@ -55,6 +61,7 @@ class ProfileViewModel(
     init{
         observeProfile(ObserveProfile.Params(id))
         observeProfileCategory(ObserveProfileCategory.Params(id))
+        observeUserGroups(Unit)
         observeUser(Unit)
         getProfile()
     }

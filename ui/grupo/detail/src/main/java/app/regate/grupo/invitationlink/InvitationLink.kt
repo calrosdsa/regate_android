@@ -61,6 +61,7 @@ import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.constant.AppUrl
+import app.regate.constant.MainPages
 import app.regate.constant.Route
 import app.regate.data.auth.AppAuthState
 import app.regate.data.common.encodeMediaData
@@ -134,7 +135,7 @@ internal fun InvitationLink(
     }
     fun shareIntent() {
         if (viewState.authState == AppAuthState.LOGGED_IN) {
-            val data = "${AppUrl}/${Route.GRUPOS}/${viewState.invitationLink?.id_link}"
+            val data = "${AppUrl}/${Route.GRUPOS}/${viewState.invitationLink?.id_link}/${MainPages.Chat}"
             appUtil.shareTextIntent(context,data)
         } else {
             openAuthBottomSheet()
@@ -183,7 +184,7 @@ internal fun InvitationLink(
                         Icon(imageVector = Icons.Filled.Link, contentDescription = null)
                     }
                     Spacer(modifier = Modifier.width(10.dp))
-                    Text(text = "${AppUrl}/${Route.GRUPOS}/${invitationLink.id_link}")
+                    Text(text = "${AppUrl}/${Route.GRUPOS}/${invitationLink.id_link}/${MainPages.Chat}")
                 }
             Spacer(modifier = Modifier.height(15.dp))
 
@@ -194,7 +195,7 @@ internal fun InvitationLink(
             )
             ShareRow(text = stringResource(id = R.string.copy_link),
                 icon = Icons.Default.ContentCopy,
-                action = { clipboardManager.setText(AnnotatedString(("${AppUrl}/${Route.GRUPOS}/${invitationLink.id_link}"))) })
+                action = { clipboardManager.setText(AnnotatedString(("${AppUrl}/${Route.GRUPOS}/${invitationLink.id_link}/${MainPages.Chat}"))) })
 
                     ShareRow(
                         text = stringResource(id = R.string.reset_link),

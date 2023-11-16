@@ -12,6 +12,7 @@ data class SalaDto(
     val descripcion: String,
     val titulo: String,
     val precio: Double,
+    val visibility: Int = 0,
     val paid:Double,
     val horas:List<String>,
     val created_at: String,
@@ -30,6 +31,12 @@ enum class SalaEstado{
     RESERVED,
 }
 
+enum class SalaVisibility{
+    NONE,
+    PUBLIC,
+    ONLY_GROUP,
+}
+
 @Serializable
 data class SalaRequestDto(
     val category_id: Int = 0,
@@ -42,6 +49,7 @@ data class SalaRequestDto(
     val precio: Int = 100000,
     val horas:List<Instant> = emptyList(),
     val titulo: String = "",
+    val visibility: Int = 0,
 //    val start_time:String = "",
 //    val end_time:String = "",
 //    val fecha:String = "",

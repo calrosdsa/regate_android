@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml:18:1-19:12
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml:18:1-19:12
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml:18:1-19:12
+ADDED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml:18:1-19:12
+INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml:18:1-19:12
+INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml:18:1-19:12
 	package
-		INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
-		ADDED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml:18:1-19:12
-		INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
+		INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
+		ADDED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml:18:1-19:12
+		INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml:18:1-19:12
+		ADDED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml:18:1-19:12
 uses-sdk
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
-INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
+INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
+INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
+INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
+INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
-		ADDED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
+		INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
+		ADDED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
+		INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
-		ADDED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\PC\Desktop\projects\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
+		INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
+		ADDED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml
+		INJECTED from D:\Regate\regate_android\ui\grupo\createsala\src\main\AndroidManifest.xml

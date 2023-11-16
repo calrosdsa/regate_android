@@ -13,6 +13,7 @@ import androidx.core.app.TaskStackBuilder
 import androidx.core.net.toUri
 import app.regate.common.resources.R
 import app.regate.constant.AppUrl
+import app.regate.constant.MainPages
 import app.regate.constant.Route
 import app.regate.data.AppRoomDatabase
 import app.regate.data.dto.notifications.MessagePayload
@@ -95,7 +96,7 @@ class HandleNotificationSala {
             )
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "${AppUrl}/${Route.DISCOVER}/${payloadString}".toUri(),
+                "${AppUrl}/${Route.DISCOVER}/${payloadString}/${MainPages.Discover}".toUri(),
                 context,
                 MainActivity::class.java
             )

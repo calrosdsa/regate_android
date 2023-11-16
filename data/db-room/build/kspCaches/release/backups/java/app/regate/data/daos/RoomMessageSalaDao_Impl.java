@@ -43,6 +43,8 @@ import kotlinx.datetime.Instant;
 public final class RoomMessageSalaDao_Impl extends RoomMessageSalaDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<MessageSala> __insertionAdapterOfMessageSala;
+
   private final EntityDeletionOrUpdateAdapter<MessageSala> __deletionAdapterOfMessageSala;
 
   private final EntityDeletionOrUpdateAdapter<MessageSala> __updateAdapterOfMessageSala;
@@ -51,6 +53,35 @@ public final class RoomMessageSalaDao_Impl extends RoomMessageSalaDao {
 
   public RoomMessageSalaDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfMessageSala = new EntityInsertionAdapter<MessageSala>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `message_sala` (`id`,`sala_id`,`content`,`created_at`,`profile_id`,`reply_to`,`sended`) VALUES (?,?,?,?,?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final MessageSala entity) {
+        statement.bindLong(1, entity.getId());
+        statement.bindLong(2, entity.getSala_id());
+        statement.bindString(3, entity.getContent());
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindString(4, _tmp);
+        }
+        statement.bindLong(5, entity.getProfile_id());
+        if (entity.getReply_to() == null) {
+          statement.bindNull(6);
+        } else {
+          statement.bindLong(6, entity.getReply_to());
+        }
+        final int _tmp_1 = entity.getSended() ? 1 : 0;
+        statement.bindLong(7, _tmp_1);
+      }
+    };
     this.__deletionAdapterOfMessageSala = new EntityDeletionOrUpdateAdapter<MessageSala>(__db) {
       @Override
       @NonNull
@@ -152,6 +183,44 @@ public final class RoomMessageSalaDao_Impl extends RoomMessageSalaDao {
         statement.bindLong(8, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final MessageSala entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfMessageSala.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends MessageSala> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfMessageSala.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

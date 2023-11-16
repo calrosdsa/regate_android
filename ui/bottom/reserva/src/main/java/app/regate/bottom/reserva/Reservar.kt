@@ -20,7 +20,6 @@ import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DismissValue
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -29,14 +28,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -53,7 +49,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.component.CustomButton
 import app.regate.common.composes.component.dialog.DialogConfirmation
-import app.regate.common.composes.util.Layout
 import app.regate.common.composes.viewModel
 import app.regate.data.auth.AppAuthState
 import app.regate.models.Cupo
@@ -259,7 +254,7 @@ internal fun Reservar(
                                 }  }
                             )
                         DropdownMenuItem(
-                            text = { Text(text = stringResource(id = R.string.send_to_a_group)) },
+                            text = { Text(text = stringResource(id = R.string.send_to_a_chat)) },
                             onClick = {
                             if(viewState.authState == AppAuthState.LOGGED_IN){
                                 navigateToSelectGroup()

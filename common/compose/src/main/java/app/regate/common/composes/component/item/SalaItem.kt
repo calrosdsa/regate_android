@@ -92,14 +92,14 @@ fun SalaItemUser (
     sala: SalaDto,
     formatDate:(String)->String,
     formatShortTime:(String,Long)->String,
-    navigateToSala:(id:Long,title:String)->Unit,
+    navigateToSala:(id:Long)->Unit,
     modifier:Modifier = Modifier
 ){
     Surface(modifier = modifier
         .padding(5.dp)
         .height(65.dp),
         onClick = {
-            navigateToSala(sala.id,sala.titulo)
+            navigateToSala(sala.id)
         }) {
 //        LocalDateTime.parse()
         Column(modifier = Modifier

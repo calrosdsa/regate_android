@@ -32,6 +32,8 @@ import kotlin.coroutines.Continuation;
 public final class RoomEmojiDao_Impl extends RoomEmojiDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<Emoji> __insertionAdapterOfEmoji;
+
   private final EntityDeletionOrUpdateAdapter<Emoji> __deletionAdapterOfEmoji;
 
   private final EntityDeletionOrUpdateAdapter<Emoji> __updateAdapterOfEmoji;
@@ -40,6 +42,22 @@ public final class RoomEmojiDao_Impl extends RoomEmojiDao {
 
   public RoomEmojiDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfEmoji = new EntityInsertionAdapter<Emoji>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `emoji` (`id`,`emoji`,`description`,`category`) VALUES (?,?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final Emoji entity) {
+        statement.bindLong(1, entity.getId());
+        statement.bindString(2, entity.getEmoji());
+        statement.bindString(3, entity.getDescription());
+        statement.bindString(4, entity.getCategory());
+      }
+    };
     this.__deletionAdapterOfEmoji = new EntityDeletionOrUpdateAdapter<Emoji>(__db) {
       @Override
       @NonNull
@@ -102,6 +120,44 @@ public final class RoomEmojiDao_Impl extends RoomEmojiDao {
         statement.bindLong(5, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final Emoji entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfEmoji.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends Emoji> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfEmoji.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

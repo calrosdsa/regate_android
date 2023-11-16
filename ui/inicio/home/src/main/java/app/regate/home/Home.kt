@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.component.CustomButton
+import app.regate.common.composes.component.item.GrupoItemCard
 import app.regate.common.composes.component.item.SalaItem
 import app.regate.common.composes.component.util.ViewMore
 import app.regate.common.composes.ui.BottomBar
@@ -66,8 +67,6 @@ import app.regate.constant.Route
 import app.regate.constant.id
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 import app.regate.home.carousel.HomeMediaCarousel
-import app.regate.home.item.GrupoItem
-
 //import app.regate.home.carousel.HomeMediaCarousel
 
 
@@ -136,9 +135,6 @@ internal fun Home(
                 }
             )
 //            TopBar(openDrawer = openDrawer)
-        },
-        bottomBar = {
-             BottomBar(navController = navController)
         },
         modifier = Modifier
             .fillMaxSize()
@@ -279,7 +275,7 @@ internal fun Home(
             items(
                 items = viewState.grupos
             ){item->
-                GrupoItem(
+                GrupoItemCard(
                     grupo = item,
                     navigateToGrupoInfo = navigateToGrupoInfo
                 )

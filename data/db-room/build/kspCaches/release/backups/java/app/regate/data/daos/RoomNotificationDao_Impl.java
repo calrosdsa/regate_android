@@ -38,6 +38,8 @@ import kotlinx.datetime.Instant;
 public final class RoomNotificationDao_Impl extends RoomNotificationDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<Notification> __insertionAdapterOfNotification;
+
   private final EntityDeletionOrUpdateAdapter<Notification> __deletionAdapterOfNotification;
 
   private final EntityDeletionOrUpdateAdapter<Notification> __updateAdapterOfNotification;
@@ -50,6 +52,49 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
 
   public RoomNotificationDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfNotification = new EntityInsertionAdapter<Notification>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `notification` (`id`,`title`,`content`,`entityId`,`typeEntity`,`read`,`created_at`) VALUES (nullif(?, 0),?,?,?,?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final Notification entity) {
+        statement.bindLong(1, entity.getId());
+        if (entity.getTitle() == null) {
+          statement.bindNull(2);
+        } else {
+          statement.bindString(2, entity.getTitle());
+        }
+        statement.bindString(3, entity.getContent());
+        if (entity.getEntityId() == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindLong(4, entity.getEntityId());
+        }
+        final Integer _tmp;
+        if (entity.getTypeEntity() == null) {
+          _tmp = null;
+        } else {
+          _tmp = AppTypeConverters.INSTANCE.fromTypeEntity(entity.getTypeEntity());
+        }
+        if (_tmp == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindLong(5, _tmp);
+        }
+        final int _tmp_1 = entity.getRead() ? 1 : 0;
+        statement.bindLong(6, _tmp_1);
+        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp_2 == null) {
+          statement.bindNull(7);
+        } else {
+          statement.bindString(7, _tmp_2);
+        }
+      }
+    };
     this.__deletionAdapterOfNotification = new EntityDeletionOrUpdateAdapter<Notification>(__db) {
       @Override
       @NonNull
@@ -209,6 +254,44 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
         statement.bindLong(8, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final Notification entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfNotification.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends Notification> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfNotification.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

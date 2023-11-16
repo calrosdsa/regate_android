@@ -38,6 +38,8 @@ import kotlinx.coroutines.flow.Flow;
 public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<Instalacion> __insertionAdapterOfInstalacion;
+
   private final EntityDeletionOrUpdateAdapter<Instalacion> __deletionAdapterOfInstalacion;
 
   private final EntityDeletionOrUpdateAdapter<Instalacion> __updateAdapterOfInstalacion;
@@ -50,6 +52,51 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
 
   public RoomInstalacionDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfInstalacion = new EntityInsertionAdapter<Instalacion>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `instalaciones` (`id`,`cantidad_personas`,`category_id`,`category_name`,`description`,`establecimiento_id`,`name`,`precio_hora`,`portada`) VALUES (?,?,?,?,?,?,?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final Instalacion entity) {
+        statement.bindLong(1, entity.getId());
+        if (entity.getCantidad_personas() == null) {
+          statement.bindNull(2);
+        } else {
+          statement.bindLong(2, entity.getCantidad_personas());
+        }
+        if (entity.getCategory_id() == null) {
+          statement.bindNull(3);
+        } else {
+          statement.bindLong(3, entity.getCategory_id());
+        }
+        if (entity.getCategory_name() == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindString(4, entity.getCategory_name());
+        }
+        if (entity.getDescription() == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindString(5, entity.getDescription());
+        }
+        statement.bindLong(6, entity.getEstablecimiento_id());
+        statement.bindString(7, entity.getName());
+        if (entity.getPrecio_hora() == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindLong(8, entity.getPrecio_hora());
+        }
+        if (entity.getPortada() == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindString(9, entity.getPortada());
+        }
+      }
+    };
     this.__deletionAdapterOfInstalacion = new EntityDeletionOrUpdateAdapter<Instalacion>(__db) {
       @Override
       @NonNull
@@ -218,6 +265,44 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
   }
 
   @Override
+  public Object insertOnConflictIgnore(final Instalacion entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfInstalacion.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends Instalacion> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfInstalacion.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
   public Object deleteEntity(final Instalacion entity,
       final Continuation<? super Integer> continuation) {
     return CoroutinesRoom.execute(__db, true, new Callable<Integer>() {
@@ -351,6 +436,79 @@ public final class RoomInstalacionDao_Impl extends RoomInstalacionDao {
         }
       }
     }, continuation);
+  }
+
+  @Override
+  public Instalacion getInstalacion(final long id) {
+    final String _sql = "select * from instalaciones where id = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, id);
+    __db.assertNotSuspendingTransaction();
+    final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+    try {
+      final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+      final int _cursorIndexOfCantidadPersonas = CursorUtil.getColumnIndexOrThrow(_cursor, "cantidad_personas");
+      final int _cursorIndexOfCategoryId = CursorUtil.getColumnIndexOrThrow(_cursor, "category_id");
+      final int _cursorIndexOfCategoryName = CursorUtil.getColumnIndexOrThrow(_cursor, "category_name");
+      final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
+      final int _cursorIndexOfEstablecimientoId = CursorUtil.getColumnIndexOrThrow(_cursor, "establecimiento_id");
+      final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+      final int _cursorIndexOfPrecioHora = CursorUtil.getColumnIndexOrThrow(_cursor, "precio_hora");
+      final int _cursorIndexOfPortada = CursorUtil.getColumnIndexOrThrow(_cursor, "portada");
+      final Instalacion _result;
+      if (_cursor.moveToFirst()) {
+        final long _tmpId;
+        _tmpId = _cursor.getLong(_cursorIndexOfId);
+        final Integer _tmpCantidad_personas;
+        if (_cursor.isNull(_cursorIndexOfCantidadPersonas)) {
+          _tmpCantidad_personas = null;
+        } else {
+          _tmpCantidad_personas = _cursor.getInt(_cursorIndexOfCantidadPersonas);
+        }
+        final Integer _tmpCategory_id;
+        if (_cursor.isNull(_cursorIndexOfCategoryId)) {
+          _tmpCategory_id = null;
+        } else {
+          _tmpCategory_id = _cursor.getInt(_cursorIndexOfCategoryId);
+        }
+        final String _tmpCategory_name;
+        if (_cursor.isNull(_cursorIndexOfCategoryName)) {
+          _tmpCategory_name = null;
+        } else {
+          _tmpCategory_name = _cursor.getString(_cursorIndexOfCategoryName);
+        }
+        final String _tmpDescription;
+        if (_cursor.isNull(_cursorIndexOfDescription)) {
+          _tmpDescription = null;
+        } else {
+          _tmpDescription = _cursor.getString(_cursorIndexOfDescription);
+        }
+        final long _tmpEstablecimiento_id;
+        _tmpEstablecimiento_id = _cursor.getLong(_cursorIndexOfEstablecimientoId);
+        final String _tmpName;
+        _tmpName = _cursor.getString(_cursorIndexOfName);
+        final Integer _tmpPrecio_hora;
+        if (_cursor.isNull(_cursorIndexOfPrecioHora)) {
+          _tmpPrecio_hora = null;
+        } else {
+          _tmpPrecio_hora = _cursor.getInt(_cursorIndexOfPrecioHora);
+        }
+        final String _tmpPortada;
+        if (_cursor.isNull(_cursorIndexOfPortada)) {
+          _tmpPortada = null;
+        } else {
+          _tmpPortada = _cursor.getString(_cursorIndexOfPortada);
+        }
+        _result = new Instalacion(_tmpId,_tmpCantidad_personas,_tmpCategory_id,_tmpCategory_name,_tmpDescription,_tmpEstablecimiento_id,_tmpName,_tmpPrecio_hora,_tmpPortada);
+      } else {
+        _result = null;
+      }
+      return _result;
+    } finally {
+      _cursor.close();
+      _statement.release();
+    }
   }
 
   @Override

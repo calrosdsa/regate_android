@@ -1,20 +1,29 @@
 package app.regate.create.sala.page
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.component.input.InputForm
+import app.regate.common.resources.R
 import app.regate.compoundmodels.InstalacionCupos
+import app.regate.data.dto.empresa.grupo.GrupoVisibility
+import app.regate.data.dto.empresa.salas.SalaVisibility
 import kotlinx.datetime.Instant
 
 @Composable
@@ -22,9 +31,11 @@ internal fun Page1(
     asunto:String,
     description:String,
     cupos:String,
+    visibility:Int,
     onChangeAsunto:(v:String)->Unit,
     onChangeDescription:(v:String)->Unit,
     onChangeCupos:(v:String)->Unit,
+    onChangeVisibility:(Int)->Unit,
     instalacionCupos: InstalacionCupos?,
     formatDate:(Instant)->String,
     formatShortTime:(Instant)->String,
@@ -74,6 +85,38 @@ internal fun Page1(
                 label = "Cupos",
                 keyboardType = KeyboardType.Number
             )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = stringResource(id = R.string.group_privacy),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(5.dp)
+            )
+
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onChangeVisibility(SalaVisibility.PUBLIC.ordinal) }
+                .padding(5.dp)) {
+                RadioButton(
+                    selected = visibility == SalaVisibility.PUBLIC.ordinal,
+                    onClick = { onChangeVisibility(SalaVisibility.PUBLIC.ordinal) })
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(text = stringResource(id = R.string.publico))
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onChangeVisibility(SalaVisibility.ONLY_GROUP.ordinal) }
+                .padding(5.dp)) {
+                RadioButton(
+                    selected = visibility == SalaVisibility.ONLY_GROUP.ordinal,
+                    onClick = { onChangeVisibility(SalaVisibility.ONLY_GROUP.ordinal) })
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(text = "Solo visible para el grupo")
+            }
+
 
 
         }

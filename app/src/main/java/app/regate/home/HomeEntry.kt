@@ -44,7 +44,7 @@ fun HomeEntry(
     composeScreens: ComposeScreens,
     establecimientoId:String?,
     startScreen:String,
-    startRoute:String
+    startRoute:Int
 //    navigateToMap:()->Unit
 ) {
     val bottomSheetNavigator = rememberBottomSheetNavigator()
@@ -98,7 +98,7 @@ internal fun AppNavigation(
     navController: NavHostController,
     composeScreens: ComposeScreens,
     startScreen:String,
-    startRoute: String,
+    startRoute: Int,
     modifier: Modifier = Modifier,
 //    navigateToMap:()->Unit
 ) {
@@ -218,7 +218,9 @@ internal fun AppNavigation(
                 navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
                 navigateToConversation = {it1,it2->
                     navController.navigate(Route.CONVERSATION id it1 id it2 )
-                }
+                },
+                navigateToMyChats = {navController.navigate(Route.MY_CHATS)},
+                openAuthDialog = {navController.navigate(Route.AUTH_DIALOG)}
             )
         }
         animatedComposable(
@@ -295,7 +297,7 @@ internal fun AppNavigation(
 
         AddMainNav(
             composeScreens, navController,
-            startRoute = startRoute
+            startPage = startRoute
         )
     }
 }

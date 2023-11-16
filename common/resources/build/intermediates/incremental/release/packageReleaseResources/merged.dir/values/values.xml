@@ -24,7 +24,9 @@
     <string name="balance_coins">Coins Balance</string>
     <string name="book_a_court">Book a court</string>
     <string name="bookings">Bookings</string>
+    <string name="cancel">Cancel</string>
     <string name="cancel_request">Cancel request</string>
+    <string name="categories">Categories</string>
     <string name="channel_group_description" translatable="false">group_notification</string>
     <string name="channel_message_description" translatable="false">message_notification</string>
     <string name="chat_group">Chat group</string>
@@ -45,10 +47,14 @@
     <string name="continuar">Continue</string>
     <string name="contributed_amount">Contributed amount %1$s</string>
     <string name="copy_link">Copy link</string>
+    <string name="copy_text">Copy text</string>
     <string name="count_selected">%1$d selected</string>
     <string name="create_group">Create group</string>
     <string name="create_sala">Create sala</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="decline">Decline</string>
+    <string name="delete_chat">Delete chat</string>
+    <string name="delete_message">Delete message</string>
     <string name="deposits">Deposits</string>
     <string name="description">Description</string>
     <string name="discount">Discount benefits are periodically launched.</string>
@@ -56,6 +62,7 @@
     <string name="dont_receive_code">Don\'t receive code?</string>
     <string name="dynamic_color">Dynamic colors</string>
     <string name="edit">Edit</string>
+    <string name="edit_message">Edit message</string>
     <string name="email_verification">Email Verification</string>
     <string name="email_verification_help_text">Before proceeding we need to verify your email. Please enter the code that was sent to your email (<b>%1$s</b>)</string>
     <string name="emileys_emotion">SMILEYS AND EMOTIONS</string>
@@ -87,6 +94,7 @@
     <string name="invitation_link">Invitation link</string>
     <string name="invitation_link_info">People who access this link will be able to join the group without needing approval from an administrator.</string>
     <string name="invitations">Invitations</string>
+    <string name="invite">Invite</string>
     <string name="join_a_group">Join a group</string>
     <string name="language">Language</string>
     <string name="later">Later</string>
@@ -102,6 +110,7 @@
     <string name="mapbox_access_token" translatable="false">pk.eyJ1Ijoiam1pcmFuZGEyMSIsImEiOiJjbGl0Y3YyeDEwMm1rM2ZwaXJ6eGs0MnNwIn0.rURAi6PkFGac0TBkM4QE-A</string>
     <string name="meke_user_admin">Appoint this user as an administrator</string>
     <string name="members">%1$d members</string>
+    <string name="message_deleted">This message has been deleted.</string>
     <string name="name">Name</string>
     <string name="near_me">Near me</string>
     <string name="new_offers">New Offers Here!</string>
@@ -137,6 +146,7 @@
     <string name="recommended_places">Recommended places</string>
     <string name="remove_user">Remove this user from the group</string>
     <string name="remove_user_admin">Revoke administrator status</string>
+    <string name="reply">Reply</string>
     <string name="report">Report</string>
     <string name="request_accepted">Request accepted</string>
     <string name="request_declined">Request declined</string>

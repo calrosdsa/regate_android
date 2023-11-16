@@ -17,8 +17,8 @@ import app.regate.data.dto.empresa.establecimiento.AttentionScheduleTimeDto;
 import app.regate.data.dto.empresa.establecimiento.HorarioInterval;
 import app.regate.data.dto.empresa.establecimiento.PaidType;
 import app.regate.models.AttentionSchedule;
-import app.regate.models.Establecimiento;
 import app.regate.models.Setting;
+import app.regate.models.establecimiento.Establecimiento;
 import java.lang.Boolean;
 import java.lang.Class;
 import java.lang.Exception;
@@ -40,6 +40,8 @@ import kotlinx.coroutines.flow.Flow;
 public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
   private final RoomDatabase __db;
 
+  private final EntityInsertionAdapter<Establecimiento> __insertionAdapterOfEstablecimiento;
+
   private final EntityInsertionAdapter<Setting> __insertionAdapterOfSetting;
 
   private final EntityInsertionAdapter<AttentionSchedule> __insertionAdapterOfAttentionSchedule;
@@ -56,6 +58,80 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
 
   public RoomEstablecimientoDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
+    this.__insertionAdapterOfEstablecimiento = new EntityInsertionAdapter<Establecimiento>(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        return "INSERT OR IGNORE INTO `establecimientos` (`id`,`address`,`created_at`,`email`,`empresa_id`,`latidud`,`longitud`,`name`,`description`,`is_open`,`phone_number`,`photo`,`address_photo`,`amenities`,`rules`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+      }
+
+      @Override
+      public void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final Establecimiento entity) {
+        statement.bindLong(1, entity.getId());
+        if (entity.getAddress() == null) {
+          statement.bindNull(2);
+        } else {
+          statement.bindString(2, entity.getAddress());
+        }
+        if (entity.getCreated_at() == null) {
+          statement.bindNull(3);
+        } else {
+          statement.bindString(3, entity.getCreated_at());
+        }
+        if (entity.getEmail() == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindString(4, entity.getEmail());
+        }
+        if (entity.getEmpresa_id() == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindLong(5, entity.getEmpresa_id());
+        }
+        if (entity.getLatidud() == null) {
+          statement.bindNull(6);
+        } else {
+          statement.bindString(6, entity.getLatidud());
+        }
+        if (entity.getLongitud() == null) {
+          statement.bindNull(7);
+        } else {
+          statement.bindString(7, entity.getLongitud());
+        }
+        statement.bindString(8, entity.getName());
+        if (entity.getDescription() == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindString(9, entity.getDescription());
+        }
+        final Integer _tmp = entity.is_open() == null ? null : (entity.is_open() ? 1 : 0);
+        if (_tmp == null) {
+          statement.bindNull(10);
+        } else {
+          statement.bindLong(10, _tmp);
+        }
+        if (entity.getPhone_number() == null) {
+          statement.bindNull(11);
+        } else {
+          statement.bindString(11, entity.getPhone_number());
+        }
+        if (entity.getPhoto() == null) {
+          statement.bindNull(12);
+        } else {
+          statement.bindString(12, entity.getPhoto());
+        }
+        if (entity.getAddress_photo() == null) {
+          statement.bindNull(13);
+        } else {
+          statement.bindString(13, entity.getAddress_photo());
+        }
+        final String _tmp_1 = AppTypeConverters.INSTANCE.fromListLong(entity.getAmenities());
+        statement.bindString(14, _tmp_1);
+        final String _tmp_2 = AppTypeConverters.INSTANCE.fromListLong(entity.getRules());
+        statement.bindString(15, _tmp_2);
+      }
+    };
     this.__insertionAdapterOfSetting = new EntityInsertionAdapter<Setting>(__db) {
       @Override
       @NonNull
@@ -361,6 +437,44 @@ public final class RoomEstablecimientoDao_Impl extends RoomEstablecimientoDao {
         statement.bindLong(16, entity.getId());
       }
     });
+  }
+
+  @Override
+  public Object insertOnConflictIgnore(final Establecimiento entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfEstablecimiento.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object insertAllonConflictIgnore(final List<? extends Establecimiento> entities,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        __db.beginTransaction();
+        try {
+          __insertionAdapterOfEstablecimiento.insert(entities);
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, continuation);
   }
 
   @Override

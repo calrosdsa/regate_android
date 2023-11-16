@@ -176,7 +176,7 @@
     <string name="symbols">SYMBOLS</string>
     <string name="flags">FLAGS</string>
     <string name="food_and_drink">FOOD AND DRINK</string>
-    <string name="send_to_a_group">Send to a group</string>
+    <string name="send_to_a_chat">Enviar a un chat</string>
     <string name="precio_per_person">Price per person</string>
     <string name="search">Search</string>
     <string name="back">Back</string>
@@ -229,5 +229,7 @@
     <string name="invite">Invite</string>
     <string name="categories">Categories</string>
     <string name="cancel">Cancel</string>
+    <string name="leave_room">Leave the room</string>
+    <string name="delete_reservation">Delete reservation</string>
 
 </resources>

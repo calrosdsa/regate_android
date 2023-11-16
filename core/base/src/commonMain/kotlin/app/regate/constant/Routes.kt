@@ -76,6 +76,14 @@ object Route {
     const val HISTORY_SEARCH = "search-history"
 }
 
+object MainPages{
+    const val Home = 0
+    const val Discover = 1
+    const val Notifications = 2
+    const val Chat = 3
+    const val Account = 4
+}
+
 
 infix fun String.arg(arg: String) = "$this/{$arg}"
 
