@@ -26,7 +26,7 @@ import app.regate.models.grupo.Grupo
 import app.regate.models.Message
 import app.regate.models.MessageInbox
 import app.regate.models.grupo.MyGroups
-import app.regate.models.Profile
+import app.regate.models.user.Profile
 import app.regate.models.grupo.UserGrupo
 import app.regate.models.UserRoom
 import app.regate.models.chat.Chat

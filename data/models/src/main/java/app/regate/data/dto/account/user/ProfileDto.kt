@@ -7,9 +7,16 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ProfileDetailDto(
     val profile:ProfileDto,
-    val categories:List<Int> = emptyList()
+    val categories:List<Int> = emptyList(),
+    val establecimientos:List<EstablecimientoItemDto> = emptyList(),
 )
 
+@Serializable
+data class  EstablecimientoItemDto(
+    val id:Long,
+    val name:String,
+    val photo:String? = null,
+)
 @Serializable
 data class ProfileCategoryRequest(
     val category_id:Int,

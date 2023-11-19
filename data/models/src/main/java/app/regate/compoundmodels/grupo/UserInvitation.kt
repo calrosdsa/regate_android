@@ -2,7 +2,6 @@ package app.regate.compoundmodels.grupo
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import app.regate.models.Profile
 import app.regate.models.grupo.Grupo
 import app.regate.models.grupo.InvitationGrupo
 

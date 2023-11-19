@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 data class UserBalanceDto(
     val balance_id:Int,
     val coins:Double,
-    val profile_id:Int
+    val profile_id:Int,
+    val retain_coin:Double
 )

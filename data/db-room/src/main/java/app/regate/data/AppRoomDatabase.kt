@@ -56,7 +56,7 @@ import app.regate.models.MessageInbox
 import app.regate.models.MessageSala
 import app.regate.models.grupo.MyGroups
 import app.regate.models.Notification
-import app.regate.models.Profile
+import app.regate.models.user.Profile
 import app.regate.models.ProfileCategory
 import app.regate.models.Reserva
 import app.regate.models.SearchHistory

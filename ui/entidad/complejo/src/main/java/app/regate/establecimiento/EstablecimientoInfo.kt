@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -79,11 +81,11 @@ fun EstablecimientoInfo(
             state.establecimiento
         }
     }
-    val categoryCount by remember(state.instalacionCategoryCount) {
-        derivedStateOf {
-            state.instalacionCategoryCount
-        }
-    }
+//    val categoryCount by remember(state.instalacionCategoryCount) {
+//        derivedStateOf {
+//            state.instalacionCategoryCount
+//        }
+//    }
     val showMore = remember{ mutableStateOf(false) }
     val rules = remember(state.rules) {
         if(state.rules.size >= 5){
@@ -114,19 +116,25 @@ fun EstablecimientoInfo(
             .padding(horizontal = 10.dp)
             .verticalScroll(scrollState)
     ) {
-        FlowRow(
+        if(state.instalacionCategoryCount.isNotEmpty()){
+
+        LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
                 .padding(vertical = 8.dp)
         ) {
-            categoryCount.map { category ->
+            items(
+                items = state.instalacionCategoryCount
+            ){item->
                 InstalacionCategoryItem(
-                    item = category,
+                    item = item,
                     navigateToReserva = navigateToReserva
                 )
             }
         }
+        }
+
         Divider(modifier = Modifier.padding(5.dp))
         state.attentionSchedule?.let {
         Text(text = "Horario de atencion",style = MaterialTheme.typography.titleSmall)

@@ -1,6 +1,5 @@
 package app.regate.data.account
 
-import app.regate.data.common.getDataEntityFromJson
 import app.regate.data.daos.FavoriteEstablecimientoDao
 import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.NotificationDao
@@ -16,7 +15,7 @@ import app.regate.data.dto.account.billing.ConsumePaginationResponse
 import app.regate.data.dto.account.billing.DepositPaginationResponse
 import app.regate.data.mappers.DtoToUser
 import app.regate.inject.ApplicationScope
-import app.regate.models.Profile
+import app.regate.models.user.Profile
 import app.regate.models.account.User
 import app.regate.settings.AppPreferences
 import app.regate.util.AppCoroutineDispatchers
@@ -72,13 +71,15 @@ class AccountRepository(
             userDao.upsert(user)
     }
     private suspend fun insertProfile(user:UserDto){
-        profileDao.upsert(Profile(
+        profileDao.upsert(
+            Profile(
             id = user.profile_id,
             user_id = user.user_id,
             profile_photo = user.profile_photo,
             nombre = user.nombre,
             apellido = user.apellido
-        ))
+        )
+        )
     }
     suspend fun  login(d: LoginRequest) {
         withContext(dispatchers.computation){

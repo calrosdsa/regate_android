@@ -23,8 +23,8 @@ import app.regate.compoundmodels.MessageProfile;
 import app.regate.compoundmodels.MessageWithChat;
 import app.regate.data.db.DateTimeTypeConverters;
 import app.regate.models.Message;
-import app.regate.models.Profile;
 import app.regate.models.chat.Chat;
+import app.regate.models.user.Profile;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.IllegalStateException;
@@ -580,7 +580,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           }
         }
         cursor.moveToPosition(-1);
-        __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
+        __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
         __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
         final List<MessageProfile> _result = new ArrayList<MessageProfile>(cursor.getCount());
         while (cursor.moveToNext()) {
@@ -750,7 +750,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               }
             }
             _cursor.moveToPosition(-1);
-            __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
+            __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
             __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
             final MessageProfile _result;
             if (_cursor.moveToFirst()) {
@@ -890,7 +890,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               }
             }
             _cursor.moveToPosition(-1);
-            __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
+            __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
             __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
             final List<MessageProfile> _result = new ArrayList<MessageProfile>(_cursor.getCount());
             while (_cursor.moveToNext()) {
@@ -1203,14 +1203,14 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
     return Collections.emptyList();
   }
 
-  private void __fetchRelationshipprofilesAsappRegateModelsProfile(
+  private void __fetchRelationshipprofilesAsappRegateModelsUserProfile(
       @NonNull final LongSparseArray<Profile> _map) {
     if (_map.isEmpty()) {
       return;
     }
     if (_map.size() > RoomDatabase.MAX_BIND_PARAMETER_CNT) {
       RelationUtil.recursiveFetchLongSparseArray(_map, false, (map) -> {
-        __fetchRelationshipprofilesAsappRegateModelsProfile(map);
+        __fetchRelationshipprofilesAsappRegateModelsUserProfile(map);
         return Unit.INSTANCE;
       });
       return;

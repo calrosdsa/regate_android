@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
+import app.regate.data.dto.account.user.EstablecimientoItemDto
 import app.regate.data.dto.system.ReportData
 import app.regate.data.dto.system.ReportType
 import app.regate.data.users.UsersRepository
@@ -14,6 +15,8 @@ import app.regate.domain.observers.grupo.ObserveUserGroups
 import app.regate.domain.observers.user.ObserveProfileCategory
 import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -36,7 +39,7 @@ class ProfileViewModel(
     private val id = savedStateHandle.get<Long>("id")?:0
     private val loadingCounter = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
-
+    private val establecimientos= MutableStateFlow<List<EstablecimientoItemDto>>(emptyList())
     val state:StateFlow<ProfileState> = combine(
         loadingCounter.observable,
         uiMessageManager.message,
@@ -44,14 +47,16 @@ class ProfileViewModel(
         observeUser.flow,
         observeProfileCategory.flow,
         observeUserGroups.flow,
-    ){loading,message,profile,user,categories,grupos->
+        establecimientos,
+    ){loading,message,profile,user,categories,grupos,establecimientos->
         ProfileState(
             loading = loading,
             message = message,
             profile = profile,
             user = user,
             categories = categories,
-            grupos = grupos
+            grupos = grupos,
+            establecimientos = establecimientos
         )
     }.stateIn(
         scope = viewModelScope,
@@ -67,9 +72,10 @@ class ProfileViewModel(
     }
 
     private fun getProfile(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try{
-                usersRepository.getProfile(id)
+                val res = usersRepository.getProfile(id)
+                establecimientos.emit(res)
             }catch (e:Exception){
                 //TODO()
             }

@@ -28,7 +28,8 @@ class CoinRepository(
                     UserBalance(
                         balance_id = res.balance_id.toLong(),
                         coins = res.coins,
-                        profile_id = res.profile_id.toLong()
+                        profile_id = res.profile_id.toLong(),
+                        retain_coin = res.retain_coin
                     )
                 )
             }catch (e:Exception){

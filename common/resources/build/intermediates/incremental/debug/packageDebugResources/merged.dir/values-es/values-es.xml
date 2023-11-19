@@ -52,6 +52,7 @@
     <string name="email_verification_help_text">Antes de continuar, necesitamos verificar su correo electrónico. Por favor ingrese el código que fue enviado a su correo electrónico (<b>%1$s</b>)</string>
     <string name="emileys_emotion">EMOCIONES Y EMOCIONES</string>
     <string name="establecimientos">Establecimientos</string>
+    <string name="establecimientos_where_user_play">Lugares donde juega</string>
     <string name="exit">Salir</string>
     <string name="expiration_date">Expiration date:  %1$s</string>
     <string name="explore_exceptional_destinations">Explora destinos excepcionales</string>

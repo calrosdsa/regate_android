@@ -325,7 +325,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         final TableInfo _infoProfiles = new TableInfo("profiles", _columnsProfiles, _foreignKeysProfiles, _indicesProfiles);
         final TableInfo _existingProfiles = TableInfo.read(db, "profiles");
         if (!_infoProfiles.equals(_existingProfiles)) {
-          return new RoomOpenHelper.ValidationResult(false, "profiles(app.regate.models.Profile).\n"
+          return new RoomOpenHelper.ValidationResult(false, "profiles(app.regate.models.user.Profile).\n"
                   + " Expected:\n" + _infoProfiles + "\n"
                   + " Found:\n" + _existingProfiles);
         }

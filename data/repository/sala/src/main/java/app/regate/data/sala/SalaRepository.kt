@@ -5,7 +5,6 @@ import app.regate.data.daos.InstalacionDao
 import app.regate.data.daos.MessageSalaDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
-import app.regate.data.daos.UserRoomDao
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.chat.TypeChat
@@ -13,7 +12,6 @@ import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.empresa.salas.CompleteSalaRequest
-import app.regate.data.dto.empresa.salas.CreateSalaResponse
 import app.regate.data.dto.empresa.salas.MessageSalaDto
 import app.regate.data.dto.empresa.salas.PaginationSalaResponse
 import app.regate.data.dto.empresa.salas.SalaCompleteDetail
@@ -21,11 +19,9 @@ import app.regate.data.dto.empresa.salas.SalaFilterData
 import app.regate.data.dto.empresa.salas.SalaRequestDto
 import app.regate.data.mappers.MessageDtoToMessageSala
 import app.regate.data.mappers.MessageToMessageSalaDto
-import app.regate.data.mappers.SalaDtoToSalaEntity
 import app.regate.inject.ApplicationScope
 import app.regate.models.MessageSala
-import app.regate.models.Profile
-import app.regate.models.UserRoom
+import app.regate.models.user.Profile
 import app.regate.models.chat.Chat
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async

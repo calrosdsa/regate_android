@@ -11,5 +11,6 @@ data class UserBalance(
     @PrimaryKey(autoGenerate = false)
     val balance_id: Long,
     val profile_id:Long,
-    val coins:Double
+    val coins:Double,
+    val retain_coin:Double =0.0,
 )

@@ -142,6 +142,42 @@ internal fun Billing(
                                 }
                             }
                         }
+
+
+                        Surface(
+                            color = MaterialTheme.colorScheme.inverseOnSurface,
+                            shape = MaterialTheme.shapes.medium
+                        ) {
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.coin),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(25.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(10.dp))
+                                    Column() {
+                                        Text(
+                                            text = stringResource(id = R.string.amount_withheld),
+                                            style = MaterialTheme.typography.labelMedium
+                                        )
+                                        Text(
+                                            text = balance.retain_coin.toString(),
+                                            style = MaterialTheme.typography.labelLarge
+                                        )
+                                    }
+                                }
+
+                            }
+                        }
+
+
                     }
                     Text(
                         text = stringResource(id = R.string.history),

@@ -2,7 +2,7 @@ package app.regate.data.daos
 
 import app.regate.models.LabelType
 import app.regate.models.Labels
-import app.regate.models.Profile
+import app.regate.models.user.Profile
 import app.regate.models.ProfileCategory
 import kotlinx.coroutines.flow.Flow
 

@@ -2,7 +2,7 @@ package app.regate.compoundmodels
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import app.regate.models.Profile
+import app.regate.models.user.Profile
 import app.regate.models.account.User
 
 class UserProfile {

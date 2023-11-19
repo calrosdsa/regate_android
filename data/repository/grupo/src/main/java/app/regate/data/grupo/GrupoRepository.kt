@@ -29,7 +29,7 @@ import app.regate.data.mappers.DtoToUserGrupo
 import app.regate.data.mappers.UserGroupDtoToProfile
 import app.regate.inject.ApplicationScope
 import app.regate.models.grupo.MyGroups
-import app.regate.models.Profile
+import app.regate.models.user.Profile
 import app.regate.models.chat.Chat
 import app.regate.models.grupo.Grupo
 import app.regate.models.grupo.InvitationGrupo

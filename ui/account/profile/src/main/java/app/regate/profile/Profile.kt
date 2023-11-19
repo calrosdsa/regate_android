@@ -48,6 +48,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.component.input.AmenityItem
+import app.regate.common.composes.component.item.EstablecimientoCard
 import app.regate.common.composes.component.item.GrupoItemCard
 import app.regate.common.composes.component.text.Label
 import app.regate.common.composes.ui.PosterCardImage
@@ -87,7 +88,7 @@ fun Profile(
         navigateToPhoto = {navController.navigate(Route.PHOTO id it)},
         navigateToProfileCategories = {navController.navigate(Route.PROFILE_CATEGORIES id it)},
         navigateToGrupoInfo = {navController.navigate(Route.INFO_GRUPO id it)},
-
+        navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)}
         )
 }
 
@@ -100,6 +101,7 @@ internal fun Profile(
     navigateToPhoto:(String)->Unit,
     navigateToProfileCategories:(Long)->Unit,
     navigateToGrupoInfo:(Long)->Unit,
+    navigateToEstablecimiento:(Long)->Unit,
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -115,7 +117,8 @@ internal fun Profile(
         },
         navigateToPhoto = navigateToPhoto,
         navigateToProfileCategories = navigateToProfileCategories,
-        navigateToGrupoInfo = navigateToGrupoInfo
+        navigateToGrupoInfo = navigateToGrupoInfo,
+        navigateToEstablecimiento = navigateToEstablecimiento
     )
 }
 
@@ -129,7 +132,8 @@ internal fun Profile(
     navigateToReport:()->Unit,
     navigateToPhoto: (String) -> Unit,
     navigateToProfileCategories: (Long) -> Unit,
-    navigateToGrupoInfo: (Long) -> Unit
+    navigateToGrupoInfo: (Long) -> Unit,
+    navigateToEstablecimiento: (Long) -> Unit
 ) {
     val scrollState = rememberScrollState()
     val isMyProfile by remember(viewState.user) {
@@ -227,8 +231,9 @@ internal fun Profile(
                         }
                     }
                 }
-                Row(modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal= 10.dp),
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically) {
                 Label(text = "Areas de interes", modifier = Modifier.padding(horizontal = 10.dp))
@@ -247,6 +252,28 @@ internal fun Profile(
 //                        Text(text = it.name)
                     }
                 }
+
+                Spacer(modifier = Modifier.height(5.dp))
+                Label(text = stringResource(id = R.string.establecimientos_where_user_play),modifier = Modifier.padding(horizontal = 10.dp))
+
+                LazyRow(contentPadding = PaddingValues(horizontal = 10.dp), modifier =Modifier.height(130.dp)) {
+                    items(
+                        items = viewState.establecimientos
+                    ){item->
+                        EstablecimientoCard(
+                            name = item.name,
+                            id = item.id,
+                            photo = item.photo,
+                            onClick = navigateToEstablecimiento,
+                            modifier = Modifier
+                                .height(125.dp)
+                                .width(185.dp)
+                                .padding(5.dp)
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(5.dp))
 
                 Label(text = "Grupos",modifier = Modifier.padding(horizontal = 10.dp))
 

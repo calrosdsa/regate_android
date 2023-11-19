@@ -18,9 +18,9 @@ import androidx.room.util.StringUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.compoundmodels.UserProfile;
 import app.regate.data.db.DateTimeTypeConverters;
-import app.regate.models.Profile;
 import app.regate.models.account.User;
 import app.regate.models.account.UserBalance;
+import app.regate.models.user.Profile;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.Integer;
@@ -542,7 +542,7 @@ public final class RoomUserDao_Impl extends RoomUserDao {
               _collectionProfile.put(_tmpKey, null);
             }
             _cursor.moveToPosition(-1);
-            __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
+            __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
             final UserProfile _result;
             if (_cursor.moveToFirst()) {
               final User _tmpUser;
@@ -591,14 +591,14 @@ public final class RoomUserDao_Impl extends RoomUserDao {
     return Collections.emptyList();
   }
 
-  private void __fetchRelationshipprofilesAsappRegateModelsProfile(
+  private void __fetchRelationshipprofilesAsappRegateModelsUserProfile(
       @NonNull final LongSparseArray<Profile> _map) {
     if (_map.isEmpty()) {
       return;
     }
     if (_map.size() > RoomDatabase.MAX_BIND_PARAMETER_CNT) {
       RelationUtil.recursiveFetchLongSparseArray(_map, false, (map) -> {
-        __fetchRelationshipprofilesAsappRegateModelsProfile(map);
+        __fetchRelationshipprofilesAsappRegateModelsUserProfile(map);
         return Unit.INSTANCE;
       });
       return;

@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.component.CustomButton
+import app.regate.common.composes.component.item.EstablecimientoCard
 import app.regate.common.composes.component.item.GrupoItemCard
 import app.regate.common.composes.component.item.SalaItem
 import app.regate.common.composes.component.util.ViewMore
@@ -197,7 +198,10 @@ internal fun Home(
                 viewState.data.recommended?.let { establecimientos ->
                     items(items = establecimientos) { item ->
                         EstablecimientoCard(
-                            item = item, navigateToComplejo = navigateToComplejo,
+                            name = item.name,
+                            photo = item.photo,
+                            id = item.id.toLong(),
+                            onClick = navigateToComplejo,
                             modifier = Modifier
                                 .height(175.dp)
                                 .width(270.dp)
@@ -237,7 +241,10 @@ internal fun Home(
                     viewState.data?.near?.let { establecimientos ->
                         items(items = establecimientos) { item ->
                             EstablecimientoCard(
-                                item = item, navigateToComplejo = navigateToComplejo,
+                                name = item.name,
+                                photo = item.photo,
+                                id = item.id.toLong(),
+                                onClick = navigateToComplejo,
                                 modifier = establecimientoSize
                             )
                         }
@@ -261,7 +268,11 @@ internal fun Home(
             }else {
                 viewState.data?.establecimientos?.let {establecimientos->
                 items(items = establecimientos) { item ->
-                    EstablecimientoCard(item = item, navigateToComplejo = navigateToComplejo,
+                    EstablecimientoCard(
+                        name = item.name,
+                        photo = item.photo,
+                        onClick= navigateToComplejo,
+                        id = item.id.toLong(),
                     modifier = establecimientoSize)
                 }
                 }
@@ -330,26 +341,6 @@ fun CardOption(
     }
 }
 
-
-@Composable
-fun EstablecimientoCard(
-    item:EstablecimientoDto,
-    modifier:Modifier = Modifier,
-    navigateToComplejo:(Long)->Unit
-){
-        Box(modifier = modifier){
-        PosterCardImageDark(
-            model = item.photo,
-            modifier = Modifier
-                .fillMaxSize()
-                .clickable { navigateToComplejo(item.id.toLong()) }
-        )
-        Text(text = item.name, style = MaterialTheme.typography.labelMedium,
-        modifier = Modifier
-            .align(Alignment.BottomStart)
-            .padding(5.dp), maxLines = 1,color = Color.White)
-        }
-}
 
 
 @Composable
