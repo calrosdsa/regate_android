@@ -20,6 +20,7 @@ import app.regate.account.Account
 import app.regate.account.billing.Billing
 import app.regate.account.billing.consume.Consume
 import app.regate.account.billing.deposits.Deposits
+import app.regate.account.billing.montoretenido.MontoRetenido
 import app.regate.account.reserva.Reserva
 import app.regate.actividades.Actividades
 import app.regate.home.Home
@@ -129,8 +130,10 @@ class ComposeScreens(
     val settings:Setting,
     val favorites:Favorites,
     val inbox:Conversations,
+
     val billing:Billing,
     val deposits: Deposits,
+    val montoRetenido: MontoRetenido,
     val consume:Consume,
     val recargar:Recargar,
     val pay:Pay,

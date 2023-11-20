@@ -8,10 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import app.regate.data.account.AccountRepository
 import app.regate.data.dto.account.billing.DepositDto
-import app.regate.data.dto.empresa.salas.SalaDto
-import app.regate.data.dto.empresa.salas.SalaFilterData
-import app.regate.domain.pagination.DeposistsPagination
-import app.regate.domain.pagination.PaginationSalaFilter
+import app.regate.domain.pagination.account.DeposistsPagination
 import kotlinx.coroutines.flow.Flow
 import me.tatarka.inject.annotations.Inject
 

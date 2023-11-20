@@ -43,6 +43,7 @@ import me.tatarka.inject.annotations.Inject
 typealias Notifications= @Composable (
     navigateToSala:(Long)->Unit,
     navigateToAccount:()->Unit,
+    navigateToNoticationSetting:()->Unit,
         ) -> Unit
 
 @Inject
@@ -51,11 +52,13 @@ fun Notifications(
     viewModelFactory:()->NotificationViewModel,
     @Assisted navigateToSala: (Long) -> Unit,
     @Assisted navigateToAccount:()->Unit,
+    @Assisted navigateToNoticationSetting: () -> Unit,
 ){
     Notifications(
         viewModel = viewModel(factory = viewModelFactory),
         navigateToSala = navigateToSala,
         navigateToAccount = navigateToAccount,
+        navigateToNoticationSetting = navigateToNoticationSetting
     )
 }
 
@@ -64,6 +67,7 @@ internal fun Notifications(
   viewModel: NotificationViewModel,
   navigateToSala: (Long) -> Unit,
   navigateToAccount: () -> Unit,
+  navigateToNoticationSetting: () -> Unit
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -72,6 +76,7 @@ internal fun Notifications(
         navigateToSala = navigateToSala,
         formatRelativeTime = formatter::formatShortRelativeTime,
         navigateToAccount = navigateToAccount,
+        navigateToNoticationSetting = navigateToNoticationSetting
     )
 }
 
@@ -82,13 +87,14 @@ internal fun Notifications(
     navigateToSala: (Long) -> Unit,
     formatRelativeTime:(Instant)->String,
     navigateToAccount: () -> Unit,
+    navigateToNoticationSetting: () -> Unit,
 
 ){
     Scaffold(
        topBar = { TopAppBar(
            title = { Text(text = stringResource(id = R.string.notifications))},
            actions = {
-               IconButton(onClick = { /*TODO*/ }) {
+               IconButton(onClick = { navigateToNoticationSetting() }) {
                    Icon(imageVector = Icons.Default.Settings, contentDescription = null)
                }
            }

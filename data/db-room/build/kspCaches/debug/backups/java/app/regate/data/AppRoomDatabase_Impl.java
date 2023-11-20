@@ -132,13 +132,13 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `attention_schedule` (`id` INTEGER NOT NULL, `day_week` INTEGER NOT NULL, `establecimiento_id` INTEGER NOT NULL, `open` INTEGER NOT NULL, `closed` INTEGER NOT NULL, `schedule_interval` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`establecimiento_id`) REFERENCES `establecimientos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_attention_schedule_establecimiento_id` ON `attention_schedule` (`establecimiento_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_room` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `sala_id` INTEGER NOT NULL, `is_admin` INTEGER NOT NULL, `is_out` INTEGER NOT NULL)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `user_balance` (`balance_id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `coins` REAL NOT NULL, PRIMARY KEY(`balance_id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `user_balance` (`balance_id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `coins` REAL NOT NULL, `retain_coin` REAL NOT NULL, PRIMARY KEY(`balance_id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `chat` (`id` INTEGER NOT NULL, `photo` TEXT, `name` TEXT NOT NULL, `last_message` TEXT, `last_message_created` TEXT, `messages_count` INTEGER NOT NULL, `type_chat` INTEGER NOT NULL, `is_message_deleted` INTEGER NOT NULL, `parent_id` INTEGER NOT NULL, `is_user_out` INTEGER NOT NULL, `updated_at` TEXT NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `invitation_grupo` (`profile_id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `estado` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`profile_id`, `grupo_id`), FOREIGN KEY(`grupo_id`) REFERENCES `grupos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_invitation_grupo_grupo_id` ON `invitation_grupo` (`grupo_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `profile_category` (`profile_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`profile_id`, `category_id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dcc51988ae6365f1e5b60d02801f4b89')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8505c3b09ceeb939f1164717e8f246e5')");
       }
 
       @Override
@@ -554,10 +554,11 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoUserRoom + "\n"
                   + " Found:\n" + _existingUserRoom);
         }
-        final HashMap<String, TableInfo.Column> _columnsUserBalance = new HashMap<String, TableInfo.Column>(3);
+        final HashMap<String, TableInfo.Column> _columnsUserBalance = new HashMap<String, TableInfo.Column>(4);
         _columnsUserBalance.put("balance_id", new TableInfo.Column("balance_id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsUserBalance.put("profile_id", new TableInfo.Column("profile_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsUserBalance.put("coins", new TableInfo.Column("coins", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsUserBalance.put("retain_coin", new TableInfo.Column("retain_coin", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysUserBalance = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesUserBalance = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoUserBalance = new TableInfo("user_balance", _columnsUserBalance, _foreignKeysUserBalance, _indicesUserBalance);
@@ -619,7 +620,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "dcc51988ae6365f1e5b60d02801f4b89", "66a0fb93b63d2fb34e0d2b1bfaef32b6");
+    }, "8505c3b09ceeb939f1164717e8f246e5", "c70a7afa3ca79d37d36a32f0429b0fb2");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;

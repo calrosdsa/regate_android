@@ -43,7 +43,8 @@ typealias Billing= @Composable (
     navigateUp: () -> Unit,
     navigateToRecargaCoins:()->Unit,
     deposits: @Composable () -> Unit,
-    consume: @Composable () -> Unit
+    consume: @Composable () -> Unit,
+    montoRetenido:@Composable () -> Unit,
 ) -> Unit
 
 @Inject
@@ -53,14 +54,16 @@ fun Billing(
     @Assisted navigateUp: () -> Unit,
     @Assisted navigateToRecargaCoins: () -> Unit,
     @Assisted deposits:@Composable () -> Unit,
-    @Assisted consume:@Composable () -> Unit
+    @Assisted consume:@Composable () -> Unit,
+    @Assisted montoRetenido:@Composable () -> Unit
 ){
     Billing(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
         navigateToRecargaCoins = navigateToRecargaCoins,
         deposits = deposits,
-        consume = consume
+        consume = consume,
+        montoRetenido = montoRetenido
     )
 }
 
@@ -70,7 +73,8 @@ internal fun Billing(
     navigateUp: () -> Unit,
     navigateToRecargaCoins: () -> Unit,
     deposits:@Composable () -> Unit,
-    consume:@Composable () -> Unit
+    consume:@Composable () -> Unit,
+    montoRetenido:@Composable () -> Unit
 ){
     val state by viewModel.state.collectAsState()
     Billing(
@@ -78,7 +82,8 @@ internal fun Billing(
         navigateUp = navigateUp,
         navigateToRecargaCoins = navigateToRecargaCoins,
         deposits = deposits,
-        consume  = consume
+        consume  = consume,
+        montoRetenido = montoRetenido
     )
 
 }
@@ -91,7 +96,8 @@ internal fun Billing(
     navigateToRecargaCoins: () -> Unit,
     deposits:@Composable () -> Unit,
     consume:@Composable () ->Unit,
-) {
+    montoRetenido:@Composable () ->Unit,
+    ) {
     val pagerState = rememberPagerState()
     val coroutine = rememberCoroutineScope()
     Scaffold(topBar = {
@@ -187,12 +193,14 @@ internal fun Billing(
                     Indicators(navToTab = { coroutine.launch { pagerState.animateScrollToPage(it) } },
                         currentTab = pagerState.currentPage)
                     HorizontalPager(
-                        pageCount = 2,
-                        state = pagerState
+                        pageCount = 3,
+                        state = pagerState,
+                        userScrollEnabled = false
                     ) { page ->
                         when (page) {
                             0 -> deposits()
                             1 -> consume()
+                            2 -> montoRetenido()
                         }
                     }
                 }
@@ -221,6 +229,14 @@ internal fun Indicators(
             onClick = {
                 // Animate to the selected page when clicked
                 navToTab(1)
+            },
+        )
+        Tab(
+            text = { Text(text = stringResource(id = R.string.amount_withheld),style = MaterialTheme.typography.labelMedium) },
+            selected = currentTab ==2,
+            onClick = {
+                // Animate to the selected page when clicked
+                navToTab(2)
             },
         )
     }

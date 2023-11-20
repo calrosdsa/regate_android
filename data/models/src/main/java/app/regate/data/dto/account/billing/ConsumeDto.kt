@@ -22,7 +22,10 @@ data class ConsumePaginationResponse(
 )
 
 enum class TypeEntity {
-    RESERVA,
-    RESERVA_SALA,
-    SALA
+    NONE,
+    ENTITY_SALA,
+    ENTITY_GROUP,
+    ENTITY_ACCOUNT,
+    ENTITY_BILLING,
+    ENTITY_RESERVA,
 }

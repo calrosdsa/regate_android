@@ -45,6 +45,7 @@ int string add_a_review 0x0
 int string all 0x0
 int string amount 0x0
 int string amount_contributed 0x0
+int string amount_withheld 0x0
 int string animals_and_nature 0x0
 int string app_name 0x0
 int string available_courts 0x0

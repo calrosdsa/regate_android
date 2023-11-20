@@ -10,5 +10,5 @@ fun Label(
     text:String,
     modifier:Modifier = Modifier,
 ){
-    Text(text = text,style =MaterialTheme.typography.labelLarge,modifier = modifier)
+    Text(text = text,style =MaterialTheme.typography.titleMedium,modifier = modifier)
 }

@@ -7,6 +7,7 @@
     <string name="all">Todo</string>
     <string name="amount">Amount: %1$s</string>
     <string name="amount_contributed">Monto aportado</string>
+    <string name="amount_withheld">Monto retenido</string>
     <string name="animals_and_nature">ANIMALES Y NATURALEZA</string>
     <string name="app_name">Regate</string>
     <string name="available_courts">Canchas disponibles</string>

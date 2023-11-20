@@ -8,6 +8,7 @@ import app.regate.data.dto.account.auth.SignUpRequest
 import app.regate.data.dto.account.auth.SocialRequest
 import app.regate.data.dto.account.billing.ConsumePaginationResponse
 import app.regate.data.dto.account.billing.DepositPaginationResponse
+import app.regate.data.dto.account.billing.MontoRetenidoPaginationRespone
 
 interface AccountDataSource {
     suspend fun me(): UserDto
@@ -19,6 +20,7 @@ interface AccountDataSource {
     suspend fun updateFcmToken(fcm_token:String)
     suspend fun getDeposits(page: Int):DepositPaginationResponse
     suspend fun getConsume(page:Int):ConsumePaginationResponse
+    suspend fun getMontoRetenido(page:Int):MontoRetenidoPaginationRespone
     suspend fun resendEmailVerification(id:Long)
 }
 

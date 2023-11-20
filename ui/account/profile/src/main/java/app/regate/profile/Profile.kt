@@ -236,7 +236,7 @@ internal fun Profile(
                     .padding(horizontal = 10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically) {
-                Label(text = "Areas de interes", modifier = Modifier.padding(horizontal = 10.dp))
+                Label(text = "Areas de interes", modifier = Modifier.padding(horizontal = 5.dp))
 
                     if(isMyProfile){
                     IconButton(onClick = { navigateToProfileCategories(viewState.profile.id) }) {
@@ -245,7 +245,8 @@ internal fun Profile(
                     }
 
                 }
-                FlowRow(modifier = Modifier.padding(horizontal = 10.dp)) {
+                FlowRow(modifier = Modifier.padding(horizontal = 15.dp),
+                verticalAlignment = Alignment.CenterVertically) {
                     viewState.categories.map{item->
                         AmenityItem(amenity = item)
                         Spacer(modifier = Modifier.width(8.dp))
@@ -254,7 +255,8 @@ internal fun Profile(
                 }
 
                 Spacer(modifier = Modifier.height(5.dp))
-                Label(text = stringResource(id = R.string.establecimientos_where_user_play),modifier = Modifier.padding(horizontal = 10.dp))
+
+                Label(text = stringResource(id = R.string.establecimientos_where_user_play),modifier = Modifier.padding(horizontal = 15.dp))
 
                 LazyRow(contentPadding = PaddingValues(horizontal = 10.dp), modifier =Modifier.height(130.dp)) {
                     items(
@@ -266,7 +268,7 @@ internal fun Profile(
                             photo = item.photo,
                             onClick = navigateToEstablecimiento,
                             modifier = Modifier
-                                .height(125.dp)
+                                .height(115 .dp)
                                 .width(185.dp)
                                 .padding(5.dp)
                         )
@@ -275,7 +277,7 @@ internal fun Profile(
 
                 Spacer(modifier = Modifier.height(5.dp))
 
-                Label(text = "Grupos",modifier = Modifier.padding(horizontal = 10.dp))
+                Label(text = "Grupos",modifier = Modifier.padding(horizontal = 15.dp))
 
                 LazyRow(contentPadding = PaddingValues(horizontal = 10.dp), modifier =Modifier.height(130.dp)) {
                     items(

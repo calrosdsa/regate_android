@@ -13,6 +13,7 @@ import app.regate.data.dto.account.auth.SignUpRequest
 import app.regate.data.dto.account.auth.SocialRequest
 import app.regate.data.dto.account.billing.ConsumePaginationResponse
 import app.regate.data.dto.account.billing.DepositPaginationResponse
+import app.regate.data.dto.account.billing.MontoRetenidoPaginationRespone
 import app.regate.data.mappers.DtoToUser
 import app.regate.inject.ApplicationScope
 import app.regate.models.user.Profile
@@ -157,5 +158,8 @@ class AccountRepository(
     }
     suspend fun getConsumePagination(page:Int):ConsumePaginationResponse{
        return accountDataSourceImpl.getConsume(page)
+    }
+    suspend fun getMontoRetenidoPagination(page:Int):MontoRetenidoPaginationRespone{
+        return accountDataSourceImpl.getMontoRetenido(page)
     }
 }

@@ -12,6 +12,7 @@ import app.regate.data.dto.account.auth.SignUpRequest
 import app.regate.data.dto.account.auth.SocialRequest
 import app.regate.data.dto.account.billing.ConsumePaginationResponse
 import app.regate.data.dto.account.billing.DepositPaginationResponse
+import app.regate.data.dto.account.billing.MontoRetenidoPaginationRespone
 import app.regate.data.mappers.DtoToUser
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -114,6 +115,13 @@ class AccountDataSourceImpl(
             header("Authorization","Bearer $token")
         }.body()
     }
+    override suspend fun getMontoRetenido(page:Int):MontoRetenidoPaginationRespone {
+        val token = authStore.get()?.accessToken
+        return client.get("/v1/account/billing/monto-retenido/?page=${page}"){
+            header("Authorization","Bearer $token")
+        }.body()
+    }
+
 
     override suspend fun resendEmailVerification(id:Long) {
         client.get("/v1/account/send-again-email-verfication/${id}/")

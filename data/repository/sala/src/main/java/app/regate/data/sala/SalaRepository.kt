@@ -62,14 +62,13 @@ class SalaRepository(
               val res = salaDataSourceImpl.createSala(d)
              val instalacion = instalacionDao.getInstalacion(d.instalacion_id)
              if( instalacion != null){
-             val chat = Chat(
-                 parent_id = res.id,
-                 type_chat = TypeChat.TYPE_CHAT_SALA.ordinal,
-                 id = res.chat_id,
-                 name = instalacion.name,
-                 photo = instalacion.portada
-             )
-                 chatDao.upsert(chat)
+                 chatDao.upsert(Chat(
+                     parent_id = res.id,
+                     type_chat = TypeChat.TYPE_CHAT_SALA.ordinal,
+                     id = res.chat_id,
+                     name = d.titulo,
+                     photo = instalacion.portada
+                 ))
              }
          }catch (e:Exception){
              throw e
