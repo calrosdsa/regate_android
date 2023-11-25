@@ -5,13 +5,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import app.regate.common.resources.R
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Divider
@@ -29,11 +33,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.component.text.DateTextWithIcon
 import app.regate.common.composes.ui.BottomBar
+import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
+import app.regate.constant.Route
+import app.regate.constant.id
 import app.regate.models.Notification
 import app.regate.models.TypeEntity
 import kotlinx.datetime.Instant
@@ -44,6 +52,7 @@ typealias Notifications= @Composable (
     navigateToSala:(Long)->Unit,
     navigateToAccount:()->Unit,
     navigateToNoticationSetting:()->Unit,
+    navController:NavController
         ) -> Unit
 
 @Inject
@@ -53,12 +62,14 @@ fun Notifications(
     @Assisted navigateToSala: (Long) -> Unit,
     @Assisted navigateToAccount:()->Unit,
     @Assisted navigateToNoticationSetting: () -> Unit,
+    @Assisted navController:NavController,
 ){
     Notifications(
         viewModel = viewModel(factory = viewModelFactory),
         navigateToSala = navigateToSala,
         navigateToAccount = navigateToAccount,
-        navigateToNoticationSetting = navigateToNoticationSetting
+        navigateToNoticationSetting = navigateToNoticationSetting,
+        navController = navController
     )
 }
 
@@ -67,7 +78,8 @@ internal fun Notifications(
   viewModel: NotificationViewModel,
   navigateToSala: (Long) -> Unit,
   navigateToAccount: () -> Unit,
-  navigateToNoticationSetting: () -> Unit
+  navigateToNoticationSetting: () -> Unit,
+  navController:NavController
 ){
     val state by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -76,7 +88,8 @@ internal fun Notifications(
         navigateToSala = navigateToSala,
         formatRelativeTime = formatter::formatShortRelativeTime,
         navigateToAccount = navigateToAccount,
-        navigateToNoticationSetting = navigateToNoticationSetting
+        navigateToNoticationSetting = navigateToNoticationSetting,
+        navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)}
     )
 }
 
@@ -88,7 +101,7 @@ internal fun Notifications(
     formatRelativeTime:(Instant)->String,
     navigateToAccount: () -> Unit,
     navigateToNoticationSetting: () -> Unit,
-
+    navigateToEstablecimiento:(Long) -> Unit
 ){
     Scaffold(
        topBar = { TopAppBar(
@@ -117,6 +130,7 @@ internal fun Notifications(
                         TypeEntity.NONE -> item.typeEntity?.let { navigateToAccount() }
                         TypeEntity.SALA -> item.entityId?.let { navigateToSala(it) }
                         TypeEntity.BILLING -> item.entityId?.let { navigateToAccount() }
+                        TypeEntity.ESTABLECIMIENTO -> item.entityId?.let{ navigateToEstablecimiento(it)}
                         else -> {}
                     }
                 })
@@ -141,7 +155,11 @@ internal fun NotificationItem(
         .padding(top = 5.dp, bottom = 5.dp)
         .height(IntrinsicSize.Min)
         .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-
+        PosterCardImage(model = item.image,
+        modifier = Modifier.size(50.dp),
+            shape = CircleShape
+        )
+        Spacer(modifier = Modifier.width(10.dp))
         Column() {
             if(item.title?.isNotBlank() == true){
             Text(text = item.title!!, style = MaterialTheme.typography.labelLarge)

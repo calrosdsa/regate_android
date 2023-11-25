@@ -18,8 +18,9 @@ data class NotificationDto(
     val title:String? = null,
     val content:String = "",
     val entity_id:Long?= null,
-    val type_entity: Int? = null,
+    val type_entity: Int = TypeEntity.NONE.ordinal,
     val read:Boolean = false,
+    val image:String? = null,
     val profile_id:Int = 0,
     val created_at: Instant = Clock.System.now()
 )

@@ -65,6 +65,8 @@ fun NavGraphBuilder.AddMainNav (
                 composeScreens.notifications(
                     navigateToSala = { navController.navigate(Route.SALA id it) },
                     navigateToAccount = { navController.navigate(Route.BILLING) },
+                    navigateToNoticationSetting = {navController.navigate(Route.SETTING)},
+                    navController = navController
                 )
             },
             chats = {

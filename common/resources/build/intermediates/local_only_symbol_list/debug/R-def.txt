@@ -24,6 +24,7 @@ drawable icon_mac
 drawable image
 drawable logo_app
 drawable map_background
+drawable notification_bell
 drawable notification_image
 drawable red_marker
 drawable sample

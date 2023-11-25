@@ -18,7 +18,9 @@ import app.regate.data.dto.notifications.MessagePayload
 import app.regate.data.dto.notifications.SalaConflictPayload
 import app.regate.data.dto.notifications.SalaPayload
 import app.regate.data.dto.notifications.TypeNotification
+import app.regate.data.dto.system.NotificationDto
 import app.regate.notifications.HandleNotificationAccount
+import app.regate.notifications.HandleNotificationEvent
 import app.regate.notifications.HandleNotificationGrupo
 import app.regate.notifications.HandleNotificationSala
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -38,6 +40,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val salaHandler = HandleNotificationSala()
     private val accountHandler = HandleNotificationAccount()
     private val grupoHandler = HandleNotificationGrupo()
+    private val notificationEvent = HandleNotificationEvent()
 //    val component:DbComponent = DbComponent::class.create(this)
 
     //    @RequiresApi(Build.VERSION_CODES.P)
@@ -111,6 +114,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 //                    scope.launch {
                         accountHandler.sendNotificationBilling(applicationContext,payload)
 //                    }
+                }catch (e:Exception){
+                    Log.d(TAG,e.localizedMessage?:"")
+                }
+            }
+
+            if(TypeNotification.NOTIFICATION_EVENT.ordinal == data["type"]?.toInt()){
+                try{
+                    val payload = Json.decodeFromString<NotificationDto>(data["payload"].toString())
+                    scope.launch {
+                    notificationEvent.sendNotificationEvent(applicationContext,payload)
+                    }
                 }catch (e:Exception){
                     Log.d(TAG,e.localizedMessage?:"")
                 }

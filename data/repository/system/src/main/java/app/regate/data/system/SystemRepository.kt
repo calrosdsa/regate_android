@@ -5,6 +5,7 @@ import app.regate.data.daos.UserDao
 import app.regate.data.dto.system.NotificationCount
 import app.regate.data.dto.system.NotificationDto
 import app.regate.data.dto.system.ReportData
+import app.regate.data.mappers.toNotification
 import app.regate.inject.ApplicationScope
 import app.regate.models.Notification
 import app.regate.models.TypeEntity
@@ -21,15 +22,7 @@ class SystemRepository(
 ){
     suspend fun getNotifications(){
         val res = systemDataSourceImpl.getNotifications().map {
-            Notification(
-                id = it.id,
-                title = it.title,
-                content = it.content,
-                created_at = it.created_at,
-                typeEntity = it.type_entity?.let { it1 -> TypeEntity.fromInt(it1) },
-                entityId = it.entity_id,
-                read = false
-            )
+            it.toNotification()
         }
         notificationDao.upsertAll(res)
     }
@@ -37,15 +30,7 @@ class SystemRepository(
         withContext(dispatchers.computation){
             try{
                 d.let {
-                   notificationDao.upsert(Notification(
-                        id = it.id,
-                        title = it.title,
-                        content = it.content,
-                        created_at = it.created_at,
-                        typeEntity = it.type_entity?.let { it1 -> TypeEntity.fromInt(it1) },
-                        entityId = it.entity_id,
-                        read = false
-                    ))
+                   notificationDao.upsert(it.toNotification())
                 }
             }catch (e:Exception){
                 throw  e

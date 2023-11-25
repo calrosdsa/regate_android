@@ -11,14 +11,15 @@ import coil.transform.CircleCropTransformation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.ensureActive
 
 @SuppressLint("SuspiciousIndentation")
-suspend fun getBitmap (url:String,context:Context): Bitmap {
+suspend fun getBitmap (url:String?,context:Context,
+default:String = "https://cdn-icons-png.flaticon.com/128/847/847969.png"): Bitmap {
     val bitmap = CoroutineScope(Dispatchers.IO).async {
-
         val loader = ImageLoader(context)
         val request = ImageRequest.Builder(context)
-            .data(url.ifBlank { "https://cdn-icons-png.flaticon.com/128/847/847969.png" })
+            .data(url?.ifBlank { default })
             .allowHardware(false) // Disable hardware bitmaps.
             .transformations(CircleCropTransformation())
             .build()

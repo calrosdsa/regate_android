@@ -22,6 +22,7 @@ int drawable icon_mac 0x0
 int drawable image 0x0
 int drawable logo_app 0x0
 int drawable map_background 0x0
+int drawable notification_bell 0x0
 int drawable notification_image 0x0
 int drawable red_marker 0x0
 int drawable sample 0x0

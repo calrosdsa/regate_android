@@ -18,5 +18,6 @@ data class Notification(
     val entityId:Long?= null,
     val typeEntity:TypeEntity? = null,
     val read:Boolean = false,
+    val image:String? = null,
     val created_at:Instant = Clock.System.now()
 ):AppEntity

@@ -33,7 +33,10 @@ enum class TypeEntity(val value: Int) {
     SALA(1),
     GRUPO(2),
     ACCOUNT(3),
-    BILLING(4);
+    BILLING(4),
+    RESERVA(5),
+    ESTABLECIMIENTO(6);
+
     companion object {
         fun fromInt(value: Int) =TypeEntity.values().first { it.value == value }
     }

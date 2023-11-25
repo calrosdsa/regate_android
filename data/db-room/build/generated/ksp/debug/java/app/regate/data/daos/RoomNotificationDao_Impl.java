@@ -56,7 +56,7 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT OR IGNORE INTO `notification` (`id`,`title`,`content`,`entityId`,`typeEntity`,`read`,`created_at`) VALUES (nullif(?, 0),?,?,?,?,?,?)";
+        return "INSERT OR IGNORE INTO `notification` (`id`,`title`,`content`,`entityId`,`typeEntity`,`read`,`image`,`created_at`) VALUES (nullif(?, 0),?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -87,11 +87,16 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
         }
         final int _tmp_1 = entity.getRead() ? 1 : 0;
         statement.bindLong(6, _tmp_1);
-        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
-        if (_tmp_2 == null) {
+        if (entity.getImage() == null) {
           statement.bindNull(7);
         } else {
-          statement.bindString(7, _tmp_2);
+          statement.bindString(7, entity.getImage());
+        }
+        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp_2 == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindString(8, _tmp_2);
         }
       }
     };
@@ -112,7 +117,7 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `notification` SET `id` = ?,`title` = ?,`content` = ?,`entityId` = ?,`typeEntity` = ?,`read` = ?,`created_at` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `notification` SET `id` = ?,`title` = ?,`content` = ?,`entityId` = ?,`typeEntity` = ?,`read` = ?,`image` = ?,`created_at` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -143,13 +148,18 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
         }
         final int _tmp_1 = entity.getRead() ? 1 : 0;
         statement.bindLong(6, _tmp_1);
-        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
-        if (_tmp_2 == null) {
+        if (entity.getImage() == null) {
           statement.bindNull(7);
         } else {
-          statement.bindString(7, _tmp_2);
+          statement.bindString(7, entity.getImage());
         }
-        statement.bindLong(8, entity.getId());
+        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp_2 == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindString(8, _tmp_2);
+        }
+        statement.bindLong(9, entity.getId());
       }
     };
     this.__preparedStmtOfUpdateUnreadNotifications = new SharedSQLiteStatement(__db) {
@@ -172,7 +182,7 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `notification` (`id`,`title`,`content`,`entityId`,`typeEntity`,`read`,`created_at`) VALUES (nullif(?, 0),?,?,?,?,?,?)";
+        return "INSERT INTO `notification` (`id`,`title`,`content`,`entityId`,`typeEntity`,`read`,`image`,`created_at`) VALUES (nullif(?, 0),?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -203,18 +213,23 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
         }
         final int _tmp_1 = entity.getRead() ? 1 : 0;
         statement.bindLong(6, _tmp_1);
-        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
-        if (_tmp_2 == null) {
+        if (entity.getImage() == null) {
           statement.bindNull(7);
         } else {
-          statement.bindString(7, _tmp_2);
+          statement.bindString(7, entity.getImage());
+        }
+        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp_2 == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindString(8, _tmp_2);
         }
       }
     }, new EntityDeletionOrUpdateAdapter<Notification>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `notification` SET `id` = ?,`title` = ?,`content` = ?,`entityId` = ?,`typeEntity` = ?,`read` = ?,`created_at` = ? WHERE `id` = ?";
+        return "UPDATE `notification` SET `id` = ?,`title` = ?,`content` = ?,`entityId` = ?,`typeEntity` = ?,`read` = ?,`image` = ?,`created_at` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -245,13 +260,18 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
         }
         final int _tmp_1 = entity.getRead() ? 1 : 0;
         statement.bindLong(6, _tmp_1);
-        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
-        if (_tmp_2 == null) {
+        if (entity.getImage() == null) {
           statement.bindNull(7);
         } else {
-          statement.bindString(7, _tmp_2);
+          statement.bindString(7, entity.getImage());
         }
-        statement.bindLong(8, entity.getId());
+        final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
+        if (_tmp_2 == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindString(8, _tmp_2);
+        }
+        statement.bindLong(9, entity.getId());
       }
     });
   }
@@ -446,6 +466,7 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
             final int _cursorIndexOfEntityId = CursorUtil.getColumnIndexOrThrow(_cursor, "entityId");
             final int _cursorIndexOfTypeEntity = CursorUtil.getColumnIndexOrThrow(_cursor, "typeEntity");
             final int _cursorIndexOfRead = CursorUtil.getColumnIndexOrThrow(_cursor, "read");
+            final int _cursorIndexOfImage = CursorUtil.getColumnIndexOrThrow(_cursor, "image");
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
             final List<Notification> _result = new ArrayList<Notification>(_cursor.getCount());
             while (_cursor.moveToNext()) {
@@ -478,6 +499,12 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
               final int _tmp_1;
               _tmp_1 = _cursor.getInt(_cursorIndexOfRead);
               _tmpRead = _tmp_1 != 0;
+              final String _tmpImage;
+              if (_cursor.isNull(_cursorIndexOfImage)) {
+                _tmpImage = null;
+              } else {
+                _tmpImage = _cursor.getString(_cursorIndexOfImage);
+              }
               final Instant _tmpCreated_at;
               final String _tmp_2;
               if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
@@ -491,7 +518,7 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
               } else {
                 _tmpCreated_at = _tmp_3;
               }
-              _item = new Notification(_tmpId,_tmpTitle,_tmpContent,_tmpEntityId,_tmpTypeEntity,_tmpRead,_tmpCreated_at);
+              _item = new Notification(_tmpId,_tmpTitle,_tmpContent,_tmpEntityId,_tmpTypeEntity,_tmpRead,_tmpImage,_tmpCreated_at);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
