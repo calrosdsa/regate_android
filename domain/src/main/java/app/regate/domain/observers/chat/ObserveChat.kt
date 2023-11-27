@@ -18,6 +18,6 @@ class ObserveChat(
     }
 
     data class Params(
-        val id:Long
+        val id:Long,
     )
 }

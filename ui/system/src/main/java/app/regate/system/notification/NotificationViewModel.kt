@@ -19,7 +19,6 @@ import me.tatarka.inject.annotations.Inject
 class NotificationViewModel(
  observeNotifications: ObserveNotifications,
    private val systemRepository: SystemRepository,
-   private val preferences: AppPreferences,
  ) : ViewModel() {
  // val loadingCounter = ObservableLoadingCounter()
 // val uiMessageManager = UiMessageManager()
@@ -39,16 +38,12 @@ class NotificationViewModel(
  init {
   observeNotifications(Unit)
 //  observeUnreadNotificationCount(Unit)
-  updateUnreadNotifications()
 
 
 //  getData()
-  updatePreferences()
  }
 
- private fun updatePreferences() {
-  preferences.startRoute = MainPages.Notifications
- }
+
 
 // fun getData(){
 //  viewModelScope.launch {
@@ -60,7 +55,13 @@ class NotificationViewModel(
 //  }
 // }
 
- private fun updateUnreadNotifications() {
+ fun deleteNotification(id:Long){
+  viewModelScope.launch {
+   systemRepository.deleteNotification(id)
+  }
+ }
+
+  fun updateUnreadNotifications() {
   viewModelScope.launch {
    try {
     systemRepository.updateUnreadNotifications()

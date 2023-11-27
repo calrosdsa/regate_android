@@ -31,7 +31,6 @@ class HomeViewModel(
     private val establecimientoRepository: EstablecimientoRepository,
     private val converter:Converter,
     private val grupoRepository: GrupoRepository,
-    private val preferences: AppPreferences,
 //    private val salaRepository: SalaRepository,
 //    authStore: AuthStore,
     observeGrupo:ObserveGrupos,
@@ -72,12 +71,9 @@ class HomeViewModel(
         }
         }
 
-        updatePreferences()
     }
 
-    private fun updatePreferences(){
-        preferences.startRoute = MainPages.Home
-    }
+
 //    fun getReccomendedEstablecimientos(){
 //    }
     fun getEstablecimientos(addressDevice: AddressDevice?){

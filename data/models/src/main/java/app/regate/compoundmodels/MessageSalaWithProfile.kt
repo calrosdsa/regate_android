@@ -2,17 +2,17 @@ package app.regate.compoundmodels
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import app.regate.models.MessageSala
+import app.regate.models.chat.MessageSala
 import app.regate.models.user.Profile
 import java.util.Objects
 
 class MessageSalaWithProfile {
     @Embedded
-    lateinit var message:MessageSala
+    lateinit var message: MessageSala
     @Relation(parentColumn = "profile_id", entityColumn = "id")
     var profile: Profile? = null
     @Relation(parentColumn = "reply_to", entityColumn = "id")
-    var reply:MessageSala? = null
+    var reply: MessageSala? = null
 
 //    @delegate:Ignore
 //    val indexItem by lazy { this.hashCode() }

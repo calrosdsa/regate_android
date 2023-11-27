@@ -16,6 +16,7 @@ import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoPendingRequestEstado
 import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
+import app.regate.data.dto.empresa.grupo.GrupoResponse
 import app.regate.data.dto.empresa.grupo.GrupoVisibility
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
@@ -176,7 +177,7 @@ class GrupoRepository(
             //TODO()
         }
     }
-    suspend fun getGrupoDetail(id:Long):List<SalaDto>{
+    suspend fun getGrupoDetail(id:Long):GrupoResponse{
         return  grupoDataSourceImpl.getGrupoDetail(id).also { result->
             userGrupoDao.deleteUsersGroup(id)
             grupoDao.upsert(dtoToGrupo.map(result.grupo))
@@ -184,7 +185,7 @@ class GrupoRepository(
             val usersGrupo = result.profiles.map { dtoToUserGrupo.map(it,result.grupo.id) }
             profileDao.upsertAll(profiles)
             userGrupoDao.upsertAll(usersGrupo)
-        }.salas
+        }
     }
     suspend fun getGrupo(id:Long):GrupoDto{
         return grupoDataSourceImpl.getGrupo(id)

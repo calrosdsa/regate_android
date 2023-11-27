@@ -35,7 +35,6 @@ class AccountViewModel(
     private val authRepository: AuthRepository,
     private val accountRepository: AccountRepository,
     private val appPreferences: AppPreferences,
-    private val systemRepository: SystemRepository,
     private val coinRepository: CoinRepository,
     observeAuthState: ObserveAuthState,
     observeUserBalance: ObserveUserBalance,
@@ -86,28 +85,17 @@ class AccountViewModel(
             }
         }
         }
-        viewModelScope.launch {
-        observeAuthState.flow.collectLatest{authState:AppAuthState->
-            if(authState == AppAuthState.LOGGED_IN){
-                getUnreadNotifications()
-            }
-        }
-        }
+//        viewModelScope.launch {
+//        observeAuthState.flow.collectLatest{authState:AppAuthState->
+//            if(authState == AppAuthState.LOGGED_IN){
+//                getUnreadNotifications()
+//            }
+//        }
+//        }
         getUserBalance()
-        updatePreferences()
     }
-    private fun updatePreferences(){
-        preferences.startRoute = MainPages.Account
-    }
-    private fun getUnreadNotifications(){
-        viewModelScope.launch {
-            try{
-                systemRepository.getNotifications()
-            }catch (e:Exception){
-                Log.d("DEBUG_APP_E",e.localizedMessage?:"")
-            }
-        }
-    }
+
+
 //    fun getNotificationCount(){
 //        viewModelScope.launch {
 //        try{

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -32,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.component.dialog.DialogConfirmation
@@ -171,7 +173,11 @@ internal fun CreateReview(
 //                placeholder = "Descripcion de la creacion del grupo",
                 label = stringResource(id = R.string.review),
                 modifier = Modifier.heightIn(min=160.dp),
-                maxLines =  Int.MAX_VALUE
+                maxLines =  Int.MAX_VALUE,
+                keyboardActions = KeyboardActions(
+                    onDone = { showConfirmationDialog = true }
+                ),
+                imeAction = ImeAction.Done
 //                maxCharacters = 255,
 //                currentCharacters = review.length
             ){

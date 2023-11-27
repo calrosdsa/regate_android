@@ -3,7 +3,7 @@ package app.regate.data.daos
 import androidx.paging.PagingSource
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.MessageWithChat
-import app.regate.models.Message
+import app.regate.models.chat.Message
 import kotlinx.coroutines.flow.Flow
 
 interface MessageProfileDao:EntityDao<Message> {
@@ -14,7 +14,7 @@ interface MessageProfileDao:EntityDao<Message> {
     suspend fun updateUnreadMessages(id:Long)
     suspend fun updateSendedMessage(id:Long,newId: Long)
     suspend fun getUnSendedMessage():List<MessageWithChat>
-    suspend fun getLastMessageSended(chatId:Long):Message?
+    suspend fun getLastMessageSended(chatId:Long): Message?
     suspend fun updatedPrimaryKey(id:Long,newId:Long)
     suspend fun deleteMessageById(id: Long)
     suspend fun updateMessageToDeleted(id:Long)

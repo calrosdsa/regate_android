@@ -56,6 +56,7 @@
     <string name="decline">Decline</string>
     <string name="delete_chat">Delete chat</string>
     <string name="delete_message">Delete message</string>
+    <string name="delete_notification">Delete notification</string>
     <string name="delete_reservation">Delete reservation</string>
     <string name="deposits">Deposits</string>
     <string name="description">Description</string>
@@ -119,6 +120,7 @@
     <string name="near_me">Near me</string>
     <string name="new_offers">New Offers Here!</string>
     <string name="new_room_created">A new room has been created.</string>
+    <string name="no_new_notifications">There are no new notifications</string>
     <string name="no_result_found">No results found. Try changing the date or time.</string>
     <string name="no_results_for_saerch">We couldn\'t find any results that match your search</string>
     <string name="notification_billing">Deposit and payment notifications</string>

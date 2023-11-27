@@ -12,6 +12,7 @@ data class ReservaDto(
     val instalacion_name: String = "",
     val instalacion_photo:String? = null,
     val paid: Double =0.0,
+    val estado:Int = 0,
     val total_price: Double = 0.0,
     val start_date: Instant,
     val end_date:Instant,
@@ -19,3 +20,8 @@ data class ReservaDto(
     val sala_id:Long? = null
 )
 
+enum class ReservaEstado{
+    VALID,
+    EXPIRED,
+    CANCEL,
+}

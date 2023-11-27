@@ -24,7 +24,6 @@ import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import app.regate.data.dto.empresa.grupo.GrupoMessageData
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
-import app.regate.data.grupo.GrupoRepository
 import app.regate.data.instalacion.CupoRepository
 import app.regate.data.labels.LabelRepository
 import app.regate.domain.observers.ObserveAuthState
@@ -34,7 +33,7 @@ import app.regate.domain.observers.chat.ObserveChat
 import app.regate.domain.observers.chat.ObserveUsersForChat
 import app.regate.extensions.combine
 import app.regate.models.Emoji
-import app.regate.models.Message
+import app.regate.models.chat.Message
 import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
 import app.regate.util.getLongUuid
@@ -224,7 +223,7 @@ class ChatGrupoViewModel(
 //            prefetchDistance = 1
         )
     }
-    private suspend fun outputMessage(data:Message,isShare:Boolean){
+    private suspend fun outputMessage(data: Message, isShare:Boolean){
             if (data.content == "" && data.data == null) return
             try{
                 state.value.user?.let {

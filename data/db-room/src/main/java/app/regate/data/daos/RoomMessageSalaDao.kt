@@ -5,8 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import app.regate.compoundmodels.MessageSalaWithProfile
-import app.regate.models.Message
-import app.regate.models.MessageSala
+import app.regate.models.chat.MessageSala
 
 @Dao
 abstract class RoomMessageSalaDao:MessageSalaDao,RoomEntityDao<MessageSala> {

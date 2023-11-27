@@ -38,6 +38,7 @@ import androidx.compose.ui.zIndex
 import app.regate.common.composes.LocalAppDateFormatter
 import app.regate.common.composes.component.text.DateTextWithIcon
 import app.regate.common.composes.ui.PosterCardImage
+import app.regate.common.composes.ui.PosterCardImageWithoutClick
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import kotlinx.datetime.Instant
@@ -77,7 +78,7 @@ internal fun Reservas(
     val formatter = LocalAppDateFormatter.current
     Reservas(
         viewState = viewState,
-        formatterDate = formatter::formatMediumDateTime,
+//        formatterDate = formatter::formatMediumDateTime,
         formatterDateReserva = {start,end->
             val date = formatter.formatShortDate(start)
             "$date de ${formatter.formatShortTime(start)} a ${formatter.formatShortTime(end)}"
@@ -94,7 +95,7 @@ internal fun Reservas(
 @Composable
 internal fun Reservas(
     viewState: ReservasState,
-    formatterDate:(Instant)->String,
+//    formatterDate:(Instant)->String,
     formatterDateReserva:(start:Instant,end:Instant)->String,
     selectReserva:(Long)->Unit,
     cancelSelected:()->Unit,
@@ -147,7 +148,7 @@ internal fun Reservas(
                             }
                         }
                         .padding(10.dp),
-                    formatterDate = formatterDate,
+//                    formatterDate = formatterDate,
                     isSelected = viewState.selectedReservas.contains(reserva.id),
                     formatterDateReserva = formatterDateReserva
                 )
@@ -160,7 +161,7 @@ internal fun Reservas(
 @Composable
 fun ReservaItem(
     item: Reserva,
-    formatterDate: (Instant) -> String,
+//    formatterDate: (Instant) -> String,
     formatterDateReserva:(Instant,Instant)->String,
     isSelected:Boolean,
     modifier:Modifier =Modifier
@@ -187,10 +188,9 @@ fun ReservaItem(
                     )
                 }
             }
-        PosterCardImage(
+        PosterCardImageWithoutClick(
             model = item.instalacion_photo,
             modifier = Modifier.fillMaxSize(),
-            enabled = false
         )
         }
 
@@ -203,7 +203,7 @@ fun ReservaItem(
             style = MaterialTheme.typography.labelLarge
         )
         Text(text = formatterDateReserva(item.start_date,item.end_date),style = MaterialTheme.typography.labelMedium)
-        DateTextWithIcon(date =  formatterDate(item.created_at))
+//        DateTextWithIcon(date =  formatterDate(item.created_at))
     }
     }
 }

@@ -18,6 +18,7 @@ data class Reserva(
     val total_price: Double = 0.0,
     val start_date: Instant,
     val end_date: Instant,
+    val estado:Int = 0,
     val instalacion_photo:String? = null,
     val user_id: Long,
     var created_at:Instant

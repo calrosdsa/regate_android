@@ -29,7 +29,6 @@ class ChatsViewModel(
     private val chatRepository: ChatRepository,
     observeAuthState: ObserveAuthState,
     pagingInteractor: ObservePagerChat,
-    private val preferences: AppPreferences
 //    private val updateFilterGrupos: UpdateFilterGrupos
 ):ViewModel() {
     private val loadingCounter = ObservableLoadingCounter()
@@ -60,10 +59,6 @@ class ChatsViewModel(
         observeAuthState(Unit)
         getUnreadMessages()
 
-        updatePreferences()
-    }
-    private fun updatePreferences(){
-        preferences.startRoute = MainPages.Chat
     }
 
 

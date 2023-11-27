@@ -13,6 +13,8 @@ int drawable coin 0x0
 int drawable default_image 0x0
 int drawable delete_icon 0x0
 int drawable doble_check 0x0
+int drawable empty_inbox 0x0
+int drawable empty_room 0x0
 int drawable enabled_location 0x0
 int drawable ic_launcher_background 0x0
 int drawable ic_launcher_foreground 0x0
@@ -85,6 +87,7 @@ int string create_shortcut 0x0
 int string decline 0x0
 int string delete_chat 0x0
 int string delete_message 0x0
+int string delete_notification 0x0
 int string delete_reservation 0x0
 int string deposits 0x0
 int string description 0x0
@@ -146,6 +149,7 @@ int string name 0x0
 int string near_me 0x0
 int string new_offers 0x0
 int string new_room_created 0x0
+int string no_new_notifications 0x0
 int string no_result_found 0x0
 int string no_results_for_saerch 0x0
 int string notification_billing 0x0

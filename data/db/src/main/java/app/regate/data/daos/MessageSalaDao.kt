@@ -1,10 +1,8 @@
 package app.regate.data.daos
 
 import androidx.paging.PagingSource
-import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.MessageSalaWithProfile
-import app.regate.models.Message
-import app.regate.models.MessageSala
+import app.regate.models.chat.MessageSala
 
 interface MessageSalaDao:EntityDao<MessageSala> {
     fun observeMessages(id:Long): PagingSource<Int, MessageSalaWithProfile>

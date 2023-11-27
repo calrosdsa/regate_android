@@ -25,6 +25,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,9 +35,11 @@ import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.component.images.AsyncImage
 import app.regate.common.composes.component.images.CardImage
+import app.regate.common.resources.R
 import app.regate.data.dto.empresa.establecimiento.EstablecimientoDto
 
 @Composable
@@ -79,16 +82,58 @@ fun  PosterCardImage(
         enabled = enabled,
         colorFilter = if(darkerImage) ColorFilter.colorMatrix(ColorMatrix().apply{setToScale(0.8f,0.8f,0.8f,1f)}) else null,
     )
-//    Card(modifier = modifier,
-//    shape = shape) {
-//        AsyncImage(
-//            model = model,
-//            requestBuilder = { crossfade(true) },
-//            contentDescription = model,
-//            modifier = Modifier.fillMaxSize(),
-//            contentScale = contentScale,
+}
+
+@Composable
+fun  PosterCardImageWithoutClick(
+    model:String?,
+    modifier: Modifier = Modifier,
+    shape:Shape = CardDefaults.shape,
+    isUser:Boolean = false,
+    contentDescription:String? = null,
+    contentScale:ContentScale = ContentScale.Crop,
+) {
+
+    if(!model.isNullOrBlank()){
+        Surface(
+            modifier = modifier,
+            shape = shape) {
+            AsyncImage(
+                model = model,
+                contentDescription = contentDescription,
+                requestBuilder = { crossfade(true) },
+                modifier = Modifier.fillMaxSize(),
+                contentScale = contentScale,
+            )
+        }
+    }else{
+//        Image(painter = painterResource(id = R.drawable.user_profile),
+//            contentDescription = contentDescription,
+//            modifier = modifier,
+//            contentScale = ContentScale.Crop
 //        )
-//    }
+        if(isUser){
+            Card(modifier = modifier,
+                shape = shape) {
+                Image(
+                    painter = painterResource(id = R.drawable.user_profile),
+                    contentDescription = contentDescription,
+                    modifier =Modifier.fillMaxSize(),
+                )
+            }
+        }else{
+            Card(
+                modifier = modifier,
+                shape = shape){
+                Image(
+                    painter = painterResource(id = R.drawable.default_image),
+                    contentDescription = contentDescription,
+                    modifier =Modifier.fillMaxSize().padding(10.dp),
+                )
+            }
+        }
+
+    }
 }
 
 

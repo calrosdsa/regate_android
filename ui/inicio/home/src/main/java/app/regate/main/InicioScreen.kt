@@ -1,5 +1,6 @@
 package app.regate.main
 
+import android.util.Log
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
@@ -40,6 +41,7 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -110,7 +112,8 @@ internal fun InicioScreen(
         notifications = notifications,
         chats = chats,
         account = account,
-        currentPage = currentPage
+        currentPage = currentPage,
+        updateInitPage = viewModel::updateInitPage
     )
 }
 
@@ -124,11 +127,15 @@ internal fun InicioScreen(
     notifications: @Composable () ->Unit,
     chats: @Composable () ->Unit,
     account: @Composable () ->Unit,
+    updateInitPage:(Int)->Unit,
 //    @Assisted bottomNav: @Composable () ->Unit,
     currentPage: Int,
 ){
     val pagerState = rememberPagerState(initialPage = currentPage)
     val coroutineScope = rememberCoroutineScope()
+    LaunchedEffect(key1 = pagerState.currentPage, block = {
+        updateInitPage(pagerState.currentPage)
+    })
     Scaffold(
         bottomBar = {
             InicioTabLayout(
@@ -179,6 +186,7 @@ private fun InicioTabLayout(
     ) {
         for (item in HomeNavigationItems) {
             Tab(selected = current == item.page,
+                modifier = Modifier.size(55.dp).padding(0.dp),
                 onClick = { navigateToPage(item.page) },
                 selectedContentColor = MaterialTheme.colorScheme.primary,
                 unselectedContentColor = MaterialTheme.colorScheme.primary,

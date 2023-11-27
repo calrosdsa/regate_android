@@ -19,7 +19,7 @@ import androidx.room.util.StringUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.compoundmodels.MessageSalaWithProfile;
 import app.regate.data.db.DateTimeTypeConverters;
-import app.regate.models.MessageSala;
+import app.regate.models.chat.MessageSala;
 import app.regate.models.user.Profile;
 import java.lang.Class;
 import java.lang.Exception;
@@ -352,7 +352,7 @@ public final class RoomMessageSalaDao_Impl extends RoomMessageSalaDao {
         }
         cursor.moveToPosition(-1);
         __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
-        __fetchRelationshipmessageSalaAsappRegateModelsMessageSala(_collectionReply);
+        __fetchRelationshipmessageSalaAsappRegateModelsChatMessageSala(_collectionReply);
         final List<MessageSalaWithProfile> _result = new ArrayList<MessageSalaWithProfile>(cursor.getCount());
         while (cursor.moveToNext()) {
           final MessageSalaWithProfile _item;
@@ -457,7 +457,7 @@ public final class RoomMessageSalaDao_Impl extends RoomMessageSalaDao {
             }
             _cursor.moveToPosition(-1);
             __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
-            __fetchRelationshipmessageSalaAsappRegateModelsMessageSala(_collectionReply);
+            __fetchRelationshipmessageSalaAsappRegateModelsChatMessageSala(_collectionReply);
             final MessageSalaWithProfile _result;
             if (_cursor.moveToFirst()) {
               final MessageSala _tmpMessage;
@@ -565,7 +565,7 @@ public final class RoomMessageSalaDao_Impl extends RoomMessageSalaDao {
         }
         _cursor.moveToPosition(-1);
         __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
-        __fetchRelationshipmessageSalaAsappRegateModelsMessageSala(_collectionReply);
+        __fetchRelationshipmessageSalaAsappRegateModelsChatMessageSala(_collectionReply);
         final List<MessageSalaWithProfile> _result = new ArrayList<MessageSalaWithProfile>(_cursor.getCount());
         while (_cursor.moveToNext()) {
           final MessageSalaWithProfile _item;
@@ -801,14 +801,14 @@ public final class RoomMessageSalaDao_Impl extends RoomMessageSalaDao {
     }
   }
 
-  private void __fetchRelationshipmessageSalaAsappRegateModelsMessageSala(
+  private void __fetchRelationshipmessageSalaAsappRegateModelsChatMessageSala(
       @NonNull final LongSparseArray<MessageSala> _map) {
     if (_map.isEmpty()) {
       return;
     }
     if (_map.size() > RoomDatabase.MAX_BIND_PARAMETER_CNT) {
       RelationUtil.recursiveFetchLongSparseArray(_map, false, (map) -> {
-        __fetchRelationshipmessageSalaAsappRegateModelsMessageSala(map);
+        __fetchRelationshipmessageSalaAsappRegateModelsChatMessageSala(map);
         return Unit.INSTANCE;
       });
       return;

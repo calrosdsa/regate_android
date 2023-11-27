@@ -1,9 +1,7 @@
 package app.regate.data.mappers
 
-import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.salas.MessageSalaDto
-import app.regate.models.Message
-import app.regate.models.MessageSala
+import app.regate.models.chat.MessageSala
 import kotlinx.datetime.Clock
 import me.tatarka.inject.annotations.Inject
 

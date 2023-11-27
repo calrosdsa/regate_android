@@ -243,7 +243,6 @@ internal fun Profile(
                         Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = null)
                     }
                     }
-
                 }
                 FlowRow(modifier = Modifier.padding(horizontal = 15.dp),
                 verticalAlignment = Alignment.CenterVertically) {

@@ -37,7 +37,7 @@ import com.dokar.sheets.PeekHeight
 import com.dokar.sheets.m3.BottomSheet
 
 @Composable
-internal fun ChatSelectDialog (
+internal fun ChatSelectDialog(
     state: BottomSheetState,
     close:()->Unit,
     chat:Chat,

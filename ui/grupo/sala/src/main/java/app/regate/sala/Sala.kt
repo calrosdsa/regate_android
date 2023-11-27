@@ -81,7 +81,6 @@ import me.tatarka.inject.annotations.Inject
 
 typealias Sala = @Composable (
     navigateUp:()->Unit,
-    navigateToChat:(id:Long,title:String)->Unit,
     openAuthBottomSheet:()->Unit,
     navigateToInstalacion:(Long) -> Unit,
     navigateToEstablecimiento:(Long)->Unit,
@@ -95,7 +94,6 @@ typealias Sala = @Composable (
 fun Sala(
     viewModelFactory: (SavedStateHandle) -> SalaViewModel,
     @Assisted navigateUp: () -> Unit,
-    @Assisted navigateToChat: (id: Long,title:String) -> Unit,
     @Assisted openAuthBottomSheet: () -> Unit,
     @Assisted navigateToInstalacion: (Long) -> Unit,
     @Assisted navigateToEstablecimiento: (Long) -> Unit,
@@ -107,7 +105,6 @@ fun Sala(
     Sala(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
-        navigateToChat = navigateToChat,
         openAuthBottomSheet = openAuthBottomSheet,
         navigateToEstablecimiento = navigateToEstablecimiento,
         navigateToInstalacion = navigateToInstalacion,
@@ -115,6 +112,8 @@ fun Sala(
         navigateToSelectGroup = navigateToSelectGroup,
 //        navigateToGroup = { navController.navigate(Route.GRUPO id it) },
         navigateToInfoGrupo = {navController.navigate(Route.INFO_GRUPO id it)},
+        navigateToChat = {id,parentId,type->
+            navController.navigate(Route.CHAT_GRUPO + "?id=$id&parentId=$parentId&typeChat=$type") },
         )
 }
 
@@ -122,13 +121,12 @@ fun Sala(
 internal fun Sala(
     viewModel: SalaViewModel,
     navigateUp: () -> Unit,
-    navigateToChat: (id:Long,title:String) -> Unit,
+    navigateToChat: (id: Long,parentId:Long,typeChat:Int) -> Unit,
     openAuthBottomSheet: () -> Unit,
     navigateToEstablecimiento: (Long) -> Unit,
     navigateToInstalacion: (Long) -> Unit,
     navigateToComplete: (Long) -> Unit,
     navigateToSelectGroup: (String) -> Unit,
-//    navigateToGroup:(Long)->Unit,
     navigateToInfoGrupo:(Long)->Unit
 ){
     val viewState by viewModel.state.collectAsState()
@@ -142,7 +140,9 @@ internal fun Sala(
         navigateUp = navigateUp,
         formatShortTime = formatter::formatShortTime,
         formatDate = formatter::formatShortDate,
-        navigateToChat = navigateToChat,
+        navigateToChat = {
+           viewModel.navigateToChat(it,navigateToChat)
+        },
         openAuthBottomSheet = openAuthBottomSheet,
         openDialogConfirmation = {joinSalaDialog.value = true},
         clearMessage = viewModel::clearMessage,
@@ -175,7 +175,7 @@ internal fun Sala(
     navigateUp: () -> Unit,
     formatShortTime:(time:String,plusMinutes:Long)->String,
     formatDate:(date:String)->String,
-    navigateToChat: (id:Long,title:String) -> Unit,
+    navigateToChat: (id: Long) -> Unit,
     openAuthBottomSheet: () -> Unit,
     openDialogConfirmation:()->Unit,
     refresh:()->Unit,
@@ -240,7 +240,6 @@ internal fun Sala(
                                 viewState.data?.sala?.let {
                                     navigateToChat(
                                         it.id,
-                                        it.titulo
                                     )
                                 }
                             },

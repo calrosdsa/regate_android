@@ -11,6 +11,7 @@ import app.regate.models.Notification
 import app.regate.models.TypeEntity
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Inject
 @ApplicationScope
 @Inject
@@ -24,7 +25,7 @@ class SystemRepository(
         val res = systemDataSourceImpl.getNotifications().map {
             it.toNotification()
         }
-        notificationDao.upsertAll(res)
+        notificationDao.insertAllonConflictIgnore(res)
     }
     suspend fun insertNotification(d:NotificationDto){
         withContext(dispatchers.computation){
@@ -39,6 +40,20 @@ class SystemRepository(
     }
     suspend fun getNotificationsCount():NotificationCount{
         return systemDataSourceImpl.getNotificationCount()
+    }
+    suspend fun deleteLastNotifications(date:Instant){
+        withContext(dispatchers.io){
+            try{
+                notificationDao.deleteLastNotifications(date)
+            }catch (e:Exception){
+                throw e
+            }
+        }
+    }
+    suspend fun deleteNotification(id:Long){
+        withContext(dispatchers.io){
+            notificationDao.deleteNotification(id)
+        }
     }
 
     suspend fun updateUnreadNotifications(){

@@ -3,6 +3,7 @@ package app.regate.data.chat
 import app.regate.compoundmodels.UserProfileGrupoAndSala
 import app.regate.constant.HostMessage
 import app.regate.data.auth.store.AuthStore
+import app.regate.data.dto.chat.ChatDto
 import app.regate.data.dto.chat.DeleteMessageRequest
 import app.regate.data.dto.chat.DeletedMessagesIds
 import app.regate.data.dto.chat.MessagePublishRequest
@@ -75,6 +76,12 @@ class ChatDataSourceImpl(
         return client.get {
             url("$baseUrl/v1/conversation/get-id/1/")
             header("Authorization","Bearer $token")
+        }.body()
+    }
+
+    override suspend fun getChat(id: Long, typeChat: Int): ChatDto {
+        return client.get {
+            url("$baseUrl/v1/chat/$id/$typeChat/")
         }.body()
     }
 

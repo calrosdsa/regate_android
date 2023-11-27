@@ -30,6 +30,10 @@ import app.regate.data.dto.empresa.grupo.MessageSalaPayload
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import app.regate.common.resources.R
+import app.regate.data.chat.ChatParams
+import app.regate.data.chat.ChatRepository
+import app.regate.data.dto.chat.TypeChat
+import app.regate.domain.interactors.UpdateChat
 
 @Inject
 class SalaViewModel(
@@ -38,6 +42,8 @@ class SalaViewModel(
     private val observeInstalacion: ObserveInstalacion,
     observeAuthState: ObserveAuthState,
     observeUser: ObserveUser,
+    private val updateChat: UpdateChat,
+    private val chatRepository: ChatRepository
     ):ViewModel() {
     private val salaId: Long = savedStateHandle["id"]!!
     private val loadingState = ObservableLoadingCounter()
@@ -72,7 +78,16 @@ class SalaViewModel(
             try{
             salaRepository.getSala(salaId).let {result->
                 data.tryEmit(result)
+                updateChat.executeSync(UpdateChat.Params(
+                    params = ChatParams(
+                        parent_id = salaId,
+                        typeChat = TypeChat.TYPE_CHAT_SALA.ordinal,
+                        photo = result.instalacion.portada,
+                        name = result.sala.titulo
+                    )
+                ))
             }
+
             } catch (e:ResponseException){
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
             } catch(e :Exception){
@@ -90,6 +105,8 @@ class SalaViewModel(
                 if (res != null) {
                     uiMessageManager.emitMessage(UiMessage(message = res.message))
                 }
+
+
 //                Log.d("DEBUG_APP_ERROR",res.message)
             }catch(e:ResponseException){
                 loadingState.removeLoader()
@@ -146,6 +163,19 @@ class SalaViewModel(
         }
     }
 
+    fun navigateToChat(id:Long,navigateToChat: (id: Long,parentId:Long,typeChat:Int) -> Unit){
+        viewModelScope.launch {
+            try{
+                val chat = chatRepository.getChatByType(id,TypeChat.TYPE_CHAT_SALA.ordinal)
+                navigateToChat(chat.id,chat.parent_id,TypeChat.TYPE_CHAT_SALA.ordinal)
+            }catch (e:Exception){
+
+                Log.d("DEBUG_APP_",e.localizedMessage?:"")
+            }
+        }
+    }
+
+
     fun refresh(){
         viewModelScope.launch {
             getSala()
@@ -156,4 +186,5 @@ class SalaViewModel(
             uiMessageManager.clearMessage(id)
         }
     }
+
 }

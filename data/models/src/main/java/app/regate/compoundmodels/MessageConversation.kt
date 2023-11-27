@@ -2,14 +2,13 @@ package app.regate.compoundmodels
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import app.regate.models.Message
-import app.regate.models.MessageInbox
+import app.regate.models.chat.MessageInbox
 import java.util.Objects
 
 
 class MessageConversation {
     @Embedded
-    lateinit var message:MessageInbox
+    lateinit var message: MessageInbox
     @Relation(parentColumn = "reply_to", entityColumn = "id")
     var reply: MessageInbox? = null
 

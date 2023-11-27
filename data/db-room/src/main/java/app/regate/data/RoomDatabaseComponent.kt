@@ -61,6 +61,8 @@ interface RoomDatabaseComponent {
 //    @Provides
 //    fun provideSalaEntityDao(db: AppDatabase):SalaEntityDao = db.salaEntityDao()
     @Provides
+    fun provideLastUpdateEntityDao(db: AppDatabase) = db.lastUpdatedEntityDao()
+    @Provides
     fun provideChatDao(db: AppDatabase):ChatDao = db.chatDao()
     @Provides
     fun provideEmojiDao(db: AppDatabase):EmojiDao = db.emojiDao()

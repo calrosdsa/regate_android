@@ -27,6 +27,8 @@ import app.regate.data.daos.RoomInstalacionDao;
 import app.regate.data.daos.RoomInstalacionDao_Impl;
 import app.regate.data.daos.RoomLabelDao;
 import app.regate.data.daos.RoomLabelDao_Impl;
+import app.regate.data.daos.RoomLastUpdatedEntityDao;
+import app.regate.data.daos.RoomLastUpdatedEntityDao_Impl;
 import app.regate.data.daos.RoomMessageInboxDao;
 import app.regate.data.daos.RoomMessageInboxDao_Impl;
 import app.regate.data.daos.RoomMessageProfileDao;
@@ -101,6 +103,8 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
 
   private volatile RoomChatDao _roomChatDao;
 
+  private volatile RoomLastUpdatedEntityDao _roomLastUpdatedEntityDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
@@ -124,7 +128,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `my_groups` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `request_estado` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_establecimiento` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `establecimiento_id` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `message_inbox` (`id` INTEGER NOT NULL, `conversation_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `sender_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, PRIMARY KEY(`id`))");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `reservas` (`id` INTEGER NOT NULL, `instalacion_id` INTEGER NOT NULL, `description` TEXT, `instalacion_name` TEXT NOT NULL, `establecimiento_id` INTEGER NOT NULL, `pagado` REAL NOT NULL, `total_price` REAL NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `instalacion_photo` TEXT, `user_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `reservas` (`id` INTEGER NOT NULL, `instalacion_id` INTEGER NOT NULL, `description` TEXT, `instalacion_name` TEXT NOT NULL, `establecimiento_id` INTEGER NOT NULL, `pagado` REAL NOT NULL, `total_price` REAL NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `estado` INTEGER NOT NULL, `instalacion_photo` TEXT, `user_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `notification` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `content` TEXT NOT NULL, `entityId` INTEGER, `typeEntity` INTEGER, `read` INTEGER NOT NULL, `image` TEXT, `created_at` TEXT NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `message_sala` (`id` INTEGER NOT NULL, `sala_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` TEXT NOT NULL, `profile_id` INTEGER NOT NULL, `reply_to` INTEGER, `sended` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `search_history` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `query` TEXT NOT NULL, `created_at` TEXT)");
@@ -137,8 +141,9 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `invitation_grupo` (`profile_id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `estado` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`profile_id`, `grupo_id`), FOREIGN KEY(`grupo_id`) REFERENCES `grupos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_invitation_grupo_grupo_id` ON `invitation_grupo` (`grupo_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `profile_category` (`profile_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`profile_id`, `category_id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `last_updated_entity` (`entity_id` TEXT NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`entity_id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f9af2e9d96217f9cba891e4cad5f3a8f')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ca529d79289b7886a1f6f449d269bc55')");
       }
 
       @Override
@@ -167,6 +172,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("DROP TABLE IF EXISTS `chat`");
         db.execSQL("DROP TABLE IF EXISTS `invitation_grupo`");
         db.execSQL("DROP TABLE IF EXISTS `profile_category`");
+        db.execSQL("DROP TABLE IF EXISTS `last_updated_entity`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -307,7 +313,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         final TableInfo _infoMessages = new TableInfo("messages", _columnsMessages, _foreignKeysMessages, _indicesMessages);
         final TableInfo _existingMessages = TableInfo.read(db, "messages");
         if (!_infoMessages.equals(_existingMessages)) {
-          return new RoomOpenHelper.ValidationResult(false, "messages(app.regate.models.Message).\n"
+          return new RoomOpenHelper.ValidationResult(false, "messages(app.regate.models.chat.Message).\n"
                   + " Expected:\n" + _infoMessages + "\n"
                   + " Found:\n" + _existingMessages);
         }
@@ -434,11 +440,11 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         final TableInfo _infoMessageInbox = new TableInfo("message_inbox", _columnsMessageInbox, _foreignKeysMessageInbox, _indicesMessageInbox);
         final TableInfo _existingMessageInbox = TableInfo.read(db, "message_inbox");
         if (!_infoMessageInbox.equals(_existingMessageInbox)) {
-          return new RoomOpenHelper.ValidationResult(false, "message_inbox(app.regate.models.MessageInbox).\n"
+          return new RoomOpenHelper.ValidationResult(false, "message_inbox(app.regate.models.chat.MessageInbox).\n"
                   + " Expected:\n" + _infoMessageInbox + "\n"
                   + " Found:\n" + _existingMessageInbox);
         }
-        final HashMap<String, TableInfo.Column> _columnsReservas = new HashMap<String, TableInfo.Column>(12);
+        final HashMap<String, TableInfo.Column> _columnsReservas = new HashMap<String, TableInfo.Column>(13);
         _columnsReservas.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsReservas.put("instalacion_id", new TableInfo.Column("instalacion_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsReservas.put("description", new TableInfo.Column("description", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -448,6 +454,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         _columnsReservas.put("total_price", new TableInfo.Column("total_price", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsReservas.put("start_date", new TableInfo.Column("start_date", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsReservas.put("end_date", new TableInfo.Column("end_date", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsReservas.put("estado", new TableInfo.Column("estado", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsReservas.put("instalacion_photo", new TableInfo.Column("instalacion_photo", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsReservas.put("user_id", new TableInfo.Column("user_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsReservas.put("created_at", new TableInfo.Column("created_at", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -491,7 +498,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         final TableInfo _infoMessageSala = new TableInfo("message_sala", _columnsMessageSala, _foreignKeysMessageSala, _indicesMessageSala);
         final TableInfo _existingMessageSala = TableInfo.read(db, "message_sala");
         if (!_infoMessageSala.equals(_existingMessageSala)) {
-          return new RoomOpenHelper.ValidationResult(false, "message_sala(app.regate.models.MessageSala).\n"
+          return new RoomOpenHelper.ValidationResult(false, "message_sala(app.regate.models.chat.MessageSala).\n"
                   + " Expected:\n" + _infoMessageSala + "\n"
                   + " Found:\n" + _existingMessageSala);
         }
@@ -619,9 +626,21 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoProfileCategory + "\n"
                   + " Found:\n" + _existingProfileCategory);
         }
+        final HashMap<String, TableInfo.Column> _columnsLastUpdatedEntity = new HashMap<String, TableInfo.Column>(2);
+        _columnsLastUpdatedEntity.put("entity_id", new TableInfo.Column("entity_id", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLastUpdatedEntity.put("created_at", new TableInfo.Column("created_at", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysLastUpdatedEntity = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesLastUpdatedEntity = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoLastUpdatedEntity = new TableInfo("last_updated_entity", _columnsLastUpdatedEntity, _foreignKeysLastUpdatedEntity, _indicesLastUpdatedEntity);
+        final TableInfo _existingLastUpdatedEntity = TableInfo.read(db, "last_updated_entity");
+        if (!_infoLastUpdatedEntity.equals(_existingLastUpdatedEntity)) {
+          return new RoomOpenHelper.ValidationResult(false, "last_updated_entity(app.regate.models.LastUpdatedEntity).\n"
+                  + " Expected:\n" + _infoLastUpdatedEntity + "\n"
+                  + " Found:\n" + _existingLastUpdatedEntity);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "f9af2e9d96217f9cba891e4cad5f3a8f", "9ecb904c92332c9ab7deaac9b4ddaffa");
+    }, "ca529d79289b7886a1f6f449d269bc55", "3105cac5c893c2424f331eabd405f411");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -632,7 +651,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas","notification","message_sala","search_history","emoji","attention_schedule","user_room","user_balance","chat","invitation_grupo","profile_category");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "establecimientos","instalaciones","cupos","users","messages","profiles","settings","labels","grupos","user_grupo","my_groups","favorite_establecimiento","message_inbox","reservas","notification","message_sala","search_history","emoji","attention_schedule","user_room","user_balance","chat","invitation_grupo","profile_category","last_updated_entity");
   }
 
   @Override
@@ -672,6 +691,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
       _db.execSQL("DELETE FROM `chat`");
       _db.execSQL("DELETE FROM `invitation_grupo`");
       _db.execSQL("DELETE FROM `profile_category`");
+      _db.execSQL("DELETE FROM `last_updated_entity`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -708,6 +728,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
     _typeConvertersMap.put(RoomSearchHistoryDao.class, RoomSearchHistoryDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomEmojiDao.class, RoomEmojiDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RoomChatDao.class, RoomChatDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(RoomLastUpdatedEntityDao.class, RoomLastUpdatedEntityDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -988,6 +1009,20 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
           _roomChatDao = new RoomChatDao_Impl(this);
         }
         return _roomChatDao;
+      }
+    }
+  }
+
+  @Override
+  public RoomLastUpdatedEntityDao lastUpdatedEntityDao() {
+    if (_roomLastUpdatedEntityDao != null) {
+      return _roomLastUpdatedEntityDao;
+    } else {
+      synchronized(this) {
+        if(_roomLastUpdatedEntityDao == null) {
+          _roomLastUpdatedEntityDao = new RoomLastUpdatedEntityDao_Impl(this);
+        }
+        return _roomLastUpdatedEntityDao;
       }
     }
   }

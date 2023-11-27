@@ -7,6 +7,7 @@ import app.regate.api.UiMessageManager
 import app.regate.data.dto.account.user.EstablecimientoItemDto
 import app.regate.data.dto.system.ReportData
 import app.regate.data.dto.system.ReportType
+import app.regate.data.grupo.GrupoRepository
 import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.user.ObserveProfile
 import app.regate.domain.observers.account.ObserveUser
@@ -31,6 +32,7 @@ import me.tatarka.inject.annotations.Inject
 class ProfileViewModel(
     @Assisted savedStateHandle: SavedStateHandle,
     private val usersRepository: UsersRepository,
+    private val grupoRepository: GrupoRepository,
     observeProfile: ObserveProfile,
     observeUser: ObserveUser,
     observeProfileCategory:ObserveProfileCategory,
@@ -76,6 +78,7 @@ class ProfileViewModel(
             try{
                 val res = usersRepository.getProfile(id)
                 establecimientos.emit(res)
+                grupoRepository.myGroups()
             }catch (e:Exception){
                 //TODO()
             }

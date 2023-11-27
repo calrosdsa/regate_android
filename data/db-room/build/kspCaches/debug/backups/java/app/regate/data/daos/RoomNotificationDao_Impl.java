@@ -46,6 +46,10 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
 
   private final SharedSQLiteStatement __preparedStmtOfUpdateUnreadNotifications;
 
+  private final SharedSQLiteStatement __preparedStmtOfDeleteLastNotifications;
+
+  private final SharedSQLiteStatement __preparedStmtOfDeleteNotification;
+
   private final SharedSQLiteStatement __preparedStmtOfDeleteAll;
 
   private final EntityUpsertionAdapter<Notification> __upsertionAdapterOfNotification;
@@ -167,6 +171,22 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
       @NonNull
       public String createQuery() {
         final String _query = "update notification set read = 1";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfDeleteLastNotifications = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "delete from notification where created_at < ?";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfDeleteNotification = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "delete from notification where id = ?";
         return _query;
       }
     };
@@ -373,6 +393,56 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
   }
 
   @Override
+  public Object deleteLastNotifications(final Instant date,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteLastNotifications.acquire();
+        int _argIndex = 1;
+        final String _tmp = DateTimeTypeConverters.INSTANCE.fromInstant(date);
+        if (_tmp == null) {
+          _stmt.bindNull(_argIndex);
+        } else {
+          _stmt.bindString(_argIndex, _tmp);
+        }
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteLastNotifications.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object deleteNotification(final long id, final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteNotification.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, id);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteNotification.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
   public Object deleteAll(final Continuation<? super Unit> continuation) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
@@ -450,7 +520,7 @@ public final class RoomNotificationDao_Impl extends RoomNotificationDao {
 
   @Override
   public Flow<List<Notification>> getNotificaciones() {
-    final String _sql = "select * from notification order by created_at desc limit 500";
+    final String _sql = "select * from notification order by created_at desc limit 100";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, true, new String[] {"notification"}, new Callable<List<Notification>>() {
       @Override

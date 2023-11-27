@@ -27,7 +27,7 @@ class HandleNotificationEvent {
     suspend fun sendNotificationEvent(context: Context, payload: NotificationDto){
         try{
             val defaultImage = "https://cdn-icons-png.flaticon.com/128/4239/4239989.png"
-            val image= Util.getBitmap(payload.image?:"",context,defaultImage)
+            val image= Util.getBitmap((payload.image?:"").ifBlank { defaultImage },context)
             val db = AppRoomDatabase.getInstance(context)
             db.notificationDao().upsert(
                payload.toNotification()

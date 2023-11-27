@@ -49,6 +49,7 @@ import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
 import app.regate.data.auth.AppAuthState
+import app.regate.data.dto.account.reserva.ReservaEstado
 import com.dokar.sheets.rememberBottomSheetState
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
@@ -56,7 +57,7 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import kotlin.time.Duration.Companion.minutes
 
-typealias Reserva = @Composable (
+typealias Reserva= @Composable (
     navigateUp:()->Unit,
     navigateToEstablecimiento:(Long)->Unit,
     navigateToConversation:(Long,Long)->Unit,
@@ -212,7 +213,6 @@ internal fun Reserva(
         ) {
             viewState.data?.let { data ->
 
-
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -303,6 +303,21 @@ internal fun Reserva(
                     }
 
 
+                }
+                if(data.reserva.estado == ReservaEstado.CANCEL.ordinal){
+
+                Spacer(modifier = Modifier.height(5.dp))
+                Column(modifier = Modifier.fillMaxWidth()) {
+
+                    Text(
+                        text = "Estado de la reserva",
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                    Text(
+                        text = "Cancelada",
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                }
                 }
 
                 Divider(modifier = Modifier.padding(vertical = 5.dp))

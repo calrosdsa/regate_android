@@ -38,12 +38,14 @@ import androidx.work.WorkerParameters
 import app.regate.common.resources.R
 import app.regate.data.establecimiento.EstablecimientoRepository
 import app.regate.data.labels.LabelRepository
+import app.regate.data.system.SystemRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Clock
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import java.util.Locale
@@ -53,7 +55,7 @@ import kotlin.random.Random
 class SyncMessages(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
-    private val labelRepository: LabelRepository,
+    private val systemRepository: SystemRepository
 //    private val establecimientoRepository: EstablecimientoRepository
 //    private val updateLibraryShows: UpdateLibraryShows,
 //    private val logger: Logger,
@@ -66,29 +68,7 @@ class SyncMessages(
     @SuppressLint("MissingPermission")
     override suspend fun doWork(): Result {
         try{
-           Log.d("DEBUG_APP","sync....")
-            try{
-                val CHANNEL_ID = applicationContext.getString(R.string.notification_billing_channel)
-                val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-                    .setContentTitle("TEST NOTIFICATION")
-                    .setContentText("Notification context")
-                    .setSmallIcon(R.drawable.logo_app)
-                    .setAutoCancel(true)
-                    .build()
-
-                with(NotificationManagerCompat.from(applicationContext)) {
-                    if (ActivityCompat.checkSelfPermission(
-                            applicationContext,
-                            Manifest.permission.POST_NOTIFICATIONS
-                        ) == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        val id = Random.nextInt(100)
-                        notify(id, notification)
-                    }
-                }
-            }catch(e:Exception){
-                Log.d(InitSync.TAG,e.localizedMessage?:"")
-            }
+            systemRepository.deleteLastNotifications(Clock.System.now())
         }catch (e:Exception){
             return Result.failure()
         }

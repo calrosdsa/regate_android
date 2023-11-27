@@ -2,7 +2,7 @@ package app.regate.compoundmodels
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import app.regate.models.Message
+import app.regate.models.chat.Message
 import app.regate.models.chat.Chat
 
 class MessageWithChat {

@@ -29,7 +29,7 @@ import app.regate.common.resources.R
 import app.regate.data.mappers.grupoToDto
 import app.regate.models.grupo.Grupo
 
-typealias FilterGroups = @Composable (
+typealias FilterGroups= @Composable (
     navigateUp:()->Unit,
     navigateToGroup:(id:Long)->Unit,
     navigateToInfoGrupo:(id:Long) ->Unit,

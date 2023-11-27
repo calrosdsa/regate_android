@@ -19,6 +19,8 @@ import app.regate.data.dto.notifications.SalaConflictPayload
 import app.regate.data.dto.notifications.SalaPayload
 import app.regate.data.dto.notifications.TypeNotification
 import app.regate.data.dto.system.NotificationDto
+import app.regate.home.MainActivityComponent
+import app.regate.home.create
 import app.regate.notifications.HandleNotificationAccount
 import app.regate.notifications.HandleNotificationEvent
 import app.regate.notifications.HandleNotificationGrupo
@@ -41,6 +43,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val accountHandler = HandleNotificationAccount()
     private val grupoHandler = HandleNotificationGrupo()
     private val notificationEvent = HandleNotificationEvent()
+
 //    val component:DbComponent = DbComponent::class.create(this)
 
     private val json = Json {
@@ -50,6 +53,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     //    @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("SuspiciousIndentation")
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: ${remoteMessage.from}")

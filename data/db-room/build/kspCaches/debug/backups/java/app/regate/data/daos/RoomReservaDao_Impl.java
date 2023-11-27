@@ -53,6 +53,8 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
 
   private final SharedSQLiteStatement __preparedStmtOfDeleteAll;
 
+  private final SharedSQLiteStatement __preparedStmtOfUpdateReserva;
+
   private final SharedSQLiteStatement __preparedStmtOfUpdateDescriptionReserva;
 
   private final EntityUpsertionAdapter<Reserva> __upsertionAdapterOfReserva;
@@ -63,7 +65,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT OR IGNORE INTO `reservas` (`id`,`instalacion_id`,`description`,`instalacion_name`,`establecimiento_id`,`pagado`,`total_price`,`start_date`,`end_date`,`instalacion_photo`,`user_id`,`created_at`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT OR IGNORE INTO `reservas` (`id`,`instalacion_id`,`description`,`instalacion_name`,`establecimiento_id`,`pagado`,`total_price`,`start_date`,`end_date`,`estado`,`instalacion_photo`,`user_id`,`created_at`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -92,17 +94,18 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
         } else {
           statement.bindString(9, _tmp_1);
         }
+        statement.bindLong(10, entity.getEstado());
         if (entity.getInstalacion_photo() == null) {
-          statement.bindNull(10);
+          statement.bindNull(11);
         } else {
-          statement.bindString(10, entity.getInstalacion_photo());
+          statement.bindString(11, entity.getInstalacion_photo());
         }
-        statement.bindLong(11, entity.getUser_id());
+        statement.bindLong(12, entity.getUser_id());
         final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
         if (_tmp_2 == null) {
-          statement.bindNull(12);
+          statement.bindNull(13);
         } else {
-          statement.bindString(12, _tmp_2);
+          statement.bindString(13, _tmp_2);
         }
       }
     };
@@ -123,7 +126,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `reservas` SET `id` = ?,`instalacion_id` = ?,`description` = ?,`instalacion_name` = ?,`establecimiento_id` = ?,`pagado` = ?,`total_price` = ?,`start_date` = ?,`end_date` = ?,`instalacion_photo` = ?,`user_id` = ?,`created_at` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `reservas` SET `id` = ?,`instalacion_id` = ?,`description` = ?,`instalacion_name` = ?,`establecimiento_id` = ?,`pagado` = ?,`total_price` = ?,`start_date` = ?,`end_date` = ?,`estado` = ?,`instalacion_photo` = ?,`user_id` = ?,`created_at` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -152,19 +155,20 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
         } else {
           statement.bindString(9, _tmp_1);
         }
+        statement.bindLong(10, entity.getEstado());
         if (entity.getInstalacion_photo() == null) {
-          statement.bindNull(10);
+          statement.bindNull(11);
         } else {
-          statement.bindString(10, entity.getInstalacion_photo());
+          statement.bindString(11, entity.getInstalacion_photo());
         }
-        statement.bindLong(11, entity.getUser_id());
+        statement.bindLong(12, entity.getUser_id());
         final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
         if (_tmp_2 == null) {
-          statement.bindNull(12);
+          statement.bindNull(13);
         } else {
-          statement.bindString(12, _tmp_2);
+          statement.bindString(13, _tmp_2);
         }
-        statement.bindLong(13, entity.getId());
+        statement.bindLong(14, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
@@ -172,6 +176,14 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
       @NonNull
       public String createQuery() {
         final String _query = "delete from reservas";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfUpdateReserva = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "update reservas set estado = ? where id = ?";
         return _query;
       }
     };
@@ -187,7 +199,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `reservas` (`id`,`instalacion_id`,`description`,`instalacion_name`,`establecimiento_id`,`pagado`,`total_price`,`start_date`,`end_date`,`instalacion_photo`,`user_id`,`created_at`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `reservas` (`id`,`instalacion_id`,`description`,`instalacion_name`,`establecimiento_id`,`pagado`,`total_price`,`start_date`,`end_date`,`estado`,`instalacion_photo`,`user_id`,`created_at`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -216,24 +228,25 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
         } else {
           statement.bindString(9, _tmp_1);
         }
+        statement.bindLong(10, entity.getEstado());
         if (entity.getInstalacion_photo() == null) {
-          statement.bindNull(10);
+          statement.bindNull(11);
         } else {
-          statement.bindString(10, entity.getInstalacion_photo());
+          statement.bindString(11, entity.getInstalacion_photo());
         }
-        statement.bindLong(11, entity.getUser_id());
+        statement.bindLong(12, entity.getUser_id());
         final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
         if (_tmp_2 == null) {
-          statement.bindNull(12);
+          statement.bindNull(13);
         } else {
-          statement.bindString(12, _tmp_2);
+          statement.bindString(13, _tmp_2);
         }
       }
     }, new EntityDeletionOrUpdateAdapter<Reserva>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `reservas` SET `id` = ?,`instalacion_id` = ?,`description` = ?,`instalacion_name` = ?,`establecimiento_id` = ?,`pagado` = ?,`total_price` = ?,`start_date` = ?,`end_date` = ?,`instalacion_photo` = ?,`user_id` = ?,`created_at` = ? WHERE `id` = ?";
+        return "UPDATE `reservas` SET `id` = ?,`instalacion_id` = ?,`description` = ?,`instalacion_name` = ?,`establecimiento_id` = ?,`pagado` = ?,`total_price` = ?,`start_date` = ?,`end_date` = ?,`estado` = ?,`instalacion_photo` = ?,`user_id` = ?,`created_at` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -262,19 +275,20 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
         } else {
           statement.bindString(9, _tmp_1);
         }
+        statement.bindLong(10, entity.getEstado());
         if (entity.getInstalacion_photo() == null) {
-          statement.bindNull(10);
+          statement.bindNull(11);
         } else {
-          statement.bindString(10, entity.getInstalacion_photo());
+          statement.bindString(11, entity.getInstalacion_photo());
         }
-        statement.bindLong(11, entity.getUser_id());
+        statement.bindLong(12, entity.getUser_id());
         final String _tmp_2 = DateTimeTypeConverters.INSTANCE.fromInstant(entity.getCreated_at());
         if (_tmp_2 == null) {
-          statement.bindNull(12);
+          statement.bindNull(13);
         } else {
-          statement.bindString(12, _tmp_2);
+          statement.bindString(13, _tmp_2);
         }
-        statement.bindLong(13, entity.getId());
+        statement.bindLong(14, entity.getId());
       }
     });
   }
@@ -370,6 +384,31 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
         } finally {
           __db.endTransaction();
           __preparedStmtOfDeleteAll.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object updateReserva(final long id, final int estado,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfUpdateReserva.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, estado);
+        _argIndex = 2;
+        _stmt.bindLong(_argIndex, id);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfUpdateReserva.release(_stmt);
         }
       }
     }, continuation);
@@ -476,6 +515,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
             final int _cursorIndexOfTotalPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "total_price");
             final int _cursorIndexOfStartDate = CursorUtil.getColumnIndexOrThrow(_cursor, "start_date");
             final int _cursorIndexOfEndDate = CursorUtil.getColumnIndexOrThrow(_cursor, "end_date");
+            final int _cursorIndexOfEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "estado");
             final int _cursorIndexOfInstalacionPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "instalacion_photo");
             final int _cursorIndexOfUserId = CursorUtil.getColumnIndexOrThrow(_cursor, "user_id");
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
@@ -526,6 +566,8 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
               } else {
                 _tmpEnd_date = _tmp_3;
               }
+              final int _tmpEstado;
+              _tmpEstado = _cursor.getInt(_cursorIndexOfEstado);
               final String _tmpInstalacion_photo;
               if (_cursor.isNull(_cursorIndexOfInstalacionPhoto)) {
                 _tmpInstalacion_photo = null;
@@ -547,7 +589,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
               } else {
                 _tmpCreated_at = _tmp_5;
               }
-              _item = new Reserva(_tmpId,_tmpInstalacion_id,_tmpDescription,_tmpInstalacion_name,_tmpEstablecimiento_id,_tmpPagado,_tmpTotal_price,_tmpStart_date,_tmpEnd_date,_tmpInstalacion_photo,_tmpUser_id,_tmpCreated_at);
+              _item = new Reserva(_tmpId,_tmpInstalacion_id,_tmpDescription,_tmpInstalacion_name,_tmpEstablecimiento_id,_tmpPagado,_tmpTotal_price,_tmpStart_date,_tmpEnd_date,_tmpEstado,_tmpInstalacion_photo,_tmpUser_id,_tmpCreated_at);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -591,6 +633,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
             final int _cursorIndexOfTotalPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "total_price");
             final int _cursorIndexOfStartDate = CursorUtil.getColumnIndexOrThrow(_cursor, "start_date");
             final int _cursorIndexOfEndDate = CursorUtil.getColumnIndexOrThrow(_cursor, "end_date");
+            final int _cursorIndexOfEstado = CursorUtil.getColumnIndexOrThrow(_cursor, "estado");
             final int _cursorIndexOfInstalacionPhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "instalacion_photo");
             final int _cursorIndexOfUserId = CursorUtil.getColumnIndexOrThrow(_cursor, "user_id");
             final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
@@ -654,6 +697,8 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
               } else {
                 _tmpEnd_date = _tmp_3;
               }
+              final int _tmpEstado;
+              _tmpEstado = _cursor.getInt(_cursorIndexOfEstado);
               final String _tmpInstalacion_photo;
               if (_cursor.isNull(_cursorIndexOfInstalacionPhoto)) {
                 _tmpInstalacion_photo = null;
@@ -675,7 +720,7 @@ public final class RoomReservaDao_Impl extends RoomReservaDao {
               } else {
                 _tmpCreated_at = _tmp_5;
               }
-              _tmpReserva = new Reserva(_tmpId,_tmpInstalacion_id,_tmpDescription,_tmpInstalacion_name,_tmpEstablecimiento_id,_tmpPagado,_tmpTotal_price,_tmpStart_date,_tmpEnd_date,_tmpInstalacion_photo,_tmpUser_id,_tmpCreated_at);
+              _tmpReserva = new Reserva(_tmpId,_tmpInstalacion_id,_tmpDescription,_tmpInstalacion_name,_tmpEstablecimiento_id,_tmpPagado,_tmpTotal_price,_tmpStart_date,_tmpEnd_date,_tmpEstado,_tmpInstalacion_photo,_tmpUser_id,_tmpCreated_at);
               final Establecimiento _tmpEstablecimiento;
               final long _tmpKey_2;
               _tmpKey_2 = _cursor.getLong(_cursorIndexOfEstablecimientoId);

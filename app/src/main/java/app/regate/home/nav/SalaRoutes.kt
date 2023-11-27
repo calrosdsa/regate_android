@@ -50,8 +50,6 @@ internal fun NavGraphBuilder.SalaRoutes(
     ) {
         composeScreens.sala(
             navigateUp = navController::navigateUp,
-            navigateToChat = {it1,it2->
-                navController.navigate(Route.CHAT_SALA id it1 id it2) },
             openAuthBottomSheet = {navController.navigate(Route.AUTH_DIALOG)},
             navigateToInstalacion = {navController.navigate(Route.INSTALACION id it)},
             navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},

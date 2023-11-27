@@ -198,4 +198,6 @@
     <string name="delete_reservation">Eliminar reserva</string>
     <string name="establecimientos_where_user_play">Lugares donde juega</string>
     <string name="amount_withheld">Monto retenido</string>
+    <string name="delete_notification">Eliminar notificación</string>
+    <string name="no_new_notifications">No hay nuevas notificaciones</string>
 </resources>

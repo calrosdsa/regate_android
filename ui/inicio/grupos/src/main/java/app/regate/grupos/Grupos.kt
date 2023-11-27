@@ -50,7 +50,7 @@ import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias Grupos= @Composable (
+typealias Grupos = @Composable (
     navController: NavController,
     userSalas:@Composable () -> Unit,
     uuid:String,

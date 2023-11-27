@@ -19,7 +19,7 @@ import androidx.room.util.StringUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.compoundmodels.MessageConversation;
 import app.regate.data.db.DateTimeTypeConverters;
-import app.regate.models.MessageInbox;
+import app.regate.models.chat.MessageInbox;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.IllegalStateException;
@@ -346,7 +346,7 @@ public final class RoomMessageInboxDao_Impl extends RoomMessageInboxDao {
           }
         }
         cursor.moveToPosition(-1);
-        __fetchRelationshipmessageInboxAsappRegateModelsMessageInbox(_collectionReply);
+        __fetchRelationshipmessageInboxAsappRegateModelsChatMessageInbox(_collectionReply);
         final List<MessageConversation> _result = new ArrayList<MessageConversation>(cursor.getCount());
         while (cursor.moveToNext()) {
           final MessageConversation _item;
@@ -479,14 +479,14 @@ public final class RoomMessageInboxDao_Impl extends RoomMessageInboxDao {
     return Collections.emptyList();
   }
 
-  private void __fetchRelationshipmessageInboxAsappRegateModelsMessageInbox(
+  private void __fetchRelationshipmessageInboxAsappRegateModelsChatMessageInbox(
       @NonNull final LongSparseArray<MessageInbox> _map) {
     if (_map.isEmpty()) {
       return;
     }
     if (_map.size() > RoomDatabase.MAX_BIND_PARAMETER_CNT) {
       RelationUtil.recursiveFetchLongSparseArray(_map, false, (map) -> {
-        __fetchRelationshipmessageInboxAsappRegateModelsMessageInbox(map);
+        __fetchRelationshipmessageInboxAsappRegateModelsChatMessageInbox(map);
         return Unit.INSTANCE;
       });
       return;

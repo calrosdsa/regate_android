@@ -65,6 +65,7 @@ class ReservaViewModel(
     fun getData(){
         viewModelScope.launch {
             try{
+                reservaRepository.updateReserva(reservaId)
                 updateEstablecimiento.executeSync(UpdateEstablecimiento.Params(id = establecimientoId))
                 updateInstalacion.executeSync(UpdateInstalacion.Params(id = instalacionId))
             }catch (e:Exception){

@@ -1,6 +1,7 @@
 package app.regate.data.chat
 
 import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.data.dto.chat.ChatDto
 import app.regate.data.dto.chat.DeleteMessageRequest
 import app.regate.data.dto.chat.DeletedMessagesIds
 import app.regate.data.dto.chat.MessagePublishRequest
@@ -24,6 +25,7 @@ interface ChatDataSource {
     suspend fun getConversationId(establecimientoId:Long):ConversationId
 
     //chat
+    suspend fun getChat(id:Long,typeChat:Int):ChatDto
     suspend fun getChats(page: Int):PaginateChatResponse
     suspend fun getUnreadMessages(page:Int):PaginationGroupMessages
     suspend fun publishMessage(data:MessagePublishRequest):MessagePublishResponse

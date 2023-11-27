@@ -34,7 +34,7 @@ class InviteUserViewModel(
     private val usersRepository: UsersRepository,
     private val grupoRepository: GrupoRepository,
     observeAddressDevice: ObserveAddressDevice,
-    pagingSource:ObservePagerInvitations
+    pagingSource:ObservePagerInvitations,
     ):ViewModel() {
     private val filterData = MutableStateFlow(FILTER_DATA)
     val pagedList: Flow<PagingData<ProfileDto>> = Pager(PAGING_CONFIG){
@@ -110,9 +110,12 @@ class InviteUserViewModel(
     fun sendInvitation(profileId:Long,update:()->Unit){
         viewModelScope.launch {
             try{
+                val grupo = grupoRepository.getGrupo(grupoId)
                 val request = GrupoInvitationRequest(
                     profile_id = profileId,
-                    grupo_id = grupoId
+                    grupo_id = grupoId,
+                    grupo_name = grupo.name,
+                    grupo_photo = grupo.photo
                 )
                 grupoRepository.sendInvitation(request)
                 update()

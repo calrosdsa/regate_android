@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.component.input.InputForm
 import com.dokar.sheets.BottomSheetState
@@ -26,7 +28,7 @@ import com.dokar.sheets.m3.BottomSheet
 import app.regate.common.resources.R
 
 @Composable
-internal fun AddDescriptionBottomSheen(
+internal fun AddDescriptionBottomSheen (
     state: BottomSheetState,
     description:String,
     save:(String)->Unit,
@@ -44,6 +46,10 @@ internal fun AddDescriptionBottomSheen(
             InputForm(value = value, onValueChange = {if(it.length <= 500){ value = it}},
                 modifier = Modifier.height(200.dp),
                 label = "Descripción",
+                keyboardActions = KeyboardActions(
+                    onDone = {save(value)}
+                ),
+                imeAction = ImeAction.Done
             ){
                 Text(text = "${value.length}/500",style = MaterialTheme.typography.labelSmall,
                     modifier = Modifier

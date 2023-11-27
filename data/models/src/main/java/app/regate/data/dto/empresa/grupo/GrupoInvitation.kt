@@ -3,7 +3,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GrupoInvitationRequest(
     val profile_id:Long,
-    val grupo_id:Long
+    val grupo_id:Long,
+    val grupo_name:String = "",
+    val grupo_photo:String? = null
 )
 
 @Serializable

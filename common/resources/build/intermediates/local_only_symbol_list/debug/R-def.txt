@@ -15,6 +15,8 @@ drawable coin
 drawable default_image
 drawable delete_icon
 drawable doble_check
+drawable empty_inbox
+drawable empty_room
 drawable enabled_location
 drawable ic_launcher_background
 drawable ic_launcher_foreground
@@ -87,6 +89,7 @@ string create_shortcut
 string decline
 string delete_chat
 string delete_message
+string delete_notification
 string delete_reservation
 string deposits
 string description
@@ -148,6 +151,7 @@ string name
 string near_me
 string new_offers
 string new_room_created
+string no_new_notifications
 string no_result_found
 string no_results_for_saerch
 string notification_billing

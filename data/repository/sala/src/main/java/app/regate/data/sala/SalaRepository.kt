@@ -20,7 +20,7 @@ import app.regate.data.dto.empresa.salas.SalaRequestDto
 import app.regate.data.mappers.MessageDtoToMessageSala
 import app.regate.data.mappers.MessageToMessageSalaDto
 import app.regate.inject.ApplicationScope
-import app.regate.models.MessageSala
+import app.regate.models.chat.MessageSala
 import app.regate.models.user.Profile
 import app.regate.models.chat.Chat
 import app.regate.util.AppCoroutineDispatchers

@@ -1,5 +1,6 @@
 package app.regate.data.reserva
 
+import app.regate.data.daos.LastUpdatedEntityDao
 import app.regate.data.daos.ReservaDao
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.account.reserva.ReservaDto
@@ -7,9 +8,14 @@ import app.regate.data.dto.account.reserva.ReservaRequest
 import app.regate.data.mappers.CupoToCupoDto
 import app.regate.inject.ApplicationScope
 import app.regate.models.Cupo
+import app.regate.models.LastUpdatedEntity
 import app.regate.models.Reserva
+import app.regate.models.UpdatedEntity
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import me.tatarka.inject.annotations.Inject
 @ApplicationScope
 @Inject
@@ -17,11 +23,19 @@ class ReservaRepository(
     private val reservaDataSourceImpl: ReservaDataSourceImpl,
     private val cupoToReservaRequest: CupoToCupoDto,
     private val dispatchers: AppCoroutineDispatchers,
-    private val reservaDao: ReservaDao
+    private val reservaDao: ReservaDao,
+    private val lastUpdateEntityDao: LastUpdatedEntityDao,
 //    private val cupoDao: CupoDao
 ) {
-    suspend fun getReserva(id: Long): ReservaDto {
-        return reservaDataSourceImpl.getReserva(id)
+    suspend fun updateReserva(id: Long) {
+        withContext(dispatchers.io) {
+            try {
+                val res = reservaDataSourceImpl.getReserva(id)
+                reservaDao.updateReserva(res.id,res.estado)
+            } catch (e: Exception) {
+                throw e
+            }
+        }
     }
 
     suspend fun updateDescriptionReserva(description:String,id: Long){
@@ -42,7 +56,9 @@ class ReservaRepository(
     suspend fun updateReservas() {
         withContext(dispatchers.computation){
             try{
-                val res = reservaDataSourceImpl.getReservas().let {results->
+                val lastUpdatedEntity = lastUpdateEntityDao.getLastUpdatedEntity(UpdatedEntity.RESERVAS)?.created_at?: Clock.System.now()
+                val res = reservaDataSourceImpl.getReservas(lastUpdatedEntity.toLocalDateTime(
+                    TimeZone.currentSystemDefault()).toString()).let { results->
                     results.map {
                         Reserva(
                             id = it.id,
@@ -61,6 +77,7 @@ class ReservaRepository(
                 }
 //                reservaDao.deleteAll()
                 reservaDao.insertAllonConflictIgnore(res)
+                lastUpdateEntityDao.upsert(LastUpdatedEntity(entity_id = UpdatedEntity.RESERVAS))
             }catch(e:Exception){
                 throw e
             }

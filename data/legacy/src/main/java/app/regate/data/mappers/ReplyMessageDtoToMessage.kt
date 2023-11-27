@@ -1,12 +1,12 @@
 package app.regate.data.mappers
 
 import app.regate.data.dto.empresa.grupo.ReplyMessage
-import app.regate.models.Message
+import app.regate.models.chat.Message
 import kotlinx.datetime.toInstant
 import me.tatarka.inject.annotations.Inject
 
 @Inject
-class ReplyMessageDtoToMessage:Mapper<ReplyMessage,Message> {
+class ReplyMessageDtoToMessage:Mapper<ReplyMessage, Message> {
     override suspend fun map(from: ReplyMessage): Message {
         return Message(
             id = from.id,

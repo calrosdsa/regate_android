@@ -75,6 +75,7 @@ class MainActivityViewModel(
     }
 
 
+
     @SuppressLint("SuspiciousIndentation")
     suspend fun startWs(profileId:Long){
         try {

@@ -233,5 +233,7 @@
     <string name="delete_reservation">Delete reservation</string>
     <string name="establecimientos_where_user_play">Lugares donde juega</string>
     <string name="amount_withheld">Monto retenido</string>
+    <string name="delete_notification">Delete notification</string>
+    <string name="no_new_notifications">There are no new notifications</string>
 
 </resources>

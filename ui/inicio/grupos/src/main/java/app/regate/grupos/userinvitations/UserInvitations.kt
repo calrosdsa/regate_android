@@ -43,7 +43,7 @@ import app.regate.compoundmodels.grupo.UserInvitation
 import app.regate.data.dto.empresa.grupo.UserGrupoRequesEstado
 import app.regate.data.dto.empresa.grupo.UserGrupoRequestDto
 
-typealias UserInvitations = @Composable (
+typealias UserInvitations= @Composable (
     navigateUp:() ->Unit,
 ) -> Unit
 

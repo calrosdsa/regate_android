@@ -25,8 +25,11 @@ abstract class RoomChatDao:ChatDao,RoomEntityDao<Chat> {
     abstract override fun observeChatsPaging(): PagingSource<Int, Chat>
 
     @Transaction
-    @Query("select * from chat where id = :id")
+    @Query("select * from chat where id = :id ")
     abstract override fun observeChat(id: Long): Flow<Chat>
+    @Transaction
+    @Query("select * from chat where parent_id = :parentId and type_chat = :typeChat")
+    abstract override fun observeChatByType(parentId: Long,typeChat: Int): Flow<Chat>
     @Query("select * from chat where parent_id = :pId and type_chat = :typeChat")
     abstract override suspend fun getChatByType(pId: Long, typeChat:Int): Chat
     @Query("select * from chat where id = :id")

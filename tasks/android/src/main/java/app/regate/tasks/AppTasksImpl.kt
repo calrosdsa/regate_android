@@ -64,17 +64,17 @@ class AppTasksImpl(
 //    }
 
     override fun syncMessages() {
-        val nightlyConstraints = Constraints.Builder()
+//        val nightlyConstraints = Constraints.Builder()
 //            .setRequiredNetworkType(NetworkType.UNMETERED)
 //            .setRequiresCharging(true)
-            .build()
-        PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS
+//            .build()
+//        PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS
 
         workManager.enqueueUniquePeriodicWork(
             SyncMessages.TAG,
             ExistingPeriodicWorkPolicy.KEEP,
-            PeriodicWorkRequestBuilder<SyncMessages>(16, TimeUnit.MINUTES)
-                .setConstraints(nightlyConstraints)
+            PeriodicWorkRequestBuilder<SyncMessages>(1, TimeUnit.HOURS)
+//                .setConstraints(nightlyConstraints)
                 .build(),
         )
     }

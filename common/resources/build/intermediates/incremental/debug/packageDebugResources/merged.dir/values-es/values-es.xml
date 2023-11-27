@@ -40,6 +40,7 @@
     <string name="decline">Declinar</string>
     <string name="delete_chat">Eliminar chat</string>
     <string name="delete_message">Delete message</string>
+    <string name="delete_notification">Eliminar notificación</string>
     <string name="delete_reservation">Eliminar reserva</string>
     <string name="deposits">Depósitos</string>
     <string name="description">Descripción</string>
@@ -96,6 +97,7 @@
     <string name="near_me">Cerca de mi</string>
     <string name="new_offers">¡Nuevas ofertas aquí!</string>
     <string name="new_room_created">Se ha creado una sala nueva.</string>
+    <string name="no_new_notifications">No hay nuevas notificaciones</string>
     <string name="no_result_found">No se encontraron resultados prueba cambiando la fecha o la hora.</string>
     <string name="no_results_for_saerch">No pudimos encontrar ningún resultado que coincida con su búsqueda.</string>
     <string name="notification_billing">Notificaciones de depósito y pago</string>

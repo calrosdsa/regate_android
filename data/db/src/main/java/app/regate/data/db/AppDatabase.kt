@@ -8,6 +8,7 @@ import app.regate.data.daos.FavoriteEstablecimientoDao
 import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.InstalacionDao
 import app.regate.data.daos.LabelDao
+import app.regate.data.daos.LastUpdatedEntityDao
 import app.regate.data.daos.MessageInboxDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MessageSalaDao
@@ -40,4 +41,5 @@ interface AppDatabase {
     fun searchHistoryDao():SearchHistoryDao
     fun emojiDao():EmojiDao
     fun chatDao():ChatDao
+    fun lastUpdatedEntityDao():LastUpdatedEntityDao
 }

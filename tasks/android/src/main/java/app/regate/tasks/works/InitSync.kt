@@ -37,6 +37,8 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import java.util.Locale
 import app.regate.common.resources.R
+import app.regate.data.system.SystemRepository
+import app.regate.util.AppCoroutineDispatchers
 import kotlin.random.Random
 
 
@@ -45,6 +47,8 @@ class InitSync(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
     private val labelRepository: LabelRepository,
+    private val systemRepository: SystemRepository,
+    private val dispatchers: AppCoroutineDispatchers,
 //    private val establecimientoRepository: EstablecimientoRepository
 //    private val updateLibraryShows: UpdateLibraryShows,
 //    private val logger: Logger,
@@ -57,7 +61,7 @@ class InitSync(
     @SuppressLint("MissingPermission")
     override suspend fun doWork(): Result {
         try{
-            withContext(Dispatchers.IO) {
+            withContext(dispatchers.io) {
             val task1 = async{
                 try{
                 labelRepository.getAmenities()
@@ -95,6 +99,7 @@ class InitSync(
             }
 //            val task4 = async{ establecimientoRepository.getEstablecimientos()}
                 awaitAll(task1,task2,task3,task4,task5)
+            systemRepository.getNotifications()
         }
 
         }catch (e:Exception){

@@ -1,12 +1,15 @@
 package app.regate.chats
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,7 +33,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
@@ -38,6 +45,7 @@ import app.regate.common.composes.component.chat.DeleteMessage
 import app.regate.common.composes.component.dialog.DialogConfirmation
 import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.util.itemsCustom
+import app.regate.common.resources.R
 import app.regate.data.auth.AppAuthState
 import app.regate.data.dto.chat.TypeChat
 import app.regate.models.chat.Chat
@@ -69,6 +77,29 @@ internal fun ChatsUser(
 //            lazyPagingItems.refresh();
 //        }
 //    })
+    Box(modifier = Modifier.fillMaxSize()){
+
+        if(lazyPagingItems.itemSnapshotList.isEmpty()) {
+            Column(modifier =  Modifier
+                .align(Alignment.Center)
+                .padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.empty_room),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth(1f)
+                        .fillMaxHeight(0.3f),
+                    contentScale = ContentScale.Fit,
+                )
+//                Text(text = stringResource(id = R.string.no_new_notifications),
+//                    textAlign = TextAlign.Center,style =MaterialTheme.typography.titleLarge.copy(
+//                        fontWeight = FontWeight(350)
+//                    ))
+            }
+        }
 
     LazyColumn(modifier = Modifier.fillMaxSize()){
         itemsCustom(items = lazyPagingItems, key = {it.id}){item->
@@ -84,6 +115,8 @@ internal fun ChatsUser(
                 )
             }
         }
+    }
+
     }
 
     if(viewState.selectedChat != null){

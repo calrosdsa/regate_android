@@ -2,13 +2,11 @@ package app.regate.data.daos
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.MessageWithChat
-import app.regate.models.Message
+import app.regate.models.chat.Message
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -28,4 +28,6 @@ abstract class RoomReservaDao:RoomEntityDao<Reserva> ,ReservaDao {
 
     @Query("update reservas set description = :descrption where id = :id")
     abstract override suspend fun updateDescriptionReserva(descrption: String, id: Long)
+    @Query("update reservas set estado = :estado where id = :id")
+    abstract override suspend fun updateReserva(id: Long,estado:Int)
 }

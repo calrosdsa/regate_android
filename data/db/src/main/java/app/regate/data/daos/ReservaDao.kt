@@ -10,6 +10,6 @@ interface ReservaDao:EntityDao<Reserva> {
     fun observeReservaDetail(id:Long):Flow<ReservaDetail>
     suspend fun deleteAll()
     suspend fun deleteByIds(ids:List<Long>)
-
+    suspend fun updateReserva(id:Long,estado:Int)
     suspend fun updateDescriptionReserva(descrption:String,id:Long)
 }

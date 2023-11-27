@@ -120,7 +120,8 @@ fun Grupo(
         navigateToReport = navigateToReport,
         navigateToPhoto = {navController.navigate(Route.PHOTO id it)},
         navigateToPendingRequests = {navController.navigate(Route.PENDING_REQUESTS id it)},
-        navigateToChatGroup = { navController.navigate(Route.CHAT_GRUPO + "?id=${it}")},
+        navigateToChat = {id,parentId,type->
+            navController.navigate(Route.CHAT_GRUPO + "?id=$id&parentId=$parentId&typeChat=$type") },
         navigateToInvitationLink = {navController.navigate(Route.GRUPO_INVITATION_LINK id it)},
         navigateToInviteUser = {navController.navigate(Route.GRUPO_INVITE_USER id it)}
     )
@@ -140,9 +141,9 @@ internal fun Grupo(
     navigateToReport: (String) -> Unit,
     navigateToPhoto:(String)->Unit,
     navigateToPendingRequests:(Long)->Unit,
-    navigateToChatGroup:(Long)->Unit,
     navigateToInvitationLink: (Long) -> Unit,
-    navigateToInviteUser: (Long) -> Unit
+    navigateToInviteUser: (Long) -> Unit,
+    navigateToChat: (id: Long,parentId:Long,typeChat:Int) -> Unit,
 ){
     val viewState by viewModel.state.collectAsState()
     val formatter = LocalAppDateFormatter.current
@@ -169,7 +170,9 @@ internal fun Grupo(
         }},
         navigateToPhoto = navigateToPhoto,
         navigateToPendingRequests = navigateToPendingRequests,
-        navigateToChatGroup = navigateToChatGroup,
+        navigateToChatGroup = {
+            viewModel.navigateToChat(it,navigateToChat)
+        },
         getPendingRequestCount = viewModel::getPendingRequestCount,
         navigateToInvitationLink = navigateToInvitationLink,
         navigateToInviteUser = navigateToInviteUser

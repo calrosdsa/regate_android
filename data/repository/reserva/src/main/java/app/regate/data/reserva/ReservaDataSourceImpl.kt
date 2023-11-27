@@ -12,6 +12,7 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Inject
 
 @Inject
@@ -26,9 +27,9 @@ class ReservaDataSourceImpl(
         }.body()
     }
 
-    override suspend fun getReservas(): List<ReservaDto> {
+    override suspend fun getReservas(lastRequested:String): List<ReservaDto> {
         val token = authStore.get()?.accessToken
-        return client.get("/v1/reservas/"){
+        return client.get("/v1/reservas/$lastRequested/"){
             header("Authorization","Bearer $token")
         }.body()
     }

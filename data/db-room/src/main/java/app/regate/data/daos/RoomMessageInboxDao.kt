@@ -5,9 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import app.regate.compoundmodels.MessageConversation
-import app.regate.compoundmodels.MessageProfile
-import app.regate.models.Message
-import app.regate.models.MessageInbox
+import app.regate.models.chat.MessageInbox
 
 @Dao
 abstract class RoomMessageInboxDao:RoomEntityDao<MessageInbox>,MessageInboxDao{

@@ -22,8 +22,8 @@ import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.compoundmodels.MessageProfile;
 import app.regate.compoundmodels.MessageWithChat;
 import app.regate.data.db.DateTimeTypeConverters;
-import app.regate.models.Message;
 import app.regate.models.chat.Chat;
+import app.regate.models.chat.Message;
 import app.regate.models.user.Profile;
 import java.lang.Class;
 import java.lang.Exception;
@@ -581,7 +581,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
         }
         cursor.moveToPosition(-1);
         __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
-        __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
+        __fetchRelationshipmessagesAsappRegateModelsChatMessage(_collectionReply);
         final List<MessageProfile> _result = new ArrayList<MessageProfile>(cursor.getCount());
         while (cursor.moveToNext()) {
           final MessageProfile _item;
@@ -751,7 +751,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             }
             _cursor.moveToPosition(-1);
             __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
-            __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
+            __fetchRelationshipmessagesAsappRegateModelsChatMessage(_collectionReply);
             final MessageProfile _result;
             if (_cursor.moveToFirst()) {
               final Message _tmpMessage;
@@ -891,7 +891,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
             }
             _cursor.moveToPosition(-1);
             __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
-            __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
+            __fetchRelationshipmessagesAsappRegateModelsChatMessage(_collectionReply);
             final List<MessageProfile> _result = new ArrayList<MessageProfile>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final MessageProfile _item;
@@ -1295,14 +1295,14 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
     }
   }
 
-  private void __fetchRelationshipmessagesAsappRegateModelsMessage(
+  private void __fetchRelationshipmessagesAsappRegateModelsChatMessage(
       @NonNull final LongSparseArray<Message> _map) {
     if (_map.isEmpty()) {
       return;
     }
     if (_map.size() > RoomDatabase.MAX_BIND_PARAMETER_CNT) {
       RelationUtil.recursiveFetchLongSparseArray(_map, false, (map) -> {
-        __fetchRelationshipmessagesAsappRegateModelsMessage(map);
+        __fetchRelationshipmessagesAsappRegateModelsChatMessage(map);
         return Unit.INSTANCE;
       });
       return;

@@ -6,12 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.data.chat.ChatParams
 import app.regate.data.chat.ChatRepository
 import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.system.ReportData
 import app.regate.data.dto.system.ReportType
 import app.regate.data.grupo.GrupoRepository
+import app.regate.domain.interactors.UpdateChat
 import app.regate.domain.observers.ObserveAuthState
 import app.regate.domain.observers.grupo.ObserveGrupo
 import app.regate.domain.observers.account.ObserveUser
@@ -40,7 +42,8 @@ class GrupoViewModel(
     private val observeUsersGrupo: ObserveUsersGrupo,
     observeGrupo: ObserveGrupo,
     private val observeUser: ObserveUser,
-    private val chatRepository: ChatRepository
+    private val chatRepository: ChatRepository,
+    private val updateChat: UpdateChat,
     ):ViewModel() {
     private val grupoId: Long = savedStateHandle["id"]!!
     private val loadingState = ObservableLoadingCounter()
@@ -110,8 +113,16 @@ class GrupoViewModel(
                 loadingState.addLoader()
                 val res = grupoRepository.getGrupoDetail(grupoId)
                 checkIsAdmin()
-                salas.tryEmit(res)
+                salas.tryEmit(res.salas)
                 loadingState.removeLoader()
+                updateChat.executeSync(UpdateChat.Params(
+                    params = ChatParams(
+                        parent_id = grupoId,
+                        typeChat = TypeChat.TYPE_CHAT_GRUPO.ordinal,
+                        photo = res.grupo.photo,
+                        name = res.grupo.name
+                    )
+                ))
                 Log.d("DEBUG_APP", res.toString())
             } catch (e: ResponseException) {
                 loadingState.removeLoader()
@@ -213,6 +224,17 @@ class GrupoViewModel(
         }catch(e:Exception){
             Log.d("DEBUG_APP_ERR_COUNT",e.localizedMessage?:"")
             10
+        }
+    }
+
+    fun navigateToChat(id:Long,navigateToChat: (id: Long,parentId:Long,typeChat:Int) -> Unit){
+        viewModelScope.launch {
+            try{
+                val chat = chatRepository.getChatByType(id,TypeChat.TYPE_CHAT_GRUPO.ordinal)
+                navigateToChat(chat.id,chat.parent_id,TypeChat.TYPE_CHAT_GRUPO.ordinal)
+            }catch (e:Exception){
+                Log.d("DEBUG_APP_",e.localizedMessage?:"")
+            }
         }
     }
 

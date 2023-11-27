@@ -45,7 +45,7 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
 
-typealias Report= @Composable (
+typealias Report = @Composable (
     navigateUp:()->Unit
         ) -> Unit
 

@@ -23,8 +23,8 @@ import app.regate.data.mappers.MessageDtoToMessage
 import app.regate.data.mappers.MessageToMessageDto
 import app.regate.inject.ApplicationScope
 import app.regate.models.grupo.Grupo
-import app.regate.models.Message
-import app.regate.models.MessageInbox
+import app.regate.models.chat.Message
+import app.regate.models.chat.MessageInbox
 import app.regate.models.grupo.MyGroups
 import app.regate.models.user.Profile
 import app.regate.models.grupo.UserGrupo

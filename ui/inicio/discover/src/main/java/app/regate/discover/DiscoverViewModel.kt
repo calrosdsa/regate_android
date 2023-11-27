@@ -133,12 +133,9 @@ class DiscoverViewModel(
             }
         }
 
-        updatePreferences()
     }
 
-    private fun updatePreferences(){
-        appPreferences.startRoute = MainPages.Discover
-    }
+
 
     companion object {
         val PAGING_CONFIG = PagingConfig(

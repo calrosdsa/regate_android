@@ -3,8 +3,10 @@ package app.regate.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
+import app.regate.constant.MainPages
 import app.regate.domain.observers.chat.ObserveUnreadMessagesCount
 import app.regate.domain.observers.system.ObserveUnreadNotificationCount
+import app.regate.settings.AppPreferences
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +17,8 @@ import me.tatarka.inject.annotations.Inject
 @Inject
 class InicioViewModel(
     observeUnreadNotificationCount: ObserveUnreadNotificationCount,
-    observeUnreadMessagesCount: ObserveUnreadMessagesCount
+    observeUnreadMessagesCount: ObserveUnreadMessagesCount,
+    private val preferences: AppPreferences
 ):ViewModel() {
 //    private val loadingCounter = ObservableLoadingCounter()
 //    private val messageManager = UiMessageManager()
@@ -38,5 +41,9 @@ class InicioViewModel(
     init{
         observeUnreadMessagesCount(Unit)
         observeUnreadNotificationCount(Unit)
+    }
+
+    fun updateInitPage(page:Int) {
+        preferences.startRoute =page
     }
 }

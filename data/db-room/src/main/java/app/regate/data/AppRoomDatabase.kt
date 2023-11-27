@@ -21,6 +21,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import app.regate.data.daos.LastUpdatedEntityDao
 import app.regate.data.daos.RoomChatDao
 import app.regate.data.daos.RoomCupoDao
 import app.regate.data.daos.RoomEmojiDao
@@ -29,6 +30,7 @@ import app.regate.data.daos.RoomFavoriteEstablecimientoDao
 import app.regate.data.daos.RoomGrupoDao
 import app.regate.data.daos.RoomInstalacionDao
 import app.regate.data.daos.RoomLabelDao
+import app.regate.data.daos.RoomLastUpdatedEntityDao
 import app.regate.data.daos.RoomMessageInboxDao
 import app.regate.data.daos.RoomMessageProfileDao
 import app.regate.data.daos.RoomMessageSalaDao
@@ -51,9 +53,10 @@ import app.regate.models.establecimiento.FavoriteEstablecimiento
 import app.regate.models.grupo.Grupo
 import app.regate.models.Instalacion
 import app.regate.models.Labels
-import app.regate.models.Message
-import app.regate.models.MessageInbox
-import app.regate.models.MessageSala
+import app.regate.models.LastUpdatedEntity
+import app.regate.models.chat.Message
+import app.regate.models.chat.MessageInbox
+import app.regate.models.chat.MessageSala
 import app.regate.models.grupo.MyGroups
 import app.regate.models.Notification
 import app.regate.models.user.Profile
@@ -93,7 +96,8 @@ import app.regate.models.grupo.InvitationGrupo
         UserBalance::class,
         Chat::class,
         InvitationGrupo::class,
-        ProfileCategory::class
+        ProfileCategory::class,
+        LastUpdatedEntity::class,
 //        SalaEntity::class,
        ],
 //    views = [
@@ -140,6 +144,7 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
     abstract override fun searchHistoryDao(): RoomSearchHistoryDao
     abstract override fun emojiDao(): RoomEmojiDao
     abstract override fun chatDao(): RoomChatDao
+    abstract override fun lastUpdatedEntityDao(): RoomLastUpdatedEntityDao
 //    abstract override fun salaEntityDao(): RoomSalaEntityDao
 
     companion object {
