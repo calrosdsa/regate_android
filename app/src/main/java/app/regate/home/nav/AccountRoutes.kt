@@ -64,7 +64,8 @@ internal fun NavGraphBuilder.AccountRoutes(
             )},
             montoRetenido = { composeScreens.montoRetenido(
                 navigateToSala = {navController.navigate(Route.SALA id it)},
-            )}
+                navigateToSalaComplete = {navController.navigate(Route.SALA_COMPLETE id it)},
+                )}
         )
     }
     animatedComposable(

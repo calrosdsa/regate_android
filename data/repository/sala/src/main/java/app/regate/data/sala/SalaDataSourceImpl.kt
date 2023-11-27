@@ -69,6 +69,15 @@ class SalaDataSourceImpl(
         }.body()
     }
 
+    override suspend fun deleteComplete(d: CompleteSalaRequest) {
+        val token = authStore.get()?.accessToken
+        client.post("/v1/sala/delete-sala-complete/"){
+            header("Authorization", "Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }
+    }
+
     override suspend fun completeSala(d: CompleteSalaRequest) {
         val token = authStore.get()?.accessToken
         client.post("/v1/sala/sala-complete/"){

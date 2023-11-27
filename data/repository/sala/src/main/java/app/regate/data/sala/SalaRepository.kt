@@ -53,8 +53,23 @@ class SalaRepository(
     suspend fun getSalaCompleteHistory(salaId: Long):SalaCompleteDetail{
         return salaDataSourceImpl.getCompleteSalaHistory(salaId)
     }
-    suspend fun salaComplete(d:CompleteSalaRequest){
-        salaDataSourceImpl.completeSala(d)
+    suspend fun salaComplete(d:CompleteSalaRequest) {
+        withContext(dispatchers.io) {
+            try {
+                salaDataSourceImpl.completeSala(d)
+            } catch (e: Exception) {
+                throw e
+            }
+        }
+    }
+    suspend fun deleteComplete(d:CompleteSalaRequest){
+        withContext(dispatchers.io){
+            try{
+                salaDataSourceImpl.deleteComplete(d)
+            }catch (e:Exception){
+                throw  e
+            }
+        }
     }
     suspend fun createSala(d:SalaRequestDto){
         withContext(dispatchers.io){

@@ -6,13 +6,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import androidx.navigation.navigation
 import app.regate.ComposeScreens
 import app.regate.constant.Route
 import app.regate.constant.id
-import app.regate.home.animatedComposable
-import app.regate.home.uri
+import app.regate.home.uri1
 import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.navigation
 
 
 @ExperimentalAnimationApi
@@ -24,6 +23,8 @@ fun NavGraphBuilder.AddMainNav (
 //    navigateToMap:()->Unit
 //    openSettings: () -> Unit,
 ) {
+    navigation(startDestination = Route.MAIN, route = Route.INICIO){
+
     composable(
         route = Route.MAIN + "?data={data}&uuid={uuid}&page={page}",
         arguments = listOf(navArgument("data") {
@@ -40,9 +41,9 @@ fun NavGraphBuilder.AddMainNav (
             }
         ),
         deepLinks = listOf(
-            navDeepLink { uriPattern = "$uri/${Route.GRUPOS}/{uuid}/{page}" },
-            navDeepLink { uriPattern = "$uri/${Route.DISCOVER}/{data}/{page}" },
-            navDeepLink { uriPattern = "$uri/${Route.NOTIFICATIONS}/{page}" }
+            navDeepLink { uriPattern = "$uri1/${Route.GRUPOS}/{uuid}/{page}" },
+            navDeepLink { uriPattern = "$uri1/${Route.DISCOVER}/{data}/{page}" },
+            navDeepLink { uriPattern = "$uri1/${Route.NOTIFICATIONS}/{page}" }
         )
     ) { navArguments ->
         val uuid = navArguments.arguments?.getString("uuid") ?: ""
@@ -109,6 +110,7 @@ fun NavGraphBuilder.AddMainNav (
 
 
 
+    }
 
     }
 

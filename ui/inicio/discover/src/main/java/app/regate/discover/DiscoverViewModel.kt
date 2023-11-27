@@ -175,6 +175,7 @@ class DiscoverViewModel(
     fun getInstalaciones(filter:FilterInstalacionData) {
         Log.d("DEBUG_APP_INS","instalacion -get")
         viewModelScope.launch {
+            try {
             val listTime = getArrayofTime(
                filter.currentTime.toJavaLocalTime(),
                 (filter.interval / 30) - 1
@@ -183,7 +184,6 @@ class DiscoverViewModel(
             val listDate = listTime.map {
                 "${Instant.fromEpochMilliseconds(filter.currentDate).toLocalDateTime(TimeZone.UTC).date} $it"
             }
-            try {
                 val data = filter.copy(
                     time = listTime,
                     date = listDate,

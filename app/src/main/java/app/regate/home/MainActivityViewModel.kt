@@ -78,7 +78,7 @@ class MainActivityViewModel(
     @SuppressLint("SuspiciousIndentation")
     suspend fun startWs(profileId:Long){
         try {
-            val cl = client.webSocketSession(method = HttpMethod.Get, host = Host.host,
+            val cl = client.webSocketSession(method = HttpMethod.Get, host = Host.host_1,
 //                client.webSocket(method = HttpMethod.Get, host = "172.20.20.76",
                 port = Host.port, path = "v1/ws/suscribe/user/?id=${profileId}")
             Log.d("DEBUG_APP","start ws.......")

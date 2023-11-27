@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 
 
@@ -27,8 +28,10 @@ fun DateTextWithIcon(
             modifier = Modifier.size(13.dp))
         Spacer(modifier = Modifier.width(5.dp))
         Text(text =date,
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.inverseSurface
+            style = MaterialTheme.typography.labelSmall.copy(
+                fontStyle = FontStyle.Italic
+            ),
+            color = MaterialTheme.colorScheme.inverseSurface,
         )
     }
 }

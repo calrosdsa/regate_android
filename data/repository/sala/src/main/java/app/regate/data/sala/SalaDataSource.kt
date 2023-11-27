@@ -17,6 +17,7 @@ import app.regate.data.dto.empresa.salas.UserSalaDto
 
 interface SalaDataSource {
    suspend fun getCompleteSalaHistory(salaId:Long):SalaCompleteDetail
+   suspend fun deleteComplete(d:CompleteSalaRequest)
    suspend fun completeSala(d:CompleteSalaRequest)
    suspend fun syncMessages(d:List<MessageSalaDto>):List<MessageSalaDto>
    suspend fun getEstablecimientoSalas(id:Long):List<SalaDto>

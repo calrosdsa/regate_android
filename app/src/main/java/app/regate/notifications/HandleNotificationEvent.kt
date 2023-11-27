@@ -12,17 +12,13 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.net.toUri
 import app.regate.common.resources.R
-import app.regate.constant.AppUrl
+import app.regate.constant.AppUrl1
 import app.regate.constant.MainPages
 import app.regate.constant.Route
 import app.regate.data.AppRoomDatabase
-import app.regate.data.dto.notifications.MessagePayload
 import app.regate.data.dto.system.NotificationDto
 import app.regate.data.mappers.toNotification
 import app.regate.home.MainActivity
-import app.regate.models.Notification
-import app.regate.models.TypeEntity
-import kotlinx.datetime.Clock
 
 class HandleNotificationEvent {
     companion object{
@@ -30,15 +26,19 @@ class HandleNotificationEvent {
     }
     suspend fun sendNotificationEvent(context: Context, payload: NotificationDto){
         try{
-            val image= getBitmap(payload.image,context,"https://cdn-icons-png.flaticon.com/64/4239/4239989.png")
+            val defaultImage = "https://cdn-icons-png.flaticon.com/128/4239/4239989.png"
+            val image= Util.getBitmap(payload.image?:"",context,defaultImage)
             val db = AppRoomDatabase.getInstance(context)
             db.notificationDao().upsert(
                payload.toNotification()
+                   .copy(
+                       image =payload.image?:defaultImage
+                   )
             )
             AppRoomDatabase.destroyInstance()
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "$AppUrl/${Route.NOTIFICATIONS}/${MainPages.Notifications}".toUri(),
+                "$AppUrl1/${Route.NOTIFICATIONS}/${MainPages.Notifications}".toUri(),
                 context,
                 MainActivity::class.java
             )

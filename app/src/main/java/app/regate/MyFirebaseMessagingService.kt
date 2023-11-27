@@ -1,4 +1,4 @@
-@file:Suppress("DEPRECATION")
+//@file:Suppress("DEPRECATION")
 
 package app.regate
 
@@ -43,6 +43,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val notificationEvent = HandleNotificationEvent()
 //    val component:DbComponent = DbComponent::class.create(this)
 
+    private val json = Json {
+        ignoreUnknownKeys = true
+    }
+
     //    @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("SuspiciousIndentation")
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -58,7 +62,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             if(TypeNotification.NOTIFICATION_GROUP.ordinal == data["type"]?.toInt()){
             val db = AppRoomDatabase.getInstance(applicationContext)
             try{
-            val messages = Json.decodeFromString<List<MessageGroupPayload>>(data["payload"].toString())
+            val messages = json.decodeFromString<List<MessageGroupPayload>>(data["payload"].toString())
                 scope.launch {
                     try {
                         val chat = db.chatDao().getChat(messages[0].message.chat_id)
@@ -80,7 +84,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             if(TypeNotification.NOTIFICATION_SALA_CREATION.ordinal == data["type"]?.toInt()){
                 try{
 
-                val newSala = Json.decodeFromString<SalaPayload>(data["payload"].toString())
+                val newSala = json.decodeFromString<SalaPayload>(data["payload"].toString())
                     scope.launch {
                         salaHandler.sendNotificationSalaCreation(applicationContext,newSala)
                     }
@@ -90,7 +94,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
             if(TypeNotification.NOTIFICATION_SALA_RESERVATION_CONFLICT.ordinal == data["type"]?.toInt()){
                 try{
-                    val payload = Json.decodeFromString<SalaConflictPayload>(data["payload"].toString())
+                    val payload = json.decodeFromString<SalaConflictPayload>(data["payload"].toString())
                     scope.launch {
                     salaHandler.sendNotificationSalaConflict(applicationContext,payload,data["payload"].toString())
                     }
@@ -100,7 +104,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
             if(TypeNotification.NOTIFICATION_SALA_HAS_BEEN_RESERVED.ordinal == data["type"]?.toInt()) {
                 try {
-                    val payload = Json.decodeFromString<MessagePayload>(data["payload"].toString())
+                    val payload = json.decodeFromString<MessagePayload>(data["payload"].toString())
                     scope.launch {
                         salaHandler.sendNotificationSalaHasBeenReserved(applicationContext, payload)
                     }
@@ -110,7 +114,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
             if(TypeNotification.NOTIFICATION_BILLING.ordinal == data["type"]?.toInt()){
                 try{
-                    val payload = Json.decodeFromString<MessagePayload>(data["payload"].toString())
+                    val payload = json.decodeFromString<MessagePayload>(data["payload"].toString())
 //                    scope.launch {
                         accountHandler.sendNotificationBilling(applicationContext,payload)
 //                    }
@@ -121,12 +125,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             if(TypeNotification.NOTIFICATION_EVENT.ordinal == data["type"]?.toInt()){
                 try{
-                    val payload = Json.decodeFromString<NotificationDto>(data["payload"].toString())
+                    val payload = json.decodeFromString<NotificationDto>(data["payload"].toString())
+                    Log.d(TAG,payload.toString())
                     scope.launch {
                     notificationEvent.sendNotificationEvent(applicationContext,payload)
                     }
                 }catch (e:Exception){
-                    Log.d(TAG,e.localizedMessage?:"")
+                    Log.d(TAG+"ERROR",e.localizedMessage?:"")
                 }
             }
             // Check if data needs to be processed by long running job

@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class SalaPayload(
     val id:Long,
     val titulo:String,
-    val grupo_id:Long
+    val grupo_id:Long,
 )

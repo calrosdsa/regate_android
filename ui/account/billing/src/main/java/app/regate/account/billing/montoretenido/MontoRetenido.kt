@@ -25,12 +25,13 @@ import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
 import app.regate.data.dto.account.billing.ConsumeDto
 import app.regate.data.dto.account.billing.MontoRetenidoDto
-import app.regate.data.dto.account.billing.TypeEntity
+import app.regate.models.TypeEntity
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 
 typealias MontoRetenido = @Composable (
     navigateToSala:(Long)->Unit,
+    navigateToSalaComplete:(Long)->Unit,
  ) ->Unit
 
 
@@ -38,11 +39,13 @@ typealias MontoRetenido = @Composable (
 @Composable
 fun MontoRetenido(
     viewModelFactory:()->MontoRetenidoViewModel,
-    @Assisted navigateToSala: (Long) -> Unit
-){
+    @Assisted navigateToSala: (Long) -> Unit,
+    @Assisted navigateToSalaComplete: (Long) -> Unit,
+    ){
     MontoRetenido(
         viewModel = viewModel(factory = viewModelFactory),
-        navigateToSala = navigateToSala
+        navigateToSala = navigateToSala,
+        navigateToSalaComplete = navigateToSalaComplete
     )
 }
 
@@ -51,6 +54,7 @@ fun MontoRetenido(
 internal fun MontoRetenido(
     viewModel:MontoRetenidoViewModel,
     navigateToSala: (Long) -> Unit,
+    navigateToSalaComplete: (Long) -> Unit
 ){
     val formatter = LocalAppDateFormatter.current
     val lazyPagingItems = viewModel.pagedList.collectAsLazyPagingItems()
@@ -63,7 +67,8 @@ internal fun MontoRetenido(
                     navigate = {
                         when(item.type_entity){
 //                            TypeEntity.RESERVA.ordinal -> navigateToReserva(item.id_entity)
-                            TypeEntity.ENTITY_SALA.ordinal -> navigateToSala(item.parent_id.toLong())
+                            TypeEntity.SALA.ordinal -> navigateToSala(item.parent_id.toLong())
+                            TypeEntity.SALA_COMPLETE.ordinal -> navigateToSalaComplete(item.parent_id.toLong())
                             else -> {}
                         }
                     },

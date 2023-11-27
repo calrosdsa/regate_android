@@ -18,9 +18,9 @@ import androidx.room.util.StringUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.compoundmodels.UserProfile;
 import app.regate.data.db.DateTimeTypeConverters;
-import app.regate.models.Profile;
 import app.regate.models.account.User;
 import app.regate.models.account.UserBalance;
+import app.regate.models.user.Profile;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.Integer;
@@ -33,11 +33,13 @@ import java.lang.SuppressWarnings;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
+import javax.annotation.processing.Generated;
 import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 import kotlinx.coroutines.flow.Flow;
 import kotlinx.datetime.Instant;
 
+@Generated("androidx.room.RoomProcessor")
 @SuppressWarnings({"unchecked", "deprecation"})
 public final class RoomUserDao_Impl extends RoomUserDao {
   private final RoomDatabase __db;
@@ -80,7 +82,7 @@ public final class RoomUserDao_Impl extends RoomUserDao {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT OR REPLACE INTO `user_balance` (`balance_id`,`profile_id`,`coins`) VALUES (?,?,?)";
+        return "INSERT OR REPLACE INTO `user_balance` (`balance_id`,`profile_id`,`coins`,`retain_coin`) VALUES (?,?,?,?)";
       }
 
       @Override
@@ -89,6 +91,7 @@ public final class RoomUserDao_Impl extends RoomUserDao {
         statement.bindLong(1, entity.getBalance_id());
         statement.bindLong(2, entity.getProfile_id());
         statement.bindDouble(3, entity.getCoins());
+        statement.bindDouble(4, entity.getRetain_coin());
       }
     };
     this.__deletionAdapterOfUser = new EntityDeletionOrUpdateAdapter<User>(__db) {
@@ -487,6 +490,7 @@ public final class RoomUserDao_Impl extends RoomUserDao {
             final int _cursorIndexOfBalanceId = CursorUtil.getColumnIndexOrThrow(_cursor, "balance_id");
             final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
             final int _cursorIndexOfCoins = CursorUtil.getColumnIndexOrThrow(_cursor, "coins");
+            final int _cursorIndexOfRetainCoin = CursorUtil.getColumnIndexOrThrow(_cursor, "retain_coin");
             final UserBalance _result;
             if (_cursor.moveToFirst()) {
               final long _tmpBalance_id;
@@ -495,7 +499,9 @@ public final class RoomUserDao_Impl extends RoomUserDao {
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final double _tmpCoins;
               _tmpCoins = _cursor.getDouble(_cursorIndexOfCoins);
-              _result = new UserBalance(_tmpBalance_id,_tmpProfile_id,_tmpCoins);
+              final double _tmpRetain_coin;
+              _tmpRetain_coin = _cursor.getDouble(_cursorIndexOfRetainCoin);
+              _result = new UserBalance(_tmpBalance_id,_tmpProfile_id,_tmpCoins,_tmpRetain_coin);
             } else {
               _result = null;
             }
@@ -542,7 +548,7 @@ public final class RoomUserDao_Impl extends RoomUserDao {
               _collectionProfile.put(_tmpKey, null);
             }
             _cursor.moveToPosition(-1);
-            __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
+            __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
             final UserProfile _result;
             if (_cursor.moveToFirst()) {
               final User _tmpUser;
@@ -591,14 +597,14 @@ public final class RoomUserDao_Impl extends RoomUserDao {
     return Collections.emptyList();
   }
 
-  private void __fetchRelationshipprofilesAsappRegateModelsProfile(
+  private void __fetchRelationshipprofilesAsappRegateModelsUserProfile(
       @NonNull final LongSparseArray<Profile> _map) {
     if (_map.isEmpty()) {
       return;
     }
     if (_map.size() > RoomDatabase.MAX_BIND_PARAMETER_CNT) {
       RelationUtil.recursiveFetchLongSparseArray(_map, false, (map) -> {
-        __fetchRelationshipprofilesAsappRegateModelsProfile(map);
+        __fetchRelationshipprofilesAsappRegateModelsUserProfile(map);
         return Unit.INSTANCE;
       });
       return;

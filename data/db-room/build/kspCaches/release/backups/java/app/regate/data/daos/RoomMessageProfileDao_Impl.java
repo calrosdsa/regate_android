@@ -23,8 +23,8 @@ import app.regate.compoundmodels.MessageProfile;
 import app.regate.compoundmodels.MessageWithChat;
 import app.regate.data.db.DateTimeTypeConverters;
 import app.regate.models.Message;
-import app.regate.models.Profile;
 import app.regate.models.chat.Chat;
+import app.regate.models.user.Profile;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.IllegalStateException;
@@ -39,11 +39,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
+import javax.annotation.processing.Generated;
 import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 import kotlinx.coroutines.flow.Flow;
 import kotlinx.datetime.Instant;
 
+@Generated("androidx.room.RoomProcessor")
 @SuppressWarnings({"unchecked", "deprecation"})
 public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
   private final RoomDatabase __db;
@@ -580,7 +582,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
           }
         }
         cursor.moveToPosition(-1);
-        __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
+        __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
         __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
         final List<MessageProfile> _result = new ArrayList<MessageProfile>(cursor.getCount());
         while (cursor.moveToNext()) {
@@ -668,6 +670,43 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
   }
 
   @Override
+  public Flow<Integer> observeUnreadMessagesCount() {
+    final String _sql = "SELECT count(*) FROM messages where readed = 0";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return CoroutinesRoom.createFlow(__db, true, new String[] {"messages"}, new Callable<Integer>() {
+      @Override
+      @NonNull
+      public Integer call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+          try {
+            final Integer _result;
+            if (_cursor.moveToFirst()) {
+              final int _tmp;
+              _tmp = _cursor.getInt(0);
+              _result = _tmp;
+            } else {
+              _result = 0;
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
   public Object getReplyMessage(final long id,
       final Continuation<? super MessageProfile> continuation) {
     final String _sql = "SELECT * FROM messages where id = ?";
@@ -713,7 +752,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               }
             }
             _cursor.moveToPosition(-1);
-            __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
+            __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
             __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
             final MessageProfile _result;
             if (_cursor.moveToFirst()) {
@@ -853,7 +892,7 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
               }
             }
             _cursor.moveToPosition(-1);
-            __fetchRelationshipprofilesAsappRegateModelsProfile(_collectionProfile);
+            __fetchRelationshipprofilesAsappRegateModelsUserProfile(_collectionProfile);
             __fetchRelationshipmessagesAsappRegateModelsMessage(_collectionReply);
             final List<MessageProfile> _result = new ArrayList<MessageProfile>(_cursor.getCount());
             while (_cursor.moveToNext()) {
@@ -1166,14 +1205,14 @@ public final class RoomMessageProfileDao_Impl extends RoomMessageProfileDao {
     return Collections.emptyList();
   }
 
-  private void __fetchRelationshipprofilesAsappRegateModelsProfile(
+  private void __fetchRelationshipprofilesAsappRegateModelsUserProfile(
       @NonNull final LongSparseArray<Profile> _map) {
     if (_map.isEmpty()) {
       return;
     }
     if (_map.size() > RoomDatabase.MAX_BIND_PARAMETER_CNT) {
       RelationUtil.recursiveFetchLongSparseArray(_map, false, (map) -> {
-        __fetchRelationshipprofilesAsappRegateModelsProfile(map);
+        __fetchRelationshipprofilesAsappRegateModelsUserProfile(map);
         return Unit.INSTANCE;
       });
       return;

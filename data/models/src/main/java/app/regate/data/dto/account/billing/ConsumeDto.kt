@@ -21,11 +21,3 @@ data class ConsumePaginationResponse(
     val nextPage:Int,
 )
 
-enum class TypeEntity {
-    NONE,
-    ENTITY_SALA,
-    ENTITY_GROUP,
-    ENTITY_ACCOUNT,
-    ENTITY_BILLING,
-    ENTITY_RESERVA,
-}

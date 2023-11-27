@@ -20,10 +20,15 @@ import me.tatarka.inject.annotations.Inject
 class ObserveAddressDevice(
     private val appPreferences: AppPreferences,
     private val dispatchers: AppCoroutineDispatchers
-) : SubjectInteractor<Unit, AddressDevice>() {
-    override fun createObservable(params: Unit): Flow<AddressDevice> {
+) : SubjectInteractor<Unit, AddressDevice?>() {
+    override fun createObservable(params: Unit): Flow<AddressDevice?> {
         return appPreferences.observeAddress().map {data->
+            try{
             Json.decodeFromString(data)
+            }catch (e:Exception){
+                null
+            }
+
         }
     }
 }

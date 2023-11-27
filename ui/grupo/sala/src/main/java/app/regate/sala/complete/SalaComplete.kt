@@ -17,8 +17,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -74,7 +78,8 @@ internal fun SalaComplete(
     SalaComplete(
         viewState = state, navigateUp = navigateUp,
         clearMessage = viewModel::clearMessage,
-        completeSala = viewModel::completeSala
+        completeSala = viewModel::completeSala,
+        deleteCompleteSala = viewModel::deleteCompleteSala
     )
 }
 
@@ -85,6 +90,7 @@ internal fun SalaComplete(
     navigateUp: () -> Unit,
     clearMessage:(Long)->Unit,
     completeSala:(Context,String)->Unit,
+    deleteCompleteSala:(Context,Double,Int)->Unit,
 ) {
     val context = LocalContext.current
     var amount by remember { mutableStateOf("") }
@@ -186,7 +192,8 @@ internal fun SalaComplete(
                             apellido = item.profile.apellido,
                             photo = item.profile.profile_photo,
                             isMe = viewState.user?.profile_id == item.profile.profile_id,
-                            amount = item.amount
+                            amount = item.amount,
+                            deleteCompleteSala = {deleteCompleteSala(context,item.amount,item.id)},
                         )
                     }
                 }
@@ -205,13 +212,19 @@ internal fun CompleteSalaItem(
     apellido:String?,
     modifier:Modifier = Modifier,
     isMe:Boolean = false,
-    navigateToProfile:(Long)->Unit= {}
+    navigateToProfile:(Long)->Unit= {},
+    deleteCompleteSala: () -> Unit
 ) {
+    Row(modifier = modifier
+        .clickable { navigateToProfile(id) }
+        .padding(5.dp)
+        .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+
     Row(
-        modifier = modifier
-            .clickable { navigateToProfile(id) }
-            .padding(5.dp)
-            .fillMaxWidth(),
+        modifier =Modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
 
@@ -236,7 +249,14 @@ internal fun CompleteSalaItem(
         }
             Text(text = stringResource(id = R.string.contributed_amount,amount.toString()),
             style = MaterialTheme.typography.labelMedium)
-            
+
         }
+    }
+        if(isMe){
+        IconButton(onClick = { deleteCompleteSala() }) {
+            Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+        }
+        }
+
     }
 }

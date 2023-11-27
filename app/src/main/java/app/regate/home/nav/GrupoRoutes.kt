@@ -7,11 +7,12 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import app.regate.ComposeScreens
+import app.regate.constant.AppUrl1
 import app.regate.constant.Route
 import app.regate.constant.arg
 import app.regate.constant.id
 import app.regate.home.animatedComposable
-import app.regate.home.uri
+import app.regate.home.uri1
 import com.google.accompanist.navigation.material.bottomSheet
 
 @ExperimentalAnimationApi
@@ -29,9 +30,11 @@ internal fun NavGraphBuilder.GrupoRoutes(
             navArgument("typeChat") { type = NavType.IntType },
             navArgument("data") {
                 type = NavType.StringType
-                defaultValue ="2312312" },
+                defaultValue ="" },
         ),
-        deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.CHAT_GRUPO}/{id}/{parentId}/{typeChat}" })
+        deepLinks = listOf(navDeepLink {
+            uriPattern = "$AppUrl1/${Route.CHAT_GRUPO}/{id}/{parentId}/{typeChat}" }
+        )
     ) {
         composeScreens.chatGrupo(
             navigateUp = navController::navigateUp,

@@ -13,20 +13,26 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.ensureActive
 
-@SuppressLint("SuspiciousIndentation")
-suspend fun getBitmap (url:String?,context:Context,
-default:String = "https://cdn-icons-png.flaticon.com/128/847/847969.png"): Bitmap {
-    val bitmap = CoroutineScope(Dispatchers.IO).async {
-        val loader = ImageLoader(context)
-        val request = ImageRequest.Builder(context)
-            .data(url?.ifBlank { default })
-            .allowHardware(false) // Disable hardware bitmaps.
-            .transformations(CircleCropTransformation())
-            .build()
+class Util {
+    companion object {
+        @SuppressLint("SuspiciousIndentation")
+        suspend fun getBitmap(
+            url: String, context: Context,
+            default: String = "https://cdn-icons-png.flaticon.com/128/847/847969.png"
+        ): Bitmap {
+            val bitmap = CoroutineScope(Dispatchers.IO).async {
+                val loader = ImageLoader(context)
+                val request = ImageRequest.Builder(context)
+                    .data(url.ifBlank { default })
+                    .allowHardware(false) // Disable hardware bitmaps.
+                    .transformations(CircleCropTransformation())
+                    .build()
 
-        val result = (loader.execute(request) as SuccessResult).drawable
-        val bitmap = (result as BitmapDrawable).bitmap
-        return@async bitmap
+                val result = (loader.execute(request) as SuccessResult).drawable
+                val bitmap = (result as BitmapDrawable).bitmap
+                return@async bitmap
+            }
+            return bitmap.await()
+        }
     }
-    return bitmap.await()
 }

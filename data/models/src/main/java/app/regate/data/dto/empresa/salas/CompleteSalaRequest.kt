@@ -5,12 +5,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CompleteSalaRequest(
+    val id:Int = 0,
     val sala_id:Long,
     val amount:Double
 )
 
 @Serializable
 data class SalaCompleteDto(
+    val id:Int,
     val sala_id: Long,
     val amount: Double,
     val profile:ProfileDto

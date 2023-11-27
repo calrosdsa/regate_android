@@ -1,5 +1,7 @@
 package app.regate.system.notification
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,7 +33,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import app.regate.common.composes.LocalAppDateFormatter
@@ -103,6 +107,7 @@ internal fun Notifications(
     navigateToNoticationSetting: () -> Unit,
     navigateToEstablecimiento:(Long) -> Unit
 ){
+//    val context = LocalContext.current
     Scaffold(
        topBar = { TopAppBar(
            title = { Text(text = stringResource(id = R.string.notifications))},
@@ -115,8 +120,7 @@ internal fun Notifications(
     ) {paddingValues->
         Box(modifier = Modifier
             .fillMaxSize()
-            .padding(paddingValues)
-            .padding(horizontal = 10.dp)) {
+            .padding(paddingValues)) {
 
         LazyColumn(
             modifier = Modifier,
@@ -131,10 +135,22 @@ internal fun Notifications(
                         TypeEntity.SALA -> item.entityId?.let { navigateToSala(it) }
                         TypeEntity.BILLING -> item.entityId?.let { navigateToAccount() }
                         TypeEntity.ESTABLECIMIENTO -> item.entityId?.let{ navigateToEstablecimiento(it)}
+//                        TypeEntity.URI -> {
+//                            try{
+//
+//                            val urlIntent = Intent(
+//                                Intent.ACTION_VIEW,
+//                                Uri.parse()
+//                            )
+//                            startActivity(urlIntent)
+//                            }catch (e:Exception){
+//                                //TODO()
+//                            }
+//                        }
                         else -> {}
                     }
                 })
-                Divider(modifier = Modifier.padding(vertical = 5.dp))
+                Divider()
             }
 
         })
@@ -149,25 +165,30 @@ internal fun NotificationItem(
     navigate:()->Unit,
     formatRelativeTime: (Instant) -> String
 ){
-        Box(modifier = Modifier.fillMaxWidth()){
-    Row(modifier = Modifier
-        .clickable { navigate() }
-        .padding(top = 5.dp, bottom = 5.dp)
-        .height(IntrinsicSize.Min)
-        .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-        PosterCardImage(model = item.image,
-        modifier = Modifier.size(50.dp),
-            shape = CircleShape
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Column() {
-            if(item.title?.isNotBlank() == true){
-            Text(text = item.title!!, style = MaterialTheme.typography.labelLarge)
+
+
+        Column(modifier = Modifier
+            .clickable { navigate() }
+            .padding(vertical = 5.dp, horizontal = 10.dp)
+            .height(IntrinsicSize.Min)
+            .fillMaxWidth()) {
+            Row(modifier = Modifier
+                .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                PosterCardImage(
+                    model = item.image,
+                    modifier = Modifier.size(45.dp),
+                    shape = CircleShape
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                if (item.title?.isNotBlank() == true) {
+                    Text(text = item.title!!, style = MaterialTheme.typography.titleMedium,
+                    maxLines = 2, overflow = TextOverflow.Ellipsis)
+                }
             }
+            Spacer(modifier = Modifier.height(5.dp))
             Text(text = item.content ,
-                style = MaterialTheme.typography.labelMedium)
+                style = MaterialTheme.typography.bodySmall)
             DateTextWithIcon(date = formatRelativeTime(item.created_at))
         }
-        }
-    }
+
 }

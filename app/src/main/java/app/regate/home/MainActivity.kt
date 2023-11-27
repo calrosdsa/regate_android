@@ -98,9 +98,9 @@ class MainActivity : ComponentActivity() {
         component = MainActivityComponent::class.create(this)
         viewModel
 
-        val establecimientoId = intent.getStringExtra("establecimientoId")
+//        val establecimientoId = intent.getStringExtra("establecimientoId")
 //        val mapIntent = Intent(this, MapActivity::class.java)
-        val startScreen = if(preferences.categories.isBlank()) Route.WELCOME_PAGE else Route.MAIN
+        val startScreen = if(preferences.categories.isBlank()) Route.WELCOME_PAGE else Route.INICIO
         val startRoute = preferences.startRoute
 //    if(preferences.categories.isBlank()) Route.WELCOME_PAGE else
 //        intent.flags = FLAG_ACTIVITY_SINGLE_TOP
@@ -129,7 +129,6 @@ class MainActivity : ComponentActivity() {
                     ) {
                             HomeEntry(
                                 composeScreens = component.screens,
-                                establecimientoId = establecimientoId,
 //                                navigateToMap = { startActivity(mapIntent)},
                                 startScreen = startScreen,
                                 startRoute = startRoute

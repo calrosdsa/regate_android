@@ -1,33 +1,19 @@
 package app.regate.grupo.invitationlink
 
-import android.content.Intent
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
-import androidx.compose.material.icons.filled.CopyAll
 import androidx.compose.material.icons.filled.Link
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material3.BottomSheetDefaults
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -49,26 +35,18 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.SavedStateHandle
 import app.regate.common.composes.LocalAppUtil
 import app.regate.common.composes.component.dialog.DialogConfirmation
 import app.regate.common.composes.component.dialog.LoaderDialog
-import app.regate.common.composes.ui.Loader
-import app.regate.common.composes.ui.PosterCardImage
 import app.regate.common.composes.ui.SimpleTopBar
 import app.regate.common.composes.viewModel
 import app.regate.common.resources.R
-import app.regate.constant.AppUrl
+import app.regate.constant.AppUrl1
 import app.regate.constant.MainPages
 import app.regate.constant.Route
 import app.regate.data.auth.AppAuthState
-import app.regate.data.common.encodeMediaData
-import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
-import app.regate.data.dto.empresa.grupo.GrupoVisibility
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -135,7 +113,7 @@ internal fun InvitationLink(
     }
     fun shareIntent() {
         if (viewState.authState == AppAuthState.LOGGED_IN) {
-            val data = "${AppUrl}/${Route.GRUPOS}/${viewState.invitationLink?.id_link}/${MainPages.Chat}"
+            val data = "${AppUrl1}/${Route.GRUPOS}/${viewState.invitationLink?.id_link}/${MainPages.Chat}"
             appUtil.shareTextIntent(context,data)
         } else {
             openAuthBottomSheet()
@@ -184,7 +162,7 @@ internal fun InvitationLink(
                         Icon(imageVector = Icons.Filled.Link, contentDescription = null)
                     }
                     Spacer(modifier = Modifier.width(10.dp))
-                    Text(text = "${AppUrl}/${Route.GRUPOS}/${invitationLink.id_link}/${MainPages.Chat}")
+                    Text(text = "${AppUrl1}/${Route.GRUPOS}/${invitationLink.id_link}/${MainPages.Chat}")
                 }
             Spacer(modifier = Modifier.height(15.dp))
 
@@ -195,7 +173,7 @@ internal fun InvitationLink(
             )
             ShareRow(text = stringResource(id = R.string.copy_link),
                 icon = Icons.Default.ContentCopy,
-                action = { clipboardManager.setText(AnnotatedString(("${AppUrl}/${Route.GRUPOS}/${invitationLink.id_link}/${MainPages.Chat}"))) })
+                action = { clipboardManager.setText(AnnotatedString(("${AppUrl1}/${Route.GRUPOS}/${invitationLink.id_link}/${MainPages.Chat}"))) })
 
                     ShareRow(
                         text = stringResource(id = R.string.reset_link),

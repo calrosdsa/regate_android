@@ -13,7 +13,7 @@ import app.regate.constant.id
 import app.regate.home.animatedComposable
 import app.regate.home.animatedComposableVariant
 import app.regate.home.slideInVerticallyComposable
-import app.regate.home.uri
+import app.regate.home.uri1
 
 
 @ExperimentalAnimationApi
@@ -70,7 +70,7 @@ internal fun NavGraphBuilder.EstablecimientoRoutes(
             navArgument("id") { type = NavType.LongType },
             navArgument("page") { type = NavType.LongType },
         ),
-        deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.ESTABLECIMIENTO}/{id}/{page}" })
+        deepLinks = listOf(navDeepLink { uriPattern = "$uri1/${Route.ESTABLECIMIENTO}/{id}/{page}" })
     ) { it ->
         val page = it.arguments?.getLong("page")?:0
         composeScreens.establecimiento(

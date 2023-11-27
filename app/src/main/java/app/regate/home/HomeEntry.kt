@@ -3,11 +3,13 @@ package app.regate.home
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -16,10 +18,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 //import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
+import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import androidx.navigation.navDeepLink
 import app.regate.ComposeScreens
-import app.regate.constant.AppUrl
+import app.regate.constant.AppUrl1
 import app.regate.constant.Route
 import app.regate.constant.arg
 import app.regate.constant.id
@@ -31,18 +33,18 @@ import app.regate.home.nav.EstablecimientoRoutes
 import app.regate.home.nav.GrupoRoutes
 import app.regate.home.nav.SalaRoutes
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 
-const val uri= AppUrl
+const val uri1= AppUrl1
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun HomeEntry(
     composeScreens: ComposeScreens,
-    establecimientoId:String?,
     startScreen:String,
     startRoute:Int
 //    navigateToMap:()->Unit
@@ -51,15 +53,8 @@ fun HomeEntry(
     val navController = rememberAnimatedNavController(bottomSheetNavigator)
 //    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 //    val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(key1 = true, block = {
-        if (establecimientoId != null) {
-            navController.navigate(Route.ESTABLECIMIENTO id establecimientoId.toLong() id 0)
-        }
-    })
 
-    LaunchedEffect(key1 = navController, block = {
-        Log.d("DEBUG_APP_DESTINATION",navController.currentDestination?.id.toString())
-    })
+
 
     Scaffold(modifier = Modifier.fillMaxSize()) {
 
@@ -108,6 +103,14 @@ internal fun AppNavigation(
         startDestination = startScreen,
         modifier = modifier
     ) {
+        
+//            navigation(startDestination = "username", route = "init") {
+//                composable("username") {
+//                    Column() {
+//                        Text(text = "asd asdasda")
+//                    }
+//                }
+//            }
         EstablecimientoRoutes(
             composeScreens = composeScreens,
             navController = navController

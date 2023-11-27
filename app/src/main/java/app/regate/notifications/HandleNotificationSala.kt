@@ -12,7 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.net.toUri
 import app.regate.common.resources.R
-import app.regate.constant.AppUrl
+import app.regate.constant.AppUrl1
 import app.regate.constant.MainPages
 import app.regate.constant.Route
 import app.regate.data.AppRoomDatabase
@@ -43,7 +43,7 @@ class HandleNotificationSala {
 //        AppRoomDatabase.destroyInstance()
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "$AppUrl/${Route.SALA}/${payload.id}".toUri(),
+                "$AppUrl1/${Route.SALA}/${payload.id}".toUri(),
                 context,
                 MainActivity::class.java
             )
@@ -90,13 +90,13 @@ class HandleNotificationSala {
             AppRoomDatabase.destroyInstance()
             val taskSalaIntent = Intent(
                 Intent.ACTION_VIEW,
-                "$AppUrl/${Route.SALA}/${payload.id}".toUri(),
+                "$AppUrl1/${Route.SALA}/${payload.id}".toUri(),
                 context,
                 MainActivity::class.java
             )
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "${AppUrl}/${Route.DISCOVER}/${payloadString}/${MainPages.Discover}".toUri(),
+                "${AppUrl1}/${Route.DISCOVER}/${payloadString}/${MainPages.Discover}".toUri(),
                 context,
                 MainActivity::class.java
             )
@@ -152,7 +152,7 @@ class HandleNotificationSala {
             AppRoomDatabase.destroyInstance()
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "$AppUrl/${Route.SALA}/${payload.id}".toUri(),
+                "$AppUrl1/${Route.SALA}/${payload.id}".toUri(),
                 context,
                 MainActivity::class.java
             )

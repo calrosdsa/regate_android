@@ -17,8 +17,8 @@ import app.regate.data.db.AppTypeConverters;
 import app.regate.data.db.DateTimeTypeConverters;
 import app.regate.models.LabelType;
 import app.regate.models.Labels;
-import app.regate.models.Profile;
 import app.regate.models.ProfileCategory;
+import app.regate.models.user.Profile;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.Integer;
@@ -32,11 +32,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
+import javax.annotation.processing.Generated;
 import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 import kotlinx.coroutines.flow.Flow;
 import kotlinx.datetime.Instant;
 
+@Generated("androidx.room.RoomProcessor")
 @SuppressWarnings({"unchecked", "deprecation"})
 public final class RoomProfileDao_Impl extends RoomProfileDao {
   private final RoomDatabase __db;

@@ -22,7 +22,7 @@ import app.regate.common.composes.viewModel
 import me.tatarka.inject.annotations.Inject
 import app.regate.common.resources.R
 import app.regate.data.dto.account.billing.ConsumeDto
-import app.regate.data.dto.account.billing.TypeEntity
+import app.regate.models.TypeEntity
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 
@@ -62,8 +62,8 @@ internal fun Consume(
                 ConsumeItem(item = item,
                 navigate = {
                     when(item.type_entity){
-                        TypeEntity.ENTITY_RESERVA.ordinal -> navigateToReserva(item.id_entity)
-                        TypeEntity.ENTITY_SALA.ordinal -> navigateToSala(item.id_entity)
+                        TypeEntity.RESERVA.ordinal -> navigateToReserva(item.id_entity)
+                        TypeEntity.SALA.ordinal -> navigateToSala(item.id_entity)
                         else -> {}
                     }
                 },

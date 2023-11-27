@@ -103,6 +103,41 @@ class SalaCompleteViewModel(
         }
     }
 
+    fun deleteCompleteSala(context:Context,amount:Double,id:Int){
+        viewModelScope.launch {
+            try {
+                loadingConter.addLoader()
+                val data = CompleteSalaRequest(
+                    id = id,
+                    sala_id = salaId,
+                    amount = amount
+                )
+                loadingConter.removeLoader()
+                salaRepository.deleteComplete(data)
+                getData()
+            }catch (e:ResponseException){
+                loadingConter.removeLoader()
+                if(e.response.status == HttpStatusCode.BadRequest){
+                    uiMessageManager.emitMessage(UiMessage(
+                        message= e.response.body<ResponseMessage>().message
+                    ))
+                }else{
+                    uiMessageManager.emitMessage(UiMessage(
+                        message= context.getString(R.string.unexpected_error)
+                    ))
+                }
+                Log.d("DEBUG_APP",e.localizedMessage?:"")
+
+            } catch (e:Exception){
+                loadingConter.removeLoader()
+                Log.d("DEBUG_APP",e.localizedMessage?:"")
+                uiMessageManager.emitMessage(UiMessage(
+                    message= context.getString(R.string.unexpected_error)
+                ))
+            }
+        }
+    }
+
     fun clearMessage(id:Long){
         viewModelScope.launch {
             uiMessageManager.clearMessage(id)

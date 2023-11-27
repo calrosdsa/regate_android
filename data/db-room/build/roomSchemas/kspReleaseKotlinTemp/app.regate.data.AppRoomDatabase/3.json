@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "174c40bb3e2cf106ed64200b2201747c",
+    "identityHash": "f9af2e9d96217f9cba891e4cad5f3a8f",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -805,7 +805,7 @@
       },
       {
         "tableName": "reservas",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `instalacion_id` INTEGER NOT NULL, `instalacion_name` TEXT NOT NULL, `establecimiento_id` INTEGER NOT NULL, `pagado` REAL NOT NULL, `total_price` REAL NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `user_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `instalacion_id` INTEGER NOT NULL, `description` TEXT, `instalacion_name` TEXT NOT NULL, `establecimiento_id` INTEGER NOT NULL, `pagado` REAL NOT NULL, `total_price` REAL NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `instalacion_photo` TEXT, `user_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -818,6 +818,12 @@
             "columnName": "instalacion_id",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "instalacion_name",
@@ -856,6 +862,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "instalacion_photo",
+            "columnName": "instalacion_photo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "user_id",
             "columnName": "user_id",
             "affinity": "INTEGER",
@@ -879,7 +891,7 @@
       },
       {
         "tableName": "notification",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `content` TEXT NOT NULL, `entityId` INTEGER, `typeEntity` INTEGER, `read` INTEGER NOT NULL, `created_at` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `content` TEXT NOT NULL, `entityId` INTEGER, `typeEntity` INTEGER, `read` INTEGER NOT NULL, `image` TEXT, `created_at` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -916,6 +928,12 @@
             "columnName": "read",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "image",
+            "columnName": "image",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "created_at",
@@ -1177,7 +1195,7 @@
       },
       {
         "tableName": "user_balance",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`balance_id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `coins` REAL NOT NULL, PRIMARY KEY(`balance_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`balance_id` INTEGER NOT NULL, `profile_id` INTEGER NOT NULL, `coins` REAL NOT NULL, `retain_coin` REAL NOT NULL, PRIMARY KEY(`balance_id`))",
         "fields": [
           {
             "fieldPath": "balance_id",
@@ -1194,6 +1212,12 @@
           {
             "fieldPath": "coins",
             "columnName": "coins",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "retain_coin",
+            "columnName": "retain_coin",
             "affinity": "REAL",
             "notNull": true
           }
@@ -1385,7 +1409,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '174c40bb3e2cf106ed64200b2201747c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f9af2e9d96217f9cba891e4cad5f3a8f')"
     ]
   }
 }

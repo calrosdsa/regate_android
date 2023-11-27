@@ -12,7 +12,7 @@ import app.regate.constant.arg
 import app.regate.constant.id
 import app.regate.home.animatedComposable
 import app.regate.home.animatedComposableVariant
-import app.regate.home.uri
+import app.regate.home.uri1
 
 @ExperimentalAnimationApi
 internal fun NavGraphBuilder.SalaRoutes(
@@ -46,7 +46,7 @@ internal fun NavGraphBuilder.SalaRoutes(
         arguments = listOf(
             navArgument("id") { type = NavType.LongType },
         ),
-        deepLinks = listOf(navDeepLink { uriPattern = "$uri/${Route.SALA}/{id}" })
+        deepLinks = listOf(navDeepLink { uriPattern = "$uri1/${Route.SALA}/{id}" })
     ) {
         composeScreens.sala(
             navigateUp = navController::navigateUp,

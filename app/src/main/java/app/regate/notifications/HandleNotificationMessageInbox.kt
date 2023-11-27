@@ -17,7 +17,7 @@ import androidx.core.app.TaskStackBuilder
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.net.toUri
 import app.regate.common.resources.R
-import app.regate.constant.AppUrl
+import app.regate.constant.AppUrl1
 import app.regate.constant.Route
 import app.regate.data.dto.notifications.MessageGroupPayload
 import app.regate.home.MainActivity
@@ -63,7 +63,7 @@ class HandleNotificationMessageInbox {
             val m3 = messages[0]
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "${AppUrl}/${Route.CHAT_GRUPO}/${chat.id}/${chat.parent_id}/${chat.type_chat}".toUri(),
+                "${AppUrl1}/${Route.CHAT_GRUPO}/${chat.id}/${chat.parent_id}/${chat.type_chat}".toUri(),
                 context,
                 MainActivity::class.java
             )
@@ -74,7 +74,7 @@ class HandleNotificationMessageInbox {
             val persons = mutableListOf<Person>()
             messages.map {
                 val person = Person.Builder()
-                    .setIcon(IconCompat.createWithBitmap(getBitmap(it.profile.profile_photo?:"",context)))
+                    .setIcon(IconCompat.createWithBitmap(Util.getBitmap(it.profile.profile_photo?:"",context)))
                     .setName("${it.profile.name} ${it.profile.apellido?:""}" )
                     .build()
                 persons.add(person)

@@ -21,7 +21,7 @@ room = "2.6.0-alpha01"
 #room = "2.5.1"
 compileSdk = "33"
 minSdk = "23"
-targetSdk = "31"
+targetSdk = "33"
 calendar = "1.1.0"
 #material3 = "1.0.1"
 args = "2.5.3"
@@ -58,7 +58,7 @@ androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-ru
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxlifecycle" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxlifecycle" }
 
-androidx-navigation-compose = "androidx.navigation:navigation-compose:2.6.0-alpha08"
+androidx-navigation-compose = "androidx.navigation:navigation-compose:2.6.0"
 
 cashapp-paging-common = "app.cash.paging:paging-common:3.1.1-0.2.0"
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }

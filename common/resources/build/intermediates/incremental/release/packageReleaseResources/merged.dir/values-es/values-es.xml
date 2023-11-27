@@ -7,6 +7,7 @@
     <string name="all">Todo</string>
     <string name="amount">Amount: %1$s</string>
     <string name="amount_contributed">Monto aportado</string>
+    <string name="amount_withheld">Monto retenido</string>
     <string name="animals_and_nature">ANIMALES Y NATURALEZA</string>
     <string name="app_name">Regate</string>
     <string name="available_courts">Canchas disponibles</string>
@@ -39,6 +40,7 @@
     <string name="decline">Declinar</string>
     <string name="delete_chat">Eliminar chat</string>
     <string name="delete_message">Delete message</string>
+    <string name="delete_reservation">Eliminar reserva</string>
     <string name="deposits">Depósitos</string>
     <string name="description">Descripción</string>
     <string name="discount">Los beneficios y descuento se lanzan regularmente</string>
@@ -51,6 +53,7 @@
     <string name="email_verification_help_text">Antes de continuar, necesitamos verificar su correo electrónico. Por favor ingrese el código que fue enviado a su correo electrónico (<b>%1$s</b>)</string>
     <string name="emileys_emotion">EMOCIONES Y EMOCIONES</string>
     <string name="establecimientos">Establecimientos</string>
+    <string name="establecimientos_where_user_play">Lugares donde juega</string>
     <string name="exit">Salir</string>
     <string name="expiration_date">Expiration date:  %1$s</string>
     <string name="explore_exceptional_destinations">Explora destinos excepcionales</string>
@@ -80,6 +83,7 @@
     <string name="language">Idioma</string>
     <string name="later">Luego</string>
     <string name="leave_group">Salir del grupo</string>
+    <string name="leave_room">Salir de la sala</string>
     <string name="location">Ubicación</string>
     <string name="login">Iniciar Sessión</string>
     <string name="logout">Cerrar Sessión</string>
@@ -151,7 +155,7 @@
     <string name="see_sala">Ver sala</string>
     <string name="select_group_text">¿En qué grupo te gustaría crear esta sala?</string>
     <string name="send">Enviar</string>
-    <string name="send_to_a_group">Enviar a un grupo</string>
+    <string name="send_to_a_chat">Enviar a un chat</string>
     <string name="services">Servicios</string>
     <string name="settings">Configuraciones</string>
     <string name="share_image_link">Compartir enlace de la imagen</string>

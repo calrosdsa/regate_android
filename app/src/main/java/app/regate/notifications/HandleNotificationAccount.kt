@@ -12,7 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.net.toUri
 import app.regate.common.resources.R
-import app.regate.constant.AppUrl
+import app.regate.constant.AppUrl1
 import app.regate.constant.MainPages
 import app.regate.constant.Route
 import app.regate.data.AppRoomDatabase
@@ -36,7 +36,7 @@ class HandleNotificationAccount {
 //            AppRoomDatabase.destroyInstance()
             val taskDetailIntent = Intent(
                 Intent.ACTION_VIEW,
-                "$AppUrl/${Route.NOTIFICATIONS}/${MainPages.Notifications}".toUri(),
+                "$AppUrl1/${Route.NOTIFICATIONS}/${MainPages.Notifications}".toUri(),
                 context,
                 MainActivity::class.java
             )
