@@ -141,9 +141,9 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `invitation_grupo` (`profile_id` INTEGER NOT NULL, `grupo_id` INTEGER NOT NULL, `estado` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`profile_id`, `grupo_id`), FOREIGN KEY(`grupo_id`) REFERENCES `grupos`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_invitation_grupo_grupo_id` ON `invitation_grupo` (`grupo_id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `profile_category` (`profile_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`profile_id`, `category_id`))");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `last_updated_entity` (`entity_id` TEXT NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`entity_id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `last_updated_entity` (`entity_id` TEXT NOT NULL, `created_at` TEXT NOT NULL, `parent_id` INTEGER NOT NULL, PRIMARY KEY(`entity_id`, `parent_id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ca529d79289b7886a1f6f449d269bc55')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '734c15f67dda0c0a38620196d5d1a97b')");
       }
 
       @Override
@@ -626,9 +626,10 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
                   + " Expected:\n" + _infoProfileCategory + "\n"
                   + " Found:\n" + _existingProfileCategory);
         }
-        final HashMap<String, TableInfo.Column> _columnsLastUpdatedEntity = new HashMap<String, TableInfo.Column>(2);
+        final HashMap<String, TableInfo.Column> _columnsLastUpdatedEntity = new HashMap<String, TableInfo.Column>(3);
         _columnsLastUpdatedEntity.put("entity_id", new TableInfo.Column("entity_id", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsLastUpdatedEntity.put("created_at", new TableInfo.Column("created_at", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLastUpdatedEntity.put("parent_id", new TableInfo.Column("parent_id", "INTEGER", true, 2, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysLastUpdatedEntity = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesLastUpdatedEntity = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoLastUpdatedEntity = new TableInfo("last_updated_entity", _columnsLastUpdatedEntity, _foreignKeysLastUpdatedEntity, _indicesLastUpdatedEntity);
@@ -640,7 +641,7 @@ public final class AppRoomDatabase_Impl extends AppRoomDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "ca529d79289b7886a1f6f449d269bc55", "3105cac5c893c2424f331eabd405f411");
+    }, "734c15f67dda0c0a38620196d5d1a97b", "dc10c406f433395931f0e1baec3c23d1");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;

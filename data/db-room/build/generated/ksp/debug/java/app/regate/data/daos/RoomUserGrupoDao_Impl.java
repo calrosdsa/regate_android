@@ -3,6 +3,7 @@ package app.regate.data.daos;
 import android.database.Cursor;
 import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityDeletionOrUpdateAdapter;
 import androidx.room.EntityInsertionAdapter;
@@ -10,6 +11,7 @@ import androidx.room.EntityUpsertionAdapter;
 import androidx.room.RoomDatabase;
 import androidx.room.RoomSQLiteQuery;
 import androidx.room.SharedSQLiteStatement;
+import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import app.regate.compoundmodels.UserProfileGrupoAndSalaDto;
@@ -47,6 +49,8 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
   private final SharedSQLiteStatement __preparedStmtOfDeleteUsersGroup;
 
   private final SharedSQLiteStatement __preparedStmtOfUpdateUser;
+
+  private final SharedSQLiteStatement __preparedStmtOfUpdateUserIsOut;
 
   private final EntityUpsertionAdapter<UserGrupo> __upsertionAdapterOfUserGrupo;
 
@@ -133,6 +137,14 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
       @NonNull
       public String createQuery() {
         final String _query = "UPDATE user_grupo set is_admin = ? where id = ?";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfUpdateUserIsOut = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "update user_grupo set is_out = ? where id = ?";
         return _query;
       }
     };
@@ -346,6 +358,32 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
   }
 
   @Override
+  public Object updateUserIsOut(final long id, final boolean isOut,
+      final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfUpdateUserIsOut.acquire();
+        int _argIndex = 1;
+        final int _tmp = isOut ? 1 : 0;
+        _stmt.bindLong(_argIndex, _tmp);
+        _argIndex = 2;
+        _stmt.bindLong(_argIndex, id);
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfUpdateUserIsOut.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
   public Object upsert(final UserGrupo entity, final Continuation<? super Long> continuation) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
@@ -404,9 +442,9 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
   public Flow<List<UserProfileGrupoAndSalaDto>> observeUsersGrupo(final long id) {
     final String _sql = "\n"
             + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.is_out,ug.id as id,\n"
-            + "        ug.grupo_id as parent_id,(2) as type_entity  from user_grupo as ug\n"
+            + "        ug.grupo_id as parent_id,(2) as type_chat  from user_grupo as ug\n"
             + "        inner join profiles as p on p.id = ug.profile_id\n"
-            + "        where ug.grupo_id = ?\n"
+            + "        where ug.grupo_id = ? and is_out = 0\n"
             + "    ";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -428,7 +466,7 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
             final int _cursorIndexOfIsOut = 5;
             final int _cursorIndexOfId = 6;
             final int _cursorIndexOfParentId = 7;
-            final int _cursorIndexOfTypeEntity = 8;
+            final int _cursorIndexOfTypeChat = 8;
             final List<UserProfileGrupoAndSalaDto> _result = new ArrayList<UserProfileGrupoAndSalaDto>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final UserProfileGrupoAndSalaDto _item;
@@ -460,9 +498,9 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
               _tmpId = _cursor.getLong(_cursorIndexOfId);
               final long _tmpParent_id;
               _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
-              final int _tmpType_entity;
-              _tmpType_entity = _cursor.getInt(_cursorIndexOfTypeEntity);
-              _item = new UserProfileGrupoAndSalaDto(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpIs_out,_tmpId,_tmpParent_id,_tmpType_entity);
+              final int _tmpType_chat;
+              _tmpType_chat = _cursor.getInt(_cursorIndexOfTypeChat);
+              _item = new UserProfileGrupoAndSalaDto(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpIs_out,_tmpId,_tmpParent_id,_tmpType_chat);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -483,29 +521,45 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
   }
 
   @Override
-  public Object getUsersCount(final boolean isOut, final long grupoId,
-      final Continuation<? super Integer> continuation) {
-    final String _sql = "select count(*) from user_grupo where grupo_id = ? and is_out = ? ";
+  public Object getUserGroup(final long groupId, final long profileId,
+      final Continuation<? super UserGrupo> continuation) {
+    final String _sql = "select * from user_grupo where grupo_id = ? and profile_id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
     int _argIndex = 1;
-    _statement.bindLong(_argIndex, grupoId);
+    _statement.bindLong(_argIndex, groupId);
     _argIndex = 2;
-    final int _tmp = isOut ? 1 : 0;
-    _statement.bindLong(_argIndex, _tmp);
+    _statement.bindLong(_argIndex, profileId);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
-    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Integer>() {
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<UserGrupo>() {
       @Override
-      @NonNull
-      public Integer call() throws Exception {
+      @Nullable
+      public UserGrupo call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
-          final Integer _result;
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfProfileId = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_id");
+          final int _cursorIndexOfGrupoId = CursorUtil.getColumnIndexOrThrow(_cursor, "grupo_id");
+          final int _cursorIndexOfIsAdmin = CursorUtil.getColumnIndexOrThrow(_cursor, "is_admin");
+          final int _cursorIndexOfIsOut = CursorUtil.getColumnIndexOrThrow(_cursor, "is_out");
+          final UserGrupo _result;
           if (_cursor.moveToFirst()) {
+            final long _tmpId;
+            _tmpId = _cursor.getLong(_cursorIndexOfId);
+            final long _tmpProfile_id;
+            _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
+            final long _tmpGrupo_id;
+            _tmpGrupo_id = _cursor.getLong(_cursorIndexOfGrupoId);
+            final boolean _tmpIs_admin;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfIsAdmin);
+            _tmpIs_admin = _tmp != 0;
+            final boolean _tmpIs_out;
             final int _tmp_1;
-            _tmp_1 = _cursor.getInt(0);
-            _result = _tmp_1;
+            _tmp_1 = _cursor.getInt(_cursorIndexOfIsOut);
+            _tmpIs_out = _tmp_1 != 0;
+            _result = new UserGrupo(_tmpId,_tmpProfile_id,_tmpGrupo_id,_tmpIs_admin,_tmpIs_out);
           } else {
-            _result = 0;
+            _result = null;
           }
           return _result;
         } finally {
@@ -520,9 +574,9 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
   public Flow<List<UserProfileGrupoAndSalaDto>> observeUsersRoom(final long id) {
     final String _sql = "\n"
             + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ur.is_admin,ur.is_out,ur.id as id, \n"
-            + "        ur.sala_id as parent_id,(1) as type_entity from user_room as ur\n"
+            + "        ur.sala_id as parent_id,(1) as type_chat from user_room as ur\n"
             + "        inner join profiles as p on p.id = ur.profile_id\n"
-            + "        where ur.sala_id = ?\n"
+            + "        where ur.sala_id = ? and is_out = 0\n"
             + "    ";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -544,7 +598,7 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
             final int _cursorIndexOfIsOut = 5;
             final int _cursorIndexOfId = 6;
             final int _cursorIndexOfParentId = 7;
-            final int _cursorIndexOfTypeEntity = 8;
+            final int _cursorIndexOfTypeChat = 8;
             final List<UserProfileGrupoAndSalaDto> _result = new ArrayList<UserProfileGrupoAndSalaDto>(_cursor.getCount());
             while (_cursor.moveToNext()) {
               final UserProfileGrupoAndSalaDto _item;
@@ -576,9 +630,9 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
               _tmpId = _cursor.getLong(_cursorIndexOfId);
               final long _tmpParent_id;
               _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
-              final int _tmpType_entity;
-              _tmpType_entity = _cursor.getInt(_cursorIndexOfTypeEntity);
-              _item = new UserProfileGrupoAndSalaDto(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpIs_out,_tmpId,_tmpParent_id,_tmpType_entity);
+              final int _tmpType_chat;
+              _tmpType_chat = _cursor.getInt(_cursorIndexOfTypeChat);
+              _item = new UserProfileGrupoAndSalaDto(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpIs_out,_tmpId,_tmpParent_id,_tmpType_chat);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();

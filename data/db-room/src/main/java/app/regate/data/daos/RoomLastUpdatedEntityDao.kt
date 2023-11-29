@@ -7,6 +7,6 @@ import app.regate.models.UpdatedEntity
 
 @Dao
 abstract class RoomLastUpdatedEntityDao:RoomEntityDao<LastUpdatedEntity>,LastUpdatedEntityDao {
-    @Query("select * from last_updated_entity where entity_id = :entity")
-    abstract override suspend fun getLastUpdatedEntity(entity: UpdatedEntity): LastUpdatedEntity?
+    @Query("select * from last_updated_entity where entity_id = :entity and parent_id = :parentId")
+    abstract override suspend fun getLastUpdatedEntity(entity: UpdatedEntity,parentId:Long): LastUpdatedEntity?
 }

@@ -4,6 +4,7 @@ import app.regate.compoundmodels.MessageProfile
 import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.data.daos.ChatDao
 import app.regate.data.daos.GrupoDao
+import app.regate.data.daos.LastUpdatedEntityDao
 import app.regate.data.daos.MessageInboxDao
 import app.regate.data.daos.MessageProfileDao
 import app.regate.data.daos.MyGroupsDao
@@ -27,7 +28,8 @@ import app.regate.data.mappers.users.UserGroupRoomDtoToProfile
 import app.regate.data.mappers.users.UserProfileGrupoAndSalaDtoToUserGrupo
 import app.regate.data.mappers.users.UserProfileGrupoAndSalaDtoToUserRoom
 import app.regate.inject.ApplicationScope
-import app.regate.models.TypeEntity
+import app.regate.models.LastUpdatedEntity
+import app.regate.models.UpdatedEntity
 import app.regate.models.grupo.Grupo
 import app.regate.models.chat.Message
 import app.regate.models.chat.MessageInbox
@@ -57,24 +59,28 @@ class ChatRepository(
     private val profileDao: ProfileDao,
     private val userGroupRoomDtoToProfile: UserGroupRoomDtoToProfile,
     private val profileGrupoAndSalaDtoToUserRoom: UserProfileGrupoAndSalaDtoToUserRoom,
-    private val profileGrupoAndSalaDtoToUserGrupo: UserProfileGrupoAndSalaDtoToUserGrupo
+    private val profileGrupoAndSalaDtoToUserGrupo: UserProfileGrupoAndSalaDtoToUserGrupo,
+    private val lastUpdatedEntityDao: LastUpdatedEntityDao
 ) {
+    @Suppress("SuspiciousIndentation")
     suspend fun notifyNewUser(d:NotifyNewUserRequest){
         withContext(dispatchers.io){
             try{
-                val chat = chatDao.getChatByType(d.parentId,d.typeEntity.ordinal)
+                val chat = chatDao.getChatByType(d.parentId,d.type_chat)
                 val profile = profileDao.getProfile(d.profileId)
                 val request = UserProfileGrupoAndSalaDto(
                     profile_id = d.profileId,
                     profile_photo = profile.profile_photo,
                     nombre = profile.nombre,
                     apellido = profile.apellido,
-                    type_entity = d.typeEntity.ordinal,
-                    id = d.id
+                    parent_id = d.parentId,
+                    id = d.id,
+                    is_out = d.is_out,
+                    type_chat = d.type_chat,
                 )
-                if (chat != null) {
-                    chatDataSourceImpl.notifyNewUser(chat.id,request)
-                }
+//                if (chat != null) {
+                    chatDataSourceImpl.notifyNewUser(chat?.id?:0,request)
+//                }
             }catch (e:Exception){
                 throw e
             }
@@ -99,15 +105,17 @@ class ChatRepository(
 
     suspend fun insertNewUser(d:UserProfileGrupoAndSalaDto){
         withContext(dispatchers.io){
-            when(d.type_entity){
-                TypeEntity.GRUPO.ordinal ->{
-                    profileDao.insertOnConflictIgnore(userGroupRoomDtoToProfile.map(d))
-                    userGrupoDao.insertOnConflictIgnore(profileGrupoAndSalaDtoToUserGrupo.map(d))
+            when(d.type_chat){
+                TypeChat.TYPE_CHAT_GRUPO.ordinal ->{
+                    profileDao.upsert(userGroupRoomDtoToProfile.map(d))
+                    userGrupoDao.upsert(profileGrupoAndSalaDtoToUserGrupo.map(d))
                 }
-                TypeEntity.SALA.ordinal ->{
-                    profileDao.insertOnConflictIgnore(userGroupRoomDtoToProfile.map(d))
-                    userRoomDao.insertOnConflictIgnore(profileGrupoAndSalaDtoToUserRoom.map(d))
+                TypeChat.TYPE_CHAT_SALA.ordinal ->{
+                    profileDao.upsert(userGroupRoomDtoToProfile.map(d))
+                    userRoomDao.upsert(profileGrupoAndSalaDtoToUserRoom.map(d))
                 }
+
+                else -> {}
             }
         }
     }
@@ -120,9 +128,10 @@ class ChatRepository(
                 )
                 when(typeChat){
                     TypeChat.TYPE_CHAT_GRUPO.ordinal ->{
-                        val actives = userGrupoDao.getUsersCount(false,parentId)
-                        val inactives = userGrupoDao.getUsersCount(true,parentId)
-                        val res = chatDataSourceImpl.getUsers(d.copy(active_users_count = actives, inactive_users_count = inactives))
+                        val lastUpdatedEntity = lastUpdatedEntityDao.getLastUpdatedEntity(UpdatedEntity.USER_ROOM,parentId)
+                        val res = chatDataSourceImpl.getUsers(d.copy(
+                            last_updated = lastUpdatedEntity?.created_at
+                        ))
                         res?.let { users->
                             val profiles = users.map {user->
                                userGroupRoomDtoToProfile.map(user)
@@ -135,11 +144,13 @@ class ChatRepository(
                             profileDao.upsertAll(profiles)
                             userGrupoDao.upsertAll(usersGroup)
                         }
+                        lastUpdatedEntityDao.upsert(LastUpdatedEntity(entity_id = UpdatedEntity.USER_ROOM, parent_id = parentId))
                     }
                     TypeChat.TYPE_CHAT_SALA.ordinal ->{
-                        val actives = userRoomDao.getUsersCount(false,parentId)
-                        val inactives = userRoomDao.getUsersCount(true,parentId)
-                        val res = chatDataSourceImpl.getUsers(d.copy(active_users_count = actives, inactive_users_count = inactives))
+                        val lastUpdatedEntity = lastUpdatedEntityDao.getLastUpdatedEntity(UpdatedEntity.USER_ROOM,parentId)
+                        val res = chatDataSourceImpl.getUsers(d.copy(
+                            last_updated = lastUpdatedEntity?.created_at
+                        ))
                         res?.let { users->
                             val profiles = users.map {user->
                                 userGroupRoomDtoToProfile.map(user)
@@ -152,6 +163,7 @@ class ChatRepository(
                             profileDao.upsertAll(profiles)
                             userRoomDao.upsertAll(usersRoom)
                         }
+                        lastUpdatedEntityDao.upsert(LastUpdatedEntity(entity_id = UpdatedEntity.USER_ROOM, parent_id = parentId))
                     }
                         else ->{}
                 }

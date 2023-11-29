@@ -1,7 +1,6 @@
 package app.regate.compoundmodels
 
-import androidx.room.Ignore
-import app.regate.models.TypeEntity
+import app.regate.data.dto.chat.TypeChat
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,5 +13,5 @@ data class UserProfileGrupoAndSalaDto(
     val is_out:Boolean = false,
     val id:Long,
     val parent_id:Long = 0,
-    val type_entity:Int = TypeEntity.SALA.ordinal
+    val type_chat:Int = 1
 )

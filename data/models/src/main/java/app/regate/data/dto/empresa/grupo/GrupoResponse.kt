@@ -17,6 +17,7 @@ data class GrupoResponse(
 )
 
 @Serializable
-data class JoinGrupoResponse(
-    val chat_id:Long=0
+data class JoinGroupResponse(
+    val chat_id:Long=0,
+    val id:Long
 )

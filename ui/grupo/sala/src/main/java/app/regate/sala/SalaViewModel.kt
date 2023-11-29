@@ -1,5 +1,6 @@
 package app.regate.sala
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
@@ -19,7 +20,6 @@ import io.ktor.client.plugins.ResponseException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
@@ -35,10 +35,8 @@ import app.regate.data.chat.ChatRepository
 import app.regate.data.dto.chat.NotifyNewUserRequest
 import app.regate.data.dto.chat.TypeChat
 import app.regate.domain.interactors.UpdateChat
-import app.regate.domain.observers.ObserveUsersSala
 import app.regate.domain.observers.chat.ObserveUsersForChat
 import app.regate.extensions.combine
-import app.regate.models.TypeEntity
 
 @Inject
 class SalaViewModel(
@@ -80,6 +78,15 @@ class SalaViewModel(
         observeUsersForChat(ObserveUsersForChat.Params(id = salaId, typeChat = TypeChat.TYPE_CHAT_SALA.ordinal))
         observeAuthState(Unit)
         observeUser(Unit)
+//        viewModelScope.launch {
+//            observeUsersForChat.flow.collectLatest {
+//                try{
+//
+//                }catch (e:Exception){
+//                    //TODO()
+//                }
+//            }
+//        }
         getSala()
     }
     fun getSala(){
@@ -87,14 +94,7 @@ class SalaViewModel(
             try{
             salaRepository.getSala(salaId).let {result->
                 data.tryEmit(result)
-                updateChat.executeSync(UpdateChat.Params(
-                    params = ChatParams(
-                        parent_id = salaId,
-                        typeChat = TypeChat.TYPE_CHAT_SALA.ordinal,
-                        photo = result.instalacion.portada,
-                        name = result.sala.titulo
-                    )
-                ))
+
             }
                 chatRepository.getUsers(salaId,TypeChat.TYPE_CHAT_SALA.ordinal)
 
@@ -105,22 +105,37 @@ class SalaViewModel(
             }
         }
     }
+    fun getChat(){
+        viewModelScope.launch {
+
+        updateChat.executeSync(UpdateChat.Params(
+            params = ChatParams(
+                parent_id = salaId,
+                typeChat = TypeChat.TYPE_CHAT_SALA.ordinal,
+                photo =state.value.data?.instalacion?.portada,
+                name = state.value.data?.instalacion?.name?:""
+            )
+        ))
+        }
+    }
+    @SuppressLint("SuspiciousIndentation")
     fun joinSala(){
         viewModelScope.launch {
-            try{
+            try {
                 loadingState.addLoader()
                 val res = state.value.data?.sala?.let {
-                    salaRepository.joinSala(salaId, it.precio,it.cupos,it.grupo_id)
+                    salaRepository.joinSala(salaId, it.precio, it.cupos, it.grupo_id)
                 }
                 getSala()
                 loadingState.removeLoader()
-                if(res != null){
-                val notifyNewUserRequest = NotifyNewUserRequest(
-                    id = res.id,
-                    profileId = state.value.user?.profile_id?:0,
-                    typeEntity = TypeEntity.SALA,
-                    parentId = state.value.data?.sala?.id?:0
-                )
+                if (res != null) {
+                    val notifyNewUserRequest = NotifyNewUserRequest(
+                        id = res.id,
+                        profileId = state.value.user?.profile_id ?: 0,
+                        parentId = salaId,
+                        type_chat = TypeChat.TYPE_CHAT_SALA.ordinal
+                    )
+                    Log.d("DEBUG_APP_DATA", notifyNewUserRequest.toString())
                     chatRepository.notifyNewUser(notifyNewUserRequest)
                 }
 
@@ -131,6 +146,8 @@ class SalaViewModel(
                 uiMessageManager.emitMessage(UiMessage(message = e.response.body<ResponseMessage>().message))
                 Log.d("DEBUG_APP_ERROR",e.response.body()?:"error")
             }catch (e:Exception){
+                loadingState.removeLoader()
+                Log.d("DEBUG_APP_ERROR",e.localizedMessage?:"")
                 //TODO()
             }
         }
@@ -169,6 +186,15 @@ class SalaViewModel(
                 }?.id .also {userSalaId->
                     if(userSalaId != null){
                         salaRepository.exitSala(userSalaId.toInt())
+                        val notifyNewUserRequest = NotifyNewUserRequest(
+                            id = userSalaId,
+                            profileId = state.value.user?.profile_id ?: 0,
+                            parentId = salaId,
+                            type_chat = TypeChat.TYPE_CHAT_SALA.ordinal,
+                            is_out = true
+                        )
+                        Log.d("DEBUG_APP_DATA", notifyNewUserRequest.toString())
+                        chatRepository.notifyNewUser(notifyNewUserRequest)
                     }
                 }
                 loadingState.removeLoader()

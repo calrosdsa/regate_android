@@ -51,7 +51,7 @@ public final class RoomLastUpdatedEntityDao_Impl extends RoomLastUpdatedEntityDa
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT OR IGNORE INTO `last_updated_entity` (`entity_id`,`created_at`) VALUES (?,?)";
+        return "INSERT OR IGNORE INTO `last_updated_entity` (`entity_id`,`created_at`,`parent_id`) VALUES (?,?,?)";
       }
 
       @Override
@@ -64,26 +64,28 @@ public final class RoomLastUpdatedEntityDao_Impl extends RoomLastUpdatedEntityDa
         } else {
           statement.bindString(2, _tmp);
         }
+        statement.bindLong(3, entity.getParent_id());
       }
     };
     this.__deletionAdapterOfLastUpdatedEntity = new EntityDeletionOrUpdateAdapter<LastUpdatedEntity>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "DELETE FROM `last_updated_entity` WHERE `entity_id` = ?";
+        return "DELETE FROM `last_updated_entity` WHERE `entity_id` = ? AND `parent_id` = ?";
       }
 
       @Override
       public void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final LastUpdatedEntity entity) {
         statement.bindString(1, __UpdatedEntity_enumToString(entity.getEntity_id()));
+        statement.bindLong(2, entity.getParent_id());
       }
     };
     this.__updateAdapterOfLastUpdatedEntity = new EntityDeletionOrUpdateAdapter<LastUpdatedEntity>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE OR ABORT `last_updated_entity` SET `entity_id` = ?,`created_at` = ? WHERE `entity_id` = ?";
+        return "UPDATE OR ABORT `last_updated_entity` SET `entity_id` = ?,`created_at` = ?,`parent_id` = ? WHERE `entity_id` = ? AND `parent_id` = ?";
       }
 
       @Override
@@ -96,14 +98,16 @@ public final class RoomLastUpdatedEntityDao_Impl extends RoomLastUpdatedEntityDa
         } else {
           statement.bindString(2, _tmp);
         }
-        statement.bindString(3, __UpdatedEntity_enumToString(entity.getEntity_id()));
+        statement.bindLong(3, entity.getParent_id());
+        statement.bindString(4, __UpdatedEntity_enumToString(entity.getEntity_id()));
+        statement.bindLong(5, entity.getParent_id());
       }
     };
     this.__upsertionAdapterOfLastUpdatedEntity = new EntityUpsertionAdapter<LastUpdatedEntity>(new EntityInsertionAdapter<LastUpdatedEntity>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "INSERT INTO `last_updated_entity` (`entity_id`,`created_at`) VALUES (?,?)";
+        return "INSERT INTO `last_updated_entity` (`entity_id`,`created_at`,`parent_id`) VALUES (?,?,?)";
       }
 
       @Override
@@ -116,12 +120,13 @@ public final class RoomLastUpdatedEntityDao_Impl extends RoomLastUpdatedEntityDa
         } else {
           statement.bindString(2, _tmp);
         }
+        statement.bindLong(3, entity.getParent_id());
       }
     }, new EntityDeletionOrUpdateAdapter<LastUpdatedEntity>(__db) {
       @Override
       @NonNull
       public String createQuery() {
-        return "UPDATE `last_updated_entity` SET `entity_id` = ?,`created_at` = ? WHERE `entity_id` = ?";
+        return "UPDATE `last_updated_entity` SET `entity_id` = ?,`created_at` = ?,`parent_id` = ? WHERE `entity_id` = ? AND `parent_id` = ?";
       }
 
       @Override
@@ -134,7 +139,9 @@ public final class RoomLastUpdatedEntityDao_Impl extends RoomLastUpdatedEntityDa
         } else {
           statement.bindString(2, _tmp);
         }
-        statement.bindString(3, __UpdatedEntity_enumToString(entity.getEntity_id()));
+        statement.bindLong(3, entity.getParent_id());
+        statement.bindString(4, __UpdatedEntity_enumToString(entity.getEntity_id()));
+        statement.bindLong(5, entity.getParent_id());
       }
     });
   }
@@ -274,12 +281,14 @@ public final class RoomLastUpdatedEntityDao_Impl extends RoomLastUpdatedEntityDa
   }
 
   @Override
-  public Object getLastUpdatedEntity(final UpdatedEntity entity,
+  public Object getLastUpdatedEntity(final UpdatedEntity entity, final long parentId,
       final Continuation<? super LastUpdatedEntity> continuation) {
-    final String _sql = "select * from last_updated_entity where entity_id = ?";
-    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    final String _sql = "select * from last_updated_entity where entity_id = ? and parent_id = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
     int _argIndex = 1;
     _statement.bindString(_argIndex, __UpdatedEntity_enumToString(entity));
+    _argIndex = 2;
+    _statement.bindLong(_argIndex, parentId);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
     return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<LastUpdatedEntity>() {
       @Override
@@ -289,6 +298,7 @@ public final class RoomLastUpdatedEntityDao_Impl extends RoomLastUpdatedEntityDa
         try {
           final int _cursorIndexOfEntityId = CursorUtil.getColumnIndexOrThrow(_cursor, "entity_id");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
+          final int _cursorIndexOfParentId = CursorUtil.getColumnIndexOrThrow(_cursor, "parent_id");
           final LastUpdatedEntity _result;
           if (_cursor.moveToFirst()) {
             final UpdatedEntity _tmpEntity_id;
@@ -306,7 +316,9 @@ public final class RoomLastUpdatedEntityDao_Impl extends RoomLastUpdatedEntityDa
             } else {
               _tmpCreated_at = _tmp_1;
             }
-            _result = new LastUpdatedEntity(_tmpEntity_id,_tmpCreated_at);
+            final long _tmpParent_id;
+            _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
+            _result = new LastUpdatedEntity(_tmpEntity_id,_tmpCreated_at,_tmpParent_id);
           } else {
             _result = null;
           }
@@ -328,6 +340,8 @@ public final class RoomLastUpdatedEntityDao_Impl extends RoomLastUpdatedEntityDa
     switch (_value) {
       case NOTIFICATIONS: return "NOTIFICATIONS";
       case RESERVAS: return "RESERVAS";
+      case USER_ROOM: return "USER_ROOM";
+      case USER_GROUP: return "USER_GROUP";
       default: throw new IllegalArgumentException("Can't convert enum to string, unknown enum value: " + _value);
     }
   }
@@ -336,6 +350,8 @@ public final class RoomLastUpdatedEntityDao_Impl extends RoomLastUpdatedEntityDa
     switch (_value) {
       case "NOTIFICATIONS": return UpdatedEntity.NOTIFICATIONS;
       case "RESERVAS": return UpdatedEntity.RESERVAS;
+      case "USER_ROOM": return UpdatedEntity.USER_ROOM;
+      case "USER_GROUP": return UpdatedEntity.USER_GROUP;
       default: throw new IllegalArgumentException("Can't convert value to enum, unknown value: " + _value);
     }
   }

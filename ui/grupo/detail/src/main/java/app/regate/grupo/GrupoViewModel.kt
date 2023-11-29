@@ -8,6 +8,7 @@ import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.data.chat.ChatParams
 import app.regate.data.chat.ChatRepository
+import app.regate.data.dto.chat.NotifyNewUserRequest
 import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.dto.system.ReportData
@@ -163,7 +164,10 @@ class GrupoViewModel(
     fun removeUserFromGroup(){
         viewModelScope.launch {
             try{
-                selectedUser.value?.let { grupoRepository.removeUserFromGroup(it.id)}
+                selectedUser.value?.let {
+                    grupoRepository.removeUserFromGroup(it.id)
+                    notifyUser(it.id,it.profile_id)
+                }
             }catch (e:Exception){
                 Log.d("DEBUG_APP_WS",e.localizedMessage?:"")
             }
@@ -172,7 +176,9 @@ class GrupoViewModel(
     fun removeUserAdmin(){
         viewModelScope.launch {
             try{
-            selectedUser.value?.let { grupoRepository.changeStatusUser(it.id,false) }
+            selectedUser.value?.let {
+                grupoRepository.changeStatusUser(it.id,false)
+            }
             }catch (e:Exception){
                 Log.d("DEBUG_APP_WS",e.localizedMessage?:"")
             }
@@ -182,7 +188,9 @@ class GrupoViewModel(
         viewModelScope.launch {
             try{
 
-            selectedUser.value?.let { grupoRepository.changeStatusUser(it.id,true) }
+            selectedUser.value?.let {
+                grupoRepository.changeStatusUser(it.id,true)
+            }
             }catch (e:Exception){
                 Log.d("DEBUG_APP_WS",e.localizedMessage?:"")
             }
@@ -196,7 +204,8 @@ class GrupoViewModel(
             val targetUser = state.value.usersProfileGrupo
                 .first { it.profile_id == state.value.user?.profile_id }
                 if (chat != null) {
-                    grupoRepository.leaveGrupo(targetUser.id,chat.id)
+                    grupoRepository.leaveGrupo(targetUser.id,chat.id,grupoId)
+                    notifyUser(targetUser.id,state.value.user?.profile_id ?: 0)
                 }
                 grupoRepository.deleteGroupUserLocal(groupId = grupoId)
             navigateUp()
@@ -204,6 +213,17 @@ class GrupoViewModel(
                 //TODO()
             }
         }
+    }
+
+    suspend fun notifyUser(id:Long,profileId:Long){
+        val request = NotifyNewUserRequest(
+            id = id,
+            profileId = profileId,
+            parentId = grupoId,
+            type_chat = TypeChat.TYPE_CHAT_GRUPO.ordinal,
+            is_out = true
+        )
+        chatRepository.notifyNewUser(request)
     }
     fun navigateToReport(navigate:(String)->Unit){
         try{

@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class JoinSalaRequest(
+    val id:Long = 0,
     val sala_id:Long,
     val precio_sala:Double,
     val profile_id:Long,

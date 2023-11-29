@@ -11,7 +11,7 @@ import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
-import app.regate.data.dto.empresa.grupo.JoinGrupoResponse
+import app.regate.data.dto.empresa.grupo.JoinGroupResponse
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
 import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
@@ -124,7 +124,7 @@ class GrupoDataSourceImpl(
     override suspend fun getGrupo(id: Long):GrupoDto {
         return client.get("/v1/grupo/${id}/").body()
     }
-    override suspend fun joinGrupo(d: JoinUserGrupoRequest):JoinGrupoResponse {
+    override suspend fun joinGrupo(d: JoinUserGrupoRequest):JoinGroupResponse {
         val token = authStore.get()?.accessToken
         return client.post("/v1/grupo/add-user/"){
             header("Authorization","Bearer $token")

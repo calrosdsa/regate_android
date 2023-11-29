@@ -9,7 +9,7 @@ import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.GrupoResponse
-import app.regate.data.dto.empresa.grupo.JoinGrupoResponse
+import app.regate.data.dto.empresa.grupo.JoinGroupResponse
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
 import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
@@ -23,7 +23,7 @@ interface GrupoDataSource {
    suspend fun filterGrupos(d:FilterGrupoData,page:Int):PaginationGroupsResponse
    suspend fun getGrupoDetail(id:Long):GrupoResponse
    suspend fun getGrupo(id:Long):GrupoDto
-   suspend fun joinGrupo(d:JoinUserGrupoRequest): JoinGrupoResponse
+   suspend fun joinGrupo(d:JoinUserGrupoRequest): JoinGroupResponse
    suspend fun createGroup(d:GroupRequest):GrupoDto
    suspend fun removeUserFromGroup(id:Long)
    suspend fun changeStatusUser(id:Long,status:Boolean)

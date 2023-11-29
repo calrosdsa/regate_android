@@ -67,7 +67,8 @@ data class  UserGrupoDto(
 data class JoinUserGrupoRequest(
     val grupo_id:Long,
     val profile_id:Long,
-    val profile:ProfileBaseDto? = null
+    val profile:ProfileBaseDto? = null,
+    val id:Long = 0,
 )
 
 @Serializable

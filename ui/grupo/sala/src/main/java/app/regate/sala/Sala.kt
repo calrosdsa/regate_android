@@ -1,6 +1,7 @@
 package app.regate.sala
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -101,7 +102,6 @@ fun Sala(
     @Assisted navigateToSelectGroup: (String) -> Unit,
     @Assisted navController: NavController
 ) {
-
     Sala(
         viewModel = viewModel(factory = viewModelFactory),
         navigateUp = navigateUp,
@@ -157,6 +157,7 @@ internal fun Sala(
 //        navigateToGroup = navigateToGroup,
         navigateToInfoGrupo = navigateToInfoGrupo,
         exitSala = viewModel::exitSala,
+        getChat = viewModel::getChat
     )
     DialogConfirmation(open = joinSalaDialog.value,
         dismiss = { joinSalaDialog.value = false },
@@ -186,7 +187,8 @@ internal fun Sala(
     navigateToComplete: (Long) -> Unit,
     shareSalaWithGroup:()->Unit,
 //    navigateToGroup:(Long)->Unit,
-    navigateToInfoGrupo: (Long) -> Unit
+    navigateToInfoGrupo: (Long) -> Unit,
+    getChat:()->Unit,
 ) {
     val context = LocalContext.current
     val participantes = remember(viewState.users) {
@@ -212,6 +214,12 @@ internal fun Sala(
             }
         }
     }
+    LaunchedEffect(key1 = iAmInTheRoom, block = {
+        if(iAmInTheRoom == true){
+            Log.d("DEBUG_APP_","GET CHAT")
+            getChat()
+        }
+    })
     val snackbarHostState = remember { SnackbarHostState() }
 
     val refreshState = rememberPullRefreshState(refreshing = false, onRefresh = { refresh() })

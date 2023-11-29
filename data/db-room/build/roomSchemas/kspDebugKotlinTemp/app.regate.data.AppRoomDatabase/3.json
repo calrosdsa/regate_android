@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "ca529d79289b7886a1f6f449d269bc55",
+    "identityHash": "734c15f67dda0c0a38620196d5d1a97b",
     "entities": [
       {
         "tableName": "establecimientos",
@@ -1413,7 +1413,7 @@
       },
       {
         "tableName": "last_updated_entity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`entity_id` TEXT NOT NULL, `created_at` TEXT NOT NULL, PRIMARY KEY(`entity_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`entity_id` TEXT NOT NULL, `created_at` TEXT NOT NULL, `parent_id` INTEGER NOT NULL, PRIMARY KEY(`entity_id`, `parent_id`))",
         "fields": [
           {
             "fieldPath": "entity_id",
@@ -1426,12 +1426,19 @@
             "columnName": "created_at",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "parent_id",
+            "columnName": "parent_id",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "entity_id"
+            "entity_id",
+            "parent_id"
           ]
         },
         "indices": [],
@@ -1441,7 +1448,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ca529d79289b7886a1f6f449d269bc55')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '734c15f67dda0c0a38620196d5d1a97b')"
     ]
   }
 }

@@ -4,5 +4,5 @@ import app.regate.models.LastUpdatedEntity
 import app.regate.models.UpdatedEntity
 
 interface LastUpdatedEntityDao:EntityDao<LastUpdatedEntity> {
-    suspend fun getLastUpdatedEntity(entity: UpdatedEntity):LastUpdatedEntity?
+    suspend fun getLastUpdatedEntity(entity: UpdatedEntity,parentId:Long):LastUpdatedEntity?
 }

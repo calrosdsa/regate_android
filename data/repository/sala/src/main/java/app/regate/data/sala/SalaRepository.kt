@@ -6,6 +6,7 @@ import app.regate.data.daos.InstalacionDao
 import app.regate.data.daos.MessageSalaDao
 import app.regate.data.daos.ProfileDao
 import app.regate.data.daos.UserDao
+import app.regate.data.daos.UserRoomDao
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.chat.IdDto
@@ -23,6 +24,7 @@ import app.regate.data.mappers.MessageDtoToMessageSala
 import app.regate.data.mappers.MessageToMessageSalaDto
 import app.regate.data.mappers.users.ProfileToProfileBaseDto
 import app.regate.inject.ApplicationScope
+import app.regate.models.UserRoom
 import app.regate.models.chat.MessageSala
 import app.regate.models.user.Profile
 import app.regate.models.chat.Chat
@@ -41,7 +43,7 @@ class SalaRepository(
     private val userDao: UserDao,
     private val instalacionDao: InstalacionDao,
     private val chatDao: ChatDao,
-//    private val userRoomDao: UserRoomDao,
+    private val userRoomDao: UserRoomDao,
     private val dispatchers:AppCoroutineDispatchers,
     private val profileToProfileBaseDto: ProfileToProfileBaseDto
 //    private val salaDtoToSalaEntity: SalaDtoToSalaEntity
@@ -96,17 +98,35 @@ class SalaRepository(
     }
     suspend fun joinSala(salaId:Long,precio:Double,cupos:Int,grupoId:Long):IdDto{
         val user  = userDao.getUser(0)
+        val userRoom = userRoomDao.getUserRoom(salaId,user.profile_id)
         val dataR = JoinSalaRequest(
             sala_id = salaId,
             precio_sala = precio,
             profile_id = user.profile_id,
             cupos = cupos,
             grupo_Id = grupoId,
+            id = userRoom?.id?:0
         )
-        return salaDataSourceImpl.joinSala(dataR)
+        return salaDataSourceImpl.joinSala(dataR).also {
+            userRoomDao.upsert(
+                UserRoom(
+                id = it.id,
+                sala_id = salaId,
+                profile_id = user.profile_id
+            )
+            )
+        }
     }
-    suspend fun exitSala(id:Int){
-        salaDataSourceImpl.exitSala(id)
+    suspend fun exitSala(id:Int) {
+        withContext(dispatchers.io) {
+            try {
+                salaDataSourceImpl.exitSala(id).also {
+                    userRoomDao.updateUserIsOut(id.toLong(),true)
+                }
+            } catch (e: Exception) {
+                throw e
+            }
+        }
     }
     suspend fun getSala(id:Long):SalaDetail{
         return  salaDataSourceImpl.getSala(id)

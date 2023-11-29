@@ -4,6 +4,9 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.regate.data.chat.ChatRepository
+import app.regate.data.dto.chat.NotifyNewUserRequest
+import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.GrupoDto
 import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.grupo.GrupoRepository
@@ -31,9 +34,10 @@ class InfoGrupoViewModel(
     private val grupoRepository: GrupoRepository,
     observeMyGroupById: ObserveMyGroupById,
     observeUser: ObserveUser,
-    observeAuthState: ObserveAuthState
+    observeAuthState: ObserveAuthState,
+    private val chatRepository: ChatRepository
 ):ViewModel() {
-    private val grupoId  = savedStateHandle.get<Long>("id")?:0
+    private val groupId  = savedStateHandle.get<Long>("id")?:0
     private val loadingCounter = ObservableLoadingCounter()
     private val grupo = MutableStateFlow<GrupoDto?>(null)
     val state:StateFlow<InvitationGrupoState> = combine(
@@ -57,7 +61,7 @@ class InfoGrupoViewModel(
     )
     init {
         getData()
-        observeMyGroupById(ObserveMyGroupById.Params(grupoId))
+        observeMyGroupById(ObserveMyGroupById.Params(groupId))
         observeAuthState(Unit)
         observeUser(Unit)
         viewModelScope.launch {
@@ -74,7 +78,7 @@ class InfoGrupoViewModel(
         viewModelScope.launch {
             try {
                 loadingCounter.addLoader()
-                val res = grupoRepository.getGrupo(grupoId)
+                val res = grupoRepository.getGrupo(groupId)
                 Log.d("DEBUG_APP_RES",res.toString())
                 grupo.emit(res)
                 loadingCounter.removeLoader()
@@ -89,7 +93,17 @@ class InfoGrupoViewModel(
             try{
                 loadingCounter.addLoader()
 //                val visibilidad = if(visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
-                grupoRepository.joinGrupo(grupoId,visibility,grupo.value)
+                val res = grupoRepository.joinGrupo(groupId,visibility,grupo.value)
+                if (res != null) {
+                    val notifyNewUserRequest = NotifyNewUserRequest(
+                        id = res.id,
+                        profileId = state.value.user?.profile_id ?: 0,
+                        parentId = groupId,
+                        type_chat = TypeChat.TYPE_CHAT_GRUPO.ordinal
+                    )
+                    Log.d("DEBUG_APP_DATA", notifyNewUserRequest.toString())
+                    chatRepository.notifyNewUser(notifyNewUserRequest)
+                }
 //                getGrupo()
                 loadingCounter.removeLoader()
 //                Log.d("DEBUG_APP_ERROR",res.message)
@@ -106,7 +120,7 @@ class InfoGrupoViewModel(
                state.value.user?.let {user ->
                 val pendingRequest = PendingRequest(
                     profile_id = user.profile_id,
-                    grupo_id = grupoId
+                    grupo_id = groupId
                 )
                 grupoRepository.declinePendingRequest(pendingRequest)
                }

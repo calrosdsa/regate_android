@@ -30,7 +30,9 @@ enum class LabelType(val storageKey: String) {
 }
 enum class UpdatedEntity(val value: Int) {
     NOTIFICATIONS(1),
-    RESERVAS(2);
+    RESERVAS(2),
+    USER_ROOM(3),
+    USER_GROUP(4);
 
     companion object {
         fun fromInt(value: Int) =TypeEntity.values().first { it.value == value }

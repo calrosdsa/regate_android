@@ -18,6 +18,7 @@ import app.regate.data.dto.empresa.grupo.GrupoPendingRequestEstado
 import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
 import app.regate.data.dto.empresa.grupo.GrupoResponse
 import app.regate.data.dto.empresa.grupo.GrupoVisibility
+import app.regate.data.dto.empresa.grupo.JoinGroupResponse
 import app.regate.data.dto.empresa.grupo.PaginationGroupsResponse
 import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
 import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
@@ -96,11 +97,12 @@ class GrupoRepository(
             }
         }
     }
-    suspend fun leaveGrupo(id:Long,chatId: Long) {
+    suspend fun leaveGrupo(id:Long,chatId: Long,grupoId: Long) {
         withContext(dispatchers.computation) {
             try {
                 grupoDataSourceImpl.removeUserFromGroup(id)
-                userGrupoDao.deleteUserGroup(id)
+                userGrupoDao.updateUserIsOut(id,true)
+                myGroupsDao.deleteByGroupId(grupoId)
                 chatDao.updateWhenUserLeave(chatId)
             } catch (e: Exception) {
                 //TODO()
@@ -138,19 +140,20 @@ class GrupoRepository(
             }
         }
     }
-    suspend fun joinGrupo(grupoId:Long,visibility:Int=2,grupoDto: GrupoDto?) {
+    suspend fun joinGrupo(grupoId:Long,visibility:Int=2,grupoDto: GrupoDto?):JoinGroupResponse? {
         try {
             val user = userDao.getUser(0)
             val profile = profileDao.getProfile(user.profile_id)
             val requestEstado = if (visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
             if (visibility == GrupoVisibility.PUBLIC.ordinal) {
-
+                val userGroup = userGrupoDao.getUserGroup(grupoId,user.profile_id)
                 val dataR = JoinUserGrupoRequest(
                     grupo_id = grupoId,
                     profile_id = user.profile_id,
-                    profile = profileToProfileBaseDto.map(profile)
+                    profile = profileToProfileBaseDto.map(profile),
+                    id = userGroup?.id?:0
                 )
-                grupoDataSourceImpl.joinGrupo(dataR).also { response ->
+                return grupoDataSourceImpl.joinGrupo(dataR).also { response ->
                     if (grupoDto != null) {
                         chatDao.upsert(
                             Chat(
@@ -176,10 +179,12 @@ class GrupoRepository(
                     profile_id = user.profile_id
                 )
                 addPendingRequest(d)
+                return null
 //            grupoDataSourceImpl.addPendingRequest(d)
             }
         } catch (e: Exception) {
             //TODO()
+            return null
         }
     }
     suspend fun getGrupoDetail(id:Long):GrupoResponse{

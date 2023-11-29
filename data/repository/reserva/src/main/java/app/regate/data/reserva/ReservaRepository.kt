@@ -56,7 +56,7 @@ class ReservaRepository(
     suspend fun updateReservas() {
         withContext(dispatchers.computation){
             try{
-                val lastUpdatedEntity = lastUpdateEntityDao.getLastUpdatedEntity(UpdatedEntity.RESERVAS)?.created_at?: Clock.System.now()
+                val lastUpdatedEntity = lastUpdateEntityDao.getLastUpdatedEntity(UpdatedEntity.RESERVAS,0)?.created_at?: Clock.System.now()
                 val res = reservaDataSourceImpl.getReservas(lastUpdatedEntity.toLocalDateTime(
                     TimeZone.currentSystemDefault()).toString()).let { results->
                     results.map {

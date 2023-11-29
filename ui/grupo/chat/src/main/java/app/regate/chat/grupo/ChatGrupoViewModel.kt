@@ -138,11 +138,11 @@ class ChatGrupoViewModel(
                     Log.d("DEBUG_APP_DATA_2",data)
                     sendSharedMessage(user.profile_id)
                     Log.d("DEBUG_APP_USER",user.toString())
-                        if(state.value.usersGrupo.map { it.profile_id }.contains(user.profile_id)){
+//                        if(state.value.usersGrupo.map { it.profile_id }.contains(user.profile_id)){
                         startWs(user.profile_id)
-                        }else{
-                            Log.d("DEBUG_APP_USER","USER NO IN CHAT")
-                        }
+//                        }else{
+//                            Log.d("DEBUG_APP_USER","USER NO IN CHAT")
+//                        }
                     }
                 }catch(e:Exception){
                     Log.d("DEBUG_APP",e.localizedMessage?:"")
@@ -210,6 +210,7 @@ class ChatGrupoViewModel(
                         }
                         MessageEventType.EventNewUser -> {
                             try{
+                                Log.d("DEBUG_APP_MESSAGE_PAYLOAD", message.readText())
                                 val payload = json.decodeFromString<UserProfileGrupoAndSalaDto>(event.payload)
                                 chatRepository.insertNewUser(payload)
                             }catch (e:Exception){
@@ -218,7 +219,6 @@ class ChatGrupoViewModel(
                         }
                     }
                 }
-
             }
             cl.start(emptyList())
         }catch (e:Exception){

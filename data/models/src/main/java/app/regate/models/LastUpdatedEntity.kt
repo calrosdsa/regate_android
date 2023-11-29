@@ -7,10 +7,11 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Entity(
-    tableName = "last_updated_entity"
+    tableName = "last_updated_entity",
+    primaryKeys = ["entity_id", "parent_id"]
 )
 data class LastUpdatedEntity(
-    @PrimaryKey
     val entity_id:UpdatedEntity,
-    val created_at:Instant = Clock.System.now()
+    val created_at:Instant = Clock.System.now(),
+    val parent_id:Long = 0,
 )
