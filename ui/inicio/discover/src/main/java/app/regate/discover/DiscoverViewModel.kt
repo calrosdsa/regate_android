@@ -255,6 +255,7 @@ class DiscoverViewModel(
                 Log.d("DEBUG_APP", datetime.toString())
                 appPreferences.filter =  Json.encodeToString(filterData.value.copy(
                     currentDate = datetime,
+                    endTime = appDateFormatter.getLocalDateTimeFromString(filterPayload.horas.last()).time,
                     day_week = Instant.fromEpochMilliseconds(filterPayload.created_at.toEpochMilliseconds())
                         .toLocalDateTime(
                             TimeZone.UTC

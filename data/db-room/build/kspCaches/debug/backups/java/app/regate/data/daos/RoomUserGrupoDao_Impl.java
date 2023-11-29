@@ -12,7 +12,7 @@ import androidx.room.RoomSQLiteQuery;
 import androidx.room.SharedSQLiteStatement;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
-import app.regate.compoundmodels.UserProfileGrupoAndSala;
+import app.regate.compoundmodels.UserProfileGrupoAndSalaDto;
 import app.regate.models.grupo.UserGrupo;
 import java.lang.Class;
 import java.lang.Exception;
@@ -401,9 +401,10 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
   }
 
   @Override
-  public Flow<List<UserProfileGrupoAndSala>> observeUsersGrupo(final long id) {
+  public Flow<List<UserProfileGrupoAndSalaDto>> observeUsersGrupo(final long id) {
     final String _sql = "\n"
-            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.is_out,ug.id as id from user_grupo as ug\n"
+            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ug.is_admin,ug.is_out,ug.id as id,\n"
+            + "        ug.grupo_id as parent_id,(2) as type_entity  from user_grupo as ug\n"
             + "        inner join profiles as p on p.id = ug.profile_id\n"
             + "        where ug.grupo_id = ?\n"
             + "    ";
@@ -411,10 +412,10 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
     return CoroutinesRoom.createFlow(__db, true, new String[] {"user_grupo",
-        "profiles"}, new Callable<List<UserProfileGrupoAndSala>>() {
+        "profiles"}, new Callable<List<UserProfileGrupoAndSalaDto>>() {
       @Override
       @NonNull
-      public List<UserProfileGrupoAndSala> call() throws Exception {
+      public List<UserProfileGrupoAndSalaDto> call() throws Exception {
         __db.beginTransaction();
         try {
           final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
@@ -426,9 +427,11 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
             final int _cursorIndexOfIsAdmin = 4;
             final int _cursorIndexOfIsOut = 5;
             final int _cursorIndexOfId = 6;
-            final List<UserProfileGrupoAndSala> _result = new ArrayList<UserProfileGrupoAndSala>(_cursor.getCount());
+            final int _cursorIndexOfParentId = 7;
+            final int _cursorIndexOfTypeEntity = 8;
+            final List<UserProfileGrupoAndSalaDto> _result = new ArrayList<UserProfileGrupoAndSalaDto>(_cursor.getCount());
             while (_cursor.moveToNext()) {
-              final UserProfileGrupoAndSala _item;
+              final UserProfileGrupoAndSalaDto _item;
               final long _tmpProfile_id;
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final String _tmpNombre;
@@ -455,7 +458,11 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
               _tmpIs_out = _tmp_1 != 0;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              _item = new UserProfileGrupoAndSala(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpIs_out,_tmpId);
+              final long _tmpParent_id;
+              _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
+              final int _tmpType_entity;
+              _tmpType_entity = _cursor.getInt(_cursorIndexOfTypeEntity);
+              _item = new UserProfileGrupoAndSalaDto(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpIs_out,_tmpId,_tmpParent_id,_tmpType_entity);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();
@@ -510,9 +517,10 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
   }
 
   @Override
-  public Flow<List<UserProfileGrupoAndSala>> observeUsersRoom(final long id) {
+  public Flow<List<UserProfileGrupoAndSalaDto>> observeUsersRoom(final long id) {
     final String _sql = "\n"
-            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ur.is_admin,ur.is_out,ur.id as id from user_room as ur\n"
+            + "        select p.id as profile_id,p.nombre,p.apellido,p.profile_photo,ur.is_admin,ur.is_out,ur.id as id, \n"
+            + "        ur.sala_id as parent_id,(1) as type_entity from user_room as ur\n"
             + "        inner join profiles as p on p.id = ur.profile_id\n"
             + "        where ur.sala_id = ?\n"
             + "    ";
@@ -520,10 +528,10 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
     return CoroutinesRoom.createFlow(__db, true, new String[] {"user_room",
-        "profiles"}, new Callable<List<UserProfileGrupoAndSala>>() {
+        "profiles"}, new Callable<List<UserProfileGrupoAndSalaDto>>() {
       @Override
       @NonNull
-      public List<UserProfileGrupoAndSala> call() throws Exception {
+      public List<UserProfileGrupoAndSalaDto> call() throws Exception {
         __db.beginTransaction();
         try {
           final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
@@ -535,9 +543,11 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
             final int _cursorIndexOfIsAdmin = 4;
             final int _cursorIndexOfIsOut = 5;
             final int _cursorIndexOfId = 6;
-            final List<UserProfileGrupoAndSala> _result = new ArrayList<UserProfileGrupoAndSala>(_cursor.getCount());
+            final int _cursorIndexOfParentId = 7;
+            final int _cursorIndexOfTypeEntity = 8;
+            final List<UserProfileGrupoAndSalaDto> _result = new ArrayList<UserProfileGrupoAndSalaDto>(_cursor.getCount());
             while (_cursor.moveToNext()) {
-              final UserProfileGrupoAndSala _item;
+              final UserProfileGrupoAndSalaDto _item;
               final long _tmpProfile_id;
               _tmpProfile_id = _cursor.getLong(_cursorIndexOfProfileId);
               final String _tmpNombre;
@@ -564,7 +574,11 @@ public final class RoomUserGrupoDao_Impl extends RoomUserGrupoDao {
               _tmpIs_out = _tmp_1 != 0;
               final long _tmpId;
               _tmpId = _cursor.getLong(_cursorIndexOfId);
-              _item = new UserProfileGrupoAndSala(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpIs_out,_tmpId);
+              final long _tmpParent_id;
+              _tmpParent_id = _cursor.getLong(_cursorIndexOfParentId);
+              final int _tmpType_entity;
+              _tmpType_entity = _cursor.getInt(_cursorIndexOfTypeEntity);
+              _item = new UserProfileGrupoAndSalaDto(_tmpProfile_id,_tmpNombre,_tmpApellido,_tmpProfile_photo,_tmpIs_admin,_tmpIs_out,_tmpId,_tmpParent_id,_tmpType_entity);
               _result.add(_item);
             }
             __db.setTransactionSuccessful();

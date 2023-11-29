@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import app.regate.common.resources.R
 
 @Composable
-internal fun EnabledLocation(
+internal fun EnabledLocation (
     navigateToHome:()->Unit,
     requestLocationPermission:()->Unit
     ){

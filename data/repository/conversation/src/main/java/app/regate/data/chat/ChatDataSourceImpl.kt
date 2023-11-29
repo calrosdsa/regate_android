@@ -1,6 +1,6 @@
 package app.regate.data.chat
 
-import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.constant.HostMessage
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.chat.ChatDto
@@ -28,7 +28,6 @@ import io.ktor.client.request.url
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
 
@@ -121,6 +120,15 @@ class ChatDataSourceImpl(
             setBody(data)
         }.body()
     }
+
+    override suspend fun notifyNewUser(chatId: Long, d: UserProfileGrupoAndSalaDto) {
+        return client.post{
+            url("$baseUrl/v1/chat/notify/new-user/$chatId/")
+            contentType(ContentType.Application.Json)
+            setBody(d)
+        }.body()
+    }
+
     override suspend fun deleteMessage(data: DeleteMessageRequest) {
         val token = authStore.get()?.accessToken
         return client.post{
@@ -136,7 +144,7 @@ class ChatDataSourceImpl(
             url("$baseUrl/v1/chat/deleted/messages/$id/")
         }.body()
     }
-    override suspend fun getUsers(d:RequestUserGroupAndRoom): List<UserProfileGrupoAndSala>? {
+    override suspend fun getUsers(d:RequestUserGroupAndRoom): List<UserProfileGrupoAndSalaDto>? {
         return client.post{
             url("$baseUrl/v1/chat/users/")
             contentType(ContentType.Application.Json)

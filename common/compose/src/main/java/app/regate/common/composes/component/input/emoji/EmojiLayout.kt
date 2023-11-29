@@ -56,7 +56,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun EmojiLayout (
+fun EmojiLayout(
     emojis:List<List<Emoji>>,
     message:TextFieldValue,
     coroutineScope: CoroutineScope,

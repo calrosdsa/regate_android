@@ -28,7 +28,7 @@ import app.regate.models.Instalacion
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InstalacionCard (
+fun InstalacionCard(
     instalacion:Instalacion,
     navigate: (id: Long) -> Unit,
     modifier: Modifier = Modifier,

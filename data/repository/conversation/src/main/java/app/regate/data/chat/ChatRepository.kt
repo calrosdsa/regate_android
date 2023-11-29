@@ -1,6 +1,7 @@
 package app.regate.data.chat
 
 import app.regate.compoundmodels.MessageProfile
+import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.data.daos.ChatDao
 import app.regate.data.daos.GrupoDao
 import app.regate.data.daos.MessageInboxDao
@@ -11,6 +12,7 @@ import app.regate.data.daos.UserGrupoDao
 import app.regate.data.daos.UserRoomDao
 import app.regate.data.dto.chat.DeleteMessageRequest
 import app.regate.data.dto.chat.MessagePublishRequest
+import app.regate.data.dto.chat.NotifyNewUserRequest
 import app.regate.data.dto.chat.RequestChatUnreadMessages
 import app.regate.data.dto.chat.RequestUserGroupAndRoom
 import app.regate.data.dto.chat.TypeChat
@@ -21,14 +23,15 @@ import app.regate.data.dto.empresa.grupo.GrupoRequestEstado
 import app.regate.data.mappers.MessageConversationToMessage
 import app.regate.data.mappers.MessageDtoToMessage
 import app.regate.data.mappers.MessageToMessageDto
+import app.regate.data.mappers.users.UserGroupRoomDtoToProfile
+import app.regate.data.mappers.users.UserProfileGrupoAndSalaDtoToUserGrupo
+import app.regate.data.mappers.users.UserProfileGrupoAndSalaDtoToUserRoom
 import app.regate.inject.ApplicationScope
+import app.regate.models.TypeEntity
 import app.regate.models.grupo.Grupo
 import app.regate.models.chat.Message
 import app.regate.models.chat.MessageInbox
 import app.regate.models.grupo.MyGroups
-import app.regate.models.user.Profile
-import app.regate.models.grupo.UserGrupo
-import app.regate.models.UserRoom
 import app.regate.models.chat.Chat
 import app.regate.util.AppCoroutineDispatchers
 import kotlinx.coroutines.async
@@ -51,8 +54,33 @@ class ChatRepository(
     private val myGrupoDao: MyGroupsDao,
     private val userGrupoDao: UserGrupoDao,
     private val userRoomDao: UserRoomDao,
-    private val profileDao: ProfileDao
+    private val profileDao: ProfileDao,
+    private val userGroupRoomDtoToProfile: UserGroupRoomDtoToProfile,
+    private val profileGrupoAndSalaDtoToUserRoom: UserProfileGrupoAndSalaDtoToUserRoom,
+    private val profileGrupoAndSalaDtoToUserGrupo: UserProfileGrupoAndSalaDtoToUserGrupo
 ) {
+    suspend fun notifyNewUser(d:NotifyNewUserRequest){
+        withContext(dispatchers.io){
+            try{
+                val chat = chatDao.getChatByType(d.parentId,d.typeEntity.ordinal)
+                val profile = profileDao.getProfile(d.profileId)
+                val request = UserProfileGrupoAndSalaDto(
+                    profile_id = d.profileId,
+                    profile_photo = profile.profile_photo,
+                    nombre = profile.nombre,
+                    apellido = profile.apellido,
+                    type_entity = d.typeEntity.ordinal,
+                    id = d.id
+                )
+                if (chat != null) {
+                    chatDataSourceImpl.notifyNewUser(chat.id,request)
+                }
+            }catch (e:Exception){
+                throw e
+            }
+
+        }
+    }
     suspend fun deleteChat(id:Long){
         withContext(dispatchers.io){
             try{
@@ -62,13 +90,27 @@ class ChatRepository(
             }
         }
     }
-    suspend fun getChatByType(parentId: Long,typeChat: Int):Chat{
+    suspend fun getChatByType(parentId: Long,typeChat: Int):Chat?{
         return chatDao.getChatByType(parentId,typeChat)
     }
     fun observeMessages(id: Long): Flow<List<MessageProfile>> {
         return messageProfileDao.getMessages(id)
     }
 
+    suspend fun insertNewUser(d:UserProfileGrupoAndSalaDto){
+        withContext(dispatchers.io){
+            when(d.type_entity){
+                TypeEntity.GRUPO.ordinal ->{
+                    profileDao.insertOnConflictIgnore(userGroupRoomDtoToProfile.map(d))
+                    userGrupoDao.insertOnConflictIgnore(profileGrupoAndSalaDtoToUserGrupo.map(d))
+                }
+                TypeEntity.SALA.ordinal ->{
+                    profileDao.insertOnConflictIgnore(userGroupRoomDtoToProfile.map(d))
+                    userRoomDao.insertOnConflictIgnore(profileGrupoAndSalaDtoToUserRoom.map(d))
+                }
+            }
+        }
+    }
     suspend fun getUsers(parentId:Long,typeChat: Int){
         withContext(dispatchers.io){
             try{
@@ -83,20 +125,11 @@ class ChatRepository(
                         val res = chatDataSourceImpl.getUsers(d.copy(active_users_count = actives, inactive_users_count = inactives))
                         res?.let { users->
                             val profiles = users.map {user->
-                                Profile(
-                                    nombre = user.nombre,
-                                    apellido = user.apellido,
-                                    profile_photo = user.profile_photo,
-                                    id = user.profile_id
-                                )
+                               userGroupRoomDtoToProfile.map(user)
                             }
                             val usersGroup = users.map {user->
-                                UserGrupo(
-                                    id = user.id,
-                                    profile_id = user.profile_id,
-                                    grupo_id = parentId,
-                                    is_admin = user.is_admin,
-                                    is_out = user.is_out
+                                profileGrupoAndSalaDtoToUserGrupo.map(
+                                    user.copy(parent_id = parentId)
                                 )
                             }
                             profileDao.upsertAll(profiles)
@@ -109,20 +142,11 @@ class ChatRepository(
                         val res = chatDataSourceImpl.getUsers(d.copy(active_users_count = actives, inactive_users_count = inactives))
                         res?.let { users->
                             val profiles = users.map {user->
-                                Profile(
-                                    nombre = user.nombre,
-                                    apellido = user.apellido,
-                                    profile_photo = user.profile_photo,
-                                    id = user.profile_id
-                                )
+                                userGroupRoomDtoToProfile.map(user)
                             }
                             val usersRoom = users.map {user->
-                                UserRoom(
-                                    id = user.id,
-                                    profile_id = user.profile_id,
-                                    sala_id = parentId,
-                                    is_admin = user.is_admin,
-                                    is_out = user.is_out
+                                profileGrupoAndSalaDtoToUserRoom.map(
+                                    user.copy(parent_id = parentId)
                                 )
                             }
                             profileDao.upsertAll(profiles)

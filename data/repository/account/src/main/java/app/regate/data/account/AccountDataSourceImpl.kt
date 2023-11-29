@@ -13,7 +13,7 @@ import app.regate.data.dto.account.auth.SocialRequest
 import app.regate.data.dto.account.billing.ConsumePaginationResponse
 import app.regate.data.dto.account.billing.DepositPaginationResponse
 import app.regate.data.dto.account.billing.MontoRetenidoPaginationRespone
-import app.regate.data.mappers.DtoToUser
+import app.regate.data.mappers.users.DtoToUser
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

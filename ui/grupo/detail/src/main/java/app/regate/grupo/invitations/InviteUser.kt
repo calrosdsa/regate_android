@@ -192,6 +192,7 @@ internal fun InviteUser(
                     items = lazyPagingItems
                 ) { item ->
                     if (item != null) {
+                        if(!viewState.usersGrupo.contains(item.profile_id)){
                         ProfileInviteUser(
                             id = item.profile_id,
                             photo = item.profile_photo,
@@ -202,8 +203,9 @@ internal fun InviteUser(
                             estado = invitationIds[item.profile_id] ?: 0,
                             cancelInvitation = { id ->
                                 cancelInvitation(id) { invitationIds.remove(id) }
-                            }
+                            },
                         )
+                        }
                     }
                 }
 
@@ -228,7 +230,7 @@ internal fun InviteUser(
                                 sendInvitation = { sendInvitation(it,{})},
                                 navigateToProfile = {},
                                 estado = item.invitation.estado,
-                                cancelInvitation = {cancelInvitation(it,{})}
+                                cancelInvitation = {cancelInvitation(it,{})},
                             )
                         }
                     }

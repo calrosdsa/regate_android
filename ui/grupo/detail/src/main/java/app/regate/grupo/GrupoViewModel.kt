@@ -5,7 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.regate.api.UiMessageManager
-import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.data.chat.ChatParams
 import app.regate.data.chat.ChatRepository
 import app.regate.data.dto.chat.TypeChat
@@ -26,7 +26,6 @@ import io.ktor.client.plugins.ResponseException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
@@ -49,8 +48,8 @@ class GrupoViewModel(
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val salas = MutableStateFlow<List<SalaDto>>(emptyList())
-    private val currentUser = MutableStateFlow<UserProfileGrupoAndSala?>(null)
-    private val selectedUser = MutableStateFlow<UserProfileGrupoAndSala?>(null)
+    private val currentUser = MutableStateFlow<UserProfileGrupoAndSalaDto?>(null)
+    private val selectedUser = MutableStateFlow<UserProfileGrupoAndSalaDto?>(null)
     private val chat = MutableStateFlow<Chat?>(null)
     val state:StateFlow<GrupoState> = combine(
         uiMessageManager.message,
@@ -123,6 +122,7 @@ class GrupoViewModel(
                         name = res.grupo.name
                     )
                 ))
+                chatRepository.getUsers(grupoId,TypeChat.TYPE_CHAT_GRUPO.ordinal)
                 Log.d("DEBUG_APP", res.toString())
             } catch (e: ResponseException) {
                 loadingState.removeLoader()
@@ -195,7 +195,9 @@ class GrupoViewModel(
                 val chat = chatRepository.getChatByType(grupoId,TypeChat.TYPE_CHAT_GRUPO.ordinal)
             val targetUser = state.value.usersProfileGrupo
                 .first { it.profile_id == state.value.user?.profile_id }
-                grupoRepository.leaveGrupo(targetUser.id,chat.id)
+                if (chat != null) {
+                    grupoRepository.leaveGrupo(targetUser.id,chat.id)
+                }
                 grupoRepository.deleteGroupUserLocal(groupId = grupoId)
             navigateUp()
             }catch (e:Exception){
@@ -231,7 +233,9 @@ class GrupoViewModel(
         viewModelScope.launch {
             try{
                 val chat = chatRepository.getChatByType(id,TypeChat.TYPE_CHAT_GRUPO.ordinal)
-                navigateToChat(chat.id,chat.parent_id,TypeChat.TYPE_CHAT_GRUPO.ordinal)
+                if (chat != null) {
+                    navigateToChat(chat.id,chat.parent_id,TypeChat.TYPE_CHAT_GRUPO.ordinal)
+                }
             }catch (e:Exception){
                 Log.d("DEBUG_APP_",e.localizedMessage?:"")
             }

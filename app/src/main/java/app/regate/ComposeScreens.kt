@@ -84,7 +84,7 @@ import me.tatarka.inject.annotations.Inject
 
 //@ActivityScope
 @Inject
-class ComposeScreens(
+class ComposeScreens (
 
     val welcome:Welcome,
     val report:Report,

@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import app.regate.common.resources.R
 
 @Composable
-internal fun EnabledNotification(
+internal fun EnabledNotification (
 //    navigateToHome:()->Unit,
     requestPermission:()->Unit,
     ){

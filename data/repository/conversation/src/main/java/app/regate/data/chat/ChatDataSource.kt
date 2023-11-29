@@ -1,6 +1,6 @@
 package app.regate.data.chat
 
-import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.data.dto.chat.ChatDto
 import app.regate.data.dto.chat.DeleteMessageRequest
 import app.regate.data.dto.chat.DeletedMessagesIds
@@ -15,7 +15,6 @@ import app.regate.data.dto.empresa.conversation.ConversationMessage
 import app.regate.data.dto.empresa.conversation.PaginationConversationMessages
 import app.regate.data.dto.empresa.grupo.GrupoMessageDto
 import app.regate.data.dto.empresa.grupo.PaginationGroupMessages
-import kotlinx.datetime.Instant
 
 interface ChatDataSource {
     suspend fun getMessages(id:Long,page:Int):PaginationConversationMessages
@@ -29,8 +28,9 @@ interface ChatDataSource {
     suspend fun getChats(page: Int):PaginateChatResponse
     suspend fun getUnreadMessages(page:Int):PaginationGroupMessages
     suspend fun publishMessage(data:MessagePublishRequest):MessagePublishResponse
+    suspend fun notifyNewUser(chatId:Long,d:UserProfileGrupoAndSalaDto)
     suspend fun deleteMessage(data:DeleteMessageRequest)
     suspend fun getDeletedMessages(id:Long):DeletedMessagesIds
-    suspend fun getUsers(d:RequestUserGroupAndRoom):List<UserProfileGrupoAndSala>?
+    suspend fun getUsers(d:RequestUserGroupAndRoom):List<UserProfileGrupoAndSalaDto>?
 }
 

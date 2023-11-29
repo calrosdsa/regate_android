@@ -31,13 +31,16 @@ abstract class RoomChatDao:ChatDao,RoomEntityDao<Chat> {
     @Query("select * from chat where parent_id = :parentId and type_chat = :typeChat")
     abstract override fun observeChatByType(parentId: Long,typeChat: Int): Flow<Chat>
     @Query("select * from chat where parent_id = :pId and type_chat = :typeChat")
-    abstract override suspend fun getChatByType(pId: Long, typeChat:Int): Chat
+    abstract override suspend fun getChatByType(pId: Long, typeChat:Int): Chat?
     @Query("select * from chat where id = :id")
     abstract override suspend fun getChat(id:Long):Chat?
     @Query("update chat set is_user_out = 1 where id = :chatId")
     abstract override suspend fun updateWhenUserLeave(chatId: Long)
     @Query("delete from chat where id = :id")
     abstract override suspend fun deleteById(id:Long)
+
+    @Query("delete from chat")
+    abstract override suspend fun deleteAll()
 }
 //
 //@Query("""

@@ -43,7 +43,7 @@ import com.dokar.sheets.PeekHeight
 import com.dokar.sheets.m3.BottomSheet
 
 @Composable
-fun MessageOptions (
+fun MessageOptions(
     state: BottomSheetState,
     message:MessageProfile,
     onDeleteMessage:()->Unit,

@@ -1,6 +1,7 @@
 package app.regate.data.daos;
 
 import android.database.Cursor;
+import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityDeletionOrUpdateAdapter;
@@ -697,6 +698,80 @@ public final class RoomProfileDao_Impl extends RoomProfileDao {
         _statement.release();
       }
     });
+  }
+
+  @Override
+  public Object getProfile(final long id, final Continuation<? super Profile> continuation) {
+    final String _sql = "select * from profiles where id = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, id);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Profile>() {
+      @Override
+      @NonNull
+      public Profile call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfUuid = CursorUtil.getColumnIndexOrThrow(_cursor, "uuid");
+          final int _cursorIndexOfUserId = CursorUtil.getColumnIndexOrThrow(_cursor, "user_id");
+          final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
+          final int _cursorIndexOfProfilePhoto = CursorUtil.getColumnIndexOrThrow(_cursor, "profile_photo");
+          final int _cursorIndexOfNombre = CursorUtil.getColumnIndexOrThrow(_cursor, "nombre");
+          final int _cursorIndexOfApellido = CursorUtil.getColumnIndexOrThrow(_cursor, "apellido");
+          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "created_at");
+          final Profile _result;
+          if (_cursor.moveToFirst()) {
+            final long _tmpId;
+            _tmpId = _cursor.getLong(_cursorIndexOfId);
+            final String _tmpUuid;
+            _tmpUuid = _cursor.getString(_cursorIndexOfUuid);
+            final Long _tmpUser_id;
+            if (_cursor.isNull(_cursorIndexOfUserId)) {
+              _tmpUser_id = null;
+            } else {
+              _tmpUser_id = _cursor.getLong(_cursorIndexOfUserId);
+            }
+            final String _tmpEmail;
+            if (_cursor.isNull(_cursorIndexOfEmail)) {
+              _tmpEmail = null;
+            } else {
+              _tmpEmail = _cursor.getString(_cursorIndexOfEmail);
+            }
+            final String _tmpProfile_photo;
+            if (_cursor.isNull(_cursorIndexOfProfilePhoto)) {
+              _tmpProfile_photo = null;
+            } else {
+              _tmpProfile_photo = _cursor.getString(_cursorIndexOfProfilePhoto);
+            }
+            final String _tmpNombre;
+            _tmpNombre = _cursor.getString(_cursorIndexOfNombre);
+            final String _tmpApellido;
+            if (_cursor.isNull(_cursorIndexOfApellido)) {
+              _tmpApellido = null;
+            } else {
+              _tmpApellido = _cursor.getString(_cursorIndexOfApellido);
+            }
+            final Instant _tmpCreated_at;
+            final String _tmp;
+            if (_cursor.isNull(_cursorIndexOfCreatedAt)) {
+              _tmp = null;
+            } else {
+              _tmp = _cursor.getString(_cursorIndexOfCreatedAt);
+            }
+            _tmpCreated_at = DateTimeTypeConverters.INSTANCE.toInstant(_tmp);
+            _result = new Profile(_tmpId,_tmpUuid,_tmpUser_id,_tmpEmail,_tmpProfile_photo,_tmpNombre,_tmpApellido,_tmpCreated_at);
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, continuation);
   }
 
   @NonNull

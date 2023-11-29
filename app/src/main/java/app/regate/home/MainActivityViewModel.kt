@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.constant.Host
 import app.regate.data.account.AccountRepository
 import app.regate.data.chat.ChatRepository
@@ -46,7 +47,11 @@ class MainActivityViewModel(
     private val chatRepository: ChatRepository,
     private val systemRepository: SystemRepository,
     private val observeUser: ObserveUser,
+//    private val json:Json
     ): ViewModel() {
+    private val json = Json{
+        ignoreUnknownKeys = true
+    }
 
     init {
         Log.d("DEBUG_",preferences.fcmToken)
@@ -90,7 +95,7 @@ class MainActivityViewModel(
           cl.apply{
                   for (message in incoming) {
                       message as? Frame.Text ?: continue
-                      val data = Json.decodeFromString<WsAccountPayload>(message.readText())
+                      val data = json.decodeFromString<WsAccountPayload>(message.readText())
                       Log.d("DEBUG_APP_WS_MAIN",message.readText())
                       when (data.type){
                           PayloadWsAccountType.PAYLOAD_USER_BALANCE.ordinal->{
@@ -99,14 +104,14 @@ class MainActivityViewModel(
                               coinRepository.updateUserBalance(payload)
                           }
                           PayloadWsAccountType.PAYLOAD_GRUPO_MESSAGE.ordinal ->{
-                              val payload = Json.decodeFromString<GrupoMessageDto>(data.payload)
+                              val payload = json.decodeFromString<GrupoMessageDto>(data.payload)
                               chatRepository.saveMessageIgnoreOnConflict(payload,false)
                               Log.d("DEBUG_APP_WS_USER",payload.toString())
 //                              db.myGroupsDao().updateLastMessageGrupo(grupo.id,lastMessage.content,lastMessage.created_at)
                           }
                           PayloadWsAccountType.PAYLOAD_TYPE_NOTIFICATION.ordinal -> {
                               try{
-                              val payload = Json.decodeFromString<NotificationDto>(data.payload)
+                              val payload = json.decodeFromString<NotificationDto>(data.payload)
                               systemRepository.insertNotification(payload)
                               Log.d("DEBUG_APP",payload.toString())
                               }catch(e:Exception){
@@ -115,7 +120,7 @@ class MainActivityViewModel(
                           }
                           PayloadWsAccountType.PAYLOAD_DELETE_MESSAGE.ordinal -> {
                               try{
-                                  val payload = Json.decodeFromString<IdDto>(data.payload)
+                                  val payload = json.decodeFromString<IdDto>(data.payload)
                                   chatRepository.updateMessageToDeleted(payload.id)
                                   Log.d("DEBUG_APP_DELETE",payload.toString())
                               }catch(e:Exception){

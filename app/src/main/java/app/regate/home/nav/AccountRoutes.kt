@@ -60,7 +60,8 @@ internal fun NavGraphBuilder.AccountRoutes(
             deposits = composeScreens.deposits,
             consume = { composeScreens.consume(
                 navigateToSala = {navController.navigate(Route.SALA id it)},
-                navigateToReserva = { navController.navigate(Route.RESERVAS) }
+                navigateToReserva = { navController.navigate(Route.RESERVAS) },
+                navigateToSalaComplete = { navController.navigate(Route.SALA_COMPLETE id it)}
             )},
             montoRetenido = { composeScreens.montoRetenido(
                 navigateToSala = {navController.navigate(Route.SALA id it)},

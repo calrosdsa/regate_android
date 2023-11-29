@@ -10,21 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import app.regate.compoundmodels.MessageProfile
-import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import kotlinx.datetime.Instant
-import app.regate.common.resources.R
 
 @Composable
 fun MessageReply (
     item: MessageProfile,
     scrollToItem:()->Unit,
-    getUserProfileGrupoAndSala: (id:Long)-> UserProfileGrupoAndSala?,
+    getUserProfileGrupoAndSalaDto: (id:Long)-> UserProfileGrupoAndSalaDto?,
     navigateToInstalacionReserva: (Long, Long,List<CupoInstalacion>) -> Unit,
     navigateToSala: (Int) -> Unit,
     formatShortDate: (Instant) -> String,
@@ -34,7 +31,7 @@ fun MessageReply (
     typeOfChat:TypeChat,
     modifier: Modifier = Modifier
 ){
-    val profile = item.reply?.let { getUserProfileGrupoAndSala(it.profile_id) }
+    val profile = item.reply?.let { getUserProfileGrupoAndSalaDto(it.profile_id) }
     Surface(
         border = BorderStroke(1.dp, Color.LightGray),
         shape = MaterialTheme.shapes.medium,

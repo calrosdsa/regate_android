@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import app.regate.common.resources.R
 
 @Composable
-internal fun SalaMenu(
+internal fun SalaMenu (
     salaTitle:String,
     leaveRoom: () -> Unit,
     shareSalaWithGroup: () -> Unit,

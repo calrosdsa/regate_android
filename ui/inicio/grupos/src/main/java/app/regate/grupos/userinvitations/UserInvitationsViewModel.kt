@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import app.regate.api.UiMessageManager
-import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.grupo.GrupoRepository
 import app.regate.domain.observers.account.ObserveUser
 import app.regate.domain.observers.grupo.ObservePagerUserInvitations
@@ -75,11 +74,11 @@ class UserInvitationsViewModel(
     fun declineInvitation(profileId:Long,grupoId:Long){
         viewModelScope.launch {
             try{
-                val request = GrupoInvitationRequest(
+                val request1 = GrupoInvitationRequest(
                     profile_id = profileId,
                     grupo_id = grupoId
                 )
-                grupoRepository.declineGrupoInvitation(request)
+                grupoRepository.declineGrupoInvitation(request1)
             }catch (e:Exception){
                 Log.d("DEBUG_APP_",e.localizedMessage?:"")
             }

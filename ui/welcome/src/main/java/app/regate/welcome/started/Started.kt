@@ -151,7 +151,6 @@ fun Started(
                 onClick = { navigateToPage(1) },
                 modifier = Modifier
                     .clip(shape = CircleShape)
-                    .height(45.dp)
             ) {
                     Text(text = stringResource(id = R.string.get_started))
             }

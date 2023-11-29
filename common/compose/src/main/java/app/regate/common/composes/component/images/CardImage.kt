@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import app.regate.common.resources.R
 
 @Composable
-fun CardImage(
+fun CardImage (
     modifier:Modifier = Modifier,
     isUser:Boolean = false,
     enabled:Boolean = true,

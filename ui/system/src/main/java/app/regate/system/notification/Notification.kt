@@ -116,6 +116,7 @@ internal fun Notifications(
         navigateToAccount = navigateToAccount,
         navigateToNoticationSetting = navigateToNoticationSetting,
         navigateToEstablecimiento = {navController.navigate(Route.ESTABLECIMIENTO id it id 0)},
+        navigateToUserInvitations = {navController.navigate(Route.USER_INVITATIONS)},
         updateUnreadNotifications = viewModel::updateUnreadNotifications,
         deleteNotification = viewModel::deleteNotification
     )
@@ -132,6 +133,7 @@ internal fun Notifications(
     navigateToAccount: () -> Unit,
     navigateToNoticationSetting: () -> Unit,
     navigateToEstablecimiento:(Long) -> Unit,
+    navigateToUserInvitations: () -> Unit,
 ){
     val sheetState = rememberBottomSheetState()
     var selectedNotification by remember {
@@ -208,10 +210,11 @@ internal fun Notifications(
                 NotificationItem(item = item,formatRelativeTime = formatRelativeTime,
                 navigate = {
                     when(item.typeEntity){
-                        TypeEntity.NONE -> item.typeEntity?.let { navigateToAccount() }
+                        TypeEntity.NONE ->  navigateToAccount()
                         TypeEntity.SALA -> item.entityId?.let { navigateToSala(it) }
-                        TypeEntity.BILLING -> item.entityId?.let { navigateToAccount() }
+                        TypeEntity.BILLING ->  navigateToAccount()
                         TypeEntity.ESTABLECIMIENTO -> item.entityId?.let{ navigateToEstablecimiento(it)}
+                        TypeEntity.ENTITY_INVITATION ->  navigateToUserInvitations()
 //                        TypeEntity.URI -> {
 //                            try{
 //

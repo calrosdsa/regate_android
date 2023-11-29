@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun CommonTopBar(modifier:Modifier= Modifier,
-onBack:()->Unit) {
+onBack:()->Unit){
     Column (modifier = modifier){
     Row(
         modifier = Modifier

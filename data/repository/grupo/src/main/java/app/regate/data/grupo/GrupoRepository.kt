@@ -10,7 +10,7 @@ import app.regate.data.daos.UserDao
 import app.regate.data.daos.UserGrupoDao
 import app.regate.data.dto.SearchFilterRequest
 import app.regate.data.dto.chat.TypeChat
-import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
+import app.regate.data.dto.empresa.grupo.JoinUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
@@ -24,10 +24,8 @@ import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.PendingRequestCount
 import app.regate.data.dto.empresa.grupo.setting.GrupoInvitationLinkDto
-import app.regate.data.dto.empresa.salas.SalaDto
 import app.regate.data.mappers.DtoToGrupo
-import app.regate.data.mappers.DtoToUserGrupo
-import app.regate.data.mappers.UserGroupDtoToProfile
+import app.regate.data.mappers.users.ProfileToProfileBaseDto
 import app.regate.inject.ApplicationScope
 import app.regate.models.grupo.MyGroups
 import app.regate.models.user.Profile
@@ -46,11 +44,10 @@ class GrupoRepository(
     private val profileDao: ProfileDao,
     private val chatDao: ChatDao,
     private val dtoToGrupo: DtoToGrupo,
-    private val dtoToUserGrupo: DtoToUserGrupo,
     private val dispatchers: AppCoroutineDispatchers,
     private val userDao: UserDao,
     private val myGroupsDao: MyGroupsDao,
-    private val profileMapper:UserGroupDtoToProfile
+    private val profileToProfileBaseDto: ProfileToProfileBaseDto
 ){
 
 
@@ -128,63 +125,71 @@ class GrupoRepository(
         return grupoDataSourceImpl.createGroup(d).also {grupo->
             grupoDao.upsert(dtoToGrupo.map(grupo))
             myGroupsDao.upsert(MyGroups(id = grupo.id))
-            val chat = Chat(
+            val chat = chatDao.getChatByType(grupo.id,TypeChat.TYPE_CHAT_GRUPO.ordinal)
+            if(chat == null && grupo.chat_id != 0L){
+            val c = Chat(
                 parent_id = grupo.id,
-                id = grupo.id,
+                id = grupo.chat_id,
                 type_chat = TypeChat.TYPE_CHAT_GRUPO.ordinal,
                 name = grupo.name,
                 photo = grupo.photo
             )
-            chatDao.upsert(chat)
+            chatDao.upsert(c)
+            }
         }
     }
-    suspend fun joinGrupo(grupoId:Long,visibility:Int=2,grupoDto: GrupoDto?){
-        try{
-        val user  = userDao.getUser(0)
-        val requestEstado= if(visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
-        if(visibility == GrupoVisibility.PUBLIC.ordinal){
-        val dataR = AddUserGrupoRequest(
-            grupo_id = grupoId,
-            profile_id = user.profile_id
-        )
-        grupoDataSourceImpl.joinGrupo(dataR).also {response->
-            if (grupoDto != null) {
-                chatDao.upsert(Chat(
-                    id = response.chat_id,
-                    parent_id = grupoDto.id,
-                    name = grupoDto.name,
-                    photo = grupoDto.photo,
-                    type_chat = TypeChat.TYPE_CHAT_GRUPO.ordinal
+    suspend fun joinGrupo(grupoId:Long,visibility:Int=2,grupoDto: GrupoDto?) {
+        try {
+            val user = userDao.getUser(0)
+            val profile = profileDao.getProfile(user.profile_id)
+            val requestEstado = if (visibility == GrupoVisibility.PUBLIC.ordinal) 1 else 2
+            if (visibility == GrupoVisibility.PUBLIC.ordinal) {
 
-                ))
-            }
-            myGroupsDao.upsert(
-                MyGroups(
-                    id = grupoId,
-                    request_estado = GrupoRequestEstado.fromInt(requestEstado)
-            )
-            )
-        }
-        }else{
-            val d = PendingRequest(
-                grupo_id = grupoId,
-                profile_id = user.profile_id
-            )
-            addPendingRequest(d)
+                val dataR = JoinUserGrupoRequest(
+                    grupo_id = grupoId,
+                    profile_id = user.profile_id,
+                    profile = profileToProfileBaseDto.map(profile)
+                )
+                grupoDataSourceImpl.joinGrupo(dataR).also { response ->
+                    if (grupoDto != null) {
+                        chatDao.upsert(
+                            Chat(
+                                id = response.chat_id,
+                                parent_id = grupoDto.id,
+                                name = grupoDto.name,
+                                photo = grupoDto.photo,
+                                type_chat = TypeChat.TYPE_CHAT_GRUPO.ordinal
+
+                            )
+                        )
+                    }
+                    myGroupsDao.upsert(
+                        MyGroups(
+                            id = grupoId,
+                            request_estado = GrupoRequestEstado.fromInt(requestEstado)
+                        )
+                    )
+                }
+            } else {
+                val d = PendingRequest(
+                    grupo_id = grupoId,
+                    profile_id = user.profile_id
+                )
+                addPendingRequest(d)
 //            grupoDataSourceImpl.addPendingRequest(d)
-        }
-        }catch (e:Exception){
+            }
+        } catch (e: Exception) {
             //TODO()
         }
     }
     suspend fun getGrupoDetail(id:Long):GrupoResponse{
         return  grupoDataSourceImpl.getGrupoDetail(id).also { result->
-            userGrupoDao.deleteUsersGroup(id)
+//            userGrupoDao.deleteUsersGroup(id)
             grupoDao.upsert(dtoToGrupo.map(result.grupo))
-            val profiles = result.profiles.map { profileMapper.map(it) }
-            val usersGrupo = result.profiles.map { dtoToUserGrupo.map(it,result.grupo.id) }
-            profileDao.upsertAll(profiles)
-            userGrupoDao.upsertAll(usersGrupo)
+//            val profiles = result.profiles.map { profileMapper.map(it) }
+//            val usersGrupo = result.profiles.map { dtoToUserGrupo.map(it,result.grupo.id) }
+//            profileDao.upsertAll(profiles)
+//            userGrupoDao.upsertAll(usersGrupo)
         }
     }
     suspend fun getGrupo(id:Long):GrupoDto{
@@ -210,25 +215,6 @@ class GrupoRepository(
         }
     }
 
-    suspend fun getUsersGroup(id:Long){
-        withContext(dispatchers.computation){
-        grupoDataSourceImpl.getUsersGrupo(id).apply {
-            userGrupoDao.deleteUsersGroup(id)
-            val profiles = map {
-//                profileMapper.map(it)
-                Profile(
-                    id = it.profile_id,
-                    profile_photo = it.profile_photo,
-                    nombre = it.nombre,
-                    apellido = it.apellido,
-                )
-            }
-            val usersGrupo = map { dtoToUserGrupo.map(it,id) }
-            profileDao.upsertAll(profiles)
-            userGrupoDao.upsertAll(usersGrupo)
-        }
-        }
-    }
 
     //REQUEST
     suspend fun getPendingRequests(groupId:Long,page:Int,estado:GrupoPendingRequestEstado = GrupoPendingRequestEstado.PENDING):PaginationPendingRequestUser{

@@ -28,7 +28,8 @@ import me.tatarka.inject.annotations.Assisted
 
 typealias Consume= @Composable (
     navigateToSala: (Long) -> Unit,
-    navigateToReserva: (Long) ->Unit
+    navigateToReserva: (Long) ->Unit,
+    navigateToSalaComplete:(Long)->Unit,
  ) ->Unit
 
 
@@ -37,11 +38,13 @@ typealias Consume= @Composable (
 fun Consume(
     viewModelFactory:()->ConsumeViewModel,
     @Assisted navigateToSala: (Long) -> Unit,
-    @Assisted navigateToReserva: (Long) -> Unit
+    @Assisted navigateToReserva: (Long) -> Unit,
+    @Assisted navigateToSalaComplete: (Long) -> Unit
 ){
     Consume(viewModel = viewModel(factory = viewModelFactory) ,
     navigateToReserva = navigateToReserva,
-        navigateToSala= navigateToSala
+        navigateToSala= navigateToSala,
+        navigateToSalaComplete = navigateToSalaComplete
     )
 }
 
@@ -50,7 +53,8 @@ fun Consume(
 internal fun Consume(
     viewModel:ConsumeViewModel,
     navigateToReserva: (Long) -> Unit,
-    navigateToSala: (Long) -> Unit
+    navigateToSala: (Long) -> Unit,
+    navigateToSalaComplete: (Long) -> Unit
 ){
     val lazyPagingItems = viewModel.pagedList.collectAsLazyPagingItems()
     val formatter = LocalAppDateFormatter.current
@@ -64,6 +68,7 @@ internal fun Consume(
                     when(item.type_entity){
                         TypeEntity.RESERVA.ordinal -> navigateToReserva(item.id_entity)
                         TypeEntity.SALA.ordinal -> navigateToSala(item.id_entity)
+                        TypeEntity.SALA_COMPLETE.ordinal -> navigateToSalaComplete(item.id_entity)
                         else -> {}
                     }
                 },

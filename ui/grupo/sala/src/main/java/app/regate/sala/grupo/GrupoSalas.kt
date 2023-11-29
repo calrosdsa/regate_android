@@ -41,7 +41,7 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
 
-typealias GrupoSalas = @Composable (
+typealias GrupoSalas= @Composable (
     navigateUp:()->Unit,
 //    navigateToCreateSala: (id: Long) -> Unit,
     openAuthBottomSheet:()->Unit,

@@ -80,7 +80,7 @@ import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun ChatInput(
+fun ChatInput (
     replyMessage:ReplyMessageData?,
     clearFocus:()->Unit,
     clearReplyMessage:() ->Unit,
@@ -421,7 +421,7 @@ enum class Keyboard {
 }
 
 @Composable
-fun keyboardAsState(): State<Keyboard> {
+fun keyboardAsState(): State<Keyboard>{
     val keyboardState = remember { mutableStateOf(Keyboard.Closed) }
     val view = LocalView.current
     DisposableEffect(view) {

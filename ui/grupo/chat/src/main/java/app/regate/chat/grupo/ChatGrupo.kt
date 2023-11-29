@@ -12,17 +12,13 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.KeyboardDoubleArrowDown
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -30,7 +26,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -49,11 +44,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
@@ -72,20 +64,17 @@ import app.regate.common.composes.util.prependErrorOrNull
 import app.regate.common.composes.util.refreshErrorOrNull
 import app.regate.common.composes.viewModel
 import app.regate.compoundmodels.MessageProfile
-import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.data.common.MessageData
 import app.regate.data.common.ReplyMessageData
 import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
-import com.dokar.sheets.PeekHeight
-import com.dokar.sheets.m3.BottomSheet
 import com.dokar.sheets.rememberBottomSheetState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import app.regate.common.resources.R
 import app.regate.constant.Route
 import app.regate.constant.id
 
@@ -147,7 +136,7 @@ internal fun ChatGrupo(
         clearMessage = viewModel::clearMessage,
 //        navigateToCreateSala = navigateToCreateSala,
 
-        getUserProfileGrupoAndSala = viewModel::getUserGrupo,
+        getUserProfileGrupoAndSalaDto = viewModel::getUserGrupo,
         formatterRelativeTime = formatter::formatShortRelativeTime,
         formatShortDate = {
             formatter.formatWithSkeleton(it.toEpochMilliseconds(),formatter.monthDaySkeleton)
@@ -186,7 +175,7 @@ internal fun ChatGrupo(
     openAuthBottomSheet: () -> Unit,
     clearMessage:(id:Long)->Unit,
 //    navigateToCreateSala: (id: Long) -> Unit,
-    getUserProfileGrupoAndSala:(id:Long)->UserProfileGrupoAndSala?,
+    getUserProfileGrupoAndSalaDto:(id:Long)->UserProfileGrupoAndSalaDto?,
     navigateToGroup: (id: Long) -> Unit,
     formatterRelativeTime:(date:Instant)->String,
     formatShortDate:(Instant)->String,
@@ -451,7 +440,7 @@ internal fun ChatGrupo(
                 formatShortTimeFromString = formatShortTimeFromString,
                 formatShortDateFromString = formatShortDateFromString,
                 navigateToInstalacionReserva = navigateToInstalacionReserva,
-                getUserProfileGrupoAndSala = getUserProfileGrupoAndSala,
+                getUserProfileGrupoAndSalaDto = getUserProfileGrupoAndSalaDto,
                 lazyListState = lazyListState,
                 navigateToSala = {navigateToSala(it.toLong())},
                 copyMessage = {text:String,->

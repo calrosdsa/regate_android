@@ -26,7 +26,7 @@ import app.regate.data.dto.empresa.salas.SalaEstado
 import app.regate.common.resources.R
 
 @Composable
-fun SalaItem (
+fun SalaItem(
     sala: SalaDto,
     formatDate:(String)->String,
     formatShortTime:(String,Long)->String,

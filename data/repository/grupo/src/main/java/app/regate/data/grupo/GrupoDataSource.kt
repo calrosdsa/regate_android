@@ -4,7 +4,7 @@ import GrupoInvitationRequest
 import PaginationInvitationResponse
 import PaginationUserInvitationsResponse
 import app.regate.data.dto.SearchFilterRequest
-import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
+import app.regate.data.dto.empresa.grupo.JoinUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
@@ -15,7 +15,6 @@ import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
 import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.PendingRequestCount
-import app.regate.data.dto.empresa.grupo.UserGrupoDto
 import app.regate.data.dto.empresa.grupo.setting.GrupoInvitationLinkDto
 
 interface GrupoDataSource {
@@ -24,8 +23,7 @@ interface GrupoDataSource {
    suspend fun filterGrupos(d:FilterGrupoData,page:Int):PaginationGroupsResponse
    suspend fun getGrupoDetail(id:Long):GrupoResponse
    suspend fun getGrupo(id:Long):GrupoDto
-   suspend fun joinGrupo(d:AddUserGrupoRequest): JoinGrupoResponse
-   suspend fun getUsersGrupo(id:Long):List<UserGrupoDto>
+   suspend fun joinGrupo(d:JoinUserGrupoRequest): JoinGrupoResponse
    suspend fun createGroup(d:GroupRequest):GrupoDto
    suspend fun removeUserFromGroup(id:Long)
    suspend fun changeStatusUser(id:Long,status:Boolean)

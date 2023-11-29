@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import app.regate.common.resources.R
 
 @Composable
-fun SearchInput(
+fun SearchInput (
     query:String,
     focusRequester: FocusRequester,
     interactionSource: MutableInteractionSource,

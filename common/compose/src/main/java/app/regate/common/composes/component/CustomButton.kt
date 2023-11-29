@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun CustomButton (
+fun CustomButton(
     onClick:() -> Unit,
     modifier:Modifier = Modifier,
     enabled:Boolean = true,

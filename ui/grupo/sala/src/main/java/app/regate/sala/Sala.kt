@@ -79,7 +79,7 @@ import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias Sala = @Composable (
+typealias Sala= @Composable (
     navigateUp:()->Unit,
     openAuthBottomSheet:()->Unit,
     navigateToInstalacion:(Long) -> Unit,
@@ -189,9 +189,9 @@ internal fun Sala(
     navigateToInfoGrupo: (Long) -> Unit
 ) {
     val context = LocalContext.current
-    val participantes = remember(viewState.data?.profiles) {
+    val participantes = remember(viewState.users) {
         derivedStateOf {
-            viewState.data?.profiles?.size
+            viewState.users.size
         }
     }
     val coroutineScope = rememberCoroutineScope()
@@ -206,9 +206,9 @@ internal fun Sala(
     val iAmInTheRoom by remember(key1 = viewState.data, key2 = viewState.authState) {
         derivedStateOf {
             viewState.user?.profile_id?.let { it2 ->
-                viewState.data?.profiles?.map { it.profile_id }?.contains(
+                viewState.users.map { it.profile_id }.contains(
                     it2
-                ) ?: false
+                )
             }
         }
     }
@@ -431,7 +431,7 @@ internal fun Sala(
                                     }
                                     spacerLazyList()
                                     items(
-                                        items = data.profiles,
+                                        items = viewState.users,
 //                        key = { it.profile_id }
                                     ) { profile ->
                                         ProfileItem(

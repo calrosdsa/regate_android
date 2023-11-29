@@ -32,8 +32,13 @@ import kotlinx.serialization.json.Json
 import app.regate.common.resources.R
 import app.regate.data.chat.ChatParams
 import app.regate.data.chat.ChatRepository
+import app.regate.data.dto.chat.NotifyNewUserRequest
 import app.regate.data.dto.chat.TypeChat
 import app.regate.domain.interactors.UpdateChat
+import app.regate.domain.observers.ObserveUsersSala
+import app.regate.domain.observers.chat.ObserveUsersForChat
+import app.regate.extensions.combine
+import app.regate.models.TypeEntity
 
 @Inject
 class SalaViewModel(
@@ -43,7 +48,8 @@ class SalaViewModel(
     observeAuthState: ObserveAuthState,
     observeUser: ObserveUser,
     private val updateChat: UpdateChat,
-    private val chatRepository: ChatRepository
+    private val chatRepository: ChatRepository,
+    observeUsersForChat: ObserveUsersForChat
     ):ViewModel() {
     private val salaId: Long = savedStateHandle["id"]!!
     private val loadingState = ObservableLoadingCounter()
@@ -55,13 +61,15 @@ class SalaViewModel(
         observeAuthState.flow,
         data,
         observeUser.flow,
-    ){message,loading,authState,data,user->
+        observeUsersForChat.flow
+    ){message,loading,authState,data,user,users->
         SalaState(
             message = message,
             authState = authState,
             loading = loading,
             data = data,
-            user = user
+            user = user,
+            users = users
         )
     }.stateIn(
         scope = viewModelScope,
@@ -69,6 +77,7 @@ class SalaViewModel(
         initialValue = SalaState.Empty
     )
     init {
+        observeUsersForChat(ObserveUsersForChat.Params(id = salaId, typeChat = TypeChat.TYPE_CHAT_SALA.ordinal))
         observeAuthState(Unit)
         observeUser(Unit)
         getSala()
@@ -87,6 +96,7 @@ class SalaViewModel(
                     )
                 ))
             }
+                chatRepository.getUsers(salaId,TypeChat.TYPE_CHAT_SALA.ordinal)
 
             } catch (e:ResponseException){
                 Log.d("DEBUG_ERROR",e.localizedMessage?:"")
@@ -99,11 +109,19 @@ class SalaViewModel(
         viewModelScope.launch {
             try{
                 loadingState.addLoader()
-                val res = state.value.data?.sala?.let { salaRepository.joinSala(salaId, it.precio,it.cupos,it.grupo_id) }
+                val res = state.value.data?.sala?.let {
+                    salaRepository.joinSala(salaId, it.precio,it.cupos,it.grupo_id)
+                }
                 getSala()
                 loadingState.removeLoader()
-                if (res != null) {
-                    uiMessageManager.emitMessage(UiMessage(message = res.message))
+                if(res != null){
+                val notifyNewUserRequest = NotifyNewUserRequest(
+                    id = res.id,
+                    profileId = state.value.user?.profile_id?:0,
+                    typeEntity = TypeEntity.SALA,
+                    parentId = state.value.data?.sala?.id?:0
+                )
+                    chatRepository.notifyNewUser(notifyNewUserRequest)
                 }
 
 
@@ -146,7 +164,7 @@ class SalaViewModel(
         viewModelScope.launch {
             try{
                 loadingState.addLoader()
-                state.value.data?.profiles?.find {
+                state.value.users.find {
                     it.profile_id == state.value.user?.profile_id
                 }?.id .also {userSalaId->
                     if(userSalaId != null){
@@ -167,7 +185,9 @@ class SalaViewModel(
         viewModelScope.launch {
             try{
                 val chat = chatRepository.getChatByType(id,TypeChat.TYPE_CHAT_SALA.ordinal)
-                navigateToChat(chat.id,chat.parent_id,TypeChat.TYPE_CHAT_SALA.ordinal)
+                if (chat != null) {
+                    navigateToChat(chat.id,chat.parent_id,TypeChat.TYPE_CHAT_SALA.ordinal)
+                }
             }catch (e:Exception){
 
                 Log.d("DEBUG_APP_",e.localizedMessage?:"")

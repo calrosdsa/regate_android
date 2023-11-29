@@ -11,7 +11,8 @@ data class InviteUserState(
     val message: UiMessage? = null,
     val addressDevice: AddressDevice? = null,
     val selectedIds:HashMap<Long,Int> = HashMap(),
-    val filterData:SearchFilterRequest = SearchFilterRequest()
+    val filterData:SearchFilterRequest = SearchFilterRequest(),
+    val usersGrupo:List<Long> = emptyList()
 ){
     companion object {
         val Empty = InviteUserState()

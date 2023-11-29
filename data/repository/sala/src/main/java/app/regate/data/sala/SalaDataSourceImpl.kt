@@ -3,6 +3,7 @@ package app.regate.data.sala
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.ResponseMessage
 import app.regate.data.dto.SearchFilterRequest
+import app.regate.data.dto.chat.IdDto
 import app.regate.data.dto.empresa.salas.JoinSalaRequest
 import app.regate.data.dto.empresa.salas.SalaDetail
 import app.regate.data.dto.empresa.salas.SalaDto
@@ -87,12 +88,7 @@ class SalaDataSourceImpl(
         }
     }
 
-    override suspend fun syncMessages(d: List<MessageSalaDto>): List<MessageSalaDto> {
-        return client.post("/v1/sala/message/sync-message/"){
-            contentType(ContentType.Application.Json)
-            setBody(d)
-        }.body()
-    }
+
 
     override suspend fun getEstablecimientoSalas(id: Long): List<SalaDto> {
             return client.get("/v1/salas/establecimiento/${id}/").body()
@@ -121,15 +117,12 @@ class SalaDataSourceImpl(
     }
 
 
-    override suspend fun getMessagesSala(id: Long,page: Int): MessageSalaPagination {
-        return client.get("/v1/sala/messages/${id}/?page=${page}").body()
-    }
 
     override suspend fun getSala(id: Long): SalaDetail {
         return client.get("/v1/sala/${id}/").body()
     }
 
-    override suspend fun joinSala(d: JoinSalaRequest):ResponseMessage{
+    override suspend fun joinSala(d: JoinSalaRequest):IdDto{
         val token = authStore.get()?.accessToken
         return client.post("/v1/sala/add-user/"){
             header("Authorization","Bearer $token")

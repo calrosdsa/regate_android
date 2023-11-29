@@ -16,13 +16,17 @@ import app.regate.data.grupo.GrupoRepository
 import app.regate.data.users.UsersRepository
 import app.regate.domain.observers.ObserveAddressDevice
 import app.regate.domain.observers.grupo.ObservePagerInvitations
+import app.regate.domain.observers.grupo.ObserveUsersGrupo
 import app.regate.domain.pagination.search.PaginationSearchProfiles
+import app.regate.extensions.combine
 import app.regate.util.ObservableLoadingCounter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
@@ -35,6 +39,7 @@ class InviteUserViewModel(
     private val grupoRepository: GrupoRepository,
     observeAddressDevice: ObserveAddressDevice,
     pagingSource:ObservePagerInvitations,
+    observeUsersGrupo: ObserveUsersGrupo
     ):ViewModel() {
     private val filterData = MutableStateFlow(FILTER_DATA)
     val pagedList: Flow<PagingData<ProfileDto>> = Pager(PAGING_CONFIG){
@@ -54,13 +59,17 @@ class InviteUserViewModel(
         observeAddressDevice.flow,
         filterData,
         selectedIds,
-    ){loading,message,addressDevice,filterData,selectedIds->
+        observeUsersGrupo.flow.mapLatest {results->
+            results.map { it.profile_id }
+        }
+    ){loading,message,addressDevice,filterData,selectedIds,usersGroup->
         InviteUserState(
             loading = loading,
             message = message,
             addressDevice = addressDevice,
             filterData = filterData,
-            selectedIds = selectedIds
+            selectedIds = selectedIds,
+            usersGrupo = usersGroup
         )
     }.stateIn(
         scope = viewModelScope,
@@ -69,6 +78,7 @@ class InviteUserViewModel(
     )
 
     init {
+        observeUsersGrupo(ObserveUsersGrupo.Params(id = grupoId))
         observeAddressDevice(Unit)
         pagingSource(ObservePagerInvitations.Params(
             pagingConfig = PAGING_CONFIG,

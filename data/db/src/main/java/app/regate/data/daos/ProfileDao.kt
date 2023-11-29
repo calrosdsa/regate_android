@@ -10,6 +10,7 @@ interface ProfileDao:EntityDao<Profile> {
     fun observeProfile(id:Long):Flow<Profile>
     fun observeProfileCategory(id:Long,typeLabel:LabelType):Flow<List<Labels>>
     fun observeProfileSalas(ids:List<Long>):Flow<List<Profile>>
+    suspend fun getProfile(id:Long):Profile
     suspend fun deleteAllProfileCategories(id:Long)
     suspend fun insertProfileCategories(entities:List<ProfileCategory>)
 }

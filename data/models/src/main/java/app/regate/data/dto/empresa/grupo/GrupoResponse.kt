@@ -12,7 +12,7 @@ data class PaginationGroupsResponse(
 @Serializable
 data class GrupoResponse(
     val grupo: GrupoDto,
-    val profiles:List<UserGrupoDto>,
+//    val profiles:List<UserGrupoDto>,
     val salas:List<SalaDto>
 )
 

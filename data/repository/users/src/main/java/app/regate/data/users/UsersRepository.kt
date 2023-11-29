@@ -7,7 +7,7 @@ import app.regate.data.dto.account.user.EstablecimientoItemDto
 import app.regate.data.dto.account.user.PaginationProfilesResponse
 import app.regate.data.dto.account.user.ProfileCategoryRequest
 import app.regate.data.dto.account.user.ProfileDto
-import app.regate.data.mappers.DtoToProfile
+import app.regate.data.mappers.users.DtoToProfile
 import app.regate.inject.ApplicationScope
 import app.regate.models.user.Profile
 import app.regate.models.ProfileCategory
@@ -21,7 +21,7 @@ class UsersRepository(
     private val profileDao: ProfileDao,
     private val profileDtoToProfile: DtoToProfile,
     private val dispatchers: AppCoroutineDispatchers,
-    private val profileMapper:DtoToProfile
+    private val profileMapper: DtoToProfile
 ){
     suspend fun updateCategoriesProfile(d:List<ProfileCategoryRequest>,profileId:Long){
         withContext(dispatchers.io){

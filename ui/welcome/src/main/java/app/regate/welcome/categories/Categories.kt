@@ -30,7 +30,7 @@ import app.regate.common.resources.R
 import app.regate.models.Labels
 
 @Composable
-fun Categories(
+fun Categories (
     categories:List<Labels>,
     selectedCategories:List<Long>,
     addCategory:(Long)->Unit,

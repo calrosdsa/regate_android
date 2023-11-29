@@ -5,4 +5,5 @@ enum class PayloadWsAccountType {
     PAYLOAD_USER_BALANCE,
     PAYLOAD_GRUPO_MESSAGE,
     PAYLOAD_DELETE_MESSAGE,
+
 }

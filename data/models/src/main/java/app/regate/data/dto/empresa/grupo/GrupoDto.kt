@@ -1,7 +1,6 @@
 package app.regate.data.dto.empresa.grupo
 
-import app.regate.data.dto.empresa.salas.SalaDto
-import kotlinx.datetime.Clock
+import app.regate.data.dto.notifications.ProfileBaseDto
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
@@ -65,9 +64,10 @@ data class  UserGrupoDto(
 )
 
 @Serializable
-data class AddUserGrupoRequest(
+data class JoinUserGrupoRequest(
     val grupo_id:Long,
-    val profile_id:Long
+    val profile_id:Long,
+    val profile:ProfileBaseDto? = null
 )
 
 @Serializable

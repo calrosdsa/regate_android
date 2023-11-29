@@ -50,6 +50,8 @@ public final class RoomChatDao_Impl extends RoomChatDao {
 
   private final SharedSQLiteStatement __preparedStmtOfDeleteById;
 
+  private final SharedSQLiteStatement __preparedStmtOfDeleteAll;
+
   private final EntityUpsertionAdapter<Chat> __upsertionAdapterOfChat;
 
   public RoomChatDao_Impl(@NonNull final RoomDatabase __db) {
@@ -167,6 +169,14 @@ public final class RoomChatDao_Impl extends RoomChatDao {
       @NonNull
       public String createQuery() {
         final String _query = "delete from chat where id = ?";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "delete from chat";
         return _query;
       }
     };
@@ -373,6 +383,26 @@ public final class RoomChatDao_Impl extends RoomChatDao {
         } finally {
           __db.endTransaction();
           __preparedStmtOfDeleteById.release(_stmt);
+        }
+      }
+    }, continuation);
+  }
+
+  @Override
+  public Object deleteAll(final Continuation<? super Unit> continuation) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteAll.acquire();
+        __db.beginTransaction();
+        try {
+          _stmt.executeUpdateDelete();
+          __db.setTransactionSuccessful();
+          return Unit.INSTANCE;
+        } finally {
+          __db.endTransaction();
+          __preparedStmtOfDeleteAll.release(_stmt);
         }
       }
     }, continuation);
@@ -734,7 +764,7 @@ public final class RoomChatDao_Impl extends RoomChatDao {
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
     return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Chat>() {
       @Override
-      @NonNull
+      @Nullable
       public Chat call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {

@@ -33,7 +33,7 @@ import app.regate.welcome.notifications.EnabledNotification
 import app.regate.welcome.started.Started
 import kotlinx.coroutines.launch
 
-typealias Welcome = @Composable (
+typealias Welcome= @Composable (
     navigateToHome:() -> Unit,
 ) -> Unit
 @Inject

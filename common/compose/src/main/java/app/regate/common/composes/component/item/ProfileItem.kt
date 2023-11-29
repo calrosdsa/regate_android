@@ -21,7 +21,7 @@ import app.regate.common.composes.component.images.ProfileImage
 import app.regate.common.resources.R
 
 @Composable
-fun ProfileItem (
+fun ProfileItem(
     id:Long,
     photo:String?,
     nombre:String,

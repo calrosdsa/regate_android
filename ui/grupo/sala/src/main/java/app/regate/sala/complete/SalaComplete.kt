@@ -55,7 +55,7 @@ import app.regate.common.composes.viewModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias SalaComplete = @Composable (
+typealias SalaComplete= @Composable (
     navigateUp:()->Unit
  ) -> Unit
 

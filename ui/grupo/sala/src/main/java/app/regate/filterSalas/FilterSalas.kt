@@ -40,7 +40,7 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
 
-typealias FilterSalas = @Composable (
+typealias FilterSalas= @Composable (
     navigateUp:()->Unit,
 //    navigateToCreateSala: (id: Long) -> Unit,
     openAuthBottomSheet:()->Unit,

@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DialogConfirmation (
+fun DialogConfirmation(
     open:Boolean,
     dismiss:()->Unit,
     confirm:()->Unit,

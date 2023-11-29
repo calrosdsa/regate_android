@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.regate.common.composes.ui.PosterCardImage
-import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.data.dto.chat.TypeChat
 import app.regate.models.chat.Chat
 
@@ -36,7 +36,7 @@ fun TopBarChat(
     navigateToGroup:(id:Long)->Unit,
     navigateToSala:(id:Long)->Unit,
     navigateToEstablecimiento:(Long)->Unit,
-    users:List<UserProfileGrupoAndSala>,
+    users:List<UserProfileGrupoAndSalaDto>,
     modifier:Modifier = Modifier
 ) {
 //    var expanded by remember { mutableStateOf(false) }

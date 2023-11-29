@@ -1,5 +1,6 @@
 package app.regate.data.account
 
+import app.regate.data.daos.ChatDao
 import app.regate.data.daos.FavoriteEstablecimientoDao
 import app.regate.data.daos.MyGroupsDao
 import app.regate.data.daos.NotificationDao
@@ -14,7 +15,7 @@ import app.regate.data.dto.account.auth.SocialRequest
 import app.regate.data.dto.account.billing.ConsumePaginationResponse
 import app.regate.data.dto.account.billing.DepositPaginationResponse
 import app.regate.data.dto.account.billing.MontoRetenidoPaginationRespone
-import app.regate.data.mappers.DtoToUser
+import app.regate.data.mappers.users.DtoToUser
 import app.regate.inject.ApplicationScope
 import app.regate.models.user.Profile
 import app.regate.models.account.User
@@ -37,6 +38,7 @@ class AccountRepository(
     private val favoriteEstablecimientoDao: FavoriteEstablecimientoDao,
     private val notificationDao: NotificationDao,
     private val reservaDao: ReservaDao,
+    private val chatDao:ChatDao,
 //    private val establecimientoDao: EstablecimientoDao
 ){
     suspend fun resendEmailVerification(id: Long){
@@ -50,6 +52,7 @@ class AccountRepository(
                 favoriteEstablecimientoDao.removeAll()
                 notificationDao.deleteAll()
                 reservaDao.deleteAll()
+                chatDao.deleteAll()
             }catch(e:Exception){
                 //TODO()
             }

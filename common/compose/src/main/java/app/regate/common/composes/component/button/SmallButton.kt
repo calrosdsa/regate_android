@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SmallButton(
+fun SmallButton (
     text:String,
     onClick:()->Unit,
     modifier: Modifier = Modifier,

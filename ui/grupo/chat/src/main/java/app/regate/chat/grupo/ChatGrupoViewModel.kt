@@ -10,7 +10,7 @@ import app.cash.paging.PagingData
 import app.cash.paging.cachedIn
 import app.regate.api.UiMessageManager
 import app.regate.compoundmodels.MessageProfile
-import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.constant.HostMessage
 import app.regate.data.app.EmojiCategory
 import app.regate.data.chat.ChatRepository
@@ -87,6 +87,7 @@ class ChatGrupoViewModel(
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
     private val scrollToBottom = MutableStateFlow<Boolean?>(null)
+    private val json = Json { ignoreUnknownKeys = true}
 //    private val isUserInt = MutableStateFlow(true)
     private val emojiData = MutableStateFlow<List<List<Emoji>>>(emptyList())
     val pagedList: Flow<PagingData<MessageProfile>> =
@@ -137,7 +138,11 @@ class ChatGrupoViewModel(
                     Log.d("DEBUG_APP_DATA_2",data)
                     sendSharedMessage(user.profile_id)
                     Log.d("DEBUG_APP_USER",user.toString())
+                        if(state.value.usersGrupo.map { it.profile_id }.contains(user.profile_id)){
                         startWs(user.profile_id)
+                        }else{
+                            Log.d("DEBUG_APP_USER","USER NO IN CHAT")
+                        }
                     }
                 }catch(e:Exception){
                     Log.d("DEBUG_APP",e.localizedMessage?:"")
@@ -189,7 +194,7 @@ class ChatGrupoViewModel(
                         MessageEventType.EventTypeMessage -> {
                             try {
                             Log.d("DEBUG_APP_MESSAGE_PAYLOAD", message.readText())
-                            val payload = Json.decodeFromString<GrupoMessageDto>(event.payload)
+                            val payload = json.decodeFromString<GrupoMessageDto>(event.payload)
                             chatRepository.updateOrSaveMessage(payload, true)
                             }catch (e:Exception){
                                 Log.d("DEBUG_WS_ERROR_1",e.localizedMessage?:"")
@@ -197,10 +202,18 @@ class ChatGrupoViewModel(
                         }
                         MessageEventType.EventTypeDeleteMessage -> {
                             try {
-                                val payload = Json.decodeFromString<IdDto>(event.payload)
+                                val payload = json.decodeFromString<IdDto>(event.payload)
                                 chatRepository.updateMessageToDeleted(payload.id)
                             }catch (e:Exception){
                                 Log.d("DEBUG_WS_ERROR_1",e.localizedMessage?:"")
+                            }
+                        }
+                        MessageEventType.EventNewUser -> {
+                            try{
+                                val payload = json.decodeFromString<UserProfileGrupoAndSalaDto>(event.payload)
+                                chatRepository.insertNewUser(payload)
+                            }catch (e:Exception){
+                                Log.d("DEBUG_APP_NEW_USER" , e.localizedMessage?:"")
                             }
                         }
                     }
@@ -314,7 +327,7 @@ class ChatGrupoViewModel(
         }
     }
 
-    fun getUserGrupo(profileId:Long):UserProfileGrupoAndSala?{
+    fun getUserGrupo(profileId:Long):UserProfileGrupoAndSalaDto?{
         return state.value.usersGrupo.find {
             it.profile_id == profileId
         }

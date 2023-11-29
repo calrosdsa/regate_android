@@ -6,7 +6,8 @@ import kotlinx.serialization.Serializable
 enum class GrupoMessageType{
     MESSAGE,
     INSTALACION,
-    SALA
+    SALA,
+
 }
 
 @Serializable

@@ -6,7 +6,7 @@ import PaginationUserInvitationsResponse
 import app.regate.constant.HostMessage
 import app.regate.data.auth.store.AuthStore
 import app.regate.data.dto.SearchFilterRequest
-import app.regate.data.dto.empresa.grupo.AddUserGrupoRequest
+import app.regate.data.dto.empresa.grupo.JoinUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.FilterGrupoData
 import app.regate.data.dto.empresa.grupo.GroupRequest
 import app.regate.data.dto.empresa.grupo.GrupoDto
@@ -17,7 +17,6 @@ import app.regate.data.dto.empresa.grupo.PaginationPendingRequestUser
 import app.regate.data.dto.empresa.grupo.PaginationUserGrupoRequest
 import app.regate.data.dto.empresa.grupo.PendingRequest
 import app.regate.data.dto.empresa.grupo.PendingRequestCount
-import app.regate.data.dto.empresa.grupo.UserGrupoDto
 import app.regate.data.dto.empresa.grupo.setting.GrupoInvitationLinkDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -62,10 +61,6 @@ class GrupoDataSourceImpl(
                 contentType(ContentType.Application.Json)
                 setBody(d)
             }.body()
-    }
-
-    override suspend fun getUsersGrupo(id: Long): List<UserGrupoDto> {
-        return client.get("/v1/grupo/users/${id}/").body()
     }
 
     override suspend fun createGroup(d: GroupRequest):GrupoDto {
@@ -129,7 +124,7 @@ class GrupoDataSourceImpl(
     override suspend fun getGrupo(id: Long):GrupoDto {
         return client.get("/v1/grupo/${id}/").body()
     }
-    override suspend fun joinGrupo(d: AddUserGrupoRequest):JoinGrupoResponse {
+    override suspend fun joinGrupo(d: JoinUserGrupoRequest):JoinGrupoResponse {
         val token = authStore.get()?.accessToken
         return client.post("/v1/grupo/add-user/"){
             header("Authorization","Bearer $token")

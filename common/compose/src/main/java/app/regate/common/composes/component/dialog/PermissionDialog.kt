@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import app.regate.common.resources.R
 
 @Composable
-fun PermissionDialog(
+fun PermissionDialog (
     permissionTextProvider: PermissionTextProvider,
     isPermanentlyDeclined: Boolean,
     onDismiss: () -> Unit,

@@ -22,6 +22,7 @@ import app.regate.appinitializers.AppInitializer
 import app.regate.util.AppCoroutineDispatchers
 import app.regate.appinitializers.PreferencesInitializer
 import kotlinx.coroutines.Dispatchers
+import kotlinx.serialization.json.Json
 //import android.content.pm.ApplicationInfo
 
 import me.tatarka.inject.annotations.IntoSet
@@ -46,6 +47,9 @@ interface AppComponent {
         main = Dispatchers.Main,
     )
 
+    @ApplicationScope
+    @Provides
+    fun provideJsonDecoder():Json = Json { ignoreUnknownKeys = true }
 
     @Provides
     @IntoSet

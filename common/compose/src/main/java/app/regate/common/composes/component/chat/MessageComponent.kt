@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import app.regate.common.composes.component.images.ProfileImage
 import app.regate.common.resources.R
 import app.regate.compoundmodels.MessageProfile
-import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.data.dto.chat.TypeChat
 import app.regate.data.dto.empresa.grupo.CupoInstalacion
 import kotlinx.datetime.Instant
@@ -56,7 +56,7 @@ fun MessageComponent(
     openLink:(String)->Unit,
     copyMessage:(m:String)->Unit,
     modifier:Modifier = Modifier,
-    getUserProfileGrupoAndSala: (id:Long)-> UserProfileGrupoAndSala? = {null},
+    getUserProfileGrupoAndSalaDto: (id:Long)-> UserProfileGrupoAndSalaDto? = {null},
 
     ){
     Row(
@@ -117,7 +117,7 @@ fun MessageComponent(
                     MessageReply(
                         item = item,
                         scrollToItem = scrollToItem,
-                        getUserProfileGrupoAndSala = getUserProfileGrupoAndSala,
+                        getUserProfileGrupoAndSalaDto = getUserProfileGrupoAndSalaDto,
                         navigateToInstalacionReserva = navigateToInstalacionReserva,
                         formatShortDate = formatShortDate,
                         formatShortTime = formatShortTime,

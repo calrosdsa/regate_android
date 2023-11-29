@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import app.regate.common.composes.ui.Skeleton
 
 @Composable
-fun SalaItemSkeleton(modifier: Modifier = Modifier) {
+fun SalaItemSkeleton(modifier: Modifier = Modifier){
     Column(modifier = modifier.padding(10.dp)) {
     Skeleton(modifier = Modifier
         .height(20.dp)

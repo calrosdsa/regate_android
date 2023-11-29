@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import app.regate.api.UiMessage
 import app.regate.data.auth.AppAuthState
 import app.regate.compoundmodels.MessageProfile
-import app.regate.compoundmodels.UserProfileGrupoAndSala
+import app.regate.compoundmodels.UserProfileGrupoAndSalaDto
 import app.regate.models.Emoji
 import app.regate.models.account.User
 import app.regate.models.chat.Chat
@@ -18,7 +18,7 @@ data class ChatGrupoState(
     val chat:Chat? = null,
     val user: User? = null,
     val authState:AppAuthState? = null,
-    val usersGrupo: List<UserProfileGrupoAndSala> = emptyList(),
+    val usersGrupo: List<UserProfileGrupoAndSalaDto> = emptyList(),
     val emojiData:List<List<Emoji>> = emptyList()
 ){
     companion object{
